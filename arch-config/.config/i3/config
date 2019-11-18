@@ -585,6 +585,7 @@ bindsym ctrl+mod1+t exec --no-startup-id thunar;focus
 #bindsym $mod+F10 exec --no-startup-id spotify;focus
 #bindsym control+mod1+s exec --no-startup-id spotify;focus
 bindsym ctrl+mod1+d exec --no-startup-id discord;focus
+bindsym ctrl+mod1+l exec --no-startup-id libreoffice;focus
 
 
 
