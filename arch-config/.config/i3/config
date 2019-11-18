@@ -430,7 +430,8 @@ exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 exec --no-startup-id pamac-tray
 
 # pCloud
-exec /home/marc/Downloads/pcloud
+# change location!
+exec #path#
 
 # bluetooth
 #exec --no-startup-id blueberry-tray
