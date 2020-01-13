@@ -488,10 +488,6 @@ exec --no-startup-id /usr/lib/xfce4/notifyd/xfce4-notifyd &
 
 #terminal
 bindsym ctrl+mod1+Return exec --no-startup-id termite;focus
-#bindsym $mod+KP_Enter exec --no-startup-id termite;focus
-#bindsym control+mod1+t exec --no-startup-id termite;focus
-#bindsym control+mod1+Return exec --no-startup-id termite;focus
-#bindsym control+mod1+KP_Enter exec --no-startup-id termite;focus
 
 #keepass
 bindsym ctrl+mod1+k exec --no-startup-id keepass;focus
@@ -534,6 +530,31 @@ bindsym control+mod1+a exec --no-startup-id xfce4-appfinder
 #xkill
 #bindsym --release $mod+Escape exec xkill
 
+#atom
+bindsym ctrl+mod1+e exec --no-startup-id atom;focus
+
+#nitrogen
+bindsym control+mod1+i exec --no-startup-id nitrogen;focus
+
+#thunar
+bindsym ctrl+mod1+t exec --no-startup-id thunar;focus
+
+#discord
+bindsym ctrl+mod1+d exec --no-startup-id discord;focus
+
+#libreoffice
+bindsym ctrl+mod1+l exec --no-startup-id libreoffice;focus
+
+#browsers
+bindsym control+mod1+f exec --no-startup-id firefox;focus
+bindsym control+mod1+v exec --no-startup-id vivaldi-stable;focus
+bindsym control+mod1+c exec --no-startup-id chromium;focus
+
+#vlc
+bindsym ctrl+mod1+m exec --no-startup-id vlc;focus
+
+
+
 #workspace related
 
 #workspace 1 related
@@ -543,18 +564,9 @@ bindsym control+mod1+a exec --no-startup-id xfce4-appfinder
 #bindsym ctrl+mod1+f exec --no-startup-id --launch firefox;focus
 #bindsym ctrl+mod1+c exec --no-startup-id --launch chromium;focus
 
-#browsers
-bindsym control+mod1+f exec --no-startup-id firefox;focus
-bindsym control+mod1+v exec --no-startup-id vivaldi-stable;focus
-bindsym control+mod1+c exec --no-startup-id chromium;focus
-
 #workspace 2 related
 #bindsym $mod+F2 exec --no-startup-id geany;focus
 #bindsym control+mod1+w exec --no-startup-id geany;focus
-
-#atom
-bindsym ctrl+mod1+e exec --no-startup-id atom;focus
-#bindsym $mod+F2 exec --no-startup-id atom;focus
 
 #workspace 3 related
 #bindsym $mod+F3 exec --no-startup-id inkscape;focus
@@ -565,11 +577,7 @@ bindsym ctrl+mod1+e exec --no-startup-id atom;focus
 #workspace 5 related
 #bindsym $mod+F5 exec --no-startup-id meld;focus
 
-#nitrogen
-bindsym control+mod1+i exec --no-startup-id nitrogen;focus
-
 #workspace 6 related
-bindsym ctrl+mod1+m exec --no-startup-id vlc;focus
 #bindsym $mod+F6 exec --no-startup-id vlc;focus
 
 #workspace 7 related
@@ -577,13 +585,6 @@ bindsym ctrl+mod1+m exec --no-startup-id vlc;focus
 
 #workspace 8 related
 #for_window [class="Thunar"] focus
-
-#thunar
-bindsym ctrl+mod1+t exec --no-startup-id thunar;focus
-#bindsym $mod+F8 exec --no-startup-id thunar;focus
-#bindsym $mod+Shift+Return exec --no-startup-id thunar;focus
-#bindsym $mod+Shift+KP_Enter exec --no-startup-id thunar;focus
-#bindsym control+mod1+b exec --no-startup-id thunar;focus
 
 #workspace 9 related
 #bindsym ctrl+mod1+x exec --no-startup-id evolution;focus
@@ -596,11 +597,7 @@ bindsym ctrl+mod1+t exec --no-startup-id thunar;focus
 #bindsym $mod+F10 exec --no-startup-id spotify;focus
 #bindsym control+mod1+s exec --no-startup-id spotify;focus
 
-#discord
-bindsym ctrl+mod1+d exec --no-startup-id discord;focus
 
-#libreoffice
-bindsym ctrl+mod1+l exec --no-startup-id libreoffice;focus
 
 
 
