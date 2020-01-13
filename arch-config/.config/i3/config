@@ -497,7 +497,7 @@ bindsym ctrl+mod1+Return exec --no-startup-id termite;focus
 bindsym ctrl+mod1+k exec --no-startup-id keepass;focus
 
 #System monitor
-bindsym control+Shift+Escape exec --no-startup-id xfce4-taskmanager;focus
+bindsym ctrl+mod1+r exec --no-startup-id xfce4-taskmanager;focus
 
 #settings
 bindsym control+mod1+s exec --no-startup-id xfce4-settings-manager
@@ -542,15 +542,19 @@ bindsym control+mod1+a exec --no-startup-id xfce4-appfinder
 #bindsym ctrl+mod1+v exec --no-startup-id exo-open --launch webbrowser;focus
 #bindsym ctrl+mod1+f exec --no-startup-id --launch firefox;focus
 #bindsym ctrl+mod1+c exec --no-startup-id --launch chromium;focus
+
+#browsers
 bindsym control+mod1+f exec --no-startup-id firefox;focus
 bindsym control+mod1+v exec --no-startup-id vivaldi-stable;focus
 bindsym control+mod1+c exec --no-startup-id chromium;focus
 
 #workspace 2 related
 #bindsym $mod+F2 exec --no-startup-id geany;focus
+#bindsym control+mod1+w exec --no-startup-id geany;focus
+
+#atom
 bindsym ctrl+mod1+e exec --no-startup-id atom;focus
 #bindsym $mod+F2 exec --no-startup-id atom;focus
-#bindsym control+mod1+w exec --no-startup-id geany;focus
 
 #workspace 3 related
 #bindsym $mod+F3 exec --no-startup-id inkscape;focus
@@ -560,6 +564,8 @@ bindsym ctrl+mod1+e exec --no-startup-id atom;focus
 
 #workspace 5 related
 #bindsym $mod+F5 exec --no-startup-id meld;focus
+
+#nitrogen
 bindsym control+mod1+i exec --no-startup-id nitrogen;focus
 
 #workspace 6 related
@@ -570,7 +576,9 @@ bindsym ctrl+mod1+m exec --no-startup-id vlc;focus
 #bindsym $mod+F7 exec --no-startup-id virtualbox;focus
 
 #workspace 8 related
-for_window [class="Thunar"] focus
+#for_window [class="Thunar"] focus
+
+#thunar
 bindsym ctrl+mod1+t exec --no-startup-id thunar;focus
 #bindsym $mod+F8 exec --no-startup-id thunar;focus
 #bindsym $mod+Shift+Return exec --no-startup-id thunar;focus
@@ -587,77 +595,12 @@ bindsym ctrl+mod1+t exec --no-startup-id thunar;focus
 #workspace 10 related
 #bindsym $mod+F10 exec --no-startup-id spotify;focus
 #bindsym control+mod1+s exec --no-startup-id spotify;focus
+
+#discord
 bindsym ctrl+mod1+d exec --no-startup-id discord;focus
+
+#libreoffice
 bindsym ctrl+mod1+l exec --no-startup-id libreoffice;focus
-
-
-
-
-#####################################################################################################################
-#################                          screenshots                                              #################
-#####################################################################################################################
-
-
-bindsym Print exec --no-startup-id scrot 'ArcoLinux-%Y-%m-%d-%s_screenshot_$wx$h.jpg' -e 'mv $f $$(xdg-user-dir PICTURES)'
-bindsym Control+Print exec --no-startup-id xfce4-screenshooter
-bindsym Control+Shift+Print exec --no-startup-id gnome-screenshot -i
-#bindsym shift+Print exec --no-startup-id shutter
-
-
-
-
-
-#####################################################################################################################
-#################                          floating or tiled                                        #################
-#####################################################################################################################
-
-
-#floating enabled from some programs - find with xprop
-
-for_window [class="Bleachbit"] floating disable
-for_window [class="Blueberry.py"] floating enable
-for_window [class="Brasero"] floating disable
-for_window [class="Galculator"] floating enable
-for_window [class="Gnome-disks"] floating disable
-for_window [class="^Gnome-font-viewer$"] floating enable
-for_window [class="^Gpick$"] floating enable
-for_window [class="Hexchat"] floating disable
-for_window [class="Imagewriter"] floating enable
-for_window [class="Font-manager"] floating enable
-#for_window [class="qt5ct|Lxappearance] floating enable
-for_window [class="Nitrogen"] floating disable
-for_window [class="Pavucontrol"] floating disable
-for_window [class="Peek"] floating enable
-for_window [class="^Skype$"] floating enable
-for_window [class="^Spotify$"] floating disable
-for_window [class="System-config-printer.py"] floating enable
-for_window [class="Unetbootin.elf"] floating enable
-for_window [class="Usb-creator-gtk"] floating enable
-for_window [class="^Vlc$"] floating disable
-for_window [class="Wine"] floating disable
-for_window [class="Xfburn"] floating disable
-for_window [class="Xfce4-appfinder"] floating enable
-for_window [class="Xfce4-settings-manager"] floating disable
-for_window [class="Xfce4-taskmanager"] floating enable
-
-
-#for_window [instance="gimp"] floating disable
-for_window [instance="script-fu"] border normal
-for_window [instance="variety"] floating disable
-
-
-for_window [title="Copying"] floating enable
-for_window [title="Deleting"] floating enable
-for_window [title="Moving"] floating enable
-for_window [title="^Terminator Preferences$"] floating enable
-
-
-#for_window [window_role="^gimp-toolbox-color-dialog$"] floating enable
-for_window [window_role="pop-up"] floating enable
-for_window [window_role="^Preferences$"] floating enable
-for_window [window_role="setup"] floating enable
-
-
 
 
 
