@@ -430,7 +430,7 @@ exec --no-startup-id termite;focus
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
 # Updater
-exec --no-startup-id pamac-tray
+#exec --no-startup-id pamac-tray
 
 # pCloud
 # change location!
