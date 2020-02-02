@@ -131,19 +131,19 @@ bindsym $mod+Shift+0 move container to workspace 10; workspace 10
 #####################################################################################################################
 
 # start dmenu
-bindsym $mod+shift+y exec --no-startup-id dmenu_run -i -nb '#191919' -nf '#fea63c' -sb '#fea63c' -sf '#191919' -fn 'NotoMonoRegular:bold:pixelsize=14'
+#bindsym $mod+shift+y exec --no-startup-id dmenu_run -i -nb '#191919' -nf '#fea63c' -sb '#fea63c' -sf '#191919' -fn 'NotoMonoRegular:bold:pixelsize=14'
 
 # gmrun
-bindsym mod1+F2 exec --no-startup-id gmrun
+#bindsym mod1+F2 exec --no-startup-id gmrun
 
 # start xfce-appfinder
-bindsym mod1+F3 exec --no-startup-id xfce4-appfinder
+#bindsym mod1+F3 exec --no-startup-id xfce4-appfinder
 
 # start rofi full
-bindsym mod1+F11 exec --no-startup-id rofi -show run -fullscreen -font "Noto Sans 13"
+#bindsym mod1+F11 exec --no-startup-id rofi -show run -fullscreen -font "Noto Sans 13"
 
 # start rofi small
-bindsym mod1+F12 exec --no-startup-id rofi -show run -font "Noto Sans 13"
+#bindsym mod1+F12 exec --no-startup-id rofi -show run -font "Noto Sans 13"
 
 
 
@@ -153,12 +153,12 @@ bindsym mod1+F12 exec --no-startup-id rofi -show run -font "Noto Sans 13"
 
 
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec --no-startup-id "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+#bindsym $mod+Shift+e exec --no-startup-id "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 
 #Press $mod (super) and X to exit - check toolbar for next choices
 bindsym $mod+X mode "$mode_system"
-bindsym control+mod1+Delete mode "$mode_system"
+#bindsym control+mod1+Delete mode "$mode_system"
 
 set $mode_system System (k) lock, (l) logout, (u) suspend, (h) hibernate, (r) reboot, (s) shutdown
 mode "$mode_system" {
@@ -209,7 +209,7 @@ bindsym $mod+q kill
 floating_modifier $mod
 
 # toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
+bindsym $mod+Shift+f floating toggle
 
 # change focus
 bindsym $mod+$left focus left
@@ -434,7 +434,7 @@ exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
 # pCloud
 # change location!
-exec #path#
+exec /home/marc/pcloud
 
 # bluetooth
 #exec --no-startup-id blueberry-tray
