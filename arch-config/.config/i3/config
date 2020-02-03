@@ -275,7 +275,7 @@ bindsym $mod+v split v
 
 # enter fullscreen mode for the focused container
 # Super + F in arcolinux is execute thunar
-bindsym $mod+f fullscreen toggle
+bindsym $mod+Shift+p fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
 # qwerty/azerty issue for letter z
