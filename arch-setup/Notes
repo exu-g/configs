@@ -1,3 +1,18 @@
+copy/move ~/arcolinux-config/.config to ~/.config
+(delete ~/arcolinux-config)
+cd .config/autostart
+make executable "disable mouse acc"
+run "disable mouse acc"
+cd .. ..
+
+download pCloud
+copy/move ~/Downloads/pcloud to ~/
+make executable ~/pcloud
+run ~/pcloud
+
+download wireguard config and unzip
+copy/move wireguard mullvad config
+
 Choose desktop wallpapers
 uncheck all unneeded wallpapers in "variety"
 choose settings (changing wallpaper) as needed
