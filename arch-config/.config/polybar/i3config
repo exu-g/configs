@@ -121,7 +121,7 @@ font-2 = "Noto Sans:size=10;0"
 font-3 = "Noto Sans Mono:size=10;0"
 
 modules-left = i3 xwindow
-modules-center = cpu1 memory2 kernel 
+modules-center = cpu1 memory2
 modules-right = battery backlight date volume wired-network wireless-network
 
 separator = |
@@ -1082,7 +1082,7 @@ label-volume = " "
 label-volume-foreground = #40ad4b
 label-muted = muted
 
-bar-volume-width = 10
+bar-volume-width = 15
 bar-volume-foreground-0 = #40ad4b
 bar-volume-foreground-1 = #40ad4b
 bar-volume-foreground-2 = #40ad4b
@@ -1104,6 +1104,7 @@ format-muted-prefix = "  "
 format-muted-prefix-foreground = "#ff0000"
 format-muted-foreground = ${colors.foreground}
 format-muted-background = ${colors.background}
+;     
 
 
 ################################################################################
