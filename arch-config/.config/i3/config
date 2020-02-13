@@ -418,13 +418,8 @@ font pango:Noto Mono Regular 13
 
 # USER APPLICATIONS TO START AT BOOT
 
-#browser
-exec --no-startup-id firefox
-for_window [class="Firefox"]
-
 #Terminal
-exec --no-startup-id termite
-for_window [class="Termite"] focus
+exec --no-startup-id termite;focus
 
 
 
