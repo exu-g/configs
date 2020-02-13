@@ -338,9 +338,10 @@ mode "resize" {
 
 # launch gaming focused programs
 
-bindsym $mod+g mode "gaming"
+bindsym $mod+g mode "$gaming"
 
-mode "gaming" {
+set $gaming Steam (s), Lutris (l)
+mode "$gaming" {
 	bindsym s exec --no-startup-id steam-native;focus
 	bindsym l exec --no-startup-id lutris;focus
 
