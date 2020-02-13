@@ -309,20 +309,20 @@ bindsym $mod+r mode "resize"
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
 
-        # Pressing right will shrink the window’s width.
-        # Pressing left will grow the window’s width.
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
         # Pressing down will shrink the window’s height.
         # Pressing up will grow the window’s height.
-        bindsym $right       resize shrink width 10 px or 10 ppt
+        bindsym $left      resize shrink width 10 px or 10 ppt
         bindsym $up       resize grow height 10 px or 10 ppt
         bindsym $down         resize shrink height 10 px or 10 ppt
-        bindsym $left      resize grow width 10 px or 10 ppt
+        bindsym $right       resize grow width 10 px or 10 ppt
 
         # same bindings, but for the arrow keys
-        bindsym Right        resize shrink width 10 px or 10 ppt
+        bindsym Left        resize shrink width 10 px or 10 ppt
         bindsym Up        resize grow height 10 px or 10 ppt
         bindsym Down          resize shrink height 10 px or 10 ppt
-        bindsym Left       resize grow width 10 px or 10 ppt
+        bindsym Right       resize grow width 10 px or 10 ppt
 
         # back to normal: Enter or Escape
         bindsym Return mode "default"
