@@ -555,6 +555,10 @@ bindsym control+mod1+c exec --no-startup-id chromium;focus
 #vlc
 bindsym ctrl+mod1+m exec --no-startup-id vlc;focus
 
+#telegram
+bindsym ctrl+mod1+b exec --no-startup-id bettergram;focus
+
+
 
 
 #workspace related
