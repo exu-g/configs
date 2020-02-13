@@ -419,25 +419,12 @@ font pango:Noto Mono Regular 13
 # USER APPLICATIONS TO START AT BOOT
 
 #browser
-#exec --no-startup-id vivaldi-stable
-for_window [class="Vivaldi-stable"] focus
-
-#text-editor
-#exec --no-startup-id geany
-#exec --no-startup-id atom
-
-#file manager
-#exec --no-startup-id thunar
-
-#Mail clients
-#exec --no-startup-id evolution
-
-#Music
-#exec --no-startup-id spotify
-for_window [class="Spotify"] focus
+exec --no-startup-id firefox
+for_window [class="Firefox"]
 
 #Terminal
-exec --no-startup-id termite;focus
+exec --no-startup-id termite
+for_window [class="Termite"] focus
 
 
 
