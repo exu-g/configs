@@ -343,13 +343,13 @@ exec /home/marc/pcloud
 #exec --no-startup-id blueberry-tray
 
 # network
-exec --no-startup-id nm-applet
+#exec --no-startup-id nm-applet
 
 # num lock activated
 exec_always --no-startup-id numlockx on
 
 # volume
-exec --no-startup-id volumeicon
+#exec --no-startup-id volumeicon
 
 #variety
 exec --no-startup-id variety
@@ -358,7 +358,7 @@ exec --no-startup-id variety
 #exec --no-startup-id conky -c ~/.config/i3/system-overview
 
 #Polybar
-#exec_always --no-startup-id ~/.config/polybar/launch.sh &
+exec_always --no-startup-id ~/.config/polybar/launch.sh &
 
 
 #####################################################################################################################
@@ -503,8 +503,6 @@ bindsym mod1+Left exec --no-startup-id variety -p
 bindsym mod1+Shift+n exec --no-startup-id variety -n && wal -i $(cat $HOME/.config/variety/wallpaper/wallpaper.jpg.txt)&
 # previous wallpaper
 bindsym mod1+Shift+p exec --no-startup-id variety -p && wal -i $(cat $HOME/.config/variety/wallpaper/wallpaper.jpg.txt)&
-# trash wallpaper
-bindsym mod1+Shift+t exec --no-startup-id variety -t && wal -i $(cat $HOME/.config/variety/wallpaper/wallpaper.jpg.txt)&
 # Update Wallpaper
 bindsym mod1+Shift+u exec --no-startup-id wal -i $(cat $HOME/.config/variety/wallpaper/wallpaper.jpg.txt)
 
@@ -619,19 +617,19 @@ exec_always --no-startup-id compton --config ~/.config/i3/compton.conf
 #####################################################################################################################
 
 
-bar {
-
-    height 25
-    workspace_buttons yes
-    font pango:Noto Sans 14
-
-    #position top
-    position bottom
-
-    #system icons
-    #tray_output none
-    #tray_output $firstMonitor
-    #tray_output $secondMonitor
+#bar {
+#
+#    height 25
+#    workspace_buttons yes
+#    font pango:Noto Sans 14
+#
+#    #position top
+#    position bottom
+#
+#    #system icons
+#    #tray_output none
+#    #tray_output $firstMonitor
+#    #tray_output $secondMonitor
 
 
 # OPTION 1 : i3status
@@ -651,7 +649,7 @@ bar {
     # put hastag in front if not installed
 
 	#status_command i3blocks
-	status_command i3blocks -c ~/.config/i3/i3blocks.conf
+	#status_command i3blocks -c ~/.config/i3/i3blocks.conf
 	#status_command i3blocks -c ~/.config/i3/i3blocks-rainbow.conf
 	#status_command i3blocks -c ~/.config/i3/i3blocks-original.conf
 	#status_command i3blocks -c ~/.config/i3/i3blocks-awesome.conf
@@ -674,29 +672,29 @@ bar {
 	# in order for the system trayicons to show up in polybar
 
 
-colors {
-        background #2F2F2F
-        statusline #eeeeee
-        separator  #666666
-        #                     border  backgr. text
-        focused_workspace     #a9a9a9 #5f676a #eeeeee
-        active_workspace      #a9a9a9 #5f676a #a9a9a9
-        inactive_workspace    #a9a9a9 #222222 #a9a9a9
-        urgent_workspace      #a9a9a9 #d42121 #FFFFFF
-        }
-
-    }
+#colors {
+#        background #2F2F2F
+#        statusline #eeeeee
+#        separator  #666666
+#        #                     border  backgr. text
+#        focused_workspace     #a9a9a9 #5f676a #eeeeee
+#        active_workspace      #a9a9a9 #5f676a #a9a9a9
+#        inactive_workspace    #a9a9a9 #222222 #a9a9a9
+#        urgent_workspace      #a9a9a9 #d42121 #FFFFFF
+#        }
+#
+#    }
 
 
 # DarkGrey background with white text - not focus grey background - black text
 # Windows decoration colors
 # class                 border  backgr. text    indicator
-client.placeholder      #242424 #242424 #242424
-client.background       #242424 #242424 #242424
-client.focused          #4A4A4A #4A4A4A #e5e5e5 #4A4A4A
-client.unfocused        #222222 #222222 #aaaaaa #222222
-client.focused_inactive #222222 #222222 #a9a9a9 #222222
-client.urgent           #d42121 #d42121 #f7f7f7 #d42121
+#client.placeholder      #242424 #242424 #242424
+#client.background       #242424 #242424 #242424
+#client.focused          #4A4A4A #4A4A4A #e5e5e5 #4A4A4A
+#client.unfocused        #222222 #222222 #aaaaaa #222222
+#client.focused_inactive #222222 #222222 #a9a9a9 #222222
+#client.urgent           #d42121 #d42121 #f7f7f7 #d42121
 
 
 #################################################################
