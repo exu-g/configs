@@ -122,7 +122,7 @@ font-3 = "Noto Sans Mono:size=10;0"
 
 modules-left = i3 xwindow
 modules-center = cpu1 memory2 kernel 
-modules-right = battery backlight date volume wired-network wireless-network
+modules-right = battery backlight date volume wired-network wireless-network discord variety
 
 separator = |
 
