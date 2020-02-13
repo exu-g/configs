@@ -332,6 +332,25 @@ mode "resize" {
 
 
 
+#####################################################################################################################
+#################                          gaming                                                   #################
+#####################################################################################################################
+
+# launch gaming focused programs
+
+bindsym $mod+g mode "gaming"
+
+mode "gaming" {
+	bindsym s exec --no-startup-id steam-native;focus
+	bindsym l exec --no-startup-id lutris;focus
+
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+
+
+
+
 
 #####################################################################################################################
 #################                          choose the font                                          #################
