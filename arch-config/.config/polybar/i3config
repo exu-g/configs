@@ -1106,7 +1106,7 @@ label-volume = " "
 label-volume-foreground = #40ad4b
 label-muted = muted
 
-bar-volume-width = 15
+bar-volume-width = 20
 bar-volume-foreground-0 = #40ad4b
 bar-volume-foreground-1 = #40ad4b
 bar-volume-foreground-2 = #40ad4b
