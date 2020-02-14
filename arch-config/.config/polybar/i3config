@@ -122,7 +122,7 @@ font-3 = "Noto Sans Mono:size=10;0"
 
 modules-left = i3 xwindow
 modules-center = cpu1 memory2
-modules-right = battery backlight date volume wired-network wireless-network
+modules-right = battery date volume wired-network wireless-network
 
 separator = |
 
@@ -1129,6 +1129,7 @@ tail = true
 [module/wired-network]
 ;https://github.com/jaagr/polybar/wiki/Module:-network
 type = internal/network
+;type "ip link show" to see network interfaces
 ;interface = enp4s0
 ;interface = enp14s0
 interface = enp5s0
@@ -1164,7 +1165,8 @@ label-disconnected-foreground = ${colors.foreground}
 [module/wireless-network]
 ;https://github.com/jaagr/polybar/wiki/Module:-network
 type = internal/network
-interface = wlp3s0
+;type "ip link show" to see network interfaces
+interface = wlp2s0
 interval = 3.0
 label-connected = %essid%
 
