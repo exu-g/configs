@@ -251,8 +251,9 @@ format = <label-state> <label-mode>
 
 label-mode = %mode%
 label-mode-padding = 2
-label-mode-foreground = #000000
-label-mode-background = #FFBB00
+label-mode-foreground = #FFFFFF
+;label-mode-background = #FFBB00
+label-mode-background = #570000
 
 ; Available tokens:
 ;   %name%
