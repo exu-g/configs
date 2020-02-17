@@ -1184,10 +1184,10 @@ label-disconnected = %local_ip% disconnected
 format-connected-foreground = ${colors.foreground}
 format-connected-background = ${colors.background}
 ;format-connected-underline = #55aa55
-format-connected-underline = #9545a0
+format-connected-underline = #571e70
 format-connected-prefix = " "
 ;format-connected-prefix-foreground = #55aa55
-format-connected-prefix-foreground = #9545a0
+format-connected-prefix-foreground = #571e70
 format-connected-prefix-background = ${colors.background}
 
 format-disconnected = <label-disconnected>
