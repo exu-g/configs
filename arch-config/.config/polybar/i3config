@@ -122,9 +122,9 @@ font-3 = "Noto Sans Mono:size=10;0"
 
 modules-left = i3 xwindow
 modules-center = cpu1 memory2 battery2
-modules-right = battery date volume wired-network wireless-network
+modules-right = battery date volume wired-network wireless-network backlight
 
-separator = |
+;separator = |
 
 ;dim-value = 1.0
 
@@ -362,7 +362,7 @@ card = intel_backlight
 ;   <label> (default)
 ;   <ramp>
 ;   <bar>
-format = <label>
+format = <bar>  <label>
 format-foreground = ${colors.foreground}
 format-background = ${colors.background}
 
@@ -380,8 +380,11 @@ ramp-4 = 🌑
 ; Only applies if <bar> is used
 bar-width = 10
 bar-indicator = |
+bar-indicator-foreground = #fffaa0
 bar-fill = ─
+bar-fill-foreground = #fff76d
 bar-empty = ─
+bar-empty-foreground = #7f7b36
 
 
 ################################################################################
