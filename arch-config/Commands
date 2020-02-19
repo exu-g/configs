@@ -1,0 +1,5 @@
+#Normalize audio
+ffmpeg-normalize *.<format> -v -pr -c:a <audio codec> -ext <extension>
+Examples:
+ffmpeg-normalize *.opus -v -pr -c:a libvorbis -ext  ogg
+ffmpeg-normalize *.mp3 -v -pr -c:a flac -ext flac
