@@ -1,3 +1,3 @@
-# arcolinux-setup
+# Arcolinux Setup
 
 Installation and setup for arcolinux
