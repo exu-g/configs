@@ -12,3 +12,5 @@ chmod +x ~/.config/scripts/startup.sh
 chmod +x ~/.config/scripts/download-arcolinux-config.sh
 
 rm -r -f ~/arcolinux-config
+
+i3 restart
