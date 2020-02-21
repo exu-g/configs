@@ -297,11 +297,11 @@ bindsym $mod+g mode "$gaming"
 
 set $gaming Steam (s), Lutris (l)
 mode "$gaming" {
-	bindsym s exec --no-startup-id steam-native;focus
-	bindsym l exec --no-startup-id lutris;focus
+    bindsym s exec --no-startup-id steam-native;focus
+    bindsym l exec --no-startup-id lutris;focus
 
-	bindsym Return mode "default"
-	bindsym Escape mode "default"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
 }
 
 
@@ -359,6 +359,9 @@ exec --no-startup-id variety
 
 #Polybar
 exec_always --no-startup-id ~/.config/polybar/launch.sh &
+
+#startup functions
+exec_always --no-startup-id ~/.config/scritps/startup.sh
 
 
 #####################################################################################################################
@@ -534,8 +537,8 @@ bindsym XF86AudioStop exec --no-startup-id playerctl stop
 #####################################################################################################################
 
 
-bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10 # increase screen brightness
-bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10 # decrease screen brightness
+bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 5 # increase screen brightness
+bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 5 # decrease screen brightness
 
 
 #####################################################################################################################
@@ -642,8 +645,8 @@ exec_always --no-startup-id picom -b --config ~/.config/i3/picom.conf
     # you will get the standard i3status bar
     # Second one is the standard statusbar with my personal settings
 
-	#status_command i3status
-	#status_command i3status -c ~/.config/i3/i3status.conf
+    #status_command i3status
+    #status_command i3status -c ~/.config/i3/i3status.conf
 
 
 # OPTION 2 : i3blocks
@@ -652,11 +655,11 @@ exec_always --no-startup-id picom -b --config ~/.config/i3/picom.conf
     # another way to provide text in the statusbar
     # put hastag in front if not installed
 
-	#status_command i3blocks
-	#status_command i3blocks -c ~/.config/i3/i3blocks.conf
-	#status_command i3blocks -c ~/.config/i3/i3blocks-rainbow.conf
-	#status_command i3blocks -c ~/.config/i3/i3blocks-original.conf
-	#status_command i3blocks -c ~/.config/i3/i3blocks-awesome.conf
+    #status_command i3blocks
+    #status_command i3blocks -c ~/.config/i3/i3blocks.conf
+    #status_command i3blocks -c ~/.config/i3/i3blocks-rainbow.conf
+    #status_command i3blocks -c ~/.config/i3/i3blocks-original.conf
+    #status_command i3blocks -c ~/.config/i3/i3blocks-awesome.conf
 
 
 # OPTION 3 : conky
@@ -666,14 +669,14 @@ exec_always --no-startup-id picom -b --config ~/.config/i3/picom.conf
     # documentation : https://i3wm.org/docs/user-contributed/conky-i3bar.html
     # conky configuration is in conky-i3statusbar
 
-	#status_command ~/.config/i3/start-conky-i3statusbar.sh
+    #status_command ~/.config/i3/start-conky-i3statusbar.sh
 
 
 # OPTION 4 : polybar
 
-	# polybar is launched elsewhere - search for the word
-	# from the opening of the "bar {...}" till the end has to go or hashtagged out
-	# in order for the system trayicons to show up in polybar
+    # polybar is launched elsewhere - search for the word
+    # from the opening of the "bar {...}" till the end has to go or hashtagged out
+    # in order for the system trayicons to show up in polybar
 
 
 #colors {
