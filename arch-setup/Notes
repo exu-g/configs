@@ -6,7 +6,8 @@ copy/move ~/arcolinux-config/.config to ~/.config
 cd .config/scripts
 chmod +x startup.sh
 ./startup.sh
-cd .. ..
+cd ..
+cd ..
 
 download pCloud: link https://www.pcloud.com/how-to-install-pcloud-drive-linux.html?download=electron-64
 copy/move ~/Downloads/pcloud to ~/
