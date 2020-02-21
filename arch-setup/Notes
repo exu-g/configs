@@ -16,3 +16,5 @@ copy/move wireguard mullvad config
 Choose desktop wallpapers
 uncheck all unneeded wallpapers in "variety"
 choose settings (changing wallpaper) as needed
+
+cp is the command for copy usage: cp <source> <destination>
