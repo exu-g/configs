@@ -4,8 +4,8 @@ rm -r -f ~/arcolinux-config
 
 git clone https://gitlab.com/RealStickman/arcolinux-config.git &&
 
-cp -r ~/arcolinux-config/.config/ ~/.config/ &&
-cp ~/arcolinux-config/.bashrc ~/
+cp -r ~/arcolinux-config/.config/ ~/ &&
+cp ~/arcolinux-config/.bashrc ~/ &&
 
 chmod +x ~/.config/polybar/launch.sh
 chmod +x ~/.config/scripts/startup.sh
