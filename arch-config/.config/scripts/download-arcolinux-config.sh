@@ -1,5 +1,7 @@
 #!/bin/bash
 
+rm -r -f /home/marc/arcolinux-config
+
 git clone https://gitlab.com/RealStickman/arcolinux-config.git &&
 
 cp -r /home/marc/arcolinux-config/.config/ /home/marc/.config/ &&
