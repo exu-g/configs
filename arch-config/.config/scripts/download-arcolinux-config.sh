@@ -16,7 +16,6 @@ rm -rf ~/arcolinux-config
 i3 restart
 
 echo Finished updating everything!
+echo Launching new shell!
 
 exec bash
-
-echo New shell!
