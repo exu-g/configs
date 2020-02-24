@@ -382,8 +382,8 @@ exec --no-startup-id /usr/lib/xfce4/notifyd/xfce4-notifyd &
 
 
 #terminal
-#bindsym ctrl+mod1+Return exec --no-startup-id termite;focus
-bindsym ctrl+mod1+Return exec --no-startup-id fish;focus
+bindsym ctrl+mod1+Return exec --no-startup-id termite;focus 
+#bindsym ctrl+mod1+Return exec --no-startup-id fish;focus
 
 #keepass
 bindsym ctrl+mod1+k exec --no-startup-id keepass;focus
