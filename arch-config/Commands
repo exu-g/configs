@@ -6,3 +6,6 @@ ffmpeg-normalize *.mp3 -v -pr -c:a flac -ext flac
 
 #extract images from video
 ffmpeg -i file.mpg -r 1/1 $filename%03d.jpg
+
+#found in .bashrc
+yta-best="youtube-dl --extract-audio --audio-format best "
