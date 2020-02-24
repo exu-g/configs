@@ -37,8 +37,10 @@ alias l.="ls -A | egrep '^\.'"
 #fix obvious typo's
 alias cd..='cd ..'
 alias pdw="pwd"
-alias udpate='sudo pacman -Syyu'
-alias upate='sudo pacman -Syyu'
+#alias udpate='sudo pacman -Syyu'
+alias udpate='trizen -Syyu --noconfirm'
+#alias upate='sudo pacman -Syyu'
+alias upate='trizen -Syyu --noconfirm'
 
 ## Colorize the grep command output for ease of use (good for log files)##
 alias grep='grep --color=auto'
@@ -69,13 +71,14 @@ alias merge="xrdb -merge ~/.Xresources"
 # Aliases for software managment
 # pacman or pm
 alias pacman='sudo pacman --color auto'
-alias update='sudo pacman -Syyu'
+#alias update='sudo pacman -Syyu'
+alias update='trizen -Syyu --noconfirm'
 
 # yay as aur helper - updates everything
 #alias pksyua="yay -Syu --noconfirm"
 #alias upall="yay -Syu --noconfirm"
 
-#trizen
+#trizen updates everything
 alias upall="trizen -Syyu --noconfirm"
 
 #ps
