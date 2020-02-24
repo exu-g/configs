@@ -197,5 +197,5 @@ ex ()
 
 [[ -f ~/.bashrc-personal ]] && . ~/.bashrc-personal
 
-neofetch
+#neofetch
 fish
