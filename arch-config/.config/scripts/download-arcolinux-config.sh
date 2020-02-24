@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rm -r -f ~/arcolinux-config
+rm -rf ~/arcolinux-config
 
 git clone https://gitlab.com/RealStickman/arcolinux-config.git &&
 
@@ -11,6 +11,8 @@ chmod +x ~/.config/polybar/launch.sh
 chmod +x ~/.config/scripts/startup.sh
 chmod +x ~/.config/scripts/download-arcolinux-config.sh
 
-rm -r -f ~/arcolinux-config
+rm -rf ~/arcolinux-config
 
 i3 restart
+
+echo Finished updating everything!
