@@ -4,3 +4,8 @@ trizen -S libreoffice-fresh-de keepass steam steam-native-runtime lutris wiregua
 
 sudo pip3 install ffmpeg-normalize
 sudo python3 -m pip install mutagen
+
+#trizen -S ttf-dejavu ttf-liberation noto-fonts
+#  sudo ln -s /etc/fonts/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.d
+#  sudo ln -s /etc/fonts/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d
+#  sudo ln -s /etc/fonts/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d
