@@ -10,6 +10,7 @@ sudo python3 -m pip install mutagen
 #  sudo ln -s /etc/fonts/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d
 #  sudo ln -s /etc/fonts/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d
 
+#execute this in the home folder!!
 git clone https://gitlab.com/RealStickman/arcolinux-config
 cp ~/arcolinux-config/.bashrc ~/
 chmod +x ~/arcolinux-config/.config/scripts/download-arcolinux-config.sh
