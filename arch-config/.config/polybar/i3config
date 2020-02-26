@@ -122,7 +122,7 @@ font-3 = "Noto Sans Mono:size=10;0"
 
 modules-left = i3 xwindow
 modules-center = cpu1 memory2
-modules-right = battery date volume wired-network wireless-network backlight
+modules-right = battery date volume wired-network wired-network2 wireless-network backlight
 
 ;separator = |
 
@@ -1170,6 +1170,46 @@ type = internal/network
 ;interface = enp4s0
 ;interface = enp14s0
 interface = enp5s0
+;interface = enp3s0
+interval = 3.0
+
+; Available tokens:
+;   %ifname%    [wireless+wired]
+;   %local_ip%  [wireless+wired]
+;   %essid%     [wireless]
+;   %signal%    [wireless]
+;   %upspeed%   [wireless+wired]
+;   %downspeed% [wireless+wired]
+;   %linkspeed% [wired]
+; Default: %ifname% %local_ip%
+label-connected = %local_ip%
+label-disconnected = %local_ip% disconnected
+
+format-connected-foreground = ${colors.foreground}
+format-connected-background = ${colors.background}
+;format-connected-underline = #55aa55
+format-connected-underline = #571e70
+format-connected-prefix = " "
+;format-connected-prefix-foreground = #55aa55
+format-connected-prefix-foreground = #571e70
+format-connected-prefix-background = ${colors.background}
+
+format-disconnected = <label-disconnected>
+format-disconnected-underline = ${colors.alert}
+label-disconnected-foreground = ${colors.foreground}
+
+
+#################################################################################
+
+
+[module/wired-network2]
+;https://github.com/jaagr/polybar/wiki/Module:-network
+type = internal/network
+;type "ip link show" to see network interfaces
+;interface = enp4s0
+;interface = enp14s0
+;interface = enp5s0
+interface = enp3s0
 interval = 3.0
 
 ; Available tokens:
