@@ -140,6 +140,9 @@ alias nmirrorlist="sudo nano /etc/pacman.d/mirrorlist"
 alias ssn="sudo shutdown now"
 alias sr="sudo reboot"
 
+#cpu-x as sudo
+alias cpu-x="sudo cpu-x"
+
 # # ex = EXtractor for all kinds of archives
 # # usage: ex <file>
 #ex ()
