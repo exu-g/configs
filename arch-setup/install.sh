@@ -22,8 +22,7 @@ cp ~/Downloads/pcloud ~/
 chmod +x ~/pcloud
 ~/pcloud
 
-#Changes to home folder automatically now.
-#~~execute this in the home folder!!~~
+#Changes to home folder automatically now, no need to be extra careful anymore.
 git clone https://gitlab.com/RealStickman/arcolinux-config
 cp ~/arcolinux-config/.bashrc ~/
 chmod +x ~/arcolinux-config/.config/scripts/download-arcolinux-config.sh
