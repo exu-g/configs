@@ -13,6 +13,8 @@ chmod +x ~/.config/polybar/launch.sh
 chmod +x ~/.config/scripts/startup.sh
 chmod +x ~/.config/scripts/download-arcolinux-config.sh
 
+cp ~/arcolinux-config/Commands ~/Dokumente
+
 rm -rf ~/arcolinux-config
 
 i3 restart
