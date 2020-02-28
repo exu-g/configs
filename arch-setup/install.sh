@@ -1,5 +1,7 @@
 #!/bin/bash
+
 cd $HOME
+
 trizen -S libreoffice-fresh-de keepass steam steam-native-runtime lutris wireguard-arch wireguard-tools gnome-boxes ttf-ms-fonts ttf-tahoma ttf-vista-fonts discord bettergram cpu-x polybar youtube-dl debtap obs-studio audacity python-pip tk pyglet picard hunspell hunspell-de hyphen hyphen-de fish psensor stress transmission-gtk
 
 #install if nvidia drivers are used
