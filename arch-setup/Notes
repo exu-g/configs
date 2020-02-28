@@ -1,18 +1,18 @@
-copy/move ~/arcolinux-config/.config to ~/.config
-(delete ~/arcolinux-config)
+#copy/move ~/arcolinux-config/.config to ~/.config
+#(delete ~/arcolinux-config)
 #cd .config/autostart
 #make executable "disable mouse acc"
 #run "disable mouse acc"
-cd .config/scripts
-chmod +x startup.sh
-./startup.sh
-cd ..
-cd ..
+#cd .config/scripts
+#chmod +x startup.sh
+#./startup.sh
+#cd ..
+#cd ..
 
-download pCloud: link https://www.pcloud.com/how-to-install-pcloud-drive-linux.html?download=electron-64
-copy/move ~/Downloads/pcloud to ~/
-make executable ~/pcloud
-run ~/pcloud
+#download pCloud: link https://www.pcloud.com/how-to-install-pcloud-drive-linux.html?download=electron-64
+#copy/move ~/Downloads/pcloud to ~/
+#make executable ~/pcloud
+#run ~/pcloud
 
 download wireguard config and unzip
 copy/move wireguard mullvad config
