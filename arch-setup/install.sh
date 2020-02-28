@@ -1,5 +1,6 @@
 #!/bin/bash
 
+#change to home (does not show in terminal)
 cd $HOME
 
 trizen -S libreoffice-fresh-de keepass steam steam-native-runtime lutris wireguard-arch wireguard-tools gnome-boxes ttf-ms-fonts ttf-tahoma ttf-vista-fonts discord bettergram cpu-x polybar youtube-dl debtap obs-studio audacity python-pip tk pyglet picard hunspell hunspell-de hyphen hyphen-de fish psensor stress transmission-gtk
@@ -21,7 +22,8 @@ cp ~/Downloads/pcloud ~/
 chmod +x ~/pcloud
 ~/pcloud
 
-#execute this in the home folder!!
+#Changes to home folder automatically now.
+#~~execute this in the home folder!!~~
 git clone https://gitlab.com/RealStickman/arcolinux-config
 cp ~/arcolinux-config/.bashrc ~/
 chmod +x ~/arcolinux-config/.config/scripts/download-arcolinux-config.sh
