@@ -1,5 +1,6 @@
 #!/bin/bash
 
+#change to home (does not show in terminal)
 cd $HOME
 
 rm -rf ~/arcolinux-config
