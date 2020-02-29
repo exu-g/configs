@@ -53,7 +53,7 @@ alias update='trizen -Syyu --noconfirm'
 #alias upall="yay -Syu --noconfirm"
 
 #trizen updates everything
-alias upall="trizen -Syyu --noconfirm" && upconf
+alias upall="trizen -Syyu --noconfirm" && "/home/marc/.config/scripts/download-arcolinux-config.sh"
 
 #ps
 alias ps="ps auxf"
