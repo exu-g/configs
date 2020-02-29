@@ -169,11 +169,6 @@ alias sr="sudo reboot"
 #cpu-x as sudo
 alias cpu-x="sudo cpu-x"
 
-#wireguard
-alias wg?="sudo wg show"
-alias wgqu="sudo wg-quick up"
-alias wgqd="sudo wg-quick down"
-
 # # ex = EXtractor for all kinds of archives
 # # usage: ex <file>
 ex ()
