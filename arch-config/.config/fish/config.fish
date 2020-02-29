@@ -144,7 +144,7 @@ alias sr="sudo reboot"
 alias cpu-x="sudo cpu-x"
 
 #wireguard
-alias wg?="sudo wg show"
+alias wgs="sudo wg show"
 alias wgqu="sudo wg-quick up"
 alias wgqd="sudo wg-quick down"
 
