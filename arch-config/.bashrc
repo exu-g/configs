@@ -24,7 +24,7 @@ if [ -d "$HOME/.local/bin" ] ;
 	then PATH="$HOME/.local/bin:$PATH"
 fi
 
-#update config
+# config
 alias upconf='/home/marc/.config/scripts/download-arcolinux-config.sh'
 
 #list
