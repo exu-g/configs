@@ -25,7 +25,7 @@ if [ -d "$HOME/.local/bin" ] ;
 fi
 
 # config
-alias upconf='/home/marc/.config/scripts/download-arcolinux-config.sh'
+#alias upconf='/home/marc/.config/scripts/download-arcolinux-config.sh'
 
 #list
 alias ls='ls --color=auto'
