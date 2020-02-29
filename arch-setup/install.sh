@@ -3,7 +3,10 @@
 #change to home (does not show in terminal)
 cd $HOME
 
-trizen -S libreoffice-fresh-de keepass steam steam-native-runtime lutris wireguard-arch wireguard-tools gnome-boxes ttf-ms-fonts ttf-tahoma ttf-vista-fonts discord bettergram cpu-x polybar youtube-dl debtap obs-studio audacity python-pip tk pyglet picard hunspell hunspell-de hyphen hyphen-de fish psensor stress transmission-gtk
+trizen -S libreoffice-fresh-de keepass steam steam-native-runtime lutris wireguard-arch wireguard-tools gnome-boxes ttf-ms-fonts ttf-tahoma ttf-vista-fonts discord bettergram cpu-x polybar youtube-dl debtap obs-studio audacity python-pip tk pyglet picard hunspell hunspell-de hyphen hyphen-de fish psensor stress transmission-gtk gimp krita blender
+
+#update stuff
+trizen -Syyu
 
 #install if nvidia drivers are used
 #sudo pacman -S nvidia nvidia-utils lib32-nvidia-utils nvidia-settings vulkan-icd-loader lib32-vulkan-icd-loader
@@ -26,4 +29,9 @@ chmod +x ~/pcloud
 git clone https://gitlab.com/RealStickman/arcolinux-config
 cp ~/arcolinux-config/.bashrc ~/
 chmod +x ~/arcolinux-config/.config/scripts/download-arcolinux-config.sh
+
+#cleanup
+rm -rf ~/arcolinux-setup
+
+#downloading config
 ~/arcolinux-config/.config/scripts/download-arcolinux-config.sh
