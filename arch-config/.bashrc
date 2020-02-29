@@ -166,6 +166,9 @@ alias nmirrorlist="sudo nano /etc/pacman.d/mirrorlist"
 alias ssn="sudo shutdown now"
 alias sr="sudo reboot"
 
+#cpu-x as sudo
+alias cpu-x="sudo cpu-x"
+
 #wireguard
 alias wg?="sudo wg show"
 alias wgqu="sudo wg-quick up"
