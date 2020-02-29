@@ -53,7 +53,7 @@ alias update='trizen -Syyu --noconfirm'
 #alias upall="yay -Syu --noconfirm"
 
 #trizen updates everything
-alias upall="trizen -Syyu --noconfirm"
+alias upall="trizen -Syyu --noconfirm" && upconf
 
 #ps
 alias ps="ps auxf"
