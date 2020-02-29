@@ -166,6 +166,11 @@ alias nmirrorlist="sudo nano /etc/pacman.d/mirrorlist"
 alias ssn="sudo shutdown now"
 alias sr="sudo reboot"
 
+#wireguard
+alias wg?="sudo wg show"
+alias wgqu="sudo wg-quick up"
+alias wgqd="sudo wg-quick down"
+
 # # ex = EXtractor for all kinds of archives
 # # usage: ex <file>
 ex ()
