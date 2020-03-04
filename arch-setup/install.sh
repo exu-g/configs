@@ -38,15 +38,15 @@ echo Installed python modules
 #echo Finished downloading pcloud
 
 #Changes to home folder automatically now, no need to be extra careful anymore.
-git clone https://gitlab.com/RealStickman/arcolinux-config
-cp ~/arcolinux-config/.bashrc ~/
-chmod +x ~/arcolinux-config/.config/scripts/download-arcolinux-config.sh
-echo Finished downloading config
+#git clone https://gitlab.com/RealStickman/arcolinux-config
+#cp ~/arcolinux-config/.bashrc ~/
+#chmod +x ~/arcolinux-config/.config/scripts/download-arcolinux-config.sh
+#echo Finished downloading config
 
 #cleanup
 rm -rf ~/arcolinux-setup
 echo Removed old setup files
 
 #downloading config
-echo Setting up config
-~/arcolinux-config/.config/scripts/download-arcolinux-config.sh
+#echo Setting up config
+#~/arcolinux-config/.config/scripts/download-arcolinux-config.sh
