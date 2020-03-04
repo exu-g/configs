@@ -14,6 +14,8 @@
 #make executable ~/pcloud
 #run ~/pcloud
 
+install trizen
+
 download wireguard config and unzip
 copy/move wireguard mullvad config
 
