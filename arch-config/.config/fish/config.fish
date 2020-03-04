@@ -1,5 +1,5 @@
 #update config
-alias upconf='/home/marc/.config/scripts/download-arcolinux-config.sh'
+alias upconf='~/.config/scripts/download-arcolinux-config.sh'
 
 #list
 alias ls='ls --color=auto'
@@ -53,7 +53,7 @@ alias update='trizen -Syyu --noconfirm'
 #alias upall="yay -Syu --noconfirm"
 
 #trizen updates everything
-alias upall="trizen -Syyu --noconfirm && /home/marc/.config/scripts/download-arcolinux-config.sh"
+alias upall="trizen -Syyu --noconfirm && ~/.config/scripts/download-arcolinux-config.sh"
 
 #ps
 alias ps="ps auxf"
