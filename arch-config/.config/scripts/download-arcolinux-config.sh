@@ -19,6 +19,7 @@ cp ~/arcolinux-config/Commands ~/Dokumente
 chmod +x ~/.config/polybar/launch.sh
 chmod +x ~/.config/scripts/startup.sh
 chmod +x ~/.config/scripts/download-arcolinux-config.sh
+chmod +x ~/.config/i3/scripts/i3exit.sh
 
 #remove downloaded folder
 rm -rf ~/arcolinux-config
