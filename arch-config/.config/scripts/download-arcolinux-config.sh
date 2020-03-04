@@ -7,7 +7,7 @@ cd $HOME
 rm -rf ~/arcolinux-config
 
 #clone this repo
-git clone https://gitlab.com/RealStickman/arcolinux-config.git &&
+git clone https://gitlab.com/RealStickman-arcolinux/arcolinux-config.git &&
 
 #copy stuff
 cp -r ~/arcolinux-config/.config/ ~/ &&
