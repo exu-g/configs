@@ -1,5 +1,5 @@
 #update config
-alias upconf='~/.config/scripts/download-arcolinux-config.sh'
+alias upconf='~/scripts/arcolinux-config.sh'
 
 #list
 alias ls='ls --color=auto'
