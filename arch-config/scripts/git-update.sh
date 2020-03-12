@@ -3,4 +3,4 @@
 cd $HOME
 
 #download MangoHud
-bash ~/scripts/mangohud
+bash ~/scripts/mangohud.sh
