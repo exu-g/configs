@@ -2,7 +2,7 @@
 alias upconf='~/scripts/arcolinux-config.sh'
 
 #update git programs
-alias upgit='~/scripts/git-update.sh'
+alias upgit='bash ~/scripts/git-update.sh'
 
 #list
 alias ls='ls --color=auto'
