@@ -57,7 +57,7 @@ alias update='trizen -Syyu --noconfirm'
 
 #trizen updates everything
 #alias upall="trizen -Syyu --noconfirm && ~/.config/scripts/download-arcolinux-config.sh"
-alias upall="trizen -Syyu --noconfirm && ~/scripts/git-update.sh && ~/scripts/arcolinux-config.sh"
+alias upall="trizen -Syyu --noconfirm && bash ~/scripts/git-update.sh && bash ~/scripts/arcolinux-config.sh"
 
 #ps
 alias ps="ps auxf"
