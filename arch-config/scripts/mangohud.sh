@@ -1,4 +1,5 @@
 #!/bin/bash
 
 git clone --recurse-submodules https://github.com/flightlessmango/MangoHud.git
-./MangoHud/build.sh package
+cd ~/MangoHud
+bash build.sh package & bash build.sh install
