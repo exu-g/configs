@@ -3,6 +3,9 @@
 #change to home (does not show in terminal)
 cd $HOME
 
+#uninstall
+pacman -Rns evolution catfish geany vim
+
 #update stuff
 trizen -Syyu
 echo Updated packages
