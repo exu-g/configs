@@ -1,9 +1,6 @@
 #update config
 alias upconf='~/scripts/arcolinux-config.sh'
 
-#update git programs
-alias upgit='bash ~/scripts/git-update.sh'
-
 #list
 alias ls='ls --color=auto'
 alias la='ls -a'
@@ -57,7 +54,7 @@ alias update='trizen -Syyu --noconfirm'
 
 #trizen updates everything
 #alias upall="trizen -Syyu --noconfirm && ~/.config/scripts/download-arcolinux-config.sh"
-alias upall="trizen -Syyu --noconfirm && bash ~/scripts/git-update.sh && bash ~/scripts/arcolinux-config.sh"
+alias upall="trizen -Syyu --noconfirm && bash ~/scripts/arcolinux-config.sh"
 
 #ps
 alias ps="ps auxf"
