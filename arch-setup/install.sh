@@ -12,7 +12,7 @@ echo Updated packages
 
 echo Installing missing programs
 trizen -S --needed libreoffice-fresh-de steam steam-native-runtime i3-gaps lutris wireguard-arch wireguard-tools gnome-boxes ttf-ms-fonts ttf-tahoma ttf-vista-fonts discord bettergram cpu-x polybar youtube-dl debtap obs-studio audacity python-pip tk picard hunspell hunspell-de hyphen hyphen-de fish psensor stress transmission-gtk gimp krita blender 
-trizen -S --needed xfce4 termite neofetch arandr firefox variety wget sublime-text-dev picom handbrake nutty bitwarden
+trizen -S --needed xfce4 termite neofetch arandr firefox variety wget sublime-text-dev picom handbrake nutty bitwarden woeusb
 #trizen -S --needed plex-media-server keepass
 
 #install wine
