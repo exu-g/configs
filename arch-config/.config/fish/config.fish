@@ -46,7 +46,8 @@ alias merge="xrdb -merge ~/.Xresources"
 # pacman or pm
 alias pacman='sudo pacman --color auto'
 #alias update='sudo pacman -Syyu'
-alias update='trizen -Syyu --noconfirm'
+#alias update='trizen -Syyu --noconfirm'
+alias update='yay -Syu'
 
 # yay as aur helper - updates everything
 #alias pksyua="yay -Syu --noconfirm"
