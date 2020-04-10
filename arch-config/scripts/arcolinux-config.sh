@@ -22,7 +22,7 @@ sudo cp -r ~/arcolinux-config/etc /
 #make bash scripts executable
 chmod +x ~/.config/polybar/launch.sh
 chmod +x ~/.config/scripts/startup.sh
-chmod +x ~/.config/scripts/download-arcolinux-config.sh
+chmod +x ~/.config/scripts/arcolinux-config.sh
 chmod +x ~/.config/i3/scripts/i3exit.sh
 chmod +x ~/scripts/arcolinux-config.sh
 
