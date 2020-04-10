@@ -17,7 +17,7 @@ cp ~/arcolinux-config/Commands ~/Dokumente
 #copy scripts
 cp -r ~/arcolinux-config/scripts/ ~/
 #copy stuff to /etc
-cp -r ~/arcolinux-config/etc /
+sudo cp -r ~/arcolinux-config/etc /
 
 #make bash scripts executable
 chmod +x ~/.config/polybar/launch.sh
