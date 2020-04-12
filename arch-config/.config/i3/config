@@ -330,7 +330,7 @@ mode "$xrandr" {
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 # choose your font
-font pango:Noto Mono Regular 13
+font pango:Noto Mono Regular 10
 
 
 #####################################################################################################################
