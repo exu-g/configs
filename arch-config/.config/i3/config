@@ -450,6 +450,9 @@ bindsym ctrl+mod1+b exec --no-startup-id bettergram;focus
 #pragha
 bindsym ctrl+mod1+n exec --no-startup-id pragha;focus
 
+#thunderbird
+bindsym ctrl+mod1+y exec --no-startup-id thunderbird;focus
+
 
 #####################################################################################################################
 #################                          screenshots                                              #################
@@ -622,8 +625,8 @@ popup_during_fullscreen smart
 
 
 for_window [class="^.*"] border none
-gaps inner 10
-gaps outer 0
+gaps inner 5
+gaps outer 5
 
 
 #####################################################################################################################
