@@ -21,6 +21,11 @@ cp -r ~/arcolinux-config/scripts/ ~/
 #copy stuff to /etc
 sudo cp -r ~/arcolinux-config/etc /
 
+#gimp plugins
+cp -r ~/arcolinux-config/gimp-plugins ~/.config/GIMP/2.10/plug-ins/
+unzip export_layers-3.3.1.zip
+#rm export_layers-3.3.1.zip
+
 #make bash scripts executable
 chmod +x ~/.config/polybar/launch.sh
 chmod +x ~/.config/scripts/startup.sh
