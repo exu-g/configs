@@ -22,7 +22,8 @@ cp -r ~/arcolinux-config/scripts/ ~/
 sudo cp -r ~/arcolinux-config/etc /
 
 #gimp plugins
-cp -r ~/arcolinux-config/gimp-plugins/* ~/.config/GIMP/2.10/plug-ins/ &&
+cp -r ~/arcolinux-config/gimp-plugins/* ~/.config/GIMP/2.10/plug-ins/ 
+sleep 10
 #unzip gimp plugins
 unzip export_layers-3.3.1.zip
 #rm export_layers-3.3.1.zip
