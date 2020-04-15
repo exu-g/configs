@@ -353,8 +353,7 @@ exec --no-startup-id termite;focus
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
 # pCloud
-# change location!
-exec /home/marc/pcloud
+exec --no-startup-id pcloud
 
 # nextcloud
 exec --no-startup-id nextcloud
