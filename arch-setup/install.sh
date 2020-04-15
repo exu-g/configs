@@ -4,7 +4,7 @@
 cd $HOME
 
 #uninstall
-pacman -Rns evolution catfish geany vim keepass keepassxc
+sudo pacman -Rns evolution catfish geany vim keepass keepassxc
 
 #update stuff
 trizen -Syyu
