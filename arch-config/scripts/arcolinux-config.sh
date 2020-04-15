@@ -25,7 +25,7 @@ sudo cp -r ~/arcolinux-config/etc /
 cp -r ~/arcolinux-config/gimp-plugins/* ~/.config/GIMP/2.10/plug-ins/ 
 sleep 10
 #unzip gimp plugins
-unzip export_layers-3.3.1.zip
+unzip ~/.config/GIMP/2.10/plug-ins/export_layers-3.3.1.zip
 #rm export_layers-3.3.1.zip
 echo Unzipped gimp plugins
 
