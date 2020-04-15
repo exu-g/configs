@@ -1,6 +1,9 @@
 #update config
 alias upconf='~/scripts/arcolinux-config.sh'
 
+#mount nfs drives
+alias nfspi='sudo mount 192.168.1.113:/mnt/ssd /mnt/nfs/ssd/ && sudo mount 192.168.1.113:/mnt/hdd /mnt/nfs/hdd/ && echo Success!'
+
 #list
 alias ls='ls --color=auto'
 alias la='ls -a'
