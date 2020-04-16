@@ -20,6 +20,8 @@ cp ~/arcolinux-config/Commands ~/Dokumente
 cp -r ~/arcolinux-config/scripts/ ~/
 #copy stuff to /etc
 sudo cp -r ~/arcolinux-config/etc /
+#copy old lightdm themes (and maybe other stuff, idk)
+sudo cp -r ~/arcolinux-config/var /
 
 #gimp plugins
 cp -r ~/arcolinux-config/gimp-plugins/* ~/.config/GIMP/2.10/plug-ins/ 
