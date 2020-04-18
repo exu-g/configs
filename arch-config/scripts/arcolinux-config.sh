@@ -6,25 +6,25 @@
 cd $HOME
 
 #remove old installs
-rm -rf ~/arcolinux-config
+rm -rf ~/config
 
 #clone this repo
-git clone https://gitlab.com/RealStickman-arcolinux/arcolinux-config.git &&
+git clone https://gitlab.com/RealStickman-arcolinux/config.git &&
 
 #copy stuff
-cp -r ~/arcolinux-config/.config/ ~/ &&
-cp ~/arcolinux-config/.bashrc ~/ &&
+cp -r ~/config/.config/ ~/ &&
+cp ~/config/.bashrc ~/ &&
 #copy commands
-cp ~/arcolinux-config/Commands ~/Dokumente
+cp ~/config/Commands ~/Dokumente
 #copy scripts
-cp -r ~/arcolinux-config/scripts/ ~/
+cp -r ~/config/scripts/ ~/
 #copy stuff to /etc
-sudo cp -r ~/arcolinux-config/etc /
+sudo cp -r ~/config/etc /
 #copy old lightdm themes (and maybe other stuff, idk)
-sudo cp -r ~/arcolinux-config/var /
+sudo cp -r ~/config/var /
 
 #gimp plugins
-cp -r ~/arcolinux-config/gimp-plugins/* ~/.config/GIMP/2.10/plug-ins/ 
+cp -r ~/config/gimp-plugins/* ~/.config/GIMP/2.10/plug-ins/ 
 #unzip gimp plugins
 echo Unzipping gimp plugins
 unzip -o ~/.config/GIMP/2.10/plug-ins/export_layers-3.3.1.zip -d ~/.config/GIMP/2.10/plug-ins/
@@ -38,7 +38,7 @@ chmod +x ~/.config/i3/scripts/i3exit.sh
 chmod +x ~/scripts/arcolinux-config.sh
 
 #remove downloaded folder
-rm -rf ~/arcolinux-config
+rm -rf ~/config
 
 #restart i3 in place
 i3 restart
