@@ -13,7 +13,7 @@ echo Updated packages
 echo Installing missing programs
 trizen -S --needed libreoffice-fresh-de steam steam-native-runtime i3-gaps lutris virt-manager ttf-ms-fonts ttf-tahoma ttf-vista-fonts discord bettergram cpu-x polybar youtube-dl blender krita
 trizen -S --needed xfce4 termite neofetch arandr firefox variety wget sublime-text-dev picom handbrake nutty bitwarden woeusb nohang-git pcloud-drive lightdm-webkit-theme-aether gimp stress
-trizen -S --needed oneko debtap obs-studio audacity python-pip tk picard hunspell hunspell-de hyphen hyphen-de fish psensor transmission-gtk rig
+trizen -S --needed oneko debtap obs-studio audacity python-pip tk picard hunspell hunspell-de hyphen hyphen-de fish psensor transmission-gtk rig smartmontools
 #trizen -S --needed plex-media-server keepass
 
 #install wine
