@@ -36,13 +36,13 @@ echo Installed python modules
 #  sudo ln -s /etc/fonts/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d
 
 #Changes to home folder automatically now, no need to be extra careful anymore.
-git clone https://gitlab.com/RealStickman-arcolinux/arcolinux-config
+git clone https://gitlab.com/RealStickman-arcolinux/config
 echo Finished downloading config
 
 #cleanup
-rm -rf ~/arcolinux-setup
+rm -rf ~/setup
 echo Removed old setup files
 
 #downloading config
 echo Setting config
-bash ~/arcolinux-config/install.sh
+bash ~/config/install.sh
