@@ -13,6 +13,7 @@ ffmpeg -i file.mpg -r 1/1 $filename%03d.jpg
 #found in .bashrc
 yta-best="youtube-dl --extract-audio --audio-format best "
 
+#lightdm configured themes
 sudo cp -r /var/lib/lightdm/.local/share/webkitgtk/localstorage/ ~/ && sudo chmod -Rv 777 ~/localstorage/
 
 #Single 4KiB random write process
