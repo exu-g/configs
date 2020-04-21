@@ -4,7 +4,7 @@
 cd $HOME
 
 #uninstall
-sudo pacman -Rns evolution catfish geany vim keepass gnome-boxes
+sudo pacman -Rns evolution catfish geany vim keepass gnome-boxes sublime-text-dev atom
 
 #update stuff
 trizen -Syyu
