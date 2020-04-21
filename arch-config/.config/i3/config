@@ -319,10 +319,11 @@ mode "$gaming" {
 
 # change xrandr display configuration
 
-bindsym $mod+t mode "$xrandr"
+bindsym $mod+d mode "$xrandr"
 
-set $xrandr Main (m)
+set $xrandr arco-pc hdmi (h)
 mode "$xrandr" {
+    bindsym h exec --no-startup-id xrandr --output DisplayPort-0 --off --output DisplayPort-1 --off --output HDMI-A-0 --set "scaling mode" "Full Aspect" --primary --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI-A-1 --off --output DVI-D-0 --off
     bindsym l exec --no-startup-id xrandr --output eDP1 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI1 --off --output VIRTUAL1 --off
 
     bindsym Return mode "default"
