@@ -16,6 +16,7 @@ cp -r ~/config/.config/ ~/ &&
 cp ~/config/.bashrc ~/ &&
 #copy commands
 cp ~/config/Commands ~/Dokumente
+cp ~/config/restic ~/Dokumente
 #copy scripts
 cp -r ~/config/scripts/ ~/
 #copy stuff to /etc
