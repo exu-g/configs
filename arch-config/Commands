@@ -13,8 +13,7 @@ ffmpeg -i file.mpg -r 1/1 $filename%03d.jpg
 #found in .bashrc
 yta-best="youtube-dl --extract-audio --audio-format best "
 
-sudo cp -r /var/lib/lightdm/.local/share/webkitgtk/localstorage/ ~/
-sudo chmod -Rv 777 ~/localstorage/
+sudo cp -r /var/lib/lightdm/.local/share/webkitgtk/localstorage/ ~/ && sudo chmod -Rv 777 ~/localstorage/
 
 #Single 4KiB random write process
 fio --name=random-write --ioengine=posixaio --rw=randwrite --bs=4k --size=4g --numjobs=1 --iodepth=1 --runtime=120 --time_based --end_fsync=1
