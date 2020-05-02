@@ -131,12 +131,12 @@ bindsym $mod+Shift+0 move container to workspace 10; workspace 10
 #Press $mod (super) and X to exit - check toolbar for next choices
 bindsym $mod+X mode "$mode_system"
 
-set $mode_system System (k) lock, (l) logout, (r) reboot, (s) shutdown
+set $mode_system System (k) lock, (l) logout, (r) reboot, (s) shutdown, (u) suspend, (h) hibernate
 mode "$mode_system" {
     bindsym k exec --no-startup-id ~/.config/i3/scripts/i3exit.sh lock, mode "default"
     bindsym l exec --no-startup-id ~/.config/i3/scripts/i3exit.sh logout, mode "default"
-    #bindsym u exec --no-startup-id ~/.config/i3/scripts/i3exit.sh suspend, mode "default"
-    #bindsym h exec --no-startup-id ~/.config/i3/scripts/i3exit.sh hibernate, mode "default"
+    bindsym u exec --no-startup-id ~/.config/i3/scripts/i3exit.sh suspend, mode "default"
+    bindsym h exec --no-startup-id ~/.config/i3/scripts/i3exit.sh hibernate, mode "default"
     bindsym r exec --no-startup-id ~/.config/i3/scripts/i3exit.sh reboot, mode "default"
     bindsym s exec --no-startup-id ~/.config/i3/scripts/i3exit.sh shutdown, mode "default"
 
@@ -313,7 +313,7 @@ mode "$gaming" {
 
 
 #####################################################################################################################
-#################                                                                                   #################
+#################                       display                                                     #################
 #####################################################################################################################
 
 
@@ -329,6 +329,33 @@ mode "$xrandr" {
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
+
+#bindsym $mod+k mode "$pcs"
+#set $pcs arco-pc (a), hp-laptop (h)
+#mode "$pcs"{
+#    bindsym a mode "$arco-pc"
+#    bindsym h mode "$hp-laptop"
+#
+#    bindsym Return mode "default"
+#    bindsym Escape mode "default"
+#}
+
+#set $arco-pc 1x hdmi (h)
+#mode "$arco-pc"{
+#    bindsym h exec --no-startup-id xrandr --output DisplayPort-0 --off --output DisplayPort-1 --off --output HDMI-A-0 --set "scaling mode" "Full Aspect" --primary --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI-A-1 --off --output DVI-D-0 --off
+#
+#    bindsym Return mode "default"
+#    bindsym Escape mode "default"
+#}
+
+#set $hp-laptop hdmi (h)
+#mode "$hp-laptop"{
+#    bindsym h exec --no-startup-id xrandr --output eDP1 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI1 --off --output VIRTUAL1 --off
+#
+#    bindsym Return mode "default"
+#    bindsym Escape mode "default"
+#}
+
 
 
 #####################################################################################################################
@@ -350,7 +377,7 @@ font pango:Noto Mono Regular 9
 # USER APPLICATIONS TO START AT BOOT
 
 #Terminal
-exec --no-startup-id termite;focus
+#exec --no-startup-id termite;focus
 
 
 # TRAY APPLICATIONS
