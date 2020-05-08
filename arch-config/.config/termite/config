@@ -1,0 +1,91 @@
+[options]
+#https://github.com/thestinger/termite/blob/master/config
+allow_bold = true
+audible_bell = false
+browser = xdg-open
+clickable_url = true
+cursor_blink = system
+cursor_shape = block
+dynamic_title = true
+filter_unmatched_urls = true
+font = Monospace 11
+#font = Hack Bold 10
+geometry = 900x650
+highlight = #2f2f2f
+icon_name = terminal
+modify_other_keys = false
+mouse_autohide = false
+scroll_on_output = false
+scroll_on_keystroke = true
+scrollback_lines = 15000
+size_hints = false
+search_wrap = true
+urgent_on_bell = true
+
+[hints]
+#font = Monospace 12
+#foreground = #dcdccc
+#background = #3f3f3f
+#active_foreground = #e68080
+#active_background = #3f3f3f
+#padding = 2
+#border = #3f3f3f
+#border_width = 10
+#roundness = 2.0
+
+############################################################
+#### You can change the color coding to your liking
+#### There is a folder themes in ~/config/termite/themes
+#### Copy/paste the colors from one of the 79+ templates to this one
+#### A backup of the original config termite is present
+############################################################
+#### Use websites to make the terminal your own
+#### https://terminal.sexy
+#### https://critical.ch/xterm/
+############################################################
+
+[colors]
+# https://critical.ch/xterm/
+#dracula theme adapted by Erik Dubois
+background = rgba(40, 42, 54, 0.6)
+
+#text
+foreground      = #dfaefc
+#text bold
+foreground_bold = #dfaefc
+#cursor
+cursor          = #dfaefc
+#background      = #130016
+
+#htop schrift
+color0  = #33084c
+#eg htop root user
+color8  = #9775aa
+#htop
+color1  = #d195f4
+#htop
+color9  = #d195f4
+#fish ~, make same as foreground
+color2  = #a132d1
+#username, same as foreground
+color10 = #a132d1
+#htop 3rd ram color
+color3  = #d195f4
+#-
+color11 = #00ff00
+#htop 2nd ram color
+color4  = #57177c
+#folders, other color for distro
+color12 = #a132d1
+#-
+color5  = #00ff00
+#-
+color13 = #00ff00
+#other stuff in htop
+color6  = #dfaefc
+#htop uptime, tasks
+color14 = #dfaefc
+#-
+color7  = #00ff00
+#-
+color15 = #00ff00
