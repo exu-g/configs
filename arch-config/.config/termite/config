@@ -71,8 +71,8 @@ color2  = #a132d1
 color10 = #a132d1
 #htop 3rd ram color
 color3  = #d195f4
-#-
-color11 = #00ff00
+#update Warning: and progress C
+color11 = #dfaefc
 #htop 2nd ram color
 color4  = #57177c
 #folders, other color for distro
@@ -85,7 +85,7 @@ color13 = #00ff00
 color6  = #dfaefc
 #htop uptime, tasks
 color14 = #dfaefc
-#-
-color7  = #00ff00
+#oooo from download progress bar
+color7  = #2d0f3f
 #-
 color15 = #00ff00
