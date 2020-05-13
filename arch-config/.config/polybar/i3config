@@ -40,12 +40,21 @@ format-offset =
 
 [colors]
 ; Nord theme ============
-background = #992F343F
-foreground = #f3f4f5
-alert = #d08770
-volume-min = #a3be8c
-volume-med = #ebcb8b
-volume-max = #bf616a
+;background = #992F343F
+;foreground = #f3f4f5
+;alert = #d08770
+;volume-min = #a3be8c
+;volume-med = #ebcb8b
+;volume-max = #bf616a
+; =======================
+
+; Purple theme ==========
+background = #99352f3f
+foreground = #f3f2f4
+alert = #d170bd
+volume-min = #00ff00
+volume-med = #00ff00
+volume-max = #00ff00
 ; =======================
 
 ; Gotham theme ==========
@@ -487,8 +496,11 @@ format-foreground = ${colors.foreground}
 format-background = ${colors.background}
 ;   
 format-prefix = " "
-format-prefix-foreground = #cd1f3f
-format-underline = #cd1f3f
+;format-prefix-foreground = #cd1f3f
+;format-underline = #cd1f3f
+format-prefix-foreground = #57177c
+format-underline = #57177c
+
 
 ; Available tags:
 ;   <label> (default)
@@ -507,28 +519,36 @@ label-font = 3
 label = Cpu %percentage:3%%
 ramp-coreload-0 = ▁
 ramp-coreload-0-font = 3
-ramp-coreload-0-foreground = #aaff77
+;ramp-coreload-0-foreground = #aaff77
+ramp-coreload-0-foreground = #c259ff
 ramp-coreload-1 = ▂
 ramp-coreload-1-font = 3
-ramp-coreload-1-foreground = #aaff77
+;ramp-coreload-1-foreground = #aaff77
+ramp-coreload-1-foreground = #a74cdb
 ramp-coreload-2 = ▃
 ramp-coreload-2-font = 3
-ramp-coreload-2-foreground = #aaff77
+;ramp-coreload-2-foreground = #aaff77
+ramp-coreload-2-foreground = #8b40b7
 ramp-coreload-3 = ▄
 ramp-coreload-3-font = 3
-ramp-coreload-3-foreground = #aaff77
+;ramp-coreload-3-foreground = #aaff77
+ramp-coreload-3-foreground = #703393
 ramp-coreload-4 = ▅
 ramp-coreload-4-font = 3
-ramp-coreload-4-foreground = #fba922
+;ramp-coreload-4-foreground = #fba922
+ramp-coreload-4-foreground = #552770
 ramp-coreload-5 = ▆
 ramp-coreload-5-font = 3
-ramp-coreload-5-foreground = #fba922
+;ramp-coreload-5-foreground = #fba922
+ramp-coreload-5-foreground = #3a1a4c
 ramp-coreload-6 = ▇
 ramp-coreload-6-font = 3
-ramp-coreload-6-foreground = #ff5555
+;ramp-coreload-6-foreground = #ff5555
+ramp-coreload-6-foreground = #1f0e28
 ramp-coreload-7 = █
 ramp-coreload-7-font = 3
-ramp-coreload-7-foreground = #ff5555
+;ramp-coreload-7-foreground = #ff5555
+ramp-coreload-7-foreground = #030105
 
 
 ################################################################################
@@ -581,8 +601,10 @@ time-alt = %H:%M
 format-prefix = " "
 ;format-prefix-foreground = #c1941a
 ;format-underline = #c1941a
-format-prefix-foreground = #c14019
-format-underline = #c14019
+;format-prefix-foreground = #c14019
+;format-underline = #c14019
+format-prefix-foreground = #57177c
+format-underline = #57177c
 format-foreground = ${colors.foreground}
 format-background = ${colors.background}
 label = %date% %time%
@@ -808,8 +830,10 @@ format = Mem <label>
 format-prefix = "  "
 ;format-prefix-foreground = #3384d0
 ;format-underline = #3384d0
-format-prefix-foreground = #3436d1
-format-underline = #3436d1
+;format-prefix-foreground = #3436d1
+;format-underline = #3436d1
+format-prefix-foreground = #57177c
+format-underline = #57177c
 format-foreground = ${colors.foreground}
 format-background = ${colors.background}
 
@@ -1115,18 +1139,19 @@ click-left = variety --selector
 type = internal/volume
 format-volume = "<label-volume>  <bar-volume>"
 
+;previous colors = 40ad4b
 label-volume = " "
-label-volume-foreground = #40ad4b
+label-volume-foreground = #57177c
 label-muted = muted
 
 bar-volume-width = 20
-bar-volume-foreground-0 = #40ad4b
-bar-volume-foreground-1 = #40ad4b
-bar-volume-foreground-2 = #40ad4b
-bar-volume-foreground-3 = #40ad4b
-bar-volume-foreground-4 = #40ad4b
-bar-volume-foreground-5 = #40ad4b
-bar-volume-foreground-6 = #40ad4b
+bar-volume-foreground-0 = #57177c
+bar-volume-foreground-1 = #57177c
+bar-volume-foreground-2 = #57177c
+bar-volume-foreground-3 = #57177c
+bar-volume-foreground-4 = #57177c
+bar-volume-foreground-5 = #57177c
+bar-volume-foreground-6 = #57177c
 bar-volume-gradient = false
 bar-volume-indicator = 
 bar-volume-indicator-font = 2
@@ -1188,10 +1213,12 @@ label-disconnected = %local_ip% disconnected
 format-connected-foreground = ${colors.foreground}
 format-connected-background = ${colors.background}
 ;format-connected-underline = #55aa55
-format-connected-underline = #571e70
+;format-connected-underline = #571e70
+format-connected-underline = #57177c
 format-connected-prefix = " "
 ;format-connected-prefix-foreground = #55aa55
-format-connected-prefix-foreground = #571e70
+;format-connected-prefix-foreground = #571e70
+format-connected-prefix-foreground = #57177c
 format-connected-prefix-background = ${colors.background}
 
 format-disconnected = <label-disconnected>
