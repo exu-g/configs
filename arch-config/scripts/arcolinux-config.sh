@@ -13,6 +13,8 @@ git clone https://gitlab.com/RealStickman-arcolinux/config.git &&
 
 #delete previous backups
 rm -rf ~/old_dat
+#make new directory
+mkdir ~/old_dat
 #back stuff up
 cp -r ~/.config ~/old_dat/.config &&
 cp -r ~/Dokumente ~/old_dat/Dokumente &&
