@@ -14,9 +14,9 @@ git clone https://gitlab.com/RealStickman-arcolinux/config.git &&
 #delete previous backups
 rm -rf ~/old_dat
 #back stuff up
-cp -r ~/.config ~/old_dat &&
-cp -r ~/Dokumente ~/old_dat &&
-cp -r ~/scripts ~/old_dat &&
+cp -r ~/.config ~/old_dat/.config &&
+cp -r ~/Dokumente ~/old_dat/Dokumente &&
+cp -r ~/scripts ~/old_dat/scripts &&
 
 #copy stuff
 cp -r ~/config/.config/ ~/ &&
