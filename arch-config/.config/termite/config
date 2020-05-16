@@ -85,7 +85,7 @@ color13 = #00ff00
 color6  = #dfaefc
 #htop uptime, tasks
 color14 = #dfaefc
-#oooo from download progress bar
-color7  = #2d0f3f
-#-
-color15 = #00ff00
+#oooo from download progress bar, nano options
+color7  = #dfaefc
+#nano
+color15 = #a132d1
