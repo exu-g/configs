@@ -7,7 +7,7 @@ cd $HOME
 sudo pacman -Rns evolution catfish geany vim keepass gnome-boxes sublime-text-dev atom adwaita-icon-theme arcolinux-i3wm-git arcolinux-tweak-tool-git arcolinux-welcome-app-git clonezilla evolution-data-server numix-circle-arc-icons-git numix-circle-icon-theme-git numix-gtk-theme-git numix-icon-theme-git oh-my-zsh-git pamac-aur qbittorrent vivaldi
 
 #update stuff
-trizen -Syyu
+yay -Syyu
 echo Updated packages
 
 #echo Installing missing programs
