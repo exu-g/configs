@@ -28,7 +28,7 @@ echo Copied folders
 #copy single files
 cp ~/config/.bashrc ~/ &&
 cp ~/config/.face ~/ &&
-cp ~/config/.gtkrc-2.0 &&
+cp ~/config/.gtkrc-2.0 ~/ &&
 echo Copied files
 #copy scripts
 cp -r ~/config/scripts/ ~/
