@@ -19,11 +19,17 @@ mkdir ~/old_dat
 cp -r ~/.config ~/old_dat/.config &&
 cp -r ~/Dokumente ~/old_dat/Dokumente &&
 cp -r ~/scripts ~/old_dat/scripts &&
+echo Made backups
 
-#copy stuff
+#copy folders
 cp -r ~/config/.config/ ~/ &&
-cp ~/config/.bashrc ~/ &&
 cp -r ~/config/Dokumente ~/ &&
+echo Copied folders
+#copy single files
+cp ~/config/.bashrc ~/ &&
+cp ~/config/.face ~/ &&
+cp ~/config/.gtkrc-2.0 &&
+echo Copied files
 #copy scripts
 cp -r ~/config/scripts/ ~/
 #copy stuff to /etc
