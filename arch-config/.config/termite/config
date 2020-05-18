@@ -77,8 +77,8 @@ color11 = #dfaefc
 color4  = #57177c
 #folders, other color for distro
 color12 = #a132d1
-#-
-color5  = #00ff00
+#yay number
+color5  = #dfaefc
 #-
 color13 = #00ff00
 #other stuff in htop
