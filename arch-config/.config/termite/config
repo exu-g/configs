@@ -79,8 +79,8 @@ color4  = #57177c
 color12 = #a132d1
 #yay number
 color5  = #dfaefc
-#-
-color13 = #00ff00
+#some build stuff
+color13 = #dfaefc
 #other stuff in htop
 color6  = #dfaefc
 #htop uptime, tasks
