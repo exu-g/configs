@@ -23,8 +23,14 @@ fio --output=fio-4K-randw.txt --name=random-write --ioengine=posixaio --rw=randw
 #16 parallel 64KiB random write processes
 fio --output=fio-64K-randw-x16.txt --name=random-write --ioengine=posixaio --rw=randwrite --bs=64k --size=256m --numjobs=16 --iodepth=16 --runtime=120 --time_based --end_fsync=1
 
-#Single 1MiB random write process
+#Single 1MiB random write process (16gb file)
 fio --output=fio-1M-randw.txt --name=random-write --ioengine=posixaio --rw=randwrite --bs=1m --size=16g --numjobs=1 --iodepth=1 --runtime=120 --time_based --end_fsync=1
+
+#Single 1MiB random write process (32gb file, 5 min)
+fio --output=fio-1M-randw-32gb.txt --name=random-write --ioengine=posixaio --rw=randwrite --bs=1m --size=32g --numjobs=1 --iodepth=1 --runtime=300 --time_based --end_fsync=1
+
+#Single 1MiB random write process (64gb file, 10 min)
+fio --output=fio-1M-randw-64gb.txt --name=random-write --ioengine=posixaio --rw=randwrite --bs=1m --size=64g --numjobs=1 --iodepth=1 --runtime=600 --time_based --end_fsync=1
 
 #smartctl test
 sudo smartctl -t <short|long> <disk>
@@ -51,3 +57,6 @@ watch sensors
 #analyze startup time
 systemd-analyze plot > detail[X].svg
 systemd-analyze blame > detail[X].txt
+
+#add kernel patch
+patch -Np1 -i *file*
