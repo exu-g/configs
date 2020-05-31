@@ -12,7 +12,7 @@ restic -r b2:test-stickman backup
 
 #arco-pc-backup home
 restic -r b2:arco-pc-backup:/home/marc init
-restic -r b2:arco-pc-backup:/home/marc backup /home/marc/ --exclude=/home/marc/Downloads --exclude=/home/marc/.local/share/Trash --exclude=/home/marc/.config --exclude=/home/marc/VMsSSD --exclude=/home/marc/workspace --exclude=/home/marc/pCloudDrive --exclude=/home/marc/Bilder --exclude=/home/marc/anaconda3 --exclude=/home/marc/.android --exclude=/home/marc/.atom --exclude=/home/marc/.att_backups --exclude=/home/marc/.conda --exclude=/home/marc/.droidcam --exclude=/home/marc/.Superposition --exclude=/home/marc/.Valley --exclude=/home/marc/.zoom --exclude=/home/marc/.yarn --exclude=/home/marc/.cache --exclude=/home/marc/.eclipse --exclude=/home/marc/.var --exclude=/home/marc/.swt --exclude=/home/marc/.subversion --exclude=/home/marc/.qwinff --exclude=/home/marc/.kodi --exclude=/home/marc/.pcloud --exclude=/home/marc/.pki --exclude=/home/marc/.psensor --exclude=/home/marc/.paradoxlauncher --exclude=/home/marc/.nv --exclude=/home/marc/.mono
+restic -r b2:arco-pc-backup:/home/marc backup /home/marc/ --exclude-file=/home/marc/Dokumente/home-exclude.txt
 
 ##Nfs backups
 
