@@ -2,44 +2,56 @@ Nfs mounting arco-pc:
 sudo mount 192.168.1.113:/mnt/ssd /mnt/nfs/ssd/
 sudo mount 192.168.1.113:/mnt/hdd /mnt/nfs/hdd/
 
-Restic repos:
+###Restic repos:
 
-raspi (ssd):
+##B2 backups
+
+#test-stickman PW:test
+restic -r b2:test-stickman init
+restic -r b2:test-stickman backup
+
+#arco-pc-backup home
+restic -r b2:arco-pc-backup:/home/marc init
+restic -r b2:arco-pc-backup:/home/marc backup /home/marc/ --exclude=/home/marc/Downloads --exclude=/home/marc/.local/share/Trash --exclude=/home/marc/.config --exclude=/home/marc/VMsSSD --exclude=/home/marc/workspace --exclude=/home/marc/pCloudDrive --exclude=/home/marc/Bilder --exclude=/home/marc/anaconda3 --exclude=/home/marc/.android --exclude=/home/marc/.atom --exclude=/home/marc/.att_backups --exclude=/home/marc/.conda --exclude=/home/marc/.droidcam --exclude=/home/marc/.Superposition --exclude=/home/marc/.Valley --exclude=/home/marc/.zoom --exclude=/home/marc/.yarn --exclude=/home/marc/.cache --exclude=/home/marc/.eclipse --exclude=/home/marc/.var --exclude=/home/marc/.swt --exclude=/home/marc/.subversion --exclude=/home/marc/.qwinff --exclude=/home/marc/.kodi --exclude=/home/marc/.pcloud --exclude=/home/marc/.pki --exclude=/home/marc/.psensor --exclude=/home/marc/.paradoxlauncher --exclude=/home/marc/.nv --exclude=/home/marc/.mono
+
+##Nfs backups
+
+#raspi (ssd):
 Through timeshift
 
-arco-pc timeshift (ssd):
+#arco-pc timeshift (ssd):
 restic init --repo /mnt/nfs/ssd/arco-pcbackup/timeshift/
 sudo chmod -Rv 777 /mnt/1d90c4d5-21d2-4455-bb4a-814de8496744/timeshift/
 restic -r "/mnt/nfs/ssd/arco-pcbackup/timeshift/" backup --verbose "/mnt/1d90c4d5-21d2-4455-bb4a-814de8496744/timeshift/snapshots/"
 
-arco-pc home Bilder (hdd):
+#arco-pc home Bilder (hdd):
 restic init --repo /mnt/nfs/hdd/arco-pcbackup/home/Bilder/
 restic -r "/mnt/nfs/hdd/arco-pcbackup/home/Bilder/" backup --verbose "/home/marc/Bilder"
 
-arco-pc home Dokumente (ssd):
+#arco-pc home Dokumente (ssd):
 restic init --repo /mnt/nfs/ssd/arco-pcbackup/home/Dokumente/
 restic -r "/mnt/nfs/ssd/arco-pcbackup/home/Dokumente/" backup --verbose "/home/marc/Dokumente"
 
-arco-pc home eFisc (ssd):
+#arco-pc home eFisc (ssd):
 restic init --repo /mnt/nfs/ssd/arco-pcbackup/home/eFisc/
 restic -r "/mnt/nfs/ssd/arco-pcbackup/home/eFisc/" backup --verbose "/home/marc/eFisc"
 
-arco-pc home Videos (hdd):
+#arco-pc home Videos (hdd):
 restic init --repo /mnt/nfs/hdd/arco-pcbackup/home//Videos/
 restic -r "/mnt/nfs/hdd/arco-pcbackup/home//Videos/" backup --verbose "/home/marc/Videos"
 
-arco-pc home Musik (hdd):
+#arco-pc home Musik (hdd):
 restic init --repo /mnt/nfs/hdd/arco-pcbackup/home/Musik/
 restic -r "/mnt/nfs/hdd/arco-pcbackup/home/Musik/" backup --verbose "/home/marc/Musik"
 
-arco-pc MediaLibrary/Movies (hdd):
+#arco-pc MediaLibrary/Movies (hdd):
 restic init --repo /mnt/nfs/hdd/arco-pcbackup/MediaLibrary/Movies/
 restic -r "/mnt/nfs/hdd/arco-pcbackup/MediaLibrary/Movies/" backup --verbose "/mnt/1d90c4d5-21d2-4455-bb4a-814de8496744/MediaLibrary/Movies"
 
-arco-pc MediaLibrary/Shows (hdd):
+#arco-pc MediaLibrary/Shows (hdd):
 restic init --repo /mnt/nfs/hdd/arco-pcbackup/MediaLibrary/Shows/
 restic -r "/mnt/nfs/hdd/arco-pcbackup/MediaLibrary/Shows/" backup --verbose "/mnt/1d90c4d5-21d2-4455-bb4a-814de8496744/MediaLibrary/Shows"
 
-Oneplus3 backup (hdd):
+#Oneplus3 backup (hdd):
 restic init --repo /mnt/nfs/hdd/Oneplus3/
 restic -r "/mnt/nfs/hdd/Oneplus3/" backup --verbose "/mnt/1d90c4d5-21d2-4455-bb4a-814de8496744/Phones/OnePlus 3/"
