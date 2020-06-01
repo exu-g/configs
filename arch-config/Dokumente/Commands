@@ -60,3 +60,9 @@ systemd-analyze blame > detail[X].txt
 
 #add kernel patch
 patch -Np1 -i *file*
+
+#create mkinitcpio
+sudo mkinitcpio -c /etc/mkinitcpio.conf -g initramfs-custom-zen-5.6.11.img
+
+#network traffic
+nload
