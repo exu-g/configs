@@ -6,13 +6,14 @@ sudo mount 192.168.1.113:/mnt/hdd /mnt/nfs/hdd/
 
 ##B2 backups
 
-#test-stickman PW:test
-restic -r b2:test-stickman init
-restic -r b2:test-stickman backup
-
-#arco-pc-backup home
+#arco-pc-backup home:
 restic -r b2:arco-pc-backup:/home/marc init
-restic -r b2:arco-pc-backup:/home/marc backup /home/marc/ --exclude-file=/home/marc/Dokumente/home-exclude.txt
+restic -r b2:arco-pc-backup:/home/marc backup --verbose /home/marc/ --exclude-file=/home/marc/Dokumente/home-exclude.txt
+
+#arco-pc-backup timeshift:
+restic -r b2:arco-pc-backup:/mnt/harddrive/timeshift/snapshots init
+sudo chmod -Rv 777 /mnt/1d90c4d5-21d2-4455-bb4a-814de8496744/timeshift/
+restic -r b2:arco-pc-backup:/mnt/harddrive/timeshift/snapshots backup --verbose "/mnt/1d90c4d5-21d2-4455-bb4a-814de8496744/timeshift/snapshots/"
 
 ##Nfs backups
 
@@ -38,7 +39,7 @@ restic -r "/mnt/nfs/ssd/arco-pcbackup/home/eFisc/" backup --verbose "/home/marc/
 
 #arco-pc home Videos (hdd):
 restic init --repo /mnt/nfs/hdd/arco-pcbackup/home//Videos/
-restic -r "/mnt/nfs/hdd/arco-pcbackup/home//Videos/" backup --verbose "/home/marc/Videos"
+restic -r "/mnt/nfs/hdd/arco-pcbackup/home/Videos/" backup --verbose "/home/marc/Videos"
 
 #arco-pc home Musik (hdd):
 restic init --repo /mnt/nfs/hdd/arco-pcbackup/home/Musik/
