@@ -8,7 +8,6 @@ ffmpeg-normalize *.m4a -v -pr -c:a libopus -ext opus
 ffmpeg-normalize *.opus -v -pr -c:a libopus -ext opus
 
 #extract images from video
-ffmpeg -i "file.mpg" -r 1/1 $filename%03d.png
 ffmpeg -i "file.mpg" -r 1/1 xyz%03d.png
 
 #found in .bashrc
@@ -62,7 +61,7 @@ systemd-analyze blame > detail[X].txt
 patch -Np1 -i *file*
 
 #create mkinitcpio
-sudo mkinitcpio -c /etc/mkinitcpio.conf -g initramfs-custom-zen-5.6.11.img
+sudo mkinitcpio -c /etc/mkinitcpio.conf -g initramfs-*kernel*.img
 
 #network traffic
 nload
