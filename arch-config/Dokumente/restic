@@ -6,14 +6,20 @@ sudo mount 192.168.1.113:/mnt/hdd /mnt/nfs/hdd/
 
 ##B2 backups
 
+export B2_ACCOUNT_ID=
+export B2_ACCOUNT_KEY=
+
+
 #arco-pc-backup home:
 restic -r b2:arco-pc-backup:/home/marc init
 restic -r b2:arco-pc-backup:/home/marc backup --verbose /home/marc/ --exclude-file=/home/marc/Dokumente/home-exclude.txt
+restic -r b2:arco-pc-backup:/home/marc snapshots
 
 #arco-pc-backup timeshift:
 restic -r b2:arco-pc-backup:/mnt/harddrive/timeshift/snapshots init
 sudo chmod -Rv 777 /mnt/1d90c4d5-21d2-4455-bb4a-814de8496744/timeshift/
 restic -r b2:arco-pc-backup:/mnt/harddrive/timeshift/snapshots backup --verbose "/mnt/1d90c4d5-21d2-4455-bb4a-814de8496744/timeshift/snapshots/"
+restic -r b2:arco-pc-backup:/mnt/harddrive/timeshift/snapshots snapshots
 
 ##Nfs backups
 
