@@ -48,6 +48,7 @@
 /home/marc/.yarn 
 /home/marc/.zoom
 
+/home/marc/old_dat
 /home/marc/Downloads
 /home/marc/VMsSSD
 /home/marc/workspace 
