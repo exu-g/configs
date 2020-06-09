@@ -18,7 +18,7 @@ sudo pacman -S --needed xfce4 arandr qemu libreoffice-fresh-de steam steam-nativ
 
 #AUR
 echo Installing AUR programs
-yay -S --needed ttf-ms-fonts ttf-tahoma ttf-vista-fonts bettergram cpu-x polybar nutty bitwarden woeusb nohang-git lightdm-webkit-theme-aether-git debtap rig gimp-plugin-registry vscodium-bin
+yay -S --needed ttf-ms-fonts ttf-tahoma ttf-vista-fonts bettergram cpu-x polybar nutty bitwarden woeusb nohang-git lightdm-webkit-theme-aether-git debtap rig gimp-plugin-registry vscodium-bin piper
 yay -S --needed pcloud-drive
 
 #install wine
