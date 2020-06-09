@@ -180,3 +180,4 @@ alias wgqd="sudo wg-quick down"
 #}
 
 neofetch
+tmux
