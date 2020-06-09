@@ -21,6 +21,7 @@ sudo chmod -Rv 777 /mnt/1d90c4d5-21d2-4455-bb4a-814de8496744/timeshift/
 restic -r b2:arco-pc-backup:/mnt/harddrive/timeshift/snapshots backup --verbose "/mnt/1d90c4d5-21d2-4455-bb4a-814de8496744/timeshift/snapshots/"
 restic -r b2:arco-pc-backup:/mnt/harddrive/timeshift/snapshots snapshots
 
+
 ##Nfs backups
 
 #raspi (ssd):
