@@ -19,11 +19,13 @@ mkdir ~/old_dat
 cp -r ~/.config ~/old_dat/.config &&
 cp -r ~/Dokumente ~/old_dat/Dokumente &&
 cp -r ~/scripts ~/old_dat/scripts &&
+cp -r ~/.mozilla ~/old_dat/.mozilla &&
 echo Made backups
 
 #copy folders
 cp -r ~/config/.config/ ~/ &&
 cp -r ~/config/Dokumente ~/ &&
+cp -r ~/config/.mozilla ~/ &&
 echo Copied folders
 #copy single files
 cp ~/config/.bashrc ~/ &&
