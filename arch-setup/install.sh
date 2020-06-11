@@ -14,7 +14,7 @@ echo Updated packages
 #trizen -S --needed libreoffice-fresh-de steam steam-native-runtime i3-gaps lutris virt-manager ttf-ms-fonts ttf-tahoma ttf-vista-fonts discord bettergram cpu-x polybar youtube-dl blender krita termite neofetch arandr firefox variety wget sublime-text-dev picom handbrake nutty bitwarden woeusb nohang-git pcloud-drive lightdm-webkit-theme-aether gimp stress debtap obs-studio audacity python-pip tk picard hunspell hunspell-de hyphen hyphen-de fish psensor transmission-gtk rig smartmontools thunderbird code gimp-plugin-registry
 
 echo Installing official programs
-sudo pacman -S --needed xfce4 arandr qemu libreoffice-fresh-de steam steam-native-runtime i3-gaps lutris virt-manager discord youtube-dl blender krita termite neofetch firefox wget picom handbrake gimp stress obs-studio audacity python-pip hunspell hunspell-de hyphen hyphen-de fish psensor transmission-qt smartmontools thunderbird ffmpeg jre-openjdk thunar gtk-engine-murrine iperf3 celluloid nload languagetool
+sudo pacman -S --needed xfce4 arandr qemu libreoffice-fresh-de steam steam-native-runtime i3-gaps lutris virt-manager discord youtube-dl blender krita termite neofetch firefox wget picom handbrake gimp stress obs-studio audacity python-pip hunspell hunspell-de hyphen hyphen-de fish psensor transmission-qt smartmontools thunderbird ffmpeg jre-openjdk thunar gtk-engine-murrine iperf3 celluloid nload languagetool dmenu
 
 #AUR
 echo Installing AUR programs
