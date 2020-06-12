@@ -16,24 +16,24 @@ rm -rf ~/old_dat
 #make new directory
 mkdir ~/old_dat
 #back stuff up
-cp -r ~/.config ~/old_dat/.config &&
-cp -r ~/Dokumente ~/old_dat/Dokumente &&
-cp -r ~/scripts ~/old_dat/scripts &&
-cp -r ~/.mozilla ~/old_dat/.mozilla &&
+rsync -ah --progress ~/.config ~/old_dat/.config &&
+rsync -ah --progress ~/Dokumente ~/old_dat/Dokumente &&
+rsync -ah --progress ~/scripts ~/old_dat/scripts &&
+rsync -ah --progress ~/.mozilla ~/old_dat/.mozilla &&
 echo Made backups
 
 #copy folders
-cp -r ~/config/.config/ ~/ &&
-cp -r ~/config/Dokumente ~/ &&
-cp -r ~/config/.mozilla ~/ &&
+rsync -ah --progress ~/config/.config/ ~/ &&
+rsync -ah --progress ~/config/Dokumente ~/ &&
+rsync -ah --progress ~/config/.mozilla ~/ &&
 echo Copied folders
 #copy single files
-cp ~/config/.bashrc ~/ &&
-cp ~/config/.face ~/ &&
-cp ~/config/.gtkrc-2.0 ~/ &&
+rsync -ah --progress ~/config/.bashrc ~/ &&
+rsync -ah --progress ~/config/.face ~/ &&
+crsync -ah --progressp ~/config/.gtkrc-2.0 ~/ &&
 echo Copied files
 #copy scripts
-cp -r ~/config/scripts/ ~/
+rsync -ah --progress ~/config/scripts/ ~/
 #copy stuff to /etc
 sudo cp -r ~/config/etc /
 #copy old lightdm themes (and maybe other stuff, idk)
