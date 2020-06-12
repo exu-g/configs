@@ -30,7 +30,7 @@ echo Copied folders
 #copy single files
 rsync -ah --progress ~/config/.bashrc ~/ &&
 rsync -ah --progress ~/config/.face ~/ &&
-crsync -ah --progressp ~/config/.gtkrc-2.0 ~/ &&
+rsync -ah --progress ~/config/.gtkrc-2.0 ~/ &&
 echo Copied files
 #copy scripts
 rsync -ah --progress ~/config/scripts/ ~/
@@ -40,7 +40,7 @@ sudo cp -r ~/config/etc /
 sudo cp -r ~/config/var /
 
 #gimp plugins
-cp -r ~/config/gimp-plugins/* ~/.config/GIMP/2.10/plug-ins/ 
+rsync -ah --progress ~/config/gimp-plugins/* ~/.config/GIMP/2.10/plug-ins/ 
 #unzip gimp plugins
 echo Unzipping gimp plugins
 unzip -o ~/.config/GIMP/2.10/plug-ins/export_layers-3.3.1.zip -d ~/.config/GIMP/2.10/plug-ins/
