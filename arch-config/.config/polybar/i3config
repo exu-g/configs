@@ -131,7 +131,7 @@ font-3 = "Noto Sans Mono:size=10;0"
 
 modules-left = i3 xwindow
 modules-center = cpu1 memory2
-modules-right = battery date volume wired-network wired-network2 wireless-network backlight
+modules-right = battery date volume backlight
 
 ;separator = |
 
