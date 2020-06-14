@@ -359,6 +359,25 @@ mode "$xrandr" {
 
 
 #####################################################################################################################
+#################                       browsers                                                     ################
+#####################################################################################################################
+
+
+bindsym $mod+c mode "$browsers"
+
+set $browsers firefox (f), chromium (c), servo (s)
+mode "$browsers" {
+    bindsym f exec --no-startup-id firefox;focus
+    bindsym c exec --no-startup-id chromium;focus
+    bindsym p exec --no-startup-id palemoon;focus
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+
+
+#####################################################################################################################
 #################                          choose the font                                          #################
 #####################################################################################################################
 
@@ -477,7 +496,7 @@ bindsym ctrl+mod1+l exec --no-startup-id libreoffice;focus
 
 #browsers
 bindsym control+mod1+f exec --no-startup-id firefox;focus
-bindsym control+mod1+c exec --no-startup-id chromium;focus
+#bindsym control+mod1+c exec --no-startup-id chromium;focus
 
 #vlc
 bindsym ctrl+mod1+m exec --no-startup-id vlc;focus
