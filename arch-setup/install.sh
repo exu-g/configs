@@ -35,14 +35,48 @@ do
     esac
 done
 
-cmd=(dialog --separate-output --checklist "Select programs:" 22 76 16)
+cmd=(dialog --separate-output --checklist "Select browsers:" 22 76 16)
+options=(1 "Firefox" on    # any option can be set to default to "on"
+         2 "Chromium" off
+         3 "Palemoon" off
+         4 "Basilisk" off
+         5 "Netsurf" off)
+choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+clear
+for choice in $choices
+do
+    case $choice in
+        1)
+            sudo pacman -S --needed qemu firefox
+            echo Installed Firefox
+            ;;
+        2)
+            sudo pacman -S --needed chromium
+            echo Installed Chromium
+            ;;
+        3)
+            sudo pacman -S --needed palemoon
+            echo Installed Palemoon
+            ;;
+        4)
+            sudo pacman -S --needed basilisk
+            echo Installed Basilisk
+            ;;
+        5)
+            sudo pacman -S --needed netsurf
+            echo Installed Netsurf
+            ;;
+    esac
+done
+
+cmd=(dialog --separate-output --checklist "Select other programs:" 22 76 16)
 options=(1 "VirtManager" off    # any option can be set to default to "on"
          2 "Steam" off
          3 "Lutris" off
          4 "Blender" off
          5 "Krita" off
          6 "Youtube-dl" off
-         7 "Discord" off
+         7 "Discord" on
          8 "Handbrake" off
          9 "Gimp" off
          10 "Audacity" off
@@ -101,7 +135,7 @@ do
 done
 
 echo Installing default pacman programs
-sudo pacman -S --needed arandr libreoffice-fresh-de termite neofetch firefox wget picom stress obs-studio  python-pip hunspell hunspell-de hyphen hyphen-de fish psensor transmission-qt smartmontools thunderbird ffmpeg jre-openjdk thunar gtk-engine-murrine iperf3 celluloid nload languagetool dmenu
+sudo pacman -S --needed arandr libreoffice-fresh-de termite neofetch wget picom stress obs-studio  python-pip hunspell hunspell-de hyphen hyphen-de fish psensor transmission-qt smartmontools thunderbird ffmpeg jre-openjdk thunar gtk-engine-murrine iperf3 celluloid nload languagetool dmenu
 echo Installed official programs
 
 #AUR
