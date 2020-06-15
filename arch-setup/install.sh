@@ -154,16 +154,17 @@ sudo pip3 install ffmpeg-normalize
 echo Installed python modules
 
 #Changes to home folder automatically now, no need to be extra careful anymore.
-echo No config download
+#echo No config download
 git clone https://gitlab.com/RealStickman-arcolinux/config
 echo Finished downloading config
 
 #cleanup
-echo Removal of old files not set
+#echo Removal of old files not set
 rm -rf ~/setup
 echo Removed old setup files
 
 #downloading config
-echo Not installing config
+#echo Not installing config
 echo Setting config
 bash ~/config/install.sh
+echo Finished everything
