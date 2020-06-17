@@ -415,9 +415,6 @@ exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 # pCloud
 exec --no-startup-id pcloud
 
-# nextcloud
-#exec --no-startup-id nextcloud
-
 # bluetooth
 #exec --no-startup-id blueberry-tray
 
