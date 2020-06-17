@@ -496,6 +496,9 @@ bindsym ctrl+mod1+t exec --no-startup-id thunar;focus
 #discord
 bindsym ctrl+mod1+d exec --no-startup-id discord;focus
 
+#empty container
+bindsym $mod+y exec --no-startup-id i3 open
+
 #libreoffice
 bindsym ctrl+mod1+l exec --no-startup-id libreoffice;focus
 
