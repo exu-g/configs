@@ -145,7 +145,8 @@ echo Installed official programs
 
 #AUR
 echo Installing default AUR programs
-yay -S --needed ttf-ms-fonts ttf-tahoma ttf-vista-fonts bettergram cpu-x polybar nutty bitwarden woeusb nohang-git lightdm-webkit-theme-aether-git debtap rig gimp-plugin-registry vscodium-bin piper
+yay -S --needed ttf-ms-fonts ttf-tahoma ttf-vista-fonts bettergram cpu-x polybar nutty woeusb nohang-git lightdm-webkit-theme-aether-git debtap rig gimp-plugin-registry vscodium-bin piper
+yay -S --needed bitwarden
 yay -S --needed pcloud-drive
 echo Installed AUR programs
 
