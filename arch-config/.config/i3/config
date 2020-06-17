@@ -427,7 +427,7 @@ exec_always --no-startup-id numlockx on
 #variety
 exec --no-startup-id variety
 
-#Corectrl (Avoid typing password)
+#Corectrl
 exec --no-startup-id corectrl
 
 #Easystroke
