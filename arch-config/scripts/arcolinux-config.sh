@@ -20,12 +20,14 @@ rsync -ah --progress ~/.config ~/old_dat/.config &&
 rsync -ah --progress ~/Dokumente ~/old_dat/Dokumente &&
 rsync -ah --progress ~/scripts ~/old_dat/scripts &&
 rsync -ah --progress ~/.mozilla ~/old_dat/.mozilla &&
+rsync -ah --progress ~/.easystroke ~/old_dat/.easystroke &&
 echo Made backups
 
 #copy folders
 rsync -ah --progress ~/config/.config/ ~/ &&
 rsync -ah --progress ~/config/Dokumente ~/ &&
 rsync -ah --progress ~/config/.mozilla ~/ &&
+rsync -ah --progress ~config/.easystroke ~/ &&
 echo Copied folders
 #copy single files
 rsync -ah --progress ~/config/.bashrc ~/ &&
