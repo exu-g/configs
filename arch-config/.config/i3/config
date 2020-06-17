@@ -433,6 +433,12 @@ exec_always --no-startup-id numlockx on
 #variety
 exec --no-startup-id variety
 
+#Easystroke
+exec --no-startup-id easystroke
+
+#Transmission
+exec --no-startup-id transmission-gtk -m
+
 #Conky
 #exec --no-startup-id conky -c ~/.config/i3/system-overview
 
