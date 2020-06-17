@@ -80,7 +80,8 @@ options=(1 "VirtManager" off    # any option can be set to default to "on"
          8 "Handbrake" off
          9 "Gimp" off
          10 "Audacity" off
-         11 "MangoHud" off)
+         11 "MangoHud" off
+         12 "Easystroke" on)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
 for choice in $choices
@@ -130,6 +131,10 @@ do
             git clone --recurse-submodules https://github.com/flightlessmango/MangoHud.git
             ./MangoHud/build.sh install
             echo Installed MangoHud
+            ;;
+        12)
+            sudo yay -S --needed easystroke
+            echo Installed Easystroke
             ;;
     esac
 done
