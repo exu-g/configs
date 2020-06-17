@@ -400,9 +400,6 @@ font pango:Noto Mono Regular 9
 #Terminal
 #exec --no-startup-id termite;focus
 
-#Corectrl (Make tray)
-exec --no-startup-id corectrl
-
 
 # TRAY APPLICATIONS
 
@@ -429,6 +426,9 @@ exec_always --no-startup-id numlockx on
 
 #variety
 exec --no-startup-id variety
+
+#Corectrl (Avoid typing password)
+exec --no-startup-id corectrl
 
 #Easystroke
 exec --no-startup-id easystroke
