@@ -37,7 +37,7 @@ done
 
 cmd=(dialog --separate-output --checklist "Select browsers:" 22 76 16)
 options=(1 "Firefox" on    # any option can be set to default to "on"
-         2 "Chromium" off
+         2 "Ungoogled-Chromium" off
          3 "Palemoon" off
          4 "Basilisk" off
          5 "Netsurf" off)
@@ -51,8 +51,8 @@ do
             echo Installed Firefox
             ;;
         2)
-            sudo pacman -S --needed chromium
-            echo Installed Chromium
+            sudo pacman -S --needed ungoogled-chromium
+            echo Installed Ungoogled-Chromium
             ;;
         3)
             sudo pacman -S --needed palemoon
