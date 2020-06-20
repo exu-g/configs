@@ -40,7 +40,8 @@ options=(1 "Firefox" on    # any option can be set to default to "on"
          2 "Ungoogled-Chromium" off
          3 "Palemoon" off
          4 "Basilisk" off
-         5 "Netsurf" off)
+         5 "Netsurf" off
+         6 "Icecat" off)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
 for choice in $choices
@@ -65,6 +66,10 @@ do
         5)
             sudo pacman -S --needed netsurf
             echo Installed Netsurf
+            ;;
+        6)
+            sudo yay -S --needed icecat-bin
+            echo Installed Icecat
             ;;
     esac
 done
