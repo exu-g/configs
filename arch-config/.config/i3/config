@@ -399,7 +399,19 @@ font pango:Noto Mono Regular 9
 # USER APPLICATIONS TO START AT BOOT
 
 #Terminal
-#exec --no-startup-id termite;focus
+exec --no-startup-id i3-msg 'workspace 1; exec termite'
+
+#Firefox
+exec --no-startup-id i3-msg 'workspace 2; layout tabbed; exec firefox'
+
+#Thunderbird
+exec --no-startup-id i3-msg 'workspace 2; layout tabbed; exec thunderbird'
+
+#Discord
+exec --no-startup-id i3-msg 'workspace 2; layout tabbed; exec discord'
+
+#Liferea
+exec --no-startup-id i3-msg 'workspace 2; layout tabbed; exec liferea -w shown'
 
 
 # TRAY APPLICATIONS
@@ -444,7 +456,7 @@ exec --no-startup-id transmission-gtk -m
 exec_always --no-startup-id ~/.config/polybar/launch.sh &
 
 #startup functions
-exec_always --no-startup-id ~/.config/scritps/startup.sh
+exec_always --no-startup-id ~/scritps/startup.sh
 
 
 #####################################################################################################################
