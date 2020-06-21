@@ -365,7 +365,7 @@ mode "$xrandr" {
 
 bindsym $mod+c mode "$browsers"
 
-set $browsers firefox (f), chromium (c), palemoon (p), basilisk (b), netsurf (n), icecat (i)
+set $browsers firefox (f), chromium (c), palemoon (p), basilisk (b), netsurf (n), icecat (i), tor (t)
 mode "$browsers" {
     bindsym f exec --no-startup-id firefox;focus
     bindsym c exec --no-startup-id chromium;focus
@@ -373,6 +373,7 @@ mode "$browsers" {
     bindsym b exec --no-startup-id basilisk;focus
     bindsym n exec --no-startup-id netsurf;focus
     bindsym i exec --no-startup-id icecat;focus
+    bindsym i exec --no-startup-id torbrowser-launcher;focus
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
