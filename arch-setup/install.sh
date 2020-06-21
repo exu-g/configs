@@ -86,7 +86,8 @@ options=(1 "VirtManager" off    # any option can be set to default to "on"
          9 "Gimp" off
          10 "Audacity" off
          11 "MangoHud" off
-         12 "Easystroke" on)
+         12 "Easystroke" on
+         13 "Liferea" off)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
 for choice in $choices
@@ -140,6 +141,10 @@ do
         12)
             sudo yay -S --needed easystroke
             echo Installed Easystroke
+            ;;
+        13)
+            sudo yay -S --needed liferea
+            echo Installed Liferea
             ;;
     esac
 done
