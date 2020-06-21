@@ -365,13 +365,14 @@ mode "$xrandr" {
 
 bindsym $mod+c mode "$browsers"
 
-set $browsers firefox (f), chromium (c), palemoon (p), basilisk (b), netsurf (n)
+set $browsers firefox (f), chromium (c), palemoon (p), basilisk (b), netsurf (n), icecat (i)
 mode "$browsers" {
     bindsym f exec --no-startup-id firefox;focus
     bindsym c exec --no-startup-id chromium;focus
     bindsym p exec --no-startup-id palemoon;focus
     bindsym b exec --no-startup-id basilisk;focus
     bindsym n exec --no-startup-id netsurf;focus
+    bindsym i exec --no-startup-id icecat;focus
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
