@@ -373,7 +373,7 @@ mode "$browsers" {
     bindsym b exec --no-startup-id basilisk;focus
     bindsym n exec --no-startup-id netsurf;focus
     bindsym i exec --no-startup-id icecat;focus
-    bindsym i exec --no-startup-id torbrowser-launcher;focus
+    bindsym t exec --no-startup-id torbrowser-launcher;focus
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
