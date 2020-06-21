@@ -15,9 +15,9 @@ alias l.="ls -A | egrep '^\.'"
 alias cd..='cd ..'
 alias pdw="pwd"
 #alias udpate='sudo pacman -Syyu'
-alias udpate='trizen -Syyu --noconfirm'
+alias udpate='yay -Syu'
 #alias upate='sudo pacman -Syyu'
-alias upate='trizen -Syyu --noconfirm'
+alias upate='yay -Syu'
 
 ## Colorize the grep command output for ease of use (good for log files)##
 alias grep='grep --color=auto'
