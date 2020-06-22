@@ -34,7 +34,6 @@
 /home/marc/.psensor 
 /home/marc/.qwinff 
 /home/marc/.screenlayout 
-/home/marc/.ssh 
 /home/marc/.steam 
 /home/marc/.subversion 
 /home/marc/.Superposition 
