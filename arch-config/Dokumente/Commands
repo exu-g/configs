@@ -76,3 +76,4 @@ ssh-keygen
 
 #allow access through ssh key
 ssh-copy-id -i <file location> <user>@<ip/domain>
+ssh-copy-id -i ~/.ssh/id_rsa.pub <user>@<ip/domain>
