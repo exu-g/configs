@@ -63,6 +63,9 @@ patch -Np1 -i *file*
 #create mkinitcpio
 sudo mkinitcpio -g /boot/initramfs-[kernel].img -k [kernel from /usr/lib/modules]
 
+#depmod
+depmod -a
+
 #network traffic
 nload
 
