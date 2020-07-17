@@ -28,7 +28,12 @@ sudo chmod -Rv 777 /run/timeshift/backup/timeshift
 restic -r b2:rpi3-backup:timeshift/snapshots backup --verbose "/run/timeshift/backup/timeshift/snapshots"
 restic -r b2:rpi3-backup:timeshift/snapshots snapshots
 
-#realstickman-xyz-backup
-restic -r b2:realstickman-xyz-backup:full init
-restic -r b2:realstickman-xyz-backup:full backup --verbose "/"
-restic -r b2:realstickman-xyz-backup:full snapshots 
+#realstickman-xyz-backup root
+restic -r b2:realstickman-xyz-backup:root init
+restic -r b2:realstickman-xyz-backup:root backup --verbose "/root"
+restic -r b2:realstickman-xyz-backup:root snapshots 
+
+#realstickman-xyz-backup etc
+restic -r b2:realstickman-xyz-backup:etc init
+restic -r b2:realstickman-xyz-backup:etc backup --verbose "/etc"
+restic -r b2:realstickman-xyz-backup:etc snapshots 
