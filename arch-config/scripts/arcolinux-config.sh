@@ -42,6 +42,7 @@ sudo cp -r ~/config/etc /
 sudo cp -r ~/config/var /
 
 #gimp plugins
+mkdir ~/.config/GIMP/2.10/plug-ins/
 rsync -ah --progress ~/config/gimp-plugins/* ~/.config/GIMP/2.10/plug-ins/ 
 #unzip gimp plugins
 echo Unzipping gimp plugins
