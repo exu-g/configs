@@ -159,6 +159,19 @@ do
     esac
 done
 
+cmd=(dialog --separate-output --checklist "Report installed packages?" 22 76 16)
+options=(1 "pkgstats" off)
+choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+clear
+for choice in $choices
+do
+    case $choice in
+        1)
+            sudo pacman -S --needed pkgstats
+            ;;
+    esac
+done
+
 echo Installing default pacman programs
 sudo pacman -S --needed arandr libreoffice-fresh-de termite neofetch wget picom stress obs-studio  python-pip hunspell hunspell-de hyphen hyphen-de fish psensor transmission-qt smartmontools thunderbird ffmpeg jre-openjdk thunar gtk-engine-murrine iperf3 celluloid nload languagetool dmenu
 echo Installed official programs
@@ -193,4 +206,5 @@ echo Removed old setup files
 #echo Not installing config
 echo Setting config
 bash ~/config/install.sh
+pkgstats
 echo Finished everything
