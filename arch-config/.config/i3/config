@@ -402,6 +402,9 @@ font pango:Noto Mono Regular 9
 #Terminal
 exec --no-startup-id i3-msg 'workspace 1; exec termite'
 
+#Liferea
+exec --no-startup-id i3-msg 'workspace 3; exec liferea'
+
 #Firefox
 exec --no-startup-id i3-msg 'workspace 2; layout tabbed; exec firefox'
 
@@ -416,9 +419,6 @@ exec --no-startup-id i3-msg 'workspace 2; layout tabbed; exec mirage'
 
 #bettergram
 exec --no-startup-id i3-msg 'workspace 2; layout tabbed; exec bettergram'
-
-#Liferea
-exec --no-startup-id i3-msg 'workspace 3; exec liferea'
 
 
 # TRAY APPLICATIONS
