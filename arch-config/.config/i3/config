@@ -538,6 +538,9 @@ bindsym ctrl+mod1+n exec --no-startup-id pragha;focus
 #thunderbird
 bindsym ctrl+mod1+y exec --no-startup-id thunderbird;focus
 
+#pycharm
+bindsym ctrl+mod1+p exec --no-startup-id pycharm-eap;focus
+
 
 #####################################################################################################################
 #################                          screenshots                                              #################
