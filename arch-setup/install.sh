@@ -96,7 +96,8 @@ options=(1 "VirtManager" off    # any option can be set to default to "on"
          12 "Easystroke" on
          13 "Liferea" off
          14 "Mirage (Matrix Client)" on
-         15 "Bettergram (Telegram Client)" on)
+         15 "Bettergram (Telegram Client)" on
+         16 "Pycharm")
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
 for choice in $choices
@@ -162,6 +163,10 @@ do
         15)
             sudo yay -S --needed bettergram
             echo Installed Bettergram
+            ;;
+        16)
+            sudo pacman -S --needed pycharm-community-edition
+            echo Installed Pycharm
             ;;
     esac
 done
