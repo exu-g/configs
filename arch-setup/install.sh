@@ -201,7 +201,7 @@ pacman -S --needed wine-staging giflib lib32-giflib libpng lib32-libpng libldap 
 echo Installed wine
 
 echo Installing python modules
-sudo pip3 install ffmpeg-normalize
+sudo pip3 install ffmpeg-normalize praw
 echo Installed python modules
 
 #Changes to home folder automatically now, no need to be extra careful anymore.
