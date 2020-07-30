@@ -3,6 +3,8 @@
 #change to home (does not show in terminal)
 cd $HOME
 
+sudo pacman -Sy
+
 read -p "Remove Programs? [y|n]";
     if [ $REPLY == "y" ]; then
         echo Uninstalling unused packages
@@ -14,9 +16,9 @@ read -p "Remove Programs? [y|n]";
 
 #update stuff
 echo Skipping updating packages
-#echo Updating packages
-#yay -Syyu
-#echo Updated packages
+echo Updating packages
+yay -Syyu
+echo Updated packages
 
 cmd=(dialog --separate-output --checklist "Select Desktop environment/Window manager:" 22 76 16)
 options=(1 "[DE] xfce4" off    # any option can be set to default to "on"
@@ -193,17 +195,14 @@ sudo pip3 install ffmpeg-normalize
 echo Installed python modules
 
 #Changes to home folder automatically now, no need to be extra careful anymore.
-#echo No config download
 git clone https://gitlab.com/RealStickman-arcolinux/config
 echo Finished downloading config
 
 #cleanup
-#echo Removal of old files not set
 rm -rf ~/setup
 echo Removed old setup files
 
 #downloading config
-#echo Not installing config
 echo Setting config
 bash ~/config/install.sh
 pkgstats
