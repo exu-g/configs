@@ -33,13 +33,13 @@ echo Made backups
 #rsync -ah --progress ~/config/.config/ ~/ &&
 #rsync -ah --progress ~/config/Dokumente ~/ &&
 #rsync -ah --progress ~/config/.mozilla ~/ &&
-#rsync -ah --progress ~config/.easystroke ~/ &&
+#rsync -ah --progress ~/config/.easystroke ~/ &&
 
 rsync -ah ~/config/.config/ ~/ &&
 rsync -ah ~/config/Dokumente ~/ &&
 rsync -ah ~/config/.mozilla ~/ &&
 mkdir ~/.easystroke
-rsync -ah ~config/.easystroke ~/ &&
+rsync -ah ~/config/.easystroke ~/ &&
 echo Copied folders
 #copy single files
 #rsync -ah --progress ~/config/.bashrc ~/ &&
