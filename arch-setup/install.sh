@@ -95,7 +95,8 @@ options=(1 "VirtManager" off    # any option can be set to default to "on"
          11 "MangoHud" off
          12 "Easystroke" on
          13 "Liferea" off
-         14 "Mirage (Matrix Client)" on)
+         14 "Mirage (Matrix Client)" on
+         15 "Bettergram (Telegram Client)" on)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
 for choice in $choices
@@ -158,6 +159,10 @@ do
             sudo yay -S --needed matrix-mirage
             echo Installed Mirage
             ;;
+        15)
+            sudo yay -S --needed bettergram
+            echo Installed Bettergram
+            ;;
     esac
 done
 
@@ -180,7 +185,7 @@ echo Installed official programs
 
 #AUR
 echo Installing default AUR programs
-yay -S --needed ttf-ms-fonts ttf-tahoma ttf-vista-fonts bettergram cpu-x polybar nutty woeusb nohang-git lightdm-webkit-theme-aether-git debtap rig gimp-plugin-registry vscodium-bin piper
+yay -S --needed ttf-ms-fonts ttf-tahoma ttf-vista-fonts cpu-x polybar nutty woeusb nohang-git lightdm-webkit-theme-aether-git debtap rig gimp-plugin-registry vscodium-bin piper
 yay -S --needed bitwarden
 yay -S --needed pcloud-drive
 echo Installed AUR programs
