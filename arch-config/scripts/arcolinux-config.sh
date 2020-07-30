@@ -16,11 +16,17 @@ rm -rf ~/old_dat
 #make new directory
 mkdir ~/old_dat
 #back stuff up
-rsync -ah --progress ~/.config ~/old_dat/.config &&
-rsync -ah --progress ~/Dokumente ~/old_dat/Dokumente &&
-rsync -ah --progress ~/scripts ~/old_dat/scripts &&
-rsync -ah --progress ~/.mozilla ~/old_dat/.mozilla &&
-rsync -ah --progress ~/.easystroke ~/old_dat/.easystroke &&
+#rsync -ah --progress ~/.config ~/old_dat/.config &&
+#rsync -ah --progress ~/Dokumente ~/old_dat/Dokumente &&
+#rsync -ah --progress ~/scripts ~/old_dat/scripts &&
+#rsync -ah --progress ~/.mozilla ~/old_dat/.mozilla &&
+#rsync -ah --progress ~/.easystroke ~/old_dat/.easystroke &&
+
+rsync -ah ~/.config ~/old_dat/.config &&
+rsync -ah ~/Dokumente ~/old_dat/Dokumente &&
+rsync -ah ~/scripts ~/old_dat/scripts &&
+rsync -ah ~/.mozilla ~/old_dat/.mozilla &&
+rsync -ah ~/.easystroke ~/old_dat/.easystroke &&
 echo Made backups
 
 #copy folders
