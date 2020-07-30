@@ -22,11 +22,11 @@ mkdir ~/old_dat
 #rsync -ah --progress ~/.mozilla ~/old_dat/.mozilla &&
 #rsync -ah --progress ~/.easystroke ~/old_dat/.easystroke &&
 
-rsync -ah ~/.config ~/old_dat/.config &&
-rsync -ah ~/Dokumente ~/old_dat/Dokumente &&
-rsync -ah ~/scripts ~/old_dat/scripts &&
-rsync -ah ~/.mozilla ~/old_dat/.mozilla &&
-rsync -ah ~/.easystroke ~/old_dat/.easystroke &&
+cp -r ~/.config ~/old_dat/.config &&
+cp -r ~/Dokumente ~/old_dat/Dokumente &&
+cp -r ~/scripts ~/old_dat/scripts &&
+cp -r ~/.mozilla ~/old_dat/.mozilla &&
+cp -r ~/.easystroke ~/old_dat/.easystroke &&
 echo Made backups
 
 #copy folders
@@ -35,25 +35,25 @@ echo Made backups
 #rsync -ah --progress ~/config/.mozilla ~/ &&
 #rsync -ah --progress ~/config/.easystroke ~/ &&
 
-rsync -ah ~/config/.config/ ~/ &&
-rsync -ah ~/config/Dokumente ~/ &&
-rsync -ah ~/config/.mozilla ~/ &&
+cp -r ~/config/.config/ ~/ &&
+cp -r ~/config/Dokumente ~/ &&
+cp -r ~/config/.mozilla ~/ &&
 mkdir ~/.easystroke
-rsync -ah ~/config/.easystroke ~/ &&
+cp -r ~/config/.easystroke ~/ &&
 echo Copied folders
 #copy single files
 #rsync -ah --progress ~/config/.bashrc ~/ &&
 #rsync -ah --progress ~/config/.face ~/ &&
 #rsync -ah --progress ~/config/.gtkrc-2.0 ~/ &&
 
-rsync -ah ~/config/.bashrc ~/ &&
-rsync -ah ~/config/.face ~/ &&
-rsync -ah ~/config/.gtkrc-2.0 ~/ &&
+cp -r ~/config/.bashrc ~/ &&
+cp -r ~/config/.face ~/ &&
+cp -r ~/config/.gtkrc-2.0 ~/ &&
 echo Copied files
 #copy scripts
 #rsync -ah --progress ~/config/scripts/ ~/
 
-rsync -ah ~/config/scripts/ ~/
+cp -r ~/config/scripts/ ~/
 #copy stuff to /etc
 sudo cp -r ~/config/etc /
 #copy old lightdm themes (and maybe other stuff, idk)
