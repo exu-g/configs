@@ -38,6 +38,7 @@ echo Made backups
 rsync -ah ~/config/.config/ ~/ &&
 rsync -ah ~/config/Dokumente ~/ &&
 rsync -ah ~/config/.mozilla ~/ &&
+mkdir ~/.easystroke
 rsync -ah ~config/.easystroke ~/ &&
 echo Copied folders
 #copy single files
@@ -67,7 +68,7 @@ mkdir ~/.config/GIMP/2.10/plug-ins/
 rsync -ah ~/config/gimp-plugins/* ~/.config/GIMP/2.10/plug-ins/ 
 #unzip gimp plugins
 echo Unzipping gimp plugins
-unzip -o ~/.config/GIMP/2.10/plug-ins/export_layers-3.3.1.zip -d ~/.config/GIMP/2.10/plug-ins/
+#unzip -o ~/.config/GIMP/2.10/plug-ins/export_layers-3.3.1.zip -d ~/.config/GIMP/2.10/plug-ins/
 rm ~/.config/GIMP/2.10/plug-ins/export_layers-3.3.1.zip
 echo Unzipped gimp plugins
 
