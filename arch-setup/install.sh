@@ -34,6 +34,9 @@ do
         2)
             sudo pacman -S --needed i3-gaps
             ;;
+        3)
+            sudo yay -S --needed gnome gnome-shell-extension-arc-menu gnome-shell-extension-dash-to-dock gnome-tweaks
+            ;;
     esac
 done
 
