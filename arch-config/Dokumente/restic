@@ -5,7 +5,6 @@
 export B2_ACCOUNT_ID=
 export B2_ACCOUNT_KEY=
 
-
 #arco-pc-backup home:
 restic -r b2:arco-pc-backup:/home/marc init
 restic -r b2:arco-pc-backup:/home/marc backup --verbose "/home/marc/" --exclude-file=/home/marc/Dokumente/home-exclude.txt
