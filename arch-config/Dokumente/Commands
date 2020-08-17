@@ -77,7 +77,7 @@ ssh-copy-id -i <file location> <user>@<ip/domain>
 ssh-copy-id -i ~/.ssh/id_rsa.pub <user>@<ip/domain>
 
 #Video as background
-xwinwrap -g 1920x1080 -ov -- mpv -wid WID --loop --no-audio --keepaspect=no <file>
+xwinwrap -g 1920x1080 -ov -- mpv -wid WID --loop --no-audio --keepaspect=no --no-osc <file>
 
 #Building LineageOS 17.1 for microG
 sudo docker build -t fremontt/losbuilder https://gitlab.com/fremontt/minimal-docker-for-lineageos/image.git
