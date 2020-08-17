@@ -49,7 +49,8 @@ format-offset =
 ; =======================
 
 ; Purple theme ==========
-background = #99352f3f
+;background = #99352f3f
+background = #352f3f
 foreground = #f3f2f4
 alert = #d170bd
 volume-min = #00ff00
