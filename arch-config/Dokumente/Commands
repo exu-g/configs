@@ -80,6 +80,7 @@ sudo docker run -v /mnt/1d90c4d5-21d2-4455-bb4a-814de8496744/dockerphone/lineage
 
 #ssh
 root@realstickman.xyz
+root@nextcloud.realstickman.xyz
 
 #generate keys per computer, only once!
 ssh-keygen
