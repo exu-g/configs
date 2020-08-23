@@ -19,7 +19,7 @@ cmd=(dialog --separate-output --checklist "Select Desktop environment/Window man
 options=(1 "[DE] xfce4" off    # any option can be set to default to "on"
          2 "[WM] i3-gaps" off)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
-clear
+#clear
 for choice in $choices
 do
     case $choice in
@@ -44,7 +44,7 @@ options=(1 "Firefox" on    # any option can be set to default to "on"
          6 "Icecat" off
          7 "Torbrowser" on)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
-clear
+#clear
 for choice in $choices
 do
     case $choice in
@@ -97,7 +97,7 @@ options=(1 "VirtManager" off    # any option can be set to default to "on"
          15 "Bettergram (Telegram Client)" on
          16 "Pycharm")
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
-clear
+#clear
 for choice in $choices
 do
     case $choice in
@@ -172,7 +172,7 @@ done
 cmd=(dialog --separate-output --checklist "Report installed packages?" 22 76 16)
 options=(1 "pkgstats" off)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
-clear
+#clear
 for choice in $choices
 do
     case $choice in
