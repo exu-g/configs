@@ -88,7 +88,13 @@ options=(1 "VirtManager" off    # any option can be set to default to "on"
          6 "Youtube-dl" off
          7 "Discord" on
          8 "Handbrake" off
-         9 "Gimp" off)
+         9 "Gimp" off
+         10 "Audacity" off
+         11 "MangoHud" off
+         12 "Easystroke" on
+         13 "Liferea" off
+         14 "Mirage" on
+         15 "Bettergram" on)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 #clear
 for choice in $choices
@@ -130,44 +136,28 @@ do
             sudo pacman -S --needed gimp
             echo Installed Gimp
             ;;
-    esac
-done
-
-#this block does not show up
-cmd=(dialog --separate-output --checklist "Select more programs:" 22 76 16)
-options=(1 "Audacity" off
-         2 "MangoHud" off
-         3 "Easystroke" on
-         4 "Liferea" off
-         5 "Mirage" on
-         6 "Bettergram" on)
-choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
-#clear
-for choice in $choices
-do
-    case $choice in
-        1)
+        10)
             sudo pacman -S --needed audacity
             echo Installed Audacity
             ;;
-        2)
+        11)
             git clone --recurse-submodules https://github.com/flightlessmango/MangoHud.git
             ./MangoHud/build.sh install
             echo Installed MangoHud
             ;;
-        3)
+        12)
             sudo yay -S --needed easystroke
             echo Installed Easystroke
             ;;
-        4)
+        13)
             sudo yay -S --needed liferea
             echo Installed Liferea
             ;;
-        5)
+        14)
             sudo yay -S --needed matrix-mirage
             echo Installed Mirage
             ;;
-        6)
+        15)
             sudo yay -S --needed bettergram
             echo Installed Bettergram
             ;;
