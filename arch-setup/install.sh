@@ -133,14 +133,14 @@ do
     esac
 done
 
+#this block does not show up
 cmd=(dialog --separate-output --checklist "Select more programs:" 22 76 16)
 options=(1 "Audacity" off
          2 "MangoHud" off
          3 "Easystroke" on
          4 "Liferea" off
          5 "Mirage" on
-         6 "Bettergram" on
-         7 "Pycharm")
+         6 "Bettergram" on)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 #clear
 for choice in $choices
@@ -170,10 +170,6 @@ do
         6)
             sudo yay -S --needed bettergram
             echo Installed Bettergram
-            ;;
-        7)
-            sudo pacman -S --needed pycharm-community-edition
-            echo Installed Pycharm
             ;;
     esac
 done
