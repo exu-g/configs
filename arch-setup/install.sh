@@ -93,8 +93,8 @@ options=(1 "VirtManager" off    # any option can be set to default to "on"
          11 "MangoHud" off
          12 "Easystroke" on
          13 "Liferea" off
-         14 "Mirage (Matrix Client)" on
-         15 "Bettergram (Telegram Client)" on
+         14 "Mirage" on
+         15 "Bettergram" on
          16 "Pycharm")
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 #clear
