@@ -108,5 +108,6 @@ ex ()
   fi
 }
 
+#execute stuff
 #neofetch
 fish
