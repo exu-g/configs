@@ -2,13 +2,6 @@
 # ~/.bashrc
 #
 
-#Ibus settings if you need them
-#type ibus-setup in terminal to change settings and start the daemon
-#delete the hashtags of the next lines and restart
-#export GTK_IM_MODULE=ibus
-#export XMODIFIERS=@im=dbus
-#export QT_IM_MODULE=ibus
-
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
@@ -25,7 +18,7 @@ if [ -d "$HOME/.local/bin" ] ;
 fi
 
 #update config
-#alias upconf='/home/marc/.config/scripts/download-arcolinux-config.sh'
+alias upconf='$HOME/scripts/arcolinux-config.sh'
 
 #list
 alias ls='ls --color=auto'
@@ -71,33 +64,10 @@ alias merge="xrdb -merge ~/.Xresources"
 # Aliases for software managment
 # pacman or pm
 alias pacman='sudo pacman --color auto'
-#alias update='sudo pacman -Syyu'
 alias update='trizen -Syyu --noconfirm'
-
-# yay as aur helper - updates everything
-#alias pksyua="yay -Syu --noconfirm"
-#alias upall="yay -Syu --noconfirm"
-
-#trizen updates everything
-alias upall="trizen -Syyu --noconfirm"
-
-#ps
-alias ps="ps auxf"
-alias psgrep="ps aux | grep -v grep | grep -i -e VSZ -e"
 
 #grub update
 alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
-
-#improve png
-alias fixpng="find . -type f -name "*.png" -exec convert {} -strip {} \;"
-
-#add new fonts
-alias update-fc='sudo fc-cache -fv'
-
-#copy/paste all content of /etc/skel over to home folder - backup of config created - beware
-alias skel='cp -Rf ~/.config ~/.config-backup-$(date +%Y.%m.%d-%H.%M.%S) && cp -rf /etc/skel/* ~'
-#backup contents of /etc/skel to hidden backup folder in home/user
-alias bupskel='cp -Rf /etc/skel ~/.skel-backup-$(date +%Y.%m.%d-%H.%M.%S)'
 
 #copy bashrc-latest over on bashrc - cb= copy bashrc
 alias cb="cp ~/.bashrc-latest ~/.bashrc && source ~/.bashrc && sudo cp /etc/skel/.bashrc-latest /etc/skel/.bashrc"
