@@ -178,7 +178,7 @@ do
 done
 
 echo Installing default pacman programs
-sudo pacman -S --needed arandr libreoffice-fresh-de termite neofetch wget picom stress obs-studio  python-pip hunspell hunspell-de hyphen hyphen-de fish psensor transmission-qt smartmontools thunderbird ffmpeg jre-openjdk thunar gtk-engine-murrine iperf3 celluloid nload languagetool dmenu
+sudo pacman -S --needed arandr libreoffice-fresh-de termite neofetch wget picom stress obs-studio  python-pip hunspell hunspell-de hyphen hyphen-de fish psensor transmission-qt smartmontools thunderbird ffmpeg jre-openjdk thunar gtk-engine-murrine iperf3 celluloid nload languagetool dmenu rofi
 echo Installed official programs
 
 #AUR
