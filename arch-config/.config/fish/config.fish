@@ -24,7 +24,7 @@ alias pacman='sudo pacman --color auto'
 alias update='yay -Syu'
 
 #trizen updates everything
-alias upall="trizen -Syyu --noconfirm && bash $HOME/scripts/arcolinux-config.sh"
+alias upall="yay -Syu --noconfirm && bash $HOME/scripts/arcolinux-config.sh"
 
 #grub update
 alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
