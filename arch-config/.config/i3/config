@@ -429,8 +429,8 @@ exec --no-startup-id i3-msg 'workspace 2; layout tabbed; exec bettergram'
 #Authentication dialog
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
-# pCloud
-exec --no-startup-id pcloud
+#pCloud
+#exec --no-startup-id pcloud
 
 #nextcloud
 exec --no-startup-id nextcloud
