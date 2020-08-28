@@ -49,6 +49,7 @@ echo Copied folders
 cp -r ~/config/.bashrc ~/ &&
 cp -r ~/config/.face ~/ &&
 cp -r ~/config/.gtkrc-2.0 ~/ &&
+cp -r ~/config/.gitconfig ~/ &&
 echo Copied files
 #copy scripts
 #rsync -ah --progress ~/config/scripts/ ~/
