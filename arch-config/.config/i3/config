@@ -313,6 +313,25 @@ mode "$gaming" {
 
 
 #####################################################################################################################
+#################                          start normal layout                                      #################
+#####################################################################################################################
+
+
+# launch programs in the right workspaces
+
+bindsym $mod+l mode "$layout"
+
+set $layout full (f), terminal (t)
+mode "$gaming" {
+    bindsym f exec --no-startup-id bash $HOME/.config/i3/scripts/layout-default.sh
+    bindsym t exec --no-startup-id i3-msg 'workspace 1; exec termite'
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+
+#####################################################################################################################
 #################                       display                                                     #################
 #####################################################################################################################
 
@@ -400,25 +419,25 @@ font pango:Noto Mono Regular 9
 # USER APPLICATIONS TO START AT BOOT
 
 #Terminal
-exec --no-startup-id i3-msg 'workspace 1; exec termite'
+#exec --no-startup-id i3-msg 'workspace 1; exec termite'
 
 #Liferea
-exec --no-startup-id i3-msg 'workspace 3; exec liferea'
+#exec --no-startup-id i3-msg 'workspace 3; exec liferea'
 
 #Firefox
-exec --no-startup-id i3-msg 'workspace 2; layout tabbed; exec firefox'
+#exec --no-startup-id i3-msg 'workspace 2; layout tabbed; exec firefox'
 
 #Thunderbird
-exec --no-startup-id i3-msg 'workspace 2; layout tabbed; exec thunderbird'
+#exec --no-startup-id i3-msg 'workspace 2; layout tabbed; exec thunderbird'
 
 #Discord
-exec --no-startup-id i3-msg 'workspace 2; layout tabbed; exec discord'
+#exec --no-startup-id i3-msg 'workspace 2; layout tabbed; exec discord'
 
 #Mirage
-exec --no-startup-id i3-msg 'workspace 2; layout tabbed; exec mirage'
+#exec --no-startup-id i3-msg 'workspace 2; layout tabbed; exec mirage'
 
 #bettergram
-exec --no-startup-id i3-msg 'workspace 2; layout tabbed; exec bettergram'
+#exec --no-startup-id i3-msg 'workspace 2; layout tabbed; exec bettergram'
 
 
 # TRAY APPLICATIONS
