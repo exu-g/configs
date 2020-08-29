@@ -322,7 +322,7 @@ mode "$gaming" {
 bindsym $mod+l mode "$layout"
 
 set $layout full (f), terminal (t)
-mode "$gaming" {
+mode "$layout" {
     bindsym f exec --no-startup-id bash $HOME/.config/i3/scripts/layout-default.sh
     bindsym t exec --no-startup-id i3-msg 'workspace 1; exec termite'
 
