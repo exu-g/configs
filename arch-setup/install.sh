@@ -3,37 +3,38 @@
 #change to home (does not show in terminal)
 cd $HOME
 
-sudo pacman -Sy
-
-echo Uninstalling unused packages
-sudo pacman -Rns evolution catfish geany vim keepass gnome-boxes sublime-text-dev atom adwaita-icon-theme arcolinux-i3wm-git arcolinux-tweak-tool-git arcolinux-welcome-app-git clonezilla evolution-data-server numix-circle-arc-icons-git numix-circle-icon-theme-git numix-gtk-theme-git numix-icon-theme-git oh-my-zsh-git pamac-aur qbittorrent vivaldi vlc code baka-mplayer tmux guvcview
-echo Uninstalled unused packages
-
-#update stuff
-echo Skipping updating packages
-echo Updating packages
-yay -Syyu
-echo Updated packages
+in_xfce=0
+in_i3-gaps=0
+in_gnome=0
 
 cmd=(dialog --separate-output --checklist "Select Desktop environment/Window manager:" 22 76 16)
 options=(1 "[DE] xfce4" off    # any option can be set to default to "on"
-         2 "[WM] i3-gaps" off)
+         2 "[WM] i3-gaps" off
+         3 "[DE] gnome" off)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
-#clear
+clear
 for choice in $choices
 do
     case $choice in
         1)
-            sudo pacman -S --needed xfce4
+            in_xfce=1
             ;;
         2)
-            sudo pacman -S --needed i3-gaps
+            in_i3-gaps=1
             ;;
         3)
-            sudo yay -S --needed gnome gnome-shell-extension-arc-menu gnome-shell-extension-dash-to-dock gnome-tweaks
+            in_gnome=1
             ;;
     esac
 done
+
+in_firefox=0
+in_ugchromium=0
+in_palemoon=0
+in_basilisk=0
+in_netsurf=0
+in_icecat=0
+in_tor=0
 
 cmd=(dialog --separate-output --checklist "Select browsers:" 22 76 16)
 options=(1 "Firefox" on    # any option can be set to default to "on"
@@ -44,40 +45,56 @@ options=(1 "Firefox" on    # any option can be set to default to "on"
          6 "Icecat" off
          7 "Torbrowser" on)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
-#clear
+clear
 for choice in $choices
 do
     case $choice in
         1)
-            sudo pacman -S --needed qemu firefox
+            in_firefox=1
             echo Installed Firefox
             ;;
         2)
-            sudo pacman -S --needed ungoogled-chromium
+            in_ugchromium=1
             echo Installed Ungoogled-Chromium
             ;;
         3)
-            sudo pacman -S --needed palemoon
+            in_palemoon=1
             echo Installed Palemoon
             ;;
         4)
-            sudo pacman -S --needed basilisk
+            in_basilisk=1
             echo Installed Basilisk
             ;;
         5)
-            sudo pacman -S --needed netsurf
+            in_netsurf=1
             echo Installed Netsurf
             ;;
         6)
-            sudo yay -S --needed icecat-bin
+            in_icecat=1
             echo Installed Icecat
             ;;
         7)
-            sudo pacman -S --needed torbrowser-launcher
+            in_tor=1
             echo Installed Torbrowser
             ;;
     esac
 done
+
+in_virtmanager=0
+in_steam=0
+in_lutris=0
+in_blender=0
+in_krita=0
+in_youtube-dl=0
+in_discord=0
+in_handbrake=0
+in_gimp=0
+in_audacity=0
+in_mangohud=0
+in_easystrokes=0
+in_liferea=0
+in_mirage=0
+in_bettergram=0
 
 cmd=(dialog --separate-output --checklist "Select other programs:" 22 76 16)
 options=(1 "VirtManager" off    # any option can be set to default to "on"
@@ -96,40 +113,40 @@ options=(1 "VirtManager" off    # any option can be set to default to "on"
          14 "Mirage" on
          15 "Bettergram" on)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
-#clear
+clear
 for choice in $choices
 do
     case $choice in
         1)
-            sudo pacman -S --needed qemu virt-manager
+            in_virtmanager=1
             echo Installed VirtManager
             ;;
         2)
-            sudo pacman -S --needed steam steam-native-runtime
+            in_steam=1
             echo Installed Steam
             ;;
         3)
-            sudo pacman -S --needed lutris
+            in_lutris=1
             echo Installed Lutris
             ;;
         4)
-            sudo pacman -S --needed blender
+            in_blender=1
             echo Installed Blender
             ;;
         5)
-            sudo pacman -S --needed krita
+            in_krita=1
             echo Installed Krita
             ;;
         6)
-            sudo pacman -S --needed youtube-dl
+            in_youtube-dl=1
             echo Installed Youtube-dl
             ;;
         7)
-            sudo pacman -S --needed discord
+            in_discord=1
             echo Installed Discord
             ;;
         8)
-            sudo pacman -S --needed handbrake
+            in_handbrake=1
             echo Installed Handbrake
             ;;
         9)
@@ -137,46 +154,58 @@ do
             echo Installed Gimp
             ;;
         10)
-            sudo pacman -S --needed audacity
+            in_audacity=1
             echo Installed Audacity
             ;;
         11)
-            git clone --recurse-submodules https://github.com/flightlessmango/MangoHud.git
-            ./MangoHud/build.sh install
+            in_mangohud=1
             echo Installed MangoHud
             ;;
         12)
-            sudo yay -S --needed easystroke
+            in_easystrokes=1
             echo Installed Easystroke
             ;;
         13)
-            sudo yay -S --needed liferea
+            in_liferea=1
             echo Installed Liferea
             ;;
         14)
-            sudo yay -S --needed matrix-mirage
+            in_mirage=1
             echo Installed Mirage
             ;;
         15)
-            sudo yay -S --needed bettergram
+            in_bettergram=1
             echo Installed Bettergram
             ;;
     esac
 done
 
+in_pkgstats=0
+
 cmd=(dialog --separate-output --checklist "Report installed packages?" 22 76 16)
 options=(1 "pkgstats" off)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
-#clear
+clear
 for choice in $choices
 do
     case $choice in
         1)
-            sudo pacman -S --needed pkgstats
+            in_pkgstats=1
             ;;
     esac
 done
 
+#uninstalling unused packages
+echo Uninstalling unused packages
+sudo pacman -Rns evolution catfish geany vim keepass gnome-boxes sublime-text-dev atom adwaita-icon-theme arcolinux-i3wm-git arcolinux-tweak-tool-git arcolinux-welcome-app-git clonezilla evolution-data-server numix-circle-arc-icons-git numix-circle-icon-theme-git numix-gtk-theme-git numix-icon-theme-git oh-my-zsh-git pamac-aur qbittorrent vivaldi vlc code baka-mplayer tmux guvcview
+echo Uninstalled unused packages
+
+#update stuff
+echo Updating packages
+yay -Syyu
+echo Updated packages
+
+#pacman programs
 echo Installing default pacman programs
 sudo pacman -S --needed arandr libreoffice-fresh-de termite neofetch wget picom stress obs-studio  python-pip hunspell hunspell-de hyphen hyphen-de fish psensor transmission-qt smartmontools thunderbird ffmpeg jre-openjdk thunar gtk-engine-murrine iperf3 celluloid nload languagetool dmenu rofi
 echo Installed official programs
@@ -193,9 +222,202 @@ echo Installing wine
 pacman -S --needed wine-staging giflib lib32-giflib libpng lib32-libpng libldap lib32-libldap gnutls lib32-gnutls mpg123 lib32-mpg123 openal lib32-openal v4l-utils lib32-v4l-utils libpulse lib32-libpulse libgpg-error lib32-libgpg-error alsa-plugins lib32-alsa-plugins alsa-lib lib32-alsa-lib libjpeg-turbo lib32-libjpeg-turbo sqlite lib32-sqlite libxcomposite lib32-libxcomposite libxinerama lib32-libgcrypt libgcrypt lib32-libxinerama ncurses lib32-ncurses opencl-icd-loader lib32-opencl-icd-loader libxslt lib32-libxslt libva lib32-libva gtk3 lib32-gtk3 gst-plugins-base-libs lib32-gst-plugins-base-libs vulkan-icd-loader lib32-vulkan-icd-loader
 echo Installed wine
 
+#python modules
 echo Installing python modules
 sudo pip3 install ffmpeg-normalize praw
 echo Installed python modules
+
+###################
+#selected programs#
+###################
+echo Installing selected programs
+
+#DEs & WMs
+if [ $in_xfce -eq 1 ]; then
+    echo "Installing xfce"
+    sudo pacman -S --needed xfce4
+else
+    echo "Skipping xfce"
+fi
+
+if [$in_i3-gaps -eq 1]; then
+    echo "Installing i3-gaps"
+    sudo pacman -S --needed i3-gaps
+else   
+    echo "Skipping i3-gaps"
+fi
+
+if [$in_gnome -eq 1]; then
+    echo "Installing gnome"
+    sudo yay -S --needed gnome gnome-shell-extension-arc-menu gnome-shell-extension-dash-to-dock gnome-tweaks
+else
+    echo "Skipping gnome"
+fi
+
+#browsers
+if [ $in_firefox -eq 1 ]; then
+    echo "Installing Firefox"
+    sudo pacman -S --needed qemu firefox
+else
+    echo "Skipping Firefox"
+fi
+
+if [ $in_ugchromium -eq 1 ]; then
+    echo "Installing Ungoogled-chromium"
+    sudo pacman -S --needed ungoogled-chromium
+else
+    echo "Skipping Ungoogled-chromium"
+fi
+
+if [ $in_palemoon -eq 1 ]; then
+    echo "Installing Palemoon"
+    sudo pacman -S --needed palemoon
+else
+    echo "Skipping Palemoon"
+fi
+
+if [ $in_basilisk -eq 1 ]; then
+    echo "Installing Basilisk"
+    sudo pacman -S --needed basilisk
+else
+    echo "Skipping Basilisk"
+fi
+
+if [ $in_netsurf -eq 1 ]; then
+    echo "Installing Netsurf"
+    sudo pacman -S --needed netsurf
+else
+    echo "Skipping Netsurf"
+fi
+
+if [ $in_icecat -eq 1 ]; then
+    echo "Installing Icecat"
+    sudo yay -S --needed icecat-bin
+else
+    echo "Skipping Icecat"
+fi
+
+if [ $in_tor -eq 1 ]; then
+    echo "Installing Tor"
+    sudo pacman -S --needed torbrowser-launcher
+else
+    echo "Skipping Tor"
+fi
+
+#other programs
+if [ $in_virtmanager -eq 1 ]; then
+    echo "Installing VirtManager"
+    sudo pacman -S --needed qemu virt-manager
+else
+    echo "Skipping VirtManager"
+fi
+
+if [ $in_steam -eq 1 ]; then
+    echo "Installing Steam"
+    sudo pacman -S --needed steam steam-native-runtime
+else
+    echo "Skipping Steam"
+fi
+
+if [ $in_lutris -eq 1 ]; then
+    echo "Installing Lutris"
+    sudo pacman -S --needed lutris
+else
+    echo "Skipping Lutris"
+fi
+
+if [ $in_blender -eq 1 ]; then
+    echo "Installing Blender"
+    sudo pacman -S --needed blender
+else
+    echo "Skipping Blender"
+fi
+
+if [ $in_krita -eq 1 ]; then
+    echo "Installing Krita"
+    sudo pacman -S --needed krita
+else
+    echo "Skipping Krita"
+fi
+
+if [ $in_youtube-dl -eq 1 ]; then
+    echo "Installing Youtube-dl"
+    sudo pacman -S --needed youtube-dl
+else
+    echo "Skipping Youtube-dl"
+fi
+
+if [ $in_discord -eq 1 ]; then
+    echo "Installing Discord"
+    sudo pacman -S --needed discord
+else
+    echo "Skipping Discord"
+fi
+
+if [ $in_handbrake -eq 1 ]; then
+    echo "Installing Handbrake"
+    sudo pacman -S --needed handbrake
+else
+    echo "Skipping Handbrake"
+fi
+
+if [ $in_gimp -eq 1 ]; then
+    echo "Installing Gimp"
+    sudo pacman -S --needed gimp
+else
+    echo "Skipping Gimp"
+fi
+
+if [ $in_audacity -eq 1 ]; then
+    echo "Installing Audacity"
+    sudo pacman -S --needed audacity
+else
+    echo "Skipping Audacity"
+fi
+
+if [ $in_mangohud -eq 1 ]; then
+    echo "Installing MangoHud"
+    git clone --recurse-submodules https://github.com/flightlessmango/MangoHud.git
+    ./MangoHud/build.sh install
+else
+    echo "Skipping MangoHud"
+fi
+
+if [ $in_easystrokes -eq 1 ]; then
+    echo "Installing Easystrokes"
+    sudo yay -S --needed easystroke
+else
+    echo "Skipping Easystrokes"
+fi
+
+if [ $in_liferea -eq 1 ]; then
+    echo "Installing Liferea"
+    sudo yay -S --needed liferea
+else
+    echo "Skipping Liferea"
+fi
+
+if [ $in_mirage -eq 1 ]; then
+    echo "Installing Mirage"
+    sudo yay -S --needed matrix-mirage
+else
+    echo "Skipping Mirage"
+fi
+
+if [ $in_bettergram -eq 1 ]; then
+    echo "Installing Bettergram"
+    sudo yay -S --needed bettergram
+else
+    echo "Skipping Bettergram"
+fi
+
+#stats
+if [ $in_pkgstats -eq 1 ]; then
+    echo "Installing pkgstats"
+    sudo pacman -S --needed pkgstats
+else
+    echo "Skipping pkgstats"
+fi
 
 #Changes to home folder automatically now, no need to be extra careful anymore.
 git clone https://gitlab.com/RealStickman-arcolinux/config
@@ -203,7 +425,7 @@ echo Finished downloading config
 
 #cleanup
 rm -rf ~/setup
-echo Removed old setup files
+echo Removed setup files
 
 #downloading config
 echo Setting config
