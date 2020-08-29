@@ -437,7 +437,6 @@ else
     echo "Skipping auto-cpufreq"
 fi
 
-
 #stats
 if [ $in_pkgstats -eq 1 ]; then
     echo "Installing pkgstats"
