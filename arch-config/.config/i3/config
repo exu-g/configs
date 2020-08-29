@@ -319,7 +319,7 @@ mode "$gaming" {
 
 # launch programs in the right workspaces
 
-bindsym $mod+l mode "$layout"
+bindsym $mod+w mode "$layout"
 
 set $layout full (f), terminal (t)
 mode "$layout" {
