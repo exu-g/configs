@@ -212,12 +212,12 @@ done
 
 #uninstalling unused packages
 echo Uninstalling unused packages
-sudo pacman -Rns evolution catfish geany vim keepass gnome-boxes sublime-text-dev atom adwaita-icon-theme arcolinux-i3wm-git arcolinux-tweak-tool-git arcolinux-welcome-app-git clonezilla evolution-data-server numix-circle-arc-icons-git numix-circle-icon-theme-git numix-gtk-theme-git numix-icon-theme-git oh-my-zsh-git pamac-aur qbittorrent vivaldi vlc code baka-mplayer tmux guvcview
+sudo pacman -Rns --noconfirm evolution catfish geany vim keepass gnome-boxes sublime-text-dev atom adwaita-icon-theme arcolinux-i3wm-git arcolinux-tweak-tool-git arcolinux-welcome-app-git clonezilla evolution-data-server numix-circle-arc-icons-git numix-circle-icon-theme-git numix-gtk-theme-git numix-icon-theme-git oh-my-zsh-git pamac-aur qbittorrent vivaldi vlc code baka-mplayer tmux guvcview
 echo Uninstalled unused packages
 
 #update stuff
 echo Updating packages
-yay -Syyu
+yay -Syyu --noconfirm 
 echo Updated packages
 
 #pacman programs
@@ -227,9 +227,9 @@ echo Installed official programs
 
 #AUR
 echo Installing default AUR programs
-yay -S --needed ttf-ms-fonts ttf-tahoma ttf-vista-fonts cpu-x polybar nutty woeusb nohang-git lightdm-webkit-theme-aether debtap rig gimp-plugin-registry vscodium-bin piper
-yay -S --needed bitwarden
-yay -S --needed pcloud-drive
+yay -S --needed --noconfirm ttf-ms-fonts ttf-tahoma ttf-vista-fonts cpu-x polybar nutty woeusb nohang-git lightdm-webkit-theme-aether debtap rig gimp-plugin-registry vscodium-bin piper
+yay -S --needed --noconfirm bitwarden
+yay -S --needed --noconfirm pcloud-drive
 echo Installed AUR programs
 
 #install wine
@@ -264,7 +264,7 @@ fi
 
 if [$in_gnome -eq 1]; then
     echo "Installing gnome"
-    sudo yay -S --needed gnome gnome-shell-extension-arc-menu gnome-shell-extension-dash-to-dock gnome-tweaks
+    sudo yay -S --needed --noconfirm gnome gnome-shell-extension-arc-menu gnome-shell-extension-dash-to-dock gnome-tweaks
 else
     echo "Skipping gnome"
 fi
@@ -307,7 +307,7 @@ fi
 
 if [ $in_icecat -eq 1 ]; then
     echo "Installing Icecat"
-    sudo yay -S --needed icecat-bin
+    sudo yay -S --needed --noconfirm icecat-bin
 else
     echo "Skipping Icecat"
 fi
@@ -400,28 +400,28 @@ fi
 
 if [ $in_easystrokes -eq 1 ]; then
     echo "Installing Easystrokes"
-    sudo yay -S --needed easystroke
+    sudo yay -S --needed --noconfirm easystroke
 else
     echo "Skipping Easystrokes"
 fi
 
 if [ $in_liferea -eq 1 ]; then
     echo "Installing Liferea"
-    sudo yay -S --needed liferea
+    sudo yay -S --needed --noconfirm liferea
 else
     echo "Skipping Liferea"
 fi
 
 if [ $in_mirage -eq 1 ]; then
     echo "Installing Mirage"
-    sudo yay -S --needed matrix-mirage
+    sudo yay -S --needed --noconfirm matrix-mirage
 else
     echo "Skipping Mirage"
 fi
 
 if [ $in_bettergram -eq 1 ]; then
     echo "Installing Bettergram"
-    sudo yay -S --needed bettergram
+    sudo yay -S --needed --noconfirm bettergram
 else
     echo "Skipping Bettergram"
 fi
@@ -429,7 +429,7 @@ fi
 #performance and battery life
 if [ $in_acpufreq -eq 1 ]; then
     echo "Installing auto-cpufreq"
-    sudo yay -S auto-cpufreq-git
+    sudo yay -S --needed --noconfirm auto-cpufreq-git
     sudo auto-cpufreq --install
     sudo systemctl start auto-cpufreq
     sudo systemctl enable auto-cpufreq
