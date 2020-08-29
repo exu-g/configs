@@ -46,6 +46,7 @@
 /home/marc/.wine 
 /home/marc/.yarn 
 /home/marc/.zoom
+/home/marc/.Trash
 
 /home/marc/old_dat
 /home/marc/Downloads
