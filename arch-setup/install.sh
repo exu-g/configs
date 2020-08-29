@@ -222,7 +222,7 @@ echo Updated packages
 
 #pacman programs
 echo Installing default pacman programs
-sudo pacman -S --needed arandr libreoffice-fresh-de termite neofetch wget picom stress obs-studio  python-pip hunspell hunspell-de hyphen hyphen-de fish psensor transmission-qt smartmontools thunderbird ffmpeg jre-openjdk thunar gtk-engine-murrine iperf3 celluloid nload languagetool dmenu rofi nextcloud-client
+sudo pacman -S --needed --noconfirm arandr libreoffice-fresh-de termite neofetch wget picom stress obs-studio  python-pip hunspell hunspell-de hyphen hyphen-de fish psensor transmission-qt smartmontools thunderbird ffmpeg jre-openjdk thunar gtk-engine-murrine iperf3 celluloid nload languagetool dmenu rofi nextcloud-client
 echo Installed official programs
 
 #AUR
@@ -234,7 +234,7 @@ echo Installed AUR programs
 
 #install wine
 echo Installing wine
-pacman -S --needed wine-staging giflib lib32-giflib libpng lib32-libpng libldap lib32-libldap gnutls lib32-gnutls mpg123 lib32-mpg123 openal lib32-openal v4l-utils lib32-v4l-utils libpulse lib32-libpulse libgpg-error lib32-libgpg-error alsa-plugins lib32-alsa-plugins alsa-lib lib32-alsa-lib libjpeg-turbo lib32-libjpeg-turbo sqlite lib32-sqlite libxcomposite lib32-libxcomposite libxinerama lib32-libgcrypt libgcrypt lib32-libxinerama ncurses lib32-ncurses opencl-icd-loader lib32-opencl-icd-loader libxslt lib32-libxslt libva lib32-libva gtk3 lib32-gtk3 gst-plugins-base-libs lib32-gst-plugins-base-libs vulkan-icd-loader lib32-vulkan-icd-loader
+pacman -S --needed --noconfirm wine-staging giflib lib32-giflib libpng lib32-libpng libldap lib32-libldap gnutls lib32-gnutls mpg123 lib32-mpg123 openal lib32-openal v4l-utils lib32-v4l-utils libpulse lib32-libpulse libgpg-error lib32-libgpg-error alsa-plugins lib32-alsa-plugins alsa-lib lib32-alsa-lib libjpeg-turbo lib32-libjpeg-turbo sqlite lib32-sqlite libxcomposite lib32-libxcomposite libxinerama lib32-libgcrypt libgcrypt lib32-libxinerama ncurses lib32-ncurses opencl-icd-loader lib32-opencl-icd-loader libxslt lib32-libxslt libva lib32-libva gtk3 lib32-gtk3 gst-plugins-base-libs lib32-gst-plugins-base-libs vulkan-icd-loader lib32-vulkan-icd-loader
 echo Installed wine
 
 #python modules
@@ -250,14 +250,14 @@ echo Installing selected programs
 #DEs & WMs
 if [ $in_xfce -eq 1 ]; then
     echo "Installing xfce"
-    sudo pacman -S --needed xfce4
+    sudo pacman -S --needed --noconfirm xfce4
 else
     echo "Skipping xfce"
 fi
 
 if [$in_i3-gaps -eq 1]; then
     echo "Installing i3-gaps"
-    sudo pacman -S --needed i3-gaps
+    sudo pacman -S --needed --noconfirm i3-gaps
 else   
     echo "Skipping i3-gaps"
 fi
@@ -272,35 +272,35 @@ fi
 #browsers
 if [ $in_firefox -eq 1 ]; then
     echo "Installing Firefox"
-    sudo pacman -S --needed qemu firefox
+    sudo pacman -S --needed --noconfirm qemu firefox
 else
     echo "Skipping Firefox"
 fi
 
 if [ $in_ugchromium -eq 1 ]; then
     echo "Installing Ungoogled-chromium"
-    sudo pacman -S --needed ungoogled-chromium
+    sudo pacman -S --needed --noconfirm ungoogled-chromium
 else
     echo "Skipping Ungoogled-chromium"
 fi
 
 if [ $in_palemoon -eq 1 ]; then
     echo "Installing Palemoon"
-    sudo pacman -S --needed palemoon
+    sudo pacman -S --needed --noconfirm palemoon
 else
     echo "Skipping Palemoon"
 fi
 
 if [ $in_basilisk -eq 1 ]; then
     echo "Installing Basilisk"
-    sudo pacman -S --needed basilisk
+    sudo pacman -S --needed --noconfirm basilisk
 else
     echo "Skipping Basilisk"
 fi
 
 if [ $in_netsurf -eq 1 ]; then
     echo "Installing Netsurf"
-    sudo pacman -S --needed netsurf
+    sudo pacman -S --needed --noconfirm netsurf
 else
     echo "Skipping Netsurf"
 fi
@@ -314,7 +314,7 @@ fi
 
 if [ $in_tor -eq 1 ]; then
     echo "Installing Tor"
-    sudo pacman -S --needed torbrowser-launcher
+    sudo pacman -S --needed --noconfirm torbrowser-launcher
 else
     echo "Skipping Tor"
 fi
@@ -322,70 +322,70 @@ fi
 #other programs
 if [ $in_virtmanager -eq 1 ]; then
     echo "Installing VirtManager"
-    sudo pacman -S --needed qemu virt-manager
+    sudo pacman -S --needed --noconfirm qemu virt-manager
 else
     echo "Skipping VirtManager"
 fi
 
 if [ $in_steam -eq 1 ]; then
     echo "Installing Steam"
-    sudo pacman -S --needed steam steam-native-runtime
+    sudo pacman -S --needed --noconfirm steam steam-native-runtime
 else
     echo "Skipping Steam"
 fi
 
 if [ $in_lutris -eq 1 ]; then
     echo "Installing Lutris"
-    sudo pacman -S --needed lutris
+    sudo pacman -S --needed --noconfirm lutris
 else
     echo "Skipping Lutris"
 fi
 
 if [ $in_blender -eq 1 ]; then
     echo "Installing Blender"
-    sudo pacman -S --needed blender
+    sudo pacman -S --needed --noconfirm blender
 else
     echo "Skipping Blender"
 fi
 
 if [ $in_krita -eq 1 ]; then
     echo "Installing Krita"
-    sudo pacman -S --needed krita
+    sudo pacman -S --needed --noconfirm krita
 else
     echo "Skipping Krita"
 fi
 
 if [ $in_youtube-dl -eq 1 ]; then
     echo "Installing Youtube-dl"
-    sudo pacman -S --needed youtube-dl
+    sudo pacman -S --needed --noconfirm youtube-dl
 else
     echo "Skipping Youtube-dl"
 fi
 
 if [ $in_discord -eq 1 ]; then
     echo "Installing Discord"
-    sudo pacman -S --needed discord
+    sudo pacman -S --needed --noconfirm discord
 else
     echo "Skipping Discord"
 fi
 
 if [ $in_handbrake -eq 1 ]; then
     echo "Installing Handbrake"
-    sudo pacman -S --needed handbrake
+    sudo pacman -S --needed --noconfirm handbrake
 else
     echo "Skipping Handbrake"
 fi
 
 if [ $in_gimp -eq 1 ]; then
     echo "Installing Gimp"
-    sudo pacman -S --needed gimp
+    sudo pacman -S --needed --noconfirm gimp
 else
     echo "Skipping Gimp"
 fi
 
 if [ $in_audacity -eq 1 ]; then
     echo "Installing Audacity"
-    sudo pacman -S --needed audacity
+    sudo pacman -S --needed --noconfirm audacity
 else
     echo "Skipping Audacity"
 fi
@@ -440,7 +440,7 @@ fi
 #stats
 if [ $in_pkgstats -eq 1 ]; then
     echo "Installing pkgstats"
-    sudo pacman -S --needed pkgstats
+    sudo pacman -S --needed --noconfirm pkgstats
 else
     echo "Skipping pkgstats"
 fi
