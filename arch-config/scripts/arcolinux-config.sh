@@ -76,6 +76,7 @@ echo Unzipped gimp plugins
 #make bash scripts executable
 chmod +x ~/.config/polybar/launch.sh
 chmod +x ~/.config/i3/scripts/i3exit.sh
+chmod +x ~/.config/i3/scripts/layout-default.sh
 chmod +x ~/scripts/arcolinux-config.sh
 
 #remove downloaded folder
