@@ -50,42 +50,42 @@ urgent_on_bell = true
 background = rgba(40, 42, 54, 0.6)
 
 #text
-foreground      = #dfaefc
+foreground      = #fcd2ae
 #text bold
-foreground_bold = #dfaefc
+foreground_bold = #fcd2ae
 #cursor
-cursor          = #dfaefc
+cursor          = #fcd2ae
 #background      = #130016
 
 #htop schrift
-color0  = #33084c
+color0  = #4c2b08
 #eg htop root user
-color8  = #9775aa
+color8  = #aa9475
 #htop
-color1  = #d195f4
+color1  = #f4c395
 #htop
-color9  = #d195f4
+color9  = #f4c395
 #fish ~, make same as foreground
-color2  = #a132d1
+color2  = #d18632
 #username, same as foreground
-color10 = #a132d1
+color10 = #d18632
 #htop 3rd ram color
-color3  = #d195f4
+color3  = #f4c395
 #update Warning: and progress C
-color11 = #dfaefc
+color11 = #fcd2ae
 #htop 2nd ram color
-color4  = #57177c
+color4  = #7c4817
 #folders, other color for distro
-color12 = #a132d1
+color12 = #d18632
 #yay number
-color5  = #dfaefc
+color5  = #fcd2ae
 #some build stuff
-color13 = #dfaefc
+color13 = #fcd2ae
 #other stuff in htop
-color6  = #dfaefc
+color6  = #fcd2ae
 #htop uptime, tasks
-color14 = #dfaefc
+color14 = #fcd2ae
 #oooo from download progress bar, nano options
-color7  = #dfaefc
+color7  = #fcd2ae
 #nano
-color15 = #a132d1
+color15 = #d18632
