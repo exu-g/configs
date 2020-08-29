@@ -180,6 +180,21 @@ do
     esac
 done
 
+in_acpufreq=0
+
+cmd=(dialog --separate-output --checklist "Performance and Battery life" 22 76 16)
+options=(1 "auto-cpufreq" off)
+choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+clear
+for choice in $choices
+do
+    case $choice in
+        1)
+            in_acpufreq=1
+            ;;
+    esac
+done
+
 in_pkgstats=0
 
 cmd=(dialog --separate-output --checklist "Report installed packages?" 22 76 16)
@@ -410,6 +425,18 @@ if [ $in_bettergram -eq 1 ]; then
 else
     echo "Skipping Bettergram"
 fi
+
+#performance and battery life
+if [ $in_acpufreq -eq 1 ]; then
+    echo "Installing auto-cpufreq"
+    sudo yay -S auto-cpufreq-git
+    sudo auto-cpufreq --install
+    sudo systemctl start auto-cpufreq
+    sudo systemctl enable auto-cpufreq
+else
+    echo "Skipping auto-cpufreq"
+fi
+
 
 #stats
 if [ $in_pkgstats -eq 1 ]; then
