@@ -88,3 +88,9 @@ ssh-keygen
 #allow access through ssh key
 ssh-copy-id -i <file location> <user>@<ip/domain>
 ssh-copy-id -i ~/.ssh/id_rsa.pub <user>@<ip/domain>
+
+#Ventoy
+#install
+sudo bash Ventoy2Disk.sh -i -g /dev/XXX
+#update
+sudo bash Ventoy2Disk.sh -u /dev/XXX
