@@ -195,6 +195,21 @@ do
     esac
 done
 
+in_doom-emacs=0
+
+cmd=(dialog --separate-output --checklist "Code editors" 22 76 16)
+options=(1 "doom-emacs" off)
+choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+clear
+for choice in $choices
+do
+    case $choice in
+        1)
+            in_doom-emacs=1
+            ;;
+    esac
+done
+
 in_pkgstats=0
 
 cmd=(dialog --separate-output --checklist "Report installed packages?" 22 76 16)
@@ -435,6 +450,17 @@ if [ $in_acpufreq -eq 1 ]; then
     sudo systemctl enable auto-cpufreq
 else
     echo "Skipping auto-cpufreq"
+fi
+
+#doom-emacs
+if [ $in_doom-emacs -eq 1]; then
+    echo "Installing doom-emacs"
+    pacman -S --needed git emacs ripgrep fd
+    git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d
+    ~/.emacs.d/bin/doom install
+    export PATH=$PATH:~/.emacs.d/bin
+else
+    echo "Skipping doom-emacs"
 fi
 
 #stats
