@@ -21,6 +21,8 @@ rsync -ah --progress ~/.config ~/old_dat/.config &&
 rsync -ah --progress ~/scripts ~/old_dat/scripts &&
 rsync -ah --progress ~/.mozilla ~/old_dat/.mozilla &&
 rsync -ah --progress ~/.easystroke ~/old_dat/.easystroke &&
+rsync -ah --progress ~/.emacs.d ~/old_dat/.emacs.d &&
+rsync -ah --progress ~/.doom.d ~/old_dat/.doom.d &&
 
 #cp -r ~/.config ~/old_dat/.config &&
 #cp -r ~/Dokumente ~/old_dat/Dokumente &&
