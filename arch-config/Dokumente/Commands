@@ -96,7 +96,7 @@ sudo bash Ventoy2Disk.sh -i -g /dev/XXX
 sudo bash Ventoy2Disk.sh -u /dev/XXX
 
 #PATH Variables
-/home/marc/.local/bin /home/marc/.bin /usr/local/bin /usr/bin /bin /usr/local/sbin /var/lib/flatpak/exports/bin /usr/lib/jvm/default/bin /usr/bin/site_perl /usr/bin/vendor_perl /usr/bin/core_perl
+/home/marc/.local/bin:/home/marc/.bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/var/lib/flatpak/exports/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl
 
 #export path Variables
-export PATH=$PATH:<path>
+export PATH="$PATH":<path>
