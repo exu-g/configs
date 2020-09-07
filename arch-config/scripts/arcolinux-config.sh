@@ -17,7 +17,7 @@ rm -rf ~/old_dat
 mkdir ~/old_dat
 #back stuff up
 rsync -ah --progress ~/.config ~/old_dat/.config &&
-rsync -ah --progress ~/Dokumente ~/old_dat/Dokumente &&
+#rsync -ah --progress ~/Dokumente ~/old_dat/Dokumente &&
 rsync -ah --progress ~/scripts ~/old_dat/scripts &&
 rsync -ah --progress ~/.mozilla ~/old_dat/.mozilla &&
 rsync -ah --progress ~/.easystroke ~/old_dat/.easystroke &&
