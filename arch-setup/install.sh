@@ -458,7 +458,7 @@ if [ $in_doom-emacs -eq 1]; then
     pacman -S --needed git emacs ripgrep fd
     git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d
     ~/.emacs.d/bin/doom install
-    export PATH=$PATH:~/.emacs.d/bin
+    export PATH="$PATH":$HOME/.emacs.d/bin
 else
     echo "Skipping doom-emacs"
 fi
