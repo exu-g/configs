@@ -2,8 +2,6 @@
 
 i3-msg 'workspace 1; exec termite'
 
-i3-msg 'workspace 3; exec liferea'
-
 i3-msg 'workspace 2; layout tabbed; exec firefox'
 
 i3-msg 'workspace 2; layout tabbed; exec thunderbird'
