@@ -217,7 +217,7 @@ for_window [urgent=latest] focus
 default_orientation horizontal
 
 # split in horizontal orientation
-bindsym $mod+h split h
+bindsym $mod+o split h
 
 # split in vertical orientation
 bindsym $mod+v split v
