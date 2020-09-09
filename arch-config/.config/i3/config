@@ -344,7 +344,7 @@ mode "$xrandr" {
 #####################################################################################################################
 
 
-bindsym $mod+c mode "$browsers"
+bindsym $mod+b mode "$browsers"
 
 set $browsers firefox (f), chromium (c), palemoon (p), basilisk (b), netsurf (n), icecat (i), tor (t)
 mode "$browsers" {
@@ -358,6 +358,25 @@ mode "$browsers" {
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
+}
+
+
+#####################################################################################################################
+#################                           media                                                   #################
+#####################################################################################################################
+
+
+bindsym $mod+m mode "$media"
+
+set $media discord (d), mirage (m), bettergram (b), slack (s)
+mode "$media"{
+     bindsym d exec --no-startup-id discord;focus
+     bindsym m exec --no-startup-id mirage;focus
+     bindsym b exec --no-startup-id bettergram;focus
+     bindsym s exec --no-startup-id slack;focus
+
+     bindsym Return mode "default"
+     bindsym Escape mode "default"
 }
 
 
@@ -452,41 +471,23 @@ bindsym control+mod1+u exec --no-startup-id pavucontrol
 bindsym control+mod1+a exec --no-startup-id rofi -show drun
 
 #texteditors
-bindsym ctrl+mod1+e exec --no-startup-id vscodium;focus
-
-#variety
-bindsym control+mod1+i exec --no-startup-id variety;focus
+#bindsym ctrl+mod1+e exec --no-startup-id vscodium;focus
+bindsym ctrl+mod1+e exec --no-startup-id emacs;focus
 
 #thunar
 bindsym ctrl+mod1+t exec --no-startup-id thunar;focus
-
-#discord
-bindsym ctrl+mod1+d exec --no-startup-id discord;focus
-
-#empty container
-bindsym $mod+y exec --no-startup-id i3 open
 
 #libreoffice
 bindsym ctrl+mod1+l exec --no-startup-id libreoffice;focus
 
 #browsers
 bindsym control+mod1+f exec --no-startup-id firefox;focus
-#bindsym control+mod1+c exec --no-startup-id chromium;focus
-
-#mirage
-bindsym ctrl+mod1+m exec --no-startup-id mirage;focus
-
-#telegram
-bindsym ctrl+mod1+b exec --no-startup-id bettergram;focus
 
 #pragha
 bindsym ctrl+mod1+n exec --no-startup-id pragha;focus
 
 #thunderbird
-bindsym ctrl+mod1+y exec --no-startup-id thunderbird;focus
-
-#pycharm
-bindsym ctrl+mod1+p exec --no-startup-id pycharm;focus
+bindsym ctrl+mod1+b exec --no-startup-id thunderbird;focus
 
 
 #####################################################################################################################
@@ -531,7 +532,6 @@ for_window [class="Xfce4-settings-manager"] floating disable
 for_window [class="Xfce4-taskmanager"] floating enable
 
 
-for_window [instance="script-fu"] border normal
 for_window [instance="variety"] floating disable
 
 
@@ -561,18 +561,6 @@ bindsym mod1+Left exec --no-startup-id variety -p
 
 
 #####################################################################################################################
-#################                          variety with pywal for your wallpapers                   #################
-#####################################################################################################################
-
-# next wallpaper
-bindsym mod1+Shift+n exec --no-startup-id variety -n && wal -i $(cat $HOME/.config/variety/wallpaper/wallpaper.jpg.txt)&
-# previous wallpaper
-bindsym mod1+Shift+p exec --no-startup-id variety -p && wal -i $(cat $HOME/.config/variety/wallpaper/wallpaper.jpg.txt)&
-# Update Wallpaper
-bindsym mod1+Shift+u exec --no-startup-id wal -i $(cat $HOME/.config/variety/wallpaper/wallpaper.jpg.txt)
-
-
-#####################################################################################################################
 #################                          audio settings                                           #################
 #####################################################################################################################
 
@@ -585,10 +573,6 @@ bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
 bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 bindsym XF86AudioStop exec --no-startup-id playerctl stop
-#bindsym XF86AudioPlay exec --no-startup-id "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause"
-#bindsym XF86AudioNext exec --no-startup-id "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next"
-#bindsym XF86AudioPrev exec --no-startup-id "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous"
-#bindsym XF86AudioStop exec --no-startup-id "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop"
 
 
 #####################################################################################################################
@@ -598,15 +582,6 @@ bindsym XF86AudioStop exec --no-startup-id playerctl stop
 
 bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 5 # increase screen brightness
 bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 5 # decrease screen brightness
-
-
-#####################################################################################################################
-#################                          bar toggle                                               #################
-#####################################################################################################################
-
-
-# bar toggle, hide or show
-bindsym $mod+b bar mode toggle
 
 
 #####################################################################################################################
@@ -670,7 +645,6 @@ gaps outer 5
 
 
 #if you want transparency on non-focused windows, ...
-#exec_always --no-startup-id compton --config ~/.config/i3/compton.conf
 exec_always --no-startup-id picom -b --config ~/.config/i3/picom.conf
 
 
