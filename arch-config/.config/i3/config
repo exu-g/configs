@@ -42,16 +42,10 @@ set $mod Mod4
 
 
 #This is setup for qwerty
-set $up l
-set $down k
-set $left j
-set $right semicolon
-
-#This is setup for azerty
-#set $up l
-#set $down k
-#set $left j
-#set $right m
+set $up k
+set $down j
+set $left h
+set $right l
 
 
 #####################################################################################################################
@@ -61,10 +55,6 @@ set $right semicolon
 
 # setting variables for later use
 # use xrandr and/or arandr to know the names of your monitors
-#exec --no-startup-id xrandr --output LVDS1 --mode 1366x768 --output DP3 --mode 1920x1080 --right-of LVDS1
-#exec --no-startup-id xrandr --output DVI-I-0 --right-of HDMI-0 --auto
-#exec --no-startup-id xrandr --output DVI-1 --right-of DVI-0 --auto
-#exec --no-startup-id xrandr --output DVI-D-1 --right-of DVI-I-1 --auto
 exec --no-startup-id xrandr --output eDP1 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI1 --off --output VIRTUAL1 --off
 exec --no-startup-id xrandr --output HDMI2 --right-of HDMI1 --auto
 
@@ -339,7 +329,7 @@ mode "$layout" {
 
 bindsym $mod+d mode "$xrandr"
 
-set $xrandr arco-pc 1x hdmi (h)
+set $xrandr arco-pc 1x hdmi (h), laptop 1x eDPI (l)
 mode "$xrandr" {
     bindsym h exec --no-startup-id xrandr --output DisplayPort-0 --off --output DisplayPort-1 --off --output HDMI-A-0 --set "scaling mode" "Full Aspect" --primary --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI-A-1 --off --output DVI-D-0 --off
     bindsym l exec --no-startup-id xrandr --output eDP1 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI1 --off --output VIRTUAL1 --off
@@ -347,33 +337,6 @@ mode "$xrandr" {
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
-
-#bindsym $mod+k mode "$pcs"
-#set $pcs arco-pc (a), hp-laptop (h)
-#mode "$pcs"{
-#    bindsym a mode "$arco-pc"
-#    bindsym h mode "$hp-laptop"
-#
-#    bindsym Return mode "default"
-#    bindsym Escape mode "default"
-#}
-
-#set $arco-pc 1x hdmi (h)
-#mode "$arco-pc"{
-#    bindsym h exec --no-startup-id xrandr --output DisplayPort-0 --off --output DisplayPort-1 --off --output HDMI-A-0 --set "scaling mode" "Full Aspect" --primary --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI-A-1 --off --output DVI-D-0 --off
-#
-#    bindsym Return mode "default"
-#    bindsym Escape mode "default"
-#}
-
-#set $hp-laptop hdmi (h)
-#mode "$hp-laptop"{
-#    bindsym h exec --no-startup-id xrandr --output eDP1 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI1 --off --output VIRTUAL1 --off
-#
-#    bindsym Return mode "default"
-#    bindsym Escape mode "default"
-#}
-
 
 
 #####################################################################################################################
@@ -398,7 +361,6 @@ mode "$browsers" {
 }
 
 
-
 #####################################################################################################################
 #################                          choose the font                                          #################
 #####################################################################################################################
@@ -415,40 +377,10 @@ font pango:Noto Mono Regular 9
 #####################################################################################################################
 
 
-# USER APPLICATIONS TO START AT BOOT
-
-#Terminal
-#exec --no-startup-id i3-msg 'workspace 1; exec termite'
-
-#Liferea
-#exec --no-startup-id i3-msg 'workspace 3; exec liferea'
-
-#Firefox
-#exec --no-startup-id i3-msg 'workspace 2; layout tabbed; exec firefox'
-
-#Thunderbird
-#exec --no-startup-id i3-msg 'workspace 2; layout tabbed; exec thunderbird'
-
-#Discord
-#exec --no-startup-id i3-msg 'workspace 2; layout tabbed; exec discord'
-
-#Mirage
-#exec --no-startup-id i3-msg 'workspace 2; layout tabbed; exec mirage'
-
-#bettergram
-#exec --no-startup-id i3-msg 'workspace 2; layout tabbed; exec bettergram'
-
-
 # TRAY APPLICATIONS
-
-# applications that are not installed will not start
-# you may see a wheel - hashtag out things you do not want
 
 #Authentication dialog
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
-
-#pCloud
-#exec --no-startup-id pcloud
 
 #nextcloud
 exec --no-startup-id nextcloud
@@ -463,7 +395,7 @@ exec --no-startup-id nm-applet
 exec_always --no-startup-id numlockx on
 
 # volume
-#exec --no-startup-id volumeicon
+exec --no-startup-id volumeicon
 
 #variety
 exec --no-startup-id variety
@@ -507,9 +439,6 @@ exec --no-startup-id /usr/lib/xfce4/notifyd/xfce4-notifyd &
 #terminal
 bindsym ctrl+mod1+Return exec --no-startup-id termite;focus 
 
-#keepass
-bindsym ctrl+mod1+k exec --no-startup-id keepass;focus
-
 #System monitor
 bindsym ctrl+mod1+r exec --no-startup-id xfce4-taskmanager;focus
 
@@ -518,12 +447,6 @@ bindsym control+mod1+s exec --no-startup-id xfce4-settings-manager
 
 #pavucontrol
 bindsym control+mod1+u exec --no-startup-id pavucontrol
-
-# start xfce-appfinder
-#bindsym control+mod1+a exec --no-startup-id xfce4-appfinder
-
-#dmenu
-#bindsym control+mod1+a exec --no-startup-id dmenu_run
 
 #rofi
 bindsym control+mod1+a exec --no-startup-id rofi -show drun
