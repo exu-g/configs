@@ -8,9 +8,6 @@ ffmpeg-normalize *.opus -v -pr -c:a libopus -ext opus
 #extract images from video
 ffmpeg -i "file.mpg" -r 1/1 xyz%03d.png
 
-#found in .bashrc
-yta-best="youtube-dl --extract-audio --audio-format best "
-
 #lightdm configured themes
 sudo cp -r /var/lib/lightdm/.local/share/webkitgtk/localstorage/ ~/ && sudo chmod -Rv 777 ~/localstorage/
 
@@ -37,9 +34,6 @@ sudo smartctl -a <disk>
 
 #fake identity
 rig
-
-#OBS videocamera
-sudo modprobe v4l2loopback
 
 #Mangohud
 In Steam: mangohud %command% MANGOHUD_OUTPUT /home/marc/Dokumente/log
