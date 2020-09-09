@@ -196,9 +196,11 @@ do
 done
 
 in_doom-emacs=0
+in_vscodium=0
 
 cmd=(dialog --separate-output --checklist "Code editors" 22 76 16)
-options=(1 "doom-emacs" off)
+options=(1 "doom-emacs" off
+        2 "vscodium" off)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
 for choice in $choices
@@ -206,6 +208,9 @@ do
     case $choice in
         1)
             in_doom-emacs=1
+            ;;
+        2)
+            in_vscodium=1
             ;;
     esac
 done
@@ -242,7 +247,7 @@ echo Installed official programs
 
 #AUR
 echo Installing default AUR programs
-yay -S --needed --noconfirm ttf-ms-fonts ttf-tahoma ttf-vista-fonts cpu-x polybar nutty woeusb nohang-git lightdm-webkit-theme-aether debtap rig gimp-plugin-registry vscodium-bin piper
+yay -S --needed --noconfirm ttf-ms-fonts ttf-tahoma ttf-vista-fonts cpu-x polybar nutty woeusb nohang-git lightdm-webkit-theme-aether debtap rig gimp-plugin-registry piper
 yay -S --needed --noconfirm bitwarden
 yay -S --needed --noconfirm pcloud-drive
 echo Installed AUR programs
@@ -461,6 +466,13 @@ if [ $in_doom-emacs -eq 1]; then
     export PATH="$PATH":$HOME/.emacs.d/bin
 else
     echo "Skipping doom-emacs"
+fi
+
+if [ $in_vscodium -eq 1 ]; then
+    echo "Installing vscodium"
+    yay -S --needed vscodium-bin
+else
+    echo "Skipping vscodium"
 fi
 
 #stats
