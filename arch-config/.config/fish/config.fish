@@ -1,6 +1,12 @@
 #update config
 alias upconf='~/scripts/arcolinux-config.sh'
 
+#download & execute setup
+alias setup='git clone https://gitlab.com/RealStickman-arcolinux/setup && cd setup && bash install.sh'
+
+#doom
+alias dooma='$HOME/.emacs.d/bin/doom'
+
 #list
 alias ls='ls --color=auto'
 alias la='ls -a'
