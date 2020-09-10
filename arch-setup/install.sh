@@ -460,7 +460,7 @@ fi
 #doom-emacs
 if [ $in_doom-emacs -eq 1]; then
     echo "Installing doom-emacs"
-    pacman -S --needed git emacs ripgrep fd
+    pacman -S --needed --noconfirm git emacs ripgrep fd pandoc
     git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d
     ~/.emacs.d/bin/doom install
     export PATH="$PATH":$HOME/.emacs.d/bin
@@ -470,7 +470,7 @@ fi
 
 if [ $in_vscodium -eq 1 ]; then
     echo "Installing vscodium"
-    yay -S --needed vscodium-bin
+    yay -S --needed --noconfirm vscodium-bin
 else
     echo "Skipping vscodium"
 fi
