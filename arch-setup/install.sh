@@ -195,7 +195,7 @@ do
     esac
 done
 
-in_doom-emacs=0
+in_emacs=0
 in_vscodium=0
 
 cmd=(dialog --separate-output --checklist "Code editors" 22 76 16)
@@ -207,7 +207,7 @@ for choice in $choices
 do
     case $choice in
         1)
-            in_doom-emacs=1
+            in_emacs=1
             ;;
         2)
             in_vscodium=1
@@ -458,7 +458,7 @@ else
 fi
 
 #doom-emacs
-if [ $in_doom-emacs -eq 1]; then
+if [ $in_emacs -eq 1]; then
     echo "Installing doom-emacs"
     yay -S --needed --noconfirm git emacs ripgrep fd pandoc shellcheck python-pipenv python-isort python-pytest python-rednose
     git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d
