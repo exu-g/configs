@@ -247,7 +247,7 @@ bindsym $mod+a focus parent
 #####################################################################################################################
 
 
-bindsym Shift+SPC mode "$main"
+bindsym Shift+Space mode "$main"
 
 set $main Media (m), Gaming (g), Resize (r), Layout (l), Browsers (b)
 mode "$main"{
