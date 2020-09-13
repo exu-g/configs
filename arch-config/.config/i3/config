@@ -243,13 +243,64 @@ bindsym $mod+a focus parent
 
 
 #####################################################################################################################
-#################                          resize                                                   #################
+#################                           change modes                                            #################
 #####################################################################################################################
 
 
-# resize window (you can also use the mouse for that)
+bindsym Shift+SPC mode "$main"
 
-bindsym $mod+r mode "resize"
+set $main Media (m), Gaming (g), Resize (r), Layout (l), Browsers (b)
+mode "$main"{
+     bindsym m mode "$media"
+     bindsym g mode "$gaming"
+     bindsym r mode "resize"
+     bindsym l mode "$layout"
+     bindsym b mode "$browsers"
+
+     bindsym Return mode "default"
+     bindsym Escape mode "default"
+}
+
+
+#############################################################################
+##################                  media                  ##################
+#############################################################################
+
+
+set $media Discord (d), Mirage (m), Bettergram (b), Slack (s)
+mode "$media"{
+     bindsym d exec --no-startup-id discord;focus
+     bindsym m exec --no-startup-id mirage;focus
+     bindsym b exec --no-startup-id bettergram;focus
+     bindsym s exec --no-startup-id slack;focus
+
+     bindsym Return mode "default"
+     bindsym Escape mode "default"
+}
+
+
+##############################################################################
+#################                   gaming                   #################
+##############################################################################
+
+
+# launch gaming focused programs
+set $gaming Steam (s), Lutris (l)
+mode "$gaming" {
+    bindsym s exec --no-startup-id steam-native;focus
+    bindsym l exec --no-startup-id lutris;focus
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+
+#############################################################################
+###################                resize                  ##################
+#############################################################################
+
+
+# resize window (you can also use the mouse for that)
 
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
@@ -263,7 +314,7 @@ mode "resize" {
         bindsym $up       resize grow height 10 px or 10 ppt
         bindsym Shift+$up       resize grow height 20 px or 20 ppt
         bindsym $down         resize shrink height 10 px or 10 ppt
-        bindsym Shift+$down         resize shrink height 20 px or 20 ppt    
+        bindsym Shift+$down         resize shrink height 20 px or 20 ppt
         bindsym $right       resize grow width 10 px or 10 ppt
         bindsym Shift+$right       resize grow width 20 px or 20 ppt
 
@@ -283,58 +334,9 @@ mode "resize" {
 }
 
 
-#####################################################################################################################
-#################                           change modes                                            #################
-#####################################################################################################################
-
-
-bindsym $mod+t mode "$main"
-
-set $main Media (m), Gaming (g)
-mode "$main"{
-     bindsym m mode "$media"
-     bindsym g mode "$gaming"
-
-     bindsym Return mode "default"
-     bindsym Escape mode "default"
-}
-
-
-#############################################################################
-######                           media                                 ######
-#############################################################################
-
-
-set $media Discord (d), Mirage (m), Bettergram (b), Slack (s)
-mode "$media"{
-     bindsym d exec --no-startup-id discord;focus
-     bindsym m exec --no-startup-id mirage;focus
-     bindsym b exec --no-startup-id bettergram;focus
-     bindsym s exec --no-startup-id slack;focus
-
-     bindsym Return mode "default"
-     bindsym Escape mode "default"
-}
-
-#############################################################################################
-#####                          gaming                                                   #####
-#############################################################################################
-
-
-# launch gaming focused programs
-set $gaming Steam (s), Lutris (l)
-mode "$gaming" {
-    bindsym s exec --no-startup-id steam-native;focus
-    bindsym l exec --no-startup-id lutris;focus
-
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-
-
-#####################################################################################################################
-#################                          start normal layout                                      #################
-#####################################################################################################################
+##############################################################################
+#################            start normal layout             #################
+##############################################################################
 
 
 # launch programs in the right workspaces
@@ -344,6 +346,28 @@ bindsym $mod+w mode "$layout"
 set $layout full (f)
 mode "$layout" {
     bindsym f exec --no-startup-id bash $HOME/.config/i3/scripts/layout-default.sh
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+
+##############################################################################
+#################                 browsers                    ################
+##############################################################################
+
+
+bindsym $mod+b mode "$browsers"
+
+set $browsers firefox (f), chromium (c), palemoon (p), basilisk (b), netsurf (n), icecat (i), tor (t)
+mode "$browsers" {
+    bindsym f exec --no-startup-id firefox;focus
+    bindsym c exec --no-startup-id chromium;focus
+    bindsym p exec --no-startup-id palemoon;focus
+    bindsym b exec --no-startup-id basilisk;focus
+    bindsym n exec --no-startup-id netsurf;focus
+    bindsym i exec --no-startup-id icecat;focus
+    bindsym t exec --no-startup-id torbrowser-launcher;focus
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
@@ -368,27 +392,6 @@ mode "$xrandr" {
     bindsym Escape mode "default"
 }
 
-
-#####################################################################################################################
-#################                       browsers                                                     ################
-#####################################################################################################################
-
-
-bindsym $mod+b mode "$browsers"
-
-set $browsers firefox (f), chromium (c), palemoon (p), basilisk (b), netsurf (n), icecat (i), tor (t)
-mode "$browsers" {
-    bindsym f exec --no-startup-id firefox;focus
-    bindsym c exec --no-startup-id chromium;focus
-    bindsym p exec --no-startup-id palemoon;focus
-    bindsym b exec --no-startup-id basilisk;focus
-    bindsym n exec --no-startup-id netsurf;focus
-    bindsym i exec --no-startup-id icecat;focus
-    bindsym t exec --no-startup-id torbrowser-launcher;focus
-
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
 
 
 #####################################################################################################################
