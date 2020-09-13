@@ -42,10 +42,10 @@ set $mod Mod4
 
 
 #This is setup for qwerty
-set $up
-set $down
-set $left
-set $right
+#set $up
+#set $down
+#set $left
+#set $right
 
 
 #####################################################################################################################
