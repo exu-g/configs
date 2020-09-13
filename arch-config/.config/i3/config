@@ -288,11 +288,12 @@ mode "resize" {
 #####################################################################################################################
 
 
-bindsym $mod+t mode "$base"
+bindsym $mod+t mode "$main"
 
-set $base media (m)
-mode "$base"{
+set $base Media (m)
+mode "$main"{
      bindsym m mode "$media"
+     bindsym g mode "$gaming"
 
      bindsym Return mode "default"
      bindsym Escape mode "default"
@@ -304,7 +305,7 @@ mode "$base"{
 #############################################################################
 
 
-set $media discord (d), mirage (m), bettergram (b), slack (s)
+set $media Discord (d), Mirage (m), Bettergram (b), Slack (s)
 mode "$media"{
      bindsym d exec --no-startup-id discord;focus
      bindsym m exec --no-startup-id mirage;focus
@@ -315,16 +316,12 @@ mode "$media"{
      bindsym Escape mode "default"
 }
 
-
-#####################################################################################################################
-#################                          gaming                                                   #################
-#####################################################################################################################
+#############################################################################################
+#####                          gaming                                                   #####
+#############################################################################################
 
 
 # launch gaming focused programs
-
-bindsym $mod+g mode "$gaming"
-
 set $gaming Steam (s), Lutris (l)
 mode "$gaming" {
     bindsym s exec --no-startup-id steam-native;focus
@@ -391,25 +388,6 @@ mode "$browsers" {
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
-}
-
-
-#####################################################################################################################
-#################                           media                                                   #################
-#####################################################################################################################
-
-
-bindsym $mod+m mode "$media"
-
-set $media discord (d), mirage (m), bettergram (b), slack (s)
-mode "$media"{
-     bindsym d exec --no-startup-id discord;focus
-     bindsym m exec --no-startup-id mirage;focus
-     bindsym b exec --no-startup-id bettergram;focus
-     bindsym s exec --no-startup-id slack;focus
-
-     bindsym Return mode "default"
-     bindsym Escape mode "default"
 }
 
 
