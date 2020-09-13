@@ -290,7 +290,7 @@ mode "resize" {
 
 bindsym $mod+t mode "$main"
 
-set $base Media (m)
+set $main Media (m), Gaming (g)
 mode "$main"{
      bindsym m mode "$media"
      bindsym g mode "$gaming"
