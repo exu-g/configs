@@ -233,7 +233,7 @@ bindsym $mod+e layout toggle split
 
 
 # change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
+bindsym $mod+t focus mode_toggle
 
 # focus the parent container
 bindsym $mod+a focus parent
@@ -247,7 +247,7 @@ bindsym $mod+a focus parent
 #####################################################################################################################
 
 
-bindsym $mod+Shift+Space mode "$main"
+bindsym shift+space mode "$main"
 
 set $main Media (m), Gaming (g), Resize (r), Layout (l), Browsers (b)
 mode "$main"{
