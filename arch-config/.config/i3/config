@@ -288,10 +288,11 @@ mode "resize" {
 #####################################################################################################################
 
 
-bindsym $mod+t mode "base"
+bindsym $mod+t mode "$base"
 
-mode "base"{
-     bindsym m mode "media"
+set $base media (m)
+mode "$base"{
+     bindsym m mode "$media"
 
      bindsym Return mode "default"
      bindsym Escape mode "default"
@@ -303,7 +304,8 @@ mode "base"{
 #############################################################################
 
 
-mode "media"{
+set $media discord (d), mirage (m), bettergram (b), slack (s)
+mode "$media"{
      bindsym d exec --no-startup-id discord;focus
      bindsym m exec --no-startup-id mirage;focus
      bindsym b exec --no-startup-id bettergram;focus
