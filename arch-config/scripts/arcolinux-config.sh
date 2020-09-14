@@ -22,13 +22,13 @@ mkdir ~/old_dat
 rsync -ah --progress ~/.config/MangoHud ~/old_dat/.config/ &&
 rsync -ah --progress ~/.config/autostart ~/old_dat/.config/ &&
 rsync -ah --progress ~/.config/fish ~/old_dat/.config/ &&
-rsync -ah --progress ~/.config/gtk-3.0 ~/old_dat/.config/gtk-3.0 &&
-rsync -ah --progress ~/.config/i3 ~/old_dat/.config/i3 &&
-rsync -ah --progress ~/.config/neofetch ~/old_dat/.config/neofetch &&
-rsync -ah --progress ~/.config/openbox ~/old_dat/.config/openbox &&
-rsync -ah --progress ~/.config/polybar ~/old_dat/.config/polybar &&
-rsync -ah --progress ~/.config/termite ~/old_dat/.config/termite &&
-rsync -ah --progress ~/.config/variety ~/old_dat/.config/variety &&
+rsync -ah --progress ~/.config/gtk-3.0 ~/old_dat/.config/ &&
+rsync -ah --progress ~/.config/i3 ~/old_dat/.config/ &&
+rsync -ah --progress ~/.config/neofetch ~/old_dat/.config/ &&
+rsync -ah --progress ~/.config/openbox ~/old_dat/.config/ &&
+rsync -ah --progress ~/.config/polybar ~/old_dat/.config/ &&
+rsync -ah --progress ~/.config/termite ~/old_dat/.config/ &&
+rsync -ah --progress ~/.config/variety ~/old_dat/.config/ &&
 
 #other directories
 rsync -ah --progress ~/scripts ~/old_dat/scripts &&
