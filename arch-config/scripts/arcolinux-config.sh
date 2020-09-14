@@ -34,7 +34,7 @@ rsync -ah --progress ~/.config/variety ~/old_dat/.config/ &&
 rsync -ah --progress ~/scripts ~/old_dat/ &&
 rsync -ah --progress ~/.mozilla ~/old_dat/ &&
 rsync -ah --progress ~/.easystroke ~/old_dat/ &&
-rsync -ah --progress ~/.emacs.d ~/old_dat/ &&
+#rsync -ah --progress ~/.emacs.d ~/old_dat/ &&
 rsync -ah --progress ~/.doom.d ~/old_dat/ &&
 echo Made backups
 
