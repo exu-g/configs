@@ -31,11 +31,11 @@ rsync -ah --progress ~/.config/termite ~/old_dat/.config/ &&
 rsync -ah --progress ~/.config/variety ~/old_dat/.config/ &&
 
 #other directories
-rsync -ah --progress ~/scripts ~/old_dat/scripts &&
-rsync -ah --progress ~/.mozilla ~/old_dat/.mozilla &&
-rsync -ah --progress ~/.easystroke ~/old_dat/.easystroke &&
-rsync -ah --progress ~/.emacs.d ~/old_dat/.emacs.d &&
-rsync -ah --progress ~/.doom.d ~/old_dat/.doom.d &&
+rsync -ah --progress ~/scripts ~/old_dat/ &&
+rsync -ah --progress ~/.mozilla ~/old_dat/ &&
+rsync -ah --progress ~/.easystroke ~/old_dat/ &&
+rsync -ah --progress ~/.emacs.d ~/old_dat/ &&
+rsync -ah --progress ~/.doom.d ~/old_dat/ &&
 echo Made backups
 
 #copy folders
