@@ -32,7 +32,7 @@ Exit the MariaDB prompt.
 \q  
 ```
 
-## Nextcloud installation
+## Nextcloud installation  
 
 Change into the /var/www directory.  
 
