@@ -19,9 +19,9 @@ mkdir ~/old_dat
 
 #back stuff up
 #config folders
-rsync -ah --progress ~/.config/MangoHud ~/old_dat/.config/MangoHud &&
-rsync -ah --progress ~/.config/autostart ~/old_dat/.config/autostart &&
-rsync -ah --progress ~/.config/fish ~/old_dat/.config/fish &&
+rsync -ah --progress ~/.config/MangoHud ~/old_dat/.config/ &&
+rsync -ah --progress ~/.config/autostart ~/old_dat/.config/ &&
+rsync -ah --progress ~/.config/fish ~/old_dat/.config/ &&
 rsync -ah --progress ~/.config/gtk-3.0 ~/old_dat/.config/gtk-3.0 &&
 rsync -ah --progress ~/.config/i3 ~/old_dat/.config/i3 &&
 rsync -ah --progress ~/.config/neofetch ~/old_dat/.config/neofetch &&
