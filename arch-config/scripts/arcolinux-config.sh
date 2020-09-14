@@ -18,7 +18,19 @@ rm -rf ~/old_dat
 mkdir ~/old_dat
 
 #back stuff up
-rsync -ah --progress ~/.config ~/old_dat/.config &&
+#config folders
+rsync -ah --progress ~/.config/MangoHud ~/old_dat/.config/MangoHud &&
+rsync -ah --progress ~/.config/autostart ~/old_dat/.config/autostart &&
+rsync -ah --progress ~/.config/fish ~/old_dat/.config/fish &&
+rsync -ah --progress ~/.config/gtk-3.0 ~/old_dat/.config/gtk-3.0 &&
+rsync -ah --progress ~/.config/i3 ~/old_dat/.config/i3 &&
+rsync -ah --progress ~/.config/neofetch ~/old_dat/.config/neofetch &&
+rsync -ah --progress ~/.config/openbox ~/old_dat/.config/openbox &&
+rsync -ah --progress ~/.config/polybar ~/old_dat/.config/polybar &&
+rsync -ah --progress ~/.config/termite ~/old_dat/.config/termite &&
+rsync -ah --progress ~/.config/variety ~/old_dat/.config/variety &&
+
+#other directories
 rsync -ah --progress ~/scripts ~/old_dat/scripts &&
 rsync -ah --progress ~/.mozilla ~/old_dat/.mozilla &&
 rsync -ah --progress ~/.easystroke ~/old_dat/.easystroke &&
@@ -30,7 +42,6 @@ echo Made backups
 cp -r ~/config/.config/ ~/ &&
 cp -r ~/config/Dokumente ~/ &&
 cp -r ~/config/.mozilla ~/ &&
-mkdir ~/.easystroke
 cp -r ~/config/.easystroke ~/ &&
 cp -r ~/config/.doom.d ~/ &&
 echo Copied folders
