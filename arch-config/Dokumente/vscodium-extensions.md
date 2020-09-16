@@ -10,11 +10,11 @@ code --list-extensions
 
 Bash IDE  
 Bracket Pair Colorizer 2  
-Dendron Markdown Preview Enhanced  
 indent-rainbow  
 Live Server  
 MagicPython  
 Markdown All in One  
+markdownlint  
 Neo Vim  
     Install neovim itself as well  
     Set path to neovim within the extension settings  
