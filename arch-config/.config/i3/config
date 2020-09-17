@@ -267,12 +267,13 @@ mode "$main"{
 #############################################################################
 
 
-set $media Discord (d), Mirage (m), Bettergram (b), Slack (s)
+set $media Discord (d), Mirage (m), Bettergram (b), Slack (s), Teams (t)
 mode "$media"{
      bindsym d exec --no-startup-id discord;focus
      bindsym m exec --no-startup-id mirage;focus
      bindsym b exec --no-startup-id bettergram;focus
      bindsym s exec --no-startup-id slack;focus
+     bindsym t exec --no-startup-id teams;focus
 
      bindsym Return mode "default"
      bindsym Escape mode "default"
@@ -301,6 +302,7 @@ mode "$gaming" {
 
 
 # resize window (you can also use the mouse for that)
+bindsym $mod+r mode "resize"
 
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
