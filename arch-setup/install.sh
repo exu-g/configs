@@ -1,10 +1,10 @@
 #!/bin/bash
 
 #change to home (does not show in terminal)
-cd $HOME
+cd "$HOME" || exit
 
 in_xfce=0
-in_i3-gaps=0
+in_i3gaps=0
 in_gnome=0
 
 cmd=(dialog --separate-output --checklist "Select Desktop environment/Window manager:" 22 76 16)
@@ -20,7 +20,7 @@ do
             in_xfce=1
             ;;
         2)
-            in_i3-gaps=1
+            in_i3gaps=1
             ;;
         3)
             in_gnome=1
@@ -85,7 +85,7 @@ in_steam=0
 in_lutris=0
 in_blender=0
 in_krita=0
-in_youtube-dl=0
+in_youtubedl=0
 in_discord=0
 in_handbrake=0
 in_gimp=0
@@ -138,7 +138,7 @@ do
             echo Installed Krita
             ;;
         6)
-            in_youtube-dl=1
+            in_youtubedl=1
             echo Installed Youtube-dl
             ;;
         7)
@@ -275,14 +275,14 @@ else
     echo "Skipping xfce"
 fi
 
-if [$in_i3-gaps -eq 1]; then
+if [ $in_i3gaps -eq 1 ]; then
     echo "Installing i3-gaps"
     sudo pacman -S --needed --noconfirm i3-gaps
 else   
     echo "Skipping i3-gaps"
 fi
 
-if [$in_gnome -eq 1]; then
+if [ $in_gnome -eq 1 ]; then
     echo "Installing gnome"
     sudo yay -S --needed --noconfirm gnome gnome-shell-extension-arc-menu gnome-shell-extension-dash-to-dock gnome-tweaks
 else
@@ -375,7 +375,7 @@ else
     echo "Skipping Krita"
 fi
 
-if [ $in_youtube-dl -eq 1 ]; then
+if [ $in_youtubedl -eq 1 ]; then
     echo "Installing Youtube-dl"
     sudo pacman -S --needed --noconfirm youtube-dl
 else
@@ -458,7 +458,7 @@ else
 fi
 
 #doom-emacs
-if [ $in_emacs -eq 1]; then
+if [ $in_emacs -eq 1 ]; then
     echo "Installing doom-emacs"
     yay -S --needed --noconfirm git emacs ripgrep fd pandoc shellcheck python-pipenv python-isort python-pytest python-rednose
     git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d
