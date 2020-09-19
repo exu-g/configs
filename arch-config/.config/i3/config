@@ -506,7 +506,7 @@ bindsym ctrl+mod1+n exec --no-startup-id pragha;focus
 bindsym ctrl+mod1+b exec --no-startup-id thunderbird;focus
 
 #redetect pulseaudio
-bindsym $mod+a+u --no-startup-id ~/scripts/redetect-audio.sh
+bindsym $mod+a --no-startup-id ~/scripts/redetect-audio.sh
 
 
 #####################################################################################################################
