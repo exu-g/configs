@@ -165,5 +165,5 @@ xdpyinfo | grep -B 2 resolution
 bash lower-vol.sh <input ext> <output ext> <input directory> <output directory> <other options>
 ```
 ```bash
-bash lower-vol.sh flac flac /home/marc/GitProjects/ffmpeg-lower-vol/ /home/marc/GitProjects/ffmpeg-lower-vol/test "-filter:a volume=0.25"
+bash lower-vol.sh flac flac "/home/marc/GitProjects/ffmpeg-lower-vol/" "/home/marc/GitProjects/ffmpeg-lower-vol/test" "-filter:a volume=0.25"
 ```
