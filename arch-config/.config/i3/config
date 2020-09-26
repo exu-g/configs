@@ -348,6 +348,7 @@ bindsym $mod+w mode "$layout"
 set $layout full (f)
 mode "$layout" {
     bindsym f exec --no-startup-id bash $HOME/.config/i3/scripts/layout-default.sh
+    bindsym w exec --no-startup-id bash $HOME/.config/i3/scripts/layout-work.sh
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
