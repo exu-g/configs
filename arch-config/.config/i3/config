@@ -345,7 +345,7 @@ mode "resize" {
 
 bindsym $mod+w mode "$layout"
 
-set $layout full (f)
+set $layout full (f), work (w)
 mode "$layout" {
     bindsym f exec --no-startup-id bash $HOME/.config/i3/scripts/layout-default.sh
     bindsym w exec --no-startup-id bash $HOME/.config/i3/scripts/layout-work.sh
