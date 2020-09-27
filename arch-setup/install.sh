@@ -483,6 +483,9 @@ else
     echo "Skipping pkgstats"
 fi
 
+#change shell
+chsh -s /usr/bin/fish $USER
+
 #enable vnstat
 sudo systemctl enable vnstat
 sudo systemctl start vnstat
