@@ -484,7 +484,7 @@ else
 fi
 
 #change shell
-chsh -s /usr/bin/fish $USER
+chsh -s /usr/bin/fish "$USER"
 
 #enable vnstat
 sudo systemctl enable vnstat
