@@ -52,3 +52,6 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+
+;; Enables the minimap by default. Use SPC-t-m to toggle
+(minimap-mode 1)
