@@ -109,5 +109,4 @@ ex ()
 }
 
 #execute stuff
-#neofetch
-fish
+neofetch
