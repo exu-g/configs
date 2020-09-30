@@ -13,8 +13,8 @@ restic -r b2:arco-pc-backup:/home/marc restore --target "/home/marc/" <snapshot>
 
 #arco-pc-backup timeshift:
 restic -r b2:arco-pc-backup:/mnt/harddrive/timeshift/snapshots init
-sudo chmod -Rv 777 /mnt/1d90c4d5-21d2-4455-bb4a-814de8496744/timeshift/
-restic -r b2:arco-pc-backup:/mnt/harddrive/timeshift/snapshots backup --verbose "/mnt/1d90c4d5-21d2-4455-bb4a-814de8496744/timeshift/snapshots/"
+#sudo chmod -Rv 777 /mnt/1d90c4d5-21d2-4455-bb4a-814de8496744/timeshift/
+sudo -E restic -r b2:arco-pc-backup:/mnt/harddrive/timeshift/snapshots backup --verbose "/mnt/1d90c4d5-21d2-4455-bb4a-814de8496744/timeshift/snapshots/"
 restic -r b2:arco-pc-backup:/mnt/harddrive/timeshift/snapshots snapshots
 restic -r b2:arco-pc-backup:/mnt/harddrive/timeshift/snapshots restore --target "/mnt/1d90c4d5-21d2-4455-bb4a-814de8496744/timeshift/snapshots/" <snapshot>
 
