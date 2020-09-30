@@ -1,11 +1,11 @@
-###Restic repos:
+# Restic repos:
 
-##B2 backups
+## B2 backups
 
-export B2_ACCOUNT_ID=
-export B2_ACCOUNT_KEY=
+export B2_ACCOUNT_ID=  
+export B2_ACCOUNT_KEY=  
 
-#arco-pc-backup home:
+### arco-pc-backup home:
 restic -r b2:arco-pc-backup:/home/marc init
 restic -r b2:arco-pc-backup:/home/marc backup --verbose "/home/marc/" --exclude-file=/home/marc/Dokumente/home-exclude.txt
 restic -r b2:arco-pc-backup:/home/marc snapshots
@@ -42,3 +42,4 @@ restic -r b2:realstickman-xyz-backup:etc init
 restic -r b2:realstickman-xyz-backup:etc backup --verbose "/etc"
 restic -r b2:realstickman-xyz-backup:etc snapshots 
 restic -r b2:realstickman-xyz-backup:etc restore --target "/etc" <snapshot>
+
