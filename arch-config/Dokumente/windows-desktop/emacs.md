@@ -32,4 +32,4 @@ git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d
 Add `C:\Users\<user>\.emacs.d\bin` to your PATH.  
 
 *Currently doesn't show emotes*  
-*Missing ripgrep and fs*  
+*Missing ripgrep and fd*  
