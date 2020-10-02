@@ -55,5 +55,5 @@
 /home/marc/pCloudDrive 
 /home/marc/Bilder 
 /home/marc/anaconda3
-
+/home/marc/MusikRaw
 /home/marc/Dokumente/Torrents/
