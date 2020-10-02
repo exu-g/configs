@@ -12,6 +12,7 @@ Add the `<location>\emacs\x86_84\bin` directory to your PATH in the environment 
 ### Shortcut
 
 Create a shortcut to `<location>\emacs\x86_64\bin\runemacs.exe`  
+Edit the shortcut to execute in your home directory `C:\Users\<user>`  
 
 ## HOME
 
