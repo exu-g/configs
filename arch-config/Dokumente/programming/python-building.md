@@ -9,5 +9,5 @@ python setup.py bdist_wheel sdist
 
 Upload to pypi  
 ```bash
-twine upload dist/*
+twine upload --skip-existing dist/*
 ```
