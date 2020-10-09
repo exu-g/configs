@@ -1,3 +1,6 @@
+#vi mode for fish
+fish_vi_key_bindings
+
 #update config
 alias upconf='~/scripts/arcolinux-config.sh'
 
