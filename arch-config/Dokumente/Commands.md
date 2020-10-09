@@ -162,13 +162,23 @@ xdpyinfo | grep -B 2 resolution
 
 ## Bash ffmpeg batch convert
 ```bash
-bash lower-vol.sh <input ext> <output ext> <input directory> <output directory> <other options>
+bash <pathto>/lower-vol.sh <input ext> <output ext> <input directory> <output directory> <other options>
 ```
 ```bash
-bash lower-vol.sh flac flac "/home/marc/GitProjects/ffmpeg-lower-vol/" "/home/marc/GitProjects/ffmpeg-lower-vol/test" "-filter:a volume=0.25"
+bash "/home/marc/GitProjects/ffmpeg-lower-vol/lower-vol.sh" flac flac "/home/marc/Downloads/newmusik/" "/home/marc/Downloads/newmusik/converted" "-filter:a volume=0.25"
 ```
 
 ## Downgrade package
 ```bash
 downgrade <packagename>
 ```
+
+## Typometer
+First, extract the .zip file and then the .jar file.  
+Enter the newly created folder and open a terminal at that location. (Should be `<download location>/typometer-x.x.x`)  
+Enter the following line in the terminal:  
+```bash
+java com.pavelfatin.typometer.Application
+```
+
+*Important: Use BASH instead of FISH, as the colors in FISH confuse the program.*  
