@@ -3,10 +3,10 @@
 ## B2 backups
 
 ```bash
-export B2_ACCOUNT_ID=  
+export B2_ACCOUNT_ID=
 ```
 ```bash
-export B2_ACCOUNT_KEY=  
+export B2_ACCOUNT_KEY=
 ```
 
 ### arco-pc-backup home
