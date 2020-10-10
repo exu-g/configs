@@ -445,8 +445,4 @@
     format = "<b>%s</b>\n%b"
     history_ignore = yes
 
-[powermanagement-battery]
-    appname = "xfce4-power-manager"
-    urgency = low
-
 # vim: ft=cfg
