@@ -604,8 +604,10 @@ bindsym XF86AudioStop exec --no-startup-id playerctl stop
 #####################################################################################################################
 
 
-bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10 # increase screen brightness
-bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10 # decrease screen brightness
+bindsym XF86MonBrightnessUp exec --no-startup-id bash $HOME/scripts/dunst-backlight.sh up # increase screen brightness
+bindsym XF86MonBrightnessDown exec --no-startup-id bash $HOME/scripts/dunst-backlight.sh down # decrease screen brightness
+#bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10 # increase screen brightness
+#bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10 # decrease screen brightness
 
 
 #####################################################################################################################
