@@ -5,7 +5,7 @@
 # $./dunst-backlight.sh down
 
 get_light() {
-    xbacklight -get
+    xbacklight -get | cut -f1 -d"."
 }
 
 send_notification() {
@@ -20,12 +20,12 @@ send_notification() {
 case $1 in
     up)
     # Increase backlight
-    xbacklight -inc 10
+    xbacklight -inc 10.000000
     send_notification
 	;;
     down)
     # Decrease backlight
-    xbacklight -dec 10
+    xbacklight -dec 10.000000
     send_notification
 	;;
 esac
