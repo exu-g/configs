@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # You can call this script like this:
-# $./volume.sh up
-# $./volume.sh down
-# $./volume.sh mute
+# $./dunst-volume.sh up
+# $./dunst-volume.sh down
+# $./dunst-volume.sh mute
 
 get_volume() {
     amixer get Master | grep '%' | head -n 1 | cut -d '[' -f 2 | cut -d '%' -f 1
