@@ -438,11 +438,13 @@
     summary = "*─*"
     format = "<b>%s</b>\n%b"
     history_ignore = yes
+    timeout = 5
 
 [dunstify-mute]
     appname = "dunstify"
     summary = "*Mute*"
     format = "<b>%s</b>\n%b"
     history_ignore = yes
+    timeout = 5
 
 # vim: ft=cfg
