@@ -464,7 +464,8 @@ exec --no-startup-id xfce4-power-manager &
 # ommitted next line to get super key to bring up the menu in xfce and avoid error then in i3
 # IF xfsettingsd is activated you can not change themes
 #exec --no-startup-id xfsettingsd &
-exec --no-startup-id /usr/lib/xfce4/notifyd/xfce4-notifyd &
+#exec --no-startup-id /usr/lib/xfce4/notifyd/xfce4-notifyd &
+exec --no-startup-id /usr/bin/dunst &
 
 
 #####################################################################################################################
