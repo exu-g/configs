@@ -447,7 +447,6 @@
 
 [powermanagement-battery]
     appname = "xfce4-power-manager"
-    summary = "Energieverwaltung"
     urgency = low
 
 # vim: ft=cfg
