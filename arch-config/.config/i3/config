@@ -586,9 +586,12 @@ bindsym mod1+Left exec --no-startup-id variety -p
 #####################################################################################################################
 
 
-bindsym XF86AudioRaiseVolume exec --no-startup-id "amixer -D pulse sset Master '5%+'"
-bindsym XF86AudioLowerVolume exec --no-startup-id "amixer -D pulse sset Master '5%-'"
-bindsym XF86AudioMute exec --no-startup-id "amixer -D pulse set Master toggle"
+bindsym XF86AudioRaiseVolume exec --no-startup-id bash $HOME/scripts/dunst-volume.sh up
+bindsym XF86AudioLowerVolume exec --no-startup-id  bash $HOME/scripts/dunst-volume.sh down
+bindsym XF86AudioMute exec --no-startup-id bash $HOME/scripts/dunst-volume.sh mute
+#bindsym XF86AudioRaiseVolume exec --no-startup-id "amixer -D pulse sset Master '5%+'"
+#bindsym XF86AudioLowerVolume exec --no-startup-id "amixer -D pulse sset Master '5%-'"
+#bindsym XF86AudioMute exec --no-startup-id "amixer -D pulse set Master toggle"
 #https://github.com/acrisci/playerctl/
 bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
 bindsym XF86AudioNext exec --no-startup-id playerctl next
