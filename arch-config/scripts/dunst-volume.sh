@@ -19,7 +19,7 @@ send_notification() {
     # https://en.wikipedia.org/wiki/Box-drawing_character
     bar=$(seq -s "─" $(($volume / 5)) | sed 's/[0-9]//g')
     # Send the notification
-    dunstify -i audio-volume-high -r 2593 "    $bar"
+    dunstify -i audio-volume-high -r 2593 "$volume    $bar"
 }
 
 case $1 in
