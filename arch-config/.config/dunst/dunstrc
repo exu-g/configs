@@ -439,5 +439,10 @@
     appname = "dunstify"
     summary = "*Mute*"
     format = "<b>%s</b>\n%b"
-#
+
+[powermanagement-battery]
+    desktop_entry = "xfce4-power-manager"
+    summary = "Energieverwaltung"
+    urgency = low
+
 # vim: ft=cfg
