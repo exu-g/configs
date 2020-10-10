@@ -62,6 +62,9 @@ sudo cp -r ~/config/etc /
 #copy old lightdm themes (and maybe other stuff, idk)
 sudo cp -r ~/config/var /
 
+#copy usr stuff
+sudo cp -r ~/config/usr /
+
 #gimp plugins
 mkdir ~/.config/GIMP/
 mkdir ~/.config/GIMP/2.10/
