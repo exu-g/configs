@@ -14,7 +14,7 @@ send_notification() {
     # https://en.wikipedia.org/wiki/Box-drawing_character
     bar=$(seq -s "─" $(($light/ 5)) | sed 's/[0-9]//g')
     # Send the notification
-    dunstify -i whitebalance -r 2489 "    $bar    "
+    dunstify -i whitebalance -r 2489 -a backlight-script -u low "    $bar    "
 }
 
 case $1 in

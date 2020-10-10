@@ -433,10 +433,19 @@
 [dunstify]
     appname = "dunstify"
     format = "<b>%s</b>\n%b"
-    timeout = 5
 
 [notify-send]
     appname = "notify-send"
     format = "<b>%s</b>\n%b"
+
+[volume-script]
+    appname = "volume-script"
+    format = "<b>%s</b>\n%b"
+    timeout = 5
+
+[backlight-script]
+    appname = "backlight-script"
+    format = "<b>%s</b>\n%b"
+    timeout = 5
 
 # vim: ft=cfg
