@@ -10,6 +10,9 @@ alias setup='git clone https://gitlab.com/RealStickman-arcolinux/setup && cd set
 #doom
 alias dooma='$HOME/.emacs.d/bin/doom'
 
+#notification
+alias notify='notify-send "Terminal" "Your command finished!" --icon=dialog-information'
+
 #list
 alias ls='ls --color=auto'
 alias la='ls -a'
