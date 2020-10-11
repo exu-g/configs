@@ -20,12 +20,12 @@ send_notification() {
 case $1 in
     up)
     # Increase backlight
-    xbacklight -inc 10% > /dev/null
+    xbacklight -inc 10%
     send_notification
 	;;
     down)
     # Decrease backlight
-    xbacklight -dec 10% > /dev/null
+    xbacklight -dec 10%
     send_notification
 	;;
 esac
