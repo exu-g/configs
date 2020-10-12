@@ -39,3 +39,18 @@ Open window below current window
 
 Move to other windows  
 `SPC h/j/k/l`  
+
+## Buffers
+
+Open recent within the same project buffers  
+`SPC b b`  
+`SPC ,`  
+
+Remove buffers  
+`SPC b k`  
+
+Open new empty buffer  
+`SPC b N`  
+
+Save buffer  
+`SPC b s`  
