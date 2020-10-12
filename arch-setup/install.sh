@@ -3,7 +3,7 @@
 set -euo pipefail
 
 #change to home (does not show in terminal)
-cd "$HOME" || exit
+cd "$HOME"
 
 in_xfce=0
 in_i3gaps=0
