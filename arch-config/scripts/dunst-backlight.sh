@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euo pipefail
+
 # You can call this script like this:
 # $./dunst-backlight.sh up
 # $./dunst-backlight.sh down

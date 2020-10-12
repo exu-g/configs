@@ -1,4 +1,7 @@
 #!/bin/bash
+
+set -euo pipefail
+
 shopt -s nullglob
 for g in /sys/kernel/iommu_groups/*; do
     echo "IOMMU Group ${g##*/}:"
