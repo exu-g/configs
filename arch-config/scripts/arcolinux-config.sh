@@ -5,7 +5,7 @@ set -euo pipefail
 #ANY CHANGES TO THE INSTALLATION PROCEDURE SHOULD BE MADE HERE
 
 #change to home (does not show in terminal)
-cd $HOME
+cd "$HOME"
 
 #remove old installs
 rm -rf ~/config
