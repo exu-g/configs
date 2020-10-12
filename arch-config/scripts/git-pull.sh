@@ -5,7 +5,6 @@ git pull
 
 cd "$HOME/GitProjects/grab" || exit
 git pull
-git checkout testing
 
 cd "$HOME/GitProjects/setup" || exit
 git pull
