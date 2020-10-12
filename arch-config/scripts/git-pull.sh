@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euo pipefail
+
 cd "$HOME/GitProjects/config" || exit
 git pull
 

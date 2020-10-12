@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euo pipefail
+
 #ANY CHANGES TO THE INSTALLATION PROCEDURE SHOULD BE MADE HERE
 
 #change to home (does not show in terminal)
