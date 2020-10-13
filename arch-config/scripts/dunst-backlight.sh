@@ -28,8 +28,8 @@ case $1 in
     down)
     # Decrease backlight
     xbacklight -dec 10% > /dev/null
-    backlight=$(xbacklight -get | cut -f1 -d"." | cut -f1 -d"0")
-    xbacklight -set "${backlight}0"
+    #backlight=$(xbacklight -get | cut -f1 -d"." | cut -f1 -d"0")
+    #xbacklight -set "${backlight}0"
     send_notification
 	;;
 esac
