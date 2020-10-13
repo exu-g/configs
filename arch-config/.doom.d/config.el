@@ -58,3 +58,7 @@
 
 (setq
  projectile-project-search-path '("~/GitProjects/"))
+
+;; autoload magit
+(require 'magit-gitflow)
+(add-hook 'magit-mode-hook 'turn-on-magit-gitflow)
