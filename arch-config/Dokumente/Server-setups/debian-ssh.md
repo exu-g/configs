@@ -30,6 +30,10 @@ In case you have not yet created an ssh-key, run the following command.
 ```bash
 ssh-keygen
 ```
+To create ed25519 keys, execute the following command.  
+```bash
+ssh-keygen -t ed25519
+```
 
 ## Disable password access  
 
