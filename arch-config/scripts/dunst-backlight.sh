@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -euo pipefail
-
 # You can call this script like this:
 # $./dunst-backlight.sh up
 # $./dunst-backlight.sh down
@@ -22,12 +20,16 @@ send_notification() {
 case $1 in
     up)
     # Increase backlight
-    xbacklight -inc 10%
+    xbacklight -inc 10% > /dev/null
+    backlight=$(xbacklight -get | cut -f1 -d"." | cut -f1 -d"0")
+    xbacklight -set "${backlight}0"
     send_notification
 	;;
     down)
     # Decrease backlight
-    xbacklight -dec 10%
+    xbacklight -dec 10% > /dev/null
+    backlight=$(xbacklight -get | cut -f1 -d"." | cut -f1 -d"0")
+    xbacklight -set "${backlight}0"
     send_notification
 	;;
 esac
