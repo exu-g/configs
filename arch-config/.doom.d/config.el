@@ -64,4 +64,10 @@
 (add-hook 'magit-mode-hook 'turn-on-magit-gitflow)
 
 (setq hl-todo-keyword-faces
-    '(("OHGODTHEHORROR"   . "#FC7702")))
+      '(("TODO"   . "#EACD4B")
+        ("FIXME"   . "#F43633")
+        ("NOTE"           . "#8ED34E")
+        ("DEPRECATED"     . "#7F7F7F")
+        ("HACK"           . "#7D5587")
+        ("REVIEW"         . "#3DADC6")
+        ("OHGODTHEHORROR"   . "#FC7702")))
