@@ -21,20 +21,19 @@ case $1 in
     up)
     # Increase backlight
     xbacklight -inc 10% > /dev/null
+    send_notification
     backlight=$(xbacklight -get | cut -f1 -d"." | cut -f1 -d"0")
     #backlight=$(xbacklight -get | rev| cut -c9- | rev)
     xbacklight -set "${backlight}0"
-    send_notification
 	;;
     down)
     # Decrease backlight
-    xbacklight -dec 10% > /dev/null
+    xbacklight -dec 9% > /dev/null
+    send_notification
     #backlight2dig=$(xbacklight -get | cut -f1 -d"." | cut -f1 -d"0")
     backlight=$(xbacklight -get | rev| cut -c9- | rev)
     #((backlight++))
     #backlight=${backlight2dig%?}
     xbacklight -set "${backlight}0"
-    xbacklight -inc 10% > /dev/null
-    send_notification
 	;;
 esac
