@@ -62,3 +62,6 @@
 ;; autoload magit
 (require 'magit-gitflow)
 (add-hook 'magit-mode-hook 'turn-on-magit-gitflow)
+
+(setq hl-todo-keyword-faces
+      '(("OHGODTHEHORROR"   . "#FC7702"))
