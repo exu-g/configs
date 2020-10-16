@@ -462,7 +462,7 @@ fi
 #doom-emacs
 if [ $in_doomemacs -eq 1 ]; then
     echo "Installing doom-emacs"
-    yay -S --needed --noconfirm git emacs ripgrep fd pandoc shellcheck python-pipenv python-isort python-pytest python-rednose pychecker
+    yay -S --needed --noconfirm git emacs ripgrep fd pandoc shellcheck python-pipenv python-isort python-pytest python-rednose pychecker texlive-core
     git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d
     ~/.emacs.d/bin/doom install
     export PATH="$PATH":$HOME/.emacs.d/bin
