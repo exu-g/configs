@@ -116,6 +116,7 @@ xwinwrap -g 1920x1080 -ov -- mpv -wid WID --loop --no-audio --keepaspect=no --no
 ```bash
 sudo docker build -t fremontt/losbuilder https://gitlab.com/fremontt/minimal-docker-for-lineageos/image.git
 sudo docker run -v /mnt/1d90c4d5-21d2-4455-bb4a-814de8496744/dockerphone/lineageosformicrog/:/root/los-build -e DEVICE_VENDOR="oneplus" -e DEVICE_CODENAME="oneplus3" -e LOS_SIGSPOOF_TYPE="RESTRICTED" -e LOS_ENABLE_CUSTOM_PACKAGES="YES" -e LOS_CUSTOM_PACKAGES="GmsCore GsfProxy FakeStore MozillaNlpBackend FDroid FDroidPrivilegedExtension AuroraStore AuroraServices NominatimNlpBackend OpenWeatherMapWeatherProvider" fremontt/losbuilder
+sudo docker run -v /mnt/1d90c4d5-21d2-4455-bb4a-814de8496744/dockerphone/lineageosformicrog/:/root/los-build -e DEVICE_VENDOR="oneplus" -e DEVICE_CODENAME="oneplus3" -e LOS_SIGSPOOF_TYPE="FULL" -e LOS_ENABLE_CUSTOM_PACKAGES="YES" -e LOS_CUSTOM_PACKAGES="" fremontt/losbuilder
 ```
 
 ## ssh
