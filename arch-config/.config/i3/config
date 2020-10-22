@@ -571,6 +571,7 @@ for_window [window_role="setup"] floating enable
 for_window [title="Microsoft Teams Notification"] floating enable
 
 for_window [title="Neu"] floating enable
+for_window [title="Microsoft Teams-Benachrichtigung"] floating enable
 
 #####################################################################################################################
 #################                          variety for your wallpapers                              #################
