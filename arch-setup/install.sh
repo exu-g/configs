@@ -1,6 +1,7 @@
 #!/bin/bash
 
-set -euo pipefail
+# TODO make this work
+#set -euo pipefail
 
 #change to home (does not show in terminal)
 cd "$HOME"
