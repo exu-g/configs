@@ -67,6 +67,9 @@ sudo cp -r ~/config/var /
 #copy usr stuff
 sudo cp -r ~/config/usr /
 
+# copy xresources
+cp ~/config/.Xresources ~/
+
 #gimp plugins
 mkdir ~/.config/GIMP/ || echo Not creating directory
 mkdir ~/.config/GIMP/2.10/ || echo Not creating directory
