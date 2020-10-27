@@ -45,47 +45,41 @@ urgent_on_bell = true
 ############################################################
 
 [colors]
-# https://critical.ch/xterm/
-#dracula theme adapted by Erik Dubois
-background = rgba(40, 42, 54, 0.6)
 
-#text
-foreground      = #ffdfc4
-#text bold
-foreground_bold = #ffdfc4
-#cursor
-cursor          = #ffdfc4
-#background      = #160d00
+# special
+foreground      = #c5c8c6
+foreground_bold = #c5c8c6
+cursor          = #c5c8c6
+background      = rgba(20, 21, 22, 0.6)
 
-#htop schrift
-color0  = #4c2b08
-#eg htop root user
-color8  = #aa9475
-#htop
-color1  = #f4c395
-#htop
-color9  = #f4c395
-#fish ~, make same as foreground
-color2  = #ea8817
-#username, same as foreground
-color10 = #ea8817
-#htop 3rd ram color
-color3  = #f4c395
-#update Warning: and progress C
-color11 = #ffdfc4
-#htop 2nd ram color
-color4  = #7c4817
-#folders, other color for distro
-color12 = #ea8817
-#yay number
-color5  = #ffdfc4
-#some build stuff
-color13 = #ffdfc4
-#other stuff in htop
-color6  = #ffdfc4
-#htop uptime, tasks
-color14 = #ffdfc4
-#oooo from download progress bar, nano options
-color7  = #ffdfc4
-#nano
-color15 = #ea8817
+# black
+color0  = #111112
+color8  = #26282c
+
+# red
+color1  = #a54242
+color9  = #cc6666
+
+# green
+color2  = #8c9440
+color10 = #b5bd68
+
+# yellow
+color3  = #de935f
+color11 = #f0c674
+
+# blue
+color4  = #5f819d
+color12 = #81a2be
+
+# magenta
+color5  = #85678f
+color13 = #b294bb
+
+# cyan
+color6  = #5e8d87
+color14 = #8abeb7
+
+# white
+color7  = #707880
+color15 = #c5c8c6
