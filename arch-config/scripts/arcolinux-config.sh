@@ -94,6 +94,9 @@ rm -rf ~/config
 #sync doom-emacs
 ~/.emacs.d/bin/doom sync
 
+# reload .Xresources
+xrdb ~/.Xresources
+
 #restart i3 in place
 i3 restart
 
