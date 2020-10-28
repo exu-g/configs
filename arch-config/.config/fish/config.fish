@@ -2,7 +2,6 @@
 #fish_vi_key_bindings
 fish_default_key_bindings
 
-
 # Info:
 # https://fishshell.com/docs/current/index.html#variables-for-changing-highlighting-colors
 set fish_color_normal blue
