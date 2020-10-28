@@ -170,3 +170,18 @@ java com.pavelfatin.typometer.Application
 ```
 
 *Important: Use BASH instead of FISH, as the colors in FISH confuse the program.*  
+
+## List number of items in directory
+```bash
+ls -1 | wc -l
+```
+
+## List size of directory
+```bash
+du -sh
+```
+
+## List usage of all partitions
+```bash
+df -h
+```
