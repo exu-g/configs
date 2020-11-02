@@ -185,3 +185,14 @@ du -sh
 ```bash
 df -h
 ```
+
+## tmpmail
+Look at temporary mail  
+```bash
+tmpmail
+```
+
+Generate new temporary mail  
+```bash
+tmpmail -g
+```
