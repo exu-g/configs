@@ -22,7 +22,9 @@ case $1 in
     # Increase backlight
     xbacklight -inc 10% > /dev/null
     send_notification
-    backlight=$(xbacklight -get | cut -f1 -d"." | cut -f1 -d"0")
+    #backlight=$(xbacklight -get | cut -f1 -d"." | cut -f1 -d"0")
+    backlightraw=$(xbacklight -get)
+    backlight=${backlightraw::-8}
     #backlight=$(xbacklight -get | rev| cut -c9- | rev)
     xbacklight -set "${backlight}0"
 	;;
@@ -31,7 +33,9 @@ case $1 in
     xbacklight -dec 9% > /dev/null
     send_notification
     #backlight2dig=$(xbacklight -get | cut -f1 -d"." | cut -f1 -d"0")
-    backlight=$(xbacklight -get | rev| cut -c9- | rev)
+    #backlight=$(xbacklight -get | rev| cut -c9- | rev)
+    backlightraw=$(xbacklight -get)
+    backlight=${backlightraw::-8}
     #((backlight++))
     #backlight=${backlight2dig%?}
     xbacklight -set "${backlight}0"
