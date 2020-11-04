@@ -41,7 +41,7 @@ mkfs.ext4 /dev/(partition)
 Generally partitions have to be mounted where you will later use them in your system.  
 
 Root: /mnt
-EFI: /mnt/efi
+EFI: /mnt/boot
 Home: /mnt/home
 
 ## Creating swapfile
@@ -72,7 +72,7 @@ pacstrap /mnt base linux linux-firmware vim dosfstools e2fsprogs
 ```bash
 genfstab -U /mnt >> /mnt/etc/fstab
 ```
-Make sure the fstab file has everything included  
+IMPORTANT: Make sure the fstab file has everything included  
 
 ## Chroot into the system
 `arch-chroot /mnt`  
@@ -127,7 +127,7 @@ refind-install --usedefault /dev/(efi partition) --alldrivers
 Edit `/boot/refind_linux.conf`  
 Delete any lines with "archiso".  
 
-Edit `/efi/EFI/BOOT/refind.conf`  
+Edit `/boot/EFI/BOOT/refind.conf`  
 Search for `Arch Linux` (vim, press "/". Attention: case sensitive)  
 Under `options` replace the UUID after `root=` with the configured EFI partition.  
 
