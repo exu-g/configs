@@ -256,7 +256,7 @@ cd ..
 
 #AUR
 echo Installing default AUR programs
-yay -S --needed --noconfirm ttf-ms-fonts ttf-tahoma ttf-vista-fonts cpu-x polybar nutty woeusb nohang-git lightdm-webkit-theme-aether debtap rig gimp-plugin-registry piper freetype2-cleartype tmpmail-git
+yay -S --needed --noconfirm ttf-ms-fonts ttf-tahoma ttf-vista-fonts cpu-x polybar nutty woeusb nohang-git lightdm-webkit-theme-aether debtap rig gimp-plugin-registry piper freetype2-cleartype tmpmail-git lightdm-webkit2-theme-glorious
 yay -S --needed --noconfirm bitwarden
 yay -S --needed --noconfirm pcloud-drive
 echo Installed AUR programs
