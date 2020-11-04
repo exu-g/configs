@@ -21,10 +21,10 @@ mkdir ~/old_dat
 
 #back stuff up
 #config folders
-rsync -ah --progress ~/.config/MangoHud ~/old_dat/.config/ || echo"Directory does not exist" > /dev/null
-rsync -ah --progress ~/.config/autostart ~/old_dat/.config/ || echo"Directory does not exist" > /dev/null
-rsync -ah --progress ~/.config/fish ~/old_dat/.config/ || echo"Directory does not exist" > /dev/null
-rsync -ah --progress ~/.config/gtk-3.0 ~/old_dat/.config/ || echo"Directory does not exist" > /dev/null
+rsync -ah --progress ~/.config/MangoHud ~/old_dat/.config/ || echo Directory does not exist > /dev/null
+rsync -ah --progress ~/.config/autostart ~/old_dat/.config/ || echo Directory does not exist > /dev/null
+rsync -ah --progress ~/.config/fish ~/old_dat/.config/ || echo Directory does not exist > /dev/null
+rsync -ah --progress ~/.config/gtk-3.0 ~/old_dat/.config/ || echo Directory does not exist > /dev/null
 rsync -ah --progress ~/.config/i3 ~/old_dat/.config/ > /dev/null
 rsync -ah --progress ~/.config/neofetch ~/old_dat/.config/ > /dev/null
 rsync -ah --progress ~/.config/openbox ~/old_dat/.config/ > /dev/null
