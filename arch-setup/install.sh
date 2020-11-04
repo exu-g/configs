@@ -294,7 +294,7 @@ fi
 
 if [ $in_gnome -eq 1 ]; then
     echo "Installing gnome"
-    sudo yay -S --needed --noconfirm gnome gnome-shell-extension-arc-menu gnome-shell-extension-dash-to-dock gnome-tweaks
+    yay -S --needed --noconfirm gnome gnome-shell-extension-arc-menu gnome-shell-extension-dash-to-dock gnome-tweaks
 else
     echo "Skipping gnome"
 fi
@@ -430,28 +430,28 @@ fi
 
 if [ $in_easystrokes -eq 1 ]; then
     echo "Installing Easystrokes"
-    sudo yay -S --needed --noconfirm easystroke
+    yay -S --needed --noconfirm easystroke
 else
     echo "Skipping Easystrokes"
 fi
 
 if [ $in_liferea -eq 1 ]; then
     echo "Installing Liferea"
-    sudo yay -S --needed --noconfirm liferea
+    yay -S --needed --noconfirm liferea
 else
     echo "Skipping Liferea"
 fi
 
 if [ $in_mirage -eq 1 ]; then
     echo "Installing Mirage"
-    sudo yay -S --needed --noconfirm matrix-mirage
+    yay -S --needed --noconfirm matrix-mirage
 else
     echo "Skipping Mirage"
 fi
 
 if [ $in_bettergram -eq 1 ]; then
     echo "Installing Bettergram"
-    sudo yay -S --needed --noconfirm bettergram
+    yay -S --needed --noconfirm bettergram
 else
     echo "Skipping Bettergram"
 fi
@@ -459,7 +459,7 @@ fi
 #performance and battery life
 if [ $in_acpufreq -eq 1 ]; then
     echo "Installing auto-cpufreq"
-    sudo yay -S --needed --noconfirm auto-cpufreq-git
+    yay -S --needed --noconfirm auto-cpufreq-git
     sudo auto-cpufreq --install
     sudo systemctl start auto-cpufreq
     sudo systemctl enable auto-cpufreq
