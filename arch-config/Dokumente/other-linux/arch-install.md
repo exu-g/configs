@@ -165,6 +165,8 @@ Uncomment `%wheel ALL=(ALL) ALL`
 `reboot`  
 
 ## Install AUR helper
+
+### yay
 ```bash
 git clone https://aur.archlinux.org/yay.git
 cd yay
