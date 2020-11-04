@@ -245,7 +245,7 @@ echo Updated packages
 
 #pacman programs
 echo Installing default pacman programs
-sudo yay -S --needed arandr libreoffice-fresh-de termite wget picom stress obs-studio python-pip hunspell hunspell-de hyphen hyphen-de fish psensor transmission-qt smartmontools thunderbird ffmpeg jre-openjdk thunar gtk-engine-murrine iperf3 celluloid nload languagetool dmenu rofi nextcloud-client devtools arcolinux-slim arcolinux-slimlock-themes-git vnstat wireguard-tools cronie bandwhich libnotify notification-daemon dunst breeze rsync restic
+yay -S --needed arandr libreoffice-fresh-de termite wget picom stress obs-studio python-pip hunspell hunspell-de hyphen hyphen-de fish psensor transmission-qt smartmontools thunderbird ffmpeg jre-openjdk thunar gtk-engine-murrine iperf3 celluloid nload languagetool dmenu rofi nextcloud-client devtools arcolinux-slim arcolinux-slimlock-themes-git vnstat wireguard-tools cronie bandwhich libnotify notification-daemon dunst breeze rsync restic
 echo Installed official programs
 
 # REVIEW Patched neofetch version to remove Color codes
@@ -257,7 +257,8 @@ rm -rf neofetch
 
 #AUR
 echo Installing default AUR programs
-yay -S --needed ttf-ms-fonts ttf-tahoma ttf-vista-fonts cpu-x polybar nutty woeusb nohang-git lightdm-webkit-theme-aether debtap rig gimp-plugin-registry piper freetype2-cleartype tmpmail-git lightdm-webkit2-theme-glorious
+yay -S --needed ttf-ms-fonts ttf-tahoma ttf-vista-fonts cpu-x polybar nutty woeusb nohang-git lightdm-webkit-theme-aether debtap rig gimp-plugin-registry piper tmpmail-git lightdm-webkit2-theme-glorious
+yay -S --needed freetype2-cleartype
 yay -S --needed bitwarden
 #yay -S --needed --noconfirm pcloud-drive
 echo Installed AUR programs
