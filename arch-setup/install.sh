@@ -235,17 +235,17 @@ done
 
 #uninstalling unused packages
 echo Uninstalling unused packages
-sudo pacman -Rns --noconfirm evolution catfish geany vim keepass gnome-boxes sublime-text-dev atom adwaita-icon-theme arcolinux-i3wm-git arcolinux-tweak-tool-git arcolinux-welcome-app-git clonezilla evolution-data-server numix-circle-arc-icons-git numix-circle-icon-theme-git numix-gtk-theme-git numix-icon-theme-git oh-my-zsh-git pamac-aur qbittorrent vivaldi vlc code baka-mplayer tmux guvcview kdenlive xfce4-notifyd chromium freetype2
+sudo pacman -Rns evolution catfish geany vim keepass gnome-boxes sublime-text-dev atom adwaita-icon-theme arcolinux-i3wm-git arcolinux-tweak-tool-git arcolinux-welcome-app-git clonezilla evolution-data-server numix-circle-arc-icons-git numix-circle-icon-theme-git numix-gtk-theme-git numix-icon-theme-git oh-my-zsh-git pamac-aur qbittorrent vivaldi vlc code baka-mplayer tmux guvcview kdenlive xfce4-notifyd chromium freetype2
 echo Uninstalled unused packages
 
 #update stuff
 echo Updating packages
-yay -Syyu --noconfirm 
+yay -Syyu
 echo Updated packages
 
 #pacman programs
 echo Installing default pacman programs
-sudo pacman -S --needed --noconfirm arandr libreoffice-fresh-de termite  wget picom stress obs-studio  python-pip hunspell hunspell-de hyphen hyphen-de fish psensor transmission-qt smartmontools thunderbird ffmpeg jre-openjdk thunar gtk-engine-murrine iperf3 celluloid nload languagetool dmenu rofi nextcloud-client devtools arcolinux-slim arcolinux-slimlock-themes-git vnstat wireguard-tools cronie bandwhich libnotify notification-daemon dunst breeze rsync restic
+sudo pacman -S --needed arandr libreoffice-fresh-de termite  wget picom stress obs-studio  python-pip hunspell hunspell-de hyphen hyphen-de fish psensor transmission-qt smartmontools thunderbird ffmpeg jre-openjdk thunar gtk-engine-murrine iperf3 celluloid nload languagetool dmenu rofi nextcloud-client devtools arcolinux-slim arcolinux-slimlock-themes-git vnstat wireguard-tools cronie bandwhich libnotify notification-daemon dunst breeze rsync restic
 echo Installed official programs
 
 # REVIEW Patched neofetch version to remove Color codes
@@ -256,14 +256,14 @@ cd ..
 
 #AUR
 echo Installing default AUR programs
-yay -S --needed --noconfirm ttf-ms-fonts ttf-tahoma ttf-vista-fonts cpu-x polybar nutty woeusb nohang-git lightdm-webkit-theme-aether debtap rig gimp-plugin-registry piper freetype2-cleartype tmpmail-git lightdm-webkit2-theme-glorious
-yay -S --needed --noconfirm bitwarden
+yay -S --needed ttf-ms-fonts ttf-tahoma ttf-vista-fonts cpu-x polybar nutty woeusb nohang-git lightdm-webkit-theme-aether debtap rig gimp-plugin-registry piper freetype2-cleartype tmpmail-git lightdm-webkit2-theme-glorious
+yay -S --needed bitwarden
 #yay -S --needed --noconfirm pcloud-drive
 echo Installed AUR programs
 
 #install wine
 echo Installing wine
-pacman -S --needed --noconfirm wine-staging giflib lib32-giflib libpng lib32-libpng libldap lib32-libldap gnutls lib32-gnutls mpg123 lib32-mpg123 openal lib32-openal v4l-utils lib32-v4l-utils libpulse lib32-libpulse libgpg-error lib32-libgpg-error alsa-plugins lib32-alsa-plugins alsa-lib lib32-alsa-lib libjpeg-turbo lib32-libjpeg-turbo sqlite lib32-sqlite libxcomposite lib32-libxcomposite libxinerama lib32-libgcrypt libgcrypt lib32-libxinerama ncurses lib32-ncurses opencl-icd-loader lib32-opencl-icd-loader libxslt lib32-libxslt libva lib32-libva gtk3 lib32-gtk3 gst-plugins-base-libs lib32-gst-plugins-base-libs vulkan-icd-loader lib32-vulkan-icd-loader
+pacman -S --needed wine-staging giflib lib32-giflib libpng lib32-libpng libldap lib32-libldap gnutls lib32-gnutls mpg123 lib32-mpg123 openal lib32-openal v4l-utils lib32-v4l-utils libpulse lib32-libpulse libgpg-error lib32-libgpg-error alsa-plugins lib32-alsa-plugins alsa-lib lib32-alsa-lib libjpeg-turbo lib32-libjpeg-turbo sqlite lib32-sqlite libxcomposite lib32-libxcomposite libxinerama lib32-libgcrypt libgcrypt lib32-libxinerama ncurses lib32-ncurses opencl-icd-loader lib32-opencl-icd-loader libxslt lib32-libxslt libva lib32-libva gtk3 lib32-gtk3 gst-plugins-base-libs lib32-gst-plugins-base-libs vulkan-icd-loader lib32-vulkan-icd-loader
 echo Installed wine
 
 #python modules
