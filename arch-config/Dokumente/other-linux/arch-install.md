@@ -42,7 +42,7 @@ Generally partitions have to be mounted where you will later use them in your sy
 
 Root: /mnt
 EFI: /mnt/boot
-Home: /mnt/home
+~~Home: /mnt/home~~
 
 ## Creating swapfile
 ```bash
@@ -114,6 +114,7 @@ Edit `/etc/hosts`
 ## Bootloader installation
 
 ### rEFInd
+*doesn't work atm*  
 ```bash
 pacman -S refind-efi efibootmgr networkmanager network-manager-applet dialog mtools base-devel linux-headers openssh
 ```
@@ -130,6 +131,21 @@ Delete any lines with "archiso".
 Edit `/boot/EFI/BOOT/refind.conf`  
 Search for `Arch Linux` (vim, press "/". Attention: case sensitive)  
 Under `options` replace the UUID after `root=` with the configured EFI partition.  
+
+### GRUB
+```bash
+pacman -S grub efibootmgr networkmanager network-manager-applet dialog mtools base-devel linux-headers openssh
+```
+
+```bash
+grub-install --target=x86_64-efi --efi-directory=(efi partition mountpoint) --bootloader-id=GRUB
+```
+
+```bash
+grub-mkconfig -o /boot/grub/grub.cfg
+```
+
+### systemd-boot
 
 ## Networking
 `systemctl enable NetworkManager`  
