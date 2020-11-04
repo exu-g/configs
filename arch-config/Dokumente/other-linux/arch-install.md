@@ -65,7 +65,7 @@ swapon /mnt/swapfile
 Some things like the userspace utilities for file management will vary.  
 See [file systems](https://wiki.archlinux.org/index.php/File_systems#Types_of_file_systems)  
 ```bash
-pacstrap /mnt base linux linux-firmware vim dosfstools e2fsprogs 
+pacstrap /mnt base linux linux-firmware vim dosfstools e2fsprogs git openssh networkmanager network-manager-applet dialog mtools base-devel linux-headers 
 ```
 
 ## Generate fstab
@@ -116,7 +116,7 @@ Edit `/etc/hosts`
 ### rEFInd
 *doesn't work atm*  
 ```bash
-pacman -S refind-efi efibootmgr networkmanager network-manager-applet dialog mtools base-devel linux-headers openssh
+pacman -S refind-efi efibootmgr 
 ```
 
 ```bash
@@ -134,7 +134,7 @@ Under `options` replace the UUID after `root=` with the configured EFI partition
 
 ### GRUB
 ```bash
-pacman -S grub efibootmgr networkmanager network-manager-applet dialog mtools base-devel linux-headers openssh
+pacman -S grub efibootmgr 
 ```
 
 ```bash
@@ -164,6 +164,11 @@ Uncomment `%wheel ALL=(ALL) ALL`
 `exit`  
 `reboot`  
 
-
+## Install AUR helper
+```bash
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si
+```
 
 
