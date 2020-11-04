@@ -253,6 +253,7 @@ git clone https://github.com/RealStickman/neofetch
 cd neofetch
 sudo make install
 cd ..
+rm -rf neofetch
 
 #AUR
 echo Installing default AUR programs
