@@ -12,8 +12,7 @@ in_gnome=0
 
 cmd=(dialog --separate-output --checklist "Select Desktop environment/Window manager:" 22 76 16)
 options=(1 "[DE] xfce4" off    # any option can be set to default to "on"
-         2 "[WM] i3-gaps" off
-         3 "[DE] gnome" off)
+         2 "[WM] i3-gaps" off)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
 for choice in $choices
@@ -24,9 +23,6 @@ do
             ;;
         2)
             in_i3gaps=1
-            ;;
-        3)
-            in_gnome=1
             ;;
     esac
 done
@@ -235,7 +231,7 @@ done
 
 #uninstalling unused packages
 echo Uninstalling unused packages
-sudo pacman -Rns evolution catfish geany vim keepass gnome-boxes sublime-text-dev atom adwaita-icon-theme arcolinux-i3wm-git arcolinux-tweak-tool-git arcolinux-welcome-app-git clonezilla evolution-data-server numix-circle-arc-icons-git numix-circle-icon-theme-git numix-gtk-theme-git numix-icon-theme-git oh-my-zsh-git pamac-aur qbittorrent vivaldi vlc code baka-mplayer tmux guvcview kdenlive xfce4-notifyd chromium freetype2 psensor transmission-qt
+sudo pacman -Rns evolution catfish geany vim keepass gnome-boxes sublime-text-dev atom adwaita-icon-theme arcolinux-i3wm-git arcolinux-tweak-tool-git arcolinux-welcome-app-git clonezilla evolution-data-server numix-circle-arc-icons-git numix-circle-icon-theme-git numix-gtk-theme-git numix-icon-theme-git oh-my-zsh-git pamac-aur qbittorrent vivaldi vlc code baka-mplayer tmux guvcview kdenlive xfce4-notifyd chromium freetype2 psensor transmission-qt pcloud-drive
 echo Uninstalled unused packages
 
 #update stuff
@@ -250,6 +246,15 @@ sudo pacman -S --needed arandr libreoffice-fresh-de termite wget picom stress ob
 sudo pacman -S --needed transmission-gtk
 # REVIEW maybe find theme with less dependencies
 sudo pacman -S --needed breeze
+
+# NOTE Distro specific stuff
+distro=$(cat /etc/*-release | grep "^ID=")
+if [ "$distro" == "ID=arcolinux" ]; then
+    sudo pacman -S --needed slim archlinux-themes-slim
+fi
+if [ "$distro" == "ID=arch" ]; then
+    sudo pacman -S --needed arcolinux-slim arcolinux-slimlock-themes-git
+fi
 echo Installed official programs
 
 # REVIEW Determine usefulness
@@ -259,20 +264,16 @@ echo Installed official programs
 # dmenu
 # devtools
 
-# REVIEW arcolinux specific stuff
-# arcolinux-slim
-# arcolinux-slimlock-themes-git
-
 # REVIEW Patched neofetch version to remove Color codes
 git clone https://github.com/RealStickman/neofetch
-cd neofetch || echo Failed to find the directory
+cd neofetch
 sudo make install
-cd .. || echo wtf
+cd ..
 rm -rf neofetch
 
 #AUR
 echo Installing default AUR programs
-yay -S --needed ttf-ms-fonts ttf-vista-fonts polybar nohang-git lightdm-webkit-theme-aether rig tmpmail-git lightdm-webkit2-theme-glorious
+yay -S --needed ttf-ms-fonts ttf-vista-fonts polybar nohang-git lightdm-webkit-theme-aether rig tmpmail-git lightdm-webkit2-theme-glorious sweet-theme-dark sweet-folders-icons-git wps-office
 yay -S --needed freetype2-cleartype
 yay -S --needed bitwarden
 #yay -S --needed --noconfirm pcloud-drive
@@ -314,13 +315,6 @@ if [ $in_i3gaps -eq 1 ]; then
     sudo pacman -S --needed --noconfirm i3-gaps
 else   
     echo "Skipping i3-gaps"
-fi
-
-if [ $in_gnome -eq 1 ]; then
-    echo "Installing gnome"
-    yay -S --needed --noconfirm gnome gnome-shell-extension-arc-menu gnome-shell-extension-dash-to-dock gnome-tweaks
-else
-    echo "Skipping gnome"
 fi
 
 #browsers
