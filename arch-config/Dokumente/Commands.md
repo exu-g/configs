@@ -196,3 +196,8 @@ Generate new temporary mail
 ```bash
 tmpmail -g
 ```
+
+## waifu2x
+```bash
+waifu2x-ncnn-vulkan -i (input directory) -o (output directory)
+```
