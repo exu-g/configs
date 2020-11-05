@@ -235,7 +235,7 @@ done
 
 #uninstalling unused packages
 echo Uninstalling unused packages
-sudo pacman -Rns evolution catfish geany vim keepass gnome-boxes sublime-text-dev atom adwaita-icon-theme arcolinux-i3wm-git arcolinux-tweak-tool-git arcolinux-welcome-app-git clonezilla evolution-data-server numix-circle-arc-icons-git numix-circle-icon-theme-git numix-gtk-theme-git numix-icon-theme-git oh-my-zsh-git pamac-aur qbittorrent vivaldi vlc code baka-mplayer tmux guvcview kdenlive xfce4-notifyd chromium freetype2
+sudo pacman -Rns evolution catfish geany vim keepass gnome-boxes sublime-text-dev atom adwaita-icon-theme arcolinux-i3wm-git arcolinux-tweak-tool-git arcolinux-welcome-app-git clonezilla evolution-data-server numix-circle-arc-icons-git numix-circle-icon-theme-git numix-gtk-theme-git numix-icon-theme-git oh-my-zsh-git pamac-aur qbittorrent vivaldi vlc code baka-mplayer tmux guvcview kdenlive xfce4-notifyd chromium freetype2 psensor transmission-qt
 echo Uninstalled unused packages
 
 #update stuff
@@ -245,8 +245,23 @@ echo Updated packages
 
 #pacman programs
 echo Installing default pacman programs
-yay -S --needed arandr libreoffice-fresh-de termite wget picom stress obs-studio python-pip hunspell hunspell-de hyphen hyphen-de fish psensor transmission-qt smartmontools thunderbird ffmpeg jre-openjdk thunar gtk-engine-murrine iperf3 celluloid nload languagetool dmenu rofi nextcloud-client devtools arcolinux-slim arcolinux-slimlock-themes-git vnstat wireguard-tools cronie bandwhich libnotify notification-daemon dunst breeze rsync restic
+sudo pacman -S --needed arandr libreoffice-fresh-de termite wget picom stress obs-studio python-pip hunspell hunspell-de hunspell-en_GB hyphen hyphen-de hyphen-en fish smartmontools thunderbird ffmpeg jre-openjdk thunar gtk-engine-murrine celluloid languagetool rofi nextcloud-client vnstat wireguard-tools cronie libnotify notification-daemon dunst rsync restic piper
+# REVIEW replace transmission-qt with gtk version
+sudo pacman -S --needed transmission-gtk
+# REVIEW maybe find theme with less dependencies
+sudo pacman -S --needed breeze
 echo Installed official programs
+
+# REVIEW Determine usefulness
+# iperf3
+# nload
+# bandwhich
+# dmenu
+# devtools
+
+# REVIEW arcolinux specific stuff
+# arcolinux-slim
+# arcolinux-slimlock-themes-git
 
 # REVIEW Patched neofetch version to remove Color codes
 git clone https://github.com/RealStickman/neofetch
@@ -257,11 +272,19 @@ rm -rf neofetch
 
 #AUR
 echo Installing default AUR programs
-yay -S --needed ttf-ms-fonts ttf-tahoma ttf-vista-fonts cpu-x polybar nutty woeusb nohang-git lightdm-webkit-theme-aether debtap rig gimp-plugin-registry piper tmpmail-git lightdm-webkit2-theme-glorious
+yay -S --needed ttf-ms-fonts ttf-vista-fonts polybar nohang-git lightdm-webkit-theme-aether rig tmpmail-git lightdm-webkit2-theme-glorious
 yay -S --needed freetype2-cleartype
 yay -S --needed bitwarden
 #yay -S --needed --noconfirm pcloud-drive
 echo Installed AUR programs
+
+# REVIEW Determine usefulness
+# ttf-tahoma
+# cpu-x
+# nutty
+# woeusb
+# debtap
+# gimp-plugin-registry
 
 #install wine
 echo Installing wine
