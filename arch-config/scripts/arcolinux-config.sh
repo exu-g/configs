@@ -61,6 +61,17 @@ cp -r ~/config/scripts/ ~/
 #copy stuff to /etc
 sudo cp -r ~/config/etc /
 
+# Distro specific stuff
+distro=$(lsb_release -a | grep "Distributor ID:")
+
+if [ "$distro" == "Distributor ID: ArcoLinux" ]; then
+    sudo mv /etc/arco-pacman.conf /etc/pacman.conf
+fi
+
+if [ "$distro" == "Distributor ID: " ]; then
+    sudo mv /etc/arch-pacman.conf /etc/pacman.conf
+fi
+
 #copy old lightdm themes (and maybe other stuff, idk)
 sudo cp -r ~/config/var /
 
