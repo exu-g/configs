@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # TODO make this work
+# NOTE ignore errors from missing "||". Try getting the line below to work
 #set -euo pipefail
 
 #change to home (does not show in terminal)
@@ -49,31 +50,24 @@ do
     case $choice in
         1)
             in_firefox=1
-            echo Installed Firefox
             ;;
         2)
             in_ugchromium=1
-            echo Installed Ungoogled-Chromium
             ;;
         3)
             in_palemoon=1
-            echo Installed Palemoon
             ;;
         4)
             in_basilisk=1
-            echo Installed Basilisk
             ;;
         5)
             in_netsurf=1
-            echo Installed Netsurf
             ;;
         6)
             in_icecat=1
-            echo Installed Icecat
             ;;
         7)
             in_tor=1
-            echo Installed Torbrowser
             ;;
     esac
 done
@@ -93,6 +87,7 @@ in_easystrokes=0
 in_liferea=0
 in_mirage=0
 in_bettergram=0
+in_waifu2x=0
 
 cmd=(dialog --separate-output --checklist "Select other programs:" 22 76 16)
 options=(1 "VirtManager" off    # any option can be set to default to "on"
@@ -109,7 +104,8 @@ options=(1 "VirtManager" off    # any option can be set to default to "on"
          12 "Easystroke" on
          13 "Liferea" off
          14 "Mirage" on
-         15 "Bettergram" on)
+         15 "Bettergram" on
+         16 "Waifu2x" off)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
 for choice in $choices
@@ -117,63 +113,51 @@ do
     case $choice in
         1)
             in_virtmanager=1
-            echo Installed VirtManager
             ;;
         2)
             in_steam=1
-            echo Installed Steam
             ;;
         3)
             in_lutris=1
-            echo Installed Lutris
             ;;
         4)
             in_blender=1
-            echo Installed Blender
             ;;
         5)
             in_krita=1
-            echo Installed Krita
             ;;
         6)
             in_youtubedl=1
-            echo Installed Youtube-dl
             ;;
         7)
             in_discord=1
-            echo Installed Discord
             ;;
         8)
             in_handbrake=1
-            echo Installed Handbrake
             ;;
         9)
-            sudo pacman -S --needed gimp
-            echo Installed Gimp
+            in_gimp=1
             ;;
         10)
             in_audacity=1
-            echo Installed Audacity
             ;;
         11)
             in_mangohud=1
-            echo Installed MangoHud
             ;;
         12)
             in_easystrokes=1
-            echo Installed Easystroke
             ;;
         13)
             in_liferea=1
-            echo Installed Liferea
             ;;
         14)
             in_mirage=1
-            echo Installed Mirage
             ;;
         15)
             in_bettergram=1
-            echo Installed Bettergram
+            ;;
+        16)
+            in_waifu2x=1
             ;;
     esac
 done
@@ -471,6 +455,13 @@ if [ $in_bettergram -eq 1 ]; then
     yay -S --needed --noconfirm bettergram
 else
     echo "Skipping Bettergram"
+fi
+
+if [ $in_waifu2x -eq 1 ]; then
+    echo "Installing Waifu2x"
+    yay -S --needed --noconfirm waifu2x-ncnn-vulkan
+else
+    echo "Skipping Waifu2x"
 fi
 
 #performance and battery life
