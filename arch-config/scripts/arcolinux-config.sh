@@ -62,13 +62,14 @@ cp -r ~/config/scripts/ ~/
 sudo cp -r ~/config/etc /
 
 # Distro specific stuff
-distro=$(lsb_release -a | grep "Distributor ID:")
+distro=$(cat /etc/*-release | grep "DISTRIB_ID=")
+#distro=$(lsb_release -a | grep "Distributor ID:")
 
-if [ "$distro" == "Distributor ID: ArcoLinux" ]; then
+if [ "$distro" == "DISTRIB_ID=ArcoLinux" ]; then
     sudo mv /etc/arco-pacman.conf /etc/pacman.conf
 fi
 
-if [ "$distro" == "Distributor ID: " ]; then
+if [ "$distro" == "DISTRIB_ID=" ]; then
     sudo mv /etc/arch-pacman.conf /etc/pacman.conf
 fi
 
