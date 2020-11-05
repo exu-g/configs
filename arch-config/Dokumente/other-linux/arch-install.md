@@ -42,7 +42,7 @@ Generally partitions have to be mounted where you will later use them in your sy
 
 Root: /mnt
 EFI: /mnt/boot
-~~Home: /mnt/home~~
+Home: /mnt/home
 
 ## Creating swapfile
 ```bash
