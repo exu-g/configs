@@ -21,23 +21,23 @@ mkdir ~/old_dat
 
 #back stuff up
 #config folders
-rsync -ah --progress ~/.config/MangoHud ~/old_dat/.config/ || echo Directory does not exist > /dev/null
-rsync -ah --progress ~/.config/autostart ~/old_dat/.config/ || echo Directory does not exist > /dev/null
-rsync -ah --progress ~/.config/fish ~/old_dat/.config/ || echo Directory does not exist > /dev/null
-rsync -ah --progress ~/.config/gtk-3.0 ~/old_dat/.config/ || echo Directory does not exist > /dev/null
-rsync -ah --progress ~/.config/i3 ~/old_dat/.config/ || echo Directory does not exist > /dev/null
-rsync -ah --progress ~/.config/neofetch ~/old_dat/.config/ || echo Directory does not exist > /dev/null
-rsync -ah --progress ~/.config/openbox ~/old_dat/.config/ || echo Directory does not exist > /dev/null
-rsync -ah --progress ~/.config/polybar ~/old_dat/.config/ || echo Directory does not exist > /dev/null
-rsync -ah --progress ~/.config/termite ~/old_dat/.config/ || echo Directory does not exist > /dev/null
-rsync -ah --progress ~/.config/variety ~/old_dat/.config/ || echo Directory does not exist > /dev/null
+rsync -ah ~/.config/MangoHud ~/old_dat/.config/ || echo Directory does not exist > /dev/null
+rsync -ah ~/.config/autostart ~/old_dat/.config/ || echo Directory does not exist > /dev/null
+rsync -ah ~/.config/fish ~/old_dat/.config/ || echo Directory does not exist > /dev/null
+rsync -ah ~/.config/gtk-3.0 ~/old_dat/.config/ || echo Directory does not exist > /dev/null
+rsync -ah ~/.config/i3 ~/old_dat/.config/ || echo Directory does not exist > /dev/null
+rsync -ah ~/.config/neofetch ~/old_dat/.config/ || echo Directory does not exist > /dev/null
+rsync -ah ~/.config/openbox ~/old_dat/.config/ || echo Directory does not exist > /dev/null
+rsync -ah ~/.config/polybar ~/old_dat/.config/ || echo Directory does not exist > /dev/null
+rsync -ah ~/.config/termite ~/old_dat/.config/ || echo Directory does not exist > /dev/null
+rsync -ah ~/.config/variety ~/old_dat/.config/ || echo Directory does not exist > /dev/null
 
 #other directories
-rsync -ah --progress ~/scripts ~/old_dat/ || echo Directory does not exist > /dev/null
-rsync -ah --progress ~/.mozilla ~/old_dat/ || echo Directory does not exist > /dev/null
-rsync -ah --progress ~/.easystroke ~/old_dat/ || echo Directory does not exist > /dev/null
-#rsync -ah --progress ~/.emacs.d ~/old_dat/ || echo Directory does not exist > /dev/null
-rsync -ah --progress ~/.doom.d ~/old_dat/ || echo Directory does not exist > /dev/null
+rsync -ah ~/scripts ~/old_dat/ || echo Directory does not exist > /dev/null
+rsync -ah ~/.mozilla ~/old_dat/ || echo Directory does not exist > /dev/null
+rsync -ah ~/.easystroke ~/old_dat/ || echo Directory does not exist > /dev/null
+#rsync -ah ~/.emacs.d ~/old_dat/ || echo Directory does not exist > /dev/null
+rsync -ah ~/.doom.d ~/old_dat/ || echo Directory does not exist > /dev/null
 echo Made backups
 
 #copy folders
@@ -61,14 +61,11 @@ cp -r ~/config/scripts/ ~/
 #copy stuff to /etc
 sudo cp -r ~/config/etc /
 
-# Distro specific stuff
+# NOTE Distro specific stuff
 distro=$(cat /etc/*-release | grep "^ID=")
-#distro=$(lsb_release -a | grep "Distributor ID:")
-
 if [ "$distro" == "ID=arcolinux" ]; then
     sudo mv /etc/arco-pacman.conf /etc/pacman.conf
 fi
-
 if [ "$distro" == "ID=arch" ]; then
     sudo mv /etc/arch-pacman.conf /etc/pacman.conf
 fi
