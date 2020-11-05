@@ -8,7 +8,6 @@ cd "$HOME"
 
 in_xfce=0
 in_i3gaps=0
-in_gnome=0
 
 cmd=(dialog --separate-output --checklist "Select Desktop environment/Window manager:" 22 76 16)
 options=(1 "[DE] xfce4" off    # any option can be set to default to "on"
