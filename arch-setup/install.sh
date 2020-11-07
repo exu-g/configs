@@ -212,6 +212,22 @@ do
     esac
 done
 
+# Additional, only once installed, packages
+in_optpkg=0
+
+cmd=(dialog --separate-output --checklist "Report installed packages?" 22 76 16)
+options=(1 "Additional packages" off)
+choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+clear
+for choice in $choices
+do
+    case $choice in
+        1)
+            in_optpkg=1
+            ;;
+    esac
+done
+
 #uninstalling unused packages
 echo Uninstalling unused packages
 sudo pacman -Rns evolution catfish geany vim keepass gnome-boxes sublime-text-dev atom adwaita-icon-theme arcolinux-i3wm-git arcolinux-tweak-tool-git arcolinux-welcome-app-git clonezilla evolution-data-server numix-circle-arc-icons-git numix-circle-icon-theme-git numix-gtk-theme-git numix-icon-theme-git oh-my-zsh-git pamac-aur qbittorrent vivaldi vlc code baka-mplayer tmux guvcview kdenlive xfce4-notifyd chromium freetype2 psensor transmission-qt pcloud-drive
@@ -500,6 +516,12 @@ if [ $in_pkgstats -eq 1 ]; then
     sudo pacman -S --needed --noconfirm pkgstats
 else
     echo "Skipping pkgstats"
+fi
+
+# additional packages
+if [ $in_optpkg -eq 1 ]; then
+    echo "Installing additional packages"
+    yay -S --needed - < "$HOME/setup/pkglist.txt"
 fi
 
 #change shell
