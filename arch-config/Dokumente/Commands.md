@@ -91,11 +91,6 @@ sudo mkinitcpio -g /boot/initramfs-[kernel].img -k [kernel from /usr/lib/modules
 depmod -a
 ```
 
-## network traffic
-```bash
-nload
-```
-
 ## pacman remove old packages
 ```bash
 pacman -Sc
