@@ -23,6 +23,9 @@ set fish_color_host brwhite
 set fish_color_host_remote brwhite
 set fish_color_cancel brred
 
+# add paths
+set fish_user_paths "$HOME/.emacs.d/bin/" $fish_user_paths
+
 #update config
 alias upconf='~/scripts/arcolinux-config.sh'
 
