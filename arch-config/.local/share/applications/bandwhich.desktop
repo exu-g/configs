@@ -1,0 +1,4 @@
+[Desktop Entry]
+Name=Bandwhich
+Exec=termite -e "sudo bandwhich"
+Type=Application
