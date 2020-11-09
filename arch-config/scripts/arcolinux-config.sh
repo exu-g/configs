@@ -104,6 +104,9 @@ chmod +x -R ~/.local/share/applications
 #remove downloaded folder
 rm -rf ~/config
 
+# reload applications
+update-desktop-database ~/.local/share/applications/
+
 #sync doom-emacs
 ~/.emacs.d/bin/doom sync
 
