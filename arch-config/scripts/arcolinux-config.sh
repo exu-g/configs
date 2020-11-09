@@ -31,6 +31,7 @@ rsync -ah ~/.config/openbox ~/old_dat/.config/ || echo Directory does not exist 
 rsync -ah ~/.config/polybar ~/old_dat/.config/ || echo Directory does not exist > /dev/null
 rsync -ah ~/.config/termite ~/old_dat/.config/ || echo Directory does not exist > /dev/null
 rsync -ah ~/.config/variety ~/old_dat/.config/ || echo Directory does not exist > /dev/null
+rsync -ah ~/.local/share/applications/ ~/old_dat/.local/share/ || echo Directory does not exist > /dev/null
 
 #other directories
 rsync -ah ~/scripts ~/old_dat/ || echo Directory does not exist > /dev/null
@@ -42,6 +43,7 @@ echo Made backups
 
 #copy folders
 cp -r ~/config/.config/ ~/ &&
+cp -r ~/config/.local/ ~/ &&
 cp -r ~/config/Dokumente ~/ &&
 cp -r ~/config/.mozilla ~/ &&
 cp -r ~/config/.easystroke ~/ &&
