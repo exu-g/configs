@@ -11,6 +11,7 @@ CoordMode, Mouse, Screen
 
 ; unset keys
 Alt & F4::return
+LWin & E::return
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
