@@ -94,10 +94,12 @@ rm ~/.config/GIMP/2.10/plug-ins/export_layers-3.3.1.zip > /dev/null
 echo Unzipped gimp plugins
 
 #make bash scripts executable
-chmod +x ~/.config/polybar/launch.sh
-chmod +x ~/.config/i3/scripts/i3exit.sh
-chmod +x ~/.config/i3/scripts/layout-default.sh
-chmod +x ~/scripts/arcolinux-config.sh
+chmod +x -R ~/.config/polybar/
+chmod +x -R ~/.config/i3/scripts
+chmod +x -R ~/scripts
+
+# make applications executable
+chmod +x -R ~/.local/share/applications
 
 #remove downloaded folder
 rm -rf ~/config
