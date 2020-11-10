@@ -17,6 +17,7 @@ git clone https://gitlab.com/RealStickman-arcolinux/config.git &&
 #cmp --silent "$HOME/scripts/arcolinux-config.sh" "$HOME/config/scripts/arcolinux-config.sh" && echo Scripts are the same || rm "$HOME/scripts/arcolinux-config.sh" && cp "$HOME/config/scripts/arcolinux-config.sh" "$HOME/scripts/" && bash ~/scripts/arcolinux-config.sh
 if ! cmp --silent "$HOME/scripts/arcolinux-config.sh" "$HOME/config/scripts/arcolinux-config.sh" ; then
     rm "$HOME/scripts/arcolinux-config.sh" && cp "$HOME/config/scripts/arcolinux-config.sh" "$HOME/scripts/" && bash ~/scripts/arcolinux-config.sh
+    echo Removed old config file and launched new one.
 fi
 
 #delete previous backups
