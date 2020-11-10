@@ -21,6 +21,9 @@ if [ -d "$HOME/.emacs.d/bin/" ] ;
   then PATH="$HOME/.emacs.d/bin/:$PATH"
 fi
 
+# environment variables
+export VISUAL="/usr/bin/emacs --no-window-system"
+export EDITOR="/usr/bin/emacs --no-window-system"
 
 #update config
 #alias upconf='$HOME/scripts/arcolinux-config.sh'
