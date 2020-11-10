@@ -19,9 +19,12 @@ rm -rf ~/old_dat
 #make new directory
 mkdir ~/old_dat
 
+# make subdirectories
+mkdir ~/old_dat/.local/share || echo Directory already exists
+
 #back stuff up
 #config folders
-rsync -ah ~/.config/MangoHud ~/old_dat/.config/ || echo Directory does not exist > /dev/null
+rsync -ah ~/.config/MangoHud ~/old_dat/.config/ || echo Directory does not exist
 rsync -ah ~/.config/autostart ~/old_dat/.config/ || echo Directory does not exist > /dev/null
 rsync -ah ~/.config/fish ~/old_dat/.config/ || echo Directory does not exist > /dev/null
 rsync -ah ~/.config/gtk-3.0 ~/old_dat/.config/ || echo Directory does not exist > /dev/null
