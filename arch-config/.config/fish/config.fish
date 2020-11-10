@@ -25,6 +25,7 @@ set fish_color_cancel brred
 
 # environment variables
 set RANGER_LOAD_DEFAULT_RC FALSE
+set EDITOR="/usr/bin/emacs --no-window-system"
 
 # add paths
 set fish_user_paths "$HOME/.emacs.d/bin/" $fish_user_paths
