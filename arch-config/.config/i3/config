@@ -366,8 +366,6 @@ set $browsers firefox (f), chromium (c), palemoon (p), basilisk (b), netsurf (n)
 mode "$browsers" {
     bindsym f exec --no-startup-id firefox;focus
     bindsym c exec --no-startup-id chromium;focus
-    bindsym p exec --no-startup-id palemoon;focus
-    bindsym b exec --no-startup-id basilisk;focus
     bindsym n exec --no-startup-id netsurf;focus
     bindsym i exec --no-startup-id icecat;focus
     bindsym t exec --no-startup-id torbrowser-launcher;focus
