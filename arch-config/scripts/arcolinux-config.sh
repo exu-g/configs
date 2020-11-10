@@ -14,7 +14,6 @@ rm -rf ~/config
 git clone https://gitlab.com/RealStickman-arcolinux/config.git &&
 
 # check if the install scripts are the same
-#cmp --silent "$HOME/scripts/arcolinux-config.sh" "$HOME/config/scripts/arcolinux-config.sh" && echo Scripts are the same || rm "$HOME/scripts/arcolinux-config.sh" && cp "$HOME/config/scripts/arcolinux-config.sh" "$HOME/scripts/" && bash ~/scripts/arcolinux-config.sh
 if ! cmp --silent "$HOME/scripts/arcolinux-config.sh" "$HOME/config/scripts/arcolinux-config.sh" ; then
     echo Removed old config file and launched new one.
     rm "$HOME/scripts/arcolinux-config.sh" && cp "$HOME/config/scripts/arcolinux-config.sh" "$HOME/scripts/" && bash ~/scripts/arcolinux-config.sh
