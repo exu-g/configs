@@ -28,7 +28,7 @@ do
 done
 
 in_firefox=0
-in_ugchromium=0
+in_chromium=0
 in_palemoon=0
 in_basilisk=0
 in_netsurf=0
@@ -37,12 +37,10 @@ in_tor=0
 
 cmd=(dialog --separate-output --checklist "Select browsers:" 22 76 16)
 options=(1 "Firefox" on    # any option can be set to default to "on"
-         2 "Ungoogled-Chromium" off
-         3 "Palemoon" off
-         4 "Basilisk" off
-         5 "Netsurf" off
-         6 "Icecat" off
-         7 "Torbrowser" on)
+         2 "Chromium" off
+         3 "Netsurf" off
+         4 "Icecat" off
+         5 "Torbrowser" on)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
 for choice in $choices
@@ -52,21 +50,15 @@ do
             in_firefox=1
             ;;
         2)
-            in_ugchromium=1
+            in_chromium=1
             ;;
         3)
-            in_palemoon=1
-            ;;
-        4)
-            in_basilisk=1
-            ;;
-        5)
             in_netsurf=1
             ;;
-        6)
+        4)
             in_icecat=1
             ;;
-        7)
+        5)
             in_tor=1
             ;;
     esac
@@ -325,25 +317,11 @@ else
     echo "Skipping Firefox"
 fi
 
-if [ $in_ugchromium -eq 1 ]; then
-    echo "Installing Ungoogled-chromium"
-    sudo pacman -S --needed --noconfirm ungoogled-chromium
+if [ $in_chromium -eq 1 ]; then
+    echo "Installing Chromium"
+    sudo pacman -S --needed --noconfirm chromium
 else
-    echo "Skipping Ungoogled-chromium"
-fi
-
-if [ $in_palemoon -eq 1 ]; then
-    echo "Installing Palemoon"
-    sudo pacman -S --needed --noconfirm palemoon
-else
-    echo "Skipping Palemoon"
-fi
-
-if [ $in_basilisk -eq 1 ]; then
-    echo "Installing Basilisk"
-    sudo pacman -S --needed --noconfirm basilisk
-else
-    echo "Skipping Basilisk"
+    echo "Skipping Chromium"
 fi
 
 if [ $in_netsurf -eq 1 ]; then
