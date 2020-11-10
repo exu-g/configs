@@ -13,38 +13,59 @@ rm -rf ~/config
 #clone this repo
 git clone https://gitlab.com/RealStickman-arcolinux/config.git &&
 
+# check if the install scripts are the same
+#cmp --silent "$HOME/scripts/arcolinux-config.sh" "$HOME/config/scripts/arcolinux-config.sh" && echo Scripts are the same || rm "$HOME/scripts/arcolinux-config.sh" && cp "$HOME/config/scripts/arcolinux-config.sh" "$HOME/scripts/" && bash ~/scripts/arcolinux-config.sh
+if ! cmp --silent "$HOME/scripts/arcolinux-config.sh" "$HOME/config/scripts/arcolinux-config.sh" ; then
+    rm "$HOME/scripts/arcolinux-config.sh" && cp "$HOME/config/scripts/arcolinux-config.sh" "$HOME/scripts/" && bash ~/scripts/arcolinux-config.sh
+fi
+
 #delete previous backups
+echo Removing old backup
 rm -rf ~/old_dat
 
 #make new directory
+echo Creating backup
 mkdir ~/old_dat
 
 # make subdirectories
+mkdir ~/old_dat/.config || echo Directory already exists
+mkdir ~/old_dat/.doom.d || echo Directory already exists
+mkdir ~/old_dat/.easystroke || echo Directory already exists
 mkdir ~/old_dat/.local || echo Directory already exists
+mkdir ~/old_dat/.mozilla || echo Directory already exists
+mkdir ~/old_dat/scripts || echo Directory already exists
 
 # make subsubdirectories
 mkdir ~/old_dat/.local/share || echo Directory already exists
 
-#back stuff up
+##############################
+# back stuff up
+##############################
 #config folders
 rsync -ah ~/.config/MangoHud ~/old_dat/.config/ || echo Directory does not exist
-rsync -ah ~/.config/autostart ~/old_dat/.config/ || echo Directory does not exist > /dev/null
-rsync -ah ~/.config/fish ~/old_dat/.config/ || echo Directory does not exist > /dev/null
-rsync -ah ~/.config/gtk-3.0 ~/old_dat/.config/ || echo Directory does not exist > /dev/null
-rsync -ah ~/.config/i3 ~/old_dat/.config/ || echo Directory does not exist > /dev/null
-rsync -ah ~/.config/neofetch ~/old_dat/.config/ || echo Directory does not exist > /dev/null
-rsync -ah ~/.config/openbox ~/old_dat/.config/ || echo Directory does not exist > /dev/null
-rsync -ah ~/.config/polybar ~/old_dat/.config/ || echo Directory does not exist > /dev/null
-rsync -ah ~/.config/termite ~/old_dat/.config/ || echo Directory does not exist > /dev/null
-rsync -ah ~/.config/variety ~/old_dat/.config/ || echo Directory does not exist > /dev/null
-rsync -ah ~/.local/share/applications/ ~/old_dat/.local/share/ || echo Directory does not exist > /dev/null
+rsync -ah ~/.config/fish ~/old_dat/.config/ || echo Directory does not exist
+rsync -ah ~/.config/gtk-3.0 ~/old_dat/.config/ || echo Directory does not exist
+rsync -ah ~/.config/i3 ~/old_dat/.config/ || echo Directory does not exist
+rsync -ah ~/.config/neofetch ~/old_dat/.config/ || echo Directory does not exist
+rsync -ah ~/.config/openbox ~/old_dat/.config/ || echo Directory does not exist
+rsync -ah ~/.config/polybar ~/old_dat/.config/ || echo Directory does not exist
+rsync -ah ~/.config/termite ~/old_dat/.config/ || echo Directory does not exist
+rsync -ah ~/.config/variety ~/old_dat/.config/ || echo Directory does not exist
 
-#other directories
-rsync -ah ~/scripts ~/old_dat/ || echo Directory does not exist > /dev/null
-rsync -ah ~/.mozilla ~/old_dat/ || echo Directory does not exist > /dev/null
-rsync -ah ~/.easystroke ~/old_dat/ || echo Directory does not exist > /dev/null
-#rsync -ah ~/.emacs.d ~/old_dat/ || echo Directory does not exist > /dev/null
-rsync -ah ~/.doom.d ~/old_dat/ || echo Directory does not exist > /dev/null
+# doom.d folder
+rsync -ah ~/.doom.d ~/old_dat/ || echo Directory does not exist
+
+# easystroke
+rsync -ah ~/.easystroke ~/old_dat/ || echo Directory does not exist
+
+# local folder
+rsync -ah ~/.local/share/applications/ ~/old_dat/.local/share/ || echo Directory does not exist
+
+# mozilla
+rsync -ah ~/.mozilla ~/old_dat/ || echo Directory does not exist
+
+# scripts
+rsync -ah ~/scripts ~/old_dat/ || echo Directory does not exist
 echo Made backups
 
 #copy folders
