@@ -20,6 +20,9 @@ rm -rf ~/old_dat
 mkdir ~/old_dat
 
 # make subdirectories
+mkdir ~/old_dat/.local || echo Directory already exists
+
+# make subsubdirectories
 mkdir ~/old_dat/.local/share || echo Directory already exists
 
 #back stuff up
