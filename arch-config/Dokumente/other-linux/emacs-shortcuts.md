@@ -54,3 +54,24 @@ Open new empty buffer
 
 Save buffer  
 `SPC b s`  
+
+## Quickly move to start/end of a document
+
+Start of document  
+`gg`  
+
+End of document  
+`G`  
+
+# Evil Snipe
+
+Move to next occurence of one letter
+`f (letter)`  
+
+Move to previous occurence of one letter
+`F (letter)`  
+
+`;` continue in that direction
+`,` go in the opposite direction
+
+`s (letter)` or `S (letter)` for occurences of two letters
