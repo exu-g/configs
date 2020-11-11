@@ -1,4 +1,0 @@
-[Desktop Entry]
-Name=Calendar
-Exec=termite -e "cal -yw"
-Type=Application
