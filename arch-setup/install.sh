@@ -276,7 +276,6 @@ echo Installed AUR programs
 # woeusb
 # debtap
 # gimp-plugin-registry
-# etcher-bin
 # multimc5
 
 #install wine
