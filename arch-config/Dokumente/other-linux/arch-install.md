@@ -37,18 +37,38 @@ Ext4:
 mkfs.ext4 /dev/(partition)
 ```
 
+btrfs:  
+```bash
+mkfs.btrfs /dev/(partition)
+```
+
 ## Mounting partitions
 Generally partitions have to be mounted where you will later use them in your system.  
 
 Root: /mnt
-EFI: /mnt/boot
+EFI: /mnt/boot or /mnt/efi
 Home: /mnt/home
 
 ## Creating swapfile
+*Not applicable to btrfs*  
 ```bash
 dd if=/dev/zero of=/mnt/swapfile bs=1M count=(size) status=progress
 ```
 
+*Swapfile in btrfs*  
+```bash
+truncate -s 0 /mnt/swapfile
+```
+
+```bash
+chattr +C /mnt/swapfile
+```
+
+```bash
+btrfs property set /mnt/swapfile compression none
+```
+
+*Initialising swapfile*  
 ```bash
 chmod 600 /mnt/swapfile
 ```
@@ -65,7 +85,23 @@ swapon /mnt/swapfile
 Some things like the userspace utilities for file management will vary.  
 See [file systems](https://wiki.archlinux.org/index.php/File_systems#Types_of_file_systems)  
 ```bash
-pacstrap /mnt base linux linux-firmware vim dosfstools e2fsprogs git openssh networkmanager network-manager-applet dialog mtools base-devel linux-headers 
+pacstrap /mnt base linux linux-firmware vim git openssh networkmanager network-manager-applet dialog base-devel linux-headers 
+```
+
+### Packages needed for file systems
+Fat32:  
+```bash
+dosfstools mtools
+```
+
+Ext4:  
+```bash
+e2fsprogs
+```
+
+btrfs:  
+```bash
+btrfs-progs
 ```
 
 ## Generate fstab
@@ -112,25 +148,6 @@ Edit `/etc/hosts`
 `passwd`  
 
 ## Bootloader installation
-
-### rEFInd
-*doesn't work atm*  
-```bash
-pacman -S refind-efi efibootmgr 
-```
-
-```bash
-refind-install --usedefault /dev/(efi partition) --alldrivers
-```
-
-`mkrlconf`  
-
-Edit `/boot/refind_linux.conf`  
-Delete any lines with "archiso".  
-
-Edit `/boot/EFI/BOOT/refind.conf`  
-Search for `Arch Linux` (vim, press "/". Attention: case sensitive)  
-Under `options` replace the UUID after `root=` with the configured EFI partition.  
 
 ### GRUB
 ```bash
