@@ -362,7 +362,7 @@ mode "$layout" {
 
 bindsym $mod+b mode "$browsers"
 
-set $browsers firefox (f), chromium (c), palemoon (p), basilisk (b), netsurf (n), icecat (i), tor (t)
+set $browsers firefox (f), chromium (c), netsurf (n), icecat (i), tor (t)
 mode "$browsers" {
     bindsym f exec --no-startup-id firefox;focus
     bindsym c exec --no-startup-id chromium;focus
