@@ -1,4 +1,4 @@
 [Desktop Entry]
-Name=Cmus
+Name=cmus
 Exec=termite -e cmus
 Type=Application
