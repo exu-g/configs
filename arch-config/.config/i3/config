@@ -506,7 +506,10 @@ bindsym ctrl+mod1+l exec --no-startup-id libreoffice;focus
 bindsym control+mod1+f exec --no-startup-id firefox;focus
 
 #pragha
-bindsym ctrl+mod1+n exec --no-startup-id pragha;focus
+#bindsym ctrl+mod1+n exec --no-startup-id pragha;focus
+
+#cmus
+bindsym ctrl+mod1+m exec --no-startup-id termite -e cmus;focus
 
 #thunderbird
 bindsym ctrl+mod1+b exec --no-startup-id thunderbird;focus
