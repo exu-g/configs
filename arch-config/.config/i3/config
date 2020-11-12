@@ -494,10 +494,10 @@ bindsym control+mod1+a exec --no-startup-id rofi -show drun
 bindsym ctrl+mod1+e exec --no-startup-id emacs;focus
 
 #thunar
-bindsym ctrl+mod1+t exec --no-startup-id thunar;focus
+bindsym ctrl+shift+t exec --no-startup-id thunar;focus
 
 #ranger
-bindsym ctrl+shift+t exec --no-startup-id termite -e ranger;focus
+bindsym ctrl+mod1+t exec --no-startup-id termite -e ranger;focus
 
 #libreoffice
 bindsym ctrl+mod1+l exec --no-startup-id libreoffice;focus
