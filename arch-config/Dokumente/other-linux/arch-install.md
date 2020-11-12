@@ -68,6 +68,10 @@ chattr +C /mnt/swapfile
 btrfs property set /mnt/swapfile compression none
 ```
 
+```bash
+fallocate -l 4096M /mnt/swapfile
+```
+
 *Initialising swapfile*  
 ```bash
 chmod 600 /mnt/swapfile
@@ -164,6 +168,8 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 ### systemd-boot
 
+### rEFInd
+
 ## Networking
 `systemctl enable NetworkManager`  
 
@@ -179,7 +185,8 @@ Uncomment `%wheel ALL=(ALL) ALL`
 
 ## Finishing installation
 `exit`  
-`reboot`  
+`poweroff`  
+Remove the installation cd  
 
 ## Install AUR helper
 
