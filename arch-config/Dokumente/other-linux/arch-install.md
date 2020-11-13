@@ -69,7 +69,7 @@ btrfs property set /mnt/swapfile compression none
 ```
 
 ```bash
-fallocate -l 4096M /mnt/swapfile
+fallocate -l (size)M /mnt/swapfile
 ```
 
 *Initialising swapfile*  
