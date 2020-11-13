@@ -13,6 +13,84 @@ Use PowerShell ISE to develop PowerShell scripts
 | -lt      | less than            |
 | -le      | less or equals to    |
 
+## Arrays
+Initialise arrays like this:  
+```
+$(arrayname) = @("item1", "item2", "item3")
+```
+
+There are two methods for looping over arrays:  
+
+**Method 1**  
+```
+foreach ($(itemname) in $(arrayname)) {
+    (command)
+    //To get the item from the array use $(itemname)
+}
+```
+
+**Method 2**
+```
+for ($i = 0; $i -lt $(arrayname).count; $i++) {
+    (command)
+    //To get the item from the array use $(arrayname)[$i]
+}
+```
+
+## Operations in the filesystem
+Test whether a file or directory exists  
+```
+Test-Path "(path)"
+```
+
+### files
+Create a new file  
+```
+New-Item -Path "(filepath)" -ItemType File
+```
+
+Remove a file  
+```
+Remove-Item "(filepath)"
+```
+
+Set file content  
+```
+Set-Content "(filepath)" ("(content)")
+```
+
+Example using multiple lines  
+```
+Set-Content "C:\temp\test.txt" ("This is a very complex sentence. " + "`r`n" + "This sentence should be on the second line.")
+```
+
+Apend content to a file  
+```
+Add-Content "(filepath)" ("(content)")
+```
+
+Show a file's content  
+```
+Get-Content "(filepath)"
+```
+
+### directories
+Create new directory  
+```
+New-Item -Path "(directorypath)" -ItemType Directory
+```
+
+Remove directory including contained files  
+```
+Remove-Item "(directorypath)" -Recurse
+```
+
+Copy directory  
+```
+Copy-Item "(inputpath)" -Recurse "(destinationpath)"
+```
+
+
 ## Remoting
 
 ### Allow recieving remote commands
