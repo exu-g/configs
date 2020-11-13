@@ -92,6 +92,10 @@ Copy-Item "(inputpath)" -Recurse "(destinationpath)"
 
 ## Remoting
 
+Documentation:  
+[Powershell Remoting](https://docs.microsoft.com/en-us/powershell/scripting/learn/ps101/08-powershell-remoting?view=powershell-7.1#one-to-many-remoting)  
+[Running Remote Commands](https://docs.microsoft.com/en-us/powershell/scripting/learn/remoting/running-remote-commands?view=powershell-7.1)  
+
 ### Allow recieving remote commands
 Run as Administrator  
 IMPORTANT: Network must not be set to public  
