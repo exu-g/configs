@@ -15,7 +15,7 @@ export B2_ACCOUNT_KEY=
 restic -r b2:arco-pc-backup:/home/marc init
 ```
 ```bash
-restic -r b2:arco-pc-backup:/home/marc backup --verbose "/home/marc/" --exclude-file=/home/marc/Dokumente/home-exclude.txt
+restic -r b2:arco-pc-backup:/home/marc backup --verbose "/home/marc/" --exclude-file=/home/marc/GitProjects/config/Dokumente/home-exclude.txt
 ```
 ```bash
 restic -r b2:arco-pc-backup:/home/marc snapshots
