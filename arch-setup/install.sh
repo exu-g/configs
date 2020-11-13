@@ -190,7 +190,7 @@ done
 in_teams=0
 in_slack=0
 
-cmd=(dialog --separate-output --checklist "Code editors" 22 76 16)
+cmd=(dialog --separate-output --checklist "School and work communication" 22 76 16)
 options=(1 "teams" off
         2 "slack" off)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
@@ -487,7 +487,7 @@ else
     echo "Skipping auto-cpufreq"
 fi
 
-#doom-emacs
+#text editors
 if [ $in_doomemacs -eq 1 ]; then
     echo "Installing doom-emacs"
     yay -S --needed --noconfirm git emacs ripgrep fd pandoc shellcheck python-pipenv python-isort python-pytest python-rednose pychecker texlive-core
@@ -505,6 +505,7 @@ else
     echo "Skipping vscodium"
 fi
 
+#other social stuff
 if [ $in_teams -eq 1 ]; then
     echo "Installing teams"
     yay -S --needed --noconfirm teams
