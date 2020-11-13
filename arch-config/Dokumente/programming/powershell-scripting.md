@@ -90,7 +90,6 @@ Copy directory
 Copy-Item "(inputpath)" -Recurse "(destinationpath)"
 ```
 
-
 ## Remoting
 
 ### Allow recieving remote commands
