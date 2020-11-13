@@ -187,6 +187,26 @@ do
     esac
 done
 
+in_teams=0
+in_slack=0
+
+cmd=(dialog --separate-output --checklist "Code editors" 22 76 16)
+options=(1 "teams" off
+        2 "slack" off)
+choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+clear
+for choice in $choices
+do
+    case $choice in
+        1)
+            in_teams=1
+            ;;
+        2)
+            in_slack=1
+            ;;
+    esac
+done
+
 in_pkgstats=0
 
 cmd=(dialog --separate-output --checklist "Report installed packages?" 22 76 16)
@@ -261,7 +281,7 @@ rm -rf neofetch
 
 #AUR
 echo Installing default AUR programs
-yay -S --needed ttf-ms-fonts ttf-vista-fonts polybar nohang-git lightdm-webkit-theme-aether rig tmpmail-git lightdm-webkit2-theme-glorious sweet-theme-dark sweet-folders-icons-git wps-office
+yay -S --needed ttf-ms-fonts ttf-vista-fonts polybar nohang-git lightdm-webkit-theme-aether rig tmpmail-git lightdm-webkit2-theme-glorious sweet-theme-dark sweet-folders-icons-git wps-office protonmail-bridge
 yay -S --needed freetype2-cleartype
 yay -S --needed bitwarden
 #yay -S --needed --noconfirm pcloud-drive
@@ -483,6 +503,20 @@ if [ $in_vscodium -eq 1 ]; then
     yay -S --needed --noconfirm vscodium-bin
 else
     echo "Skipping vscodium"
+fi
+
+if [ $in_teams -eq 1 ]; then
+    echo "Installing teams"
+    yay -S --needed --noconfirm teams
+else
+    echo "Skipping teams"
+fi
+
+if [ $in_slack -eq 1 ]; then
+    echo "Installing slack"
+    yay -S --needed --noconfirm slack-desktop
+else
+    echo "Skipping slack"
 fi
 
 #stats
