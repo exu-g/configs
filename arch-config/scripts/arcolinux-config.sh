@@ -71,7 +71,7 @@ echo Made backups
 #copy folders
 cp -r ~/config/.config/ ~/ &&
 cp -r ~/config/.local/ ~/ &&
-cp -r ~/config/Dokumente ~/ &&
+#cp -r ~/config/Dokumente ~/ &&
 cp -r ~/config/.mozilla ~/ &&
 cp -r ~/config/.easystroke ~/ &&
 cp -r ~/config/.doom.d ~/ &&
