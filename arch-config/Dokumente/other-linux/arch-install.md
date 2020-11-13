@@ -92,6 +92,11 @@ See [file systems](https://wiki.archlinux.org/index.php/File_systems#Types_of_fi
 pacstrap /mnt base linux linux-firmware vim git openssh networkmanager network-manager-applet dialog base-devel linux-headers 
 ```
 
+### Wifi
+```bash
+pacstrap /mnt wpa_supplicant
+```
+
 ### Packages needed for file systems
 Fat32:  
 ```bash
