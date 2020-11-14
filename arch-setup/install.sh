@@ -250,7 +250,9 @@ echo Updated packages
 
 #pacman programs
 echo Installing default pacman programs
-sudo pacman -S --needed arandr libreoffice-fresh-de termite wget picom stress obs-studio python-pip hunspell hunspell-de hunspell-en_GB hyphen hyphen-de hyphen-en fish smartmontools thunderbird ffmpeg jre-openjdk thunar gtk-engine-murrine celluloid languagetool rofi nextcloud-client vnstat wireguard-tools cronie libnotify notification-daemon dunst rsync restic piper lightdm-gtk-greeter unzip ranger bandwhich cmus xorg-xrdb variety nitrogen feh gnome-keyring
+sudo pacman -S --needed arandr libreoffice-fresh-de termite wget picom stress obs-studio python-pip hunspell hunspell-de hunspell-en_GB hyphen hyphen-de hyphen-en fish smartmontools thunderbird ffmpeg jre-openjdk thunar gtk-engine-murrine celluloid languagetool rofi nextcloud-client vnstat wireguard-tools cronie libnotify notification-daemon dunst rsync restic piper lightdm-gtk-greeter unzip ranger bandwhich cmus xorg-xrdb variety nitrogen feh gnome-keyring xorg-xbacklight
+#audio
+sudo pacman -S --needed pavucontrol pulseaudio pulseaudio-alsa pulseaudio-bluetooth libpulse alsa-card-profiles libcanberra-pulse lib32-libpulse pulseaudio-equalizer-ladspa
 # REVIEW replace transmission-qt with gtk version
 sudo pacman -S --needed transmission-gtk
 # REVIEW maybe find theme with less dependencies
