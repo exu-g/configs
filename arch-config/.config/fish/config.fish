@@ -69,8 +69,8 @@ alias wget="wget -c"
 
 # Aliases for software managment
 alias pacman='sudo pacman --color auto'
-#alias update='yay -Syu --combinedupgrade'
-alias update='paru -Syu --combinedupgrade'
+#alias update='yay -Syu --sudoloop'
+alias update='paru -Syu --sudoloop --newsonupgrade'
 
 #grub update
 alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
