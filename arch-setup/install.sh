@@ -250,7 +250,7 @@ echo Updated packages
 
 #pacman programs
 echo Installing default pacman programs
-sudo pacman -S --needed arandr libreoffice-fresh-de termite wget picom stress obs-studio python-pip hunspell hunspell-de hunspell-en_GB hyphen hyphen-de hyphen-en fish smartmontools thunderbird ffmpeg jre-openjdk thunar gtk-engine-murrine celluloid languagetool rofi nextcloud-client vnstat wireguard-tools cronie libnotify notification-daemon dunst rsync restic piper lightdm-gtk-greeter unzip ranger bandwhich cmus
+sudo pacman -S --needed arandr libreoffice-fresh-de termite wget picom stress obs-studio python-pip hunspell hunspell-de hunspell-en_GB hyphen hyphen-de hyphen-en fish smartmontools thunderbird ffmpeg jre-openjdk thunar gtk-engine-murrine celluloid languagetool rofi nextcloud-client vnstat wireguard-tools cronie libnotify notification-daemon dunst rsync restic piper lightdm-gtk-greeter unzip ranger bandwhich cmus xorg-xrdb variety
 # REVIEW replace transmission-qt with gtk version
 sudo pacman -S --needed transmission-gtk
 # REVIEW maybe find theme with less dependencies
@@ -259,10 +259,10 @@ sudo pacman -S --needed breeze
 # NOTE Distro specific stuff
 distro=$(cat /etc/*-release | grep "^ID=")
 if [ "$distro" == "ID=arcolinux" ]; then
-    sudo pacman -S --needed slim archlinux-themes-slim
+    sudo pacman -S --needed arcolinux-slim arcolinux-slimlock-themes-git
 fi
 if [ "$distro" == "ID=arch" ]; then
-    sudo pacman -S --needed arcolinux-slim arcolinux-slimlock-themes-git
+    sudo pacman -S --needed slim archlinux-themes-slim
 fi
 echo Installed official programs
 
@@ -298,7 +298,7 @@ echo Installed AUR programs
 
 #install wine
 echo Installing wine
-pacman -S --needed wine-staging giflib lib32-giflib libpng lib32-libpng libldap lib32-libldap gnutls lib32-gnutls mpg123 lib32-mpg123 openal lib32-openal v4l-utils lib32-v4l-utils libpulse lib32-libpulse libgpg-error lib32-libgpg-error alsa-plugins lib32-alsa-plugins alsa-lib lib32-alsa-lib libjpeg-turbo lib32-libjpeg-turbo sqlite lib32-sqlite libxcomposite lib32-libxcomposite libxinerama lib32-libgcrypt libgcrypt lib32-libxinerama ncurses lib32-ncurses opencl-icd-loader lib32-opencl-icd-loader libxslt lib32-libxslt libva lib32-libva gtk3 lib32-gtk3 gst-plugins-base-libs lib32-gst-plugins-base-libs vulkan-icd-loader lib32-vulkan-icd-loader
+pacman -S --needed wine-staging giflib lib32-giflib libpng lib32-libpng libldap lib32-libldap gnutls lib32-gnutls mpg123 lib32-mpg123 openal lib32-openal v4l-utils lib32-v4l-utils libpulse lib32-libpulse libgpg-error lib32-libgpg-error alsa-plugins lib32-alsa-plugins alsa-lib lib32-alsa-lib libjpeg-turbo lib32-libjpeg-turbo sqlite lib32-sqlite libxcomposite lib32-libxcomposite libxinerama lib32-libgcrypt libgcrypt lib32-libxinerama ncurses lib32-ncurses opencl-icd-loader lib32-opencl-icd-loader libxslt lib32-libxslt libva lib32-libva gtk3 lib32-gtk3 gst-plugins-base-libs lib32-gst-plugins-base-libs vulkan-icd-loader lib32-vulkan-icd-loader os-prober
 echo Installed wine
 
 #python modules
@@ -321,7 +321,7 @@ fi
 
 if [ $in_i3gaps -eq 1 ]; then
     echo "Installing i3-gaps"
-    sudo pacman -S --needed --noconfirm i3-gaps
+    sudo pacman -S --needed i3-gaps
 else   
     echo "Skipping i3-gaps"
 fi
