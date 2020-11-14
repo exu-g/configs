@@ -197,7 +197,7 @@ Remove the installation cd
 
 ### yay
 *Currently has build errors*
-*Use paru instead and install yay-bin*
+*Use paru instead*
 ```bash
 git clone https://aur.archlinux.org/yay.git
 cd yay
