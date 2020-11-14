@@ -71,6 +71,8 @@ alias wget="wget -c"
 alias pacman='sudo pacman --color auto'
 alias update='yay -Pw && yay -Syu --combinedupgrade'
 
+alias yay='yay -Pw && yay'
+
 #grub update
 alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 
