@@ -211,3 +211,13 @@ cd paru
 makepkg -si
 ```
 
+## Windows in GRUB
+It can happen that windows does not show up in the GRUB menu.  
+Use the following commands to update grub.  
+```bash
+sudo os-prober
+```
+
+```bash
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+```
