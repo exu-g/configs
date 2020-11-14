@@ -245,7 +245,7 @@ echo Uninstalled unused packages
 
 #update stuff
 echo Updating packages
-yay -Syyu
+paru -Syyu
 echo Updated packages
 
 #pacman programs
@@ -281,10 +281,10 @@ rm -rf neofetch
 
 #AUR
 echo Installing default AUR programs
-yay -S --needed ttf-ms-fonts ttf-vista-fonts polybar nohang-git lightdm-webkit-theme-aether rig tmpmail-git lightdm-webkit2-theme-glorious sweet-theme-dark sweet-folders-icons-git wps-office protonmail-bridge
-yay -S --needed freetype2-cleartype
-yay -S --needed bitwarden
-#yay -S --needed --noconfirm pcloud-drive
+paru -S --needed ttf-ms-fonts ttf-vista-fonts polybar nohang-git lightdm-webkit-theme-aether rig tmpmail-git lightdm-webkit2-theme-glorious sweet-theme-dark sweet-folders-icons-git wps-office protonmail-bridge
+paru -S --needed freetype2-cleartype
+paru -S --needed bitwarden
+#paru -S --needed --noconfirm pcloud-drive
 echo Installed AUR programs
 
 # REVIEW Determine usefulness
@@ -350,7 +350,7 @@ fi
 
 if [ $in_icecat -eq 1 ]; then
     echo "Installing Icecat"
-    sudo yay -S --needed --noconfirm icecat-bin
+    sudo paru -S --needed --noconfirm icecat-bin
 else
     echo "Skipping Icecat"
 fi
@@ -443,35 +443,35 @@ fi
 
 if [ $in_easystrokes -eq 1 ]; then
     echo "Installing Easystrokes"
-    yay -S --needed --noconfirm easystroke
+    paru -S --needed --noconfirm easystroke
 else
     echo "Skipping Easystrokes"
 fi
 
 if [ $in_liferea -eq 1 ]; then
     echo "Installing Liferea"
-    yay -S --needed --noconfirm liferea
+    paru -S --needed --noconfirm liferea
 else
     echo "Skipping Liferea"
 fi
 
 if [ $in_mirage -eq 1 ]; then
     echo "Installing Mirage"
-    yay -S --needed --noconfirm matrix-mirage
+    paru -S --needed --noconfirm matrix-mirage
 else
     echo "Skipping Mirage"
 fi
 
 if [ $in_bettergram -eq 1 ]; then
     echo "Installing Bettergram"
-    yay -S --needed --noconfirm bettergram
+    paru -S --needed --noconfirm bettergram
 else
     echo "Skipping Bettergram"
 fi
 
 if [ $in_waifu2x -eq 1 ]; then
     echo "Installing Waifu2x"
-    yay -S --needed --noconfirm waifu2x-ncnn-vulkan
+    paru -S --needed --noconfirm waifu2x-ncnn-vulkan
 else
     echo "Skipping Waifu2x"
 fi
@@ -479,7 +479,7 @@ fi
 #performance and battery life
 if [ $in_acpufreq -eq 1 ]; then
     echo "Installing auto-cpufreq"
-    yay -S --needed --noconfirm auto-cpufreq-git
+    paru -S --needed --noconfirm auto-cpufreq-git
     sudo auto-cpufreq --install
     sudo systemctl start auto-cpufreq
     sudo systemctl enable auto-cpufreq
@@ -490,7 +490,7 @@ fi
 #text editors
 if [ $in_doomemacs -eq 1 ]; then
     echo "Installing doom-emacs"
-    yay -S --needed --noconfirm git emacs ripgrep fd pandoc shellcheck python-pipenv python-isort python-pytest python-rednose pychecker texlive-core
+    paru -S --needed --noconfirm git emacs ripgrep fd pandoc shellcheck python-pipenv python-isort python-pytest python-rednose pychecker texlive-core
     git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d
     ~/.emacs.d/bin/doom install
     export PATH="$PATH":$HOME/.emacs.d/bin
@@ -500,7 +500,7 @@ fi
 
 if [ $in_vscodium -eq 1 ]; then
     echo "Installing vscodium"
-    yay -S --needed --noconfirm vscodium-bin
+    paru -S --needed --noconfirm vscodium-bin
 else
     echo "Skipping vscodium"
 fi
@@ -508,14 +508,14 @@ fi
 #other social stuff
 if [ $in_teams -eq 1 ]; then
     echo "Installing teams"
-    yay -S --needed --noconfirm teams
+    paru -S --needed --noconfirm teams
 else
     echo "Skipping teams"
 fi
 
 if [ $in_slack -eq 1 ]; then
     echo "Installing slack"
-    yay -S --needed --noconfirm slack-desktop
+    paru -S --needed --noconfirm slack-desktop
 else
     echo "Skipping slack"
 fi
@@ -531,7 +531,7 @@ fi
 # additional packages
 if [ $in_optpkg -eq 1 ]; then
     echo "Installing additional packages"
-    yay -S --needed - < "$HOME/setup/pkglist.txt"
+    paru -S --needed - < "$HOME/setup/pkglist.txt"
 fi
 
 #change shell
