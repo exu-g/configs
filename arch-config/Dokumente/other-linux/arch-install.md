@@ -196,10 +196,18 @@ Remove the installation cd
 ## Install AUR helper
 
 ### yay
+*Currently has build errors*
+*Use paru instead and install yay-bin*
 ```bash
 git clone https://aur.archlinux.org/yay.git
 cd yay
 makepkg -si
 ```
 
+### paru
+```bash
+git clone https://aur.archlinux.org/paru.git
+cd paru
+makepkg -si
+```
 
