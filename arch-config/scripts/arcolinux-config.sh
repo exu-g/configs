@@ -108,6 +108,9 @@ sudo cp -r ~/config/usr /
 # copy xresources
 cp ~/config/.Xresources ~/
 
+# copy xinitrc
+cp ~/config/.xinitrc ~/
+
 #gimp plugins
 mkdir ~/.config/GIMP/ || echo Not creating directory
 mkdir ~/.config/GIMP/2.10/ || echo Not creating directory
