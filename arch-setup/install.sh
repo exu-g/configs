@@ -75,7 +75,7 @@ in_audacity=0
 in_mangohud=0
 in_easystrokes=0
 in_liferea=0
-in_mirage=0
+in_fractal=0
 in_bettergram=0
 in_waifu2x=0
 
@@ -93,7 +93,7 @@ options=(1 "VirtManager" off    # any option can be set to default to "on"
          11 "MangoHud" off
          12 "Easystroke" on
          13 "Liferea" off
-         14 "Mirage" on
+         14 "Fractal" on
          15 "Bettergram" on
          16 "Waifu2x" off)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
@@ -141,7 +141,7 @@ do
             in_liferea=1
             ;;
         14)
-            in_mirage=1
+            in_fractal=1
             ;;
         15)
             in_bettergram=1
@@ -240,7 +240,7 @@ done
 
 #uninstalling unused packages
 echo Uninstalling unused packages
-sudo pacman -Rns evolution catfish geany vim keepass gnome-boxes sublime-text-dev atom adwaita-icon-theme arcolinux-i3wm-git arcolinux-tweak-tool-git arcolinux-welcome-app-git clonezilla evolution-data-server numix-circle-arc-icons-git numix-circle-icon-theme-git numix-gtk-theme-git numix-icon-theme-git oh-my-zsh-git pamac-aur qbittorrent vivaldi vlc code baka-mplayer tmux guvcview kdenlive xfce4-notifyd chromium psensor transmission-qt pcloud-drive
+sudo pacman -Rns evolution catfish geany vim keepass gnome-boxes sublime-text-dev atom adwaita-icon-theme arcolinux-i3wm-git arcolinux-tweak-tool-git arcolinux-welcome-app-git clonezilla evolution-data-server numix-circle-arc-icons-git numix-circle-icon-theme-git numix-gtk-theme-git numix-icon-theme-git oh-my-zsh-git pamac-aur qbittorrent vivaldi vlc code baka-mplayer tmux guvcview kdenlive xfce4-notifyd chromium psensor transmission-qt pcloud-drive matrix-mirage element-desktop
 echo Uninstalled unused packages
 
 #update stuff
@@ -458,11 +458,11 @@ else
     echo "Skipping Liferea"
 fi
 
-if [ $in_mirage -eq 1 ]; then
-    echo "Installing Mirage"
-    paru -S --needed --noconfirm matrix-mirage
+if [ $in_fractal -eq 1 ]; then
+    echo "Installing Fractal"
+    sudo pacman -S --needed --noconfirm fractal
 else
-    echo "Skipping Mirage"
+    echo "Skipping Fractal"
 fi
 
 if [ $in_bettergram -eq 1 ]; then
