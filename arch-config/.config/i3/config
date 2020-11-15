@@ -267,10 +267,10 @@ mode "$main"{
 #############################################################################
 
 
-set $media Discord (d), Mirage (m), Bettergram (b), Slack (s), Teams (t)
+set $media Discord (d), Fractal (f), Bettergram (b), Slack (s), Teams (t)
 mode "$media"{
      bindsym d exec --no-startup-id discord;focus
-     bindsym m exec --no-startup-id mirage;focus
+     bindsym f exec --no-startup-id fractal;focus
      bindsym b exec --no-startup-id bettergram;focus
      bindsym s exec --no-startup-id slack;focus
      bindsym t exec --no-startup-id teams;focus
