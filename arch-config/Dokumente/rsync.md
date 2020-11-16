@@ -16,3 +16,8 @@ Update Musik
 ```bash
 rsync -uvr --progress --bwlimit=4096 /home/marc/Musik/ root@jellyfin.realstickman.net:/home/jellyfin/Musik
 ```
+
+Update Website  
+```bash
+rsync -uvrP --bwlimit=4096 /home/marc/GitProjects/website/ root@realstickman.net:/var/www/website
+```
