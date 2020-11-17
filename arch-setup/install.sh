@@ -553,6 +553,9 @@ sudo ufw enable
 git clone https://gitlab.com/RealStickman-arcolinux/config
 echo Finished downloading config
 
+# Download git repos
+bash ~/config/scripts/git-pull.sh
+
 #cleanup
 rm -rf ~/setup
 echo Removed setup files
@@ -562,3 +565,4 @@ echo Setting config
 bash ~/config/install.sh
 pkgstats
 echo Finished everything
+exit 0
