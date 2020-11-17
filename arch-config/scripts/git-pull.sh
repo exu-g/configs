@@ -56,3 +56,5 @@ fi
 cd "$HOME/GitProjects/website"
 git fetch --all
 git pull
+
+exit 0

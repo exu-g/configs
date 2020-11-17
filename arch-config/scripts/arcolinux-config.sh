@@ -149,3 +149,5 @@ echo Launching new shell!
 
 #new shell to reload .bashrc and fish config
 exec bash
+
+exit 0

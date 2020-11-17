@@ -9,3 +9,5 @@ for g in /sys/kernel/iommu_groups/*; do
         echo -e "\t$(lspci -nns ${d##*/})"
     done;
 done;
+
+exit 0
