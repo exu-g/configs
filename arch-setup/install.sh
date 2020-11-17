@@ -288,6 +288,7 @@ paru -S --needed ttf-ms-fonts ttf-vista-fonts polybar nohang-git lightdm-webkit-
 sudo pacman -S --needed freetype2
 paru -S --needed bitwarden
 #paru -S --needed --noconfirm pcloud-drive
+sudo pacman -S --needed ufw
 echo Installed AUR programs
 
 # REVIEW Determine usefulness
@@ -543,6 +544,10 @@ chsh -s /usr/bin/fish "$USER"
 #enable vnstat
 sudo systemctl enable vnstat
 sudo systemctl start vnstat
+
+# enable firewall
+echo "Enabling Firewall"
+sudo ufw enable
 
 #Changes to home folder automatically now, no need to be extra careful anymore.
 git clone https://gitlab.com/RealStickman-arcolinux/config
