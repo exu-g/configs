@@ -574,8 +574,9 @@ for_window [window_role="^Preferences$"] floating enable
 for_window [window_role="setup"] floating enable
 for_window [title="Microsoft Teams Notification"] floating enable
 
-for_window [title="Neu"] floating enable
-for_window [title="Microsoft Teams-Benachrichtigung"] floating enable
+# class = WM_CLASS, title = WM_NAME
+for_window [class="tufts-vue-VUE" title="Format"] floating enable
+for_window [class="tufts-vue-VUE" title="ColorPopupMenu"] floating enable
 
 #####################################################################################################################
 #################                          variety for your wallpapers                              #################
