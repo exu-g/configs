@@ -257,6 +257,7 @@ sudo pacman -S --needed pavucontrol pulseaudio pulseaudio-alsa pulseaudio-blueto
 sudo pacman -S --needed transmission-gtk
 # REVIEW maybe find theme with less dependencies
 sudo pacman -S --needed breeze
+sudo pacman -S --needed noto-fonts noto-fonts-emoji
 
 # NOTE Distro specific stuff
 distro=$(cat /etc/*-release | grep "^ID=")
