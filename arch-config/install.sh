@@ -12,3 +12,4 @@ echo Launching arcolinux-config.sh
 #make executable & launch arcolinux-config.sh
 chmod +x ~/config/scripts/arcolinux-config.sh
 bash ~/config/scripts/arcolinux-config.sh
+exit 0

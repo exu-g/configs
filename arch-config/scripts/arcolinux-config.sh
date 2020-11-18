@@ -106,7 +106,7 @@ sudo cp -r ~/config/var /
 sudo cp -r ~/config/usr /
 
 # copy xresources
-cp ~/config/.Xresources ~/
+#cp ~/config/.Xresources ~/
 
 #gimp plugins
 mkdir ~/.config/GIMP/ || echo Not creating directory
@@ -149,3 +149,5 @@ echo Launching new shell!
 
 #new shell to reload .bashrc and fish config
 exec bash
+
+exit 0
