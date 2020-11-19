@@ -1,1 +1,3 @@
 vue
+viper4linux-gui
+viper4linux-git
