@@ -109,9 +109,9 @@ sudo cp -r ~/config/usr /
 #cp ~/config/.Xresources ~/
 
 #gimp plugins
-mkdir ~/.config/GIMP/ || echo Not creating directory
-mkdir ~/.config/GIMP/2.10/ || echo Not creating directory
-mkdir ~/.config/GIMP/2.10/plug-ins/ || echo Not creating directory
+#mkdir ~/.config/GIMP/ || echo Not creating directory
+#mkdir ~/.config/GIMP/2.10/ || echo Not creating directory
+mkdir -p ~/.config/GIMP/2.10/plug-ins/ || echo Not creating directory
 rsync -ah ~/config/gimp-plugins/* ~/.config/GIMP/2.10/plug-ins/
 
 #unzip gimp plugins
