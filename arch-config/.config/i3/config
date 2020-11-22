@@ -455,6 +455,9 @@ exec_always --no-startup-id ~/scritps/startup.sh
 # Protonmail Bridge
 exec --no-startup-id protonmail-bridge -no-window
 
+# PulseEffects
+exec --no-startup-id pulseeffects --gapplication-service
+
 
 #####################################################################################################################
 #################                                 system applications                               #################
