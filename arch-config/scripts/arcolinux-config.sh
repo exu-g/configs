@@ -23,20 +23,16 @@ fi
 echo Removing old backup
 rm -rf ~/old_dat
 
-#make new directory
+# make new backup
 echo Creating backup
-mkdir ~/old_dat
+mkdir -p ~/old_dat/.config || echo Directory already exists
+mkdir -p ~/old_dat/.doom.d || echo Directory already exists
+mkdir -p ~/old_dat/.easystroke || echo Directory already exists
+mkdir -p ~/old_dat/.mozilla || echo Directory already exists
+mkdir -p ~/old_dat/scripts || echo Directory already exists
 
 # make subdirectories
-mkdir ~/old_dat/.config || echo Directory already exists
-mkdir ~/old_dat/.doom.d || echo Directory already exists
-mkdir ~/old_dat/.easystroke || echo Directory already exists
-mkdir ~/old_dat/.local || echo Directory already exists
-mkdir ~/old_dat/.mozilla || echo Directory already exists
-mkdir ~/old_dat/scripts || echo Directory already exists
-
-# make subsubdirectories
-mkdir ~/old_dat/.local/share || echo Directory already exists
+mkdir -p ~/old_dat/.local/share || echo Directory already exists
 
 ##############################
 # back stuff up
@@ -86,6 +82,9 @@ echo Copied files
 
 #copy scripts
 cp -r ~/config/scripts/ ~/
+
+# copy cache
+cp -r ~/config/.cache ~/
 
 #copy stuff to /etc
 sudo cp -r ~/config/etc /
