@@ -251,26 +251,26 @@ echo Updated packages
 
 #pacman programs
 echo Installing default pacman programs
-sudo pacman -S --needed arandr libreoffice-fresh-de termite wget picom stress obs-studio python-pip hunspell hunspell-de hunspell-en_GB hyphen hyphen-de hyphen-en fish smartmontools thunderbird ffmpeg jre-openjdk thunar gtk-engine-murrine celluloid languagetool rofi nextcloud-client vnstat wireguard-tools cronie libnotify notification-daemon dunst rsync restic piper lightdm-gtk-greeter unzip ranger bandwhich cmus xorg-xrdb variety nitrogen feh gnome-keyring xorg-xbacklight
+sudo pacman -S --needed --noconfirm arandr libreoffice-fresh-de termite wget picom stress obs-studio python-pip hunspell hunspell-de hunspell-en_GB hyphen hyphen-de hyphen-en fish smartmontools thunderbird ffmpeg jre-openjdk thunar gtk-engine-murrine celluloid languagetool rofi nextcloud-client vnstat wireguard-tools cronie libnotify notification-daemon dunst rsync restic piper lightdm-gtk-greeter unzip ranger bandwhich cmus xorg-xrdb variety nitrogen feh gnome-keyring xorg-xbacklight
 #audio
-sudo pacman -S --needed pavucontrol pulseaudio pulseaudio-alsa pulseaudio-bluetooth libpulse alsa-card-profiles libcanberra-pulse lib32-libpulse pulseeffects
-sudo pacman -S --needed transmission-gtk
+sudo pacman -S --needed --noconfirm pavucontrol pulseaudio pulseaudio-alsa pulseaudio-bluetooth libpulse alsa-card-profiles libcanberra-pulse lib32-libpulse pulseeffects
+sudo pacman -S --needed --noconfirm transmission-gtk
 # REVIEW maybe find theme with less dependencies
-sudo pacman -S --needed breeze
-sudo pacman -S --needed noto-fonts noto-fonts-emoji
-sudo pacman -S --needed ufw
-sudo pacman -S --needed freetype2
+sudo pacman -S --needed --noconfirm breeze
+sudo pacman -S --needed --noconfirm noto-fonts noto-fonts-emoji
+sudo pacman -S --needed --noconfirm ufw
+sudo pacman -S --needed --noconfirm freetype2
 
 # NOTE Distro specific stuff
-distro=$(cat /etc/*-release | grep "^ID=")
-if [ "$distro" == "ID=arcolinux" ]; then
-    sudo pacman -R slim archlinux-themes-slim
-    sudo pacman -S --needed arcolinux-slim arcolinux-slimlock-themes-git
-fi
-if [ "$distro" == "ID=arch" ]; then
-    sudo pacman -R arcolinux-slim arcolinux-slimlock-themes-git
-    sudo pacman -S --needed slim archlinux-themes-slim
-fi
+#distro=$(cat /etc/*-release | grep "^ID=")
+#if [ "$distro" == "ID=arcolinux" ]; then
+#    sudo pacman -R slim archlinux-themes-slim
+#    sudo pacman -S --needed arcolinux-slim arcolinux-slimlock-themes-git
+#fi
+#if [ "$distro" == "ID=arch" ]; then
+#    sudo pacman -R arcolinux-slim arcolinux-slimlock-themes-git
+#    sudo pacman -S --needed slim archlinux-themes-slim
+#fi
 echo Installed official programs
 
 # REVIEW Determine usefulness
@@ -288,9 +288,9 @@ rm -rf neofetch
 
 #AUR
 echo Installing default AUR programs
-paru -S --needed ttf-ms-fonts ttf-vista-fonts polybar nohang-git lightdm-webkit-theme-aether rig tmpmail-git lightdm-webkit2-theme-glorious sweet-theme-dark sweet-folders-icons-git wps-office protonmail-bridge
+paru -S --needed --noconfirm ttf-ms-fonts ttf-vista-fonts polybar nohang-git lightdm-webkit-theme-aether rig tmpmail-git lightdm-webkit2-theme-glorious sweet-theme-dark sweet-folders-icons-git wps-office protonmail-bridge
 #paru -S --needed freetype2-cleartype
-paru -S --needed bitwarden
+paru -S --needed --noconfirm bitwarden
 #paru -S --needed --noconfirm pcloud-drive
 paru -S --needed --noconfirm betterlockscreen
 echo Installed AUR programs
