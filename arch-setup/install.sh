@@ -539,7 +539,7 @@ fi
 # additional packages
 if [ $in_optpkg -eq 1 ]; then
     echo "Installing additional packages"
-    paru -S --needed - < "$HOME/setup/pkglist.txt"
+    paru -S --needed - < "$HOME/setup/optpkglist.txt"
 fi
 
 #change shell
