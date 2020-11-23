@@ -3,3 +3,4 @@ umlet
 vmware-workstation15
 linux-headers
 nnn
+pdfsam
