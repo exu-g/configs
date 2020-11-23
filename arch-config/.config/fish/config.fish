@@ -30,6 +30,7 @@ set VISUAL "/usr/bin/emacs --no-window-system"
 
 # add paths
 set fish_user_paths "$HOME/.emacs.d/bin/" $fish_user_paths
+set fish_user_paths "$HOME/scripts" $fish_user_paths
 
 # use sudo !! to run the last command as root
 function sudo --description "Replacement for Bash 'sudo !!' command to run last command using sudo."
