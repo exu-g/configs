@@ -1,0 +1,14 @@
+ttf-ms-fonts
+ttf-vista-fonts
+polybar
+nohang-git
+lightdm-webkit-theme-aether
+rig
+tmpmail-git
+lightdm-webkit2-theme-glorious
+sweet-theme-dark
+sweet-folders-icons-git
+wps-office
+protonmail-bridge
+bitwarden
+betterlockscreen

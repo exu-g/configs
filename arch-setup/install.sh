@@ -288,11 +288,11 @@ rm -rf neofetch
 
 #AUR
 echo Installing default AUR programs
-paru -S --needed --noconfirm ttf-ms-fonts ttf-vista-fonts polybar nohang-git lightdm-webkit-theme-aether rig tmpmail-git lightdm-webkit2-theme-glorious sweet-theme-dark sweet-folders-icons-git wps-office protonmail-bridge
+paru -S --needed --noconfirm - < "$HOME/setup/aurpkgs.txt"
 #paru -S --needed freetype2-cleartype
-paru -S --needed --noconfirm bitwarden
+#paru -S --needed --noconfirm bitwarden
 #paru -S --needed --noconfirm pcloud-drive
-paru -S --needed --noconfirm betterlockscreen
+#paru -S --needed --noconfirm betterlockscreen
 echo Installed AUR programs
 
 # REVIEW Determine usefulness
