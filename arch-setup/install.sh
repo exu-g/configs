@@ -241,7 +241,7 @@ done
 #uninstalling unused packages
 echo Uninstalling unused packages
 #sudo pacman -Rns evolution catfish geany vim keepass gnome-boxes sublime-text-dev atom adwaita-icon-theme arcolinux-i3wm-git arcolinux-tweak-tool-git arcolinux-welcome-app-git clonezilla evolution-data-server numix-circle-arc-icons-git numix-circle-icon-theme-git numix-gtk-theme-git numix-icon-theme-git oh-my-zsh-git pamac-aur qbittorrent vivaldi vlc code baka-mplayer tmux guvcview kdenlive xfce4-notifyd chromium psensor transmission-qt pcloud-drive matrix-mirage element-desktop pulseaudio-equalizer-ladspa
-sudo pacman -Rns - < "$HOME/setup/uninstall.txt"
+sudo pacman -Rns --noconfirm - < "$HOME/setup/uninstall.txt"
 echo Uninstalled unused packages
 
 #update stuff
@@ -251,15 +251,13 @@ echo Updated packages
 
 #pacman programs
 echo Installing default pacman programs
-sudo pacman -S --needed --noconfirm arandr libreoffice-fresh-de termite wget picom stress obs-studio python-pip hunspell hunspell-de hunspell-en_GB hyphen hyphen-de hyphen-en fish smartmontools thunderbird ffmpeg jre-openjdk thunar gtk-engine-murrine celluloid languagetool rofi nextcloud-client vnstat wireguard-tools cronie libnotify notification-daemon dunst rsync restic piper lightdm-gtk-greeter unzip ranger bandwhich cmus xorg-xrdb variety nitrogen feh gnome-keyring xorg-xbacklight
-#audio
-sudo pacman -S --needed --noconfirm pavucontrol pulseaudio pulseaudio-alsa pulseaudio-bluetooth libpulse alsa-card-profiles libcanberra-pulse lib32-libpulse pulseeffects
-sudo pacman -S --needed --noconfirm transmission-gtk
+sudo pacman -S --needed --noconfirm - < "$HOME/setup/officialpkgs.txt"
+#sudo pacman -S --needed --noconfirm transmission-gtk
 # REVIEW maybe find theme with less dependencies
 sudo pacman -S --needed --noconfirm breeze
-sudo pacman -S --needed --noconfirm noto-fonts noto-fonts-emoji
-sudo pacman -S --needed --noconfirm ufw
-sudo pacman -S --needed --noconfirm freetype2
+#sudo pacman -S --needed --noconfirm noto-fonts noto-fonts-emoji
+#sudo pacman -S --needed --noconfirm ufw
+#sudo pacman -S --needed --noconfirm freetype2
 
 # NOTE Distro specific stuff
 #distro=$(cat /etc/*-release | grep "^ID=")
@@ -272,6 +270,12 @@ sudo pacman -S --needed --noconfirm freetype2
 #    sudo pacman -S --needed slim archlinux-themes-slim
 #fi
 echo Installed official programs
+
+# audio
+echo Installing audio programs
+#sudo pacman -S --needed --noconfirm pavucontrol pulseaudio pulseaudio-alsa pulseaudio-bluetooth libpulse alsa-card-profiles libcanberra-pulse lib32-libpulse pulseeffects
+sudo pacman -S --needed --noconfirm - < "$HOME/setup/audiopkgs.txt"
+echo Installed audio programs
 
 # REVIEW Determine usefulness
 # iperf3
@@ -306,12 +310,13 @@ echo Installed AUR programs
 
 #install wine
 echo Installing wine
-pacman -S --needed wine-staging giflib lib32-giflib libpng lib32-libpng libldap lib32-libldap gnutls lib32-gnutls mpg123 lib32-mpg123 openal lib32-openal v4l-utils lib32-v4l-utils libpulse lib32-libpulse libgpg-error lib32-libgpg-error alsa-plugins lib32-alsa-plugins alsa-lib lib32-alsa-lib libjpeg-turbo lib32-libjpeg-turbo sqlite lib32-sqlite libxcomposite lib32-libxcomposite libxinerama lib32-libgcrypt libgcrypt lib32-libxinerama ncurses lib32-ncurses opencl-icd-loader lib32-opencl-icd-loader libxslt lib32-libxslt libva lib32-libva gtk3 lib32-gtk3 gst-plugins-base-libs lib32-gst-plugins-base-libs vulkan-icd-loader lib32-vulkan-icd-loader os-prober
+#sudo pacman -S --needed wine-staging giflib lib32-giflib libpng lib32-libpng libldap lib32-libldap gnutls lib32-gnutls mpg123 lib32-mpg123 openal lib32-openal v4l-utils lib32-v4l-utils libpulse lib32-libpulse libgpg-error lib32-libgpg-error alsa-plugins lib32-alsa-plugins alsa-lib lib32-alsa-lib libjpeg-turbo lib32-libjpeg-turbo sqlite lib32-sqlite libxcomposite lib32-libxcomposite libxinerama lib32-libgcrypt libgcrypt lib32-libxinerama ncurses lib32-ncurses opencl-icd-loader lib32-opencl-icd-loader libxslt lib32-libxslt libva lib32-libva gtk3 lib32-gtk3 gst-plugins-base-libs lib32-gst-plugins-base-libs vulkan-icd-loader lib32-vulkan-icd-loader os-prober
+sudo pacman -S --needed --noconfirm - < "$HOME/setup/winepkgs.txt"
 echo Installed wine
 
 #python modules
 echo Installing python modules
-sudo pip3 install ffmpeg-normalize praw
+sudo pip3 install ffmpeg-normalize
 echo Installed python modules
 
 ###################
