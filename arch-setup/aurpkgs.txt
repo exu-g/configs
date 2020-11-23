@@ -12,3 +12,4 @@ wps-office
 protonmail-bridge
 bitwarden
 betterlockscreen
+ttf-iosevka
