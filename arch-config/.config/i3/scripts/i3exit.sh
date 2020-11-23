@@ -3,13 +3,13 @@
 
 case "$1" in
     lock)
-        slimlock
+        betterlockscreen -l
         ;;
     logout)
         i3-msg exit
         ;;
     suspend)
-        systemctl suspend
+        betterlockscreen -s
         ;;
     hibernate)
         systemctl hibernate
