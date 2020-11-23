@@ -1,7 +1,5 @@
 vue
-viper4linux-gui
-viper4linux-git
-lsp-plugins
 umlet
 vmware-workstation15
 linux-headers
+nnn
