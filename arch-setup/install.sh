@@ -20,9 +20,11 @@ do
     case $choice in
         1)
             in_xfce=1
+            echo "xfce4" >> selectedpkgs.txt
             ;;
         2)
             in_i3gaps=1
+            echo "i3-gaps" >> selectedpkgs.txt
             ;;
     esac
 done
@@ -46,18 +48,23 @@ do
     case $choice in
         1)
             in_firefox=1
+            echo "firefox" >> selectedpkgs.txt
             ;;
         2)
             in_chromium=1
+            echo "chromium" >> selectedpkgs.txt
             ;;
         3)
             in_netsurf=1
+            echo "netsurf" >> selectedpkgs.txt
             ;;
         4)
             in_icecat=1
+            echo "icecat-bin" >> aurselectedpkgs.txt
             ;;
         5)
             in_tor=1
+            echo "torbrowser-launcher" >> selectedpkgs.txt
             ;;
     esac
 done
@@ -103,51 +110,67 @@ do
     case $choice in
         1)
             in_virtmanager=1
+            printf '%s\n' 'qemu' 'virt-manager' >> selectedpkgs.txt
             ;;
         2)
             in_steam=1
+            printf '%s\n' 'steam' 'steam-native-runtime' >> selectedpkgs.txt
             ;;
         3)
             in_lutris=1
+            echo "lutris" >> selectedpkgs.txt
             ;;
         4)
             in_blender=1
+            echo "blender" >> selectedpkgs.txt
             ;;
         5)
             in_krita=1
+            echo "krita" >> selectedpkgs.txt
             ;;
         6)
             in_youtubedl=1
+            echo "youtube-dl" >> selectedpkgs.txt
             ;;
         7)
             in_discord=1
+            echo "discord" >> selectedpkgs.txt
             ;;
         8)
             in_handbrake=1
+            echo "handbrake" >> selectedpkgs.txt
             ;;
         9)
             in_gimp=1
+            echo "gimp" >> selectedpkgs.txt
             ;;
         10)
             in_audacity=1
+            echo "audacity" >> selectedpkgs.txt
             ;;
         11)
+            # REVIEW special case
             in_mangohud=1
             ;;
         12)
             in_easystrokes=1
+            echo "easystroke" >> aurselectedpkgs.txt
             ;;
         13)
             in_liferea=1
+            echo "liferea" >> aurselectedpkgs.txt
             ;;
         14)
             in_fractal=1
+            echo "fractal" >> selectedpkgs.txt
             ;;
         15)
             in_bettergram=1
+            echo "bettergram" >> aurselectedpkgs.txt
             ;;
         16)
             in_waifu2x=1
+            echo "waifu2x-ncnn-vulkan" >> aurselectedpkgs.txt
             ;;
     esac
 done
@@ -163,6 +186,8 @@ do
     case $choice in
         1)
             in_acpufreq=1
+            echo "auto-cpufreq-git" >> aurselectedpkgs.txt
+            # TODO Handle rest of installation
             ;;
     esac
 done
@@ -180,9 +205,13 @@ do
     case $choice in
         1)
             in_doomemacs=1
+            # TODO sort pacman and AUR packages
+            printf '%s\n' 'git' 'emacs' 'ripgrep' 'fd' 'pandoc' 'shellcheck' 'python-pipenv' 'python-isort' 'python-pytest' 'python-rednose' 'pychecker' 'texlive-core' >> aurselectedpkgs.txt
+            # TODO handle rest of installation
             ;;
         2)
             in_vscodium=1
+            echo "vscodium-bin" >> aurselectedpkgs.txt
             ;;
     esac
 done
@@ -200,9 +229,11 @@ do
     case $choice in
         1)
             in_teams=1
+            echo "teams" >> aurselectedpkgs.txt
             ;;
         2)
             in_slack=1
+            echo "slack-desktop" >> aurselectedpkgs.txt
             ;;
     esac
 done
@@ -218,6 +249,7 @@ do
     case $choice in
         1)
             in_pkgstats=1
+            echo "pkgstats" >> selectedpkgs.txt
             ;;
     esac
 done
@@ -342,7 +374,7 @@ fi
 #browsers
 if [ $in_firefox -eq 1 ]; then
     echo "Installing Firefox"
-    sudo pacman -S --needed --noconfirm qemu firefox
+    sudo pacman -S --needed --noconfirm firefox
 else
     echo "Skipping Firefox"
 fi
@@ -363,7 +395,7 @@ fi
 
 if [ $in_icecat -eq 1 ]; then
     echo "Installing Icecat"
-    sudo paru -S --needed --noconfirm icecat-bin
+    paru -S --needed --noconfirm icecat-bin
 else
     echo "Skipping Icecat"
 fi
