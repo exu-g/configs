@@ -262,9 +262,11 @@ sudo pacman -S --needed noto-fonts noto-fonts-emoji
 # NOTE Distro specific stuff
 distro=$(cat /etc/*-release | grep "^ID=")
 if [ "$distro" == "ID=arcolinux" ]; then
+    sudo pacman -R slim archlinux-themes-slim
     sudo pacman -S --needed arcolinux-slim arcolinux-slimlock-themes-git
 fi
 if [ "$distro" == "ID=arch" ]; then
+    sudo pacman -R arcolinux-slim arcolinux-slimlock-themes-git
     sudo pacman -S --needed slim archlinux-themes-slim
 fi
 echo Installed official programs
