@@ -253,11 +253,12 @@ echo Installing default pacman programs
 sudo pacman -S --needed arandr libreoffice-fresh-de termite wget picom stress obs-studio python-pip hunspell hunspell-de hunspell-en_GB hyphen hyphen-de hyphen-en fish smartmontools thunderbird ffmpeg jre-openjdk thunar gtk-engine-murrine celluloid languagetool rofi nextcloud-client vnstat wireguard-tools cronie libnotify notification-daemon dunst rsync restic piper lightdm-gtk-greeter unzip ranger bandwhich cmus xorg-xrdb variety nitrogen feh gnome-keyring xorg-xbacklight
 #audio
 sudo pacman -S --needed pavucontrol pulseaudio pulseaudio-alsa pulseaudio-bluetooth libpulse alsa-card-profiles libcanberra-pulse lib32-libpulse pulseeffects
-# REVIEW replace transmission-qt with gtk version
 sudo pacman -S --needed transmission-gtk
 # REVIEW maybe find theme with less dependencies
 sudo pacman -S --needed breeze
 sudo pacman -S --needed noto-fonts noto-fonts-emoji
+sudo pacman -S --needed ufw
+sudo pacman -S --needed freetype2
 
 # NOTE Distro specific stuff
 distro=$(cat /etc/*-release | grep "^ID=")
@@ -288,10 +289,9 @@ rm -rf neofetch
 echo Installing default AUR programs
 paru -S --needed ttf-ms-fonts ttf-vista-fonts polybar nohang-git lightdm-webkit-theme-aether rig tmpmail-git lightdm-webkit2-theme-glorious sweet-theme-dark sweet-folders-icons-git wps-office protonmail-bridge
 #paru -S --needed freetype2-cleartype
-sudo pacman -S --needed freetype2
 paru -S --needed bitwarden
 #paru -S --needed --noconfirm pcloud-drive
-sudo pacman -S --needed ufw
+paru -S --needed --noconfirm betterlockscreen
 echo Installed AUR programs
 
 # REVIEW Determine usefulness
