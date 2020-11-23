@@ -103,6 +103,9 @@ alias ytv-best="youtube-dl -f bestvideo+bestaudio "
 #Cleanup orphaned packages
 alias cleanup='sudo pacman -Rns (pacman -Qtdq)'
 
+# Clean cached packages
+alias cleancache='paru -Sc'
+
 #get the error messages from journalctl
 #alias jctl="journalctl -p 3 -xb"
 
