@@ -13,3 +13,4 @@ protonmail-bridge
 bitwarden
 betterlockscreen
 ttf-iosevka
+font-manager-git
