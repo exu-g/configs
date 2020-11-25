@@ -85,6 +85,7 @@ in_liferea=0
 in_fractal=0
 in_bettergram=0
 in_waifu2x=0
+in_telegram=0
 
 cmd=(dialog --separate-output --checklist "Select other programs:" 22 76 16)
 options=(1 "VirtManager" off    # any option can be set to default to "on"
@@ -101,8 +102,9 @@ options=(1 "VirtManager" off    # any option can be set to default to "on"
          12 "Easystroke" on
          13 "Liferea" off
          14 "Fractal" on
-         15 "Bettergram" on
-         16 "Waifu2x" off)
+         15 "Bettergram" off
+         16 "Waifu2x" off
+         17 "Telegram" on)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
 for choice in $choices
@@ -171,6 +173,10 @@ do
         16)
             in_waifu2x=1
             echo "waifu2x-ncnn-vulkan" >> aurselectedpkgs.txt
+            ;;
+        17)
+            in_telegram=1
+            echo "telegram-desktop" >> selectedpkgs.txt
             ;;
     esac
 done
@@ -519,6 +525,13 @@ if [ $in_waifu2x -eq 1 ]; then
     paru -S --needed --noconfirm waifu2x-ncnn-vulkan
 else
     echo "Skipping Waifu2x"
+fi
+
+if [ $in_telegram -eq 1 ]; then
+    echo "Installing Telegram"
+    sudo pacman -S --needed --noconfirm telegram-desktop
+else
+    echo "Skipping Telegram"
 fi
 
 #performance and battery life
