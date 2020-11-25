@@ -448,4 +448,9 @@
     format = "<b>%s</b>\n%b"
     timeout = 5
 
+[xfce4-power-manager]
+    appname = "Power Manager"
+    summary = "Brightness:*"
+    format = ""
+
 # vim: ft=cfg
