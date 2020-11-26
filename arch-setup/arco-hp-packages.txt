@@ -4,4 +4,4 @@ vmware-workstation15
 linux-headers
 nnn
 pdfsam
-eclipse-java
+eclipse-java-bin
