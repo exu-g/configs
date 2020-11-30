@@ -146,7 +146,7 @@ i3 restart
 echo Finished updating everything!
 echo Launching new shell!
 
-#new shell to reload .bashrc and fish config
-exec bash
+# reload fish
+exec fish
 
 exit 0
