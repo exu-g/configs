@@ -47,3 +47,4 @@ noto-fonts
 noto-fonts-emoji
 ufw
 freetype2
+traceroute
