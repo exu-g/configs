@@ -4,7 +4,8 @@
 
 
 
-Xcursor.theme: Breeze_Snow
+!Xcursor.theme: Breeze_Snow
+Xcursor.theme: capitaine-cursors-white
 
 ! special
 *.foreground:   #c5c8c6
