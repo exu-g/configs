@@ -353,9 +353,9 @@ sudo pacman -S --needed --noconfirm - < "$HOME/setup/winepkgs.txt"
 echo Installed wine
 
 #python modules
-echo Installing python modules
-sudo pip3 install ffmpeg-normalize
-echo Installed python modules
+#echo Installing python modules
+#sudo pip3 install
+#echo Installed python modules
 
 ###################
 #selected programs#
