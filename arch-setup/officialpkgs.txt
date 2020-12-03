@@ -41,10 +41,13 @@ xorg-xrdb
 variety
 nitrogen
 feh
-gnome-keyring xorg-xbacklight
+gnome-keyring
+xorg-xbacklight
 transmission-gtk
 noto-fonts
 noto-fonts-emoji
 ufw
 freetype2
 traceroute
+seahorse
+libsecret
