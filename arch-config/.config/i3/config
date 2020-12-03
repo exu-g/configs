@@ -576,6 +576,7 @@ for_window [window_role="setup"] floating enable
 
 # custom
 for_window [title="Microsoft Teams Notification"] floating enable
+for_window [title="Microsoft Teams-Benachrichtigung"] floating enable
 
 for_window [class="tufts-vue-VUE" title="Format"] floating enable
 for_window [class="tufts-vue-VUE" title="ColorPopupMenu"] floating enable
