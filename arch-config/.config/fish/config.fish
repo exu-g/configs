@@ -32,6 +32,9 @@ set VISUAL "/usr/bin/emacs --no-window-system"
 set fish_user_paths "$HOME/.emacs.d/bin/" $fish_user_paths
 set fish_user_paths "$HOME/scripts/in_path" $fish_user_paths
 
+# enable thefuck
+thefuck --alias | source
+
 # use sudo !! to run the last command as root
 function sudo --description "Replacement for Bash 'sudo !!' command to run last command using sudo."
     if test "$argv" = !!
