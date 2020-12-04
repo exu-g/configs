@@ -291,8 +291,6 @@ echo Updated packages
 echo Installing default pacman programs
 sudo pacman -S --needed --noconfirm - < "$HOME/setup/officialpkgs.txt"
 #sudo pacman -S --needed --noconfirm transmission-gtk
-# REVIEW maybe find theme with less dependencies
-sudo pacman -S --needed --noconfirm breeze
 #sudo pacman -S --needed --noconfirm noto-fonts noto-fonts-emoji
 #sudo pacman -S --needed --noconfirm ufw
 #sudo pacman -S --needed --noconfirm freetype2
