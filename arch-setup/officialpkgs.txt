@@ -32,7 +32,6 @@ dunst
 rsync
 restic
 piper
-lightdm-gtk-greeter
 unzip
 ranger
 bandwhich
