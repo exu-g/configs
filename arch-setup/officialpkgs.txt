@@ -38,8 +38,6 @@ ranger
 bandwhich
 cmus
 xorg-xrdb
-variety
-nitrogen
 feh
 gnome-keyring
 xorg-xbacklight
