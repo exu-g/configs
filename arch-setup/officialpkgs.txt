@@ -51,3 +51,4 @@ freetype2
 traceroute
 seahorse
 libsecret
+capitaine-cursors
