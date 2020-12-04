@@ -50,3 +50,4 @@ traceroute
 seahorse
 libsecret
 capitaine-cursors
+thefuck
