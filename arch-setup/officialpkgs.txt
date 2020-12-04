@@ -50,3 +50,4 @@ seahorse
 libsecret
 capitaine-cursors
 thefuck
+lightdm
