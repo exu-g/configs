@@ -14,3 +14,4 @@ ttf-iosevka
 font-manager-git
 ffmpeg-normalize-git
 lightdm-slick-greeter
+lightdm-settings
