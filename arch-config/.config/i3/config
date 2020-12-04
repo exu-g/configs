@@ -432,7 +432,7 @@ exec_always --no-startup-id numlockx on
 #exec --no-startup-id volumeicon
 
 #variety
-exec --no-startup-id variety
+#exec --no-startup-id variety
 
 #Corectrl
 exec --no-startup-id corectrl
@@ -457,6 +457,9 @@ exec --no-startup-id protonmail-bridge -no-window
 
 # PulseEffects
 exec --no-startup-id pulseeffects --gapplication-service
+
+# feh background image
+exec --no-startup-id bash $HOME/.fehbg &
 
 
 #####################################################################################################################
@@ -588,11 +591,11 @@ for_window [class="tufts-vue-VUE" title="ColorPopupMenu"] floating enable
 
 #Variety keybindings mod1 = ALT
 # next wallpaper
-bindsym mod1+n exec --no-startup-id variety -n
-bindsym mod1+Right exec --no-startup-id variety -n
+#bindsym mod1+n exec --no-startup-id variety -n
+#bindsym mod1+Right exec --no-startup-id variety -n
 # previous wallpaper
-bindsym mod1+p exec --no-startup-id variety -p
-bindsym mod1+Left exec --no-startup-id variety -p
+#bindsym mod1+p exec --no-startup-id variety -p
+#bindsym mod1+Left exec --no-startup-id variety -p
 
 
 #####################################################################################################################
