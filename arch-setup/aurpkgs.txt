@@ -15,4 +15,3 @@ betterlockscreen
 ttf-iosevka
 font-manager-git
 ffmpeg-normalize-git
-thefuck
