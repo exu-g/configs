@@ -78,7 +78,11 @@ cp -r ~/config/.bashrc ~/ &&
 cp -r ~/config/.face ~/ &&
 cp -r ~/config/.gtkrc-2.0 ~/ &&
 cp -r ~/config/.gitconfig ~/ &&
+cp -r ~/config/.fehbg ~/ &&
 echo Copied files
+
+# make fehbg executable
+chmod +x ~/.fehbg
 
 #copy scripts
 cp -r ~/config/scripts/ ~/
@@ -138,6 +142,9 @@ update-desktop-database ~/.local/share/applications/
 
 # reload .Xresources
 xrdb ~/.Xresources
+
+# execute feh
+"$HOME/.fehbg"
 
 #restart i3 in place
 i3 restart
