@@ -1,2 +1,2 @@
 #!/bin/sh
-feh --no-fehbg --bg-scale '$HOME/Bilder/Backgrounds/spaceengine/scr00019.png'
+feh --no-fehbg --bg-scale "$HOME/Bilder/Backgrounds/spaceengine/scr00019.png"
