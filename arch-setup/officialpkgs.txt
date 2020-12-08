@@ -53,3 +53,4 @@ thefuck
 lightdm
 tmux
 ttf-fira-code
+ttf-fira-sans
