@@ -119,7 +119,7 @@ bindsym $mod+Shift+0 move container to workspace 10; workspace 10
 
 
 #Press $mod (super) and X to exit - check toolbar for next choices
-bindsym $mod+l mode "$mode_system"
+bindsym $mod+x mode "$mode_system"
 
 set $mode_system System (k) lock, (l) logout, (r) reboot, (s) shutdown, (u) suspend, (h) hibernate
 mode "$mode_system" {
