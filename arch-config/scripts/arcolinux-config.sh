@@ -79,6 +79,7 @@ cp -r ~/config/.face ~/ &&
 cp -r ~/config/.gtkrc-2.0 ~/ &&
 cp -r ~/config/.gitconfig ~/ &&
 cp -r ~/config/.fehbg ~/ &&
+cp -r ~/config/.tmux.conf ~/ &&
 echo Copied files
 
 # make fehbg executable
