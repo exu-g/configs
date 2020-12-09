@@ -19,5 +19,5 @@ rsync -uvr --progress --bwlimit=4096 /home/marc/Musik/ root@jellyfin.realstickma
 
 Update Website  
 ```bash
-rsync -uvrP --bwlimit=4096 /home/marc/GitProjects/website/ root@realstickman.net:/var/www/website
+rsync -vr --bwlimit=4096 /home/marc/GitProjects/website/ root@realstickman.net:/var/www/website
 ```
