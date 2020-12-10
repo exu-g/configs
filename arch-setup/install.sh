@@ -608,7 +608,7 @@ git clone https://gitlab.com/RealStickman-arcolinux/config
 echo Finished downloading config
 
 # Download git repos
-bash ~/config/scripts/git-pull.sh
+bash ~/config/scripts/sc-git-pull
 
 #cleanup
 rm -rf ~/setup
