@@ -15,13 +15,6 @@ cd "$HOME/GitProjects/config"
 git fetch --all
 git pull
 
-if [ ! -d "$HOME/GitProjects/ffmpeg-lower-vol" ]; then
-    git -C $WORKPATH clone git@gitlab.com:RealStickman/ffmpeg-lower-vol.git
-fi
-cd "$HOME/GitProjects/ffmpeg-lower-vol"
-git fetch --all
-git pull
-
 if [ ! -d "$HOME/GitProjects/grab" ]; then
     git -C $WORKPATH clone git@gitlab.com:RealStickman/grab.git
 fi
