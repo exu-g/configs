@@ -515,7 +515,10 @@ bindsym control+mod1+f exec --no-startup-id firefox;focus
 #bindsym ctrl+mod1+n exec --no-startup-id pragha;focus
 
 #cmus
-bindsym ctrl+mod1+m exec --no-startup-id termite -e cmus;focus
+#bindsym ctrl+mod1+m exec --no-startup-id termite -e cmus;focus
+
+#tauon music box
+bindsym ctrl+mod1+m exec --no-startup-id tauon;focus
 
 #thunderbird
 bindsym ctrl+mod1+b exec --no-startup-id thunderbird;focus
