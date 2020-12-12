@@ -2,10 +2,10 @@
 #fish_vi_key_bindings
 fish_default_key_bindings
 
-if status is-interactive
-and not set -q TMUX
-    exec tmux
-end
+#if status is-interactive
+#and not set -q TMUX
+#    exec tmux
+#end
 
 # Info:
 # https://fishshell.com/docs/current/index.html#variables-for-changing-highlighting-colors
