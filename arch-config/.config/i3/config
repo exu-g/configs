@@ -249,13 +249,12 @@ bindsym $mod+a focus parent
 
 bindsym $mod+m mode "$main"
 
-set $main Media (m), Gaming (g), Resize (r), Layout (l), Browsers (b)
+set $main Media (m), Gaming (g), Resize (r), Layout (l)
 mode "$main"{
      bindsym m mode "$media"
      bindsym g mode "$gaming"
      bindsym r mode "resize"
      bindsym l mode "$layout"
-     bindsym b mode "$browsers"
 
      bindsym Return mode "default"
      bindsym Escape mode "default"
@@ -349,26 +348,6 @@ set $layout full (f), work (w)
 mode "$layout" {
     bindsym f exec --no-startup-id bash $HOME/.config/i3/scripts/layout-default.sh
     bindsym w exec --no-startup-id bash $HOME/.config/i3/scripts/layout-work.sh
-
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-
-
-##############################################################################
-#################                 browsers                    ################
-##############################################################################
-
-
-bindsym $mod+b mode "$browsers"
-
-set $browsers firefox (f), chromium (c), netsurf (n), icecat (i), tor (t)
-mode "$browsers" {
-    bindsym f exec --no-startup-id firefox;focus
-    bindsym c exec --no-startup-id chromium;focus
-    bindsym n exec --no-startup-id netsurf;focus
-    bindsym i exec --no-startup-id icecat;focus
-    bindsym t exec --no-startup-id torbrowser-launcher;focus
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
