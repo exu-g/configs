@@ -117,7 +117,7 @@
             "mode": "IIR",
             "num-bands": "30",
             "input-gain": "0",
-            "output-gain": "0",
+            "output-gain": "-3",
             "split-channels": "false",
             "left": {
                 "band0": {
@@ -1039,7 +1039,7 @@
             "state": "false",
             "input-gain": "0",
             "output-gain": "0",
-            "model-path": ""
+            "model-path": "Standard RNNoise Model"
         }
     }
 }
