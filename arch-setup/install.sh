@@ -326,6 +326,12 @@ sudo make install
 cd ..
 rm -rf neofetch
 
+# install paru
+if ["pacman -Q | grep yay"] && [! "pacman -Q | grep paru"]; then
+    echo "Installing paru"
+    yay -S paru
+fi
+
 #AUR
 echo Installing default AUR programs
 paru -S --needed - < "$HOME/setup/aurpkgs.txt"
