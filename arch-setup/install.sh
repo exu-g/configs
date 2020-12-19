@@ -279,7 +279,7 @@ done
 #uninstalling unused packages
 echo Uninstalling unused packages
 #sudo pacman -Rns evolution catfish geany vim keepass gnome-boxes sublime-text-dev atom adwaita-icon-theme arcolinux-i3wm-git arcolinux-tweak-tool-git arcolinux-welcome-app-git clonezilla evolution-data-server numix-circle-arc-icons-git numix-circle-icon-theme-git numix-gtk-theme-git numix-icon-theme-git oh-my-zsh-git pamac-aur qbittorrent vivaldi vlc code baka-mplayer tmux guvcview kdenlive xfce4-notifyd chromium psensor transmission-qt pcloud-drive matrix-mirage element-desktop pulseaudio-equalizer-ladspa
-sudo pacman -Rns --noconfirm - < "$HOME/setup/uninstall.txt"
+sudo pacman -Rns - < "$HOME/setup/uninstall.txt"
 echo Uninstalled unused packages
 
 #update stuff
@@ -289,7 +289,7 @@ echo Updated packages
 
 #pacman programs
 echo Installing default pacman programs
-sudo pacman -S --needed --noconfirm - < "$HOME/setup/officialpkgs.txt"
+sudo pacman -S --needed - < "$HOME/setup/officialpkgs.txt"
 #sudo pacman -S --needed --noconfirm transmission-gtk
 #sudo pacman -S --needed --noconfirm noto-fonts noto-fonts-emoji
 #sudo pacman -S --needed --noconfirm ufw
@@ -310,7 +310,7 @@ echo Installed official programs
 # audio
 echo Installing audio programs
 #sudo pacman -S --needed --noconfirm pavucontrol pulseaudio pulseaudio-alsa pulseaudio-bluetooth libpulse alsa-card-profiles libcanberra-pulse lib32-libpulse pulseeffects
-sudo pacman -S --needed --noconfirm - < "$HOME/setup/audiopkgs.txt"
+sudo pacman -S --needed - < "$HOME/setup/audiopkgs.txt"
 echo Installed audio programs
 
 # REVIEW Determine usefulness
@@ -328,7 +328,7 @@ rm -rf neofetch
 
 #AUR
 echo Installing default AUR programs
-paru -S --needed --noconfirm - < "$HOME/setup/aurpkgs.txt"
+paru -S --needed - < "$HOME/setup/aurpkgs.txt"
 #paru -S --needed freetype2-cleartype
 #paru -S --needed --noconfirm bitwarden
 #paru -S --needed --noconfirm pcloud-drive
@@ -347,7 +347,7 @@ echo Installed AUR programs
 #install wine
 echo Installing wine
 #sudo pacman -S --needed wine-staging giflib lib32-giflib libpng lib32-libpng libldap lib32-libldap gnutls lib32-gnutls mpg123 lib32-mpg123 openal lib32-openal v4l-utils lib32-v4l-utils libpulse lib32-libpulse libgpg-error lib32-libgpg-error alsa-plugins lib32-alsa-plugins alsa-lib lib32-alsa-lib libjpeg-turbo lib32-libjpeg-turbo sqlite lib32-sqlite libxcomposite lib32-libxcomposite libxinerama lib32-libgcrypt libgcrypt lib32-libxinerama ncurses lib32-ncurses opencl-icd-loader lib32-opencl-icd-loader libxslt lib32-libxslt libva lib32-libva gtk3 lib32-gtk3 gst-plugins-base-libs lib32-gst-plugins-base-libs vulkan-icd-loader lib32-vulkan-icd-loader os-prober
-sudo pacman -S --needed --noconfirm - < "$HOME/setup/winepkgs.txt"
+sudo pacman -S --needed - < "$HOME/setup/winepkgs.txt"
 echo Installed wine
 
 #python modules
@@ -363,7 +363,7 @@ echo Installing selected programs
 #DEs & WMs
 if [ $in_xfce -eq 1 ]; then
     echo "Installing xfce"
-    sudo pacman -S --needed --noconfirm xfce4
+    sudo pacman -S --needed xfce4
 else
     echo "Skipping xfce"
 fi
@@ -378,35 +378,35 @@ fi
 #browsers
 if [ $in_firefox -eq 1 ]; then
     echo "Installing Firefox"
-    sudo pacman -S --needed --noconfirm firefox
+    sudo pacman -S --needed firefox
 else
     echo "Skipping Firefox"
 fi
 
 if [ $in_chromium -eq 1 ]; then
     echo "Installing Chromium"
-    sudo pacman -S --needed --noconfirm chromium
+    sudo pacman -S --needed chromium
 else
     echo "Skipping Chromium"
 fi
 
 if [ $in_netsurf -eq 1 ]; then
     echo "Installing Netsurf"
-    sudo pacman -S --needed --noconfirm netsurf
+    sudo pacman -S --needed netsurf
 else
     echo "Skipping Netsurf"
 fi
 
 if [ $in_icecat -eq 1 ]; then
     echo "Installing Icecat"
-    paru -S --needed --noconfirm icecat-bin
+    paru -S --needed icecat-bin
 else
     echo "Skipping Icecat"
 fi
 
 if [ $in_tor -eq 1 ]; then
     echo "Installing Tor"
-    sudo pacman -S --needed --noconfirm torbrowser-launcher
+    sudo pacman -S --needed torbrowser-launcher
 else
     echo "Skipping Tor"
 fi
@@ -414,70 +414,70 @@ fi
 #other programs
 if [ $in_virtmanager -eq 1 ]; then
     echo "Installing VirtManager"
-    sudo pacman -S --needed --noconfirm qemu virt-manager
+    sudo pacman -S --needed qemu virt-manager
 else
     echo "Skipping VirtManager"
 fi
 
 if [ $in_steam -eq 1 ]; then
     echo "Installing Steam"
-    sudo pacman -S --needed --noconfirm steam steam-native-runtime
+    sudo pacman -S --needed steam steam-native-runtime
 else
     echo "Skipping Steam"
 fi
 
 if [ $in_lutris -eq 1 ]; then
     echo "Installing Lutris"
-    sudo pacman -S --needed --noconfirm lutris
+    sudo pacman -S --needed lutris
 else
     echo "Skipping Lutris"
 fi
 
 if [ $in_blender -eq 1 ]; then
     echo "Installing Blender"
-    sudo pacman -S --needed --noconfirm blender
+    sudo pacman -S --needed blender
 else
     echo "Skipping Blender"
 fi
 
 if [ $in_krita -eq 1 ]; then
     echo "Installing Krita"
-    sudo pacman -S --needed --noconfirm krita
+    sudo pacman -S --needed krita
 else
     echo "Skipping Krita"
 fi
 
 if [ $in_youtubedl -eq 1 ]; then
     echo "Installing Youtube-dl"
-    sudo pacman -S --needed --noconfirm youtube-dl
+    sudo pacman -S --needed youtube-dl
 else
     echo "Skipping Youtube-dl"
 fi
 
 if [ $in_discord -eq 1 ]; then
     echo "Installing Discord"
-    sudo pacman -S --needed --noconfirm discord
+    sudo pacman -S --needed discord
 else
     echo "Skipping Discord"
 fi
 
 if [ $in_handbrake -eq 1 ]; then
     echo "Installing Handbrake"
-    sudo pacman -S --needed --noconfirm handbrake
+    sudo pacman -S --needed handbrake
 else
     echo "Skipping Handbrake"
 fi
 
 if [ $in_gimp -eq 1 ]; then
     echo "Installing Gimp"
-    sudo pacman -S --needed --noconfirm gimp
+    sudo pacman -S --needed gimp
 else
     echo "Skipping Gimp"
 fi
 
 if [ $in_audacity -eq 1 ]; then
     echo "Installing Audacity"
-    sudo pacman -S --needed --noconfirm audacity
+    sudo pacman -S --needed audacity
 else
     echo "Skipping Audacity"
 fi
@@ -492,42 +492,42 @@ fi
 
 if [ $in_easystrokes -eq 1 ]; then
     echo "Installing Easystrokes"
-    paru -S --needed --noconfirm easystroke
+    paru -S --needed easystroke
 else
     echo "Skipping Easystrokes"
 fi
 
 if [ $in_liferea -eq 1 ]; then
     echo "Installing Liferea"
-    paru -S --needed --noconfirm liferea
+    paru -S --needed liferea
 else
     echo "Skipping Liferea"
 fi
 
 if [ $in_fractal -eq 1 ]; then
     echo "Installing Fractal"
-    sudo pacman -S --needed --noconfirm fractal
+    sudo pacman -S --needed fractal
 else
     echo "Skipping Fractal"
 fi
 
 if [ $in_bettergram -eq 1 ]; then
     echo "Installing Bettergram"
-    paru -S --needed --noconfirm bettergram
+    paru -S --needed bettergram
 else
     echo "Skipping Bettergram"
 fi
 
 if [ $in_waifu2x -eq 1 ]; then
     echo "Installing Waifu2x"
-    paru -S --needed --noconfirm waifu2x-ncnn-vulkan
+    paru -S --needed waifu2x-ncnn-vulkan
 else
     echo "Skipping Waifu2x"
 fi
 
 if [ $in_telegram -eq 1 ]; then
     echo "Installing Telegram"
-    sudo pacman -S --needed --noconfirm telegram-desktop
+    sudo pacman -S --needed telegram-desktop
 else
     echo "Skipping Telegram"
 fi
@@ -535,7 +535,7 @@ fi
 #performance and battery life
 if [ $in_acpufreq -eq 1 ]; then
     echo "Installing auto-cpufreq"
-    paru -S --needed --noconfirm auto-cpufreq-git
+    paru -S --needed auto-cpufreq-git
     sudo auto-cpufreq --install
     sudo systemctl start auto-cpufreq
     sudo systemctl enable auto-cpufreq
@@ -546,7 +546,7 @@ fi
 #text editors
 if [ $in_doomemacs -eq 1 ]; then
     echo "Installing doom-emacs"
-    paru -S --needed --noconfirm git emacs ripgrep fd pandoc shellcheck python-pipenv python-isort python-pytest python-rednose pychecker texlive-core
+    paru -S --needed git emacs ripgrep fd pandoc shellcheck python-pipenv python-isort python-pytest python-rednose pychecker texlive-core
     git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d
     ~/.emacs.d/bin/doom install
     export PATH="$PATH":$HOME/.emacs.d/bin
@@ -556,7 +556,7 @@ fi
 
 if [ $in_vscodium -eq 1 ]; then
     echo "Installing vscodium"
-    paru -S --needed --noconfirm vscodium-bin
+    paru -S --needed vscodium-bin
 else
     echo "Skipping vscodium"
 fi
@@ -564,14 +564,14 @@ fi
 #other social stuff
 if [ $in_teams -eq 1 ]; then
     echo "Installing teams"
-    paru -S --needed --noconfirm teams
+    paru -S --needed teams
 else
     echo "Skipping teams"
 fi
 
 if [ $in_slack -eq 1 ]; then
     echo "Installing slack"
-    paru -S --needed --noconfirm slack-desktop
+    paru -S --needed slack-desktop
 else
     echo "Skipping slack"
 fi
@@ -579,7 +579,7 @@ fi
 #stats
 if [ $in_pkgstats -eq 1 ]; then
     echo "Installing pkgstats"
-    sudo pacman -S --needed --noconfirm pkgstats
+    sudo pacman -S --needed pkgstats
 else
     echo "Skipping pkgstats"
 fi
