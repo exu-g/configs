@@ -327,7 +327,7 @@ cd ..
 rm -rf neofetch
 
 # install paru
-if ["pacman -Q | grep yay"] && [! "pacman -Q | grep paru"]; then
+if [[ $(pacman -Q | grep yay) ]] && [[ ! $(pacman -Q | grep paru) ]]; then
     echo "Installing paru"
     yay -S paru
 fi
