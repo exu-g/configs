@@ -329,7 +329,7 @@ rm -rf neofetch
 # install paru
 if [[ $(pacman -Q | grep yay) ]] && [[ ! $(pacman -Q | grep paru) ]]; then
     echo "Installing paru"
-    yay -S paru
+    yay -S paru-bin
 fi
 
 #AUR
