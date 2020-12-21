@@ -537,6 +537,7 @@ for_window [class="Xfce4-settings-manager"] floating disable
 
 # custom
 for_window [instance="variety"] floating disable
+for_window [title="Epic Games Launcher"] floating disable
 
 # floating enabled
 for_window [class="Xfce4-taskmanager"] floating enable
