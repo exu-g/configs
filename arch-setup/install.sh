@@ -260,18 +260,23 @@ do
     esac
 done
 
-# Additional, only once installed, packages
-in_optpkg=0
+# Packages installed on different systems
+in_arco_pc=0
+in_arco_hp=0
 
-cmd=(dialog --separate-output --checklist "Report installed packages?" 22 76 16)
-options=(1 "Additional packages" off)
+cmd=(dialog --separate-output --checklist "Install system specific packages?" 22 76 16)
+options=(1 "Arco PC" off
+        2 "Arco HP" off)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
 for choice in $choices
 do
     case $choice in
         1)
-            in_optpkg=1
+            in_arco_pc=1
+            ;;
+        2)
+            in_arco_hp=1
             ;;
     esac
 done
@@ -590,10 +595,17 @@ else
     echo "Skipping pkgstats"
 fi
 
-# additional packages
-if [ $in_optpkg -eq 1 ]; then
-    echo "Installing additional packages"
-    paru -S --needed - < "$HOME/setup/optpkglist.txt"
+# other system configs
+# arco pc
+if [ $in_arco_pc -eq 1 ]; then
+    echo "Installing arco pc packages"
+    paru -S --needed - < "$HOME/setup/arco-pc-packages.txt"
+fi
+
+# arco hp
+if [ $in_arco_hp -eq 1 ]; then
+    echo "Installing arco hp packages"
+    paru -S --needed - < "$HOME/setup/arco-hp-packages.txt"
 fi
 
 #change shell
