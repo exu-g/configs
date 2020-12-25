@@ -2,3 +2,6 @@ tauon-music-box
 capitaine-cursors
 0ad
 emby-server
+puddletag
+etcher-bin
+pmbootstrap
