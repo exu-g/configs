@@ -1,5 +1,23 @@
 # Restic repos:
 
+## Local backups
+
+## arco-pc-backup home
+
+```
+restic init --repo /mnt/backups/arco-pc/home/marc
+```
+There is currently a problem in go that makes this command fail. Run the following command before retrying: `export GODEBUG=asyncpreemptoff=1`  
+```
+restic -r /mnt/backups/arco-pc/home/marc backup --verbose "/home/marc/" --exclude-file=/home/marc/GitProjects/config/Dokumente/home-exclude.txt
+```
+```
+restic -r /mnt/backups/arco-pc/home/marc snapshots
+```
+```
+restic -r /mnt/backups/arco-pc/home/marc restore --target "/home/marc" (snapshot)
+```
+
 ## B2 backups
 
 ```bash
@@ -21,7 +39,7 @@ restic -r b2:arco-pc-backup:/home/marc backup --verbose "/home/marc/" --exclude-
 restic -r b2:arco-pc-backup:/home/marc snapshots
 ```
 ```bash
-restic -r b2:arco-pc-backup:/home/marc restore --target "/home/marc/" <snapshot>
+restic -r b2:arco-pc-backup:/home/marc restore --target "/home/marc/" (snapshot)
 ```
 
 ### arco-pc-backup timeshift
