@@ -47,8 +47,9 @@ alias fgrep='fgrep --color=auto'
 alias wget="wget -c"
 
 # Aliases for software managment
-alias pacman='sudo pacman --color auto'
-alias update='yay -Syu'
+alias pacman='pacman --color auto'
+#alias update='yay -Syu'
+alias update='paru -Syu --sudoloop --newsonupgrade'
 
 #grub update
 #alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
