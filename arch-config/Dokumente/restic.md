@@ -2,12 +2,12 @@
 
 ## Local backups
 
-## arco-pc-backup home
+### arco-pc-backup home
 
+There is currently a problem in go that makes this command fail. Run the following command before retrying: `export GODEBUG=asyncpreemptoff=1`  
 ```
 restic init --repo /mnt/backups/arco-pc/home/marc
 ```
-There is currently a problem in go that makes this command fail. Run the following command before retrying: `export GODEBUG=asyncpreemptoff=1`  
 ```
 restic -r /mnt/backups/arco-pc/home/marc backup --verbose "/home/marc/" --exclude-file=/home/marc/GitProjects/config/Dokumente/home-exclude.txt
 ```
@@ -16,6 +16,22 @@ restic -r /mnt/backups/arco-pc/home/marc snapshots
 ```
 ```
 restic -r /mnt/backups/arco-pc/home/marc restore --target "/home/marc" (snapshot)
+```
+
+### arco-pc-backup timeshift
+
+There is currently a problem in go that makes this command fail. Run the following command before retrying: `export GODEBUG=asyncpreemptoff=1`  
+```
+restic init --repo /mnt/backups/arco-pc/timeshift
+```
+```
+sudo -E restic -r /mnt/backups/arco-pc/timeshift backup --verbose "/mnt/1d90c4d5-21d2-4455-bb4a-814de8496744/timeshift/snapshots/"
+```
+```
+restic -r /mnt/backups/arco-pc/timeshift snapshots
+```
+```
+restic -r /mnt/backups/arco-pc/timeshift restore --target "/mnt/1d90c4d5-21d2-4455-bb4a-814de8496744/timeshift/snapshots/" (snapshot)
 ```
 
 ## B2 backups
