@@ -49,6 +49,12 @@ else
     end
 end
 
+# edit with emacs
+alias emacs="/usr/bin/emacs --no-window-system"
+
+# sudo alias
+alias fucking=sudo
+
 #update config
 alias upconf='~/scripts/arcolinux-config.sh'
 
@@ -77,18 +83,18 @@ alias fgrep='fgrep --color=auto'
 alias wget="wget -c"
 
 # Aliases for software managment
-alias pacman='sudo pacman --color auto'
+alias pacman='pacman --color auto'
 #alias update='yay -Syu --sudoloop'
 alias update='paru -Syu --sudoloop --newsonupgrade'
 
 #grub update
-alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
+alias update-grub="grub-mkconfig -o /boot/grub/grub.cfg"
 
 #check vulnerabilities microcode
 alias microcode='grep . /sys/devices/system/cpu/vulnerabilities/*'
 
 #get fastest mirrors in your neighborhood
-alias mirror="sudo reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacman.d/mirrorlist"
+alias mirror="reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacman.d/mirrorlist"
 #alias mirror-delay="sudo reflector --latest 50 --number 20 --sort delay --save /etc/pacman.d/mirrorlist"
 #alias mirror-score="sudo reflector --latest 50 --number 20 --sort score --save /etc/pacman.d/mirrorlist"
 #alias mirror-age="sudo reflector --latest 50 --number 20 --sort age --save /etc/pacman.d/mirrorlist"
