@@ -56,3 +56,4 @@ ttf-fira-code
 ttf-fira-sans
 python-dbus
 python-gobject
+catfish
