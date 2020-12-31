@@ -57,3 +57,4 @@ ttf-fira-sans
 python-dbus
 python-gobject
 catfish
+gvfs
