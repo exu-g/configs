@@ -58,3 +58,4 @@ python-dbus
 python-gobject
 catfish
 gvfs
+xdg-user-dirs
