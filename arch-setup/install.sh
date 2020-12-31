@@ -86,6 +86,7 @@ in_fractal=0
 in_bettergram=0
 in_waifu2x=0
 in_telegram=0
+in_element=0
 
 cmd=(dialog --separate-output --checklist "Select other programs:" 22 76 16)
 options=(1 "VirtManager" off    # any option can be set to default to "on"
@@ -101,10 +102,11 @@ options=(1 "VirtManager" off    # any option can be set to default to "on"
          11 "MangoHud" off
          12 "Easystroke" on
          13 "Liferea" off
-         14 "Fractal" on
+         14 "Fractal" off
          15 "Bettergram" off
          16 "Waifu2x" off
-         17 "Telegram" on)
+         17 "Telegram" on
+         18 "Element" on)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
 for choice in $choices
@@ -177,6 +179,10 @@ do
         17)
             in_telegram=1
             echo "telegram-desktop" >> selectedpkgs.txt
+            ;;
+        18)
+            in_element=1
+            echo "element-desktop" >> selectedpkgs.txt
             ;;
     esac
 done
@@ -541,6 +547,13 @@ if [ $in_telegram -eq 1 ]; then
     sudo pacman -S --needed telegram-desktop
 else
     echo "Skipping Telegram"
+fi
+
+if [ $in_telegram -eq 1 ]; then
+    echo "Installing Element"
+    sudo pacman -S --needed element-desktop
+else
+    echo "Skipping Element"
 fi
 
 #performance and battery life
