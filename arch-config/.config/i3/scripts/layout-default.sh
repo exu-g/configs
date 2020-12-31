@@ -8,7 +8,7 @@ i3-msg 'workspace 2; layout tabbed; exec thunderbird'
 
 i3-msg 'workspace 2; layout tabbed; exec discord'
 
-i3-msg 'workspace 2; layout tabbed; exec fractal'
+i3-msg 'workspace 2; layout tabbed; exec element-desktop'
 
 i3-msg 'workspace 2; layout tabbed; exec telegram-desktop'
 
