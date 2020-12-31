@@ -1,5 +1,4 @@
 evolution
-catfish
 geany
 keepass
 gnome-boxes
