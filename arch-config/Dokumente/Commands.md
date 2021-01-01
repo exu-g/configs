@@ -13,7 +13,7 @@ ffmpeg-normalize *.opus -v -pr -c:a libopus -ext opus
 
 ## ffmpeg extract images from video
 ```bash
-ffmpeg -i "file.mpg" -r 1/1 xyz%03d.png
+ffmpeg -i "file.mpg" -r 2/1 xyz%03d.png
 ```
 
 ## copy lightdm configured themes
