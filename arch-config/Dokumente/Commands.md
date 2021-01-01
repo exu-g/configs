@@ -11,7 +11,7 @@ ffmpeg-normalize *.m4a -v -pr -c:a libopus -ext opus
 ffmpeg-normalize *.opus -v -pr -c:a libopus -ext opus
 ```
 
-## extract images from video
+## ffmpeg extract images from video
 ```bash
 ffmpeg -i "file.mpg" -r 1/1 xyz%03d.png
 ```
