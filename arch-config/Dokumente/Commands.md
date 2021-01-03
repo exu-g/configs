@@ -196,3 +196,9 @@ tmpmail -g
 ```bash
 waifu2x-ncnn-vulkan -i (input directory) -o (output directory)
 ```
+
+## pacnew files
+Regularly run this command to resolve pacnew files
+```bash
+sudo pacdiff
+```
