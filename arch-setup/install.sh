@@ -289,7 +289,6 @@ done
 
 #uninstalling unused packages
 echo Uninstalling unused packages
-#sudo pacman -Rns evolution catfish geany vim keepass gnome-boxes sublime-text-dev atom adwaita-icon-theme arcolinux-i3wm-git arcolinux-tweak-tool-git arcolinux-welcome-app-git clonezilla evolution-data-server numix-circle-arc-icons-git numix-circle-icon-theme-git numix-gtk-theme-git numix-icon-theme-git oh-my-zsh-git pamac-aur qbittorrent vivaldi vlc code baka-mplayer tmux guvcview kdenlive xfce4-notifyd chromium psensor transmission-qt pcloud-drive matrix-mirage element-desktop pulseaudio-equalizer-ladspa
 sudo pacman -Rns - < "$HOME/setup/uninstall.txt"
 echo Uninstalled unused packages
 
@@ -301,34 +300,12 @@ echo Updated packages
 #pacman programs
 echo Installing default pacman programs
 sudo pacman -S --needed - < "$HOME/setup/officialpkgs.txt"
-#sudo pacman -S --needed --noconfirm transmission-gtk
-#sudo pacman -S --needed --noconfirm noto-fonts noto-fonts-emoji
-#sudo pacman -S --needed --noconfirm ufw
-#sudo pacman -S --needed --noconfirm freetype2
-
-# NOTE Distro specific stuff
-#distro=$(cat /etc/*-release | grep "^ID=")
-#if [ "$distro" == "ID=arcolinux" ]; then
-#    sudo pacman -R slim archlinux-themes-slim
-#    sudo pacman -S --needed arcolinux-slim arcolinux-slimlock-themes-git
-#fi
-#if [ "$distro" == "ID=arch" ]; then
-#    sudo pacman -R arcolinux-slim arcolinux-slimlock-themes-git
-#    sudo pacman -S --needed slim archlinux-themes-slim
-#fi
 echo Installed official programs
 
 # audio
 echo Installing audio programs
-#sudo pacman -S --needed --noconfirm pavucontrol pulseaudio pulseaudio-alsa pulseaudio-bluetooth libpulse alsa-card-profiles libcanberra-pulse lib32-libpulse pulseeffects
 sudo pacman -S --needed - < "$HOME/setup/audiopkgs.txt"
 echo Installed audio programs
-
-# REVIEW Determine usefulness
-# iperf3
-# nload
-# dmenu
-# devtools
 
 # REVIEW Patched neofetch version to remove Color codes
 git clone https://github.com/RealStickman/neofetch
@@ -346,31 +323,12 @@ fi
 #AUR
 echo Installing default AUR programs
 paru -S --needed - < "$HOME/setup/aurpkgs.txt"
-#paru -S --needed freetype2-cleartype
-#paru -S --needed --noconfirm bitwarden
-#paru -S --needed --noconfirm pcloud-drive
-#paru -S --needed --noconfirm betterlockscreen
 echo Installed AUR programs
-
-# REVIEW Determine usefulness
-# ttf-tahoma
-# cpu-x
-# nutty
-# woeusb
-# debtap
-# gimp-plugin-registry
-# multimc5
 
 #install wine
 echo Installing wine
-#sudo pacman -S --needed wine-staging giflib lib32-giflib libpng lib32-libpng libldap lib32-libldap gnutls lib32-gnutls mpg123 lib32-mpg123 openal lib32-openal v4l-utils lib32-v4l-utils libpulse lib32-libpulse libgpg-error lib32-libgpg-error alsa-plugins lib32-alsa-plugins alsa-lib lib32-alsa-lib libjpeg-turbo lib32-libjpeg-turbo sqlite lib32-sqlite libxcomposite lib32-libxcomposite libxinerama lib32-libgcrypt libgcrypt lib32-libxinerama ncurses lib32-ncurses opencl-icd-loader lib32-opencl-icd-loader libxslt lib32-libxslt libva lib32-libva gtk3 lib32-gtk3 gst-plugins-base-libs lib32-gst-plugins-base-libs vulkan-icd-loader lib32-vulkan-icd-loader os-prober
 sudo pacman -S --needed - < "$HOME/setup/winepkgs.txt"
 echo Installed wine
-
-#python modules
-#echo Installing python modules
-#sudo pip3 install
-#echo Installed python modules
 
 ###################
 #selected programs#
