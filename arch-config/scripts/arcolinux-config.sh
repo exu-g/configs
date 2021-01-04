@@ -92,7 +92,7 @@ cp -r ~/config/scripts/ ~/
 cp -r ~/config/.cache ~/
 
 #copy stuff to /etc
-sudo cp -r ~/config/etc /
+#sudo cp -r ~/config/etc /
 sudo rsync --exclude=default/grub ~/config/etc /
 
 read -r -p "Do you want to overwrite the grub config? [y/N] " response
