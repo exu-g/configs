@@ -7,3 +7,5 @@ etcher-bin
 pmbootstrap
 inetutils
 putty
+remmina
+freerdp
