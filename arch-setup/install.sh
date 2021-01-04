@@ -595,6 +595,10 @@ sudo systemctl start ufw
 # update fonts cache
 fc-cache -f
 
+# download grub theme
+git clone https://github.com/xenlism/Grub-themes.git
+bash Grub-themes/xenlism-grub-arch-1080p/install.sh
+
 #Changes to home folder automatically now, no need to be extra careful anymore.
 git clone https://gitlab.com/RealStickman-arcolinux/config
 echo Finished downloading config
