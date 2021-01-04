@@ -92,17 +92,17 @@ cp -r ~/config/scripts/ ~/
 cp -r ~/config/.cache ~/
 
 #copy stuff to /etc
-#sudo cp -r ~/config/etc /
-sudo rsync --exclude=default/grub ~/config/etc /etc/
+sudo cp -r ~/config/etc /
+#sudo rsync --exclude=default/grub ~/config/etc /etc/
 
-read -r -p "Do you want to overwrite the grub config? [y/N] " response
-if [[ "$response" =~ ^([yY][eE][sS][jJ]|[yY])$ ]]
-then
+#read -r -p "Do you want to overwrite the grub config? [y/N] " response
+#if [[ "$response" =~ ^([yY][eE][sS][jJ]|[yY])$ ]]
+#then
     # copy config
-    sudo cp ~/config/etc/default/grub /etc/default/
+#    sudo cp ~/config/etc/default/grub /etc/default/
     # update grub
-    sudo grub-mkconfig -o /boot/grub/grub.cfg
-fi
+#    sudo grub-mkconfig -o /boot/grub/grub.cfg
+#fi
 
 # NOTE Distro specific stuff
 distro=$(cat /etc/*-release | grep "^ID=")
