@@ -88,7 +88,7 @@ alias pacman='pacman --color auto'
 alias update='paru -Syu --sudoloop --newsonupgrade --upgrademenu --combinedupgrade; notify'
 
 #grub update
-alias update-grub="grub-mkconfig -o /boot/grub/grub.cfg"
+alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 
 #check vulnerabilities microcode
 alias microcode='grep . /sys/devices/system/cpu/vulnerabilities/*'
