@@ -549,7 +549,7 @@ else
     echo "Skipping Telegram"
 fi
 
-if [ $in_telegram -eq 1 ]; then
+if [ $in_element -eq 1 ]; then
     echo "Installing Element"
     sudo pacman -S --needed element-desktop
 else
