@@ -93,13 +93,13 @@ cp -r ~/config/.cache ~/
 
 #copy stuff to /etc
 sudo cp -r ~/config/etc /
-sudo rsync ~/config/etc / --exclude ~/config/etc/default/grub
+sudo rsync --exclude-from=~/config/etc/default/grub ~/config/etc /
 
 read -r -p "Do you want to overwrite the grub config? [y/N] " response
 if [[ "$response" =~ ^([yY][eE][sS][jJ]|[yY])$ ]]
 then
     # copy config
-    sudo cp ~/config/etc/default/grub /
+    sudo cp ~/config/etc/default/grub /etc/default/
     # update grub
     sudo grub-mkconfig -o /boot/grub/grub.cfg
 fi
