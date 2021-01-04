@@ -93,6 +93,16 @@ cp -r ~/config/.cache ~/
 
 #copy stuff to /etc
 sudo cp -r ~/config/etc /
+sudo rsync ~/config/etc / --exclude grub
+
+read -r -p "Do you want to overwrite the grub config? [y/N] " response
+if [[ "$response" =~ ^([yY][eE][sS][jJ]|[yY])$ ]]
+then
+    # copy config
+    sudo cp ~/config/etc/default/grub /
+    # update grub
+    sudo grub-mkconfig -o /boot/grub/grub.cfg
+fi
 
 # NOTE Distro specific stuff
 distro=$(cat /etc/*-release | grep "^ID=")
@@ -146,9 +156,6 @@ xrdb ~/.Xresources
 
 # execute feh
 "$HOME/.fehbg"
-
-# update grub
-sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 #restart i3 in place
 i3 restart
