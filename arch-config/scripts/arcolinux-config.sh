@@ -147,6 +147,9 @@ xrdb ~/.Xresources
 # execute feh
 "$HOME/.fehbg"
 
+# update grub
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+
 #restart i3 in place
 i3 restart
 
