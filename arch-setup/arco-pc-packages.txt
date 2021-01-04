@@ -5,3 +5,5 @@ emby-server
 puddletag
 etcher-bin
 pmbootstrap
+inetutils
+putty
