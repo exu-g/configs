@@ -60,3 +60,4 @@ catfish
 gvfs
 xdg-user-dirs
 linux-zen
+linux-zen-headers
