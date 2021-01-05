@@ -9,3 +9,4 @@ inetutils
 putty
 remmina
 freerdp
+libvncserver
