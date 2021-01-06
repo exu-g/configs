@@ -1,5 +1,8 @@
 # SSH
 
+## hydra
+`$ ssh -i .ssh/id_ed25519_non-root jellyfin@jellyfin.realstickman.net`
+
 ## raspi3
-192.168.1.119
+`$ ssh marc@192.168.1.119`
 
