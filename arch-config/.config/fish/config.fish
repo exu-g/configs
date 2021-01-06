@@ -36,6 +36,7 @@ set VISUAL "/usr/bin/emacs --no-window-system"
 # add paths
 set fish_user_paths "$HOME/.emacs.d/bin/" $fish_user_paths
 set fish_user_paths "$HOME/scripts/in_path" $fish_user_paths
+set fish_user_paths "$HOME/.local/bin" $fish_user_paths
 
 # enable thefuck
 thefuck --alias | source
