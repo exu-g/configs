@@ -10,3 +10,4 @@ putty
 remmina
 freerdp
 libvncserver
+eclipse-java-bin
