@@ -12,3 +12,4 @@ freerdp
 libvncserver
 eclipse-java-bin
 jdk11-openjdk
+gnuclad
