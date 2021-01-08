@@ -14,4 +14,3 @@ eclipse-java-bin
 jdk11-openjdk
 gnuclad
 calibre
-betterdiscord
