@@ -15,3 +15,4 @@ jdk11-openjdk
 gnuclad
 calibre
 hplip
+ly
