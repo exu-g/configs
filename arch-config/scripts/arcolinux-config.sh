@@ -122,6 +122,11 @@ sudo cp -r ~/config/usr /
 # copy xresources
 #cp ~/config/.Xresources ~/
 
+# download cat as cat
+git clone https://github.com/RealStickman/bash-cat-with-cat.git
+cp ./bash-cat-with-cat/cat.sh "$HOME/scripts/in_path/cat.sh"
+rm -rf ./bash-cat-with-cat
+
 #gimp plugins
 #mkdir ~/.config/GIMP/ || echo Not creating directory
 #mkdir ~/.config/GIMP/2.10/ || echo Not creating directory
