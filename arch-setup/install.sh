@@ -307,6 +307,16 @@ echo Installing audio programs
 sudo pacman -S --needed - < "$HOME/setup/audiopkgs.txt"
 echo Installed audio programs
 
+# pip
+echo Installing python programs
+pip install --user autotrash
+echo Installed python programs
+
+# setup autotrash
+autotrash -d 5 --install
+systemctl --user start autotrash
+systemctl --user enable autotrash.timer
+
 # REVIEW Patched neofetch version to remove Color codes
 git clone https://github.com/RealStickman/neofetch
 cd neofetch
