@@ -33,3 +33,4 @@ matrix-mirage
 element-desktop
 pulseaudio-equalizer-ladspa
 arcolinux-lightdm-gtk-greeter
+arcolinux-lightdm-gtk-greeter-settings
