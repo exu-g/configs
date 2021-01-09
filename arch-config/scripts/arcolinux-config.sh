@@ -80,10 +80,14 @@ cp -r ~/config/.gtkrc-2.0 ~/ &&
 cp -r ~/config/.gitconfig ~/ &&
 cp -r ~/config/.fehbg ~/ &&
 cp -r ~/config/.tmux.conf ~/ &&
+cp -r ~/config/.xinitrc ~/ &&
 echo Copied files
 
 # make fehbg executable
 chmod +x ~/.fehbg
+
+# make .xinitrc executable
+chmod +x ~/.xinitrc
 
 #copy scripts
 cp -r ~/config/scripts/ ~/
