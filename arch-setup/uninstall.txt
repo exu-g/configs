@@ -32,3 +32,4 @@ pcloud-drive
 matrix-mirage
 element-desktop
 pulseaudio-equalizer-ladspa
+arcolinux-lightdm-gtk-greeter
