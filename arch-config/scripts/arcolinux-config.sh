@@ -124,7 +124,7 @@ sudo cp -r ~/config/usr /
 
 # download cat as cat
 git clone https://github.com/RealStickman/bash-cat-with-cat.git
-cp ./bash-cat-with-cat/cat.sh "$HOME/scripts/in_path/cat.sh"
+cp ./bash-cat-with-cat/cat.sh "$HOME/scripts/pieces/cat.sh"
 rm -rf ./bash-cat-with-cat
 
 #gimp plugins
