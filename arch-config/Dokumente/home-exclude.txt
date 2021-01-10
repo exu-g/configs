@@ -58,3 +58,4 @@
 /home/marc/MusikRaw
 /home/marc/Dokumente/Torrents/
 /home/marc/Videos/
+/home/marc/Torrents
