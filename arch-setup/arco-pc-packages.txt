@@ -17,3 +17,4 @@ calibre
 hplip
 ly
 waifu2x-ncnn-vulkan
+video2x
