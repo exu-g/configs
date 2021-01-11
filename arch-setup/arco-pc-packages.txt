@@ -21,3 +21,4 @@ video2x
 basilisk-bin
 librewolf-bin
 surf
+vmware-workstation15
