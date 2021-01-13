@@ -58,34 +58,19 @@ restic -r b2:arco-pc-backup:/home/marc snapshots
 restic -r b2:arco-pc-backup:/home/marc restore --target "/home/marc/" (snapshot)
 ```
 
-### arco-pc-backup timeshift
+### arco-pc-backup 3tb toshiba
 
-```bash
-restic -r b2:arco-pc-backup:/mnt/harddrive/timeshift/snapshots init
 ```
-```bash
-sudo -E restic -r b2:arco-pc-backup:/mnt/harddrive/timeshift/snapshots backup --verbose "/mnt/1d90c4d5-21d2-4455-bb4a-814de8496744/timeshift/snapshots/"
+restic -r b2:arco-pc-backup:/mnt/harddrive init
 ```
-```bash
-restic -r b2:arco-pc-backup:/mnt/harddrive/timeshift/snapshots snapshots
 ```
-```bash
-restic -r b2:arco-pc-backup:/mnt/harddrive/timeshift/snapshots restore --target "/mnt/1d90c4d5-21d2-4455-bb4a-814de8496744/timeshift/snapshots/" <snapshot>
+sudo -E restic -r b2:arco-pc-backup:/mnt/harddrive backup --verbose "/mnt/1d90c4d5-21d2-4455-bb4a-814de8496744" --exclude="/mnt/1d90c4d5-21d2-4455-bb4a-814de8496744/.Trash-1000"
 ```
-
-### arco-pc-backup consoles
-
-```bash
-restic -r b2:arco-pc-backup:/mnt/harddrive/Consoles init
 ```
-```bash
-restic -r b2:arco-pc-backup:/mnt/harddrive/Consoles backup --verbose "/mnt/1d90c4d5-21d2-4455-bb4a-814de8496744/Consoles"
+restic -r b2:arco-pc-backup:/mnt/harddrive snapshots
 ```
-```bash
-restic -r b2:arco-pc-backup:/mnt/harddrive/Consoles snapshots
 ```
-```bash
-restic -r b2:arco-pc-backup:/mnt/harddrive/Consoles restore --target "/mnt/1d90c4d5-21d2-4455-bb4a-814de8496744/Consoles" <snapshot>
+restic -r b2:arco-pc-backup:/mnt/harddrive restore --target "/mnt/1d90c4d5-21d2-4455-bb4a-814de8496744" (snapshot)
 ```
 
 ### realstickman-xyz-backup root
