@@ -86,3 +86,18 @@ restic -r b2:realstickman-xyz-backup:etc snapshots
 ```bash
 restic -r b2:realstickman-xyz-backup:etc restore --target "/etc" <snapshot>
 ```
+
+### nextcloud-realstickman-backup var
+
+```
+restic -r b2:nextcloud-realstickman-backup:var init
+```
+```
+restic -r b2:nextcloud-realstickman-backup:var backup --verbose "/var"
+```
+```
+restic -r b2:nextcloud-realstickman-backup:var snapshots 
+```
+```
+restic -r b2:nextcloud-realstickman-backup:var restore --target "/var" <snapshot>
+```
