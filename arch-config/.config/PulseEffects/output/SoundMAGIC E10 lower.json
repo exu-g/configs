@@ -919,7 +919,7 @@
             }
         },
         "stereo_tools": {
-            "state": "false",
+            "state": "true",
             "input-gain": "0",
             "output-gain": "0",
             "balance-in": "0",
@@ -929,7 +929,7 @@
             "muter": "false",
             "phasel": "false",
             "phaser": "false",
-            "mode": "LR > LR (Stereo Default)",
+            "mode": "LR > RL (Stereo Flip Channels)",
             "side-level": "0",
             "side-balance": "0",
             "middle-level": "0",
