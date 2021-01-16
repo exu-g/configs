@@ -202,3 +202,8 @@ Regularly run this command to resolve pacnew files
 ```bash
 sudo pacdiff
 ```
+
+## IO Utilisation
+```
+iostat -dx /dev/sdX
+```
