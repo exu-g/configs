@@ -50,7 +50,8 @@
             "loudness",
             "maximizer",
             "filter",
-            "pitch"
+            "pitch",
+            "rnnoise"
         ],
         "bass_enhancer": {
             "state": "false",
@@ -857,6 +858,7 @@
             "state": "false",
             "fft": "4096",
             "std": "ISO226-2003",
+            "input": "0",
             "volume": "0"
         },
         "multiband_gate": {
@@ -917,7 +919,7 @@
             }
         },
         "stereo_tools": {
-            "state": "false",
+            "state": "true",
             "input-gain": "0",
             "output-gain": "0",
             "balance-in": "0",
@@ -927,7 +929,7 @@
             "muter": "false",
             "phasel": "false",
             "phaser": "false",
-            "mode": "LR > LR (Stereo Default)",
+            "mode": "LR > RL (Stereo Flip Channels)",
             "side-level": "0",
             "side-balance": "0",
             "middle-level": "0",
@@ -1032,6 +1034,12 @@
             "output-gain": "0",
             "time-l": "0",
             "time-r": "0"
+        },
+        "rnnoise": {
+            "state": "false",
+            "input-gain": "0",
+            "output-gain": "0",
+            "model-path": ""
         }
     }
 }
