@@ -4,6 +4,7 @@ set -euo pipefail
 #change into music raw folder
 cd "$HOME/MusikRaw"
 
+# number of parallel jobs can be set on as an argument
 numjobs="$1"
 
 # get directories
@@ -36,5 +37,7 @@ done < directories
 
 # remove directories file
 rm directories
+
+echo Finished!
 
 exit
