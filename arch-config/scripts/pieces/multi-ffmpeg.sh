@@ -17,15 +17,15 @@ while read -r dir; do
     cd "$dir"
     # convert m4a
     if [[ $(ls | grep ".m4a") ]]; then
-        ffmpeg-normalize *.m4a -v -pr -c:a libopus -ar 92 -ext opus &
+        ffmpeg-normalize *.m4a -v -pr -c:a libopus -ext opus &
     fi
     # convert flac
     if [[ $(ls | grep ".flac") ]]; then
-        ffmpeg-normalize *.flac -v -pr -c:a flac -ar 88.2 -ext flac &
+        ffmpeg-normalize *.flac -v -pr -c:a flac -ext flac &
     fi
     # convert opus
     if [[ $(ls | grep ".opus") ]]; then
-        ffmpeg-normalize *.opus -v -pr -c:a libopus -ar 92 -ext opus &
+        ffmpeg-normalize *.opus -v -pr -c:a libopus -ext opus &
     fi
     cd "$HOME/MusikRaw"
     # create directory
