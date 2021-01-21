@@ -25,3 +25,5 @@ vmware-workstation15
 exodus
 mediainfo-gui
 sysstat
+jellyfin-mpv-shim
+freezer-git
