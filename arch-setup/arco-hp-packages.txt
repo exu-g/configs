@@ -5,3 +5,4 @@ linux-headers
 nnn
 pdfsam
 eclipse-java-bin
+tauon-music-box
