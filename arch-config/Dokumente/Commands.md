@@ -207,3 +207,11 @@ sudo pacdiff
 ```
 iostat -dx /dev/sdX
 ```
+
+## copy/create/move multiple files
+```
+mkdir -p test/test{1,2,3}
+```
+```
+cp source/{file1,file2}.txt destination
+```
