@@ -27,6 +27,10 @@ while read -r dir; do
     if [[ $(ls | grep ".opus") ]]; then
         ffmpeg-normalize *.opus -v -pr -c:a libopus -ext opus &
     fi
+    # link cover.jpg
+    if [[ -f cover.jpg ]]; then
+        ln -vf "$HOME/MusikRaw/$dir/cover.jpg" "$HOME/Musik/$dir/"
+    fi
     cd "$HOME/MusikRaw"
     # create directory
     mkdir -p "$HOME/Musik/$dir"
