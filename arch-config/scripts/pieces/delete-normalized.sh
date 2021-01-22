@@ -12,3 +12,5 @@ while read -r dir; do
     rm -rf normalized
     cd "$HOME/MusikRaw"
 done < directories
+
+exit
