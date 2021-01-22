@@ -11,10 +11,13 @@ numjobs="$1"
 ls -d */ > directories
 
 while read -r dir; do
-    #echo "$dir"
+    # change into directory
+    cd "$dir"
+    # create directory in music
+    mkdir -p "$HOME/Musik/$dir"
+
     # if there are $numjobs or more, dont spawn any new processes
     while [[ $(jobs | wc -l) -gt $numjobs ]] ; do sleep 1 ; done
-    cd "$dir"
     # convert m4a
     if [[ $(ls | grep ".m4a") ]]; then
         ffmpeg-normalize *.m4a -v -pr -c:a libopus -ext opus &
@@ -31,11 +34,11 @@ while read -r dir; do
     if [[ -f cover.jpg ]]; then
         ln -vf "$HOME/MusikRaw/$dir/cover.jpg" "$HOME/Musik/$dir/"
     fi
-    cd "$HOME/MusikRaw"
-    # create directory
-    mkdir -p "$HOME/Musik/$dir"
+
     # make symbolic link to music
     ln -svf "$HOME/MusikRaw/$dir/normalized/"* "$HOME/Musik/$dir/"
+    # go back to music raw
+    cd "$HOME/MusikRaw"
 done < directories
 
 # remove directories file
