@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# remove content of music directory
+rm -rf "$HOME/Musik/"*
+
 # change into music raw folder
 cd "$HOME/MusikRaw"
 
