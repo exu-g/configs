@@ -11,6 +11,11 @@ ffmpeg-normalize *.m4a -v -pr -c:a libopus -ext opus
 ffmpeg-normalize *.opus -v -pr -c:a libopus -ext opus
 ```
 
+## ffmpeg extract cover image form audio file
+```
+ffmpeg -i "file.flac" "cover.jpg"
+```
+
 ## ffmpeg extract images from video
 ```bash
 ffmpeg -i "file.mpg" -r 4/1 xyz%03d.png
