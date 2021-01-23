@@ -602,6 +602,9 @@ sudo ufw enable
 sudo systemctl enable ufw
 sudo systemctl start ufw
 
+# enable lightdm
+sudo systemctl enable lightdm
+
 # update fonts cache
 fc-cache -f
 
