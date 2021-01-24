@@ -220,3 +220,8 @@ mkdir -p test/test{1,2,3}
 ```
 cp source/{file1,file2}.txt destination
 ```
+
+## Force usage of AUR
+```
+paru -S -a (package)
+```
