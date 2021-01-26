@@ -36,7 +36,11 @@ while read -r dir; do
     fi
 
     # make symbolic link to music
-    ln -svf "$HOME/MusikRaw/$dir/normalized/"* "$HOME/Musik/$dir/"
+    # if the "normalized" directory exists, links are created
+    if [[ -d "normalized" ]]; then
+        ln -svf "$HOME/MusikRaw/$dir/normalized/"* "$HOME/Musik/$dir/"
+    fi
+
     # go back to music raw
     cd "$HOME/MusikRaw"
 done < directories
