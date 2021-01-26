@@ -16,7 +16,7 @@ fi
 
 # run compression with 4 threads
 for i in {1..19}; do
-    for x in {1..10}; do
+    for x in {1..5}; do
         # remove previous round
         if [[ -f zstd-$i.tar.zst ]]; then
             rm zstd-$i.tar.zst
