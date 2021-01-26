@@ -30,9 +30,6 @@ while read -r dir; do
 
         # convert flac files to opus
         while read -r file; do
-            # only set amount of jobs
-            while [[ $(jobs | wc -l) -gt $numjobs ]] ; do sleep 1 ; done
-
             # strip extension
             noextfile="${file%.*}"
             # add opus extension
