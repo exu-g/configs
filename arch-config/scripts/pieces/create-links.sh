@@ -26,6 +26,7 @@ while read -r dir; do
     if [[ -d "normalized" ]]; then
         ln -svf "$HOME/MusikRaw/$dir/normalized/"* "$HOME/Musik/$dir/"
     fi
+
     # go back to music raw
     cd "$HOME/MusikRaw"
 done < directories
