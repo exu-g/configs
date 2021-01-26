@@ -6,26 +6,19 @@ set -euo pipefail
 # read working directory
 workdir="$1"
 
+cd "$workdir"
+
+cd ..
+
 if [[ -f compression-results.txt ]]; then
     rm compression-results.txt
 fi
 
-echo "zstd -1 -T0" >> compression-results.txt
-{ time tar -c -I"zstd -1 -T0" -f zstd-1.tar.zst "$workdir" 2> /dev/null ; } 2>>  compression-results.txt
-echo "-----------------------------" >> compression-results.txt
-
-echo "zstd -2 -T0" >> compression-results.txt
-{ time tar -c -I"zstd -2 -T0" -f zstd-2.tar.zst "$workdir" 2> /dev/null ; } 2>>  compression-results.txt
-echo "-----------------------------" >> compression-results.txt
-
-echo "zstd -3 -T0" >> compression-results.txt
-{ time tar -c -I"zstd -3 -T0" -f zstd-3.tar.zst "$workdir" 2> /dev/null ; } 2>>  compression-results.txt
-echo "-----------------------------" >> compression-results.txt
-
-echo "zstd -4 -T0" >> compression-results.txt
-{ time tar -c -I"zstd -4 -T0" -f zstd-4.tar.zst "$workdir" 2> /dev/null ; } 2>>  compression-results.txt
-echo "-----------------------------" >> compression-results.txt
-
-echo "zstd -5 -T0" >> compression-results.txt
-{ time tar -c -I"zstd -5 -T0" -f zstd-5.tar.zst "$workdir" 2> /dev/null ; } 2>>  compression-results.txt
-echo "-----------------------------" >> compression-results.txt
+for i in {1..19}; do
+    for x in {1..5}; do
+        echo "zstd -$i -T0: Run $x" >> compression-results.txt
+        { time tar -c -I"zstd -$i -T0" -f zstd-$i-run-$x.tar.zst "$workdir" 2> /dev/null ; } 2>>  compression-results.txt
+        echo "-----------------------------" >> compression-results.txt
+        echo "Finished Run $x with zstd -$i -T0"
+    done
+done
