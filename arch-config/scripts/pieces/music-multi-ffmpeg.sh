@@ -18,18 +18,47 @@ while read -r dir; do
 
     # if there are $numjobs or more, dont spawn any new processes
     while [[ $(jobs | wc -l) -gt $numjobs ]] ; do sleep 1 ; done
+
+    # check if any flac files exist. cancle if that is not the case
+    if ls *.flac > /dev/null 2>&1; then
+        # get flac files
+        ls -f *.flac > "$HOME/MusikRaw/$dir/flaclist"
+
+        # create transcode directory
+        mkdir -p "$HOME/MusikRaw/$dir/transcode"
+
+
+        # convert flac files to opus
+        while read -r file; do
+            # only set amount of jobs
+            while [[ $(jobs | wc -l) -gt $numjobs ]] ; do sleep 1 ; done
+
+            # strip extension
+            noextfile="${file%.*}"
+            # add opus extension
+            opusfile="${noextfile}.opus"
+            ffmpeg -nostdin -i "$HOME/MusikRaw/$dir/$file" "$HOME/MusikRaw/$dir/transcode/$opusfile" &
+        done < flaclist
+
+        # remove list
+        rm "$HOME/MusikRaw/$dir/flaclist"
+    fi
+
     # convert m4a
     if [[ $(ls | grep ".m4a") ]]; then
         ffmpeg-normalize *.m4a -v -pr -c:a libopus -ext opus &
     fi
+
     # convert flac
     if [[ $(ls | grep ".flac") ]]; then
         ffmpeg-normalize *.flac -v -pr -c:a flac -ext flac &
     fi
+
     # convert opus
     if [[ $(ls | grep ".opus") ]]; then
         ffmpeg-normalize *.opus -v -pr -c:a libopus -ext opus &
     fi
+
     # link cover.jpg
     if [[ -f cover.jpg ]]; then
         ln -vf "$HOME/MusikRaw/$dir/cover.jpg" "$HOME/Musik/$dir/"
