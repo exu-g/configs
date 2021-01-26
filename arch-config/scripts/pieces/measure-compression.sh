@@ -14,11 +14,16 @@ if [[ -f compression-results.txt ]]; then
     rm compression-results.txt
 fi
 
+# run compression with 4 threads
 for i in {1..19}; do
-    for x in {1..5}; do
-        echo "zstd -$i -T0: Run $x" >> compression-results.txt
-        { time tar -c -I"zstd -$i -T0" -f zstd-$i-run-$x.tar.zst "$workdir" 2> /dev/null ; } 2>>  compression-results.txt
+    for x in {1..10}; do
+        # remove previous round
+        if [[ -f zstd-$i.tar.zst ]]; then
+            rm zstd-$i.tar.zst
+        fi
+        echo "zstd -$i -T4: Run $x" >> compression-results.txt
+        { time tar -c -I"zstd -$i -T4" -f zstd-$i.tar.zst "$workdir" 2> /dev/null ; } 2>>  compression-results.txt
         echo "-----------------------------" >> compression-results.txt
-        echo "Finished Run $x with zstd -$i -T0"
+        echo "Finished Run $x with zstd -$i -T4"
     done
 done
