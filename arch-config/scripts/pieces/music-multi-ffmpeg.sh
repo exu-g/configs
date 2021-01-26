@@ -37,7 +37,9 @@ while read -r dir; do
             noextfile="${file%.*}"
             # add opus extension
             opusfile="${noextfile}.opus"
-            ffmpeg -nostdin -i "$HOME/MusikRaw/$dir/$file" "$HOME/MusikRaw/$dir/transcode/$opusfile" &
+            # encode to 192k bit opus
+            # TODO include cover picture (prefer picture named same as audio, cover at second place)
+            ffmpeg -nostdin -i "$HOME/MusikRaw/$dir/$file" -b:a 192k "$HOME/MusikRaw/$dir/transcode/$opusfile" &
         done < flaclist
 
         # remove list
@@ -46,17 +48,22 @@ while read -r dir; do
 
     # convert m4a
     if [[ $(ls | grep ".m4a") ]]; then
-        ffmpeg-normalize *.m4a -v -pr -c:a libopus -ext opus &
+        ffmpeg-normalize *.m4a -v -pr -c:a libopus -b:a 128k -ext opus &
     fi
 
     # convert flac
-    if [[ $(ls | grep ".flac") ]]; then
-        ffmpeg-normalize *.flac -v -pr -c:a flac -ext flac &
+    #if [[ $(ls | grep ".flac") ]]; then
+    #    ffmpeg-normalize *.flac -v -pr -c:a flac -ext flac &
+    #fi
+
+    # convert transcoded files
+    if [[ -d "$HOME/MusikRaw/$dir/transcode" ]]; then
+        ffmpeg-normalize transcode/*.opus -v -pr -c:a libopus -b:a 192k -ext opus &
     fi
 
     # convert opus
     if [[ $(ls | grep ".opus") ]]; then
-        ffmpeg-normalize *.opus -v -pr -c:a libopus -ext opus &
+        ffmpeg-normalize *.opus -v -pr -c:a libopus -b:a 128k -ext opus &
     fi
 
     # link cover.jpg
