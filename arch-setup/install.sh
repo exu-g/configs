@@ -630,7 +630,7 @@ echo Removed setup files
 echo Setting config
 bash ~/config/install.sh
 
-if [[ $(pacman -Q pkgstats) ]]; then
+if [[ $(pacman -Q pkgstats 2>/dev/null > /dev/null) ]]; then
     pkgstats
 fi
 
