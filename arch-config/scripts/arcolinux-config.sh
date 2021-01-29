@@ -11,7 +11,7 @@ cd "$HOME"
 rm -rf ~/config
 
 #clone this repo
-git clone https://gitlab.com/RealStickman-arcolinux/config.git &&
+git clone https://gitlab.com/RealStickman-arch/config.git &&
 
 # check if the install scripts are the same
 if ! cmp --silent "$HOME/scripts/arcolinux-config.sh" "$HOME/config/scripts/arcolinux-config.sh" ; then
