@@ -629,6 +629,10 @@ echo Removed setup files
 #downloading config
 echo Setting config
 bash ~/config/install.sh
-pkgstats
+
+if [[ $(pacman -Q pkgstats) ]]; then
+    pkgstats
+fi
+
 echo Finished everything
 exit 0
