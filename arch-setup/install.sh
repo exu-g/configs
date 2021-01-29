@@ -4,6 +4,9 @@
 # NOTE ignore errors from missing "||". Try getting the line below to work
 #set -euo pipefail
 
+# get current directory
+setupdir=$(pwd)
+
 #change to home (does not show in terminal)
 cd "$HOME"
 
@@ -20,11 +23,11 @@ do
     case $choice in
         1)
             in_xfce=1
-            echo "xfce4" >> selectedpkgs.txt
+            echo "xfce4" >> "$setupdir/selectedpkgs.txt"
             ;;
         2)
             in_i3gaps=1
-            echo "i3-gaps" >> selectedpkgs.txt
+            echo "i3-gaps" >> "$setupdir/selectedpkgs.txt"
             ;;
     esac
 done
@@ -48,23 +51,23 @@ do
     case $choice in
         1)
             in_firefox=1
-            echo "firefox" >> selectedpkgs.txt
+            echo "firefox" >> "$setupdir/selectedpkgs.txt"
             ;;
         2)
             in_chromium=1
-            echo "chromium" >> selectedpkgs.txt
+            echo "chromium" >> "$setupdir/selectedpkgs.txt"
             ;;
         3)
             in_netsurf=1
-            echo "netsurf" >> selectedpkgs.txt
+            echo "netsurf" >> "$setupdir/selectedpkgs.txt"
             ;;
         4)
             in_icecat=1
-            echo "icecat-bin" >> aurselectedpkgs.txt
+            echo "icecat-bin" >> "$setupdir/aurselectedpkgs.txt"
             ;;
         5)
             in_tor=1
-            echo "torbrowser-launcher" >> selectedpkgs.txt
+            echo "torbrowser-launcher" >> "$setupdir/selectedpkgs.txt"
             ;;
     esac
 done
@@ -114,43 +117,43 @@ do
     case $choice in
         1)
             in_virtmanager=1
-            printf '%s\n' 'qemu' 'virt-manager' >> selectedpkgs.txt
+            printf '%s\n' 'qemu' 'virt-manager' >> "$setupdir/selectedpkgs.txt"
             ;;
         2)
             in_steam=1
-            printf '%s\n' 'steam' 'steam-native-runtime' >> selectedpkgs.txt
+            printf '%s\n' 'steam' 'steam-native-runtime' >> "$setupdir/selectedpkgs.txt"
             ;;
         3)
             in_lutris=1
-            echo "lutris" >> selectedpkgs.txt
+            echo "lutris" >> "$setupdir/selectedpkgs.txt"
             ;;
         4)
             in_blender=1
-            echo "blender" >> selectedpkgs.txt
+            echo "blender" >> "$setupdir/selectedpkgs.txt"
             ;;
         5)
             in_krita=1
-            echo "krita" >> selectedpkgs.txt
+            echo "krita" >> "$setupdir/selectedpkgs.txt"
             ;;
         6)
             in_youtubedl=1
-            echo "youtube-dl" >> selectedpkgs.txt
+            echo "youtube-dl" >> "$setupdir/selectedpkgs.txt"
             ;;
         7)
             in_discord=1
-            echo "discord" >> selectedpkgs.txt
+            echo "discord" >> "$setupdir/selectedpkgs.txt"
             ;;
         8)
             in_handbrake=1
-            echo "handbrake" >> selectedpkgs.txt
+            echo "handbrake" >> "$setupdir/selectedpkgs.txt"
             ;;
         9)
             in_gimp=1
-            echo "gimp" >> selectedpkgs.txt
+            echo "gimp" >> "$setupdir/selectedpkgs.txt"
             ;;
         10)
             in_audacity=1
-            echo "audacity" >> selectedpkgs.txt
+            echo "audacity" >> "$setupdir/selectedpkgs.txt"
             ;;
         11)
             # REVIEW special case
@@ -158,31 +161,31 @@ do
             ;;
         12)
             in_easystrokes=1
-            echo "easystroke" >> aurselectedpkgs.txt
+            echo "easystroke" >> "$setupdir/aurselectedpkgs.txt"
             ;;
         13)
             in_liferea=1
-            echo "liferea" >> aurselectedpkgs.txt
+            echo "liferea" >> "$setupdir/aurselectedpkgs.txt"
             ;;
         14)
             in_fractal=1
-            echo "fractal" >> selectedpkgs.txt
+            echo "fractal" >> "$setupdir/selectedpkgs.txt"
             ;;
         15)
             in_bettergram=1
-            echo "bettergram" >> aurselectedpkgs.txt
+            echo "bettergram" >> "$setupdir/aurselectedpkgs.txt"
             ;;
         16)
             in_waifu2x=1
-            echo "waifu2x-ncnn-vulkan" >> aurselectedpkgs.txt
+            echo "waifu2x-ncnn-vulkan" >> "$setupdir/aurselectedpkgs.txt"
             ;;
         17)
             in_telegram=1
-            echo "telegram-desktop" >> selectedpkgs.txt
+            echo "telegram-desktop" >> "$setupdir/selectedpkgs.txt"
             ;;
         18)
             in_element=1
-            echo "element-desktop" >> selectedpkgs.txt
+            echo "element-desktop" >> "$setupdir/selectedpkgs.txt"
             ;;
     esac
 done
@@ -198,7 +201,7 @@ do
     case $choice in
         1)
             in_acpufreq=1
-            echo "auto-cpufreq-git" >> aurselectedpkgs.txt
+            echo "auto-cpufreq-git" >> "$setupdir/aurselectedpkgs.txt"
             # TODO Handle rest of installation
             ;;
     esac
@@ -218,12 +221,12 @@ do
         1)
             in_doomemacs=1
             # TODO sort pacman and AUR packages
-            printf '%s\n' 'git' 'emacs' 'ripgrep' 'fd' 'pandoc' 'shellcheck' 'python-pipenv' 'python-isort' 'python-pytest' 'python-rednose' 'pychecker' 'texlive-core' >> aurselectedpkgs.txt
+            printf '%s\n' 'git' 'emacs' 'ripgrep' 'fd' 'pandoc' 'shellcheck' 'python-pipenv' 'python-isort' 'python-pytest' 'python-rednose' 'pychecker' 'texlive-core' >> "$setupdir/aurselectedpkgs.txt"
             # TODO handle rest of installation
             ;;
         2)
             in_vscodium=1
-            echo "vscodium-bin" >> aurselectedpkgs.txt
+            echo "vscodium-bin" >> "$setupdir/aurselectedpkgs.txt"
             ;;
     esac
 done
@@ -241,11 +244,11 @@ do
     case $choice in
         1)
             in_teams=1
-            echo "teams" >> aurselectedpkgs.txt
+            echo "teams" >> "$setupdir/aurselectedpkgs.txt"
             ;;
         2)
             in_slack=1
-            echo "slack-desktop" >> aurselectedpkgs.txt
+            echo "slack-desktop" >> "$setupdir/aurselectedpkgs.txt"
             ;;
     esac
 done
@@ -261,7 +264,7 @@ do
     case $choice in
         1)
             in_pkgstats=1
-            echo "pkgstats" >> selectedpkgs.txt
+            echo "pkgstats" >> "$setupdir/selectedpkgs.txt"
             ;;
     esac
 done
@@ -289,7 +292,7 @@ done
 
 #uninstalling unused packages
 echo Uninstalling unused packages
-sudo pacman -Rns - < "$HOME/setup/uninstall.txt"
+sudo pacman -Rns - < "$setupdir/uninstall.txt"
 echo Uninstalled unused packages
 
 #update stuff
@@ -299,12 +302,12 @@ echo Updated packages
 
 #pacman programs
 echo Installing default pacman programs
-sudo pacman -S --needed - < "$HOME/setup/officialpkgs.txt"
+sudo pacman -S --needed - < "$setupdir/officialpkgs.txt"
 echo Installed official programs
 
 # audio
 echo Installing audio programs
-sudo pacman -S --needed - < "$HOME/setup/audiopkgs.txt"
+sudo pacman -S --needed - < "$setupdir/audiopkgs.txt"
 echo Installed audio programs
 
 # pip
@@ -332,12 +335,12 @@ fi
 
 #AUR
 echo Installing default AUR programs
-paru -S --needed - < "$HOME/setup/aurpkgs.txt"
+paru -S --needed - < "$setupdir/aurpkgs.txt"
 echo Installed AUR programs
 
 #install wine
 echo Installing wine
-sudo pacman -S --needed - < "$HOME/setup/winepkgs.txt"
+sudo pacman -S --needed - < "$setupdir/winepkgs.txt"
 echo Installed wine
 
 ###################
@@ -580,13 +583,13 @@ fi
 # arco pc
 if [ $in_arco_pc -eq 1 ]; then
     echo "Installing arco pc packages"
-    paru -S --needed - < "$HOME/setup/arco-pc-packages.txt"
+    paru -S --needed - < "$setupdir/arco-pc-packages.txt"
 fi
 
 # arco hp
 if [ $in_arco_hp -eq 1 ]; then
     echo "Installing arco hp packages"
-    paru -S --needed - < "$HOME/setup/arco-hp-packages.txt"
+    paru -S --needed - < "$setupdir/arco-hp-packages.txt"
 fi
 
 #change shell
