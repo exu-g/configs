@@ -60,10 +60,10 @@ alias fucking=sudo
 alias cat="$HOME/scripts/pieces/cat.sh"
 
 #update config
-alias upconf='~/scripts/arcolinux-config.sh'
+alias upconf='~/scripts/arch-config.sh'
 
 #download & execute setup
-alias setup='git clone https://gitlab.com/RealStickman-arcolinux/setup && cd setup && bash install.sh'
+alias setup='git clone https://gitlab.com/RealStickman-arch/setup && cd setup && bash install.sh'
 
 #notification
 alias notify='notify-send "Terminal" "Your command finished!" --icon=dialog-information'
