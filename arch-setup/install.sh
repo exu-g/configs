@@ -613,7 +613,7 @@ git clone https://github.com/xenlism/Grub-themes.git
 bash Grub-themes/xenlism-grub-arch-1080p/install.sh
 
 #Changes to home folder automatically now, no need to be extra careful anymore.
-git clone https://gitlab.com/RealStickman-arcolinux/config
+git clone https://gitlab.com/RealStickman-arch/config
 echo Finished downloading config
 
 # Download git repos
