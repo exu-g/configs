@@ -161,7 +161,9 @@ update-desktop-database ~/.local/share/applications/
 ~/.emacs.d/bin/doom sync
 
 # reload .Xresources
-xrdb ~/.Xresources
+if [[ -f "$HOME/.Xresources" ]]; then
+    xrdb ~/.Xresources
+fi
 
 # execute feh
 "$HOME/.fehbg"
