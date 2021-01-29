@@ -7,9 +7,9 @@ set -euo pipefail
 #change to home (does not show in terminal)
 cd $HOME
 
-echo Launching arcolinux-config.sh
+echo Launching arch-config.sh
 
-#make executable & launch arcolinux-config.sh
-chmod +x ~/config/scripts/arcolinux-config.sh
-bash ~/config/scripts/arcolinux-config.sh
+#make executable & launch arch-config.sh
+chmod +x ~/config/scripts/arch-config.sh
+bash ~/config/scripts/arch-config.sh
 exit 0
