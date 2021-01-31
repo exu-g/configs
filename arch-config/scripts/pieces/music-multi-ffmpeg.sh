@@ -63,16 +63,20 @@ while read -r dir; do
         ffmpeg-normalize *.opus -v -pr -c:a libopus -b:a 128k -ext opus &
     fi
 
+    # use music-create-links instead
+    : '
     # link cover.jpg
     if [[ -f cover.jpg ]]; then
         ln -vf "$HOME/MusikRaw/$dir/cover.jpg" "$HOME/Musik/$dir/"
     fi
-
+    '
+    : '
     # make symbolic link to music
     # if the "normalized" directory exists, links are created
     if [[ -d "normalized" ]]; then
         ln -svf "$HOME/MusikRaw/$dir/normalized/"* "$HOME/Musik/$dir/"
     fi
+    '
 
     # go back to music raw
     cd "$HOME/MusikRaw"
