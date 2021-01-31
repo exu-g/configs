@@ -14,7 +14,7 @@ while read -r dir; do
     # change into directory
     cd "$dir"
     # create directory in music
-    mkdir -p "$HOME/Musik/$dir"
+    #mkdir -p "$HOME/Musik/$dir"
 
     # if there are $numjobs or more, dont spawn any new processes
     while [[ $(jobs | wc -l) -gt $numjobs ]] ; do sleep 1 ; done
