@@ -27,3 +27,4 @@ mediainfo-gui
 sysstat
 jellyfin-mpv-shim
 freezer-git
+roomeqwizard
