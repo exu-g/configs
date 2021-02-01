@@ -28,3 +28,4 @@ sysstat
 jellyfin-mpv-shim
 freezer-git
 roomeqwizard
+v4l-utils
