@@ -48,13 +48,13 @@ restic -r b2:arco-pc-backup:/home/marc restore --target "/home/marc/" (snapshot)
 restic -r b2:arco-pc-backup:/mnt/harddrive init
 ```
 ```
-sudo -E restic -r b2:arco-pc-backup:/mnt/harddrive backup --verbose "/mnt/1d90c4d5-21d2-4455-bb4a-814de8496744" --exclude="/mnt/1d90c4d5-21d2-4455-bb4a-814de8496744/.Trash-1000"
+sudo -E restic -r b2:arco-pc-backup:/mnt/harddrive backup --verbose "/mnt/storage" --exclude="/mnt/storage/.Trash-1000" --exclude="/mnt/storage/MediaLibrary/Handbrake/" --limit-upload=2048
 ```
 ```
 restic -r b2:arco-pc-backup:/mnt/harddrive snapshots
 ```
 ```
-restic -r b2:arco-pc-backup:/mnt/harddrive restore --target "/mnt/1d90c4d5-21d2-4455-bb4a-814de8496744" (snapshot)
+restic -r b2:arco-pc-backup:/mnt/harddrive restore --target "/mnt/storage" (snapshot)
 ```
 
 ### realstickman-xyz-backup root
