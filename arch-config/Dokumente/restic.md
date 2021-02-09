@@ -67,7 +67,6 @@ restic -r b2:hydra-server-backup:/etc/nginx snapshots
 restic -r b2:hydra-server-backup:/etc/nginx restore --target "/etc/nginx" <snapshot>
 ```
 
-
 ### realstickman-xyz-backup root
 ```bash
 restic -r b2:realstickman-xyz-backup:root init
