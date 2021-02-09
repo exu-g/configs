@@ -3,7 +3,6 @@
 ## Local backups
 
 ### arco-pc-backup home
-
 There is currently a problem in go that makes this command fail. Run the following command before retrying: `export GODEBUG=asyncpreemptoff=1`  
 ```
 restic init --repo /mnt/backups/arco-pc/home/marc
@@ -19,7 +18,6 @@ restic -r /mnt/backups/arco-pc/home/marc restore --target "/home/marc" (snapshot
 ```
 
 ## B2 backups
-
 ```bash
 export B2_ACCOUNT_ID=
 ```
@@ -28,7 +26,6 @@ export B2_ACCOUNT_KEY=
 ```
 
 ### arco-pc-backup home
-
 ```bash
 restic -r b2:arco-pc-backup:/home/marc init
 ```
@@ -43,7 +40,6 @@ restic -r b2:arco-pc-backup:/home/marc restore --target "/home/marc/" (snapshot)
 ```
 
 ### arco-pc-backup 3tb toshiba
-
 ```
 restic -r b2:arco-pc-backup:/mnt/harddrive init
 ```
@@ -57,8 +53,22 @@ restic -r b2:arco-pc-backup:/mnt/harddrive snapshots
 restic -r b2:arco-pc-backup:/mnt/harddrive restore --target "/mnt/storage" (snapshot)
 ```
 
-### realstickman-xyz-backup root
+### hydra-server-backup /etc/nginx
+```bash
+restic -r b2:hydra-server-backup:/etc/nginx init
+```
+```bash
+restic -r b2:hydra-server-backup:/etc/nginx backup --verbose "/etc/nginx"
+```
+```bash
+restic -r b2:hydra-server-backup:/etc/nginx snapshots 
+```
+```bash
+restic -r b2:hydra-server-backup:/etc/nginx restore --target "/etc/nginx" <snapshot>
+```
 
+
+### realstickman-xyz-backup root
 ```bash
 restic -r b2:realstickman-xyz-backup:root init
 ```
@@ -73,7 +83,6 @@ restic -r b2:realstickman-xyz-backup:root restore --target "/root" <snapshot>
 ```
 
 ### realstickman-xyz-backup etc
-
 ```bash
 restic -r b2:realstickman-xyz-backup:etc init
 ```
@@ -88,7 +97,6 @@ restic -r b2:realstickman-xyz-backup:etc restore --target "/etc" <snapshot>
 ```
 
 ### nextcloud-realstickman-backup var
-
 ```
 restic -r b2:nextcloud-realstickman-backup:var init
 ```
