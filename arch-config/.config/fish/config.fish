@@ -30,8 +30,10 @@ set fish_color_cancel brred
 
 # environment variables
 set RANGER_LOAD_DEFAULT_RC FALSE
-set EDITOR "/usr/bin/emacs --no-window-system"
-set VISUAL "/usr/bin/emacs --no-window-system"
+#set EDITOR "/usr/bin/emacs --no-window-system"
+#set VISUAL "/usr/bin/emacs --no-window-system"
+set EDITOR "/usr/bin/vim"
+set VISUAL "/usr/bin/vim"
 
 # add paths
 set fish_user_paths "$HOME/.emacs.d/bin/" $fish_user_paths

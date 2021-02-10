@@ -22,8 +22,10 @@ if [ -d "$HOME/.emacs.d/bin/" ] ;
 fi
 
 # environment variables
-export VISUAL="/usr/bin/emacs --no-window-system"
-export EDITOR="/usr/bin/emacs --no-window-system"
+#export VISUAL="/usr/bin/emacs --no-window-system"
+#export EDITOR="/usr/bin/emacs --no-window-system"
+export VISUAL="/usr/bin/vim"
+export EDITOR="/usr/bin/vim"
 
 #update config
 #alias upconf='$HOME/scripts/arcolinux-config.sh'
