@@ -22,10 +22,10 @@ basilisk-bin
 librewolf-bin
 surf
 vmware-workstation15
-exodus
 mediainfo-gui
 sysstat
 jellyfin-mpv-shim
 freezer-git
 roomeqwizard
 v4l-utils
+electrum
