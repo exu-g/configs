@@ -5,12 +5,23 @@ set -euo pipefail
 cd "$HOME/MusikRaw"
 
 # get directories
-ls -d */ > directories
+ls -d */ > artistdirectories
 
-while read -r dir; do
-    cd "$dir"
-    rm -rf "transcode"
+while read -r artdir; do
+    cd "$artdir"
+    # get albums
+    ls -d */ > directories
+    # delete normalized from albums
+    while read -r dir; do
+        cd "$dir"
+        rm -rf "transcode"
+        cd "$HOME/MusikRaw/$artdir"
+    done < directories
+    # cleanup
+    rm directories
     cd "$HOME/MusikRaw"
-done < directories
+done < artistdirectories
+# cleanup
+rm artistdirectories
 
 exit
