@@ -64,3 +64,4 @@ linux-zen-headers
 lightdm-gtk-greeter
 lightdm-gtk-greeter-settings
 pacman-contrib
+okular
