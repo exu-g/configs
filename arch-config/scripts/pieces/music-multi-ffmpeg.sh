@@ -7,83 +7,81 @@ cd "$HOME/MusikRaw"
 # number of parallel jobs can be set on as an argument
 numjobs="$1"
 
-# get directories
-ls -d */ > directories
+# using find to get music that has to be transcoded
 
-while read -r dir; do
-    # change into directory
-    cd "$dir"
-    # create directory in music
-    #mkdir -p "$HOME/Musik/$dir"
+# find opus, ignore anything in "normalized" or "transcode" folders
+find "$HOME/MusikRaw/" -name "*\.opus" | grep -v "\/normalized\/" | grep -v "\/transcode\/" > opusfiles
 
+while read -r opus; do
     # if there are $numjobs or more, dont spawn any new processes
     while [[ $(jobs | wc -l) -gt $numjobs ]] ; do sleep 1 ; done
 
-    # check if any flac files exist. cancle if that is not the case
-    if ls *.flac > /dev/null 2>&1; then
-        # get flac files
-        ls -f *.flac > "$HOME/MusikRaw/$dir/flaclist"
+    # get directory path
+    pathname="$(dirname "$opus")"
+    # go to that path for proper output location
+    cd "$pathname"
+    # convert file
+    ffmpeg-normalize "$opus" -v -pr -c:a libopus -b:a 128k -ext opus &
+done < opusfiles
 
-        # create transcode directory
-        mkdir -p "$HOME/MusikRaw/$dir/transcode"
+# go to musik raw folder
+cd "$HOME/MusikRaw"
 
+# cleanup
+rm opusfiles
 
-        # convert flac files to opus
-        while read -r file; do
-            # strip extension
-            noextfile="${file%.*}"
-            # add opus extension
-            opusfile="${noextfile}.opus"
-            # encode to 192k bit opus
-            # TODO include cover picture (prefer picture named same as audio, cover at second place)
-            ffmpeg -nostdin -i "$HOME/MusikRaw/$dir/$file" -b:a 192k "$HOME/MusikRaw/$dir/transcode/$opusfile" &
-        done < flaclist
+# find m4a files, ignore "normalized" or "transcode" folders
+find "$HOME/MusikRaw/" -name "*\.m4a" | grep -v "\/normalized\/" | grep -v "\/transcode\/" > m4afiles
 
-        # remove list
-        rm "$HOME/MusikRaw/$dir/flaclist"
-    fi
+while read -r m4a; do
+    # if there are $numjobs or more, dont spawn any new processes
+    while [[ $(jobs | wc -l) -gt $numjobs ]] ; do sleep 1 ; done
 
-    # convert m4a
-    if [[ $(ls | grep ".m4a") ]]; then
-        ffmpeg-normalize *.m4a -v -pr -c:a libopus -b:a 128k -ext opus &
-    fi
+    # get directory path
+    pathname="$(dirname "$m4a")"
+    # go to that path for proper output location
+    cd "$pathname"
+    # convert file
+    ffmpeg-normalize "$m4a" -v -pr -c:a libopus -b:a 128k -ext opus &
+done < m4afiles
 
-    # convert flac
-    #if [[ $(ls | grep ".flac") ]]; then
-    #    ffmpeg-normalize *.flac -v -pr -c:a flac -ext flac &
-    #fi
+# go to musik raw folder
+cd "$HOME/MusikRaw"
 
-    # convert transcoded files
-    if [[ -d "$HOME/MusikRaw/$dir/transcode" ]]; then
-        ffmpeg-normalize transcode/*.opus -v -pr -c:a libopus -b:a 192k -ext opus &
-    fi
+# cleanup
+rm m4afiles
 
-    # convert opus
-    if [[ $(ls | grep ".opus") ]]; then
-        ffmpeg-normalize *.opus -v -pr -c:a libopus -b:a 128k -ext opus &
-    fi
+# find flac files, ignore "normalized" or "transcode" folders
+find "$HOME/MusikRaw/" -name "*\.flac" | grep -v "\/normalized\/" | grep -v "\/transcode\/" > flacfiles
 
-    # use music-create-links instead
-    : '
-    # link cover.jpg
-    if [[ -f cover.jpg ]]; then
-        ln -vf "$HOME/MusikRaw/$dir/cover.jpg" "$HOME/Musik/$dir/"
-    fi
-    '
-    : '
-    # make symbolic link to music
-    # if the "normalized" directory exists, links are created
-    if [[ -d "normalized" ]]; then
-        ln -svf "$HOME/MusikRaw/$dir/normalized/"* "$HOME/Musik/$dir/"
-    fi
-    '
+while read -r flac; do
+    # if there are $numjobs or more, dont spawn any new processes
+    while [[ $(jobs | wc -l) -gt $numjobs ]] ; do sleep 1 ; done
 
-    # go back to music raw
-    cd "$HOME/MusikRaw"
-done < directories
+    # get directory path
+    pathname="$(dirname "$flac")"
+    # go to that path for proper output location
+    cd "$pathname"
+    # create directory for transcodes
+    mkdir -p "$pathname/transcode"
+    # get name of file
+    file="$(basename "$flac")"
+    # strip extension
+    noextfile="${file%.*}"
+    # add opus extension
+    opusfile="${noextfile}.opus"
+    # convert to opus in transcode directory
+    # TODO include cover picture (prefer file picture, cover.jpg second preference)
+    ffmpeg -nostdin -i "$flac" -b:a 256k "${pathname}/transcode/$opusfile" &
+    # convert opus in transcode to normalized
+    ffmpeg-normalize "transcode/$opusfile" -v -pr -c:a libopus -b:a 256k -ext opus &
+done < flacfiles
 
-# remove directories file
-rm directories
+# go to musik raw folder
+cd "$HOME/MusikRaw"
+
+# cleanup
+rm flacfiles
 
 echo Finished!
 
