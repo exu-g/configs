@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=Internet Explorer
+Exec=wine "C:\Program Files (x86)\DVDFab\DVDFab 12\DVDFab.exe"
+Type=Application
+Categories=Wine
