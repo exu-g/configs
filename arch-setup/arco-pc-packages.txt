@@ -29,4 +29,3 @@ freezer-git
 roomeqwizard
 v4l-utils
 electrum
-makemkv
