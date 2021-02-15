@@ -64,6 +64,9 @@ rsync -ah ~/.mozilla ~/old_dat/ || echo Directory does not exist
 rsync -ah ~/scripts ~/old_dat/ || echo Directory does not exist
 echo Made backups
 
+# remove old templates
+rm -r ~/.config/Vorlagen
+
 #copy folders
 cp -r ~/config/.config/ ~/ &&
 cp -r ~/config/.local/ ~/ &&
