@@ -100,7 +100,7 @@ alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 alias microcode='grep . /sys/devices/system/cpu/vulnerabilities/*'
 
 #get fastest mirrors in your neighborhood
-alias mirror="reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacman.d/mirrorlist"
+alias mirror="sudo reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacman.d/mirrorlist"
 #alias mirror-delay="sudo reflector --latest 50 --number 20 --sort delay --save /etc/pacman.d/mirrorlist"
 #alias mirror-score="sudo reflector --latest 50 --number 20 --sort score --save /etc/pacman.d/mirrorlist"
 #alias mirror-age="sudo reflector --latest 50 --number 20 --sort age --save /etc/pacman.d/mirrorlist"
