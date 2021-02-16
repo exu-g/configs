@@ -4,6 +4,11 @@ set -euo pipefail
 
 #ANY CHANGES TO THE INSTALLATION PROCEDURE SHOULD BE MADE HERE
 
+# check if user is root
+if [ "$EUID" -ne 0 ]; then
+    sudo -l > /dev/null
+fi
+
 #change to home (does not show in terminal)
 cd "$HOME"
 
