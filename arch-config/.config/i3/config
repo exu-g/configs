@@ -249,10 +249,11 @@ bindsym $mod+a focus parent
 
 bindsym $mod+m mode "$main"
 
-set $main Media (m), Gaming (g), Resize (r), Layout (l)
+set $main Media (m), Gaming (g), Crypto (c), Resize (r), Layout (l)
 mode "$main"{
      bindsym m mode "$media"
      bindsym g mode "$gaming"
+     bindsym c mode "$crypto"
      bindsym r mode "resize"
      bindsym l mode "$layout"
 
@@ -273,6 +274,21 @@ mode "$media"{
      bindsym b exec --no-startup-id telegram-desktop;focus
      bindsym s exec --no-startup-id slack;focus
      bindsym t exec --no-startup-id teams;focus
+
+     bindsym Return mode "default"
+     bindsym Escape mode "default"
+}
+
+
+##############################################################################
+#################                   gaming                   #################
+##############################################################################
+
+
+set $crypto Electrum (b), Electon Cash (c)
+mode "$crypto"{
+     bindsym b exec --no-startup-id electrum;focus
+     bindsym c exec --no-startup-id electron-cash;focus
 
      bindsym Return mode "default"
      bindsym Escape mode "default"
