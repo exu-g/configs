@@ -65,3 +65,4 @@ lightdm-gtk-greeter
 lightdm-gtk-greeter-settings
 pacman-contrib
 okular
+lxappearance
