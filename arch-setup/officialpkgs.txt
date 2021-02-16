@@ -66,3 +66,4 @@ lightdm-gtk-greeter-settings
 pacman-contrib
 okular
 lxappearance
+man-db
