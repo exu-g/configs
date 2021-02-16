@@ -7,6 +7,9 @@ fish_default_key_bindings
 #    exec tmux
 #end
 
+# change greeting
+set fish_greeting "Good Morning! Nice day for fishing ain't it! Hu ha!"
+
 # Info:
 # https://fishshell.com/docs/current/index.html#variables-for-changing-highlighting-colors
 set fish_color_normal blue
