@@ -1,0 +1,10 @@
+lxappearance
+kvantum-qt5
+capitaine-cursors
+breeze
+breeze-icons
+sweet-theme-dark
+sweet-folders-icons-git
+kvantum-theme-sweet-git
+candy-icons-git
+surfn-icons-git
