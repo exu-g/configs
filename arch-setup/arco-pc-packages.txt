@@ -32,5 +32,4 @@ electrum
 alarm-clock-applet
 breeze
 breeze-icons
-candy-icons-git
-sweet-kde-git
+kvantum-theme-sweet-git
