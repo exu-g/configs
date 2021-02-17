@@ -34,3 +34,8 @@ element-desktop
 pulseaudio-equalizer-ladspa
 arcolinux-lightdm-gtk-greeter
 arcolinux-lightdm-gtk-greeter-settings
+ranger
+cmus
+thefuck
+evince
+nnn
