@@ -292,7 +292,7 @@ done
 
 #uninstalling unused packages
 echo Uninstalling unused packages
-sudo pacman -Rns - < "$setupdir/uninstall.txt"
+sudo pacman -Rns - < "$setupdir/packages/uninstall.txt"
 echo Uninstalled unused packages
 
 #update stuff
@@ -302,12 +302,12 @@ echo Updated packages
 
 #pacman programs
 echo Installing default pacman programs
-sudo pacman -S --needed - < "$setupdir/officialpkgs.txt"
+sudo pacman -S --needed - < "$setupdir/packages/officialpkgs.txt"
 echo Installed official programs
 
 # audio
 echo Installing audio programs
-sudo pacman -S --needed - < "$setupdir/audiopkgs.txt"
+sudo pacman -S --needed - < "$setupdir/packages/audiopkgs.txt"
 echo Installed audio programs
 
 # pip
@@ -335,17 +335,17 @@ fi
 
 #AUR
 echo Installing default AUR programs
-paru -S --needed - < "$setupdir/aurpkgs.txt"
+paru -S --needed - < "$setupdir/packages/aurpkgs.txt"
 echo Installed AUR programs
 
 # theming
 echo Installing themes and icons
-paru -S --needed - < "$setupdir/theme-packages.txt"
+paru -S --needed - < "$setupdir/packages/theme-packages.txt"
 echo Installed themes and icons
 
 #install wine
 echo Installing wine
-sudo pacman -S --needed - < "$setupdir/winepkgs.txt"
+sudo pacman -S --needed - < "$setupdir/packages/winepkgs.txt"
 echo Installed wine
 
 ###################
@@ -588,13 +588,13 @@ fi
 # arco pc
 if [ $in_arco_pc -eq 1 ]; then
     echo "Installing arco pc packages"
-    paru -S --needed - < "$setupdir/arco-pc-packages.txt"
+    paru -S --needed - < "$setupdir/packages/arco-pc-packages.txt"
 fi
 
 # arco hp
 if [ $in_arco_hp -eq 1 ]; then
     echo "Installing arco hp packages"
-    paru -S --needed - < "$setupdir/arco-hp-packages.txt"
+    paru -S --needed - < "$setupdir/packages/arco-hp-packages.txt"
 fi
 
 #change shell
