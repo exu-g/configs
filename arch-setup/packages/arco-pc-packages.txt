@@ -23,3 +23,5 @@ v4l-utils
 electrum
 electron-cash
 alarm-clock-applet
+jackett
+radarr
