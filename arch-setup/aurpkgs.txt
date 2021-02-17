@@ -4,8 +4,6 @@ polybar
 nohang-git
 rig
 tmpmail-git
-sweet-theme-dark
-sweet-folders-icons-git
 wps-office
 protonmail-bridge
 bitwarden
@@ -16,4 +14,5 @@ ffmpeg-normalize-git
 lightdm-slick-greeter
 lightdm-settings
 corectrl
-surfn-icons-git
+vmware-workstation15
+pdfsam
