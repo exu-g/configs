@@ -33,9 +33,7 @@ rsync
 restic
 piper
 unzip
-ranger
 bandwhich
-cmus
 xorg-xrdb
 feh
 gnome-keyring
@@ -48,8 +46,6 @@ freetype2
 traceroute
 seahorse
 libsecret
-capitaine-cursors
-thefuck
 lightdm
 tmux
 ttf-fira-code
@@ -65,5 +61,4 @@ lightdm-gtk-greeter
 lightdm-gtk-greeter-settings
 pacman-contrib
 okular
-lxappearance
 man-db
