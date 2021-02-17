@@ -338,6 +338,11 @@ echo Installing default AUR programs
 paru -S --needed - < "$setupdir/aurpkgs.txt"
 echo Installed AUR programs
 
+# theming
+echo Installing themes and icons
+paru -S --needed - < "$setupdir/theme-packages.txt"
+echo Installed themes and icons
+
 #install wine
 echo Installing wine
 sudo pacman -S --needed - < "$setupdir/winepkgs.txt"
