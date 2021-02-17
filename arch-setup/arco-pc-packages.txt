@@ -30,3 +30,5 @@ roomeqwizard
 v4l-utils
 electrum
 alarm-clock-applet
+breeze
+breeze-icons
