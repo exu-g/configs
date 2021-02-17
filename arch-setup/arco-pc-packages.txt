@@ -34,3 +34,4 @@ breeze
 breeze-icons
 kvantum-theme-sweet-git
 kvantum-qt5
+candy-icons-git
