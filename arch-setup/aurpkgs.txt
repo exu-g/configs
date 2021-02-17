@@ -16,3 +16,4 @@ ffmpeg-normalize-git
 lightdm-slick-greeter
 lightdm-settings
 corectrl
+surfn-icons-git
