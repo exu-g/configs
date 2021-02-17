@@ -33,3 +33,4 @@ alarm-clock-applet
 breeze
 breeze-icons
 kvantum-theme-sweet-git
+kvantum-qt5
