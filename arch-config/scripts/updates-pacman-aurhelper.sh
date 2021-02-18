@@ -15,9 +15,7 @@ fi
 
 updates=$(("$updates_arch" + "$updates_aur"))
 
-if [ "$updates" -gt 0 ]; then
-    echo " $updates"
-elif [ "$updates" -eq 0 ]; then
+if [ "$updates" -ge 0 ]; then
     echo " $updates"
 else
     echo ""
