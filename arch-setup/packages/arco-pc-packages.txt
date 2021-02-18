@@ -24,3 +24,4 @@ electron-cash
 alarm-clock-applet
 jackett
 radarr
+sonarr
