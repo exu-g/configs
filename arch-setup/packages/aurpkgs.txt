@@ -16,3 +16,4 @@ lightdm-settings
 corectrl
 vmware-workstation15
 pdfsam
+tauon-music-box
