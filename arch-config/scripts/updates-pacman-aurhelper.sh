@@ -17,7 +17,7 @@ updates=$(("$updates_arch" + "$updates_aur"))
 
 if [ "$updates" -gt 0 ]; then
     echo " $updates"
-elif [ "$update" -eq 0 ]; then
+elif [ "$updates" -eq 0 ]; then
     echo " $updates"
 else
     echo ""
