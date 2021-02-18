@@ -1,4 +1,3 @@
-tauon-music-box
 0ad
 puddletag
 etcher-bin
