@@ -3,3 +3,4 @@ umlet
 linux-headers
 eclipse-java-bin
 tauon-music-box
+alarm-clock-applet
