@@ -25,3 +25,4 @@ alarm-clock-applet
 jackett
 radarr
 sonarr
+monero-gui
