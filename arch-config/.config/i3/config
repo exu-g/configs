@@ -285,10 +285,11 @@ mode "$media"{
 ##############################################################################
 
 
-set $crypto Electrum (b), Electon Cash (c)
+set $crypto Electrum (b), Electon Cash (c), Monero (m)
 mode "$crypto"{
      bindsym b exec --no-startup-id electrum;focus
      bindsym c exec --no-startup-id electron-cash;focus
+     bindsym m exec --no-startup-id monero-wallet-gui;focus
 
      bindsym Return mode "default"
      bindsym Escape mode "default"
