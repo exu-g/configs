@@ -9,6 +9,12 @@ numjobs="$1"
 
 # using find to get music that has to be transcoded
 
+############################################################
+
+##############################
+#####      OPUS          #####
+##############################
+
 # find opus, ignore anything in "normalized" or "transcode" folders
 find "$HOME/MusikRaw/" -name "*\.opus" | grep -v "\/normalized\/" | grep -v "\/transcode\/" > opusfiles
 
@@ -29,6 +35,10 @@ cd "$HOME/MusikRaw"
 
 # cleanup
 rm opusfiles
+
+##############################
+#####      M4A           #####
+##############################
 
 # find m4a files, ignore "normalized" or "transcode" folders
 find "$HOME/MusikRaw/" -name "*\.m4a" | grep -v "\/normalized\/" | grep -v "\/transcode\/" > m4afiles
@@ -51,6 +61,10 @@ cd "$HOME/MusikRaw"
 # cleanup
 rm m4afiles
 
+##############################
+#####      FLAC          #####
+##############################
+
 # find flac files, ignore "normalized" or "transcode" folders
 find "$HOME/MusikRaw/" -name "*\.flac" | grep -v "\/normalized\/" | grep -v "\/transcode\/" > flacfiles
 
@@ -70,9 +84,33 @@ while read -r flac; do
     noextfile="${file%.*}"
     # add opus extension
     opusfile="${noextfile}.opus"
+
     # convert to opus in transcode directory
     # TODO include cover picture (prefer file picture, cover.jpg second preference)
     ffmpeg -nostdin -i "$flac" -b:a 256k "${pathname}/transcode/$opusfile" &
+done < flacfiles
+
+# wait for previous jobs to finish
+while [[ $(jobs | wc -l) -gt 1 ]] ; do sleep 1 ; done
+
+cd "$HOME/MusikRaw"
+
+# convert previously transcoded flacs
+while read -r flac; do
+    # if there are $numjobs or more, dont spawn any new processes
+    while [[ $(jobs | wc -l) -gt $numjobs ]] ; do sleep 1 ; done
+
+    # get directory path
+    pathname="$(dirname "$flac")"
+    # go to that path for proper output location
+    cd "$pathname"
+    # get name of file
+    file="$(basename "$flac")"
+    # strip extension
+    noextfile="${file%.*}"
+    # add opus extension
+    opusfile="${noextfile}.opus"
+
     # convert opus in transcode to normalized
     ffmpeg-normalize "transcode/$opusfile" -v -pr -c:a libopus -b:a 256k -ext opus &
 done < flacfiles
@@ -82,6 +120,8 @@ cd "$HOME/MusikRaw"
 
 # cleanup
 rm flacfiles
+
+############################################################
 
 echo Finished!
 
