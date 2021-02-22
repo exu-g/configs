@@ -25,6 +25,29 @@ export B2_ACCOUNT_ID=
 export B2_ACCOUNT_KEY=
 ```
 
+### Generalised version
+
+#### Initialise repository
+`restic -r b2:(bucket):(path) init`  
+
+#### Create backup
+`restic -r b2:(bucket):(path) backup --verbose "(path)" --exclude-file=(exclude file)`
+
+#### Show snapshots
+`restic -r b2:(bucket):(path) snapshots`  
+
+#### Restore snapshot
+`restic -r b2:(bucket):(path) restore --target "(path)" (snapshot)`  
+
+#### Remove Snapshots
+Only keep last X snapshots. Use "-n" to do a dry run  
+Does not remove data, just links  
+`restic -r b2:(bucket):(path) forget -l (X)`  
+
+Clean up unreferenced data. "-n" for dry run  
+`restic -r b2:(bucket):(path) prune`  
+
+
 ### arco-pc-backup home
 ```bash
 restic -r b2:arco-pc-backup:/home/marc init
