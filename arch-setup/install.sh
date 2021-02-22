@@ -571,7 +571,8 @@ fi
 
 if [ $in_slack -eq 1 ]; then
     echo "Installing slack"
-    paru -S --needed slack-desktop
+    #paru -S --needed slack-desktop
+    paru -s --needed slack-electron
 else
     echo "Skipping slack"
 fi
