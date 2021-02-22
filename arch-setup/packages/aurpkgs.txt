@@ -17,3 +17,4 @@ corectrl
 vmware-workstation15
 pdfsam
 tauon-music-box
+libreoffice-extension-languagetool
