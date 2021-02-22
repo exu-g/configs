@@ -141,7 +141,8 @@ do
             ;;
         7)
             in_discord=1
-            echo "discord" >> "$setupdir/selectedpkgs.txt"
+            #echo "discord" >> "$setupdir/selectedpkgs.txt"
+            echo "discord_arch_electron" >> "$setupdir/aurselectedpkgs.txt"
             ;;
         8)
             in_handbrake=1
@@ -248,7 +249,8 @@ do
             ;;
         2)
             in_slack=1
-            echo "slack-desktop" >> "$setupdir/aurselectedpkgs.txt"
+            #echo "slack-desktop" >> "$setupdir/aurselectedpkgs.txt"
+            echo "slack-electron" >> "$setupdir/aurselectedpkgs.txt"
             ;;
     esac
 done
@@ -449,7 +451,8 @@ fi
 
 if [ $in_discord -eq 1 ]; then
     echo "Installing Discord"
-    sudo pacman -S --needed discord
+    #sudo pacman -S --needed discord
+    paru -S discord_arch_electron
 else
     echo "Skipping Discord"
 fi
