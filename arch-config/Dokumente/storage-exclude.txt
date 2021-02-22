@@ -1,0 +1,9 @@
+/mnt/storage/.Trash-1000
+/mnt/storage/MediaLibrary/Handbrake/
+/mnt/storage/SteamLibrary
+/mnt/storage/Monero-blockchain
+/mnt/storage/Radarr
+/mnt/storage/Sonarr
+/mnt/storage/MediaLibrary/Handbrake-output
+/mnt/storage/MediaLibrary/other
+/mnt/storage/Grossi Dateien
