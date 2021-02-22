@@ -166,7 +166,7 @@
                     "slope": "x1",
                     "solo": "false",
                     "mute": "false",
-                    "gain": "0",
+                    "gain": "-1",
                     "frequency": "110",
                     "q": "4.3600000000000003"
                 },
@@ -176,7 +176,7 @@
                     "slope": "x1",
                     "solo": "false",
                     "mute": "false",
-                    "gain": "0",
+                    "gain": "-2",
                     "frequency": "200",
                     "q": "4.3600000000000003"
                 },
@@ -186,7 +186,7 @@
                     "slope": "x1",
                     "solo": "false",
                     "mute": "false",
-                    "gain": "0",
+                    "gain": "-2",
                     "frequency": "235",
                     "q": "4.3600000000000003"
                 },
@@ -196,7 +196,7 @@
                     "slope": "x1",
                     "solo": "false",
                     "mute": "false",
-                    "gain": "0",
+                    "gain": "-1",
                     "frequency": "360",
                     "q": "4.3600000000000003"
                 },
@@ -468,7 +468,7 @@
                     "slope": "x1",
                     "solo": "false",
                     "mute": "false",
-                    "gain": "0",
+                    "gain": "-1",
                     "frequency": "110",
                     "q": "4.3600000000000003"
                 },
@@ -478,7 +478,7 @@
                     "slope": "x1",
                     "solo": "false",
                     "mute": "false",
-                    "gain": "0",
+                    "gain": "-2",
                     "frequency": "200",
                     "q": "4.3600000000000003"
                 },
@@ -488,7 +488,7 @@
                     "slope": "x1",
                     "solo": "false",
                     "mute": "false",
-                    "gain": "0",
+                    "gain": "-2",
                     "frequency": "235",
                     "q": "4.3600000000000003"
                 },
@@ -498,7 +498,7 @@
                     "slope": "x1",
                     "solo": "false",
                     "mute": "false",
-                    "gain": "0",
+                    "gain": "-1",
                     "frequency": "360",
                     "q": "4.3600000000000003"
                 },
