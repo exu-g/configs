@@ -68,7 +68,6 @@ restic -r b2:arco-pc-backup:/mnt/harddrive init
 ```
 ```
 restic -r b2:arco-pc-backup:/mnt/harddrive backup --verbose "/mnt/storage" --exclude-file=/home/marc/GitProjects/config/Dokumente/storage-exclude.txt --limit-upload=2048
-
 ```
 ```
 restic -r b2:arco-pc-backup:/mnt/harddrive snapshots
