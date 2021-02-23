@@ -2,11 +2,6 @@
 #fish_vi_key_bindings
 fish_default_key_bindings
 
-#if status is-interactive
-#and not set -q TMUX
-#    exec tmux
-#end
-
 # change greeting
 set fish_greeting "Good Morning! Nice day for fishing ain't it! Hu ha!"
 
