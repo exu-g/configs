@@ -32,7 +32,10 @@ set fish_color_host_remote brwhite
 set fish_color_cancel brred
 
 # environment variables
-set RANGER_LOAD_DEFAULT_RC FALSE
+# for ranger
+#set RANGER_LOAD_DEFAULT_RC FALSE
+
+# text editor
 #set EDITOR "/usr/bin/emacs --no-window-system"
 #set VISUAL "/usr/bin/emacs --no-window-system"
 set EDITOR "/usr/bin/vim"
