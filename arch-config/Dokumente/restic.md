@@ -67,7 +67,8 @@ restic -r b2:arco-pc-backup:/home/marc restore --target "/home/marc/" (snapshot)
 restic -r b2:arco-pc-backup:/mnt/harddrive init
 ```
 ```
-restic -r b2:arco-pc-backup:/mnt/harddrive backup --verbose "/mnt/storage" --exclude="/mnt/storage/.Trash-1000" --exclude="/mnt/storage/MediaLibrary/Handbrake/" --exclude="/mnt/storage/SteamLibrary" --limit-upload=2048
+restic -r b2:arco-pc-backup:/mnt/harddrive backup --verbose "/mnt/storage" --exclude-file=/home/marc/GitProjects/config/Dokumente/storage-exclude.txt --limit-upload=2048
+
 ```
 ```
 restic -r b2:arco-pc-backup:/mnt/harddrive snapshots
