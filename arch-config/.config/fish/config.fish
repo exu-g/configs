@@ -55,9 +55,6 @@ end
 # edit with emacs
 alias emacs="/usr/bin/emacs --no-window-system"
 
-# sudo alias
-alias fucking=sudo
-
 # alias cat
 alias cat="$HOME/scripts/pieces/cat.sh"
 
