@@ -43,15 +43,6 @@ set fish_user_paths "$HOME/.emacs.d/bin/" $fish_user_paths
 set fish_user_paths "$HOME/scripts/in_path" $fish_user_paths
 set fish_user_paths "$HOME/.local/bin" $fish_user_paths
 
-# use sudo !! to run the last command as root
-function sudo --description "Replacement for Bash 'sudo !!' command to run last command using sudo."
-    if test "$argv" = !!
-    eval command sudo $history[1]
-else
-    command sudo $argv
-    end
-end
-
 # edit with emacs
 alias emacs="/usr/bin/emacs --no-window-system"
 
