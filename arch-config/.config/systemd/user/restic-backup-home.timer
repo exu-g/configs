@@ -1,5 +1,5 @@
 [Unit]
-Description=Backup home with restic weekly
+Description=Backup home with restic daily
 [Timer]
 OnCalendar=daily
 Persistent=true
