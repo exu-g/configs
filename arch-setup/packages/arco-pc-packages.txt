@@ -26,3 +26,4 @@ jackett
 radarr
 sonarr
 monero-gui
+p3x-onenote
