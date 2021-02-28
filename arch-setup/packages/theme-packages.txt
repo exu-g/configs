@@ -1,5 +1,6 @@
 lxappearance
 kvantum-qt5
+qt5ct
 capitaine-cursors
 breeze
 breeze-icons
