@@ -132,7 +132,7 @@ sudo cp -r ~/config/var /
 sudo cp -r ~/config/usr /
 
 # copy xresources
-#cp ~/config/.Xresources ~/
+cp ~/config/.Xresources ~/
 
 # download cat as cat
 git clone https://github.com/RealStickman/bash-cat-with-cat.git
