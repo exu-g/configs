@@ -9,3 +9,4 @@ sweet-folders-icons-git
 kvantum-theme-sweet-git
 candy-icons-git
 surfn-icons-git
+sardi-icons
