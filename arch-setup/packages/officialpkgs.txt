@@ -63,3 +63,4 @@ pacman-contrib
 okular
 man-db
 neovim
+webkit2gtk
