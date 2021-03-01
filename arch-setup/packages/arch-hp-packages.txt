@@ -5,3 +5,4 @@ eclipse-java-bin
 alarm-clock-applet
 balena-etcher
 nmap
+putty
