@@ -7,3 +7,4 @@ alsa-card-profiles
 libcanberra-pulse
 lib32-libpulse
 pulseeffects-legacy
+alsa-utils
