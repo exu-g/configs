@@ -66,3 +66,4 @@ neovim
 webkit2gtk
 openresolv
 playerctl
+cmake
