@@ -4,3 +4,4 @@ linux-headers
 eclipse-java-bin
 alarm-clock-applet
 balena-etcher
+nmap
