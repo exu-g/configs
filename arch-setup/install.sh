@@ -597,8 +597,8 @@ fi
 
 # arco hp
 if [ $in_arco_hp -eq 1 ]; then
-    echo "Installing arco hp packages"
-    paru -S --needed - < "$setupdir/packages/arco-hp-packages.txt"
+    echo "Installing arch hp packages"
+    paru -S --needed - < "$setupdir/packages/arch-hp-packages.txt"
 fi
 
 #change shell
