@@ -539,7 +539,9 @@ bindsym Control+Print exec --no-startup-id xfce4-screenshooter
 
 # class = WM_CLASS, title = WM_NAME
 
-# floating disabled
+##############################
+###   floating disabled    ###
+##############################
 for_window [class="Bleachbit"] floating disable
 for_window [class="Brasero"] floating disable
 for_window [class="Gnome-disks"] floating disable
@@ -552,12 +554,21 @@ for_window [class="^Vlc$"] floating disable
 for_window [class="Xfburn"] floating disable
 for_window [class="Xfce4-settings-manager"] floating disable
 
-# custom
+# variety
 for_window [instance="variety"] floating disable
+
+# epic
 for_window [title="Epic Games Launcher"] floating disable
+
+# ubisoft
 for_window [title="Ubisoft Connect"] floating disable
 
-# floating enabled
+# firefox picture in picture
+for_window [title="Picture-in-Picture"] floating enable
+
+##############################
+###   floating enabled     ###
+##############################
 for_window [class="Xfce4-taskmanager"] floating enable
 for_window [class="Blueberry.py"] floating enable
 for_window [class="Galculator"] floating enable
@@ -586,8 +597,6 @@ for_window [title="Microsoft Teams-Benachrichtigung"] floating enable
 for_window [class="tufts-vue-VUE" title="Format"] floating enable
 for_window [class="tufts-vue-VUE" title="ColorPopupMenu"] floating enable
 
-# firefox picture in picture
-for_window [title="Picture-in-Picture"] floating enable
 
 #####################################################################################################################
 #################                          variety for your wallpapers                              #################
