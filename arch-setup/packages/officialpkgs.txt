@@ -65,3 +65,4 @@ man-db
 neovim
 webkit2gtk
 openresolv
+playerctl
