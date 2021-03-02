@@ -650,6 +650,7 @@ bindsym XF86MonBrightnessDown exec --no-startup-id bash $HOME/scripts/dunst-back
 
 # Border control
 hide_edge_borders both
+default_border pixel 2
 
 bindsym $mod+u mode "$border"
 
@@ -797,12 +798,12 @@ exec_always --no-startup-id picom -b --config ~/.config/i3/picom.conf
 
 # Purple/Pink
 # class                 border  backgr. text    indicator
-client.placeholder      #33022f #33022f #f2daf0
-client.background       #33022f #33022f #f2daf0
-client.focused          #33022f #33022f #f2daf0 #f2daf0
-client.unfocused        #33022f #33022f #f2daf0 #f2daf0
-client.focused_inactive #33022f #33022f #f2daf0 #f2daf0
-client.urgent           #33022f #33022f #f2daf0 #f2daf0
+client.placeholder      #33022f #33022f #ffe5fc
+client.background       #33022f #33022f #ffe5fc
+client.focused          #33022f #33022f #ffe5fc #ffe5fc
+client.unfocused        #33022f #33022f #ffe5fc #ffe5fc
+client.focused_inactive #33022f #33022f #ffe5fc #ffe5fc
+client.urgent           #33022f #33022f #ffe5fc #ffe5fc
 
 
 #################################################################
