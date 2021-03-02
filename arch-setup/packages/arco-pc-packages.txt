@@ -29,3 +29,4 @@ monero-gui
 p3x-onenote
 fanficfare
 edac-utils
+rasdaemon
