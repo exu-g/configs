@@ -649,8 +649,7 @@ bindsym XF86MonBrightnessDown exec --no-startup-id bash $HOME/scripts/dunst-back
 
 
 # Border control
-hide_edge_borders both
-default_border pixel 2
+hide_edge_borders none
 
 bindsym $mod+u mode "$border"
 
@@ -663,15 +662,6 @@ mode "$border" {
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
-
-
-new_window pixel 2
-#new_window normal 2
-#new_window none
-
-new_float pixel 2
-#new_float normal 2
-#new_float none
 
 
 #####################################################################################################################
@@ -693,8 +683,8 @@ popup_during_fullscreen smart
 # delete or uncomment the following lines if you do not have it or do not
 # want it
 
-
-for_window [class="^.*"] border none
+# set border and gaps
+for_window [class="^.*"] border pixel 2
 gaps inner 5
 gaps outer 5
 
@@ -800,10 +790,10 @@ exec_always --no-startup-id picom -b --config ~/.config/i3/picom.conf
 # class                 border  backgr. text    indicator
 client.placeholder      #33022f #33022f #ffe5fc
 client.background       #33022f #33022f #ffe5fc
-client.focused          #33022f #33022f #ffe5fc #ffe5fc
-client.unfocused        #33022f #33022f #ffe5fc #ffe5fc
-client.focused_inactive #33022f #33022f #ffe5fc #ffe5fc
-client.urgent           #33022f #33022f #ffe5fc #ffe5fc
+client.focused          #33022f #33022f #ffe5fc #33022f
+client.unfocused        #33022f #33022f #ffe5fc #33022f
+client.focused_inactive #33022f #33022f #ffe5fc #33022f
+client.urgent           #33022f #33022f #ffe5fc #33022f
 
 
 #################################################################
