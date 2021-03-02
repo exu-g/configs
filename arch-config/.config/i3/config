@@ -788,12 +788,12 @@ exec_always --no-startup-id picom -b --config ~/.config/i3/picom.conf
 
 # Purple/Pink
 # class                 border  backgr. text    indicator
-client.placeholder      #33022f #4c0346 #ffe5fc
-client.background       #33022f #4c0346 #ffe5fc
-client.focused          #33022f #4c0346 #ffe5fc #33022f
-client.unfocused        #33022f #4c0346 #ffe5fc #33022f
-client.focused_inactive #33022f #4c0346 #ffe5fc #33022f
-client.urgent           #33022f #4c0346 #ffe5fc #33022f
+client.placeholder      #663361 #33022f #eeeeee
+client.background       #663361 #33022f #eeeeee
+client.focused          #663361 #33022f #eeeeee #33022f
+client.unfocused        #663361 #33022f #eeeeee #33022f
+client.focused_inactive #663361 #33022f #eeeeee #33022f
+client.urgent           #663361 #33022f #eeeeee #33022f
 
 
 #################################################################
