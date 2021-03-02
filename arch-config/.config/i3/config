@@ -656,21 +656,21 @@ bindsym $mod+u mode "$border"
 set $border none (o), pixel (p), normal (n)
 mode "$border" {
     bindsym o border none
-    bindsym p border pixel 1
-    bindsym n border normal 1
+    bindsym p border pixel 2
+    bindsym n border normal 2
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
 
 
-#new_window pixel 1
-#new_window normal 1
-new_window none
+new_window pixel 2
+#new_window normal 2
+#new_window none
 
-#new_float pixel 1
-#new_float normal 1
-new_float none
+new_float pixel 2
+#new_float normal 2
+#new_float none
 
 
 #####################################################################################################################
@@ -794,6 +794,15 @@ exec_always --no-startup-id picom -b --config ~/.config/i3/picom.conf
 #client.unfocused        #222222 #222222 #aaaaaa #222222
 #client.focused_inactive #222222 #222222 #a9a9a9 #222222
 #client.urgent           #d42121 #d42121 #f7f7f7 #d42121
+
+# Purple/Pink
+# class                 border  backgr. text    indicator
+client.placeholder      #33022f #33022f #33022f
+client.background       #33022f #33022f #33022f
+client.focused          #33022f #33022f #33022f #33022f
+client.unfocused        #33022f #33022f #33022f #33022f
+client.focused_inactive #33022f #33022f #33022f #33022f
+client.urgent           #33022f #33022f #33022f #33022f
 
 
 #################################################################
