@@ -47,7 +47,6 @@ Does not remove data, just links
 Clean up unreferenced data. "-n" for dry run  
 `restic -r b2:(bucket):(path) prune`  
 
-
 ### arco-pc-backup home
 ```bash
 restic -r b2:arco-pc-backup:/home/marc init
@@ -76,58 +75,30 @@ restic -r b2:arco-pc-backup:/mnt/harddrive snapshots
 restic -r b2:arco-pc-backup:/mnt/harddrive restore --target "/mnt/storage" (snapshot)
 ```
 
-### hydra-server-backup /etc/nginx
-```bash
-restic -r b2:hydra-server-backup:/etc/nginx init
+### hydra-server-backup var
 ```
-```bash
-restic -r b2:hydra-server-backup:/etc/nginx backup --verbose "/etc/nginx"
+restic -r b2:hydra-server-backup:var init
 ```
-```bash
-restic -r b2:hydra-server-backup:/etc/nginx snapshots 
 ```
-```bash
-restic -r b2:hydra-server-backup:/etc/nginx restore --target "/etc/nginx" <snapshot>
+restic -r b2:hydra-server-backup:var backup --verbose "/var"
 ```
-
-### realstickman-xyz-backup root
-```bash
-restic -r b2:realstickman-xyz-backup:root init
 ```
-```bash
-restic -r b2:realstickman-xyz-backup:root backup --verbose "/root"
+restic -r b2:hydra-server-backup:var snapshots 
 ```
-```bash
-restic -r b2:realstickman-xyz-backup:root snapshots 
 ```
-```bash
-restic -r b2:realstickman-xyz-backup:root restore --target "/root" <snapshot>
+restic -r b2:hydra-server-backup:var restore --target "/var" <snapshot>
 ```
 
-### realstickman-xyz-backup etc
-```bash
-restic -r b2:realstickman-xyz-backup:etc init
+### hydra-server-backup etc
 ```
-```bash
-restic -r b2:realstickman-xyz-backup:etc backup --verbose "/etc"
-```
-```bash
-restic -r b2:realstickman-xyz-backup:etc snapshots 
-```
-```bash
-restic -r b2:realstickman-xyz-backup:etc restore --target "/etc" <snapshot>
-```
-
-### nextcloud-realstickman-backup var
-```
-restic -r b2:nextcloud-realstickman-backup:var init
+restic -r b2:hydra-server-backup:etc init
 ```
 ```
-restic -r b2:nextcloud-realstickman-backup:var backup --verbose "/var"
+restic -r b2:hydra-server-backup:etc backup --verbose "/etc"
 ```
 ```
-restic -r b2:nextcloud-realstickman-backup:var snapshots 
+restic -r b2:hydra-server-backup:etc snapshots 
 ```
 ```
-restic -r b2:nextcloud-realstickman-backup:var restore --target "/var" <snapshot>
+restic -r b2:hydra-server-backup:etc restore --target "/etc" <snapshot>
 ```
