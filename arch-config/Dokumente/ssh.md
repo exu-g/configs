@@ -6,3 +6,5 @@
 ## raspi3
 `$ ssh marc@192.168.1.119`
 
+## raspi4
+`$ ssh alarm@192.168.1.182`
