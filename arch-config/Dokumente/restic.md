@@ -75,18 +75,18 @@ restic -r b2:arco-pc-backup:/mnt/harddrive snapshots
 restic -r b2:arco-pc-backup:/mnt/harddrive restore --target "/mnt/storage" (snapshot)
 ```
 
-### hydra-server-backup var
+### hydra-server-backup var/www
 ```
-restic -r b2:hydra-server-backup:var init
-```
-```
-restic -r b2:hydra-server-backup:var backup --verbose "/var"
+restic -r b2:hydra-server-backup:var/www init
 ```
 ```
-restic -r b2:hydra-server-backup:var snapshots 
+restic -r b2:hydra-server-backup:var/www backup --verbose "/var/www"
 ```
 ```
-restic -r b2:hydra-server-backup:var restore --target "/var" <snapshot>
+restic -r b2:hydra-server-backup:var/www snapshots 
+```
+```
+restic -r b2:hydra-server-backup:var/www restore --target "/var/www" <snapshot>
 ```
 
 ### hydra-server-backup etc
