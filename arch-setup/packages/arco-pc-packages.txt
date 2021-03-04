@@ -11,7 +11,6 @@ gnuclad
 calibre
 hplip
 waifu2x-ncnn-vulkan
-video2x
 basilisk-bin
 librewolf-bin
 surf
