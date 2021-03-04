@@ -7,3 +7,4 @@ balena-etcher
 nmap
 putty
 mysql-workbench
+p3x-onenote
