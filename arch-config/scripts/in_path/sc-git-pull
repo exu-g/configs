@@ -58,7 +58,7 @@ if [ ! -d "$HOME/GitProjects/arch-autobuild-pkg" ]; then
     git@gitlab.com:arch-pkgbuilds/arch-autobuild-pkg.git
 fi
 cd "$HOME/GitProjects/arch-autobuild-pkg"
-git fetch -all
+git fetch --all
 git pull
 
 exit 0
