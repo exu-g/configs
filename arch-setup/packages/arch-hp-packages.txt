@@ -8,3 +8,4 @@ nmap
 putty
 mysql-workbench
 p3x-onenote
+intellij-idea-ultimate-edition
