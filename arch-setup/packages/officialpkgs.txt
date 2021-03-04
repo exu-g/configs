@@ -67,3 +67,4 @@ webkit2gtk
 openresolv
 playerctl
 cmake
+galculator
