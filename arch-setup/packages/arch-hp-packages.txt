@@ -6,3 +6,4 @@ alarm-clock-applet
 balena-etcher
 nmap
 putty
+mysql-workbench
