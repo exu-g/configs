@@ -55,7 +55,7 @@ git fetch --all
 git pull
 
 if [ ! -d "$HOME/GitProjects/arch-autobuild-pkg" ]; then
-    git@gitlab.com:arch-pkgbuilds/arch-autobuild-pkg.git
+   git -C $WORKPATH clone git@gitlab.com:arch-pkgbuilds/arch-autobuild-pkg.git
 fi
 cd "$HOME/GitProjects/arch-autobuild-pkg"
 git fetch --all
