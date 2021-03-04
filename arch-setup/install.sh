@@ -622,7 +622,10 @@ fc-cache -f
 
 # download grub theme
 git clone https://github.com/xenlism/Grub-themes.git
-bash Grub-themes/xenlism-grub-arch-1080p/install.sh
+cd "Grub-themes/xenlism-grub-arch-1080p/"
+sudo bash install.sh
+# go back
+cd ../../
 
 #Changes to home folder automatically now, no need to be extra careful anymore.
 git clone https://gitlab.com/RealStickman-arch/config
