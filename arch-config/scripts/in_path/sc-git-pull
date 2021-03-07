@@ -61,4 +61,11 @@ cd "$HOME/GitProjects/arch-autobuild-pkg"
 git fetch --all
 git pull
 
+if [ ! -d "$HOME/GitProjects/ssh" ]; then
+   git -C $WORKPATH clone git@gitlab.com:RealStickman/ssh.git
+fi
+cd "$HOME/GitProjects/ssh"
+git fetch --all
+git pull
+
 exit 0
