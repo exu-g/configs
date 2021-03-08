@@ -57,6 +57,9 @@ if [[ "$#" -eq 1 ]]; then
     # -t/--theme to change theme
     if [[ "$1" == "-t" || "$1" == "--theme" ]]; then
         func_seltheme
+    elif [[ "$1" == "-h" || "$1" == "--help" ]]; then
+        echo "-h, --help   Show help menu"
+        echo "-t, --theme  Show theme selection screen"
     fi
 fi
 
