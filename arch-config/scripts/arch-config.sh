@@ -53,7 +53,7 @@ fi
 #####     arguments      #####
 ##############################
 # handle arguments
-if [[ "$1" -ne 0 ]]; then
+if [[ "$#" -eq 1 ]]; then
     # -t/--theme to change theme
     if [[ "$1" == "-t" || "$1" == "--theme" ]]; then
         func_seltheme
