@@ -136,7 +136,7 @@ cp ~/config/.Xresources ~/
 
 # TODO
 # copy theme select file
-cp ~/config/.seltheme ~/
+#cp ~/config/.seltheme ~/
 
 # install theme selected in themes file
 git clone https://gitlab.com/RealStickman-arch/themes.git
