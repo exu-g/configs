@@ -15,10 +15,10 @@ function func_seltheme {
     do
         case $choice in
             1)
-                echo "nyarch" >> "$HOME/.seltheme"
+                echo "nyarch" > "$HOME/.seltheme"
                 ;;
             2)
-                echo "space-pink" >> "$HOME/.seltheme"
+                echo "space-pink" > "$HOME/.seltheme"
                 ;;
         esac
     done
