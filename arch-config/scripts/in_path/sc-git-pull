@@ -9,7 +9,7 @@ fi
 WORKPATH="$HOME/GitProjects"
 
 if [ ! -d "$HOME/GitProjects/config" ]; then
-    git -C $WORKPATH clone git@gitlab.com:RealStickman-arcolinux/config.git
+    git -C $WORKPATH clone git@gitlab.com:RealStickman-arch/config.git
 fi
 cd "$HOME/GitProjects/config"
 git fetch --all
@@ -32,19 +32,18 @@ git pull
 '
 
 if [ ! -d "$HOME/GitProjects/setup" ]; then
-    git -C $WORKPATH clone git@gitlab.com:RealStickman-arcolinux/setup.git
+    git -C $WORKPATH clone git@gitlab.com:RealStickman-arch/setup.git
 fi
 cd "$HOME/GitProjects/setup"
 git fetch --all
 git pull
 
 if [ ! -d "$HOME/GitProjects/themes" ]; then
-    git -C $WORKPATH clone git@gitlab.com:RealStickman-arcolinux/themes.git
+    git -C $WORKPATH clone git@gitlab.com:RealStickman-arch/themes.git
 fi
 cd "$HOME/GitProjects/themes"
 git fetch --all
 git pull
-
 : '
 if [ ! -d "$HOME/GitProjects/setup-pinephone" ]; then
     git -C $WORKPATH clone git@gitlab.com:RealStickman/setup-pinephone.git
