@@ -4,6 +4,26 @@ set -euo pipefail
 
 #ANY CHANGES TO THE INSTALLATION PROCEDURE SHOULD BE MADE HERE
 
+# function to select theme
+function func_seltheme {
+    cmd=(dialog --separate-output --checklist "Select theme (Only select one)" 22 76 16)
+    options=(1 "Nyarch" off    # any option can be set to default to "on"
+             2 "Spaceengine Pink" off)
+    choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+    clear
+    for choice in $choices
+    do
+        case $choice in
+            1)
+                echo "nyarch" >> "$HOME/.seltheme"
+                ;;
+            2)
+                echo "space-pink" >> "$HOME/.seltheme"
+                ;;
+        esac
+    done
+}
+
 # check if user is root
 if [ "$EUID" -ne 0 ]; then
     sudo -l > /dev/null
@@ -22,6 +42,11 @@ git clone https://gitlab.com/RealStickman-arch/config.git &&
 if ! cmp --silent "$HOME/scripts/arch-config.sh" "$HOME/config/scripts/arch-config.sh" ; then
     echo Removed old config file and launched new one.
     rm "$HOME/scripts/arch-config.sh" && cp "$HOME/config/scripts/arch-config.sh" "$HOME/scripts/" && bash ~/scripts/arch-config.sh
+fi
+
+# if no seltheme file exists, ask to select a theme
+if [[ ! -f "$HOME/.seltheme" ]]; then
+    func_seltheme
 fi
 
 #delete previous backups
