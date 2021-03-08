@@ -134,6 +134,10 @@ sudo cp -r ~/config/usr /
 # copy xresources
 cp ~/config/.Xresources ~/
 
+# TODO
+# copy theme select file
+cp ~/config/.seltheme ~/
+
 # install theme selected in themes file
 git clone https://gitlab.com/RealStickman-arch/themes.git
 seltheme="$(cat "$HOME/.seltheme")"
