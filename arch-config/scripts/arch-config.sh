@@ -129,13 +129,10 @@ cp -r ~/config/.bashrc ~/ &&
 cp -r ~/config/.face ~/ &&
 cp -r ~/config/.gtkrc-2.0 ~/ &&
 cp -r ~/config/.gitconfig ~/ &&
-cp -r ~/config/.fehbg ~/ &&
+#cp -r ~/config/.fehbg ~/ &&
 cp -r ~/config/.tmux.conf ~/ &&
 cp -r ~/config/.xinitrc ~/ &&
 echo Copied files
-
-# make fehbg executable
-chmod +x ~/.fehbg
 
 # make .xinitrc executable
 chmod +x ~/.xinitrc
@@ -193,6 +190,9 @@ elif [[ "$seltheme" == "space-pink" ]]; then
     cp "./themes/.fehbg-space-pink" "$HOME/.fehbg"
 fi
 rm -rf ./themes
+
+# make fehbg executable
+chmod +x ~/.fehbg
 
 # download cat as cat
 git clone https://github.com/RealStickman/bash-cat-with-cat.git
