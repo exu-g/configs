@@ -42,7 +42,7 @@ git clone https://gitlab.com/RealStickman-arch/config.git &&
 # NOTE Arguments get passed automatically now
 if ! cmp --silent "$HOME/scripts/arch-config.sh" "$HOME/config/scripts/arch-config.sh" ; then
     echo Removed old config file and launched new one.
-    rm "$HOME/scripts/arch-config.sh" && cp "$HOME/config/scripts/arch-config.sh" "$HOME/scripts/" && 'bash ~/scripts/arch-config.sh "$@"'
+    rm "$HOME/scripts/arch-config.sh" && cp "$HOME/config/scripts/arch-config.sh" "$HOME/scripts/" && bash ~/scripts/arch-config.sh "$@"
 fi
 
 # if no seltheme file exists, ask to select a theme
