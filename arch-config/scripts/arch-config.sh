@@ -211,6 +211,10 @@ unzip -o ~/.config/GIMP/2.10/plug-ins/export_layers-3.3.1.zip -d ~/.config/GIMP/
 rm ~/.config/GIMP/2.10/plug-ins/export_layers-3.3.1.zip > /dev/null
 echo Unzipped gimp plugins
 
+# xfce settings
+# disable screensaver & locker
+/usr/bin/xfconf-query -c xfce4-session -n -t bool -p /startup/screensaver/enabled -s false
+
 #make bash scripts executable
 chmod +x -R ~/.config/polybar/
 chmod +x -R ~/.config/i3/scripts
