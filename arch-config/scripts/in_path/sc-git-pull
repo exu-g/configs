@@ -38,10 +38,10 @@ cd "$HOME/GitProjects/setup"
 git fetch --all
 git pull
 
-if [ ! -d "$HOME/GitProjects/theme" ]; then
-    git -C $WORKPATH clone git@gitlab.com:RealStickman-arcolinux/theme.git
+if [ ! -d "$HOME/GitProjects/themes" ]; then
+    git -C $WORKPATH clone git@gitlab.com:RealStickman-arcolinux/themes.git
 fi
-cd "$HOME/GitProjects/theme"
+cd "$HOME/GitProjects/themes"
 git fetch --all
 git pull
 
