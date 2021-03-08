@@ -49,6 +49,17 @@ if [[ ! -f "$HOME/.seltheme" ]]; then
     func_seltheme
 fi
 
+##############################
+#####     arguments      #####
+##############################
+# handle arguments
+if [[ ! -z "$1" ]]; then
+    # -t/--theme to change theme
+    if [[ "$1" == "-t" || "$1" == "--theme" ]]; then
+        func_seltheme
+    fi
+fi
+
 #delete previous backups
 echo Removing old backup
 rm -rf ~/old_dat
