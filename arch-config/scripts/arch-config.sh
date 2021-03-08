@@ -39,6 +39,7 @@ rm -rf ~/config
 git clone https://gitlab.com/RealStickman-arch/config.git &&
 
 # check if the install scripts are the same
+# NOTE Arguments get passed automatically now
 if ! cmp --silent "$HOME/scripts/arch-config.sh" "$HOME/config/scripts/arch-config.sh" ; then
     echo Removed old config file and launched new one.
     rm "$HOME/scripts/arch-config.sh" && cp "$HOME/config/scripts/arch-config.sh" "$HOME/scripts/" && 'bash ~/scripts/arch-config.sh "$@"'
