@@ -134,6 +134,16 @@ sudo cp -r ~/config/usr /
 # copy xresources
 cp ~/config/.Xresources ~/
 
+# install theme selected in themes file
+git clone https://gitlab.com/RealStickman-arch/themes.git
+seltheme="$(cat "$HOME/.seltheme")"
+if [[ "$seltheme" == "nyarch" ]]; then
+    cp "./themes/nyarch/"* "$HOME/.config/"
+elif [[ "$seltheme" == "space-pink" ]]; then
+    cp "./themes/space-pink"* "$HOME/.config/"
+fi
+rm -rf ./themes
+
 # download cat as cat
 git clone https://github.com/RealStickman/bash-cat-with-cat.git
 cp ./bash-cat-with-cat/cat.sh "$HOME/scripts/pieces/cat.sh"
