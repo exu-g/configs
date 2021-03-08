@@ -177,9 +177,8 @@ sudo cp -r ~/config/usr /
 # copy xresources
 cp ~/config/.Xresources ~/
 
-# TODO
-# copy theme select file
-#cp ~/config/.seltheme ~/
+# remove old themes folder
+rm -rf ./themes
 
 # install theme selected in themes file
 git clone https://gitlab.com/RealStickman-arch/themes.git
