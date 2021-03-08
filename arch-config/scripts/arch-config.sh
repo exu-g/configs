@@ -142,9 +142,9 @@ cp ~/config/.Xresources ~/
 git clone https://gitlab.com/RealStickman-arch/themes.git
 seltheme="$(cat "$HOME/.seltheme")"
 if [[ "$seltheme" == "nyarch" ]]; then
-    cp -r "./themes/nyarch/"* "$HOME/.config/"
+    cp -r "./themes/nyarch" "$HOME/.config/"
 elif [[ "$seltheme" == "space-pink" ]]; then
-    cp -r "./themes/space-pink/"* "$HOME/.config/"
+    cp -r "./themes/space-pink" "$HOME/.config/"
 fi
 rm -rf ./themes
 
