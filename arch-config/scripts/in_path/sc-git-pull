@@ -38,6 +38,13 @@ cd "$HOME/GitProjects/setup"
 git fetch --all
 git pull
 
+if [ ! -d "$HOME/GitProjects/theme" ]; then
+    git -C $WORKPATH clone git@gitlab.com:RealStickman-arcolinux/theme.git
+fi
+cd "$HOME/GitProjects/theme"
+git fetch --all
+git pull
+
 : '
 if [ ! -d "$HOME/GitProjects/setup-pinephone" ]; then
     git -C $WORKPATH clone git@gitlab.com:RealStickman/setup-pinephone.git
