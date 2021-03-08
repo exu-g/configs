@@ -61,6 +61,9 @@ if [[ "$#" -eq 1 ]]; then
         echo "-h, --help   Show help menu"
         echo "-t, --theme  Show theme selection screen"
     fi
+elif [[ "$#" -gt 1 ]]; then
+    echo "Too many arguments"
+    exit 1
 fi
 
 #delete previous backups
