@@ -69,7 +69,9 @@ fi
 
 #delete previous backups
 echo Removing old backup
-rm -rf ~/old_dat
+if [[ -d ~/old_dat ]]; then
+    rm -rf ~/old_dat
+fi
 
 # make new backup
 echo Creating backup
@@ -86,34 +88,65 @@ mkdir -p ~/old_dat/.local/share || echo Directory already exists
 # back stuff up
 ##############################
 #config folders
-rsync -ah ~/.config/MangoHud ~/old_dat/.config/ || echo Directory does not exist
-rsync -ah ~/.config/fish ~/old_dat/.config/ || echo Directory does not exist
-rsync -ah ~/.config/gtk-3.0 ~/old_dat/.config/ || echo Directory does not exist
-rsync -ah ~/.config/i3 ~/old_dat/.config/ || echo Directory does not exist
-rsync -ah ~/.config/neofetch ~/old_dat/.config/ || echo Directory does not exist
-rsync -ah ~/.config/openbox ~/old_dat/.config/ || echo Directory does not exist
-rsync -ah ~/.config/polybar ~/old_dat/.config/ || echo Directory does not exist
-rsync -ah ~/.config/termite ~/old_dat/.config/ || echo Directory does not exist
-rsync -ah ~/.config/variety ~/old_dat/.config/ || echo Directory does not exist
+if [[ -d ~/.config/MangoHud ]]; then
+    rsync -ah ~/.config/MangoHud ~/old_dat/.config/ || echo Directory does not exist
+fi
+if [[ -d ~/.config/fish ]]; then
+    rsync -ah ~/.config/fish ~/old_dat/.config/ || echo Directory does not exist
+fi
+if [[ -d ~/.config/gtk-3.0 ]]; then
+    rsync -ah ~/.config/gtk-3.0 ~/old_dat/.config/ || echo Directory does not exist
+fi
+if [[ -d ~/.config/i3 ]]; then
+    rsync -ah ~/.config/i3 ~/old_dat/.config/ || echo Directory does not exist
+fi
+if [[ -d ~/.config/neofetch ]]; then
+    rsync -ah ~/.config/neofetch ~/old_dat/.config/ || echo Directory does not exist
+fi
+if [[ -d ~/.config/openbox ]]; then
+    rsync -ah ~/.config/openbox ~/old_dat/.config/ || echo Directory does not exist
+fi
+if [[ -d ~/.config/polybar ]]; then
+    rsync -ah ~/.config/polybar ~/old_dat/.config/ || echo Directory does not exist
+fi
+if [[ -d ~/.config/termite ]]; then
+    rsync -ah ~/.config/termite ~/old_dat/.config/ || echo Directory does not exist
+fi
+if [[ -d ~/.config/variety ]]; then
+    rsync -ah ~/.config/variety ~/old_dat/.config/ || echo Directory does not exist
+fi
 
 # doom.d folder
-rsync -ah ~/.doom.d ~/old_dat/ || echo Directory does not exist
+if [[ -d ~/.doom.d ]]; then
+    rsync -ah ~/.doom.d ~/old_dat/ || echo Directory does not exist
+fi
 
 # easystroke
-rsync -ah ~/.easystroke ~/old_dat/ || echo Directory does not exist
+if [[ -d ~/.easystroke ]]; then
+    rsync -ah ~/.easystroke ~/old_dat/ || echo Directory does not exist
+fi
 
 # local folder
-rsync -ah ~/.local/share/applications/ ~/old_dat/.local/share/ || echo Directory does not exist
+if [[ -d ~/.local/share/applications ]]; then
+    rsync -ah ~/.local/share/applications/ ~/old_dat/.local/share/ || echo Directory does not exist
+fi
 
 # mozilla
-rsync -ah ~/.mozilla ~/old_dat/ || echo Directory does not exist
+if [[ -d ~/.mozilla ]]; then
+    rsync -ah ~/.mozilla ~/old_dat/ || echo Directory does not exist
+fi
 
 # scripts
-rsync -ah ~/scripts ~/old_dat/ || echo Directory does not exist
+if [[ -d ~/scripts ]]; then
+    rsync -ah ~/scripts ~/old_dat/ || echo Directory does not exist
+fi
+
 echo Made backups
 
 # remove old templates
-rm -r ~/.config/Vorlagen
+if [[ -d ~/.config/Vorlagen ]]; then
+    rm -r ~/.config/Vorlagen
+fi
 
 #copy folders
 cp -r ~/config/.config/ ~/ &&
