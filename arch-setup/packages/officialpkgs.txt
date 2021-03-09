@@ -1,6 +1,5 @@
 arandr
 libreoffice-fresh-de
-termite
 wget
 picom
 stress
@@ -69,3 +68,4 @@ playerctl
 cmake
 galculator
 flameshot
+kitty
