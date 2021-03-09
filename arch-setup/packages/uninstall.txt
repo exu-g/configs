@@ -40,3 +40,4 @@ thefuck
 evince
 nnn
 xfcd4-screensaver
+termite
