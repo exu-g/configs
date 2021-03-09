@@ -463,11 +463,12 @@ exec --no-startup-id bash $HOME/.fehbg &
 #####################################################################################################################
 
 
+# no really good alternatives that are independent. some others to check out:
+# gnome-power-manager
+# mate-power-manager
 exec --no-startup-id xfce4-power-manager &
-# ommitted next line to get super key to bring up the menu in xfce and avoid error then in i3
-# IF xfsettingsd is activated you can not change themes
-#exec --no-startup-id xfsettingsd &
-#exec --no-startup-id /usr/lib/xfce4/notifyd/xfce4-notifyd &
+
+# notifications
 exec --no-startup-id /usr/bin/dunst &
 
 
@@ -480,10 +481,10 @@ exec --no-startup-id /usr/bin/dunst &
 bindsym ctrl+mod1+Return exec --no-startup-id termite;focus 
 
 #System monitor
-bindsym ctrl+mod1+r exec --no-startup-id xfce4-taskmanager;focus
+#bindsym ctrl+mod1+r exec --no-startup-id xfce4-taskmanager;focus
 
 #settings
-bindsym control+mod1+s exec --no-startup-id xfce4-settings-manager
+#bindsym control+mod1+s exec --no-startup-id xfce4-settings-manager
 
 #pavucontrol
 bindsym control+mod1+u exec --no-startup-id pavucontrol
@@ -498,20 +499,11 @@ bindsym ctrl+mod1+e exec --no-startup-id emacs;focus
 #thunar
 bindsym ctrl+mod1+t exec --no-startup-id thunar;focus
 
-#ranger
-#bindsym ctrl+mod1+t exec --no-startup-id termite -e ranger;focus
-
 #libreoffice
 bindsym ctrl+mod1+l exec --no-startup-id libreoffice;focus
 
 #browsers
 bindsym control+mod1+f exec --no-startup-id firefox;focus
-
-#pragha
-#bindsym ctrl+mod1+n exec --no-startup-id pragha;focus
-
-#cmus
-#bindsym ctrl+mod1+m exec --no-startup-id termite -e cmus;focus
 
 #tauon music box
 bindsym ctrl+mod1+m exec --no-startup-id tauon;focus
@@ -527,9 +519,11 @@ bindsym $mod+shift+a exec --no-startup-id bash $HOME/scripts/redetect-audio.sh
 #################                          screenshots                                              #################
 #####################################################################################################################
 
-
-bindsym Print exec --no-startup-id xfce4-screenshooter
-bindsym Control+Print exec --no-startup-id xfce4-screenshooter
+# TODO flameshot
+#bindsym Print exec --no-startup-id xfce4-screenshooter
+#bindsym Control+Print exec --no-startup-id xfce4-screenshooter
+bindsym Print exec --no-startup-id flameshot gui
+bindsym Control+Print exec --no-startup-id flameshot gui -d 2000
 
 
 #####################################################################################################################
