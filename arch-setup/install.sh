@@ -608,6 +608,9 @@ chsh -s /usr/bin/fish "$USER"
 sudo systemctl enable vnstat
 sudo systemctl start vnstat
 
+# enable lockscreen for systemd
+sudo systemctl enable betterlockscreen@$USER
+
 # enable firewall
 echo "Enabling Firewall"
 sudo ufw enable
