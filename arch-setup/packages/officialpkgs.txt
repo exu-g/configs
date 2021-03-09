@@ -68,3 +68,4 @@ openresolv
 playerctl
 cmake
 galculator
+flameshot
