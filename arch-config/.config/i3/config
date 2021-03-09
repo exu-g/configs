@@ -457,6 +457,9 @@ exec --no-startup-id pulseeffects --gapplication-service
 # feh background image
 exec --no-startup-id bash $HOME/.fehbg &
 
+# betterlockscreen image to desktop background
+exec --no-startup-id source ~/.fehbg
+
 
 #####################################################################################################################
 #################                                 system applications                               #################
