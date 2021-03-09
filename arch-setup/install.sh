@@ -297,9 +297,12 @@ echo Uninstalling unused packages
 sudo pacman -Rns - < "$setupdir/packages/uninstall.txt"
 echo Uninstalled unused packages
 
+# find all repos
+sudo pacman -Sy
+
 #update stuff
 echo Updating packages
-sudo pacman -Syyu
+sudo pacman -Syu
 echo Updated packages
 
 #pacman programs
