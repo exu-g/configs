@@ -299,7 +299,7 @@ echo Uninstalled unused packages
 
 #update stuff
 echo Updating packages
-paru -Syyu
+sudo pacman -Syyu
 echo Updated packages
 
 #pacman programs
@@ -333,6 +333,13 @@ rm -rf neofetch
 if [[ $(pacman -Q | grep yay) ]] && [[ ! $(pacman -Q | grep paru) ]]; then
     echo "Installing paru"
     yay -S paru-bin
+fi
+
+if [[ $(pacman -Q | grep yay) ]] && [[ ! $(pacman -Q | grep paru) ]]; then
+    echo "Installing paru from git"
+    git clone https://aur.archlinux.org/paru.git
+    cd paru
+    makepkg -si
 fi
 
 #AUR
