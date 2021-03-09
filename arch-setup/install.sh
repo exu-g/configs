@@ -343,6 +343,7 @@ if [[ $(pacman -Q | grep yay) ]] && [[ ! $(pacman -Q | grep paru) ]]; then
     git clone https://aur.archlinux.org/paru.git
     cd paru
     makepkg -si
+    cd ..
 fi
 
 #AUR
