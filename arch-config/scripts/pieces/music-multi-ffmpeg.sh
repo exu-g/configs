@@ -121,6 +121,66 @@ cd "$HOME/MusikRaw"
 # cleanup
 rm flacfiles
 
+##############################
+#####      MP3           #####
+##############################
+
+# find mp3 files, ignore "normalized" or "transcode" folders
+find "$HOME/MusikRaw/" -name "*\.mp3" | grep -v "\/normalized\/" | grep -v "\/transcode\/" > mp3files
+
+while read -r mp3; do
+    # if there are $numjobs or more, dont spawn any new processes
+    while [[ $(jobs | wc -l) -gt $numjobs ]] ; do sleep 1 ; done
+
+    # get directory path
+    pathname="$(dirname "$mp3")"
+    # go to that path for proper output location
+    cd "$pathname"
+    # create directory for transcodes
+    mkdir -p "$pathname/transcode"
+    # get name of file
+    file="$(basename "$mp3")"
+    # strip extension
+    noextfile="${file%.*}"
+    # add opus extension
+    opusfile="${noextfile}.opus"
+
+    # convert to opus in transcode directory
+    # TODO include cover picture (prefer file picture, cover.jpg second preference)
+    ffmpeg -nostdin -i "$mp3" -b:a 256k "${pathname}/transcode/$opusfile" &
+done < mp3files
+
+# wait for previous jobs to finish
+while [[ $(jobs | wc -l) -gt 1 ]] ; do sleep 1 ; done
+
+cd "$HOME/MusikRaw"
+
+# convert previously transcoded mp3s
+while read -r mp3; do
+    # if there are $numjobs or more, dont spawn any new processes
+    while [[ $(jobs | wc -l) -gt $numjobs ]] ; do sleep 1 ; done
+
+    # get directory path
+    pathname="$(dirname "$mp3")"
+    # go to that path for proper output location
+    cd "$pathname"
+    # get name of file
+    file="$(basename "$mp3")"
+    # strip extension
+    noextfile="${file%.*}"
+    # add opus extension
+    opusfile="${noextfile}.opus"
+
+    # convert opus in transcode to normalized
+    ffmpeg-normalize "transcode/$opusfile" -v -pr -c:a libopus -b:a 256k -ext opus &
+done < mp3files
+
+# go to musik raw folder
+cd "$HOME/MusikRaw"
+
+# cleanup
+rm mp3files
+
 ############################################################
 
 echo Finished!
