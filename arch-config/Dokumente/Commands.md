@@ -225,3 +225,11 @@ cp source/{file1,file2}.txt destination
 ```
 paru -S -a (package)
 ```
+
+## Pulseaudio list sinks and list supported specs for sink
+```
+pactl list sinks | grep -Ei 'name:|sysfs.path'
+```
+```
+grep -P 'rates|bits' /proc/asound/card(num)/codec\#0
+```
