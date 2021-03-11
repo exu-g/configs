@@ -464,6 +464,7 @@ exec --no-startup-id bash $HOME/.fehbg &
 
 
 # no really good alternatives that are independent. some others to check out:
+# there are some scripts that should work with i3
 # gnome-power-manager
 # mate-power-manager
 exec --no-startup-id xfce4-power-manager &
