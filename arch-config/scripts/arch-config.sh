@@ -218,6 +218,7 @@ if [[ "$seltheme" == "nyarch" ]]; then
     cp -r "./themes/nyarch/polybar" "$HOME/.config/"
     cp -r "./themes/nyarch/neofetch/lowpoly_flamegirl_blue.txt" "$HOME/.config/neofetch/lowpoly_flamegirl.txt"
     cp "./themes/.fehbg-nyarch" "$HOME/.fehbg"
+    #sed -i 's/^NAME=".*"/NAME="Rawrch Linyux"/' /etc/os-release
 elif [[ "$seltheme" == "space-pink" ]]; then
     cp -r "./themes/space-pink/i3" "$HOME/.config/"
     cp -r "./themes/space-pink/polybar" "$HOME/.config/"
