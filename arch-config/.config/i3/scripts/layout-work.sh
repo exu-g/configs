@@ -10,4 +10,6 @@ i3-msg 'workspace 2; layout tabbed; exec slack'
 
 i3-msg 'workspace 2; layout tabbed; exec teams'
 
+i3-msg 'workspace 2; layout tabbed; exec p3x-onenote'
+
 i3-msg 'mode "default"'
