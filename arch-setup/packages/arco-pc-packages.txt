@@ -24,7 +24,6 @@ alarm-clock-applet
 jackett
 radarr
 sonarr
-monero-gui
 p3x-onenote
 fanficfare
 edac-utils
