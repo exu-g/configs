@@ -29,3 +29,4 @@ p3x-onenote
 fanficfare
 edac-utils
 rasdaemon
+stress-ng
