@@ -30,3 +30,4 @@ edac-utils
 rasdaemon
 stressapptool-git
 i2c-tools
+cpu-g-git
