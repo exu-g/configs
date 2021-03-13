@@ -28,3 +28,5 @@ p3x-onenote
 fanficfare
 edac-utils
 rasdaemon
+stressapptool
+i2c-tools
