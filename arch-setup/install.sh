@@ -170,20 +170,20 @@ in_doomemacs=0
 #in_vscodium=0
 
 cmd=(dialog --separate-output --checklist "Code editors" 22 76 16)
-options=(1 "doom-emacs" off
-        2 "vscodium" off)
+options=(0 "doom-emacs" off
+         1 "vscodium" off)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
 for choice in $choices
 do
     case $choice in
-        1)
+        0)
             in_doomemacs=1
             # TODO sort pacman and AUR packages
             printf '%s\n' 'git' 'emacs' 'ripgrep' 'fd' 'pandoc' 'shellcheck' 'python-pipenv' 'python-isort' 'python-pytest' 'python-rednose' 'pychecker' 'texlive-core' >> "$setupdir/aurselectedpkgs.txt"
             # TODO handle rest of installation
             ;;
-        2)
+        1)
             #in_vscodium=1
             echo "vscodium-bin" >> "$setupdir/aurselectedpkgs.txt"
             ;;
