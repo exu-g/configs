@@ -239,7 +239,7 @@ in_arco_hp=0
 
 cmd=(dialog --separate-output --checklist "Install system specific packages?" 22 76 16)
 options=(1 "Arco PC" off
-        2 "Arco HP" off)
+         2 "Arco HP" off)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
 for choice in $choices
