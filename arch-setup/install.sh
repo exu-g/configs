@@ -220,13 +220,13 @@ done
 #in_pkgstats=0
 
 cmd=(dialog --separate-output --checklist "Report installed packages?" 22 76 16)
-options=(1 "pkgstats" off)
+options=(0 "pkgstats" off)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
 for choice in $choices
 do
     case $choice in
-        1)
+        0)
             #in_pkgstats=1
             echo "pkgstats" >> "$setupdir/selectedpkgs.txt"
             ;;
