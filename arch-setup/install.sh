@@ -326,6 +326,14 @@ echo Installed wine
 ###################
 echo Installing selected programs
 
+# install selected packages
+echo Installing from official repository
+sudo pacman -S --needed - < "$setupdir/selectedpkgs.txt"
+
+# install selected aur packages
+echo Installing from AUR
+paru -S --needed - < "$setupdir/aurselectedpkgs.txt"
+
 #DEs & WMs
 : '
 if [ $in_xfce -eq 1 ]; then
@@ -483,6 +491,7 @@ else
 fi
 '
 
+: '
 if [ $in_mangohud -eq 1 ]; then
     echo "Installing MangoHud"
     git clone --recurse-submodules https://github.com/flightlessmango/MangoHud.git
@@ -490,6 +499,7 @@ if [ $in_mangohud -eq 1 ]; then
 else
     echo "Skipping MangoHud"
 fi
+'
 
 : '
 if [ $in_easystrokes -eq 1 ]; then
@@ -628,11 +638,9 @@ if [ $in_arco_hp -eq 1 ]; then
     paru -S --needed - < "$setupdir/packages/arch-hp-packages.txt"
 fi
 
-# install selected packages
-sudo pacman -S --needed - < "$setupdir/selectedpkgs.txt"
-
-# install selected aur packages
-paru -S --needed - < "$setupdir/aurselectedpkgs.txt"
+##############################
+#####   Configuration    #####
+##############################
 
 #change shell
 chsh -s /usr/bin/fish "$USER"
