@@ -81,23 +81,17 @@ done
 
 cmd=(dialog --separate-output --checklist "Select other programs:" 22 76 16)
 options=(1 "VirtManager" off    # any option can be set to default to "on"
-         2 "Steam" off
-         3 "Lutris" off
-         4 "Blender" off
-         5 "Krita" off
-         6 "Youtube-dl" off
-         7 "Discord" on
-         8 "Handbrake" off
-         9 "Gimp" off
-         10 "Audacity" off
-         11 "MangoHud" off
-         12 "Easystroke" on
-         13 "Liferea" off
-         14 "Fractal" off
-         15 "Bettergram" off
-         16 "Waifu2x" off
-         17 "Telegram" on
-         18 "Element" on)
+         10 "Steam" off
+         11 "Lutris" off
+         20 "Krita" off
+         21 "Gimp" off
+         30 "Youtube-dl" off
+         40 "Handbrake" off
+         41 "Audacity" off
+         50 "Easystroke" on
+         60 "Discord" on
+         61 "Element" on
+         62 "Telegram" on)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
 for choice in $choices
@@ -107,74 +101,50 @@ do
             #in_virtmanager=1
             printf '%s\n' 'qemu' 'virt-manager' >> "$setupdir/selectedpkgs.txt"
             ;;
-        2)
+        10)
             #in_steam=1
             printf '%s\n' 'steam' 'steam-native-runtime' >> "$setupdir/selectedpkgs.txt"
             ;;
-        3)
+        11)
             #in_lutris=1
             echo "lutris" >> "$setupdir/selectedpkgs.txt"
             ;;
-        4)
-            #in_blender=1
-            echo "blender" >> "$setupdir/selectedpkgs.txt"
-            ;;
-        5)
+        20)
             #in_krita=1
             echo "krita" >> "$setupdir/selectedpkgs.txt"
             ;;
-        6)
+        21)
+            #in_gimp=1
+            echo "gimp" >> "$setupdir/selectedpkgs.txt"
+            ;;
+        30)
             #in_youtubedl=1
             echo "youtube-dl" >> "$setupdir/selectedpkgs.txt"
             ;;
-        7)
+        40)
+            #in_handbrake=1
+            echo "handbrake" >> "$setupdir/selectedpkgs.txt"
+            ;;
+        41)
+            #in_audacity=1
+            echo "audacity" >> "$setupdir/selectedpkgs.txt"
+            ;;
+        50)
+            #in_easystrokes=1
+            echo "easystroke" >> "$setupdir/aurselectedpkgs.txt"
+            ;;
+        60)
             #in_discord=1
             #echo "discord" >> "$setupdir/selectedpkgs.txt"
             echo "discord_arch_electron" >> "$setupdir/aurselectedpkgs.txt"
             ;;
-        8)
-            #in_handbrake=1
-            echo "handbrake" >> "$setupdir/selectedpkgs.txt"
-            ;;
-        9)
-            #in_gimp=1
-            echo "gimp" >> "$setupdir/selectedpkgs.txt"
-            ;;
-        10)
-            #in_audacity=1
-            echo "audacity" >> "$setupdir/selectedpkgs.txt"
-            ;;
-        11)
-            # REVIEW special case
-            in_mangohud=1
-            ;;
-        12)
-            #in_easystrokes=1
-            echo "easystroke" >> "$setupdir/aurselectedpkgs.txt"
-            ;;
-        13)
-            #in_liferea=1
-            echo "liferea" >> "$setupdir/aurselectedpkgs.txt"
-            ;;
-        14)
-            #in_fractal=1
-            echo "fractal" >> "$setupdir/selectedpkgs.txt"
-            ;;
-        15)
-            #in_bettergram=1
-            echo "bettergram" >> "$setupdir/aurselectedpkgs.txt"
-            ;;
-        16)
-            #in_waifu2x=1
-            echo "waifu2x-ncnn-vulkan" >> "$setupdir/aurselectedpkgs.txt"
-            ;;
-        17)
-            #in_telegram=1
-            echo "telegram-desktop" >> "$setupdir/selectedpkgs.txt"
-            ;;
-        18)
+        61)
             #in_element=1
             echo "element-desktop" >> "$setupdir/selectedpkgs.txt"
+            ;;
+        62)
+            #in_telegram=1
+            echo "telegram-desktop" >> "$setupdir/selectedpkgs.txt"
             ;;
     esac
 done
