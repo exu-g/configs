@@ -152,13 +152,13 @@ done
 in_acpufreq=0
 
 cmd=(dialog --separate-output --checklist "Performance and Battery life" 22 76 16)
-options=(1 "auto-cpufreq" off)
+options=(0 "auto-cpufreq" off)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
 for choice in $choices
 do
     case $choice in
-        1)
+        0)
             in_acpufreq=1
             echo "auto-cpufreq-git" >> "$setupdir/aurselectedpkgs.txt"
             # TODO Handle rest of installation
