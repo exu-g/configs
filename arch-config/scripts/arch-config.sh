@@ -282,8 +282,10 @@ fi
 # execute feh
 "$HOME/.fehbg"
 
-#restart i3 in place
-i3 restart
+#restart i3 in place, but only if i3 is running
+if [[ "$(ps aux | grep "\si3\$")" ]]; then
+    i3 restart
+fi
 
 #output
 echo Finished updating everything!
