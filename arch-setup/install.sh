@@ -37,23 +37,23 @@ done
 #in_tor=0
 
 cmd=(dialog --separate-output --checklist "Select browsers:" 22 76 16)
-options=(1 "Firefox" on    # any option can be set to default to "on"
-         2 "Chromium" off
-         3 "Torbrowser" on)
+options=(0 "Firefox" on    # any option can be set to default to "on"
+         10 "Chromium" off
+         20 "Torbrowser" on)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
 for choice in $choices
 do
     case $choice in
-        1)
+        0)
             #in_firefox=1
             echo "firefox" >> "$setupdir/selectedpkgs.txt"
             ;;
-        2)
+        10)
             #in_chromium=1
             echo "chromium" >> "$setupdir/selectedpkgs.txt"
             ;;
-        3)
+        20)
             #in_tor=1
             echo "torbrowser-launcher" >> "$setupdir/selectedpkgs.txt"
             ;;
