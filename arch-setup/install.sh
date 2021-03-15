@@ -194,21 +194,25 @@ done
 #in_slack=0
 
 cmd=(dialog --separate-output --checklist "School and work communication" 22 76 16)
-options=(1 "teams" off
-        2 "slack" off)
+options=(0 "Teams" off
+         1 "Slack" off
+         10 "OneNote" off)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
 for choice in $choices
 do
     case $choice in
-        1)
+        0)
             #in_teams=1
             echo "teams" >> "$setupdir/aurselectedpkgs.txt"
             ;;
-        2)
+        1)
             #in_slack=1
             #echo "slack-desktop" >> "$setupdir/aurselectedpkgs.txt"
             echo "slack-electron" >> "$setupdir/aurselectedpkgs.txt"
+            ;;
+        10)
+            echo "p3x-onenote" >> "$setupdir/aurselectedpkgs.txt"
             ;;
     esac
 done
