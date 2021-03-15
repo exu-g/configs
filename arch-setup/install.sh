@@ -14,18 +14,18 @@ cd "$HOME"
 #in_i3gaps=0
 
 cmd=(dialog --separate-output --checklist "Select Desktop environment/Window manager:" 22 76 16)
-options=(1 "[DE] xfce4" off    # any option can be set to default to "on"
-         2 "[WM] i3-gaps" off)
+options=(0 "[DE] xfce4" off    # any option can be set to default to "on"
+         100 "[WM] i3-gaps" off)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
 for choice in $choices
 do
     case $choice in
-        1)
+        0)
             #in_xfce=1
             echo "xfce4" >> "$setupdir/selectedpkgs.txt"
             ;;
-        2)
+        100)
             #in_i3gaps=1
             echo "i3-gaps" >> "$setupdir/selectedpkgs.txt"
             ;;
