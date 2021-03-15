@@ -147,7 +147,7 @@ while read -r mp3; do
 
     # convert to opus in transcode directory
     # TODO include cover picture (prefer file picture, cover.jpg second preference)
-    ffmpeg -nostdin -i "$mp3" -b:a 256k "${pathname}/transcode/$opusfile" &
+    ffmpeg -nostdin -i "$mp3" -b:a 192k "${pathname}/transcode/$opusfile" &
 done < mp3files
 
 # wait for previous jobs to finish
@@ -172,7 +172,7 @@ while read -r mp3; do
     opusfile="${noextfile}.opus"
 
     # convert opus in transcode to normalized
-    ffmpeg-normalize "transcode/$opusfile" -v -pr -c:a libopus -b:a 256k -ext opus &
+    ffmpeg-normalize "transcode/$opusfile" -v -pr -c:a libopus -b:a 192k -ext opus &
 done < mp3files
 
 # go to musik raw folder
