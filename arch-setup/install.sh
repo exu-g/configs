@@ -80,7 +80,7 @@ done
 #in_element=0
 
 cmd=(dialog --separate-output --checklist "Select other programs:" 22 76 16)
-options=(1 "VirtManager" off    # any option can be set to default to "on"
+options=(0 "VirtManager" off    # any option can be set to default to "on"
          10 "Steam" off
          11 "Lutris" off
          20 "Krita" off
@@ -97,7 +97,7 @@ clear
 for choice in $choices
 do
     case $choice in
-        1)
+        0)
             #in_virtmanager=1
             printf '%s\n' 'qemu' 'virt-manager' >> "$setupdir/selectedpkgs.txt"
             ;;
