@@ -294,13 +294,11 @@ sudo make install
 cd ..
 rm -rf neofetch
 
-# install paru
+# install paru-bin with yay, or download paru from github
 if [[ $(pacman -Q | grep yay) ]] && [[ ! $(pacman -Q | grep paru) ]]; then
     echo "Installing paru"
     yay -S paru-bin
-fi
-
-if [[ $(pacman -Q | grep yay) ]] && [[ ! $(pacman -Q | grep paru) ]]; then
+elif [[ ! $(pacman -Q | grep yay) ]] && [[ ! $(pacman -Q | grep paru) ]]; then
     echo "Installing paru from git"
     git clone https://aur.archlinux.org/paru.git
     cd paru
