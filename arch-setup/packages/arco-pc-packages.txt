@@ -32,3 +32,4 @@ stressapptool-git
 i2c-tools
 cpu-g-git
 corefreq-git
+sysstat
