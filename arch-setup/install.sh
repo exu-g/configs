@@ -661,6 +661,10 @@ sudo systemctl start ufw
 # enable lightdm
 sudo systemctl enable lightdm
 
+# regenerate locale
+# Fixes rofi not launching
+sudo locale-gen
+
 # update fonts cache
 fc-cache -f
 
