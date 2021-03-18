@@ -272,11 +272,6 @@ echo Installing default pacman programs
 sudo pacman -S --needed - < "$setupdir/packages/officialpkgs.txt"
 echo Installed official programs
 
-# audio
-echo Installing audio programs
-sudo pacman -S --needed - < "$setupdir/packages/audiopkgs.txt"
-echo Installed audio programs
-
 # pip
 echo Installing python programs
 pip install --user autotrash
@@ -305,6 +300,11 @@ elif [[ ! $(pacman -Q | grep yay) ]] && [[ ! $(pacman -Q | grep paru) ]]; then
     makepkg -si
     cd ..
 fi
+
+# audio
+echo Installing audio programs
+sudo pacman -S --needed - < "$setupdir/packages/audiopkgs.txt"
+echo Installed audio programs
 
 #AUR
 echo Installing default AUR programs
