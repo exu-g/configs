@@ -303,7 +303,7 @@ fi
 
 # audio
 echo Installing audio programs
-sudo pacman -S --needed - < "$setupdir/packages/audiopkgs.txt"
+paru -S --needed - < "$setupdir/packages/audiopkgs.txt"
 echo Installed audio programs
 
 #AUR
