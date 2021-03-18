@@ -70,3 +70,5 @@ galculator
 flameshot
 kitty
 xfce4-power-manager
+base-devel
+fakeroot
