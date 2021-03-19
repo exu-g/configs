@@ -7,3 +7,4 @@
 /mnt/storage/MediaLibrary/Handbrake-output
 /mnt/storage/MediaLibrary/other
 /mnt/storage/Grossi Dateien
+/mnt/storage/TorrentsHDD
