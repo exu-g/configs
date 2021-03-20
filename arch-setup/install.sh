@@ -82,6 +82,7 @@ in_vmware15=0
 
 cmd=(dialog --separate-output --checklist "Select other programs:" 22 76 16)
 options=(0 "VirtManager" off    # any option can be set to default to "on"
+         1 "VMWare Workstation 15" off
          10 "Steam" off
          11 "Lutris" off
          20 "Krita" off
