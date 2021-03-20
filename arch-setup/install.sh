@@ -61,6 +61,7 @@ do
 done
 
 #in_virtmanager=0
+in_vmware15=0
 #in_steam=0
 #in_lutris=0
 #in_blender=0
@@ -100,6 +101,11 @@ do
         0)
             #in_virtmanager=1
             printf '%s\n' 'qemu' 'virt-manager' >> "$setupdir/selectedpkgs.txt"
+            ;;
+        1)
+            in_vmware15=1
+            echo "vmware-workstation15" >> "$setupdir/aurselectedpkgs.txt"
+            # TODO handle rest of installation
             ;;
         10)
             #in_steam=1
@@ -333,6 +339,16 @@ sudo pacman -S --needed - < "$setupdir/selectedpkgs.txt"
 # install selected aur packages
 echo Installing from AUR
 paru -S --needed - < "$setupdir/aurselectedpkgs.txt"
+
+if [ $in_vmware15 -eq 1 ]; then
+    echo "Installing VMWare Workstation 15"
+    paru -S --needed vmware-workstation15
+    sudo groupadd -f vmware
+    sudo chgpr vmware /dev/vmnet*
+    sudo chmod g+rw /dev/vmnet*
+else
+    echo "Skipping VMWare Workstation 15"
+fi
 
 #DEs & WMs
 : '
