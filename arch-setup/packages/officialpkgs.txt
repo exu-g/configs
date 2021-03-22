@@ -80,4 +80,4 @@ xf86-video-nouveau
 xf86-video-fbdev
 xf86-video-intel
 os-prober
-pcmanfm
+pcmanfm-gtk3
