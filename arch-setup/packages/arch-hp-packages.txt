@@ -11,3 +11,4 @@ p3x-onenote
 intellij-idea-ultimate-edition-jre
 xfce4-goodies
 htop
+pcmanfm
