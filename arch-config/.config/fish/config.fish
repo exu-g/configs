@@ -33,8 +33,8 @@ set fish_color_cancel brred
 # text editor
 #set EDITOR "/usr/bin/emacs --no-window-system"
 #set VISUAL "/usr/bin/emacs --no-window-system"
-set EDITOR "/usr/bin/vim"
-set VISUAL "/usr/bin/vim"
+set EDITOR "/usr/bin/nvim"
+set VISUAL "/usr/bin/nvim"
 
 # add paths
 set fish_user_paths "$HOME/.emacs.d/bin/" $fish_user_paths
@@ -43,6 +43,9 @@ set fish_user_paths "$HOME/.local/bin" $fish_user_paths
 
 # edit with emacs
 alias emacs="/usr/bin/emacs --no-window-system"
+
+# use neovim instead of vim
+alias vim="/usr/bin/nvim"
 
 # alias cat
 alias cat="$HOME/scripts/pieces/cat.sh"
