@@ -499,8 +499,9 @@ bindsym control+mod1+a exec --no-startup-id rofi -show drun
 #bindsym ctrl+mod1+e exec --no-startup-id vscodium;focus
 bindsym ctrl+mod1+e exec --no-startup-id emacs;focus
 
-#thunar
-bindsym ctrl+mod1+t exec --no-startup-id thunar;focus
+# file manager
+#bindsym ctrl+mod1+t exec --no-startup-id thunar;focus
+bindsym ctrl+mod1+t exec --no-startup-id pcmanfm;focus
 
 #libreoffice
 bindsym ctrl+mod1+l exec --no-startup-id libreoffice;focus
