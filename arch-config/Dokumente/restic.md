@@ -2,7 +2,7 @@
 
 ## Local backups
 
-### arco-pc-backup home
+### lupusregina-backup home
 There is currently a problem in go that makes this command fail. Run the following command before retrying: `export GODEBUG=asyncpreemptoff=1`  
 ```
 restic init --repo /mnt/backups/arco-pc/home/marc
@@ -47,7 +47,7 @@ Does not remove data, just links
 Clean up unreferenced data. "-n" for dry run  
 `restic -r b2:(bucket):(path) prune`  
 
-### arco-pc-backup home
+### lupusregina-backup home
 ```bash
 restic -r b2:arco-pc-backup:/home/marc init
 ```
@@ -61,7 +61,7 @@ restic -r b2:arco-pc-backup:/home/marc snapshots
 restic -r b2:arco-pc-backup:/home/marc restore --target "/home/marc/" (snapshot)
 ```
 
-### arco-pc-backup 3tb toshiba
+### lupusregina-backup 3tb toshiba
 ```
 restic -r b2:arco-pc-backup:/mnt/harddrive init
 ```
@@ -75,7 +75,7 @@ restic -r b2:arco-pc-backup:/mnt/harddrive snapshots
 restic -r b2:arco-pc-backup:/mnt/harddrive restore --target "/mnt/storage" (snapshot)
 ```
 
-### hydra-server-backup var/www
+### albedo-server-backup var/www
 ```
 restic -r b2:hydra-server-backup:var/www init
 ```
@@ -89,7 +89,7 @@ restic -r b2:hydra-server-backup:var/www snapshots
 restic -r b2:hydra-server-backup:var/www restore --target "/var/www" <snapshot>
 ```
 
-### hydra-server-backup etc
+### albedo-server-backup etc
 ```
 restic -r b2:hydra-server-backup:etc init
 ```
