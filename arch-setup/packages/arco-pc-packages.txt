@@ -33,3 +33,4 @@ i2c-tools
 cpu-g-git
 corefreq-git
 sysstat
+intellij-idea-ultimate-edition-jre
