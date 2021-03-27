@@ -10,7 +10,6 @@ rsync -uvr --progress --bwlimit=4096 --chmod=744 -e "ssh -i $HOME/.ssh/id_ed2551
 ### Update Shows
 ```
 rsync -uvr --progress --bwlimit=4096 --chmod=744 -e "ssh -i $HOME/.ssh/id_ed25519_non-root" /mnt/storage/MediaLibrary/Shows/ jellyfin@albedo.realstickman.net:/home/jellyfin/Shows/
-
 ```
 
 ### Update Musik
