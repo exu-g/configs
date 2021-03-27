@@ -280,6 +280,9 @@ update-desktop-database ~/.local/share/applications/
 #sync doom-emacs
 ~/.emacs.d/bin/doom sync
 
+# reload systemd user scripts
+systemctl --user daemon-reload
+
 # reload .Xresources
 if [[ -f "$HOME/.Xresources" ]]; then
     xrdb ~/.Xresources
