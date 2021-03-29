@@ -458,6 +458,9 @@ exec --no-startup-id protonmail-bridge -no-window
 # feh background image
 exec --no-startup-id bash $HOME/.fehbg &
 
+# activate flameshot
+exec --no-startup-id flameshot &
+
 
 #####################################################################################################################
 #################                                 system applications                               #################
