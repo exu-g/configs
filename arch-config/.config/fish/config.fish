@@ -86,7 +86,7 @@ alias pacman='pacman --color auto'
 #alias update='paru -Syu --sudoloop --newsonupgrade --upgrademenu --combinedupgrade; notify'
 
 # Update pip packages
-alias pip-update='pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U --user'
+alias pip-update='pip list --outdated --format=freeze | cut -d = -f 1  | xargs -n1 pip install -U --user'
 
 #grub update
 alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
