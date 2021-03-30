@@ -83,3 +83,7 @@ os-prober
 pcmanfm-gtk3
 engrampa
 htop
+brotli
+p7zip
+unace
+unrar
