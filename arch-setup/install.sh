@@ -175,10 +175,12 @@ done
 
 in_doomemacs=0
 #in_vscodium=0
+in_podman=0
 
-cmd=(dialog --separate-output --checklist "Code editors" 22 76 16)
+cmd=(dialog --separate-output --checklist "Devtools" 22 76 16)
 options=(0 "doom-emacs" off
-         1 "vscodium" off)
+         1 "vscodium" off
+         10 "Podman" off)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
 for choice in $choices
@@ -193,6 +195,9 @@ do
         1)
             #in_vscodium=1
             echo "vscodium-bin" >> "$setupdir/aurselectedpkgs.txt"
+            ;;
+        10)
+            in_podman=1
             ;;
     esac
 done
@@ -592,7 +597,7 @@ else
     echo "Skipping auto-cpufreq"
 fi
 
-#text editors
+#devtools
 if [ $in_doomemacs -eq 1 ]; then
     echo "Installing doom-emacs"
     paru -S --needed git emacs ripgrep fd pandoc shellcheck python-pipenv python-isort python-pytest python-rednose pychecker texlive-core
@@ -611,6 +616,15 @@ else
     echo "Skipping vscodium"
 fi
 '
+
+if [ $in_podman -eq 1 ]; then
+    echo "Installing podman"
+    sudo pacman -S --needed podman
+    sudo touch /etc/subuid /etc/subgid
+    sudo usermod --add-subuids 100000-165536 --add-subgids 100000-165536 "$USER"
+else
+    echo "Skipping podman"
+fi
 
 : '
 #other social stuff
