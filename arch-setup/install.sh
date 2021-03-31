@@ -622,6 +622,8 @@ if [ $in_podman -eq 1 ]; then
     sudo pacman -S --needed podman
     sudo touch /etc/subuid /etc/subgid
     sudo usermod --add-subuids 100000-165536 --add-subgids 100000-165536 "$USER"
+    sudo groupadd podman
+    sudo usermod -a -G podman "$USER"
 else
     echo "Skipping podman"
 fi
