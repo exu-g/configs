@@ -300,6 +300,11 @@ fi
 echo Finished updating everything!
 echo Launching new shell!
 
+# remind user of cgroupsv2 if using podman
+if [[ $(pacman -Q | grep podman) ]]; then
+    echo "Remember to set \"systemd.unified_cgroup_hierarchy=1\" in the kernel!!"
+fi
+
 # reload fish
 exec fish
 
