@@ -1,5 +1,6 @@
 [Unit]
 Description=Restic storage backup
+After=restic-backup-home.service
 [Service]
 Type=oneshot
 ExecStart=restic backup --verbose --tag systemd-storage.timer $BACKUP_EXCLUDES $BACKUP_PATHS --limit-upload=2048
