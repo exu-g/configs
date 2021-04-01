@@ -87,3 +87,4 @@ brotli
 p7zip
 unace
 unrar
+polkit-gnome
