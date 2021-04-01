@@ -12,3 +12,5 @@ intellij-idea-ultimate-edition-jre
 xfce4-goodies
 htop
 pcmanfm
+electron9-bin
+balena-etcher
