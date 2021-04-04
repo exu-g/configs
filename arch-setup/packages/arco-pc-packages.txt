@@ -35,3 +35,4 @@ corefreq-git
 sysstat
 intellij-idea-ultimate-edition
 intellij-idea-ultimate-edition-jre
+easytag
