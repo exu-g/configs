@@ -80,11 +80,13 @@ xf86-video-nouveau
 xf86-video-fbdev
 xf86-video-intel
 os-prober
-pcmanfm-gtk3
-engrampa
 htop
 brotli
 p7zip
 unace
 unrar
 polkit-gnome
+nemo
+nemo-fileroller
+nemo-preview
+nemo-share

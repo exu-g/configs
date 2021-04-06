@@ -42,3 +42,5 @@ nnn
 xfcd4-screensaver
 termite
 thunar
+pcmanfm-gtk3
+engrampa
