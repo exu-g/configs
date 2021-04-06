@@ -280,6 +280,9 @@ update-desktop-database ~/.local/share/applications/
 #sync doom-emacs
 ~/.emacs.d/bin/doom sync
 
+# set nemo terminal emulator
+gsettings set org.cinnamon.desktop.default-applications.terminal exec kitty
+
 # reload systemd user scripts
 systemctl --user daemon-reload
 
