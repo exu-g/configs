@@ -90,3 +90,4 @@ nemo
 nemo-fileroller
 nemo-preview
 nemo-share
+dconf-editor
