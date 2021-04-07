@@ -19,6 +19,12 @@ gsettings set org.nemo.list-view default-zoom-level small
 # TODO
 gsettings set org.nemo.preferences show-edit-icon-toolbar false
 
+# show sidebar
+gsettings set org.nemo.window-state start-with-sidebar true
+
+# enable "places" in sidebar
+gsettings set org.nemo.window-state side-pane-view places
+
 # enable open in terminal
 gsettings set org.nemo.preferences.menu-config background-menu-open-in-terminal true
 
