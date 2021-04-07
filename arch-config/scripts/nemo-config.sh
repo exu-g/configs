@@ -13,6 +13,9 @@ gsettings set org.nemo.preferences show-hidden-files true
 # show terminal button
 gsettings set org.nemo.preferences show-open-in-terminal-toolbar true
 
+# set zoom level for list view
+gsettings set org.nemo.list-view default-zoom-level small
+
 # TODO
 gsettings set org.nemo.preferences show-edit-icon-toolbar false
 
