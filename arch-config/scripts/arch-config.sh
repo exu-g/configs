@@ -271,6 +271,9 @@ chmod +x -R ~/scripts
 # make applications executable
 chmod +x -R ~/.local/share/applications
 
+# set settings for nemo
+bash ~/config/scripts/nemo-config.sh
+
 #remove downloaded folder
 rm -rf ~/config
 
@@ -279,9 +282,6 @@ update-desktop-database ~/.local/share/applications/
 
 #sync doom-emacs
 ~/.emacs.d/bin/doom sync
-
-# set settings for nemo
-bash ~/config/scripts/nemo-config.sh
 
 # reload systemd user scripts
 systemctl --user daemon-reload
