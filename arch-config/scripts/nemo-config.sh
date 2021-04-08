@@ -16,6 +16,10 @@ gsettings set org.nemo.preferences show-open-in-terminal-toolbar true
 # set zoom level for list view
 gsettings set org.nemo.list-view default-zoom-level small
 
+# Use Thunar as bulk rename tool
+# Those escapes are a nightmare
+gsettings set org.nemo.preferences bulk-rename-tool 'b'\''thunar -B'\'''
+
 # TODO
 gsettings set org.nemo.preferences show-edit-icon-toolbar false
 
