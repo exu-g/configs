@@ -92,3 +92,4 @@ nemo-preview
 nemo-share
 dconf-editor
 gsettings-desktop-schemas
+thunar
