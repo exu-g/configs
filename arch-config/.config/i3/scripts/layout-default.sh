@@ -16,7 +16,7 @@ i3-msg 'workspace 2; layout tabbed; exec thunderbird'
 
 i3-msg 'workspace 2; layout tabbed; exec discord'
 
-sleep 2
+sleep 5
 
 #i3-msg 'workspace 2; layout tabbed; exec element-desktop'
 
