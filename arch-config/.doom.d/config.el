@@ -73,3 +73,6 @@
         ("HACK"           . "#7D5587")
         ("REVIEW"         . "#3DADC6")
         ("OHGODTHEHORROR"   . "#FC7702")))
+
+;; Less delay for company to show up
+(setq company-idle-delay 0)
