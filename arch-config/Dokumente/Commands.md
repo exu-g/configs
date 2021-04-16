@@ -233,3 +233,12 @@ pactl list sinks | grep -Ei 'name:|sysfs.path'
 ```
 grep -P 'rates|bits' /proc/asound/card(num)/codec\#0
 ```
+
+## GPG
+Symetric file encryption and decryption  
+```
+gpg -c (file)
+```
+```
+gpg (file).gpg
+```
