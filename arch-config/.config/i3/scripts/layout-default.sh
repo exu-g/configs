@@ -12,7 +12,7 @@ sleep 0.3
 
 i3-msg 'workspace 2; layout tabbed; exec thunderbird'
 
-#sleep 0.5
+sleep 0.2
 
 i3-msg 'workspace 2; layout tabbed; exec discord'
 
