@@ -93,3 +93,4 @@ nemo-share
 dconf-editor
 gsettings-desktop-schemas
 thunar
+tldr
