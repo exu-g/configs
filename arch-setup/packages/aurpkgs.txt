@@ -14,7 +14,6 @@ ffmpeg-normalize-git
 lightdm-slick-greeter
 lightdm-settings
 corectrl
-vmware-workstation15
 pdfsam
 tauon-music-box
 libreoffice-extension-languagetool
