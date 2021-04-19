@@ -94,3 +94,4 @@ dconf-editor
 gsettings-desktop-schemas
 thunar
 tldr
+reflector
