@@ -300,12 +300,12 @@ if [[ "$(ps aux | grep "\si3\$")" ]]; then
 fi
 
 #output
-echo Finished updating everything!
+echo -e "\033[38;2;20;200;20mFinished updating everything!\033[0m"
 echo Launching new shell!
 
 # remind user of cgroupsv2 if using podman
 if [[ $(pacman -Q | grep podman) ]]; then
-    echo "Remember to set \"systemd.unified_cgroup_hierarchy=1\" in the kernel!!"
+    echo -e "\033[38;2;200;20;20mRemember to set \"systemd.unified_cgroup_hierarchy=1\" in the kernel!!\033[0m"
 fi
 
 # reload fish
