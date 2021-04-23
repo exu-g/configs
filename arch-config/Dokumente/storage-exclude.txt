@@ -8,3 +8,5 @@
 /mnt/storage/MediaLibrary/other
 /mnt/storage/Grossi Dateien
 /mnt/storage/TorrentsHDD
+/mnt/storage/chia
+/mnt/storage/tmp
