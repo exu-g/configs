@@ -16,9 +16,13 @@ numjobs="$1"
 ##############################
 
 # find opus, ignore anything in "normalized" or "transcode" folders
-find "$HOME/MusikRaw/" -name "*\.opus" | grep -v "\/normalized\/" | grep -v "\/transcode\/" > opusfiles
+#find "$HOME/MusikRaw/" -name "*\.opus" | grep -v "\/normalized\/" | grep -v "\/transcode\/" > opusfiles
 
-while read -r opus; do
+# array of opus with find
+readarray -d '' opusfiles < <(find "$HOME/MusikRaw/" -not \( -path *"\/normalized\/"* -prune \) -not \( -path *"\/transcode\/"* -prune \) -name "*\.opus" -print0)
+
+for opus in "${opusfiles[@]}"; do
+#while read -r opus; do
     # if there are $numjobs or more, dont spawn any new processes
     while [[ $(jobs | wc -l) -gt $numjobs ]] ; do sleep 1 ; done
 
@@ -28,22 +32,27 @@ while read -r opus; do
     cd "$pathname"
     # convert file
     ffmpeg-normalize "$opus" -v -pr -c:a libopus -b:a 128k -ext opus &
-done < opusfiles
+#done < opusfiles
+done
 
 # go to musik raw folder
 cd "$HOME/MusikRaw"
 
 # cleanup
-rm opusfiles
+#rm opusfiles
 
 ##############################
 #####      M4A           #####
 ##############################
 
 # find m4a files, ignore "normalized" or "transcode" folders
-find "$HOME/MusikRaw/" -name "*\.m4a" | grep -v "\/normalized\/" | grep -v "\/transcode\/" > m4afiles
+#find "$HOME/MusikRaw/" -name "*\.m4a" | grep -v "\/normalized\/" | grep -v "\/transcode\/" > m4afiles
 
-while read -r m4a; do
+# array of m4a with find
+readarray -d '' m4afiles < <(find "$HOME/MusikRaw/" -not \( -path *"\/normalized\/"* -prune \) -not \( -path *"\/transcode\/"* -prune \) -name "*\.m4a" -print0)
+
+for m4a in "${m4afiles[@]}"; do
+#while read -r m4a; do
     # if there are $numjobs or more, dont spawn any new processes
     while [[ $(jobs | wc -l) -gt $numjobs ]] ; do sleep 1 ; done
 
@@ -53,22 +62,27 @@ while read -r m4a; do
     cd "$pathname"
     # convert file
     ffmpeg-normalize "$m4a" -v -pr -c:a libopus -b:a 128k -ext opus &
-done < m4afiles
+#done < m4afiles
+done
 
 # go to musik raw folder
 cd "$HOME/MusikRaw"
 
 # cleanup
-rm m4afiles
+#rm m4afiles
 
 ##############################
 #####      FLAC          #####
 ##############################
 
 # find flac files, ignore "normalized" or "transcode" folders
-find "$HOME/MusikRaw/" -name "*\.flac" | grep -v "\/normalized\/" | grep -v "\/transcode\/" > flacfiles
+#find "$HOME/MusikRaw/" -name "*\.flac" | grep -v "\/normalized\/" | grep -v "\/transcode\/" > flacfiles
 
-while read -r flac; do
+# array of flac with find
+readarray -d '' flacfiles < <(find "$HOME/MusikRaw/" -not \( -path *"\/normalized\/"* -prune \) -not \( -path *"\/transcode\/"* -prune \) -name "*\.flac" -print0)
+
+for flac in "${flacfiles[@]}"; do
+#while read -r flac; do
     # if there are $numjobs or more, dont spawn any new processes
     while [[ $(jobs | wc -l) -gt $numjobs ]] ; do sleep 1 ; done
 
@@ -88,7 +102,8 @@ while read -r flac; do
     # convert to opus in transcode directory
     # TODO include cover picture (prefer file picture, cover.jpg second preference)
     ffmpeg -nostdin -i "$flac" -b:a 256k "${pathname}/transcode/$opusfile" &
-done < flacfiles
+#done < flacfiles
+done
 
 # wait for previous jobs to finish
 while [[ $(jobs | wc -l) -gt 1 ]] ; do sleep 1 ; done
@@ -96,7 +111,8 @@ while [[ $(jobs | wc -l) -gt 1 ]] ; do sleep 1 ; done
 cd "$HOME/MusikRaw"
 
 # convert previously transcoded flacs
-while read -r flac; do
+for flac in "${flacfiles[@]}"; do
+#while read -r flac; do
     # if there are $numjobs or more, dont spawn any new processes
     while [[ $(jobs | wc -l) -gt $numjobs ]] ; do sleep 1 ; done
 
@@ -113,22 +129,27 @@ while read -r flac; do
 
     # convert opus in transcode to normalized
     ffmpeg-normalize "transcode/$opusfile" -v -pr -c:a libopus -b:a 256k -ext opus &
-done < flacfiles
+#done < flacfiles
+done
 
 # go to musik raw folder
 cd "$HOME/MusikRaw"
 
 # cleanup
-rm flacfiles
+#rm flacfiles
 
 ##############################
 #####      MP3           #####
 ##############################
 
 # find mp3 files, ignore "normalized" or "transcode" folders
-find "$HOME/MusikRaw/" -name "*\.mp3" | grep -v "\/normalized\/" | grep -v "\/transcode\/" > mp3files
+#find "$HOME/MusikRaw/" -name "*\.mp3" | grep -v "\/normalized\/" | grep -v "\/transcode\/" > mp3files
 
-while read -r mp3; do
+# array of mp3 with find
+readarray -d '' mp3files < <(find "$HOME/MusikRaw/" -not \( -path *"\/normalized\/"* -prune \) -not \( -path *"\/transcode\/"* -prune \) -name "*\.mp3" -print0)
+
+for mp3 in "${mp3files[@]}"; do
+#while read -r mp3; do
     # if there are $numjobs or more, dont spawn any new processes
     while [[ $(jobs | wc -l) -gt $numjobs ]] ; do sleep 1 ; done
 
@@ -148,7 +169,8 @@ while read -r mp3; do
     # convert to opus in transcode directory
     # TODO include cover picture (prefer file picture, cover.jpg second preference)
     ffmpeg -nostdin -i "$mp3" -b:a 192k "${pathname}/transcode/$opusfile" &
-done < mp3files
+#done < mp3files
+done
 
 # wait for previous jobs to finish
 while [[ $(jobs | wc -l) -gt 1 ]] ; do sleep 1 ; done
@@ -156,7 +178,8 @@ while [[ $(jobs | wc -l) -gt 1 ]] ; do sleep 1 ; done
 cd "$HOME/MusikRaw"
 
 # convert previously transcoded mp3s
-while read -r mp3; do
+for mp3 in "${mp3files[@]}"; do
+#while read -r mp3; do
     # if there are $numjobs or more, dont spawn any new processes
     while [[ $(jobs | wc -l) -gt $numjobs ]] ; do sleep 1 ; done
 
@@ -173,16 +196,17 @@ while read -r mp3; do
 
     # convert opus in transcode to normalized
     ffmpeg-normalize "transcode/$opusfile" -v -pr -c:a libopus -b:a 192k -ext opus &
-done < mp3files
+#done < mp3files
+done
 
 # go to musik raw folder
 cd "$HOME/MusikRaw"
 
 # cleanup
-rm mp3files
+#rm mp3files
 
 ############################################################
 
 echo Finished!
 
-exit
+$(exit 0); echo "$?"
