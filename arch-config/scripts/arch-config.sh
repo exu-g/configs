@@ -253,6 +253,16 @@ if [[ $(pacman -Q | grep vmware-workstation) ]]; then
     sudo systemctl enable --now vmware-networks-server.service
 fi
 
+# enable fstrim timer
+sudo systemctl enable fstrim.timer
+
+# enable btrfs maintenance timers
+if [[ $(pacman -Q | grep btrfsmaintenance) ]]; then
+    sudo systemctl restart btrfsmaintenance-refresh.service
+    sudo systemctl enable btrfs-balance.timer
+    sudo systemctl enable btrfs-scrub.timer
+fi
+
 #unzip gimp plugins
 echo Unzipping gimp plugins
 unzip -o ~/.config/GIMP/2.10/plug-ins/export_layers-3.3.1.zip -d ~/.config/GIMP/2.10/plug-ins/ > /dev/null
