@@ -95,3 +95,4 @@ gsettings-desktop-schemas
 thunar
 tldr
 reflector
+util-linux
