@@ -19,3 +19,4 @@ tauon-music-box
 libreoffice-extension-languagetool
 downgrade
 nemo-audio-tab
+btrfsmaintenance
