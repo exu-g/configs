@@ -59,7 +59,8 @@ alias setup='git clone https://gitlab.com/RealStickman-arch/setup && cd setup &&
 #notification
 alias notify='notify-send "Terminal" "Your command finished!" --icon=dialog-information'
 
-#ssh alias to never bother with terminfo again
+# ssh alias to never bother with terminfo again
+# needs python on the server
 alias ssh='kitty +kitten ssh use-python'
 
 #list
