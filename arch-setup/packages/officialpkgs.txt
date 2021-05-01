@@ -96,3 +96,4 @@ thunar
 tldr
 reflector
 util-linux
+dhclient
