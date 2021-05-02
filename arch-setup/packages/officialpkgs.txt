@@ -97,3 +97,9 @@ tldr
 reflector
 util-linux
 dhclient
+libbluray
+libaacs
+libcdio
+libdvdread
+libdvdcss
+libdvdnav
