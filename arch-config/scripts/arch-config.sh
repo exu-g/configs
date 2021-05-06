@@ -133,7 +133,7 @@ if [[ -d ~/.easystroke ]]; then
 fi
 
 # elvish
-if [[ -d ~/.elvish]]; then
+if [[ -d ~/.elvish ]]; then
     rsync -ah ~/.elvish ~/old_dat/ || echo Directory does not exist
 fi
 
