@@ -29,6 +29,15 @@ fn ls [@a]{ e:ls --color $@a }
 # emacs in terminal
 fn emacs [@a]{ /usr/bin/emacs --no-window-system $@a }
 
+# use neovim instead of vim
+fn vim [@a]{ /usr/bin/nvim $@a }
+
+# bash cat
+fn cat [@a]{ $E:HOME/scripts/pieces/cat.sh $@a }
+
+# update config
+fn upconf [@a]{ $E:HOME/scripts/arch-config.sh $@a }
+
 ##############################
 #####       other        #####
 ##############################
