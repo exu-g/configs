@@ -30,6 +30,21 @@ set fish_color_cancel brred
 # for ranger
 #set RANGER_LOAD_DEFAULT_RC FALSE
 
+# custom prompt
+function fish_prompt
+  set_color --bold red
+  echo -n (whoami)
+  set_color --bold yellow
+  echo -n "@"
+  set_color normal
+  set_color cyan
+  echo -n (hostname)
+  set_color yellow
+  echo -n ' '(prompt_pwd)
+  set_color normal
+  echo -n '> '
+end
+
 # text editor
 #set EDITOR "/usr/bin/emacs --no-window-system"
 #set VISUAL "/usr/bin/emacs --no-window-system"
