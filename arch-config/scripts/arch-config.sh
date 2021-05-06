@@ -35,6 +35,8 @@ cd "$HOME"
 #remove old installs
 rm -rf ~/config
 
+echo "Checking config file"
+
 #clone this repo
 git clone https://gitlab.com/RealStickman-arch/config.git &>/dev/null
 
@@ -80,79 +82,77 @@ fi
 
 # make new backup
 echo Creating backup
-mkdir -p ~/old_dat/.config || echo Directory already exists
-mkdir -p ~/old_dat/.doom.d || echo Directory already exists
-mkdir -p ~/old_dat/.easystroke || echo Directory already exists
-mkdir -p ~/old_dat/.mozilla || echo Directory already exists
-mkdir -p ~/old_dat/scripts || echo Directory already exists
-mkdir -p ~/old_dat/.elvish || echo Directory already exists
+mkdir -p ~/old_dat/.config
+mkdir -p ~/old_dat/.doom.d
+mkdir -p ~/old_dat/.easystroke
+mkdir -p ~/old_dat/.mozilla
+mkdir -p ~/old_dat/scripts
+mkdir -p ~/old_dat/.elvish
 
 # make subdirectories
-mkdir -p ~/old_dat/.local/share || echo Directory already exists
+mkdir -p ~/old_dat/.local/share
 
 ##############################
 # back stuff up
 ##############################
 #config folders
 if [[ -d ~/.config/MangoHud ]]; then
-    rsync -ah ~/.config/MangoHud ~/old_dat/.config/ || echo Directory does not exist
+    rsync -ah ~/.config/MangoHud ~/old_dat/.config/
 fi
 if [[ -d ~/.config/fish ]]; then
-    rsync -ah ~/.config/fish ~/old_dat/.config/ || echo Directory does not exist
+    rsync -ah ~/.config/fish ~/old_dat/.config/
 fi
 if [[ -d ~/.config/gtk-3.0 ]]; then
-    rsync -ah ~/.config/gtk-3.0 ~/old_dat/.config/ || echo Directory does not exist
+    rsync -ah ~/.config/gtk-3.0 ~/old_dat/.config/
 fi
 if [[ -d ~/.config/i3 ]]; then
-    rsync -ah ~/.config/i3 ~/old_dat/.config/ || echo Directory does not exist
+    rsync -ah ~/.config/i3 ~/old_dat/.config/
 fi
 if [[ -d ~/.config/neofetch ]]; then
-    rsync -ah ~/.config/neofetch ~/old_dat/.config/ || echo Directory does not exist
+    rsync -ah ~/.config/neofetch ~/old_dat/.config/
 fi
 if [[ -d ~/.config/openbox ]]; then
-    rsync -ah ~/.config/openbox ~/old_dat/.config/ || echo Directory does not exist
+    rsync -ah ~/.config/openbox ~/old_dat/.config/
 fi
 if [[ -d ~/.config/polybar ]]; then
-    rsync -ah ~/.config/polybar ~/old_dat/.config/ || echo Directory does not exist
+    rsync -ah ~/.config/polybar ~/old_dat/.config/
 fi
 if [[ -d ~/.config/termite ]]; then
-    rsync -ah ~/.config/termite ~/old_dat/.config/ || echo Directory does not exist
+    rsync -ah ~/.config/termite ~/old_dat/.config/
 fi
 if [[ -d ~/.config/variety ]]; then
-    rsync -ah ~/.config/variety ~/old_dat/.config/ || echo Directory does not exist
+    rsync -ah ~/.config/variety ~/old_dat/.config/
 fi
 
 # doom.d folder
 if [[ -d ~/.doom.d ]]; then
-    rsync -ah ~/.doom.d ~/old_dat/ || echo Directory does not exist
+    rsync -ah ~/.doom.d ~/old_dat/
 fi
 
 # easystroke
 if [[ -d ~/.easystroke ]]; then
-    rsync -ah ~/.easystroke ~/old_dat/ || echo Directory does not exist
+    rsync -ah ~/.easystroke ~/old_dat/
 fi
 
 # elvish
 if [[ -d ~/.elvish ]]; then
-    rsync -ah ~/.elvish ~/old_dat/ || echo Directory does not exist
+    rsync -ah ~/.elvish ~/old_dat/
 fi
 
 # local folder
 if [[ -d ~/.local/share/applications ]]; then
-    rsync -ah ~/.local/share/applications/ ~/old_dat/.local/share/ || echo Directory does not exist
+    rsync -ah ~/.local/share/applications/ ~/old_dat/.local/share/
 fi
 
 # mozilla
 if [[ -d ~/.mozilla ]]; then
-    rsync -ah ~/.mozilla ~/old_dat/ || echo Directory does not exist
+    rsync -ah ~/.mozilla ~/old_dat/
 fi
 
 # scripts
 if [[ -d ~/scripts ]]; then
-    rsync -ah ~/scripts ~/old_dat/ || echo Directory does not exist
+    rsync -ah ~/scripts ~/old_dat/
 fi
-
-echo Made backups
 
 # remove old templates
 if [[ -d ~/.config/Vorlagen ]]; then
@@ -280,7 +280,6 @@ fi
 echo Unzipping gimp plugins
 unzip -o ~/.config/GIMP/2.10/plug-ins/export_layers-3.3.1.zip -d ~/.config/GIMP/2.10/plug-ins/ > /dev/null
 rm ~/.config/GIMP/2.10/plug-ins/export_layers-3.3.1.zip > /dev/null
-echo Unzipped gimp plugins
 
 # xfce settings
 # disable screensaver & locker
