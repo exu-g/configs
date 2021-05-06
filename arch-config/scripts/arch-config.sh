@@ -262,8 +262,9 @@ if [[ $(pacman -Q | grep vmware-workstation) ]]; then
 fi
 
 # add group for corectrl
+echo "Setting up group for corectrl"
 sudo groupadd -f corectrl
-sudo gpasswd -a "$USER" corectrl
+sudo gpasswd -a "$USER" corectrl 1>/dev/null
 
 # enable fstrim timer
 sudo systemctl enable fstrim.timer
