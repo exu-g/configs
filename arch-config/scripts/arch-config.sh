@@ -312,6 +312,9 @@ fi
 "$HOME/.fehbg"
 
 # TODO make this only run if i3 is actually active
+# if [[ "$(ps aux | grep "FIXME")" ]]; then ...
+# ps aux | grep "\si3\s" TODO
+# ps aux | grep "\si3\$" breaks if i3 has been restarted already in this session
 i3 restart
 
 #output
