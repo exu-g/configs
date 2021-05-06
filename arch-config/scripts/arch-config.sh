@@ -324,6 +324,6 @@ if [[ $(pacman -Q | grep podman) ]]; then
 fi
 
 # reload fish
-exec fish
+exec "$(getent passwd $LOGNAME | cut -d: -f7)"
 
 exit 0
