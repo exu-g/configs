@@ -36,11 +36,11 @@ cd "$HOME"
 rm -rf ~/config
 
 #clone this repo
-git clone https://gitlab.com/RealStickman-arch/config.git 1>/dev/null &&
+git clone https://gitlab.com/RealStickman-arch/config.git &>/dev/null
 
 # make sure to use master branch
 cd config
-git checkout master 1>/dev/null
+git checkout master &>/dev/null
 cd ..
 
 # check if the install scripts are the same
@@ -160,23 +160,23 @@ if [[ -d ~/.config/Vorlagen ]]; then
 fi
 
 #copy folders
-cp -r ~/config/.config/ ~/ &&
-cp -r ~/config/.local/ ~/ &&
-#cp -r ~/config/Dokumente ~/ &&
-cp -r ~/config/.mozilla ~/ &&
-cp -r ~/config/.easystroke ~/ &&
-cp -r ~/config/.elvish ~/ &&
-cp -r ~/config/.doom.d ~/ &&
+cp -r ~/config/.config/ ~/
+cp -r ~/config/.local/ ~/
+#cp -r ~/config/Dokumente ~/
+cp -r ~/config/.mozilla ~/
+cp -r ~/config/.easystroke ~/
+cp -r ~/config/.elvish ~/
+cp -r ~/config/.doom.d ~/
 echo Copied folders
 
 #copy single files
-cp -r ~/config/.bashrc ~/ &&
-cp -r ~/config/.face ~/ &&
-cp -r ~/config/.gtkrc-2.0 ~/ &&
-cp -r ~/config/.gitconfig ~/ &&
-#cp -r ~/config/.fehbg ~/ &&
-cp -r ~/config/.tmux.conf ~/ &&
-cp -r ~/config/.xinitrc ~/ &&
+cp -r ~/config/.bashrc ~/
+cp -r ~/config/.face ~/
+cp -r ~/config/.gtkrc-2.0 ~/
+cp -r ~/config/.gitconfig ~/
+#cp -r ~/config/.fehbg ~/
+cp -r ~/config/.tmux.conf ~/
+cp -r ~/config/.xinitrc ~/
 echo Copied files
 
 # make .xinitrc executable
@@ -223,7 +223,7 @@ cp ~/config/.Xresources ~/
 rm -rf ./themes
 
 # install theme selected in themes file
-git clone https://gitlab.com/RealStickman-arch/themes.git 1>/dev/null
+git clone https://gitlab.com/RealStickman-arch/themes.git &>/dev/null
 seltheme="$(cat "$HOME/.seltheme")"
 if [[ "$seltheme" == "nyarch" ]]; then
     #cp -r "./themes/nyarch/i3" "$HOME/.config/"
@@ -246,7 +246,7 @@ chmod +x ~/.fehbg
 
 # download cat as cat
 echo "Installing bash cat"
-git clone https://github.com/RealStickman/bash-cat-with-cat.git 1>/dev/null
+git clone https://github.com/RealStickman/bash-cat-with-cat.git &>/dev/null
 cp ./bash-cat-with-cat/cat.sh "$HOME/scripts/pieces/cat.sh"
 rm -rf ./bash-cat-with-cat
 
