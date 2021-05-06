@@ -63,6 +63,9 @@ alias notify='notify-send "Terminal" "Your command finished!" --icon=dialog-info
 # needs python on the server
 alias ssh='kitty +kitten ssh use-python'
 
+# alias for powershell
+alias powershell='pwsh'
+
 #list
 alias ls='ls --color=auto'
 #alias la='ls -a'
