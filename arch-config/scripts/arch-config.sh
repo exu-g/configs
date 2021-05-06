@@ -85,6 +85,7 @@ mkdir -p ~/old_dat/.doom.d || echo Directory already exists
 mkdir -p ~/old_dat/.easystroke || echo Directory already exists
 mkdir -p ~/old_dat/.mozilla || echo Directory already exists
 mkdir -p ~/old_dat/scripts || echo Directory already exists
+mkdir -p ~/old_dat/.elvish || echo Directory already exists
 
 # make subdirectories
 mkdir -p ~/old_dat/.local/share || echo Directory already exists
@@ -131,6 +132,11 @@ if [[ -d ~/.easystroke ]]; then
     rsync -ah ~/.easystroke ~/old_dat/ || echo Directory does not exist
 fi
 
+# elvish
+if [[ -d ~/.elvish]]; then
+    rsync -ah ~/.elvish ~/old_dat/ || echo Directory does not exist
+fi
+
 # local folder
 if [[ -d ~/.local/share/applications ]]; then
     rsync -ah ~/.local/share/applications/ ~/old_dat/.local/share/ || echo Directory does not exist
@@ -159,6 +165,7 @@ cp -r ~/config/.local/ ~/ &&
 #cp -r ~/config/Dokumente ~/ &&
 cp -r ~/config/.mozilla ~/ &&
 cp -r ~/config/.easystroke ~/ &&
+cp -r ~/config/.elvish ~/ &&
 cp -r ~/config/.doom.d ~/ &&
 echo Copied folders
 
