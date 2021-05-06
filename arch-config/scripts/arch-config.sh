@@ -311,10 +311,8 @@ fi
 # execute feh
 "$HOME/.fehbg"
 
-#restart i3 in place, but only if i3 is running
-if [[ "$(ps aux | grep "\si3\$")" ]]; then
-    i3 restart
-fi
+# TODO make this only run if i3 is actually active
+i3 restart
 
 #output
 echo -e "\033[38;2;20;200;20mFinished updating everything!\033[0m"
