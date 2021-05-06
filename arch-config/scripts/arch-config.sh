@@ -260,6 +260,10 @@ if [[ $(pacman -Q | grep vmware-workstation) ]]; then
     sudo systemctl enable --now vmware-networks-server.service
 fi
 
+# add group for corectrl
+sudo groupadd -f corectrl
+sudo gpasswd -a "$USER" corectrl
+
 # enable fstrim timer
 sudo systemctl enable fstrim.timer
 
@@ -313,9 +317,12 @@ fi
 
 # TODO make this only run if i3 is actually active
 # if [[ "$(ps aux | grep "FIXME")" ]]; then ...
-# ps aux | grep "\si3\s" TODO
+# ps aux | grep "\si3\s" breaks if i3 hasn't been restarted yet
+# ps aux | grep "\si3" works for both, not certain if other stuff could be detected as well
 # ps aux | grep "\si3\$" breaks if i3 has been restarted already in this session
-i3 restart
+if [[ ps aux | grep -E "\skitty(\s|$)" ]]; then
+    i3-msg restart
+fi
 
 #output
 echo -e "\033[38;2;20;200;20mFinished updating everything!\033[0m"
@@ -326,7 +333,12 @@ if [[ $(pacman -Q | grep podman) ]]; then
     echo -e "\033[38;2;200;20;20mRemember to set \"systemd.unified_cgroup_hierarchy=1\" in the kernel!!\033[0m"
 fi
 
-# reload fish
+# reminder for enable additional gpu features for corectrl with amd gpus
+if [[ $(pacman -Q | grep podman) ]]; then
+    echo -e "\033[38;2;200;20;20mRemember to set \"amdgpu.ppfeaturemask=0xffffffff\" in the kernel!!\033[0m"
+fi
+
+# reload user default shell
 exec "$(getent passwd $LOGNAME | cut -d: -f7)"
 
 exit 0
