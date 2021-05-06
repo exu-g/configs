@@ -321,7 +321,7 @@ fi
 # ps aux | grep "\si3" works for both, not certain if other stuff could be detected as well
 # ps aux | grep "\si3\$" breaks if i3 has been restarted already in this session
 if ps aux | grep -E "\si3(\s|$)" &>/dev/null; then
-    i3-msg restart
+    i3-msg restart 1>/dev/null
 fi
 
 #output
