@@ -36,11 +36,11 @@ cd "$HOME"
 rm -rf ~/config
 
 #clone this repo
-git clone https://gitlab.com/RealStickman-arch/config.git &&
+git clone https://gitlab.com/RealStickman-arch/config.git 1>/dev/null &&
 
 # make sure to use master branch
 cd config
-git checkout master
+git checkout master 1>/dev/null
 cd ..
 
 # check if the install scripts are the same
@@ -223,7 +223,7 @@ cp ~/config/.Xresources ~/
 rm -rf ./themes
 
 # install theme selected in themes file
-git clone https://gitlab.com/RealStickman-arch/themes.git
+git clone https://gitlab.com/RealStickman-arch/themes.git 1>/dev/null
 seltheme="$(cat "$HOME/.seltheme")"
 if [[ "$seltheme" == "nyarch" ]]; then
     #cp -r "./themes/nyarch/i3" "$HOME/.config/"
@@ -245,7 +245,8 @@ rm -rf ./themes
 chmod +x ~/.fehbg
 
 # download cat as cat
-git clone https://github.com/RealStickman/bash-cat-with-cat.git
+echo "Installing bash cat"
+git clone https://github.com/RealStickman/bash-cat-with-cat.git 1>/dev/null
 cp ./bash-cat-with-cat/cat.sh "$HOME/scripts/pieces/cat.sh"
 rm -rf ./bash-cat-with-cat
 
