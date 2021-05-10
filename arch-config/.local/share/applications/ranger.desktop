@@ -1,4 +1,0 @@
-[Desktop Entry]
-Name=Ranger
-Exec=termite -e ranger
-Type=Application
