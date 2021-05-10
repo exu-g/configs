@@ -20,3 +20,4 @@ libreoffice-extension-languagetool
 downgrade
 nemo-audio-tab
 btrfsmaintenance
+jellyfin-media-player
