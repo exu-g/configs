@@ -1,4 +1,0 @@
-[Desktop Entry]
-Name=Bandwhich
-Exec=kitty -e "sudo bandwhich"
-Type=Application
