@@ -103,3 +103,4 @@ libcdio
 libdvdread
 libdvdcss
 libdvdnav
+foliate
