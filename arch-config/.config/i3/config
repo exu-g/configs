@@ -302,10 +302,11 @@ mode "$crypto"{
 
 
 # launch gaming focused programs
-set $gaming Steam (s), Lutris (l)
+set $gaming Steam (s), Lutris (l), Citra (3DS) (c)
 mode "$gaming" {
     bindsym s exec --no-startup-id steam-native;focus
     bindsym l exec --no-startup-id lutris;focus
+    bindsym c exec --no-startup-id citra-qt;focus
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
