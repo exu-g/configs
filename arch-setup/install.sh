@@ -85,6 +85,7 @@ options=(0 "VirtManager" off    # any option can be set to default to "on"
          1 "VMWare Workstation 15" off
          10 "Steam" off
          11 "Lutris" off
+         12 "Citra" off
          20 "Krita" off
          21 "Gimp" off
          30 "Youtube-dl" off
@@ -115,6 +116,9 @@ do
         11)
             #in_lutris=1
             echo "lutris" >> "$setupdir/selectedpkgs.txt"
+            ;;
+        12)
+            echo "citra-qt-git" >> "$setupdir/aurselectedpkgs.txt"
             ;;
         20)
             #in_krita=1
