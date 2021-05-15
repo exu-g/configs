@@ -1,4 +1,4 @@
-wine-staging
+wine
 giflib
 lib32-giflib
 libpng
