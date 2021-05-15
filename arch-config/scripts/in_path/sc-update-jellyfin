@@ -1,0 +1,16 @@
+#!/bin/bash
+set -euo pipefail
+
+sshkeypath=$HOME/.ssh/id_ed25519_non-root
+
+user=jellyfin
+server=albedo.realstickman.net
+
+# update Movies
+rsync -uvr --progress --bwlimit=4096 --chmod=744 -e "ssh -i $sshkeypath" /mnt/storage/MediaLibrary/Movies/ ${user}@${server}:/home/jellyfin/Movies/
+
+# Update Shows
+rsync -uvr --progress --bwlimit=4096 --chmod=744 -e "ssh -i $sshkeypath" /mnt/storage/MediaLibrary/Shows/ ${user}@${server}:/home/jellyfin/Shows/
+
+# Update Music
+rsync -uvrL --progress --bwlimit=4096 --chmod=744 -e "ssh -i $sshkeypath" /home/marc/Musik/ ${user}@${server}:/home/jellyfin/Musik/
