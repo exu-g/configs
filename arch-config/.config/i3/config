@@ -250,11 +250,12 @@ bindsym $mod+a focus parent
 
 bindsym $mod+m mode "$main"
 
-set $main Media (m), Gaming (g), Crypto (c), Resize (r), Layout (l)
+set $main Social (s), Gaming (g), Crypto (c), Media (m), Resize (r), Layout (l)
 mode "$main"{
-     bindsym m mode "$media"
+     bindsym s mode "$social"
      bindsym g mode "$gaming"
      bindsym c mode "$crypto"
+     bindsym m mode "$media"
      bindsym r mode "resize"
      bindsym l mode "$layout"
 
@@ -264,12 +265,12 @@ mode "$main"{
 
 
 #############################################################################
-##################                  media                  ##################
+##################                  social                 ##################
 #############################################################################
 
 
-set $media Discord (d), Element (e), Telegram (b), Slack (s), Teams (t)
-mode "$media"{
+set $social Discord (d), Element (e), Telegram (b), Slack (s), Teams (t)
+mode "$social"{
      bindsym d exec --no-startup-id discord;focus
      bindsym e exec --no-startup-id element-desktop;focus
      bindsym b exec --no-startup-id telegram-desktop;focus
@@ -281,8 +282,24 @@ mode "$media"{
 }
 
 
+#############################################################################
+##################                  media                  ##################
+#############################################################################
+
+
+set $media Tauon (t), Celluloid (c), Jellyfin (j)
+mode "$media"{
+     bindsym t exec --no-startup-id tauon;focus
+     bindsym c exec --no-startup-id celluloid;focus
+     bindsym j exec --no-startup-id jellyfinmediaplayer;focus
+
+     bindsym Return mode "default"
+     bindsym Escape mode "default"
+}
+
+
 ##############################################################################
-#################                   gaming                   #################
+#################                   crypto                   #################
 ##############################################################################
 
 
