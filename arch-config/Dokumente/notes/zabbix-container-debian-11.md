@@ -71,7 +71,7 @@ Copy `service_discovery_blacklist` or `service_discovery_whitelist` to `/etc/zab
 `# systemctl restart zabbix-agent`  
 
 Install proxy in front of zabbix  
-`# apt install nginx`  
+`# apt install nginx certbot python3-certbot-nginx`  
 
 `# vim /etc/nginx/sites-available/zabbix.conf`  
 ```
@@ -84,7 +84,7 @@ server {
     add_header X-Content-Type-Options "nosniff";
 
     location = / {
-        return 302 https://$host/web/;
+        return 302 https://$host/index.php;
     }
 
     location / {
@@ -119,3 +119,6 @@ server {
 `# ln -s /etc/nginx/sites-available/zabbix.conf /etc/nginx/sites-enabled/`  
 
 `# systemctl restart nginx`  
+
+*You need to run the site in http mode first for certbot to work!*  
+`# certbot certonly --nginx --agree-tos --redirect --hsts --staple-ocsp --email (email) -d (domain1),(domain2)`  
