@@ -35,7 +35,7 @@ Create zabbix server
                   -d docker://zabbix/zabbix-server-mysql
 ```
 
-Create web interface
+Create web interface  
 ```
 # podman run --name zabbix-web -t \
                   -e ZBX_SERVER_HOST="127.0.0.1" \
@@ -49,6 +49,28 @@ Create web interface
                   -d docker://zabbix/zabbix-web-nginx-mysql
 ```
 
+Install agent the old-fashined way  
+```
+# wget https://repo.zabbix.com/zabbix/5.2/debian/pool/main/z/zabbix-release/zabbix-release_5.2-1+debian10_all.deb
+# dpkg -i zabbix-release_5.2-1+debian10_all.deb
+# apt update 
+```
+
+`# apt install zabbix-agent`  
+
+Installing sytemd monitoring  
+`$ git clone https://github.com/MogiePete/zabbix-systemd-service-monitoring.git`  
+`$ cd zabbix-systemd-service-monitoring`  
+
+Copy `service_discovery_blacklist` or `service_discovery_whitelist` to `/etc/zabbix/`  
+
+`# cp -r usr /`  
+`# chmod +x /usr/local/bin/zbx_service_*`  
+
+`# cp userparameter_systemd_services.conf /etc/zabbix/zabbix_agentd.d/userparameter_systemd_services.conf`  
+`# systemctl restart zabbix-agent`  
+
+Install proxy in front of zabbix  
 `# apt install nginx`  
 
 `# vim /etc/nginx/sites-available/zabbix.conf`  
