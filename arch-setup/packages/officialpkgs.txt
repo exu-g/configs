@@ -93,7 +93,6 @@ nemo-share
 dconf-editor
 gsettings-desktop-schemas
 thunar
-tldr
 reflector
 util-linux
 dhclient
