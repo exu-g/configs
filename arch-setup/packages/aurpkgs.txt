@@ -21,3 +21,4 @@ downgrade
 nemo-audio-tab
 btrfsmaintenance
 jellyfin-media-player
+tealdeer
