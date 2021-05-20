@@ -15,3 +15,5 @@ pcmanfm
 electron9-bin
 balena-etcher
 mysql-workbench
+docker
+docker-compose
