@@ -18,19 +18,26 @@ cd "$HOME"
 # get current date
 currdate="$(date +%Y-%m-%d)"
 
+# create backup directory
 mkdir -p "$HOME/evolution-mail-backup"
 mkdir -p "$HOME/evolution-mail-backup/.config"
 mkdir -p "$HOME/evolution-mail-backup/.local"
 
+# copy stuff to backup directory
 cp -r "$HOME/.config/evolution/" "$HOME/evolution-mail-backup/.config/"
 cp -r "$HOME/.local/share/evolution/" "$HOME/evolution-mail-backup/.local/"
 
+# create archive from backup
 tar -cv -I"zstd -19 -T0" -f evolution-mail-backup-${currdate}.tar.zst evolution-mail-backup/
 
+# remove backup dir
 rm -rf "$HOME/evolution-mail-backup"
 
+# encrypt backup archive
 echo '$pass' | gpg -c --batch --yes --passphrase-fd 0 evolution-mail-backup-${currdate}.tar.zst
 
+# remove unencrypted archive
 rm evolution-mail-backup-${currdate}.tar.zst
 
+# put encrypted archive into backups folder
 mv evolution-mail-backup-${currdate}.tar.zst.gpg "$HOME/Nextcloud/backups/"
