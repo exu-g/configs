@@ -10,7 +10,8 @@ i3-msg 'workspace 2; layout tabbed; exec firefox'
 
 sleep 0.3
 
-i3-msg 'workspace 2; layout tabbed; exec thunderbird'
+#i3-msg 'workspace 2; layout tabbed; exec thunderbird'
+i3-msg 'workspace 2; layout tabbed; exec evolution'
 
 sleep 2
 
