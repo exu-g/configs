@@ -250,6 +250,12 @@ git clone https://github.com/RealStickman/bash-cat-with-cat.git &>/dev/null
 cp ./bash-cat-with-cat/cat.sh "$HOME/scripts/pieces/cat.sh"
 rm -rf ./bash-cat-with-cat
 
+# download ip-calculator with powershell
+echo "Installing powershell ip calculator"
+git clone https://github.com/RealStickman/PSipcalc &>/dev/null
+cp ./PSipcalc/PSipcalc.ps1 "$HOME/scripts/in_path/sc-psipcalc.ps1"
+rm -rf ./PSipcalc
+
 #gimp plugins
 #mkdir ~/.config/GIMP/ || echo Not creating directory
 #mkdir ~/.config/GIMP/2.10/ || echo Not creating directory
