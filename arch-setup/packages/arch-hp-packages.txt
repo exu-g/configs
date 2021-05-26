@@ -17,3 +17,4 @@ balena-etcher
 mysql-workbench
 docker
 docker-compose
+ntttcp-for-linux-git
