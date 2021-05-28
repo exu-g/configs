@@ -1,4 +1,4 @@
-# Arcolinux Config
+# Arch Config
 
 Configuration files for arch linux. Selection of software:  
 - i3-gaps (.config/i3)
@@ -11,3 +11,6 @@ Configuration files for arch linux. Selection of software:
 - neofetch (.config/neofetch)
 
 And some more  
+
+## Credits
+Sounds from [Notification Sounds](https://notificationsounds.com)  
