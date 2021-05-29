@@ -3,8 +3,10 @@ set -euo pipefail
 
 if [ $# -eq 0 ]; then
     echo "Please supply the seed"
+    $(exit 1); echo "$?"
 elif [ $# -ge 2 ]; then
     echo "Please only give one argument"
+    $(exit 1); echo "$?"
 fi
 
 seed="$1"
