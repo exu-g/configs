@@ -671,7 +671,7 @@ fi
 # arco pc
 if [ $in_arco_pc -eq 1 ]; then
     echo "Installing arco pc packages"
-    paru -S --needed - < "$setupdir/packages/arco-pc-packages.txt"
+    paru -S --needed - < "$setupdir/packages/lupusregina-packages.txt"
 fi
 
 # arco hp
