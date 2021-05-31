@@ -230,7 +230,6 @@ texlive-core
 textris
 thunar
 thunderbird
-tlpui
 tmpmail-git
 tmux
 torbrowser-launcher
@@ -239,6 +238,7 @@ transmission-gtk
 ttf-fira-code
 ttf-fira-sans
 ttf-iosevka
+ttf-liberation
 ttf-ms-fonts
 ttf-vista-fonts
 ufw
