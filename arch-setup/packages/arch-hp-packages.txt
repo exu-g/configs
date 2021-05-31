@@ -1,8 +1,8 @@
 alsa-card-profiles
 alsa-utils
 arandr
-auto-cpufreq-git
 autoconf
+auto-cpufreq-git
 automake
 balena-etcher
 bandwhich
@@ -14,8 +14,8 @@ bison
 bitwarden
 breeze
 breeze-icons
-btrfs-progs
 btrfsmaintenance
+btrfs-progs
 ca-certificates
 ca-certificates-mozilla
 candy-icons-git
@@ -65,9 +65,9 @@ gnome-keyring
 grep
 groff
 grub
-gtk-engine-murrine
 gtk2
 gtk3
+gtk-engine-murrine
 gvfs
 gzip
 hplip
@@ -81,9 +81,9 @@ hyphen-en
 i3-gaps
 i3lock-color
 inetutils
-intel-ucode
 intellij-idea-ultimate-edition
 intellij-idea-ultimate-edition-jre
+intel-ucode
 jellyfin-media-player
 jre-openjdk
 kitty
@@ -139,8 +139,8 @@ nemo-fileroller
 nemo-preview
 nemo-share
 neovim
-network-manager-applet
 networkmanager
+network-manager-applet
 nextcloud-client
 nmap
 nohang-git
