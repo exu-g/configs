@@ -272,6 +272,11 @@ echo "Setting up group for corectrl"
 sudo groupadd -f corectrl
 sudo gpasswd -a "$USER" corectrl 1>/dev/null
 
+# group for controlling backlight
+echo "Setting group for backlight"
+sudo groupadd -f video
+sudo gpasswd -a "$USER" video 1>/dev/null
+
 # enable fstrim timer
 sudo systemctl enable fstrim.timer
 
