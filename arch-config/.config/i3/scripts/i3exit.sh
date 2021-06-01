@@ -3,8 +3,7 @@
 
 case "$1" in
     lock)
-        #betterlockscreen -l
-        ~/.config/i3/scripts/disable-dunst.sh
+        killall -SIGUSR1 dunst; betterlockscreen -l
         ;;
     logout)
         i3-msg exit
