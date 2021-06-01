@@ -4,9 +4,11 @@
 # $./dunst-backlight.sh up
 # $./dunst-backlight.sh down
 
+: '
 get_light() {
     xbacklight -get | cut -f1 -d"."
 }
+'
 
 send_notification() {
     light=$(get_light)
@@ -20,24 +22,19 @@ send_notification() {
 case $1 in
     up)
     # Increase backlight
-    xbacklight -inc 10% > /dev/null
+    xbacklight -inc 10 > /dev/null
+    #xbacklight -inc 10% > /dev/null # legacy xorg-xbacklight
     send_notification
-    #backlight=$(xbacklight -get | cut -f1 -d"." | cut -f1 -d"0")
-    backlightraw=$(xbacklight -get)
-    backlight=${backlightraw::-8}
-    #backlight=$(xbacklight -get | rev| cut -c9- | rev)
-    xbacklight -set "${backlight}0"
+    #backlightraw=$(xbacklight -get)
+    #backlight=${backlightraw::-8}
+    #xbacklight -set "${backlight}0"
 	;;
     down)
     # Decrease backlight
-    xbacklight -dec 9% > /dev/null
+    #xbacklight -dec 9% > /dev/null # legacy xorg-xbacklight
     send_notification
-    #backlight2dig=$(xbacklight -get | cut -f1 -d"." | cut -f1 -d"0")
-    #backlight=$(xbacklight -get | rev| cut -c9- | rev)
-    backlightraw=$(xbacklight -get)
-    backlight=${backlightraw::-8}
-    #((backlight++))
-    #backlight=${backlight2dig%?}
-    xbacklight -set "${backlight}0"
+    #backlightraw=$(xbacklight -get)
+    #backlight=${backlightraw::-8}
+    #xbacklight -set "${backlight}0"
 	;;
 esac
