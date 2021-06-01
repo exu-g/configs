@@ -4,11 +4,10 @@
 # $./dunst-backlight.sh up
 # $./dunst-backlight.sh down
 
-: '
 get_light() {
-    xbacklight -get | cut -f1 -d"."
+    #xbacklight -get | cut -f1 -d"."
+    xbacklight -get
 }
-'
 
 send_notification() {
     light=$(get_light)
@@ -16,7 +15,7 @@ send_notification() {
     # https://en.wikipedia.org/wiki/Box-drawing_character
     bar=$(seq -s "─" $(($light/ 5)) | sed 's/[0-9]//g')
     # Send the notification
-    dunstify -i whitebalance -r 2489 -a backlight-script "    $bar    "
+    dunstify -i whitebalance -r 2489 -a backlight-script "$light    $bar    "
 }
 
 case $1 in
@@ -31,6 +30,7 @@ case $1 in
 	;;
     down)
     # Decrease backlight
+    xbacklight -dec 10 > /dev/null
     #xbacklight -dec 9% > /dev/null # legacy xorg-xbacklight
     send_notification
     #backlightraw=$(xbacklight -get)
