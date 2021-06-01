@@ -1,3 +1,4 @@
+acpilight
 arandr
 bandwhich
 base-devel
@@ -101,5 +102,4 @@ xf86-video-fbdev
 xf86-video-intel
 xf86-video-nouveau
 xfce4-power-manager
-xorg-xbacklight
 xorg-xrdb
