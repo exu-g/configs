@@ -262,9 +262,14 @@ rm -rf ./PSipcalc
 mkdir -p ~/.config/GIMP/2.10/plug-ins/ || echo Not creating directory
 rsync -ah ~/config/gimp-plugins/* ~/.config/GIMP/2.10/plug-ins/
 
-# set systemd stuff for vmware (only if installed)
+# set systemd and group for vmware (only if installed)
 if [[ $(pacman -Q | grep vmware-workstation) ]]; then
     sudo systemctl enable --now vmware-networks-server.service
+    echo "Setting up group for vmware"
+    sudo groupadd -f vmware
+    sudo gpasswd -a "$USER" vmware 1>/dev/null
+    sudo chgpr vmware /dev/vmnet*
+    sudo chmod g+rw /dev/vmnet*
 fi
 
 # add group for corectrl
