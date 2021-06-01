@@ -357,10 +357,6 @@ paru -S --needed - < "$setupdir/aurselectedpkgs.txt"
 if [ $in_vmware15 -eq 1 ]; then
     echo "Installing VMWare Workstation 15"
     paru -S --needed vmware-workstation15
-    sudo groupadd -f vmware
-    sudo usermod -aG vmware "$USER"
-    sudo chgpr vmware /dev/vmnet*
-    sudo chmod g+rw /dev/vmnet*
 else
     echo "Skipping VMWare Workstation 15"
 fi
