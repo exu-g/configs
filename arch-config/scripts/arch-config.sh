@@ -296,6 +296,11 @@ fi
 sudo chown root:root -R /etc/sudoers.d/
 sudo chmod 600 -R /etc/sudoers.d/
 
+# group for monitoring wireguard
+echo "Setting group for wireguard"
+sudo groupadd -f wireguard
+sudo gpasswd -a "$USER" wireguard 1>/dev/null
+
 # unzip gimp plugins
 echo Unzipping gimp plugins
 unzip -o ~/.config/GIMP/2.10/plug-ins/export_layers-3.3.1.zip -d ~/.config/GIMP/2.10/plug-ins/ > /dev/null
