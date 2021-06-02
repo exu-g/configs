@@ -27,6 +27,7 @@ function func_seltheme {
     done
 }
 
+echo
 cat <<EOF
 ########################################
 ################ Setup  ################
@@ -66,11 +67,9 @@ if [[ ! -f "$HOME/.seltheme" ]]; then
     func_seltheme
 fi
 
-cat <<EOF
 ####################
 #### Arguments  ####
 ####################
-EOF
 
 # handle arguments
 if [[ "$#" -eq 1 ]]; then
@@ -86,17 +85,16 @@ elif [[ "$#" -gt 1 ]]; then
     exit 1
 fi
 
+echo
 cat <<EOF
 ########################################
 ################ Backup ################
 ########################################
 EOF
 
-cat <<EOF
 ####################
 ##### Cleaning #####
 ####################
-EOF
 
 #delete previous backups
 echo Removing old backup
@@ -104,11 +102,9 @@ if [[ -d ~/old_dat ]]; then
     rm -rf ~/old_dat
 fi
 
-cat <<EOF
 ####################
 ##### Creating #####
 ####################
-EOF
 
 # make new backup
 echo Creating backup
@@ -186,6 +182,7 @@ if [[ -d ~/.config/Vorlagen ]]; then
     rm -r ~/.config/Vorlagen
 fi
 
+echo
 cat <<EOF
 ########################################
 ########### Copy New Config  ###########
@@ -252,11 +249,9 @@ sudo cp -r ~/config/usr /
 # copy xresources
 cp ~/config/.Xresources ~/
 
-cat <<EOF
 ####################
 ###### Theme  ######
 ####################
-EOF
 
 # remove old themes folder
 rm -rf ./themes
@@ -283,11 +278,9 @@ rm -rf ./themes
 # make fehbg executable
 chmod +x ~/.fehbg
 
-cat <<EOF
 ####################
 ##### Bash Cat #####
 ####################
-EOF
 
 # download cat as cat
 echo "Installing bash cat"
@@ -295,11 +288,9 @@ git clone https://github.com/RealStickman/bash-cat-with-cat.git &>/dev/null
 cp ./bash-cat-with-cat/cat.sh "$HOME/scripts/pieces/cat.sh"
 rm -rf ./bash-cat-with-cat
 
-cat <<EOF
 ####################
 ##### PSIPCalc #####
 ####################
-EOF
 
 # download ip-calculator with powershell
 echo "Installing powershell ip calculator"
@@ -307,11 +298,9 @@ git clone https://github.com/RealStickman/PSipcalc &>/dev/null
 cp ./PSipcalc/PSipcalc.ps1 "$HOME/scripts/in_path/sc-psipcalc"
 rm -rf ./PSipcalc
 
-cat <<EOF
 ####################
 ####### Gimp #######
 ####################
-EOF
 
 #gimp plugins
 #mkdir ~/.config/GIMP/ || echo Not creating directory
@@ -319,6 +308,7 @@ EOF
 mkdir -p ~/.config/GIMP/2.10/plug-ins/ || echo Not creating directory
 rsync -ah ~/config/gimp-plugins/* ~/.config/GIMP/2.10/plug-ins/
 
+echo
 cat <<EOF
 ########################################
 ############### Services ###############
@@ -340,6 +330,7 @@ if [[ $(pacman -Q | grep btrfsmaintenance) ]]; then
     sudo systemctl enable btrfs-scrub.timer
 fi
 
+echo
 cat <<EOF
 ########################################
 ################ Groups ################
@@ -379,6 +370,7 @@ echo "Setting group for wireguard"
 sudo groupadd -f wireguard
 sudo gpasswd -a "$USER" wireguard 1>/dev/null
 
+echo
 cat <<EOF
 ########################################
 ############# Misc Config  #############
@@ -412,6 +404,7 @@ bash ~/config/scripts/nemo-config.sh
 #remove downloaded folder
 rm -rf ~/config
 
+echo
 cat <<EOF
 ########################################
 ############## Reloading  ##############
@@ -444,6 +437,7 @@ if ps aux | grep -E "\si3(\s|$)" &>/dev/null; then
     i3-msg restart 1>/dev/null
 fi
 
+echo
 cat <<EOF
 ########################################
 ############### Finished ###############
