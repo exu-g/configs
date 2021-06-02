@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+cat <<EOF
 ############################################################
 ###################### INSTALL CONFIG ######################
 ############################################################
+EOF
 
 # function to select theme
 function func_seltheme {
@@ -25,9 +27,11 @@ function func_seltheme {
     done
 }
 
+cat <<EOF
 ########################################
 ################ Setup  ################
 ########################################
+EOF
 
 # check if user is root
 if [ "$EUID" -ne 0 ]; then
@@ -62,9 +66,11 @@ if [[ ! -f "$HOME/.seltheme" ]]; then
     func_seltheme
 fi
 
+cat <<EOF
 ####################
 #### Arguments  ####
 ####################
+EOF
 
 # handle arguments
 if [[ "$#" -eq 1 ]]; then
@@ -80,13 +86,17 @@ elif [[ "$#" -gt 1 ]]; then
     exit 1
 fi
 
+cat <<EOF
 ########################################
 ################ Backup ################
 ########################################
+EOF
 
+cat <<EOF
 ####################
 ##### Cleaning #####
 ####################
+EOF
 
 #delete previous backups
 echo Removing old backup
@@ -94,9 +104,11 @@ if [[ -d ~/old_dat ]]; then
     rm -rf ~/old_dat
 fi
 
+cat <<EOF
 ####################
 ##### Creating #####
 ####################
+EOF
 
 # make new backup
 echo Creating backup
@@ -174,9 +186,11 @@ if [[ -d ~/.config/Vorlagen ]]; then
     rm -r ~/.config/Vorlagen
 fi
 
+cat <<EOF
 ########################################
 ########### Copy New Config  ###########
 ########################################
+EOF
 
 #copy folders
 cp -r ~/config/.config/ ~/
@@ -238,9 +252,11 @@ sudo cp -r ~/config/usr /
 # copy xresources
 cp ~/config/.Xresources ~/
 
+cat <<EOF
 ####################
 ###### Theme  ######
 ####################
+EOF
 
 # remove old themes folder
 rm -rf ./themes
@@ -267,9 +283,11 @@ rm -rf ./themes
 # make fehbg executable
 chmod +x ~/.fehbg
 
+cat <<EOF
 ####################
 ##### Bash Cat #####
 ####################
+EOF
 
 # download cat as cat
 echo "Installing bash cat"
@@ -277,9 +295,11 @@ git clone https://github.com/RealStickman/bash-cat-with-cat.git &>/dev/null
 cp ./bash-cat-with-cat/cat.sh "$HOME/scripts/pieces/cat.sh"
 rm -rf ./bash-cat-with-cat
 
+cat <<EOF
 ####################
 ##### PSIPCalc #####
 ####################
+EOF
 
 # download ip-calculator with powershell
 echo "Installing powershell ip calculator"
@@ -287,9 +307,11 @@ git clone https://github.com/RealStickman/PSipcalc &>/dev/null
 cp ./PSipcalc/PSipcalc.ps1 "$HOME/scripts/in_path/sc-psipcalc"
 rm -rf ./PSipcalc
 
+cat <<EOF
 ####################
 ####### Gimp #######
 ####################
+EOF
 
 #gimp plugins
 #mkdir ~/.config/GIMP/ || echo Not creating directory
@@ -297,9 +319,11 @@ rm -rf ./PSipcalc
 mkdir -p ~/.config/GIMP/2.10/plug-ins/ || echo Not creating directory
 rsync -ah ~/config/gimp-plugins/* ~/.config/GIMP/2.10/plug-ins/
 
+cat <<EOF
 ########################################
 ############### Services ###############
 ########################################
+EOF
 
 # set systemd services for vmware (only if installed)
 if [[ $(pacman -Q | grep vmware-workstation) ]]; then
@@ -316,9 +340,11 @@ if [[ $(pacman -Q | grep btrfsmaintenance) ]]; then
     sudo systemctl enable btrfs-scrub.timer
 fi
 
+cat <<EOF
 ########################################
 ################ Groups ################
 ########################################
+EOF
 
 # set systemd and group for vmware (only if installed)
 if [[ $(pacman -Q | grep vmware-workstation) ]]; then
@@ -353,9 +379,11 @@ echo "Setting group for wireguard"
 sudo groupadd -f wireguard
 sudo gpasswd -a "$USER" wireguard 1>/dev/null
 
+cat <<EOF
 ########################################
 ############# Misc Config  #############
 ########################################
+EOF
 
 # set permissions for sudoers.d to root only
 sudo chown root:root -R /etc/sudoers.d/
@@ -384,9 +412,11 @@ bash ~/config/scripts/nemo-config.sh
 #remove downloaded folder
 rm -rf ~/config
 
+cat <<EOF
 ########################################
 ############## Reloading  ##############
 ########################################
+EOF
 
 # reload applications
 update-desktop-database ~/.local/share/applications/
@@ -414,9 +444,11 @@ if ps aux | grep -E "\si3(\s|$)" &>/dev/null; then
     i3-msg restart 1>/dev/null
 fi
 
+cat <<EOF
 ########################################
 ############### Finished ###############
 ########################################
+EOF
 
 #output
 echo -e "\033[38;2;20;200;20mFinished updating everything!\033[0m"
