@@ -292,7 +292,11 @@ if [[ $(pacman -Q | grep btrfsmaintenance) ]]; then
     sudo systemctl enable btrfs-scrub.timer
 fi
 
-#unzip gimp plugins
+# set permissions for sudoers.d to root only
+sudo chown root:root -R /etc/sudoers.d/
+sudo chmod 600 -R /etc/sudoers.d/
+
+# unzip gimp plugins
 echo Unzipping gimp plugins
 unzip -o ~/.config/GIMP/2.10/plug-ins/export_layers-3.3.1.zip -d ~/.config/GIMP/2.10/plug-ins/ > /dev/null
 rm ~/.config/GIMP/2.10/plug-ins/export_layers-3.3.1.zip > /dev/null
