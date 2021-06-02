@@ -1,0 +1,3 @@
+# The "wg show all" command may be run by anyone in the group "wireguard"
+
+%wireguard ALL=(ALL) NOPASSWD: /usr/bin/wg show interfaces
