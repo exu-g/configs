@@ -1,8 +1,9 @@
-#!/bin/bash
-
+#!/usr/bin/env bash
 set -euo pipefail
 
-#ANY CHANGES TO THE INSTALLATION PROCEDURE SHOULD BE MADE HERE
+############################################################
+###################### INSTALL CONFIG ######################
+############################################################
 
 # function to select theme
 function func_seltheme {
@@ -24,15 +25,19 @@ function func_seltheme {
     done
 }
 
+########################################
+################ Setup  ################
+########################################
+
 # check if user is root
 if [ "$EUID" -ne 0 ]; then
     sudo -l > /dev/null
 fi
 
-#change to home (does not show in terminal)
+# change to home
 cd "$HOME"
 
-#remove old installs
+# remove old installs
 rm -rf ~/config
 
 echo "Checking config file"
@@ -57,9 +62,10 @@ if [[ ! -f "$HOME/.seltheme" ]]; then
     func_seltheme
 fi
 
-##############################
-#####     arguments      #####
-##############################
+####################
+#### Arguments  ####
+####################
+
 # handle arguments
 if [[ "$#" -eq 1 ]]; then
     # -t/--theme to change theme
@@ -74,11 +80,23 @@ elif [[ "$#" -gt 1 ]]; then
     exit 1
 fi
 
+########################################
+################ Backup ################
+########################################
+
+####################
+##### Cleaning #####
+####################
+
 #delete previous backups
 echo Removing old backup
 if [[ -d ~/old_dat ]]; then
     rm -rf ~/old_dat
 fi
+
+####################
+##### Creating #####
+####################
 
 # make new backup
 echo Creating backup
@@ -92,9 +110,6 @@ mkdir -p ~/old_dat/.elvish
 # make subdirectories
 mkdir -p ~/old_dat/.local/share
 
-##############################
-# back stuff up
-##############################
 #config folders
 if [[ -d ~/.config/MangoHud ]]; then
     rsync -ah ~/.config/MangoHud ~/old_dat/.config/
@@ -159,6 +174,10 @@ if [[ -d ~/.config/Vorlagen ]]; then
     rm -r ~/.config/Vorlagen
 fi
 
+########################################
+########### Copy New Config  ###########
+########################################
+
 #copy folders
 cp -r ~/config/.config/ ~/
 cp -r ~/config/.local/ ~/
@@ -174,7 +193,6 @@ cp -r ~/config/.bashrc ~/
 cp -r ~/config/.face ~/
 cp -r ~/config/.gtkrc-2.0 ~/
 cp -r ~/config/.gitconfig ~/
-#cp -r ~/config/.fehbg ~/
 cp -r ~/config/.tmux.conf ~/
 cp -r ~/config/.xinitrc ~/
 echo Copied files
@@ -210,14 +228,19 @@ if [ "$distro" == "ID=arch" ]; then
     sudo mv /etc/arch-pacman.conf /etc/pacman.conf
 fi
 
+# NOTE only for webkit2gtk version of lightdm
 #copy old lightdm themes (and maybe other stuff, idk)
-sudo cp -r ~/config/var /
+#sudo cp -r ~/config/var /
 
 #copy usr stuff
 sudo cp -r ~/config/usr /
 
 # copy xresources
 cp ~/config/.Xresources ~/
+
+####################
+###### Theme  ######
+####################
 
 # remove old themes folder
 rm -rf ./themes
@@ -244,11 +267,19 @@ rm -rf ./themes
 # make fehbg executable
 chmod +x ~/.fehbg
 
+####################
+##### Bash Cat #####
+####################
+
 # download cat as cat
 echo "Installing bash cat"
 git clone https://github.com/RealStickman/bash-cat-with-cat.git &>/dev/null
 cp ./bash-cat-with-cat/cat.sh "$HOME/scripts/pieces/cat.sh"
 rm -rf ./bash-cat-with-cat
+
+####################
+##### PSIPCalc #####
+####################
 
 # download ip-calculator with powershell
 echo "Installing powershell ip calculator"
@@ -256,31 +287,24 @@ git clone https://github.com/RealStickman/PSipcalc &>/dev/null
 cp ./PSipcalc/PSipcalc.ps1 "$HOME/scripts/in_path/sc-psipcalc"
 rm -rf ./PSipcalc
 
+####################
+####### Gimp #######
+####################
+
 #gimp plugins
 #mkdir ~/.config/GIMP/ || echo Not creating directory
 #mkdir ~/.config/GIMP/2.10/ || echo Not creating directory
 mkdir -p ~/.config/GIMP/2.10/plug-ins/ || echo Not creating directory
 rsync -ah ~/config/gimp-plugins/* ~/.config/GIMP/2.10/plug-ins/
 
-# set systemd and group for vmware (only if installed)
+########################################
+############### Services ###############
+########################################
+
+# set systemd services for vmware (only if installed)
 if [[ $(pacman -Q | grep vmware-workstation) ]]; then
     sudo systemctl enable --now vmware-networks-server.service
-    echo "Setting up group for vmware"
-    sudo groupadd -f vmware
-    sudo gpasswd -a "$USER" vmware 1>/dev/null
-    sudo chgrp vmware /dev/vmnet*
-    sudo chmod g+rw /dev/vmnet*
 fi
-
-# add group for corectrl
-echo "Setting up group for corectrl"
-sudo groupadd -f corectrl
-sudo gpasswd -a "$USER" corectrl 1>/dev/null
-
-# group for controlling backlight
-echo "Setting group for backlight"
-sudo groupadd -f video
-sudo gpasswd -a "$USER" video 1>/dev/null
 
 # enable fstrim timer
 sudo systemctl enable fstrim.timer
@@ -292,14 +316,50 @@ if [[ $(pacman -Q | grep btrfsmaintenance) ]]; then
     sudo systemctl enable btrfs-scrub.timer
 fi
 
-# set permissions for sudoers.d to root only
-sudo chown root:root -R /etc/sudoers.d/
-sudo chmod 600 -R /etc/sudoers.d/
+########################################
+################ Groups ################
+########################################
+
+# set systemd and group for vmware (only if installed)
+if [[ $(pacman -Q | grep vmware-workstation) ]]; then
+    echo "Setting up group for vmware"
+    sudo groupadd -f vmware
+    sudo gpasswd -a "$USER" vmware 1>/dev/null
+    sudo chgrp vmware /dev/vmnet*
+    sudo chmod g+rw /dev/vmnet*
+fi
+
+# set group for wireshark (only if installed)
+if [[ $(pacman -Q | grep wireshark-qt) ]]; then
+    echo "Setting up group for wireshark"
+    sudo groupadd -f wireshark
+    sudo gpasswd -a "$USER" wireshark 1>/dev/null
+fi
+
+# add group for corectrl
+if [[ $(pacman -Q | grep corectrl) ]]; then
+    echo "Setting up group for corectrl"
+    sudo groupadd -f corectrl
+    sudo gpasswd -a "$USER" corectrl 1>/dev/null
+fi
+
+# group for controlling backlight
+echo "Setting group for backlight"
+sudo groupadd -f video
+sudo gpasswd -a "$USER" video 1>/dev/null
 
 # group for monitoring wireguard
 echo "Setting group for wireguard"
 sudo groupadd -f wireguard
 sudo gpasswd -a "$USER" wireguard 1>/dev/null
+
+########################################
+############# Misc Config  #############
+########################################
+
+# set permissions for sudoers.d to root only
+sudo chown root:root -R /etc/sudoers.d/
+sudo chmod 600 -R /etc/sudoers.d/
 
 # unzip gimp plugins
 echo Unzipping gimp plugins
@@ -324,6 +384,10 @@ bash ~/config/scripts/nemo-config.sh
 #remove downloaded folder
 rm -rf ~/config
 
+########################################
+############## Reloading  ##############
+########################################
+
 # reload applications
 update-desktop-database ~/.local/share/applications/
 
@@ -341,7 +405,7 @@ fi
 # execute feh
 "$HOME/.fehbg"
 
-# TODO make this only run if i3 is actually active
+# NOTE working now
 # if [[ "$(ps aux | grep "FIXME")" ]]; then ...
 # ps aux | grep "\si3\s" breaks if i3 hasn't been restarted yet
 # ps aux | grep "\si3" works for both, not certain if other stuff could be detected as well
@@ -349,6 +413,10 @@ fi
 if ps aux | grep -E "\si3(\s|$)" &>/dev/null; then
     i3-msg restart 1>/dev/null
 fi
+
+########################################
+############### Finished ###############
+########################################
 
 #output
 echo -e "\033[38;2;20;200;20mFinished updating everything!\033[0m"
@@ -367,4 +435,5 @@ fi
 # reload user default shell
 exec "$(getent passwd $LOGNAME | cut -d: -f7)"
 
-exit 0
+# exit successfully
+$(exit 0); echo "$?"
