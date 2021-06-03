@@ -455,6 +455,6 @@
 
 # vim: ft=cfg
 
-[play-sound]
-    summary = "*"
-    script = "/home/marc/scripts/dunst-notification-sound.sh"
+#[play-sound]
+#    summary = "*"
+#    script = "/home/marc/scripts/dunst-notification-sound.sh"
