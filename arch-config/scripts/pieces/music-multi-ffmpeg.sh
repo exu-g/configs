@@ -101,7 +101,7 @@ for flac in "${flacfiles[@]}"; do
 
     # convert to opus in transcode directory
     # TODO include cover picture (prefer file picture, cover.jpg second preference)
-    ffmpeg -nostdin -i "$flac" -b:a 256k "${pathname}/transcode/$opusfile" &
+    ffmpeg -nostdin -i "$flac" -b:a 384k "${pathname}/transcode/$opusfile" &
 #done < flacfiles
 done
 
@@ -128,7 +128,7 @@ for flac in "${flacfiles[@]}"; do
     opusfile="${noextfile}.opus"
 
     # convert opus in transcode to normalized
-    ffmpeg-normalize "transcode/$opusfile" -v -pr -c:a libopus -b:a 256k -ext opus &
+    ffmpeg-normalize "transcode/$opusfile" -v -pr -c:a libopus -b:a 384k -ext opus &
 #done < flacfiles
 done
 
