@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# check if user is root
+if [ "$EUID" -ne 0 ]; then
+    sudo -l > /dev/null
+fi
+
 cat <<EOF
 ############################################################
 ###################### INSTALL CONFIG ######################
@@ -33,11 +38,6 @@ cat <<EOF
 ################ Setup  ################
 ########################################
 EOF
-
-# check if user is root
-if [ "$EUID" -ne 0 ]; then
-    sudo -l > /dev/null
-fi
 
 # change to home
 cd "$HOME"
@@ -416,6 +416,9 @@ update-desktop-database ~/.local/share/applications/
 
 #sync doom-emacs
 ~/.emacs.d/bin/doom sync
+
+# dunst
+pkill dunst && dunst &
 
 # reload systemd user scripts
 systemctl --user daemon-reload
