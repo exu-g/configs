@@ -3,7 +3,7 @@ set -euo pipefail
 
 # check if user is root
 if [ "$EUID" -ne 0 ]; then
-    sudo -l > /dev/null
+    sudo -v
 fi
 
 cat <<EOF
