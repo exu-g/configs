@@ -458,3 +458,7 @@
 #[play-sound]
 #    summary = "*"
 #    script = "/home/marc/scripts/dunst-notification-sound.sh"
+
+[Evolution]
+    appname = "evolution-mail-notification"
+    script = "/home/marc/scripts/dunst-notification-sound.sh"
