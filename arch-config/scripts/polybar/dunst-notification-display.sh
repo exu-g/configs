@@ -6,6 +6,10 @@ if [ $# -eq 1 ]; then
     # check if the argument is "toggle"
     if [[ "$1" == "toggle" ]]; then
         dunstctl set-paused toggle
+        status="$(dunstctl is-paused)"
+        if [[ "$status" == "false" ]]; then
+            dunstify Notifications "Notifications are enabled" -t 2000 -a dunstify
+        fi
     # exit if something else is provided
     else
         echo "Wrong argument. Use \"toggle\""
@@ -20,7 +24,7 @@ fi
 # get the paused status of dunst
 status="$(dunstctl is-paused)"
 
-# if the status is false, dunst is paused
+# if the status is true, dunst is paused
 # notifications will wait until you reenable dunst
 if [[ "$status" == "true" ]]; then
     echo -e "\uf1f6"
