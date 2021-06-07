@@ -433,20 +433,24 @@
 [dunstify]
     appname = "dunstify"
     format = "<b>%s</b>\n%b"
+    script = "/home/marc/scripts/dunst-notification-sound.sh"
 
 [notify-send]
     appname = "notify-send"
     format = "<b>%s</b>\n%b"
+    script = "/home/marc/scripts/dunst-notification-sound.sh"
 
 [volume-script]
     appname = "volume-script"
     format = "<b>%s</b>\n%b"
     timeout = 5
+    script = "/home/marc/scripts/dunst-notification-sound.sh"
 
 [backlight-script]
     appname = "backlight-script"
     format = "<b>%s</b>\n%b"
     timeout = 5
+    script = "/home/marc/scripts/dunst-notification-sound.sh"
 
 [xfce4-power-manager]
     appname = "Power Manager"
