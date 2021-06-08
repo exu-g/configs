@@ -182,6 +182,11 @@ if [[ -d ~/.config/Vorlagen ]]; then
     rm -r ~/.config/Vorlagen
 fi
 
+# remove old scripts in path
+if [[ -d ~/scripts/in_path ]]; then
+    rm -r ~/scripts/in_path
+fi
+
 echo
 cat <<EOF
 ########################################
