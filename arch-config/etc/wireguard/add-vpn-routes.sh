@@ -21,12 +21,12 @@ for int in "${interfaces[@]// /}"; do
     #echo $intipf
     if [[ $int == "enp"* && $intipf =~ "172.16.52." ]]; then
         #echo lan
-        #ip route add 192.168.1.0/24 via 172.16.52.1 metric $metric
+        ip route add 192.168.1.0/24 via 172.16.52.1 metric $metric
         # add 10 for next metric
         metric=$(($metric + 10))
     elif [[ $int == "wlp"* && $intipf =~ "192.168.86." ]]; then
         #echo wlan
-        #ip route add 192.168.1.0/24 via 192.168.86.1 metric $metric
+        ip route add 192.168.1.0/24 via 192.168.86.1 metric $metric
         # add 10 for next metric
         metric=$(($metric + 10))
     fi
