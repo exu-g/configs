@@ -29,7 +29,14 @@ for file in "${conffiles[@]}"; do
         echo "Skipping $file"
     else
         echo "Patching $file"
-        awk 'NR==5{print "PostUp = ip route add 192.168.1.0/24 via 172.16.52.1"}NR==5{print "PreDown = ip route delete 192.168.1.0/24;"}1' "$file" > "${file}.tmp"
+        # NOTE only one PreDown line is required as we are using a specific table for this
+        # lan
+        awk 'NR==5{print "PostUp = ip route add 192.168.1.0/24 via 172.16.52.1 metric 10"}NR==5{print "PreDown = ip route del 192.168.1.0/24"}1' "$file" > "${file}.tmp"
+        # TODO tables do not work as intended
+        #awk 'NR==5{print "PostUp = ip route add 192.168.1.0/24 via 192.168.86.1 metric 10 table 7"}NR==5{print "PreDown = ip route flush table 7"}1' "$file" > "${file}.tmp"
+        mv "${file}.tmp" "$file"
+        # wifi
+        #awk 'NR==6{print "PostUp = ip route add 192.168.1.0/24 via 172.16.52.1 metric 20 table 7"}1' "$file" > "${file}.tmp"
         mv "${file}.tmp" "$file"
     fi
 done
