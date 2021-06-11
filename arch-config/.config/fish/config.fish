@@ -29,7 +29,6 @@ set fish_color_separator --bold yellow
 set fish_color_host cyan
 set fish_color_cwd yellow
 
-
 # environment variables
 # for ranger
 #set RANGER_LOAD_DEFAULT_RC FALSE
