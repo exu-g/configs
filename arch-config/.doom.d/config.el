@@ -76,3 +76,8 @@
 
 ;; Less delay for company to show up
 (setq company-idle-delay 0)
+
+;; Set tab width to 4 spaces
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
+(setq indent-line-function 'insert-tab)
