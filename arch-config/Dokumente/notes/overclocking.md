@@ -5,7 +5,7 @@
 `$ paru -S corefreq-client`  
 
 `# modprobe corefreqk`  
-`#  systemctl start corefreqd`  
+`# systemctl start corefreqd`  
 
 `$  corefreq-cli`  
 
