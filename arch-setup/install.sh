@@ -140,8 +140,10 @@ do
             echo "handbrake" >> "$setupdir/selectedpkgs.txt"
             ;;
         41)
+            # TODO
             #in_audacity=1
-            echo "audacity" >> "$setupdir/selectedpkgs.txt"
+            #echo "audacity" >> "$setupdir/selectedpkgs.txt"
+            echo "The situation with audacity is unknown right now. Check for FOSS no-telemetry forks"
             ;;
         50)
             #in_easystrokes=1
