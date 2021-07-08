@@ -12,6 +12,14 @@ else
     $(exit 1); echo "$?"
 fi
 
+# TODO make this work
+: '
+# prompt for password
+echo -n Password:
+read -s -r pass
+echo
+'
+
 # go to home dir
 cd "$HOME"
 
