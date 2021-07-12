@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+: '
 # give password as argument
 if [ $# -eq 1 ]; then
     pass=$1
@@ -11,14 +12,12 @@ else
     echo "Please only insert one argument"
     $(exit 1); echo "$?"
 fi
+'
 
-# TODO make this work
-: '
 # prompt for password
-echo -n Password:
+echo -n "Password: "
 read -s -r pass
 echo
-'
 
 # go to home dir
 cd "$HOME"
