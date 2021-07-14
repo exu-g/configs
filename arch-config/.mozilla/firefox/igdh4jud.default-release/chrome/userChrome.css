@@ -22,6 +22,17 @@
       background-color:    unset !important; /* Original:  var(--lwt-accent-color) */
   }
 
+  /* Navbar Border */
+  #navigator-toolbox:-moz-lwtheme {
+    --tabs-border-color: rgba(0,0,0,.3);
+  }
+
+  /* Hidden Tab Panel Padding */
+  #allTabsMenu-hiddenTabsView .all-tabs-item {
+    margin-inline: 8px;
+    border-radius: 4px;
+  }
+
   /** Windows 7 - Compatibility ***********************************************/
   @media (-moz-os-version: windows-win7) {
     /* Header Color */
@@ -65,10 +76,12 @@
     }
   }
 
-  /** Root - Reduce Padding ***************************************************/
+  /** Reduce Padding **********************************************************/
+  /*= Root - Reduce Padding ==================================================*/
   :root {
     /* Tab Bar */
     --proton-tab-block-margin: 2px !important; /* Original: 4px */
+    --tab-block-margin:        2px !important; /* New version of --proton-tab-block-margin */
     --inline-tab-padding:      6px !important; /* Original: 8px */
 
     /* Panel */
@@ -89,13 +102,14 @@
   :root[uidensity=touch] {
     /* Tab Bar - Like Original */
     --proton-tab-block-margin: 4px !important; /* Original: 4px */
+    --tab-block-margin:        4px !important; /* New version of --proton-tab-block-margin */
     --inline-tab-padding:      8px !important; /* Original: 8px */
 
     /* Panel - Like Original */
     --arrowpanel-menuitem-padding: 8px  !important; /* Original: 8px */
   }
 
-  /** Tab Bar - Reduce Width, Show more tabs **********************************/
+  /*= Tab Bar - Reduce Width, Show more tabs =================================*/
   .titlebar-spacer[type="pre-tabs"] {
     width: 30px !important; /* Original: 40px */
   }
@@ -152,7 +166,8 @@
     margin-inline-end: -.5px !important;
   }
 
-  /** Tab Bar - Reduce Height, Show more contents *****************************/
+  /*= Tab Bar - Reduce Height, Show more contents ============================*/
+  /* Toolbar Height */
   :root:not([uidensity=touch]) #TabsToolbar {
     --toolbarbutton-inner-padding: 9px; /* Original: calc((var(--tab-min-height) - 16px) / 2) = 10px */
   }
@@ -164,10 +179,11 @@
     max-height: 36px;
   }
   :root[uidensity=touch] .toolbar-items, .tabbrowser-tab {
-    max-height: unset;
+    max-height: 45px;
   }
 
-  :root:not([uidensity=touch]) #tabbrowser-arrowscrollbox {
+  /* Scroll Button - Size Fix */
+  :root #tabbrowser-arrowscrollbox {
     --scrollbtn-vertical-padding: 3px;
     --scrollbtn-vertical-border:  2px;
     --scrollbtn-border-radius:    7px;
@@ -202,6 +218,109 @@
     background-position-y: bottom calc(.5px + var(--tabs-navbar-shadow-size)) !important;
   }
 
+  /*= URL Bar - Reduce Padding ===============================================*/
+  :root:not([uidensity=touch]) #urlbar-container, #search-container {
+    padding-block: 2px; /* Original: 4px */
+    margin-inline: 5px; /* Original: 5px */
+  }
+
+  /* spread menu */
+  :root[uidensity=compact] .urlbarView-row:not([type=tip], [type=dynamic]) {
+    padding-block: 1px; /* [Compact, General]: 2px, Touch: 11px */
+  }
+  :root[uidensity=compact] #urlbar .search-one-offs:not([hidden]) {
+    padding-block: 2px; /* [Compact, General]: 4px, Touch 11px */
+  }
+
+  /*= BookMark Bar - Reduce Height ===========================================*/
+  :root[uidensity=compact] #PersonalToolbar toolbarbutton {
+      margin-top: 0px; /* Original: 2px */
+  }
+
+  /*= Menu - Reduce Padding ==================================================*/
+  :root {
+    --menu-padding: 0.35em;
+  }
+  :root[uidensity=compact] {
+    --menu-padding: 0.25em;
+  }
+  :root[uidensity=touch] {
+    --menu-padding: 0.5em;
+  }
+  menupopup > menuitem, menupopup > menu {
+    /* Original: 0.5em */
+    padding-block: var(--menu-padding) !important;
+  }
+
+  @supports not -moz-bool-pref("layout.css.osx-font-smoothing.enabled") {
+    :root:not([uidensity=touch]) .menu-text, .menu-iconic-text {
+      padding-inline-end: 0 !important; /* Original: 2px */
+    }
+    :root:not([uidensity=touch]) .menupopup-arrowscrollbox {
+      padding-block: 1px !important;    /* Original: 4px*/
+    }
+    :root:not([uidensity=touch]) #context-navigation:not([hidden]) {
+      padding: 0 0 1px !important;      /* Original: 0 0 4px*/
+    }
+    :root:not([uidensity=touch]) .menu-right {
+      margin-right: 6px !important;     /* Original: 12px */
+    }
+  }
+
+  /*= Poup Panel - Reduce padding ============================================*/
+  #protections-popup-main-header-label {
+    height: unset !important; /* Original: 37.6px */
+  }
+
+  #identity-popup,
+  #permission-popup,
+  #protections-popup {
+    --vertical-section-padding: 0.8em; /* Original: 0.9em */
+  }
+
+  .protections-popup-footer-button,
+  .protections-popup-category {
+    min-height: 24px; /* Original: 32px */
+    height: unset !important;
+  }
+
+  /** Popup panel - Compact mode  */
+  /* Footer Button Height */
+  :root[uidensity=compact] .panel-footer.panel-footer-menulike > button {
+    padding: 3px 8px !important;
+  }
+  /* Footer Button Height */
+  :root[uidensity=compact] #protections-popup-trackersView-settings-button {
+    margin: 4px 8px 0 !important;
+  }
+  /* not cut off for Protection popup Footer on windows */
+  :root[uidensity=compact] #protections-popup-multiView #protections-popup-footer {
+    padding: 3px 0 20px !important;
+  }
+  /* Button and disabed category in Protection popup */
+  :root[uidensity=compact] #protections-popup-multiView .protections-popup-footer-button,
+  :root[uidensity=compact] #protections-popup-multiView .protections-popup-category {
+    height: 20px !important;
+    min-height: 20px !important;
+  }
+  /* Footer Button in Tracking Content Panel */
+  :root[uidensity=compact] #protections-popup-multiView .panel-footer.panel-footer-menulike {
+    margin: 0 0 3px !important;
+  }
+  /* Identity popup header padding */
+  :root[uidensity=compact] #identity-popup-multiView #identity-popup-mainView-panel-header {
+    padding: 2px 5px !important;
+  }
+  /* Text When There is no trackers */
+  :root[uidensity=compact] #protections-popup-no-trackers-found-description {
+    margin: 2em 4em !important;
+  }
+  /* Download Item margin */
+  :root[uidensity=compact] #downloadsListBox {
+    margin: 0 !important;
+  }
+
+
   /** Tab Bar - Connect to window *********************************************/
   .tab-background {
     border-radius: var(--tab-border-radius) var(--tab-border-radius) 0px 0px !important;
@@ -209,12 +328,20 @@
   }
 
   .tab-content {
-    margin-top: var(--proton-tab-block-margin);
+    margin-top: var(--tab-block-margin);
   }
 
   .tab-stack {
     margin-top:    0px !important;
     margin-bottom: 0px !important;
+  }
+
+  /* Remove line at Toolbar's top */
+  #tabbrowser-tabs {
+    z-index: 1 !important;
+  }
+  #tabbrowser-arrowscrollbox[overflowing] .tabbrowser-tab[pinned]:is([visuallyselected], [multiselected]) {
+    overflow: hidden;
   }
 
   /** Selected Tab - Color like toolbar ***************************************/
@@ -262,7 +389,7 @@
 
   /** Selected Tab - Bottom Rounded Corner ************************************/
   #tabbrowser-tabs {
-    --tab-corner-rounding: 5px; /* 10px looks about like chromium - 17px looks close to Australis tabs */
+    --tab-corner-rounding: 4px; /* 10px looks about like chromium - 17px looks close to Australis tabs */
     --tab-corner-padding:  1px;
   }
 
@@ -283,7 +410,7 @@
     stroke: var(--tabs-border-color, transparent) !important;
     -moz-context-properties: fill, stroke !important;
 
-    background-image: url(./icons/tab-bottom-corner.svg);
+    /* Image */
     background-size:   var(--tab-corner-rounding);
     background-repeat: no-repeat;
     background-position-y: bottom;
@@ -291,60 +418,99 @@
 
   :root[lwtheme="true"] tab[visuallyselected] > stack::before {
     left: calc(var(--tab-corner-padding) - var(--tab-corner-rounding)) !important;
+    background-image: url(./icons/tab-bottom-corner-left.svg);
   }
   :root[lwtheme="true"] tab[visuallyselected] > stack::after {
     left:  auto;
     right: calc(var(--tab-corner-padding) - var(--tab-corner-rounding));
-    transform: scaleX(-1) !important;
+    background-image: url(./icons/tab-bottom-corner-right.svg);
   }
 
   /** Unselected Tab - Divide line ********************************************/
-  #tabbrowser-arrowscrollbox:not([overflowing]) .tabbrowser-tab[first-visible-unpinned-tab] .tab-background::before,
+  #tabbrowser-arrowscrollbox {
+    position: absolute;
+  }
+
   .tabbrowser-tab:not([visuallyselected], [multiselected], :hover, :first-child) .tab-background::before,
-  #tabbrowser-arrowscrollbox:not([overflowing]) .tabbrowser-tab:not([visuallyselected], [multiselected], :hover)[last-visible-tab] .tab-background::after {
+  #tabs-newtab-button:not(:hover, [open])::before {
     /* Box Model */
     content:  "";
-    display:  block;
+    display: block;
     position: absolute;
-    top:   50%;
+
+    /* Position */
+    top:       50%;
+    transform: translateX(-2.5px) translateY(calc(-50% + 1px));
 
     /* Bar shape */
     width:     1px;
     height:   20px;
-    overflow: hidden;
 
     /* Bar Color */
     opacity: var(--tab-separator-opacity);
-    transition: opacity .2s var(--ease-basic) !important;
-    background-color: color-mix(in srgb, currentColor 20%, transparent) !important; /*  Replace var(--toolbarseparator-color) - Hard coded for compatibility */
+    transition: opacity .2s var(--ease-basic);
+    background-color: color-mix(in srgb, currentColor 20%, transparent); /*  Replace var(--toolbarseparator-color) - Hard coded for compatibility */
+  }
+  #tabs-newtab-button:is(:hover, [open])::before {
+    content: "";
+    position: absolute;
   }
 
-  .tab-background::before {
-    transform: translateX(-2.5px) translateY(calc(-50% + 1px)) !important;
-  }
-  .tabbrowser-tab[last-visible-tab] .tab-background::after {
-    right: 0;
-    transform: translateX(1.5px) translateY(calc(-50% + 1px)) !important;
-  }
-
-  .tabbrowser-tab:is([visuallyselected], [multiselected], :hover) + .tabbrowser-tab:not([visuallyselected]) .tab-background::before,
-  .tabbrowser-tab[first-visible-unpinned-tab]:is([visuallyselected], [multiselected], :hover) .tab-background::before,
-  #tabbrowser-arrowscrollbox[overflowing] tab.tabbrowser-tab[first-visible-unpinned-tab] .tab-background::before {
+  #navigator-toolbox:not([movingtab]) .tabbrowser-tab:is([visuallyselected], [multiselected], :hover) + .tabbrowser-tab .tab-background::before,
+  #navigator-toolbox:not([movingtab]) .tabbrowser-tab:is([visuallyselected], [multiselected], :hover) ~ .tabbrowser-tab[afterhovered] .tab-background::before,
+  #navigator-toolbox:not([movingtab]) .tabbrowser-tab[last-visible-tab]:is([visuallyselected], [multiselected], :hover) ~ #tabs-newtab-button::before,
+  #navigator-toolbox:not([movingtab]) .tabbrowser-tab[first-visible-unpinned-tab]:is([visuallyselected], [multiselected], :hover) .tab-background::before,
+  #navigator-toolbox:not([movingtab]) #tabbrowser-arrowscrollbox[overflowing] tab.tabbrowser-tab[first-visible-unpinned-tab] .tab-background::before {
     opacity: 0 !important;
   }
 
   /* Latest Tab & New tab margin */
   #tabbrowser-arrowscrollbox:not([overflowing]) .tabbrowser-tab[last-visible-tab] {
-    margin-inline-end: 4px !important;
+    margin-inline-end: 1px !important;
+  }
+
+  /* New tab button - Looks like tab ******************************************/
+  #tabs-newtab-button {
+    /* Original:
+    margin: 0 0 var(--tabs-navbar-shadow-size) !important
+    => Can't ovrride style. Therefore, we should approach it by bypass.
+    */
+    --tabs-navbar-shadow-size: -1px; /* Original: 1px */
+    --tabs-navbar-original-shadow-size: 1px;
+
+    /* Size */
+    -moz-box-align: stretch !important;
+    padding-top: var(--tab-block-margin) !important;
+  }
+
+  #tabs-newtab-button > .toolbarbutton-icon {
+    border-radius: var(--tab-border-radius) var(--tab-border-radius) 0 0 !important; /* Original: var(--tab-border-radius) */
+  }
+
+  /* Coner Rounding */
+  #tabs-newtab-button:hover {
+    /* Color */
+    fill: color-mix(in srgb, currentColor 17%, transparent) !important; /* Replace var(--toolbarbutton-hover-background) - Hard coded for compatibility */
+    -moz-context-properties: fill !important;
+
+    /* Corner Image */
+    --newtab-position: calc((var(--tab-corner-rounding) / 2) * -1);
+    background-image: url("./icons/tab-bottom-corner-left.svg"), url("./icons/tab-bottom-corner-right.svg");
+    background-repeat: no-repeat;
+    background-position: left var(--newtab-position) bottom var(--tabs-navbar-original-shadow-size),  right var(--newtab-position)  bottom var(--tabs-navbar-original-shadow-size);
+    background-size: var(--tab-corner-rounding);
+  }
+
+  #tabs-newtab-button .toolbarbutton-icon {
+    padding: calc(var(--toolbarbutton-inner-padding) - (var(--tab-block-margin) / 4)) var(--toolbarbutton-inner-padding) calc(var(--toolbarbutton-inner-padding) + (var(--tab-block-margin) / 4) + var(--tabs-navbar-original-shadow-size)) !important;
+    -moz-context-properties: fill, fill-opacity;
+    fill: var(--toolbarbutton-icon-fill);
+    fill-opacity: var(--toolbarbutton-icon-fill-opacity);
   }
 
   /** Clipped tabs - Letters cleary *******************************************/
   #tabbrowser-tabs[closebuttons=activetab] .tab-content:not([pinned]) {
     padding-inline-start: 8px !important;
-  }
-
-  #tabbrowser-tabs[closebuttons=activetab] .tabbrowser-tab:not([visuallyselected]) .tab-close-button {
-    visibility: collapse !important;
   }
 
   #tabbrowser-tabs[closebuttons=activetab] .tab-label-container[textoverflow][labeldirection="ltr"]:not([pinned]),
@@ -355,6 +521,15 @@
   #tabbrowser-tabs[closebuttons=activetab] .tab-label-container[textoverflow][labeldirection="rtl"]:not([pinned]),
   #tabbrowser-tabs[closebuttons=activetab] .tab-label-container[textoverflow]:not([labeldirection]):-moz-locale-dir(rtl):not([pinned]) {
     mask-image: linear-gradient(to left, black 70%, transparent) !important;
+  }
+
+  /** Clipped tabs - Show close button at hover *******************************/
+  #tabbrowser-tabs[closebuttons="activetab"] > #tabbrowser-arrowscrollbox > .tabbrowser-tab:not([pinned]) > .tab-stack > .tab-content > .tab-close-button:not([selected="true"]) {
+    display: -moz-inline-box !important;
+  }
+
+  #tabbrowser-tabs[closebuttons=activetab] .tabbrowser-tab:not([visuallyselected], :hover) .tab-close-button {
+    visibility: collapse !important;
   }
 
   /** Sound Tab - Hide Label **************************************************/
@@ -530,55 +705,6 @@
     display: none !important;
   }
 
-  /** URL Bar - Reduce Padding ************************************************/
-  :root:not([uidensity=touch]) #urlbar-container, #search-container {
-    padding-block: 2px; /* Original: 4px */
-    margin-inline: 5px; /* Original: 5px */
-  }
-
-  /* spread menu */
-  :root[uidensity=compact] .urlbarView-row:not([type=tip], [type=dynamic]) {
-    padding-block: 1px; /* [Compact, General]: 2px, Touch: 11px */
-  }
-  :root[uidensity=compact] #urlbar .search-one-offs:not([hidden]) {
-    padding-block: 2px; /* [Compact, General]: 4px, Touch 11px */
-  }
-
-  /** BookMark Bar - Reduce Height ********************************************/
-  :root[uidensity=compact] #PersonalToolbar toolbarbutton {
-      margin-top: 0px; /* Original: 2px */
-  }
-
-  /** Menu - Reduce Padding ***************************************************/
-  :root {
-    --menu-padding: 0.35em;
-  }
-  :root[uidensity=compact] {
-    --menu-padding: 0.25em;
-  }
-  :root[uidensity=touch] {
-    --menu-padding: 0.5em;
-  }
-  menupopup > menuitem, menupopup > menu {
-    /* Original: 0.5em */
-    padding-block: var(--menu-padding) !important;
-  }
-
-  @supports not -moz-bool-pref("layout.css.osx-font-smoothing.enabled") {
-    :root:not([uidensity=touch]) .menu-text, .menu-iconic-text {
-      padding-inline-end: 0 !important; /* Original: 2px */
-    }
-    :root:not([uidensity=touch]) .menupopup-arrowscrollbox {
-      padding-block: 1px !important;    /* Original: 4px*/
-    }
-    :root:not([uidensity=touch]) #context-navigation:not([hidden]) {
-      padding: 0 0 1px !important;      /* Original: 0 0 4px*/
-    }
-    :root:not([uidensity=touch]) .menu-right {
-      margin-right: 6px !important;     /* Original: 12px */
-    }
-  }
-
   /** Panel - Icons ***********************************************************/
   /*= Padding ================================================================*/
   :root {
@@ -589,6 +715,9 @@
   #downloadsHistory .button-text,
   .subviewbutton > .toolbarbutton-text {
     padding-inline-start: var(--arrowpanel-menuicon-padding) !important;
+  }
+  .toolbaritem-combined-buttons > .subviewbutton:not(.subviewbutton-iconic) > .toolbarbutton-text {
+    padding-inline-start: 0 !important;
   }
   #panelMenu_bookmarksMenu .subviewbutton[disabled=true] .toolbarbutton-text,
   #appMenu_historyMenu     .subviewbutton[disabled=true] .toolbarbutton-text {
@@ -629,6 +758,14 @@
     fill: currentColor !important;
     fill-opacity: var(--toolbarbutton-icon-fill-opacity) !important;
     -moz-context-properties: fill !important;
+  }
+  #appMenu-zoomReduce-button2 > .toolbarbutton-icon,
+  #appMenu-zoomEnlarge-button2 > .toolbarbutton-icon {
+    stroke: var(--zoom-controls-bgcolor, var(--button-bgcolor, ButtonFace)) !important;
+    -moz-context-properties: fill, stroke !important;
+  }
+  #appMenu-zoomReduce-button2:not([disabled], [open], :active):is(:hover) > .toolbarbutton-icon, #appMenu-zoomEnlarge-button2:not([disabled], [open], :active):is(:hover) > .toolbarbutton-icon {
+    stroke: var(--button-hover-bgcolor) !important;
   }
 
   .subviewbutton[disabled=true] > image {
@@ -710,7 +847,7 @@
   }
 
   #appMenu-quit-button2 {
-    list-style-image: url(chrome://browser/skin/quit.svg);
+    list-style-image: url(./icons/quit.svg);
   }
 
   /*= Panel - Account ========================================================*/
@@ -739,14 +876,14 @@
     list-style-image: url(chrome://browser/skin/fxa/add-device.svg);
   }
   #PanelUI-fxa-menu-sendtab-button {
-    list-style-image: url(chrome://browser/skin/send-to-device.svg);
+    list-style-image: url(./icons/send-to-device.svg);
   }
   #PanelUI-fxa-menu-sync-prefs-button,
   #PanelUI-remotetabs-view-managedevices {
     list-style-image: url(chrome://global/skin/icons/settings.svg);
   }
   #PanelUI-fxa-menu-account-signout-button {
-    list-style-image: url(chrome://browser/skin/sign-out.svg);
+    list-style-image: url(./icons/sign-out.svg);
   }
 
   .PanelUI-remotetabs-notabsforclient-label {
@@ -769,7 +906,7 @@
     display: none;
   }
   .pageAction-sendToDevice-device.subviewbutton.sync-menuitem.sendtab-target[clientType=""] {
-    list-style-image: url(chrome://browser/skin/send-to-device.svg);
+    list-style-image: url(./icons/send-to-device.svg);
   }
   .pageAction-sendToDevice-device.subviewbutton.sync-menuitem.sendtab-target:not([clientType]) {
     list-style-image: url(chrome://global/skin/icons/settings.svg);
@@ -802,7 +939,7 @@
     list-style-image: url(chrome://browser/skin/window.svg);
   }
   #appMenuRestoreSession {
-    list-style-image: url(chrome://browser/skin/restore-session.svg);
+    list-style-image: url(./icons/restore-session.svg);
   }
   #appMenuClearRecentHistory {
     list-style-image: url(chrome://browser/skin/forget.svg);
@@ -816,7 +953,7 @@
     list-style-image: url(./icons/movetowindow-16.svg);
   }
   #appMenu-library-recentlyClosedWindows {
-    list-style-image: url(chrome://browser/skin/restore-session.svg);
+    list-style-image: url(./icons/restore-session.svg);
   }
 
   /*= Panel - More tools =====================================================*/
@@ -896,6 +1033,9 @@
   #downloadsHistory {
     list-style-image: url(chrome://browser/skin/downloads/downloads.svg);
   }
+  #downloadsHistory .box-inherit.button-box {
+    display: -moz-inline-box !important;
+  }
 
   /*= Toolbar - Overflow Menu ================================================*/
   #overflowMenu-customize-button {
@@ -946,7 +1086,7 @@
   @supports -moz-bool-pref("widget.macos.native-context-menus") {
     :not(menu, #ContentSelectDropdown) > menupopup > menuitem:not(.menuitem-iconic, [type="checkbox"], .in-menulist),
     :not(menu, #ContentSelectDropdown) > menupopup > menu:not(.menu-iconic, [type="checkbox"], .in-menulist) {
-      list-style-image: var(--menuitem-image);
+      list-style-image: var(--menuitem-image) !important;
     }
   }
 
@@ -1048,7 +1188,10 @@
     --menuitem-image: url(./icons/arrow-swap.svg);
   }
   #context_sendTabToDevice {
-    --menuitem-image: url(chrome://browser/skin/send-to-device.svg);
+    --menuitem-image: url(./icons/send-to-device.svg);
+  }
+  #context_shareTabURL { /* At windows */
+    --menuitem-image: url(./icons/share.svg);
   }
   #context_reopenInContainer {
     --menuitem-image: url(./icons/container-openin-16.svg);
@@ -1197,7 +1340,7 @@
     --menuitem-image: url(chrome://browser/skin/link.svg);
   }
   #context-sendlinktodevice {
-    --menuitem-image: url(chrome://browser/skin/send-to-device.svg);
+    --menuitem-image: url(./icons/send-to-device.svg);
   }
 
   #context-media-play {
@@ -1292,7 +1435,7 @@
     --menuitem-image: url(chrome://browser/skin/pocket-outline.svg);
   }
   #context-sendpagetodevice {
-    --menuitem-image: url(chrome://browser/skin/send-to-device.svg);
+    --menuitem-image: url(./icons/send-to-device.svg);
   }
   #fill-login {
     --menuitem-image: url(./icons/password.svg);
@@ -1471,6 +1614,10 @@
     --menuitem-image: url(chrome://browser/skin/bookmark-star-on-tray.svg);
   }
 
+  menupopup[context="placesContext"]  > .openintabs-menuitem {
+    --menuitem-image: url(./icons/movetowindow-16.svg);
+  }
+
   /*= pageActionContextMenu ==================================================*/
   .pageActionContextMenuItem.extensionPinned.extensionUnpinned.manageExtensionItem {
     --menuitem-image: url(chrome://global/skin/icons/settings.svg);
@@ -1592,5 +1739,30 @@
 
   #syncedTabsRefreshFilter {
     --menuitem-image: url(chrome://browser/skin/sync.svg);
+  }
+
+  /*= urlbar-input-container =================================================*/
+  #urlbar-input-container .textbox-contextmenu menuitem[cmd="cmd_undo"]  {
+    --menuitem-image: url(chrome://global/skin/icons/undo.svg);
+  }
+  #urlbar-input-container .textbox-contextmenu menuitem[cmd="cmd_redo"]  {
+  }
+
+  #urlbar-input-container .textbox-contextmenu menuitem[cmd="cmd_cut"]  {
+    --menuitem-image: url(chrome://browser/skin/edit-cut.svg);
+  }
+  #urlbar-input-container .textbox-contextmenu menuitem[cmd="cmd_copy"]  {
+    --menuitem-image: url(chrome://browser/skin/edit-copy.svg);
+  }
+  #urlbar-input-container .textbox-contextmenu menuitem[cmd="cmd_paste"]  {
+    --menuitem-image: url(chrome://browser/skin/edit-paste.svg);
+  }
+  #paste-and-go {
+  }
+  #urlbar-input-container .textbox-contextmenu menuitem[cmd="cmd_delete"]  {
+    --menuitem-image:  url(chrome://global/skin/icons/delete.svg);
+  }
+  #urlbar-input-container .textbox-contextmenu menuitem[cmd="cmd_selectAll"]  {
+    --menuitem-image: url(./icons/select-all-on.svg);
   }
 }
