@@ -1,6 +1,6 @@
 # Compiling everything
 
-Okay so first you need to install asp and git by typing sudo pacman -Sy asp git .
+Okay so first you need to install asp and git by typing sudo pacman -S asp git .
 
 Then you need to create the CFlags by typing gcc -### -march=native /usr/include/stdlib.h and copy the output (everything from -march=whatevermatchesyourcpu) in your /etc/makepkg.conf for which you have to be root/sudo. I usually use -O3 and add -pipe -ftree-vectorize -fomit-frame-point -fopenmp at the end. The milage with the optimizations WILL vary and if you push it too hard things will break, run slower or show unexpected behaviour and not every package benefits equally from a highly optimized code.
 
