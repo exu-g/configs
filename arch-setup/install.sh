@@ -103,7 +103,7 @@ do
     case $choice in
         0)
             #in_virtmanager=1
-            printf '%s\n' 'qemu' 'virt-manager' >> "$setupdir/selectedpkgs.txt"
+            printf '%s\n' 'qemu' 'virt-manager' 'ebtables' 'dnsmasq' >> "$setupdir/selectedpkgs.txt"
             ;;
         1)
             #in_vmware15=1
