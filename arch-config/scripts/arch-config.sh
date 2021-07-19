@@ -351,6 +351,12 @@ if [[ $(pacman -Q | grep vmware-workstation) ]]; then
     sudo chmod g+rw /dev/vmnet*
 fi
 
+# set group for libvirt
+if [[ $(pacman -Q | grep libvirt) ]]; then
+    echo "Setting group for libvirt"
+    sudo gpasswd -a "$USER" libvirt 1>/dev/null
+fi
+
 # set group for wireshark (only if installed)
 if [[ $(pacman -Q | grep wireshark-qt) ]]; then
     echo "Setting up group for wireshark"
