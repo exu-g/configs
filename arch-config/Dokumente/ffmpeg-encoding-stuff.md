@@ -46,3 +46,11 @@
     - two subtitle streams, only using the full subtitles
 - size:   
 `ffmpeg -i \[Arid\]\ Death\ Note\ -\ 01\ -\ Rebirth\ \[3BECAA78\].mkv -c:v libx264 -c:a libopus -b:a 192k -crf 20 -tune animation -map 0:v:0 -map 0:a:0 -map 0:a:1 -map 0:s:0 -metadata:s:v:0 title="Video" -metadata:s:a:0 title="Japanese" -metadata:s:a:0 language=jpn -disposition:a:0 default -metadata:s:a:1 title="English" -metadata:s:a:1 language=eng -metadata:s:s:0 title="English" -metadata:s:s:0 language=eng -disposition:s:0 default "Death Note - 01 - Rebirth libx264 mapped metadata tune.mkv"`  
+
+Convert Season in loop  
+```
+for i in (seq -w 1 26)
+                                                                                                             ffmpeg -i \[Judas\]\ Kimetsu\ no\ Yaiba\ -\ S01E{$i}.mkv -c:v libx264 -c:a libopus -b:a 192k -crf 20 -tune animation -map 0:v:0 -map 0:a:0 -map 0:a:1 -map 0:s:0 -metadata:s:v:0 title="Video" -metadata:s:a:0 title="Japanese" -metadata:s:a:0 language=jpn -disposition:a:0 default -metadata:s:a:1 title="English" -metadata:s:a:1 language=eng -metadata:s:s:0 title="English" -metadata:s:s:0 language=eng -disposition:s:0 default "/mnt/storage/MediaLibrary/Handbrake-output/Demon Slayer/Demon Slayer - Kimetsu no Yaiba - S01E$i.mkv"
+
+end
+```
