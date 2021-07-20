@@ -3,8 +3,7 @@
 ## Base
 Arch base  
 Install AUR helper  
-Install `kitty`  
-`$ paru -S plasma-bigscreen-git libcec mycroft-core`  
+`$ paru -S kitty dolphin plasma-bigscreen-git libcec mycroft-core`  
 
 ## Autologin
 `# mkdir -p /etc/systemd/system/getty@tty1.service.d`
@@ -39,4 +38,4 @@ Create a script that launches bigscreen
 
 plasmashell --replace -p org.kde.plasma.mycroft.bigscreen
 ```
-Add the script to "Autostart" in the settings. Make sure executable is set  
+Add the script to "autostart" in the settings. Make sure executable is set  
