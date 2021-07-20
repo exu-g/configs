@@ -3,10 +3,10 @@
 ## Base
 Arch base  
 Install AUR helper  
-`$ paru -S kitty dolphin plasma-bigscreen-git libcec mycroft-core`  
+`$ paru -S kitty dolphin plasma-bigscreen-git libcec`  
 
 ## Autologin
-`# mkdir -p /etc/systemd/system/getty@tty1.service.d`
+`# mkdir -p /etc/systemd/system/getty@tty1.service.d`  
 
 `# vim /etc/systemd/system/getty@tty1.service.d/override.conf`  
 ```
@@ -16,6 +16,7 @@ ExecStart=-/usr/bin/agetty --autologin (username) --noclear %I $TERM
 Type=simple
 ```
 
+`# systemctl daemon-reload`  
 `# systemctl enable getty@tty1`  
 
 ## Plasma Bigscreen 
