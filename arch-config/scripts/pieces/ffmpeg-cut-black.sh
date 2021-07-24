@@ -84,4 +84,4 @@ for file in ${splitfiles[@]}; do
     rm "$file"
 done
 
-$(exit 0); echo "$?"
+exit 0
