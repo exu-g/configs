@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if $# -ne 1; then
+if [ $# -ne 1 ]; then
     echo "Please provide the path to one video file"
     $(exit 1); echo "$?"
 fi

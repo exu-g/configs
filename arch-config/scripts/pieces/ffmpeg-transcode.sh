@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if $# -ne 3; then
+if [ $# -ne 3 ]; then
     echo "Please use this script with \"PATH\" \"Input Extension\" \"Output Extension\""
     $(exit 1); echo "$?"
 fi
