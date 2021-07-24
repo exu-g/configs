@@ -3,6 +3,7 @@ set -euo pipefail
 
 if $# -ne 3; then
     echo "Please use this script with \"PATH\" \"Input Extension\" \"Output Extension\""
+    $(exit 1); echo "$?"
 fi
 
 # TODO argument sanity check
