@@ -37,6 +37,8 @@ for i in "${!timings[@]}"; do
     fi
 done
 
+# TODO check whether seltimings is set/filled at all
+
 for i in "${seltimings[@]}"; do
     echo $i
 done
