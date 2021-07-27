@@ -55,3 +55,12 @@ ffmpeg -i \[Judas\]\ Kimetsu\ no\ Yaiba\ -\ S01E{$i}.mkv -c:v libx264 -c:a libop
 
 end
 ```
+
+Death Note bluray  
+```
+for i in (seq -w 2 37)
+
+ffmpeg -i Death\ Note\ -\ S01E{$i}.mkv -c:v libx264 -c:a libopus -b:a 192k -crf 20 -tune animation -c:s copy -map 0:v:0 -map 0:a:0 -map 0:a:1 -map 0:s:0 -metadata title="Death Note - S01E$i" -metadata:s:v:0 title="Video" -metadata:s:a:0 title="English" -metadata:s:a:0 language=eng -metadata:s:a:1 title="Japanese" -metadata:s:a:1 language=jpn -disposition:a:1 default -metadata:s:s:0 title="English" -metadata:s:s:0 language=eng -disposition:s:0 default "Death Note - S01E$i [1080p].mkv"
+
+end
+```
