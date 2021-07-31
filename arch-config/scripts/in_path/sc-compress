@@ -8,7 +8,7 @@ elif [ $# -eq 3 ]; then
     alg=$1
     str=$2
     target=$3
-elif [ $1 == "-h" || $1 == "--help" ]; then
+elif [ $1 == "-h" ] || [ $1 == "--help" ]; then
     echo "sc-compress ALGORITHM [STRENGTH] TARGET"
     echo "Algorithms: xz, zstd"
     echo "Strength: low, medium, high"
