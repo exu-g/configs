@@ -15,6 +15,7 @@ pdfsam
 polybar
 protonmail-bridge
 rig
+rustscan
 tauon-music-box
 tealdeer
 tmpmail-git
