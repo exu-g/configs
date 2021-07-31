@@ -12,6 +12,7 @@ elif [ $1 == "-h" ] || [ $1 == "--help" ]; then
     echo "sc-compress ALGORITHM [STRENGTH] TARGET"
     echo "Algorithms: xz, zstd"
     echo "Strength: low, medium, high"
+    exit 0
 else
     exit 1
 fi
