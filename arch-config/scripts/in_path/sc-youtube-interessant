@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+cd $HOME/Videos/Interessant
+
+youtube-dl --cookies "$HOME/Nextcloud/youtube-cookie.txt" PLw1D9N29TD5IoVg0O-nWroc0lB28o2lsG
+
+exit 0
