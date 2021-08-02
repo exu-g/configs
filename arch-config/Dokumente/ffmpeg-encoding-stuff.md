@@ -68,7 +68,7 @@ end
 Complex example with different audio channels  
 Note that the disposition is deleted first. Otherwise later settings might not apply  
 ```
-for i in (seq -w 1 25); ffmpeg -i Steins\;Gate\ -\ {$i}.mkv -metadata title="Steins;Gate - $i" -disposition 0 \
+for i in (seq -w 1 25); ffmpeg -i Steins\;Gate\ -\ {$i}.mkv -metadata title="Steins;Gate - $i" -map_metadata -1 -disposition 0 \
 
 -c:v libx264 -crf 20 -tune animation -map 0:v:0 -metadata:s:v:0 title="Video" \
 
