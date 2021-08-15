@@ -76,3 +76,16 @@ for i in (seq -w 1 25); ffmpeg -i Steins\;Gate\ -\ {$i}.mkv -metadata title="Ste
                                                                                                     -c:s copy -map 0:s:3 -metadata:s:s:3 title="English" -metadata:s:s:3 language=eng -disposition:s:3 default \
                                                                                                     "/mnt/storage/MediaLibrary/Handbrake-output/Steins;Gate/Steins;Gate - $i [1080p].mkv"; end
 ```
+
+Note how the subtitles are identified by their new id after mapping  
+```
+for i in (seq -w 1 13); ffmpeg -i Vivy\ -\ Flourite\ Eye\'s\ Song\ -\ {$i}.mkv -metadata title="Vivy - Flourite Eye's Song - $i" -map_metadata -1 -disposition 0 \
+
+-c:v libx264 -crf 20 -tune animation -map 0:v:0 -metadata:s:v:0 title="Video" \
+
+-c:a libopus -b:a 192k -map 0:a:0 -map 0:a:1 -metadata:s:a:0 title="English" -metadata:s:a:0 language=eng -metadata:s:a:1 title="Japanese" -metadata:s:a:1 language=jpn -disposition:a:1 default \
+
+-c:s copy -map 0:s:1 -metadata:s:s:0 title="English" -metadata:s:s:0 language=eng -disposition:s:0 default \
+
+/mnt/storage/MediaLibrary/output/Vivy\ -\ Flourite\ Eye\'s\ Song/Vivy\ -\ Flourite\ Eye\'s\ Song\ -\ {$i}.mkv; end
+```
