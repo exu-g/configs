@@ -1,7 +1,6 @@
 betterlockscreen
 bitwarden
 btrfsmaintenance
-corectrl
 downgrade
 ffmpeg-normalize-git
 font-manager-git
