@@ -4,4 +4,4 @@ pipewire-alsa
 pipewire-jack
 pipewire-media-session
 pipewire-pulse
-pulseeffects
+easyeffects
