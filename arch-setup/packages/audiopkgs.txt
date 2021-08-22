@@ -1,7 +1,7 @@
+easyeffects
 pavucontrol
 pipewire
 pipewire-alsa
 pipewire-jack
 pipewire-media-session
 pipewire-pulse
-easyeffects
