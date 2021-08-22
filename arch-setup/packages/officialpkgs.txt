@@ -10,6 +10,7 @@ cronie
 dconf-editor
 dhclient
 dunst
+evolution
 fakeroot
 feh
 ffmpeg
