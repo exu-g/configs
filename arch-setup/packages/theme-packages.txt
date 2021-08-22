@@ -9,4 +9,4 @@ qt5ct
 sardi-icons
 surfn-icons-git
 sweet-folders-icons-git
-sweet-theme-dark
+sweet-gtk-theme-dark
