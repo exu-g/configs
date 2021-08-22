@@ -179,6 +179,10 @@ do
             echo "auto-cpufreq-git" >> "$setupdir/aurselectedpkgs.txt"
             # TODO Handle rest of installation
             ;;
+        1)
+            #in_corectrl=1
+            echo "corectrl" >> "$setupdir/aurselectedpkgs.txt"
+            ;;
     esac
 done
 
