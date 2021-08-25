@@ -3,14 +3,19 @@ arandr
 bandwhich
 base-devel
 brotli
+btrfs-progs
 catfish
 celluloid
 cmake
 cronie
 dconf-editor
 dhclient
+dosfstools
 dunst
+e2fsprogs
 evolution
+exfatprogs
+f2fs-tools
 fakeroot
 feh
 ffmpeg
@@ -57,6 +62,7 @@ nextcloud-client
 notification-daemon
 noto-fonts
 noto-fonts-emoji
+ntfs-3g
 obs-studio
 okular
 openresolv
@@ -103,4 +109,5 @@ xf86-video-fbdev
 xf86-video-intel
 xf86-video-nouveau
 xfce4-power-manager
+xfsprogs
 xorg-xrdb
