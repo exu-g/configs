@@ -178,7 +178,7 @@ alias wgqu="sudo wg-quick up"
 alias wgqd="sudo wg-quick down"
 
 # lsblk to list more info
-alias lsblkf="lsblk -o NAME,FSTYPE,LABEL,MOUNTPOINT,SIZE,MODEL"
+alias lsblkf="lsblk -o NAME,FSTYPE,LABEL,MOUNTPOINT,SIZE,MODEL,UUID"
 
 #execute stuff
 #neofetch
