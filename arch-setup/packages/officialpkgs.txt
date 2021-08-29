@@ -67,6 +67,7 @@ obs-studio
 okular
 openresolv
 os-prober
+os-prober
 p7zip
 pacman-contrib
 picom
