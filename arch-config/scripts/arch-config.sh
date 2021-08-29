@@ -347,6 +347,9 @@ if [[ $(pacman -Q | grep btrfsmaintenance) ]]; then
     sudo systemctl enable btrfs-scrub.timer
 fi
 
+# enable systemd-timesyncd (ntp service)
+sudo timedatectl set-ntp true
+
 echo
 cat <<EOF
 ########################################
