@@ -20,10 +20,10 @@ sleep 0.3
 
 i3-msg 'workspace 2; exec discord'
 
-sleep 6.0
+sleep 7.0
 
 i3-msg 'workspace 2; exec telegram-desktop'
 
-sleep 1
+sleep 0.3
 
 i3-msg 'workspace 2; layout tabbed'
