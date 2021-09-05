@@ -8,7 +8,7 @@ sleep 0.4
 
 i3-msg 'workspace 2; exec firefox'
 
-sleep 1.0
+sleep 1.5
 
 i3-msg 'workspace 2; exec evolution'
 
