@@ -592,6 +592,9 @@ for_window [title="Picture-in-Picture"] floating disable
 # system-config-printer
 for_window [title="Druckeinstellungen - localhost"] floating disable
 
+# hp printers
+for_window [class="hp-toolbox"] floating disable
+
 ##############################
 ###   floating enabled     ###
 ##############################
