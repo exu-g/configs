@@ -84,6 +84,7 @@ rsync
 seahorse
 smartmontools
 stress
+system-config-printer
 thunar
 thunderbird
 tmux
