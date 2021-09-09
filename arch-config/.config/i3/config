@@ -587,7 +587,10 @@ for_window [title="Epic Games Launcher"] floating disable
 for_window [title="Ubisoft Connect"] floating disable
 
 # firefox picture in picture
-for_window [title="Picture-in-Picture"] floating enable
+for_window [title="Picture-in-Picture"] floating disable
+
+# system-config-printer
+for_window [title="Druckeinstellungen - localhost"] floating disable
 
 ##############################
 ###   floating enabled     ###
