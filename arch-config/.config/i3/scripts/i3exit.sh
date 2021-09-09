@@ -3,7 +3,8 @@
 
 case "$1" in
     lock)
-        betterlockscreen -l; dunstctl set-paused true
+        #betterlockscreen -l; dunstctl set-paused true
+        betterlockscreen -l
         ;;
     logout)
         i3-msg exit
