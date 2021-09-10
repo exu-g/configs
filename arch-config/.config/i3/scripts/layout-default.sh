@@ -8,7 +8,7 @@ sleep 0.4
 
 i3-msg 'workspace 2; exec firefox'
 
-sleep 1.5
+sleep 1.7
 
 i3-msg 'workspace 2; exec evolution'
 
@@ -16,14 +16,14 @@ sleep 0.5
 
 i3-msg 'workspace 2; exec joplin-desktop'
 
-sleep 0.3
+sleep 0
 
 i3-msg 'workspace 2; exec discord'
 
-sleep 7.5
+sleep 7.8
 
 i3-msg 'workspace 2; exec telegram-desktop'
 
-sleep 0.3
+sleep 0
 
 i3-msg 'workspace 2; layout tabbed'
