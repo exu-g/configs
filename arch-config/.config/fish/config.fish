@@ -117,6 +117,9 @@ alias ls='ls --color=auto'
 # fix obvious typo's
 #alias cd..='cd ..'
 
+# kill all wine processes
+alias killwine='ls -l /proc/*/exe 2>/dev/null | grep -E 'wine(64)?-preloader|wineserver' | perl -pe 's;^.*/proc/(\d+)/exe.*$;$1;g;' | xargs -n 1 kill'
+
 ## Colorize the grep command output for ease of use (good for log files)##
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
