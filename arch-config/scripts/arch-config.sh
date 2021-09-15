@@ -444,7 +444,7 @@ update-desktop-database ~/.local/share/applications/
 ~/.emacs.d/bin/doom sync
 
 # dunst
-pkill dunst && dunst &
+pkill dunst && nohup dunst &
 
 # reload systemd user scripts
 systemctl --user daemon-reload
