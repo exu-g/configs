@@ -23,7 +23,10 @@ fish
 flameshot
 foliate
 freetype2
+fwupd
+fwupd-efi
 galculator
+gnome-firmware
 gnome-keyring
 gsettings-desktop-schemas
 gtk-engine-murrine
