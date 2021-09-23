@@ -31,6 +31,7 @@ gnome-keyring
 gsettings-desktop-schemas
 gtk-engine-murrine
 gvfs
+gvfs-mtp
 htop
 hunspell
 hunspell-de
