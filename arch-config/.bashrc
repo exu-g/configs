@@ -120,4 +120,4 @@ alias update='paru -Syu --sudoloop --newsonupgrade'
 #}
 
 #execute stuff
-neofetch
+#neofetch
