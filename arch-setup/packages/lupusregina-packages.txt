@@ -1,6 +1,7 @@
 0ad
 aarch64-linux-musl
 accountsservice
+acpilight
 adobe-source-han-sans-cn-fonts
 adobe-source-han-sans-jp-fonts
 adobe-source-han-sans-kr-fonts
@@ -140,6 +141,7 @@ dosfstools
 downgrade
 drawio-desktop
 dunst
+easyeffects
 easystroke
 edac-utils
 edk2-ovmf
@@ -155,7 +157,7 @@ esptool
 etcher-bin
 ethtool
 evolution
-exfat-utils
+exfatprogs
 exo
 expac
 f2fs-tools
@@ -174,6 +176,7 @@ firefox
 fish
 flameshot
 flex
+foliate
 font-manager-git
 fractal
 freerdp
@@ -197,6 +200,7 @@ glib2
 glm
 gmrun
 gnome-disk-utility
+gnome-firmware
 gnome-icon-theme
 gnome-keyring
 gnome-screenshot
@@ -264,7 +268,6 @@ i2c-tools
 i3blocks
 i3-gaps
 i3status
-icaclient
 icecat-bin
 imagemagick
 inetutils
@@ -283,6 +286,7 @@ jackett
 javafx-scenebuilder
 jellyfin-media-player
 jfsutils
+joplin-desktop
 jq
 jre11-openjdk
 jre-openjdk
@@ -513,6 +517,7 @@ python-pytest
 python-pywal
 python-rednose
 python-yarl
+qdirstat
 qemu
 qt5ct
 qt5-styleplugins
@@ -548,7 +553,6 @@ sg3_utils
 shellcheck
 simple-scan
 simplescreenrecorder
-slack-electron
 smartmontools
 sonarr
 sox
@@ -564,7 +568,7 @@ stressapptest-git
 sudo
 surfn-icons-git
 sweet-folders-icons-git
-sweet-theme-dark
+sweet-gtk-theme-dark
 syslinux
 sysstat
 system-config-printer
@@ -733,7 +737,6 @@ xorg-setxkbmap
 xorg-smproxy
 xorg-x11perf
 xorg-xauth
-xorg-xbacklight
 xorg-xcmsdb
 xorg-xcursorgen
 xorg-xdpyinfo
@@ -766,7 +769,7 @@ xst-git
 xwinwrap-git
 yad
 yay
-youtube-dl
+yt-dlp-drop-in
 zenity
 zsh
 zsh-completions
