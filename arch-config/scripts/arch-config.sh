@@ -334,7 +334,7 @@ EOF
 
 # set systemd services for vmware (only if installed)
 if [[ $(pacman -Q | grep vmware-workstation) ]]; then
-    sudo systemctl enable --now vmware-networks-server.service
+    sudo systemctl enable --now vmware-networks-server.service || echo "Service failed, continuing"
 fi
 
 # enable fstrim timer
