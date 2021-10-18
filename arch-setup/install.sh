@@ -89,7 +89,8 @@ options=(0 "VirtManager" off    # any option can be set to default to "on"
          13 "Cemu" off
          20 "Krita" off
          21 "Gimp" off
-         30 "Youtube-dl" off
+         #30 "Youtube-dl" off
+         31 "YT-dlp" off
          40 "Handbrake" off
          41 "Audacity" off
          50 "Easystroke" on
@@ -134,6 +135,9 @@ do
         30)
             #in_youtubedl=1
             echo "youtube-dl" >> "$setupdir/selectedpkgs.txt"
+            ;;
+        31)
+            printf '%s\n' 'yt-dlp' 'yt-dlp-drop-in' >> "$setupdir/aurselectedpkgs.txt"
             ;;
         40)
             #in_handbrake=1
