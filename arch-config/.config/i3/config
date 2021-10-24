@@ -595,6 +595,9 @@ for_window [title="Druckeinstellungen - localhost"] floating disable
 # hp printers
 for_window [class="hp-toolbox"] floating disable
 
+# balena etcher
+for_window [title="Etcher"] floating disable
+
 ##############################
 ###   floating enabled     ###
 ##############################
