@@ -351,7 +351,7 @@ fi
 sudo timedatectl set-ntp true
 
 # enable ssh-agent
-systemctl --user enable ssh-agent
+systemctl --user enable --now ssh-agent
 
 echo
 cat <<EOF
