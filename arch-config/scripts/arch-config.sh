@@ -350,6 +350,9 @@ fi
 # enable systemd-timesyncd (ntp service)
 sudo timedatectl set-ntp true
 
+# enable ssh-agent
+systemctl --user enable ssh-agent
+
 echo
 cat <<EOF
 ########################################
