@@ -32,6 +32,9 @@ set fish_color_cwd yellow
 # environment variables
 # for ranger
 #set RANGER_LOAD_DEFAULT_RC FALSE
+# SSH Agent
+#set SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/ssh-agent.socket"
+set SSH_AUTH_SOCK /run/user/1000/ssh-agent.socket; export SSH_AUTH_SOCK
 
 # Defined in /home/marc/.config/fish/functions/fish_prompt.fish @ line 2
 # slightly modified from defaults
