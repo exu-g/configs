@@ -408,8 +408,7 @@ EOF
 
 # automatically add ssh keys to agent
 if ! grep -q "AddKeysToAgent yes" "$HOME/.ssh/config"; then
-    sed -i '1s/^/AddKeysToAgent yes\n/' "$HOME/.ssh/config"
-    echo works
+    echo 'AddKeysToAgent yes' | cat - "$HOME/.ssh/config" > temp && mv temp "$HOME/.ssh/config"
 fi
 
 # set permissions for sudoers.d to root only
