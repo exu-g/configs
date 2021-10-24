@@ -408,9 +408,7 @@ EOF
 
 # automatically add ssh keys to agent
 if ! grep -q "AddKeysToAgent yes" "$HOME/.ssh/config"; then
-    sed -i '' '1i\
-    AddKeysToAgent yes
-    ' "$HOME/.ssh/config"
+    sed -i '1s/^/AddKeysToAgent yes\n/' "$HOME/.ssh/config"
     echo works
 fi
 
