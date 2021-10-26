@@ -88,7 +88,7 @@ set fish_user_paths "$HOME/.local/bin" $fish_user_paths
 alias emacs="/usr/bin/emacs --no-window-system"
 
 # use neovim instead of vim
-alias vim="/usr/bin/nvim"
+#alias vim="/usr/bin/nvim"
 
 # alias cat
 alias cat="$HOME/scripts/pieces/cat.sh"
