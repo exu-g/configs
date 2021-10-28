@@ -19,6 +19,17 @@ echo -n "Password: "
 read -s -r pass
 echo
 
+# prompt a second time
+echo -n "Repeat Password: "
+read -s -r pass2
+echo
+
+# check correctness
+if [ ! "$pass" = "$pass2" ]; then
+    echo "Passwords don't match!"
+    exit
+fi
+
 # go to home dir
 cd "$HOME"
 
