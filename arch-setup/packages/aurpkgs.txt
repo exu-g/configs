@@ -4,6 +4,7 @@ btrfsmaintenance
 downgrade
 ffmpeg-normalize-git
 font-manager-git
+jellyamp
 jellyfin-media-player
 libreoffice-extension-languagetool
 lightdm-settings
