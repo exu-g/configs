@@ -1,5 +1,4 @@
 configuration {
-	modi: drun;
 	#theme: "/usr/share/rofi/themes/android_notification.rasi";
 	theme: "/usr/share/rofi/themes/sidebar.rasi";
 	font: "monospace 12";
