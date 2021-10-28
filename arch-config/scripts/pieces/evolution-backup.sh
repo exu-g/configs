@@ -46,7 +46,7 @@ cp -r "$HOME/.config/evolution/" "$HOME/evolution-mail-backup/.config/"
 cp -r "$HOME/.local/share/evolution/" "$HOME/evolution-mail-backup/.local/"
 
 # create archive from backup
-tar -cv -I"zstd -19 -T0" -f evolution-mail-backup-${currdate}.tar.zst evolution-mail-backup/
+tar -c -I"zstd -19 -T0" -f evolution-mail-backup-${currdate}.tar.zst evolution-mail-backup/
 
 # remove backup dir
 rm -rf "$HOME/evolution-mail-backup"
