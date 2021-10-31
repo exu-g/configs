@@ -45,11 +45,17 @@ export B2_ACCOUNT_KEY=
 `restic -r b2:(bucket):(path) restore --target "(path)" (snapshot)`  
 
 #### Remove Snapshots
-Only keep last X snapshots. Use "-n" to do a dry run  
+`-n` for dry run  
+`--prune=true` also run prune  
+
+Only keep last X snapshots.  
 Does not remove data, just links  
 `restic -r b2:(bucket):(path) forget -l (X)`  
 
-Clean up unreferenced data. "-n" for dry run  
+Remove snapshots without certain tag
+`restic -r b2:(bucket):(path) forget --keep-tag=(tag)`  
+
+Clean up unreferenced data.  
 `restic -r b2:(bucket):(path) prune`  
 
 ### lupusregina-backup home
