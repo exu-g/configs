@@ -102,3 +102,8 @@ restic -r b2:hydra-server-backup:etc snapshots
 ```
 restic -r b2:hydra-server-backup:etc restore --target "/etc" <snapshot>
 ```
+
+### aura-server-backup etc
+```
+restic -r b2:aura-server-backup:etc snapshots 
+```
