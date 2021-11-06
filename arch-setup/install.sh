@@ -703,9 +703,10 @@ sudo systemctl enable betterlockscreen@$USER
 
 # enable firewall
 echo "Enabling Firewall"
-sudo ufw enable
-sudo systemctl enable ufw
-sudo systemctl start ufw
+#sudo ufw enable
+#sudo systemctl enable ufw
+#sudo systemctl start ufw
+sudo systemctl enable --now firewalld
 
 # enable lightdm
 sudo systemctl enable lightdm

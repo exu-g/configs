@@ -19,6 +19,7 @@ f2fs-tools
 fakeroot
 feh
 ffmpeg
+firewalld
 fish
 flameshot
 foliate
@@ -96,7 +97,6 @@ traceroute
 transmission-gtk
 ttf-fira-code
 ttf-fira-sans
-ufw
 unace
 unrar
 unzip
