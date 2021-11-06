@@ -707,6 +707,7 @@ echo "Enabling Firewall"
 #sudo systemctl enable ufw
 #sudo systemctl start ufw
 sudo systemctl enable --now firewalld
+sudo firewall-cmd --zone=public --permanent --remove-service=ssh
 
 # enable lightdm
 sudo systemctl enable lightdm
