@@ -269,12 +269,13 @@ mode "$main"{
 #############################################################################
 
 
-set $social Discord (d), Element (e), Telegram (b), Teams (t)
+set $social Discord (d), Element (e), Telegram (b), Signal (s), Teams (t)
 mode "$social"{
      bindsym d exec --no-startup-id discord;focus
      bindsym e exec --no-startup-id element-desktop;focus
      bindsym b exec --no-startup-id telegram-desktop;focus
      #bindsym s exec --no-startup-id slack;focus
+     bindsym s exec --no-startup-id signal-desktop;focus
      bindsym t exec --no-startup-id teams;focus
 
      bindsym Return mode "default"
