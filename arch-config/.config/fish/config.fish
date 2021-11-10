@@ -178,6 +178,9 @@ alias cleancache='paru -Sc'
 #cpu-x as sudo
 alias cpu-x="sudo cpu-x"
 
+# kill ssh tunnels
+alias killsshtun='pkill -f "ssh\s"'
+
 #wireguard
 alias wgs="sudo wg show"
 alias wgqu="sudo wg-quick up"
