@@ -38,6 +38,7 @@ sublime-text-dev
 termite
 thefuck
 tmux
+transmission-gtk
 transmission-qt
 vivaldi
 vlc
