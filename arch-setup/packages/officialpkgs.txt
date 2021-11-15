@@ -95,7 +95,7 @@ thunar
 thunderbird
 tmux
 traceroute
-transmission-gtk
+transmission-remote-gtk
 ttf-fira-code
 ttf-fira-sans
 unace
