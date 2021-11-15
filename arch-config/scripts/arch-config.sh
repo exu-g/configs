@@ -451,6 +451,11 @@ update-desktop-database ~/.local/share/applications/
 #sync doom-emacs
 ~/.emacs.d/bin/doom sync
 
+# disable freedesktop notification daemon
+if [[ -f "/usr/share/dbus-1/services/org.freedesktop.Notifications.service" ]]; then
+    sudo mv /usr/share/dbus-1/services/org.freedesktop.Notifications.service /usr/share/dbus-1/services/org.freedesktop.Notifications.service.disabled
+fi
+
 # dunst
 pkill dunst && nohup dunst &
 
