@@ -610,7 +610,7 @@ for_window [title="Etcher"] floating disable
 for_window [title="Jellyamp"] floating disable
 
 # rule the waves 2
-for_window [class="rtw2.exe"] floating disable
+for_window [title="Rule the Waves II - Version 1.21"] floating disable
 
 ##############################
 ###   floating enabled     ###
