@@ -609,6 +609,9 @@ for_window [title="Etcher"] floating disable
 # jellyamp
 for_window [title="Jellyamp"] floating disable
 
+# rule the waves 2
+for_window [class="rtw2.exe"] floating disable
+
 ##############################
 ###   floating enabled     ###
 ##############################
