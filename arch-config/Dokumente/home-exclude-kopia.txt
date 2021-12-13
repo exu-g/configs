@@ -8,6 +8,7 @@
 .conda
 .config
 .cargo
+.chia
 .dotnet
 .droidcam
 .dvdcss
