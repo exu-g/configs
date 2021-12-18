@@ -89,3 +89,16 @@ for i in (seq -w 1 13); ffmpeg -i Vivy\ -\ Flourite\ Eye\'s\ Song\ -\ {$i}.mkv -
 
 /mnt/storage/MediaLibrary/output/Vivy\ -\ Flourite\ Eye\'s\ Song/Vivy\ -\ Flourite\ Eye\'s\ Song\ -\ {$i}.mkv; end
 ```
+
+Include subtitles from external files  
+```
+for i in (seq -w 1 11); ffmpeg -i Bartender\ {$i}\ \[BDRip\ 1920x1080\ HEVC\ FLAC\].mkv -i ENG\ Subs/Bartender\ {$i}\ \[BDRip\ 1920x1080\ HEVC\ FLAC\].eng.\[BD\].sup.mks -metadata title="Bartender - S01E$i" -map_metadata -1 -disposition 0 \
+
+-c:v libx264 -crf 20 -tune animation -map 0:v:0 -metadata:s:v:0 title="Video" \
+                                       
+-c:a libopus -b:a 192k -map 0:a:0 -metadata:s:a:0 title="Japanese" -metadata:s:a:0 language=jpn \
+
+-c:s copy -map 1:s:0 -metadata:s:s:0 title="English" -metadata:s:s:0 language=eng \
+
+/mnt/storage/MediaLibrary/output/Bartender/Bartender\ \-\ S01E{$i}\ \[1080p\].mkv; end
+```
