@@ -472,6 +472,9 @@ exec_always --no-startup-id ~/.config/polybar/launch.sh &
 # Protonmail Bridge
 exec --no-startup-id protonmail-bridge -no-window
 
+# Start KopiaUI
+exec --no-startup-id /opt/KopiaUI/kopia-ui
+
 # PulseEffects
 #exec --no-startup-id pulseeffects --gapplication-service
 
