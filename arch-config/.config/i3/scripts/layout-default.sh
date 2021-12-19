@@ -18,7 +18,7 @@ i3-msg 'workspace 2; exec joplin-desktop'
 
 sleep 0
 
-i3-msg 'workspace 2; exec discord'
+i3-msg 'workspace 2; exec discord --no-sandbox'
 
 sleep 7.8
 
