@@ -9,6 +9,7 @@ jellyfin-media-player
 libreoffice-extension-languagetool
 lightdm-settings
 lightdm-slick-greeter
+mpv-mpris
 nemo-audio-tab
 nohang-git
 pdfsam
