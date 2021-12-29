@@ -90,7 +90,8 @@ options=(0 "VirtManager" off    # any option can be set to default to "on"
          20 "Krita" off
          21 "Gimp" off
          #30 "Youtube-dl" off
-         31 "YT-dlp" off
+         31 "YT-dlp" on
+         32 "Megatools" off
          40 "Handbrake" off
          41 "Audacity" off
          50 "Easystroke" on
@@ -138,6 +139,9 @@ do
             ;;
         31)
             printf '%s\n' 'yt-dlp' 'yt-dlp-drop-in' >> "$setupdir/aurselectedpkgs.txt"
+            ;;
+        32)
+            echo "megatools-bin" >> "$setupdir/aurselectedpkgs.txt"
             ;;
         40)
             #in_handbrake=1
