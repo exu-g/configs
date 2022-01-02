@@ -205,7 +205,76 @@ cd "$HOME/MusikRaw"
 # cleanup
 #rm mp3files
 
+##############################
+#####      WAV           #####
+##############################
+
+# find wav files, ignore "normalized" or "transcode" folders
+#find "$HOME/MusikRaw/" -name "*\.wav" | grep -v "\/normalized\/" | grep -v "\/transcode\/" > wavfiles
+
+# array of wav with find
+readarray -d '' wavfiles < <(find "$HOME/MusikRaw/" -not \( -path *"\/normalized\/"* -prune \) -not \( -path *"\/transcode\/"* -prune \) -name "*\.wav" -print0)
+
+for wav in "${wavfiles[@]}"; do
+#while read -r wav; do
+    # if there are $numjobs or more, dont spawn any new processes
+    while [[ $(jobs | wc -l) -gt $numjobs ]] ; do sleep 1 ; done
+
+    # get directory path
+    pathname="$(dirname "$wav")"
+    # go to that path for proper output location
+    cd "$pathname"
+    # create directory for transcodes
+    mkdir -p "$pathname/transcode"
+    # get name of file
+    file="$(basename "$wav")"
+    # strip extension
+    noextfile="${file%.*}"
+    # add opus extension
+    opusfile="${noextfile}.opus"
+
+    # convert to opus in transcode directory
+    # TODO include cover picture (prefer file picture, cover.jpg second preference)
+    ffmpeg -nostdin -i "$wav" -b:a 384k "${pathname}/transcode/$opusfile" &
+#done < wavfiles
+done
+
+# wait for previous jobs to finish
+while [[ $(jobs | wc -l) -gt 1 ]] ; do sleep 1 ; done
+
+cd "$HOME/MusikRaw"
+
+# convert previously transcoded wavs
+for wav in "${wavfiles[@]}"; do
+#while read -r wav; do
+    # if there are $numjobs or more, dont spawn any new processes
+    while [[ $(jobs | wc -l) -gt $numjobs ]] ; do sleep 1 ; done
+
+    # get directory path
+    pathname="$(dirname "$wav")"
+    # go to that path for proper output location
+    cd "$pathname"
+    # get name of file
+    file="$(basename "$wav")"
+    # strip extension
+    noextfile="${file%.*}"
+    # add opus extension
+    opusfile="${noextfile}.opus"
+
+    # convert opus in transcode to normalized
+    ffmpeg-normalize "transcode/$opusfile" -v -pr -c:a libopus -b:a 384k -ext opus &
+#done < wavfiles
+done
+
+# go to musik raw folder
+cd "$HOME/MusikRaw"
+
+# cleanup
+#rm wavfiles
+
 ############################################################
+
+while [[ $(jobs | wc -l) -gt 1 ]] ; do sleep 1 ; done
 
 echo Finished!
 
