@@ -97,7 +97,8 @@ options=(0 "VirtManager" off    # any option can be set to default to "on"
          50 "Easystroke" on
          60 "Discord" on
          61 "Element" on
-         62 "Telegram" on)
+         62 "Telegram" on
+         70 "TestSSL" off)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
 for choice in $choices
@@ -169,6 +170,9 @@ do
         62)
             #in_telegram=1
             echo "telegram-desktop" >> "$setupdir/selectedpkgs.txt"
+            ;;
+        70)
+            echo "testssl.sh" >> "$setupdir/selectedpkgs.txt"
             ;;
     esac
 done
