@@ -740,7 +740,7 @@ popup_during_fullscreen smart
 # want it
 
 # set border and gaps
-#for_window [class="^.*"] border pixel 2
+for_window [class="^.*"] border pixel 2
 #gaps inner 3
 #gaps outer 3
 
