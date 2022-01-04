@@ -13,10 +13,10 @@ sshkeypath=$HOME/.ssh/id_ed25519_non-root
 ssh -NTfL 2400:${serverremote}:22 ${jumpuser}@${jumphost}
 
 # transfer Movies
-rsync -uvr --progress --bwlimit=4096 --chmod=744 -e "ssh -i $sshkeypath -p $port" /mnt/storage/MediaLibrary/Movies/ ${user}@${server}:/mnt/media/content/Movies/
+rsync -uvr --progress --bwlimit=4M --chmod=744 -e "ssh -i $sshkeypath -p $port" /mnt/storage/MediaLibrary/Movies/ ${user}@${server}:/mnt/media/content/Movies/
 
 # transfer Shows
-rsync -uvr --progress --bwlimit=4096 --chmod=744 -e "ssh -i $sshkeypath -p $port" /mnt/storage/MediaLibrary/Shows/ ${user}@${server}:/mnt/media/content/Shows/
+rsync -uvr --progress --bwlimit=4M --chmod=744 -e "ssh -i $sshkeypath -p $port" /mnt/storage/MediaLibrary/Shows/ ${user}@${server}:/mnt/media/content/Shows/
 
 # transfer Music
-rsync -uvrL --progress --bwlimit=4096 --chmod=744 -e "ssh -i $sshkeypath -p $port" /home/marc/Musik/ ${user}@${server}:/mnt/media/content/Musik/
+rsync -uvrL --progress --bwlimit=4M --chmod=744 -e "ssh -i $sshkeypath -p $port" /home/marc/Musik/ ${user}@${server}:/mnt/media/content/Musik/
