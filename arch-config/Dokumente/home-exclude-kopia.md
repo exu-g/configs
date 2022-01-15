@@ -82,6 +82,8 @@ workspace
 .pki
 .psensor
 .qwinff
+.recoll
+.rustup
 .screenlayout
 .steam
 .subversion
