@@ -214,6 +214,7 @@ do
         0)
             in_doomemacs=1
             # TODO sort pacman and AUR packages
+            # pychecker not in AUR anymore
             printf '%s\n' 'git' 'emacs' 'ripgrep' 'fd' 'pandoc' 'shellcheck' 'python-pipenv' 'python-isort' 'python-pytest' 'python-rednose' 'pychecker' 'texlive-core' >> "$setupdir/aurselectedpkgs.txt"
             # TODO handle rest of installation
             ;;
