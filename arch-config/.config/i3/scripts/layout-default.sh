@@ -17,12 +17,12 @@ sleep 0.5
 i3-msg 'workspace 2; exec joplin-desktop'
 
 sleep 0
-# set tabbed layout
-i3-msg 'workspace 2; layout tabbed'
-
-sleep 0
 
 i3-msg 'workspace 2; exec discord --no-sandbox'
+
+sleep 0.5
+# set tabbed layout
+i3-msg 'workspace 2; layout tabbed'
 
 #sleep 7.8
 
