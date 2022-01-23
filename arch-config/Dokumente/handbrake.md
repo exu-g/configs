@@ -5,7 +5,7 @@
 ### Bluray
 - H.264
 - Constant Framerate
-- RF 20
+- RF 20 -> RF 18
 - Medium
 
 ### DVD
