@@ -32,18 +32,21 @@ for file in "${conffiles[@]}"; do
         # NOTE route while being connected into my lan
         awk 'NR==5{print "PostUp = ip route add 192.168.1.0/24 via 172.16.52.1 metric 10"}NR==5{print "PreDown = ip route del 192.168.1.0/24"}1' "$file" > "${file}.tmp"
         mv "${file}.tmp" "$file"
+        # hetzner net
+        awk 'NR==5{print "PostUp = ip route add 172.18.50.0/24 via 172.16.52.1 metric 10"}NR==5{print "PreDown = ip route del 172.18.50.0/24"}1' "$file" > "${file}.tmp"
+        mv "${file}.tmp" "$file"
         # NOTE only one PreDown line is required as we are using a specific table for this
         # TODO tables do not work as intended
         #awk 'NR==5{print "PostUp = ip route add 192.168.1.0/24 via 192.168.86.1 metric 10 table 7"}NR==5{print "PreDown = ip route flush table 7"}1' "$file" > "${file}.tmp"
         # NOTE adds a dns to all configs
-        awk 'NR==4{print "DNS = 172.16.16.5"}1' "$file" > "${file}.tmp"
-        mv "${file}.tmp" "$file"
+        #awk 'NR==4{print "DNS = 172.16.16.5"}1' "$file" > "${file}.tmp"
+        #mv "${file}.tmp" "$file"
         # NOTE adds a dns to all configs
-        awk 'NR==5{print "DNS = 172.16.52.5"}1' "$file" > "${file}.tmp"
-        mv "${file}.tmp" "$file"
+        #awk 'NR==5{print "DNS = 172.16.52.5"}1' "$file" > "${file}.tmp"
+        #mv "${file}.tmp" "$file"
         # NOTE adds a dns to all configs
-        awk 'NR==6{print "DNS = 172.16.16.1"}1' "$file" > "${file}.tmp"
-        mv "${file}.tmp" "$file"
+        #awk 'NR==6{print "DNS = 172.16.16.1"}1' "$file" > "${file}.tmp"
+        #mv "${file}.tmp" "$file"
         # wifi
         #awk 'NR==6{print "PostUp = ip route add 192.168.1.0/24 via 172.16.52.1 metric 20 table 7"}1' "$file" > "${file}.tmp"
         #mv "${file}.tmp" "$file"
