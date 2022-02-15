@@ -1,16 +1,18 @@
 #!/bin/bash
 set -euo pipefail
 
-sshkeypath=$HOME/.ssh/id_ed25519_non-root
+user=exu
+server=172.18.50.102
+port=22
+sshkeypath=$HOME/.ssh/id_ed25519
+# don't transfer to the storage box directly, leads to mangled file names
+# see: https://serverfault.com/a/765951
 
-user=jellyfin
-server=albedo.realstickman.net
+# transfer Music
+rsync -uvrL --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /home/marc/Musik/ ${user}@${server}:/mnt/media/Musik/
 
-# Update Music
-rsync -uvrL --progress --bwlimit=4096 --chmod=744 -e "ssh -i $sshkeypath" /home/marc/Musik/ ${user}@${server}:/home/jellyfin/Musik/
+# transfer Shows
+rsync -uvr --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /mnt/storage/MediaLibrary/Shows/ ${user}@${server}:/mnt/media/Shows/
 
-# Update Shows
-rsync -uvr --progress --bwlimit=4096 --chmod=744 -e "ssh -i $sshkeypath" /mnt/storage/MediaLibrary/Shows/ ${user}@${server}:/home/jellyfin/Shows/
-
-# update Movies
-rsync -uvr --progress --bwlimit=4096 --chmod=744 -e "ssh -i $sshkeypath" /mnt/storage/MediaLibrary/Movies/ ${user}@${server}:/home/jellyfin/Movies/
+# transfer Movies
+rsync -uvr --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /mnt/storage/MediaLibrary/Movies/ ${user}@${server}:/mnt/media/Movies/
