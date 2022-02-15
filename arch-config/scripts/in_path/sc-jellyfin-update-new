@@ -1,22 +1,16 @@
 #!/bin/bash
 set -euo pipefail
 
-user=jellyfin
-server=localhost
-port=2400
-jumpuser=exu
-jumphost=nazarick.exu.li
-serverremote=172.16.53.101
-sshkeypath=$HOME/.ssh/id_ed25519_non-root
-
-# set another ssh key here?
-ssh -NTfL 2400:${serverremote}:22 ${jumpuser}@${jumphost}
+user=u289320-sub1
+server=u289320-sub1.your-storagebox.de
+port=23
+sshkeypath=$HOME/.ssh/id_rsa_jellyfin
 
 # transfer Music
-rsync -uvrL --progress --bwlimit=4M --chmod=744 -e "ssh -i $sshkeypath -p $port" /home/marc/Musik/ ${user}@${server}:/mnt/media/content/Musik/
+rsync -uvrL --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /home/marc/Musik/ ${user}@${server}:Musik/
 
 # transfer Shows
-rsync -uvr --progress --bwlimit=4M --chmod=744 -e "ssh -i $sshkeypath -p $port" /mnt/storage/MediaLibrary/Shows/ ${user}@${server}:/mnt/media/content/Shows/
+rsync -uvr --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /mnt/storage/MediaLibrary/Shows/ ${user}@${server}:Shows/
 
 # transfer Movies
-rsync -uvr --progress --bwlimit=4M --chmod=744 -e "ssh -i $sshkeypath -p $port" /mnt/storage/MediaLibrary/Movies/ ${user}@${server}:/mnt/media/content/Movies/
+rsync -uvr --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /mnt/storage/MediaLibrary/Movies/ ${user}@${server}:Movies/
