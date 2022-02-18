@@ -102,3 +102,9 @@ for i in (seq -w 1 11); ffmpeg -i Bartender\ {$i}\ \[BDRip\ 1920x1080\ HEVC\ FLA
 
 /mnt/storage/MediaLibrary/output/Bartender/Bartender\ \-\ S01E{$i}\ \[1080p\].mkv; end
 ```
+
+Edit medatada, here set subtitles as default, from exising files  
+```
+for i in (seq -w 1 12); ffmpeg -i S02E{$i}.mkv -c:v copy -map 0:v -c:a copy -map 0:a -c:s copy -map 0:s:0 -disposition:s:0 default \
+                            /mnt/storage/MediaLibrary/output/Kaguya-sama\ Love\ is\ War\ \(2019\)/Season\ 02/S02E{$i}.mkv; end
+```
