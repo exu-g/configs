@@ -1,5 +1,6 @@
 0ad
 aarch64-linux-musl
+abootimg
 accountsservice
 acpilight
 adobe-source-han-sans-cn-fonts
@@ -85,7 +86,7 @@ bibata-cursor-theme
 bind
 binutils
 bison
-bitwarden-bin
+bitwarden
 blender
 blueman
 bluez
@@ -122,6 +123,7 @@ cups-pdf
 cups-pk-helper
 czkawka-gui
 darkhttpd
+davfs2
 dconf-editor
 ddrescue
 debtap
@@ -132,7 +134,7 @@ dhclient
 dhcpcd
 dialog
 diffutils
-discord_arch_electron
+discord
 dmenu
 dmidecode
 dmraid
@@ -140,7 +142,7 @@ dnsmasq
 docker
 dosfstools
 downgrade
-drawio-desktop
+drawio-desktop-bin
 dunst
 easyeffects
 easystroke
@@ -262,6 +264,7 @@ hunspell-en_gb
 hunspell-en_us
 hunspell-fr
 hwinfo
+hyperfine
 hyphen
 hyphen-de
 hyphen-en
@@ -283,6 +286,7 @@ ipw2200-fw
 irssi
 it87-dkms-git
 iw
+jackett-bin
 javafx-scenebuilder
 jellyamp-appimage
 jellyfin-media-player
@@ -293,6 +297,7 @@ jre11-openjdk
 jre-openjdk
 jsoncpp
 k3b
+kcm-wacomtablet
 kconfig
 kcoreaddons
 kdenlive
@@ -350,6 +355,7 @@ lightdm-slick-greeter
 lightdm-webkit2-greeter
 lightdm-webkit2-theme-glorious
 lightdm-webkit-theme-aether-git
+lineageos-devel
 linux-atm
 linux-firmware
 linux-zen
@@ -376,6 +382,7 @@ man-pages
 mariadb
 mc
 mdadm
+mediaelch
 mediainfo-gui
 megatools-bin
 meld
@@ -384,7 +391,6 @@ menulibre
 mesa
 mesa-vdpau
 meson
-minecraft
 mintstick-git
 mkinitcpio
 mkinitcpio-nfs-utils
@@ -435,7 +441,6 @@ nsjail
 nss-mdns
 ntfs-3g
 ntp
-ntttcp-for-linux-git
 numix-circle-arc-icons-git
 numix-circle-icon-theme-git
 numix-gtk-theme-git
@@ -452,6 +457,7 @@ ocl-icd
 oh-my-zsh-git
 okular
 oneko
+onlyoffice-bin
 openbox
 openbox-themes-pambudi-git
 openconnect
@@ -506,7 +512,6 @@ protontricks
 psensor
 puddletag
 pulseaudio-alsa
-pulseeffects-legacy
 putty
 pxz-git
 pyhoca-cli
@@ -520,6 +525,7 @@ python-multidict
 python-pathvalidate
 python-pip
 python-pipenv
+python-pycryptodome
 python-pylint
 python-pyparted
 python-pyqt4
@@ -572,11 +578,12 @@ spice-protocol
 splix
 spotiflyer-bin
 squashfs-tools
+ssh-tools
 steam
 steam-native-runtime
 steamvr-openhmd-git
 stress
-stressapptest-git
+stressapptest
 sudo
 surfn-icons-git
 sweet-folders-icons-git
@@ -607,6 +614,7 @@ tk
 tmpmail-git
 tmux
 torbrowser-launcher
+transmission-gtk
 transmission-remote-gtk
 tree
 trizen
@@ -642,6 +650,7 @@ usb_modeswitch
 usbutils
 variety
 vdpauinfo
+ventoy-bin
 vi
 video2x
 vim
@@ -649,7 +658,7 @@ virtio-win
 virt-manager
 vkd3d
 vlc
-vmware-workstation15
+vmware-workstation
 vnstat
 volumeicon
 vpnc
@@ -661,7 +670,7 @@ wattman-gtk-git
 webkit2gtk
 wget
 which
-wine-ge-custom
+wine
 wireguard-tools
 wireless-regdb
 wireless_tools
@@ -775,6 +784,7 @@ xorg-xvinfo
 xorg-xwd
 xorg-xwininfo
 xorg-xwud
+xournalpp
 xsensors
 xst-git
 xwinwrap-git
