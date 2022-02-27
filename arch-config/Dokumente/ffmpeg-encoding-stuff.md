@@ -106,5 +106,13 @@ for i in (seq -w 1 11); ffmpeg -i Bartender\ {$i}\ \[BDRip\ 1920x1080\ HEVC\ FLA
 Edit medatada, here set subtitles as default, from exising files  
 ```
 for i in (seq -w 1 12); ffmpeg -i S02E{$i}.mkv -c:v copy -map 0:v -c:a copy -map 0:a -c:s copy -map 0:s:0 -disposition:s:0 default \
-                            /mnt/storage/MediaLibrary/output/Kaguya-sama\ Love\ is\ War\ \(2019\)/Season\ 02/S02E{$i}.mkv; end
+
+/mnt/storage/MediaLibrary/output/Kaguya-sama\ Love\ is\ War\ \(2019\)/Season\ 02/S02E{$i}.mkv; end
+```
+
+Extract subtitles  
+```
+for i in (seq -w 1 37); ffmpeg -i Death\ Note\ {$i}.mkv -map 0:s:0 -metadata:s:s:0 title="English [Redc4t]" -metadata:s:s:0 language=eng \
+
+/mnt/storage/MediaLibrary/output/Death\ Note\ Subs\ Redc4t/Death\ Note\ Subs\ Redc4t\ \-\ S01E{$i}.ass; end
 ```
