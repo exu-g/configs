@@ -334,7 +334,20 @@ EOF
 
 # set systemd services for vmware (only if installed)
 if [[ $(pacman -Q | grep vmware-workstation) ]]; then
-    sudo systemctl enable --now vmware-networks-server.service || echo "Service failed, continuing"
+    sudo systemctl enable --now vmware-networks.service || echo "Service failed, continuing"
+    sudo systemctl enable --now vmware-usbarbitrator.service || echo "Service failed, continuing"
+fi
+
+# NOTE temporary
+# remove old vmware services
+if [ -f "/etc/systemd/system/vmware.service" ]; then
+    sudo rm "/etc/systemd/system/vmware.service"
+fi
+if [ -f "/etc/systemd/system/vmware-networks-server.service" ]; then
+    sudo rm "/etc/systemd/system/vmware-networks-server.service"
+fi
+if [ -f "/etc/systemd/system/vmware-usbarbitrator.service" ]; then
+    sudo rm "/etc/systemd/system/vmware-usbarbitrator.service"
 fi
 
 # enable fstrim timer
