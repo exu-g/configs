@@ -315,13 +315,9 @@
   --in-content-button-vertical-padding: 7px;
 
   --in-content-table-background: #f8f8fa;
-  --in-content-table-border-color: var(--in-content-box-border-color); /* Legacy: #d1d1d1; rgba(249, 249, 250, 0.2) */
-  --in-content-table-header-background: var(
-    --in-content-primary-button-background
-  ); /* Legacy: #0a84ff; rgb(5, 64, 150); */
-  --in-content-table-header-color: var(
-    --in-content-primary-button-text-color
-  ); /* Legacy: #ffffff; var(--in-content-page-color); */
+  --in-content-table-border-dark-color: #d1d1d1;
+  --in-content-table-header-background: #0a84ff;
+  --in-content-table-header-color: #ffffff;
   --in-content-sidebar-width: 240px;
 
   --dialog-warning-text-color: var(--red-60);
@@ -409,7 +405,9 @@
     --in-content-danger-button-background-active: #ffdfe7;
 
     --in-content-table-background: rgb(35, 34, 43);
-    --in-content-table-border-dark-color: var(--in-content-box-border-color);
+    --in-content-table-border-dark-color: rgba(249, 249, 250, 0.2);
+    --in-content-table-header-background: rgb(5, 64, 150);
+    --in-content-table-header-color: var(--in-content-page-color);
 
     --in-content-accent-color: var(--in-content-primary-button-background);
     --in-content-accent-color-active: var(--in-content-primary-button-background-hover);
@@ -1205,7 +1203,7 @@
                  url-prefix("about:cache"),
                  url-prefix("about:checkerboard") {
   table {
-    border: 1px solid var(--in-content-table-border-color) !important;
+    border: 1px solid var(--in-content-border-color) !important;
     border-radius: 0 !important;
   }
 }
@@ -1213,7 +1211,7 @@
                  url-prefix("about:checkerboard") {
   th,
   td {
-    border: 1px solid var(--in-content-table-border-color) !important;
+    border: 1px solid var(--in-content-border-color) !important;
   }
   th {
     background-color: var(--in-content-table-header-background) !important;
@@ -1570,8 +1568,7 @@
   }
 
   /* Padding - Windows */
-  @media (-moz-os-version: windows-win7), (-moz-os-version: windows-win8), (-moz-os-version: windows-win10), /* Legacy - v99 */
-         (-moz-platform: windows-win7), (-moz-platform: windows-win8), (-moz-platform: windows-win10) {
+  @media (-moz-os-version: windows-win7), (-moz-os-version: windows-win8), (-moz-os-version: windows-win10) {
     /* Checkbox */
     :root {
       --context-menu-text-padding: calc(var(--menu-padding) + var(--context-menu-background-padding-default) + 16px);
@@ -1584,20 +1581,17 @@
     }
   }
 
-  @media (-moz-os-version: windows-win7), /* Legacy - v99 */
-         (-moz-platform: windows-win7) {
+  @media (-moz-os-version: windows-win7) {
     :root {
       --context-menu-background-padding-default: 2px;
     }
   }
-  @media (-moz-os-version: windows-win8), /* Legacy - v99 */
-         (-moz-platform: windows-win8) {
+  @media (-moz-os-version: windows-win8) {
     :root {
       --context-menu-background-padding-default: 3px;
     }
   }
-  @media (-moz-os-version: windows-win7), (-moz-os-version: windows-win8), /* Legacy - v99 */
-         (-moz-platform: windows-win7), (-moz-platform: windows-win8) {
+  @media (-moz-os-version: windows-win7), (-moz-os-version: windows-win8) {
     #placesContext menuitem:not(.menuitem-iconic, .in-menulist, [type="checkbox"], [checked="true"]),
     #placesContext menu:not(.menu-iconic, .in-menulist, [type="checkbox"], [checked="true"]),
     menupopup:is(#organizeButtonPopup, #maintenanceButtonPopup) > menuitem,
@@ -1606,8 +1600,7 @@
       padding-inline-start: 0 !important;
     }
   }
-  @media (-moz-os-version: windows-win10), /* Legacy - v99 */
-         (-moz-platform: windows-win10) {
+  @media (-moz-os-version: windows-win10) {
     :root {
       --context-menu-background-padding: 1em;
       --context-menu-text-padding: 24px; /* 16px + 8px */
