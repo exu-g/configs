@@ -1,6 +1,118 @@
 @namespace xul url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 @namespace html url("http://www.w3.org/1999/xhtml");
 
+/** Video player **************************************************************/
+/* Control Bar UI */
+audio {
+  --duration-color: #929292; /* Like Original */
+  --media-background: rgba(26,26,26,.8); /* Like Original */
+
+  border-radius: 8px;
+  --box-shadow1: rgba(14,13,26,.12);
+  --box-shadow2: rgba(7,48,114,.12);
+  --box-shadow3: rgba(34,0,51,.04);
+  box-shadow: 0 5px 10px -3px var(--box-shadow1), 0 3px 16px 2px var(--box-shadow2),
+              0 8px 12px  1px var(--box-shadow3);
+  /* Or: 0 2px 15px rgba(0,0,0,.1); */
+}
+video {
+  --duration-color: #eee;
+  --media-background: linear-gradient(transparent, rgba(26,26,26,.85));
+}
+
+@media (-moz-toolbar-prefers-color-scheme: dark), (prefers-color-scheme: dark) {
+  audio {
+    --box-shadow1: rgba(249, 249, 250, 0.12);
+    --box-shadow2: rgba(91, 91, 102, 0.12);
+    --box-shadow3: rgba(82, 82, 94, 0.04);
+  }
+}
+@media (prefers-contrast) {
+  video {
+    --duration-color: #929292; /* Like Original */
+    --media-background: rgba(26,26,26,.8); /* Like Original */
+  }
+}
+#controlsContainer .controlBar {
+  background: var(--media-background) !important;
+}
+#controlsContainer .duration {
+  color: var(--duration-color) !important; /* Original: #929292 */
+}
+#controlsContainer .fullscreenButton {
+  background-image: url("./icons/enter-fullscreen.svg") !important;
+}
+#controlsContainer .fullscreenButton[fullscreened] {
+  background-image: url("./icons/exit-fullscreen.svg") !important;
+}
+
+#controlsContainer .muteButton[noAudio] {
+  /* Remove volume button at noAudio */
+  display: none !important;
+}
+
+/* Control Bar Size */
+#controlsContainer {
+  --button-size: 32px !important; /* Original: 30px */
+  --controlBar-height: 40px; /* Original: 40px, Replace to this value */
+}
+#controlsContainer .touch {
+  --button-size: 48px !important; /* Original: 40px */
+  --controlBar-height: 52px; /* Original: 52px */
+}
+.videocontrols[inDOMFullscreen] #controlsContainer {
+  --button-size: 64px !important; /* Original: 30px */
+  --track-size: 6px !important; /* Original: 5px, Touch: 7px */
+  --thumb-size: 15px !important; /* Original: 13px, Touch: 16px */
+  --controlBar-height: 64px; /* Original: 40px */
+}
+.videocontrols[inDOMFullscreen] #controlsContainer .touch {
+  --button-size: 72px !important; /* Original: 40px */
+  --controlBar-height: 64px; /* Original: 52px */
+}
+#controlsContainer .controlBar {
+  height: var(--controlBar-height) !important; /* Original: 40px */
+}
+.videocontrols[inDOMFullscreen] #controlsContainer .controlBar {
+  padding-bottom: 8px !important;
+}
+
+/* Click to play UI */
+#controlsContainer .clickToPlay {
+  cursor: pointer;
+  opacity: 0.65 !important;
+}
+#controlsContainer .controlsSpacerStack:hover > .clickToPlay {
+  opacity: 0.85 !important;
+}
+#controlsContainer .controlsSpacerStack:hover > .clickToPlay:hover {
+  opacity: 1 !important;
+  fill: #48a0f7 !important; /* color as .scrubber */
+}
+
+/* Animation */
+@media (prefers-reduced-motion: no-preference) {
+  /* Control Bar */
+  #controlsContainer .controlBar {
+    transition: transform 350ms ease;
+  }
+  #controlsContainer .controlBar[hidden] {
+    transform: translateY(100%);
+    transition: transform 350ms ease-in-out, opacity 1s ease 100ms !important;
+  }
+  #controlsContainer .controlBar[hidden] .progressBar,
+  #controlsContainer .controlBar[hidden] .bufferBar {
+    display: unset !important;
+    opacity: 0.55;
+    transition: opacity 150ms ease 50ms;
+  }
+
+  /* Click to play */
+  #controlsContainer .clickToPlay {
+    transition: opacity 150ms ease-in-out, fill 150ms ease-in-out;
+  }
+}
+
 @-moz-document url("about:home"), url("about:newtab") {
   /** Activity Stream - Search Focus Border: like URL *************************/
   /* At DarkMode, Color */
@@ -315,9 +427,13 @@
   --in-content-button-vertical-padding: 7px;
 
   --in-content-table-background: #f8f8fa;
-  --in-content-table-border-dark-color: #d1d1d1;
-  --in-content-table-header-background: #0a84ff;
-  --in-content-table-header-color: #ffffff;
+  --in-content-table-border-color: var(--in-content-box-border-color); /* Legacy: #d1d1d1; rgba(249, 249, 250, 0.2) */
+  --in-content-table-header-background: var(
+    --in-content-primary-button-background
+  ); /* Legacy: #0a84ff; rgb(5, 64, 150); */
+  --in-content-table-header-color: var(
+    --in-content-primary-button-text-color
+  ); /* Legacy: #ffffff; var(--in-content-page-color); */
   --in-content-sidebar-width: 240px;
 
   --dialog-warning-text-color: var(--red-60);
@@ -405,9 +521,7 @@
     --in-content-danger-button-background-active: #ffdfe7;
 
     --in-content-table-background: rgb(35, 34, 43);
-    --in-content-table-border-dark-color: rgba(249, 249, 250, 0.2);
-    --in-content-table-header-background: rgb(5, 64, 150);
-    --in-content-table-header-color: var(--in-content-page-color);
+    --in-content-table-border-dark-color: var(--in-content-box-border-color);
 
     --in-content-accent-color: var(--in-content-primary-button-background);
     --in-content-accent-color-active: var(--in-content-primary-button-background-hover);
@@ -1203,7 +1317,7 @@
                  url-prefix("about:cache"),
                  url-prefix("about:checkerboard") {
   table {
-    border: 1px solid var(--in-content-border-color) !important;
+    border: 1px solid var(--in-content-table-border-color) !important;
     border-radius: 0 !important;
   }
 }
@@ -1211,7 +1325,7 @@
                  url-prefix("about:checkerboard") {
   th,
   td {
-    border: 1px solid var(--in-content-border-color) !important;
+    border: 1px solid var(--in-content-table-border-color) !important;
   }
   th {
     background-color: var(--in-content-table-header-background) !important;
@@ -1568,7 +1682,8 @@
   }
 
   /* Padding - Windows */
-  @media (-moz-os-version: windows-win7), (-moz-os-version: windows-win8), (-moz-os-version: windows-win10) {
+  @media (-moz-os-version: windows-win7), (-moz-os-version: windows-win8), (-moz-os-version: windows-win10), /* Legacy - v99 */
+         (-moz-platform: windows-win7), (-moz-platform: windows-win8), (-moz-platform: windows-win10) {
     /* Checkbox */
     :root {
       --context-menu-text-padding: calc(var(--menu-padding) + var(--context-menu-background-padding-default) + 16px);
@@ -1581,17 +1696,20 @@
     }
   }
 
-  @media (-moz-os-version: windows-win7) {
+  @media (-moz-os-version: windows-win7), /* Legacy - v99 */
+         (-moz-platform: windows-win7) {
     :root {
       --context-menu-background-padding-default: 2px;
     }
   }
-  @media (-moz-os-version: windows-win8) {
+  @media (-moz-os-version: windows-win8), /* Legacy - v99 */
+         (-moz-platform: windows-win8) {
     :root {
       --context-menu-background-padding-default: 3px;
     }
   }
-  @media (-moz-os-version: windows-win7), (-moz-os-version: windows-win8) {
+  @media (-moz-os-version: windows-win7), (-moz-os-version: windows-win8), /* Legacy - v99 */
+         (-moz-platform: windows-win7), (-moz-platform: windows-win8) {
     #placesContext menuitem:not(.menuitem-iconic, .in-menulist, [type="checkbox"], [checked="true"]),
     #placesContext menu:not(.menu-iconic, .in-menulist, [type="checkbox"], [checked="true"]),
     menupopup:is(#organizeButtonPopup, #maintenanceButtonPopup) > menuitem,
@@ -1600,7 +1718,8 @@
       padding-inline-start: 0 !important;
     }
   }
-  @media (-moz-os-version: windows-win10) {
+  @media (-moz-os-version: windows-win10), /* Legacy - v99 */
+         (-moz-platform: windows-win10) {
     :root {
       --context-menu-background-padding: 1em;
       --context-menu-text-padding: 24px; /* 16px + 8px */
