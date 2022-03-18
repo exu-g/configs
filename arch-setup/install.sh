@@ -39,7 +39,7 @@ done
 cmd=(dialog --separate-output --checklist "Select browsers:" 22 76 16)
 options=(0 "Firefox" on    # any option can be set to default to "on"
          10 "Chromium" off
-         20 "Torbrowser" on)
+         20 "Torbrowser" off)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
 for choice in $choices
@@ -82,7 +82,7 @@ done
 
 cmd=(dialog --separate-output --checklist "Select other programs:" 22 76 16)
 options=(0 "VirtManager" off    # any option can be set to default to "on"
-         1 "VMWare Workstation 15" off
+         1 "VMWare Workstation" off
          10 "Steam" off
          11 "Lutris" off
          12 "Citra" off
@@ -110,7 +110,7 @@ do
             ;;
         1)
             #in_vmware15=1
-            echo "vmware-workstation15" >> "$setupdir/aurselectedpkgs.txt"
+            echo "vmware-workstation" >> "$setupdir/aurselectedpkgs.txt"
             ;;
         10)
             #in_steam=1
