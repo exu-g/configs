@@ -10,6 +10,9 @@ setupdir=$(pwd)
 #change to home (does not show in terminal)
 cd "$HOME"
 
+# update mirrors and packages
+sudo pacman -Syu
+
 #in_xfce=0
 #in_i3gaps=0
 
