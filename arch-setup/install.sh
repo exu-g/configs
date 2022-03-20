@@ -10,8 +10,9 @@ setupdir=$(pwd)
 #change to home (does not show in terminal)
 cd "$HOME"
 
-# update mirrors and packages
+# fix install problems
 sudo pacman -Syu
+sudo pacman -S python
 
 #in_xfce=0
 #in_i3gaps=0
