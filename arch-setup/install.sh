@@ -12,7 +12,7 @@ cd "$HOME"
 
 # fix install problems
 sudo pacman -Syu
-sudo pacman -S python
+sudo pacman -S python-pip
 
 #in_xfce=0
 #in_i3gaps=0
