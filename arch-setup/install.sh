@@ -320,7 +320,7 @@ pip install --user autotrash
 echo Installed python programs
 
 # setup autotrash
-autotrash -d 5 --install
+"$HOME/.local/bin/autotrash" -d 5 --install
 systemctl --user start autotrash
 systemctl --user enable autotrash.timer
 
