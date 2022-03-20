@@ -85,7 +85,7 @@ polkit-gnome
 python-dbus
 python-gobject
 python-pip
-qt5-imageformats # webp support in nomacs
+qt5-imageformats
 reflector
 restic
 rofi
