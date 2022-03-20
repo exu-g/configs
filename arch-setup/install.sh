@@ -18,7 +18,7 @@ fi
 
 # fix install problems
 sudo pacman -Syu
-sudo pacman -S python-pip
+sudo pacman -S --needed python-pip
 
 #in_xfce=0
 #in_i3gaps=0
