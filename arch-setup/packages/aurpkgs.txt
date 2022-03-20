@@ -14,7 +14,7 @@ nemo-audio-tab
 nohang-git
 pdfsam
 polybar
-protonmail-bridge
+protonmail-bridge-bin
 rig
 rustscan
 tauon-music-box
