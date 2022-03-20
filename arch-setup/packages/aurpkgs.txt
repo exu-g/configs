@@ -6,6 +6,7 @@ ffmpeg-normalize-git
 font-manager-git
 jellyamp
 jellyfin-media-player
+joplin-desktop-bin
 libreoffice-extension-languagetool
 lightdm-settings
 lightdm-slick-greeter
