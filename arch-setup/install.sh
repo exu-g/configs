@@ -10,6 +10,12 @@ setupdir=$(pwd)
 #change to home (does not show in terminal)
 cd "$HOME"
 
+# check if multilib repo is enabled
+if ! pacman -Sl multilib &> /dev/null; then
+    echo "Please enable the multilib repository first"
+    exit 1
+fi
+
 # fix install problems
 sudo pacman -Syu
 sudo pacman -S python-pip
