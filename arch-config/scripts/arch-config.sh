@@ -114,6 +114,7 @@ mkdir -p ~/old_dat/.easystroke
 mkdir -p ~/old_dat/.mozilla
 mkdir -p ~/old_dat/scripts
 mkdir -p ~/old_dat/.elvish
+mkdir -p ~/old_dat/.ssh
 
 # make subdirectories
 mkdir -p ~/old_dat/.local/share
@@ -150,6 +151,11 @@ fi
 # doom.d folder
 if [[ -d ~/.doom.d ]]; then
     rsync -ah ~/.doom.d ~/old_dat/
+fi
+
+# .ssh folder
+if [[ -d ~/.ssh ]]; then
+    rsync -ah ~/.ssh ~/old_dat/
 fi
 
 # easystroke
@@ -202,6 +208,7 @@ cp -r ~/config/.mozilla/firefox/default-release/* ~/.mozilla/firefox/*.default-r
 cp -r ~/config/.easystroke ~/
 cp -r ~/config/.elvish ~/
 cp -r ~/config/.doom.d ~/
+cp -r ~/config/.ssh ~/
 echo Copied folders
 
 #copy single files
@@ -420,9 +427,9 @@ cat <<EOF
 EOF
 
 # automatically add ssh keys to agent
-if ! grep -q "AddKeysToAgent yes" "$HOME/.ssh/config"; then
-    echo 'AddKeysToAgent yes' | cat - "$HOME/.ssh/config" > temp && mv temp "$HOME/.ssh/config"
-fi
+#if ! grep -q "AddKeysToAgent yes" "$HOME/.ssh/config"; then
+#    echo 'AddKeysToAgent yes' | cat - "$HOME/.ssh/config" > temp && mv temp "$HOME/.ssh/config"
+#fi
 
 # set permissions for sudoers.d to root only
 sudo chown root:root -R /etc/sudoers.d/
