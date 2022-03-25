@@ -343,8 +343,8 @@ if [[ $(pacman -Q | grep yay) ]] && [[ ! $(pacman -Q | grep paru) ]]; then
     yay -S paru-bin
 elif [[ ! $(pacman -Q | grep yay) ]] && [[ ! $(pacman -Q | grep paru) ]]; then
     echo "Installing paru from git"
-    git clone https://aur.archlinux.org/paru.git
-    cd paru
+    git clone https://aur.archlinux.org/paru-bin.git
+    cd paru-bin
     makepkg -si
     cd ..
 fi
