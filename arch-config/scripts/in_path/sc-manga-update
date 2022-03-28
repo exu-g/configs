@@ -30,3 +30,13 @@ rsync -uvrL --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /home/marc/
 rsync -uvrL --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /home/marc/Nextcloud/Books/Tech/ ${user}@${server}:/mnt/books/kavita-nightly/tech/
 # other
 rsync -uvrL --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /home/marc/Nextcloud/Books/other/ ${user}@${server}:/mnt/books/kavita-nightly/other/
+
+# download from kavita
+# books
+rsync -uvrL --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" ${user}@${server}:/mnt/books/kavita/books/ /home/marc/Nextcloud/Books/Unterhaltung/
+# manga
+rsync -uvrL --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" ${user}@${server}:/mnt/books/kavita/manga/ /home/marc/Nextcloud/Books/Manga/
+# Tech
+rsync -uvrL --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" ${user}@${server}:/mnt/books/kavita/tech/ /home/marc/Nextcloud/Books/Tech/
+# other
+rsync -uvrL --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" ${user}@${server}:/mnt/books/kavita/other/ /home/marc/Nextcloud/Books/other/
