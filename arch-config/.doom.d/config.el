@@ -56,7 +56,7 @@
 ;; they are implemented.
 
 ;; Enables the minimap by default. Use SPC-t-m to toggle
-(minimap-mode 1)
+;(minimap-mode 1)
 
 (setq
  projectile-project-search-path '("~/GitProjects/"))
