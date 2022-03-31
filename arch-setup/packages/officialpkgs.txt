@@ -67,6 +67,7 @@ nemo-preview
 nemo-share
 neovim
 nextcloud-client
+nomacs
 notification-daemon
 noto-fonts
 noto-fonts-emoji
