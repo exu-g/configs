@@ -15,7 +15,6 @@ dhclient
 dosfstools
 dunst
 e2fsprogs
-evolution
 exfatprogs
 f2fs-tools
 fakeroot
@@ -96,6 +95,7 @@ smartmontools
 stress
 system-config-printer
 thunar
+thunderbird
 thunderbird
 tmux
 traceroute
