@@ -12,6 +12,7 @@ cronie
 davfs2
 dconf-editor
 dhclient
+dnsutils
 dosfstools
 dunst
 e2fsprogs
@@ -95,7 +96,6 @@ smartmontools
 stress
 system-config-printer
 thunar
-thunderbird
 thunderbird
 tmux
 traceroute
