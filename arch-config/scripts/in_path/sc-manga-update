@@ -10,33 +10,45 @@ sshkeypath=$HOME/.ssh/id_ed25519
 
 # transfer to kavita
 # books
-rsync -uvrL --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /home/marc/Nextcloud/Books/Unterhaltung/ ${user}@${server}:/mnt/books/kavita/books/
+echo Kavita books
+rsync -ur --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /home/marc/Nextcloud/Books/Unterhaltung/ ${user}@${server}:/mnt/books/kavita/books/
 # manga
-rsync -uvrL --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /home/marc/Nextcloud/Books/Manga/ ${user}@${server}:/mnt/books/kavita/manga/
+echo Kavita manga
+rsync -ur --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /home/marc/Nextcloud/Books/Manga/ ${user}@${server}:/mnt/books/kavita/manga/
 # Tech
-rsync -uvrL --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /home/marc/Nextcloud/Books/Tech/ ${user}@${server}:/mnt/books/kavita/tech/
+echo Kavita tech
+rsync -ur --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /home/marc/Nextcloud/Books/Tech/ ${user}@${server}:/mnt/books/kavita/tech/
 # other
-rsync -uvrL --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /home/marc/Nextcloud/Books/other/ ${user}@${server}:/mnt/books/kavita/other/
+echo Kavita other
+rsync -ur --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /home/marc/Nextcloud/Books/other/ ${user}@${server}:/mnt/books/kavita/other/
 
 # transfer to komga
 # TODO
 
 # transfer to kavita-nightly
 # books
-rsync -uvrL --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /home/marc/Nextcloud/Books/Unterhaltung/ ${user}@${server}:/mnt/books/kavita-nightly/books/
+echo Kavita Nightly books
+rsync -ur --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /home/marc/Nextcloud/Books/Unterhaltung/ ${user}@${server}:/mnt/books/kavita-nightly/books/
 # manga
-rsync -uvrL --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /home/marc/Nextcloud/Books/Manga/ ${user}@${server}:/mnt/books/kavita-nightly/manga/
+echo Kavita Nightly manga
+rsync -ur --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /home/marc/Nextcloud/Books/Manga/ ${user}@${server}:/mnt/books/kavita-nightly/manga/
 # Tech
-rsync -uvrL --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /home/marc/Nextcloud/Books/Tech/ ${user}@${server}:/mnt/books/kavita-nightly/tech/
+echo Kavita Nightly tech
+rsync -ur --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /home/marc/Nextcloud/Books/Tech/ ${user}@${server}:/mnt/books/kavita-nightly/tech/
 # other
-rsync -uvrL --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /home/marc/Nextcloud/Books/other/ ${user}@${server}:/mnt/books/kavita-nightly/other/
+echo Kavita Nightly other
+rsync -ur --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /home/marc/Nextcloud/Books/other/ ${user}@${server}:/mnt/books/kavita-nightly/other/
 
 # download from kavita
 # books
-rsync -uvrL --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" ${user}@${server}:/mnt/books/kavita/books/ /home/marc/Nextcloud/Books/Unterhaltung/
+echo Downloading books
+rsync -ur --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" ${user}@${server}:/mnt/books/kavita/books/ /home/marc/Nextcloud/Books/Unterhaltung/
 # manga
-rsync -uvrL --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" ${user}@${server}:/mnt/books/kavita/manga/ /home/marc/Nextcloud/Books/Manga/
+echo Downloading manga
+rsync -ur --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" ${user}@${server}:/mnt/books/kavita/manga/ /home/marc/Nextcloud/Books/Manga/
 # Tech
-rsync -uvrL --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" ${user}@${server}:/mnt/books/kavita/tech/ /home/marc/Nextcloud/Books/Tech/
+echo Downloading tech
+rsync -ur --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" ${user}@${server}:/mnt/books/kavita/tech/ /home/marc/Nextcloud/Books/Tech/
 # other
-rsync -uvrL --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" ${user}@${server}:/mnt/books/kavita/other/ /home/marc/Nextcloud/Books/other/
+echo Downloading other
+rsync -ur --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" ${user}@${server}:/mnt/books/kavita/other/ /home/marc/Nextcloud/Books/other/
