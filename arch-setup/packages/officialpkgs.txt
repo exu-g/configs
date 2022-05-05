@@ -70,6 +70,7 @@ nextcloud-client
 nomacs
 notification-daemon
 noto-fonts
+noto-fonts-cjk
 noto-fonts-emoji
 ntfs-3g
 obs-studio
