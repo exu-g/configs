@@ -41,8 +41,8 @@ rsync -ur --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /home/marc/Ne
 
 # download from kavita
 # books
-echo Downloading books
-rsync -ur --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" ${user}@${server}:/mnt/books/kavita/books/ /home/marc/Nextcloud/Books/Unterhaltung/
+#echo Downloading books
+#rsync -ur --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" ${user}@${server}:/mnt/books/kavita/books/ /home/marc/Nextcloud/Books/Unterhaltung/
 # manga
 echo Downloading manga
 rsync -ur --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" ${user}@${server}:/mnt/books/kavita/manga/ /home/marc/Nextcloud/Books/Manga/
