@@ -2,29 +2,15 @@
 
 i3-msg 'mode "default"'
 
-i3-msg 'workspace 1; exec kitty'
+# workspace 1
+i3-msg "workspace 1; append_layout ~/.config/i3/layouts/layout-default/workspace-1.json"
 
-sleep 0.4
+(kitty &)
 
-i3-msg 'workspace 2; exec firefox'
+# workspace 2
+i3-msg "workspace 2; append_layout ~/.config/i3/layouts/layout-default/workspace-2.json"
 
-sleep 1.7
-
-#i3-msg 'workspace 2; exec evolution'
-i3-msg 'workspace 2; exec thunderbird'
-
-sleep 0.5
-
-i3-msg 'workspace 2; exec joplin-desktop'
-
-sleep 0
-
-i3-msg 'workspace 2; exec discord --no-sandbox'
-
-sleep 0.5
-# set tabbed layout
-i3-msg 'workspace 2; layout tabbed'
-
-#sleep 7.8
-
-#i3-msg 'workspace 2; exec telegram-desktop'
+(firefox &)
+(thunderbird &)
+(joplin-desktop &)
+(discord --no-sandbox &)
