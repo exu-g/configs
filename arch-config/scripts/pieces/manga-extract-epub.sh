@@ -18,6 +18,8 @@ cd "$parentdir"
 #echo $filename
 #echo $outdir
 
+rm -rf "$outdir"
+
 # 1. extract .epub
 unzip "$dir" -d "$outdir"
 
