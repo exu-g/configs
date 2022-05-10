@@ -24,11 +24,16 @@ rm -rf "$outdir"
 unzip "$dir" -d "$outdir"
 
 # 2. images under "(folder name)/OEBPS/image"
-mv "$outdir/OEBPS/image/"* "$outdir/"
+#mv "$outdir/OEBPS/image/"* "$outdir/"
+mv "$outdir/images/"* "$outdir/"
 
 # 3. delete folders "META-INF", "OEBPS" and file "mimetype"
-rm -r "$outdir/"{META-INF,OEBPS,mimetype}
+rm -rf "$outdir/"{META-INF,OEBPS,mimetype,images,text,content.opf,page_styles.css,stylesheet.css,titlepage.xhtml,toc.ncx}
 
 # 4. rename images to "pageXXX.(ext)"
 cd "$outdir"
+# if cover.jpg exists, rename it to be the first page
+if [ -f cover.jpg ] || [ -f cover.jpeg ]; then
+    mv cover.* 0000000000.jpg
+fi
 ls | cat -n | while read n f; do mv "$f" `printf "page%03d.jpg" $n`; done
