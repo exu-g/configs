@@ -13,4 +13,4 @@ i3-msg "workspace 2; append_layout ~/.config/i3/layouts/layout-default/workspace
 (firefox &)
 (thunderbird &)
 (joplin-desktop &)
-(discord --no-sandbox &)
+(discord &)
