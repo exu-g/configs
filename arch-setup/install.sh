@@ -636,6 +636,7 @@ fi
 if [ $in_doomemacs -eq 1 ]; then
     echo "Installing doom-emacs"
     paru -S --needed git emacs ripgrep fd pandoc shellcheck python-pipenv python-isort python-pytest python-rednose pychecker texlive-core powershell-bin
+    pip install grip
     git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d
     ~/.emacs.d/bin/doom install
     export PATH="$PATH":$HOME/.emacs.d/bin
@@ -654,7 +655,7 @@ fi
 
 if [ $in_podman -eq 1 ]; then
     echo "Installing podman"
-    sudo pacman -S --needed podman podman-dnsname
+    sudo pacman -S --needed podman podman-dnsname fuse-overlayfs
     sudo touch /etc/subuid /etc/subgid
     sudo usermod --add-subuids 100000-165536 --add-subgids 100000-165536 "$USER"
     sudo groupadd -f podman
