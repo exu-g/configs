@@ -9,14 +9,12 @@
        "y": 0
     },
     "marks": [],
-    "name": "i3-save-tree --works ~",
+    "name": "Kitty",
     "percent": 1,
     "swallows": [
        {
         "class": "^kitty$",
-        "instance": "^kitty$",
-        "machine": "^lupusregina$",
-        "title": "^i3\\-save\\-tree\\ \\-\\-works\\ \\~$"
+        "instance": "^kitty$"
        }
     ],
     "type": "con"
