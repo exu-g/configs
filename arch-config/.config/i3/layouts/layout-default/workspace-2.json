@@ -1,5 +1,4 @@
 {
-     tabbed split container with 4 children
     "border": "normal",
     "floating": "auto_off",
     "layout": "tabbed",
@@ -18,14 +17,12 @@
                "y": 0
             },
             "marks": [],
-            "name": "i3 - ArchWiki — Mozilla Firefox",
+            "name": "Mozilla Firefox",
             "percent": 0.25,
             "swallows": [
                {
                 "class": "^firefox$",
                 "instance": "^Navigator$",
-                "machine": "^lupusregina$",
-                "title": "^i3\\ \\-\\ ArchWiki\\ \\—\\ Mozilla\\ Firefox$",
                 "window_role": "^browser$"
                }
             ],
@@ -42,15 +39,12 @@
                "y": 0
             },
             "marks": [],
-            "name": "Inbox - mrc@frm01.net - Mozilla Thunderbird",
+            "name": "Mozilla Thunderbird",
             "percent": 0.25,
             "swallows": [
                {
                 "class": "^Thunderbird$",
-                "instance": "^Mail$",
-                "machine": "^lupusregina$",
-                "title": "^Inbox\\ \\-\\ mrc\\@frm01\\.net\\ \\-\\ Mozilla\\ Thunderbird$",
-                "window_role": "^3pane$"
+                "instance": "^Mail$"
                }
             ],
             "type": "con"
@@ -72,9 +66,7 @@
                {
                 "class": "^Joplin$",
                 "instance": "^joplin$",
-                "machine": "^lupusregina$",
-                "title": "^Joplin$",
-                "window_role": "^browser\\-window$"
+                "title": "^Joplin$"
                }
             ],
             "type": "con"
@@ -90,15 +82,12 @@
                "y": 20
             },
             "marks": [],
-            "name": "offtopic-chat - Discord",
+            "name": "Discord",
             "percent": 0.25,
             "swallows": [
                {
                 "class": "^discord$",
-                "instance": "^discord$",
-                "machine": "^lupusregina$",
-                "title": "^offtopic\\-chat\\ \\-\\ Discord$",
-                "window_role": "^browser\\-window$"
+                "instance": "^discord$"
                }
             ],
             "type": "con"
