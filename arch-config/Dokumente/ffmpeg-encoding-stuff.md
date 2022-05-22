@@ -120,11 +120,7 @@ for i in (seq -w 1 37); ffmpeg -i Death\ Note\ {$i}.mkv -map 0:s:0 -metadata:s:s
 Encoding stuff but with a set bitrate and using hevc (cause VP9 is kinda unsupported still)
 Bitrate of 20 Mib/20480 kib
 ```
-ffmpeg -y -i "/mnt/storage/MediaLibrary/Shows/To Your Eternity (2021)/S
-eason 01/S01E01 - The Last One [1080p].mkv" -c:v libx265 -b:v 20480k -preset fast -map 0:v:0 -x265-params 
-pass=1 -f null /dev/null && \
-                                       ffmpeg -i "/mnt/storage/MediaLibrary/Shows/To Your Eternity (2021)/
-Season 01/S01E01 - The Last One [1080p].mkv" -c:v libx265 -b:v 20480k -preset fast -map 0:v:0 -x265-params
- pass=2 -c:a copy -map 0:a -c:s copy -map 0:s "/mnt/storage/MediaLibrary/output/To Your Eternity/S01E01.mk
+ffmpeg -y -i "/mnt/storage/MediaLibrary/Shows/To Your Eternity (2021)/Season 01/S01E01 - The Last One [1080p].mkv" -c:v libx265 -b:v 20480k -preset fast -map 0:v:0 -x265-params pass=1 -f null /dev/null && \
+                                       ffmpeg -i "/mnt/storage/MediaLibrary/Shows/To Your Eternity (2021)/Season 01/S01E01 - The Last One [1080p].mkv" -c:v libx265 -b:v 20480k -preset fast -map 0:v:0 -x265-params pass=2 -c:a copy -map 0:a -c:s copy -map 0:s "/mnt/storage/MediaLibrary/output/To Your Eternity/S01E01.mk
 v"
 ```
