@@ -83,6 +83,7 @@ set VISUAL "/usr/bin/nvim"
 set fish_user_paths "$HOME/.emacs.d/bin/" $fish_user_paths
 set fish_user_paths "$HOME/scripts/in_path" $fish_user_paths
 set fish_user_paths "$HOME/.local/bin" $fish_user_paths
+set fish_user_paths "$HOME/node_modules/.bin/" $fish_user_paths
 
 # edit with emacs
 alias emacs="/usr/bin/emacs --no-window-system"
