@@ -19,7 +19,6 @@ protonmail-bridge-bin
 rig
 rustscan
 tealdeer
-tmpmail-git
 ttf-iosevka
 ttf-ms-fonts
 ttf-vista-fonts
