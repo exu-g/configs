@@ -510,9 +510,12 @@ fi
 pkill dunst && nohup dunst &
 
 # reload .Xresources
+# TODO fails without display
+set +e
 if [[ -f "$HOME/.Xresources" ]]; then
     xrdb ~/.Xresources
 fi
+set -e
 
 # execute feh
 if [[ -f "$HOME/.fehbg" ]]; then
