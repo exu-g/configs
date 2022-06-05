@@ -541,4 +541,4 @@ fi
 exec "$(getent passwd $LOGNAME | cut -d: -f7)"
 
 # exit successfully
-$(exit 0); echo "$?"
+exit 0
