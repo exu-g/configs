@@ -1,8 +1,6 @@
 #!/bin/bash
 
-# TODO make this work
-# NOTE ignore errors from missing "||". Try getting the line below to work
-#set -euo pipefail
+set -euo pipefail
 
 # function to keep sudo from timing out
 function func_dont_timeout {
@@ -20,11 +18,13 @@ fi
 # keep sudo active in background
 func_dont_timeout &
 
-# get current directory
-setupdir=$(pwd)
+# get script directory
+scriptloc="$BASH_SOURCE"
+setupdir=$(dirname "$scriptloc")
+#setupdir=$(pwd)
 
-#change to home (does not show in terminal)
-cd "$HOME"
+#change to home directory
+#cd "$HOME"
 
 # check if multilib repo is enabled
 if ! pacman -Sl multilib &>/dev/null; then
@@ -40,18 +40,17 @@ sudo pacman -Syu
 echo Select packages to install
 
 cmd=(dialog --separate-output --checklist "Select Desktop environment/Window manager:" 22 76 16)
-options=(0 "[DE] xfce4" off # any option can be set to default to "on"
-    100 "[WM] i3-gaps" off)
+options=(100 "[WM] i3-gaps" off
+         101 "[WM] sway" off)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
 for choice in $choices; do
     case $choice in
-        0)
-            echo "xfce4" >>"$setupdir/selectedpkgs.txt"
-            ;;
         100)
-            echo "i3-gaps" >>"$setupdir/selectedpkgs.txt"
+            echo "i3-gaps" >> "$setupdir/selectedpkgs.txt"
             ;;
+        101)
+            printf '%s\n' 'sway' 'swaylock' 'swayidle' >> "$setupdir/selectedpkgs.txt"
     esac
 done
 
@@ -64,13 +63,13 @@ clear
 for choice in $choices; do
     case $choice in
         0)
-            echo "firefox" >>"$setupdir/selectedpkgs.txt"
+            echo "firefox" >> "$setupdir/selectedpkgs.txt"
             ;;
         10)
-            echo "chromium" >>"$setupdir/selectedpkgs.txt"
+            echo "chromium" >> "$setupdir/selectedpkgs.txt"
             ;;
         20)
-            echo "torbrowser-launcher" >>"$setupdir/selectedpkgs.txt"
+            echo "torbrowser-launcher" >> "$setupdir/selectedpkgs.txt"
             ;;
     esac
 done
@@ -99,16 +98,16 @@ clear
 for choice in $choices; do
     case $choice in
         0)
-            printf '%s\n' 'qemu' 'virt-manager' 'ebtables' 'dnsmasq' >>"$setupdir/selectedpkgs.txt"
+            printf '%s\n' 'qemu' 'virt-manager' 'ebtables' 'dnsmasq' >> "$setupdir/selectedpkgs.txt"
             ;;
         1)
-            echo "vmware-workstation" >>"$setupdir/aurselectedpkgs.txt"
+            echo "vmware-workstation" >> "$setupdir/aurselectedpkgs.txt"
             ;;
         10)
-            printf '%s\n' 'steam' 'steam-native-runtime' >>"$setupdir/selectedpkgs.txt"
+            printf '%s\n' 'steam' 'steam-native-runtime' >> "$setupdir/selectedpkgs.txt"
             ;;
         11)
-            echo "lutris" >>"$setupdir/selectedpkgs.txt"
+            echo "lutris" >> "$setupdir/selectedpkgs.txt"
             ;;
         12)
             echo "citra-qt-git" >>"$setupdir/aurselectedpkgs.txt"
@@ -117,10 +116,10 @@ for choice in $choices; do
             echo "minigalaxy" >>"$setupdir/aurselectedpkgs.txt"
             ;;
         20)
-            echo "krita" >>"$setupdir/selectedpkgs.txt"
+            echo "krita" >> "$setupdir/selectedpkgs.txt"
             ;;
         21)
-            echo "gimp" >>"$setupdir/selectedpkgs.txt"
+            echo "gimp" >> "$setupdir/selectedpkgs.txt"
             ;;
         31)
             printf '%s\n' 'yt-dlp' 'yt-dlp-drop-in' >>"$setupdir/aurselectedpkgs.txt"
@@ -151,6 +150,27 @@ for choice in $choices; do
             ;;
         80)
             echo "onedriver" >>"$setupdir/aurselectedpkgs.txt"
+    esac
+done
+
+in_acpufreq=0
+
+cmd=(dialog --separate-output --checklist "Performance and Battery life" 22 76 16)
+options=(0 "auto-cpufreq" off
+         1 "corectrl" off)
+choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+clear
+for choice in $choices
+do
+    case $choice in
+        0)
+            in_acpufreq=1
+            echo "auto-cpufreq-git" >> "$setupdir/aurselectedpkgs.txt"
+            # TODO Handle rest of installation
+            ;;
+        1)
+            echo "corectrl" >> "$setupdir/aurselectedpkgs.txt"
+>>>>>>> e733d5d1 (Prepare for sway. Remove old comments)
             ;;
     esac
 done
@@ -173,27 +193,8 @@ for choice in $choices; do
             printf '%s\n' 'git' 'emacs' 'ripgrep' 'fd' 'pandoc' 'shellcheck' 'python-pipenv' 'python-isort' 'python-pytest' 'python-rednose' 'pychecker' 'texlive-core' 'pyright' 'python-grip' 'prettier' 'shfmt' >>"$setupdir/aurselectedpkgs.txt"
             # TODO handle rest of installation
             ;;
-        1)
-            echo "vscodium-bin" >>"$setupdir/aurselectedpkgs.txt"
-            ;;
         10)
             in_podman=1
-            ;;
-    esac
-done
-
-cmd=(dialog --separate-output --checklist "School and work communication" 22 76 16)
-options=(0 "Teams" off
-    10 "OneNote" off)
-choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
-clear
-for choice in $choices; do
-    case $choice in
-        0)
-            echo "teams" >>"$setupdir/aurselectedpkgs.txt"
-            ;;
-        10)
-            echo "p3x-onenote" >>"$setupdir/aurselectedpkgs.txt"
             ;;
     esac
 done
@@ -210,6 +211,7 @@ for choice in $choices; do
     esac
 done
 
+: '
 # Packages installed on different systems
 in_arco_pc=0
 in_arco_hp=0
@@ -229,6 +231,7 @@ for choice in $choices; do
             ;;
     esac
 done
+'
 
 rm "$setupdir/notfoundpackages.txt"
 
@@ -246,6 +249,7 @@ echo Uninstalling unused packages
 while read package; do
     sudo pacman -Rns --noconfirm "$package"
 done <"$setupdir/packages/uninstall.txt"
+
 echo Uninstalled unused packages
 
 #pacman programs
@@ -265,7 +269,7 @@ done <"$setupdir/packages/winepkgs.txt"
 echo Installed wine
 
 # install paru-bin
-if [[ ! $(pacman -Q | grep paru) ]]; then
+if [[ ! $(pacman -Q paru) ]]; then
     echo "Installing paru from the AUR"
     git clone https://aur.archlinux.org/paru-bin.git
     cd paru-bin
@@ -312,6 +316,15 @@ if [ -f "$setupdir/aurselectedpkgs.txt" ]; then
     paru -S --needed - <"$setupdir/aurselectedpkgs.txt" || true
 fi
 
+#performance and battery life
+if [ $in_acpufreq -eq 1 ]; then
+    echo "Installing auto-cpufreq"
+    paru -S --needed auto-cpufreq-git
+    sudo auto-cpufreq --install
+    sudo systemctl start auto-cpufreq
+    sudo systemctl enable auto-cpufreq
+fi
+
 #devtools
 if [ $in_doomemacs -eq 1 ]; then
     echo "Installing doom-emacs"
@@ -321,8 +334,6 @@ if [ $in_doomemacs -eq 1 ]; then
     git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d
     ~/.emacs.d/bin/doom install
     export PATH="$PATH":$HOME/.emacs.d/bin
-else
-    echo "Skipping doom-emacs"
 fi
 
 if [ $in_podman -eq 1 ]; then
@@ -332,8 +343,6 @@ if [ $in_podman -eq 1 ]; then
     sudo usermod --add-subuids 100000-165536 --add-subgids 100000-165536 "$USER"
     sudo groupadd -f podman
     sudo usermod -aG podman "$USER"
-else
-    echo "Skipping podman"
 fi
 
 # other system configs
@@ -355,16 +364,21 @@ fi
 ##############################
 #####   Configuration    #####
 ##############################
+echo Configuring packages
 
 #change shell
 chsh -s /usr/bin/fish "$USER"
 
 # setup autotrash
 autotrash -td 5 --install
+
+#enable vnstat
+sudo systemctl enable --now vnstat
+
 systemctl --user enable autotrash.timer
 
 # enable lockscreen for systemd
-sudo systemctl enable betterlockscreen@$USER
+#sudo systemctl enable betterlockscreen@$USER
 
 # enable firewall
 echo "Enabling Firewall"
@@ -376,7 +390,7 @@ sudo systemctl enable lightdm
 
 # regenerate locale
 # Fixes rofi not launching
-sudo locale-gen
+#sudo locale-gen
 
 # update fonts cache
 fc-cache -f
