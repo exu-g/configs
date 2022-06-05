@@ -24,7 +24,7 @@ fi
 
 # fix install problems
 echo Updating repos and packages
-sudo pacman -Syu
+sudo pacman -Syu --noconfirm
 echo Installing pip
 sudo pacman -S --needed --noconfirm python-pip
 echo Select packages to install
@@ -254,12 +254,15 @@ done
 #uninstalling unused packages
 echo Uninstalling unused packages
 # || true to pass set -e (error when encountering packages not installed)
-sudo pacman -Rns - < "$setupdir/packages/uninstall.txt" 2>/dev/null || true
+sudo pacman -Rns --noconfirm - < "$setupdir/packages/uninstall.txt" 2>/dev/null || true
 echo Uninstalled unused packages
 
 #pacman programs
 echo Installing default pacman programs
 sudo pacman -S --needed - < "$setupdir/packages/officialpkgs.txt" 2>/dev/null
+# TODO for jack, use pipewire-jack (2)
+# TODO for pipewire-session-manager, use wireplumber (2)
+# TODO for phonon-qt5-backend, use phonon-qt5-gstreamer (1)
 echo Installed official programs
 
 # pip
@@ -288,12 +291,20 @@ fi
 
 # audio
 echo Installing audio programs
-paru -S --needed - < "$setupdir/packages/audiopkgs.txt"
+paru -S --needed --noconfirm - < "$setupdir/packages/audiopkgs.txt" 2>/dev/null
 echo Installed audio programs
 
 #AUR
 echo Installing default AUR programs
-paru -S --needed - < "$setupdir/packages/aurpkgs.txt"
+paru -S --needed - < "$setupdir/packages/aurpkgs.txt" 2>/dev/null
+# TODO for btrfsmaintenance, use btrfsmaintenance (1)
+# TODO for jellyfin-media-player, use jellyfin-media-player (1)
+# TODO for java-environment, use jdk-openjdk (1)
+# TODO for cargo, use rust (1)
+# TODO for ttf-iosevka, use ttf-iosevka (1)
+# TODO for ttf-ms-fonts, use ttf-ms-fonts (1)
+# TODO for ttf-vista-fonts, use ttf-vista-fonts (1)
+# TODO for wps-office, use wps-office (1)
 echo Installed AUR programs
 
 # theming
