@@ -8,7 +8,6 @@ catfish
 celluloid
 cmake
 cronie
-davfs2
 dconf-editor
 dhclient
 dnsutils

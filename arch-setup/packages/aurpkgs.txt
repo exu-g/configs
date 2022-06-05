@@ -1,6 +1,7 @@
 autotrash
 bitwarden
 btrfsmaintenance
+davfs2
 downgrade
 ffmpeg-normalize-git
 font-manager-git
