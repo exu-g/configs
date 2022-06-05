@@ -25,4 +25,3 @@ tmpmail-git
 ttf-iosevka
 ttf-ms-fonts
 ttf-vista-fonts
-wps-office
