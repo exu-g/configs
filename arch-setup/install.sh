@@ -259,7 +259,7 @@ echo Uninstalled unused packages
 
 #pacman programs
 echo Installing default pacman programs
-sudo pacman -S --needed - < "$setupdir/packages/officialpkgs.txt"
+sudo pacman -S --needed - < "$setupdir/packages/officialpkgs.txt" 2>/dev/null
 echo Installed official programs
 
 # pip
