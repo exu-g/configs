@@ -305,6 +305,7 @@ paru -S --needed - < "$setupdir/packages/aurpkgs.txt" 2>/dev/null
 # TODO for ttf-ms-fonts, use ttf-ms-fonts (1)
 # TODO for ttf-vista-fonts, use ttf-vista-fonts (1)
 # TODO for wps-office, use wps-office (1)
+# TODO for ffmpeg-normalize, use ffmpeg-normalize (1)
 echo Installed AUR programs
 
 # theming
@@ -361,6 +362,7 @@ if [ $in_podman -eq 1 ]; then
     sudo usermod -aG podman "$USER"
 fi
 
+: '
 # other system configs
 # arco pc
 if [ $in_arco_pc -eq 1 ]; then
@@ -373,6 +375,7 @@ if [ $in_arco_hp -eq 1 ]; then
     echo "Installing arch hp packages"
     paru -S --needed - < "$setupdir/packages/arch-hp-packages.txt"
 fi
+'
 
 ##############################
 #####   Configuration    #####
