@@ -390,7 +390,6 @@ sudo systemctl enable --now vnstat
 
 # setup autotrash
 autotrash -d 5 --install
-systemctl --user start autotrash
 systemctl --user enable autotrash.timer
 
 # enable lockscreen for systemd
