@@ -143,8 +143,8 @@ fi
 if [[ -d ~/.config/gtk-3.0 ]]; then
     rsync -ah ~/.config/gtk-3.0 ~/old_dat/.config/
 fi
-if [[ -d ~/.config/i3 ]]; then
-    rsync -ah ~/.config/i3 ~/old_dat/.config/
+if [[ -d ~/.config/sway ]]; then
+    rsync -ah ~/.config/sway ~/old_dat/.config/
 fi
 if [[ -d ~/.config/polybar ]]; then
     rsync -ah ~/.config/polybar ~/old_dat/.config/
@@ -309,14 +309,14 @@ EOF
 seltheme="$(cat "$HOME/.seltheme")"
 if [[ "$seltheme" == "nyarch" ]]; then
     #cp -r "./themes/nyarch/i3" "$HOME/.config/"
-    cat "$HOME/configs/arch-themes/nyarch/i3/color" >>"$HOME/.config/i3/config"
+    cat "$HOME/configs/arch-themes/nyarch/i3/color" >>"$HOME/.config/sway/config"
     cp -r "$HOME/configs/arch-themes/nyarch/polybar" "$HOME/.config/"
     #cp -r "./themes/nyarch/neofetch/lowpoly_flamegirl_blue.txt" "$HOME/.config/neofetch/lowpoly_flamegirl.txt"
     #cp "./themes/.fehbg-nyarch" "$HOME/.fehbg"
     #sed -i 's/^NAME=".*"/NAME="Rawrch Linyux"/' /etc/os-release
 elif [[ "$seltheme" == "space-pink" ]]; then
     #cp -r "./themes/space-pink/i3" "$HOME/.config/"
-    cat "$HOME/configs/arch-themes/space-pink/i3/color" >>"$HOME/.config/i3/config"
+    cat "$HOME/configs/arch-themes/space-pink/i3/color" >>"$HOME/.config/sway/config"
     cp -r "$HOME/configs/arch-themes/space-pink/polybar" "$HOME/.config/"
     #cp -r "./themes/space-pink/neofetch/lowpoly_flamegirl_orange.txt" "$HOME/.config/neofetch/lowpoly_flamegirl.txt"
     #cp "./themes/.fehbg-space-pink" "$HOME/.fehbg"
@@ -477,7 +477,7 @@ sudo chmod 600 -R /etc/sudoers.d/
 
 #make bash scripts executable
 chmod +x -R ~/.config/polybar/
-chmod +x -R ~/.config/i3/scripts
+chmod +x -R ~/.config/sway/scripts
 chmod +x -R ~/scripts
 
 # make applications executable
