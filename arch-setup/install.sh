@@ -16,11 +16,17 @@ if ! pacman -Sl multilib &> /dev/null; then
     exit 1
 fi
 
+# NOTE on unattended pacman installing
+# Option 1: Will assume the default choice
+#--noconfirm
+# Option 2: Will always choose "yes", locale override needed to work all the time (might fail for other locales)
+#yes | LC_ALL=en_US.UTF-8 pacman ...
+
 # fix install problems
 echo Updating repos and packages
 sudo pacman -Syu
 echo Installing pip
-sudo pacman -S --needed python-pip
+sudo pacman -S --needed --noconfirm python-pip
 echo Select packages to install
 
 cmd=(dialog --separate-output --checklist "Select Desktop environment/Window manager:" 22 76 16)
