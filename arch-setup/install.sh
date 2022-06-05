@@ -413,7 +413,7 @@ sudo systemctl enable lightdm
 # Fixes rofi not launching
 #sudo locale-gen
 
-if [[ $(pacman -Q | grep podman) ]]; then
+if [[ $(pacman -Q | grep sway) ]]; then
     sudo systemctl enable --now seatd.service
     sudo groupadd -f seat
 fi
