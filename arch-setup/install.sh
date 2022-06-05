@@ -415,7 +415,7 @@ sudo systemctl enable lightdm
 
 if [[ $(pacman -Q | grep sway) ]]; then
     sudo systemctl enable --now seatd.service
-    sudo groupadd -f seat
+    sudo gpasswd -a "$USER" seat 1>/dev/null
 fi
 
 # update fonts cache
