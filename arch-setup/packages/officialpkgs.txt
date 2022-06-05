@@ -106,8 +106,6 @@ qt5-imageformats
 rebuild-detector
 reflector
 restic
-rofi
-rofi-emoji
 rsync
 seahorse
 smartmontools
@@ -132,6 +130,7 @@ wget
 whois
 wireguard-tools
 wireplumber
+wofi
 xdg-user-dirs
 xdotool
 xf86-input-elographics
@@ -143,7 +142,6 @@ xf86-video-ati
 xf86-video-fbdev
 xf86-video-intel
 xf86-video-nouveau
-xfce4-power-manager
 xfsprogs
 xorg-xrdb
 xsel
