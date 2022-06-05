@@ -306,6 +306,7 @@ paru -S --needed - < "$setupdir/packages/aurpkgs.txt" 2>/dev/null
 # TODO for ttf-vista-fonts, use ttf-vista-fonts (1)
 # TODO for wps-office, use wps-office (1)
 # TODO for ffmpeg-normalize, use ffmpeg-normalize (1)
+# TODO for nohang, use nohang (1)
 echo Installed AUR programs
 
 # theming
@@ -389,6 +390,8 @@ chsh -s /usr/bin/fish "$USER"
 sudo systemctl enable --now vnstat
 
 # setup autotrash
+# NOTE without this directory autotrash.service fails to run
+mkdir -p "$HOME/.local/share/Trash/info"
 autotrash -d 5 --install
 systemctl --user enable autotrash.timer
 
