@@ -254,7 +254,7 @@ done
 #uninstalling unused packages
 echo Uninstalling unused packages
 # || true to pass set -e (error when encountering packages not installed)
-sudo pacman -Rns - < "$setupdir/packages/uninstall.txt" &>/dev/null || true
+sudo pacman -Rns - < "$setupdir/packages/uninstall.txt" 2>/dev/null || true
 echo Uninstalled unused packages
 
 #pacman programs
