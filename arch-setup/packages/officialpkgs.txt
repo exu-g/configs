@@ -1,6 +1,5 @@
 acpilight
 age
-arandr
 bandwhich
 base-devel
 brotli
@@ -90,7 +89,6 @@ python-pip
 qt5-imageformats
 reflector
 restic
-rofi
 rsync
 seahorse
 smartmontools
@@ -111,6 +109,7 @@ vnstat
 webkit2gtk
 wget
 wireguard-tools
+wofi
 xdg-user-dirs
 xf86-input-elographics
 xf86-input-evdev
@@ -121,6 +120,5 @@ xf86-video-ati
 xf86-video-fbdev
 xf86-video-intel
 xf86-video-nouveau
-xfce4-power-manager
 xfsprogs
 xorg-xrdb

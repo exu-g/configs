@@ -1,5 +1,4 @@
 autotrash
-betterlockscreen
 bitwarden
 btrfsmaintenance
 downgrade
