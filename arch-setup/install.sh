@@ -5,9 +5,6 @@ set -euo pipefail
 # get script directory
 scriptloc=$(realpath "$BASH_SOURCE")
 setupdir=$(dirname "$scriptloc")
-echo $scriptloc
-echo $setupdir
-exit
 #setupdir=$(pwd)
 
 #change to home directory
@@ -435,9 +432,8 @@ echo Finished downloading config
 
 
 #cleanup
-# TODO make this work again
-#rm -rf "$setupdir"
-#echo Removed setup files
+rm -rf "$setupdir"
+echo Removed setup files
 
 #downloading config
 echo Setting config
