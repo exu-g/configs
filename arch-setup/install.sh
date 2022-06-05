@@ -413,10 +413,12 @@ sudo systemctl enable lightdm
 # Fixes rofi not launching
 #sudo locale-gen
 
+: '
 if [[ $(pacman -Q | grep sway) ]]; then
     sudo systemctl enable --now seatd.service
     sudo gpasswd -a "$USER" seat 1>/dev/null
 fi
+'
 
 # update fonts cache
 fc-cache -f
