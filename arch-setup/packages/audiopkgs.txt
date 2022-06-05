@@ -4,5 +4,5 @@ pavucontrol
 pipewire
 pipewire-alsa
 pipewire-jack
-pipewire-media-session
+wireplumber
 pipewire-pulse
