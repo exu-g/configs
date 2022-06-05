@@ -324,11 +324,13 @@ echo Installing selected programs
 
 # install selected packages
 echo Installing from official repository
-sudo pacman -S --needed - < "$setupdir/selectedpkgs.txt"
+# NOTE || true to continue if no packages have been selected
+sudo pacman -S --needed - < "$setupdir/selectedpkgs.txt" || true
 
 # install selected aur packages
 echo Installing from AUR
-paru -S --needed - < "$setupdir/aurselectedpkgs.txt"
+# NOTE || true to continue if no packages have been selected
+paru -S --needed - < "$setupdir/aurselectedpkgs.txt" || true
 
 #performance and battery life
 if [ $in_acpufreq -eq 1 ]; then
