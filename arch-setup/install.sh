@@ -439,6 +439,9 @@ echo Removed setup files
 
 #downloading config
 echo Setting config
+# TODO temporary
+cd config
+git checkout wayland
 bash ~/config/install.sh
 
 # Download git repos
