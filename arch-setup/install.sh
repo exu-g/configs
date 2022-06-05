@@ -389,12 +389,14 @@ chsh -s /usr/bin/fish "$USER"
 #enable vnstat
 sudo systemctl enable --now vnstat
 
+# NOTE unsets set -e temporarily
+set +e
 # setup autotrash
 # NOTE without this directory autotrash.service fails to run
 mkdir -p "$HOME/.local/share/Trash/info"
 autotrash -d 5 --install
-# NOTE fix script exiting after this for some reason
-systemctl --user enable autotrash.timer || true
+systemctl --user enable autotrash.timer
+set -e
 
 # enable lockscreen for systemd
 #sudo systemctl enable betterlockscreen@$USER
