@@ -124,12 +124,12 @@ bindsym $mod+x mode "$mode_system"
 
 set $mode_system System (l) lock, (e) logout, (r) reboot, (s) shutdown, (u) suspend, (h) hibernate
 mode "$mode_system" {
-    bindsym l exec --no-startup-id ~/.config/i3/scripts/i3exit.sh lock, mode "default"
-    bindsym e exec --no-startup-id ~/.config/i3/scripts/i3exit.sh logout, mode "default"
-    bindsym r exec --no-startup-id ~/.config/i3/scripts/i3exit.sh reboot, mode "default"
-    bindsym s exec --no-startup-id ~/.config/i3/scripts/i3exit.sh shutdown, mode "default"
-    bindsym u exec --no-startup-id ~/.config/i3/scripts/i3exit.sh suspend, mode "default"
-    bindsym h exec --no-startup-id ~/.config/i3/scripts/i3exit.sh hibernate, mode "default"
+    bindsym l exec --no-startup-id ~/.config/sway/scripts/i3exit.sh lock, mode "default"
+    bindsym e exec --no-startup-id ~/.config/sway/scripts/i3exit.sh logout, mode "default"
+    bindsym r exec --no-startup-id ~/.config/sway/scripts/i3exit.sh reboot, mode "default"
+    bindsym s exec --no-startup-id ~/.config/sway/scripts/i3exit.sh shutdown, mode "default"
+    bindsym u exec --no-startup-id ~/.config/sway/scripts/i3exit.sh suspend, mode "default"
+    bindsym h exec --no-startup-id ~/.config/sway/scripts/i3exit.sh hibernate, mode "default"
 
     # back to normal: Enter or Escape
     bindsym Return mode "default"
@@ -385,8 +385,8 @@ bindsym $mod+w mode "$layout"
 
 set $layout full (f)
 mode "$layout" {
-    bindsym f exec --no-startup-id bash $HOME/.config/i3/scripts/layout-default.sh
-    #bindsym w exec --no-startup-id bash $HOME/.config/i3/scripts/layout-work.sh
+    bindsym f exec --no-startup-id bash $HOME/.config/sway/scripts/layout-default.sh
+    #bindsym w exec --no-startup-id bash $HOME/.config/sway/scripts/layout-work.sh
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
@@ -459,7 +459,7 @@ exec --no-startup-id corectrl
 #exec --no-startup-id transmission-gtk -m
 
 #Conky
-#exec --no-startup-id conky -c ~/.config/i3/system-overview
+#exec --no-startup-id conky -c ~/.config/sway/system-overview
 
 #Polybar
 exec_always --no-startup-id ~/.config/polybar/launch.sh &
@@ -769,7 +769,7 @@ for_window [class="^.*"] border pixel 2
 
 
 #if you want transparency on non-focused windows, ...
-exec_always --no-startup-id picom -b --config ~/.config/i3/picom.conf
+exec_always --no-startup-id picom -b --config ~/.config/sway/picom.conf
 
 
 #####################################################################################################################
@@ -803,7 +803,7 @@ exec_always --no-startup-id picom -b --config ~/.config/i3/picom.conf
     # Second one is the standard statusbar with my personal settings
 
     #status_command i3status
-    #status_command i3status -c ~/.config/i3/i3status.conf
+    #status_command i3status -c ~/.config/sway/i3status.conf
 
 
 # OPTION 2 : i3blocks
@@ -813,10 +813,10 @@ exec_always --no-startup-id picom -b --config ~/.config/i3/picom.conf
     # put hastag in front if not installed
 
     #status_command i3blocks
-    #status_command i3blocks -c ~/.config/i3/i3blocks.conf
-    #status_command i3blocks -c ~/.config/i3/i3blocks-rainbow.conf
-    #status_command i3blocks -c ~/.config/i3/i3blocks-original.conf
-    #status_command i3blocks -c ~/.config/i3/i3blocks-awesome.conf
+    #status_command i3blocks -c ~/.config/sway/i3blocks.conf
+    #status_command i3blocks -c ~/.config/sway/i3blocks-rainbow.conf
+    #status_command i3blocks -c ~/.config/sway/i3blocks-original.conf
+    #status_command i3blocks -c ~/.config/sway/i3blocks-awesome.conf
 
 
 # OPTION 3 : conky
@@ -826,7 +826,7 @@ exec_always --no-startup-id picom -b --config ~/.config/i3/picom.conf
     # documentation : https://i3wm.org/docs/user-contributed/conky-i3bar.html
     # conky configuration is in conky-i3statusbar
 
-    #status_command ~/.config/i3/start-conky-i3statusbar.sh
+    #status_command ~/.config/sway/start-conky-i3statusbar.sh
 
 
 # OPTION 4 : polybar
