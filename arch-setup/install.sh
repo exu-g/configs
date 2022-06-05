@@ -41,7 +41,7 @@ do
             echo "i3-gaps" >> "$setupdir/selectedpkgs.txt"
             ;;
         101)
-            printf '%s\n' 'sway' 'swaylock' 'swayidle' >> "$setupdir/selectedpkgs.txt"
+            printf '%s\n' 'sway' 'swaylock' 'swayidle' 'seatd' >> "$setupdir/selectedpkgs.txt"
     esac
 done
 
@@ -412,6 +412,11 @@ sudo systemctl enable lightdm
 # regenerate locale
 # Fixes rofi not launching
 #sudo locale-gen
+
+if [[ $(pacman -Q | grep podman) ]]; then
+    sudo systemctl enable --now seatd.service
+    sudo groupadd -f seat
+fi
 
 # update fonts cache
 fc-cache -f
