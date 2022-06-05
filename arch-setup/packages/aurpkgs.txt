@@ -4,7 +4,6 @@ btrfsmaintenance
 davfs2
 downgrade
 ffmpeg-normalize
-font-manager-git
 jellyamp
 jellyfin-media-player
 libreoffice-extension-languagetool
@@ -12,7 +11,7 @@ lightdm-settings
 lightdm-slick-greeter
 mpv-mpris
 nemo-audio-tab
-nohang-git
+nohang
 pdfsam
 polybar
 protonmail-bridge-bin
