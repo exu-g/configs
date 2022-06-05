@@ -130,8 +130,8 @@ fi
 if [[ -d ~/.config/gtk-3.0 ]]; then
     rsync -ah ~/.config/gtk-3.0 ~/old_dat/.config/
 fi
-if [[ -d ~/.config/i3 ]]; then
-    rsync -ah ~/.config/i3 ~/old_dat/.config/
+if [[ -d ~/.config/sway ]]; then
+    rsync -ah ~/.config/sway ~/old_dat/.config/
 fi
 if [[ -d ~/.config/neofetch ]]; then
     rsync -ah ~/.config/neofetch ~/old_dat/.config/
@@ -285,14 +285,14 @@ git clone https://gitlab.com/RealStickman-arch/themes.git &>/dev/null
 seltheme="$(cat "$HOME/.seltheme")"
 if [[ "$seltheme" == "nyarch" ]]; then
     #cp -r "./themes/nyarch/i3" "$HOME/.config/"
-    cat "./themes/nyarch/i3/color" >> "$HOME/.config/i3/config"
+    cat "./themes/nyarch/sway/color" >> "$HOME/.config/sway/config"
     cp -r "./themes/nyarch/polybar" "$HOME/.config/"
     cp -r "./themes/nyarch/neofetch/lowpoly_flamegirl_blue.txt" "$HOME/.config/neofetch/lowpoly_flamegirl.txt"
     cp "./themes/.fehbg-nyarch" "$HOME/.fehbg"
     #sed -i 's/^NAME=".*"/NAME="Rawrch Linyux"/' /etc/os-release
 elif [[ "$seltheme" == "space-pink" ]]; then
     #cp -r "./themes/space-pink/i3" "$HOME/.config/"
-    cat "./themes/space-pink/i3/color" >> "$HOME/.config/i3/config"
+    cat "./themes/space-pink/sway/color" >> "$HOME/.config/sway/config"
     cp -r "./themes/space-pink/polybar" "$HOME/.config/"
     cp -r "./themes/space-pink/neofetch/lowpoly_flamegirl_orange.txt" "$HOME/.config/neofetch/lowpoly_flamegirl.txt"
     cp "./themes/.fehbg-space-pink" "$HOME/.fehbg"
@@ -458,7 +458,7 @@ rm ~/.config/GIMP/2.10/plug-ins/export_layers-3.3.1.zip > /dev/null
 
 #make bash scripts executable
 chmod +x -R ~/.config/polybar/
-chmod +x -R ~/.config/i3/scripts
+chmod +x -R ~/.config/sway/scripts
 chmod +x -R ~/scripts
 
 # make applications executable
