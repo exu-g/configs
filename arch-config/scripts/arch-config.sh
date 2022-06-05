@@ -52,7 +52,8 @@ git clone https://gitlab.com/RealStickman-arch/config.git &>/dev/null
 
 # make sure to use master branch
 cd config
-git checkout master &>/dev/null
+#git checkout master &>/dev/null
+git checkout wayland &>/dev/null
 cd ..
 
 # check if the install scripts are the same
