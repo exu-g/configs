@@ -496,8 +496,10 @@ EOF
 # reload applications
 update-desktop-database ~/.local/share/applications/
 
-#sync doom-emacs
-~/.emacs.d/bin/doom sync
+# sync doom-emacs only if it is installed
+if [[ -f  ~/.emacs.d/bin/doom ]]; then
+    ~/.emacs.d/bin/doom sync
+fi
 
 # disable freedesktop notification daemon
 if [[ -f "/usr/share/dbus-1/services/org.freedesktop.Notifications.service" ]]; then
