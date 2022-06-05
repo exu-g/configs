@@ -496,9 +496,12 @@ pkill dunst && nohup dunst &
 systemctl --user daemon-reload
 
 # reload .Xresources
+# TODO fails without display
+set +e
 if [[ -f "$HOME/.Xresources" ]]; then
     xrdb ~/.Xresources
 fi
+set -e
 
 # execute feh
 "$HOME/.fehbg"
