@@ -393,7 +393,8 @@ sudo systemctl enable --now vnstat
 # NOTE without this directory autotrash.service fails to run
 mkdir -p "$HOME/.local/share/Trash/info"
 autotrash -d 5 --install
-systemctl --user enable autotrash.timer
+# NOTE fix script exiting after this for some reason
+systemctl --user enable autotrash.timer || true
 
 # enable lockscreen for systemd
 #sudo systemctl enable betterlockscreen@$USER
