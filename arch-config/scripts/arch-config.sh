@@ -204,10 +204,15 @@ EOF
 cp -r ~/config/.config/ ~/
 cp -r ~/config/.local/ ~/
 #cp -r ~/config/Dokumente ~/
-# NOTE check if firefox default-release directory exists. 1 is good, 0 is bad
-firefoxdir=$(find ~/.mozilla/firefox/ -name \*.default-release | wc -l)
-if [[ $firefoxdir -eq 1  ]]; then
-    cp -r ~/config/.mozilla/firefox/default-release/* ~/.mozilla/firefox/*.default-release/
+# NOTE find fails if the top level directory is not found
+if [[ -d ~/.mozilla/firefox ]]; then
+    # NOTE check if firefox default-release directory exists. 1 is good, 0 is bad
+    firefoxdir=$(find ~/.mozilla/firefox/ -name \*.default-release | wc -l)
+    if [[ $firefoxdir -eq 1  ]]; then
+        cp -r ~/config/.mozilla/firefox/default-release/* ~/.mozilla/firefox/*.default-release/
+    else
+        echo "Please launch firefox and then update the config again"
+    fi
 else
     echo "Please launch firefox and then update the config again"
 fi
