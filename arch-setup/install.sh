@@ -426,6 +426,8 @@ fc-cache -f
 #Changes to home folder automatically now, no need to be extra careful anymore.
 # TODO make config script independent of download location
 cd "$HOME"
+# NOTE remove directory if it exists already and redownload
+rm -rf config
 git clone https://gitlab.com/RealStickman-arch/config
 echo Finished downloading config
 
