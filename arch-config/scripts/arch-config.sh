@@ -501,10 +501,11 @@ set +e
 if [[ -f "$HOME/.Xresources" ]]; then
     xrdb ~/.Xresources
 fi
-set -e
 
 # execute feh
+# TODO fails without display
 "$HOME/.fehbg"
+set -e
 
 # NOTE working now
 # if [[ "$(ps aux | grep "FIXME")" ]]; then ...
