@@ -6,6 +6,7 @@ downgrade
 ffmpeg-normalize
 jellyamp
 jellyfin-media-player
+joplin-appimage
 libreoffice-extension-languagetool
 lightdm-settings
 lightdm-slick-greeter
