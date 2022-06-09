@@ -458,7 +458,7 @@ exec --no-startup-id corectrl
 exec --no-startup-id easystroke
 
 #Transmission
-exec --no-startup-id transmission-gtk -m
+#exec --no-startup-id transmission-gtk -m
 
 #Conky
 #exec --no-startup-id conky -c ~/.config/i3/system-overview
