@@ -30,10 +30,10 @@ for file in "${conffiles[@]}"; do
     else
         echo "Patching $file"
         # NOTE route while being connected into my lan
-        awk 'NR==5{print "PostUp = ip route add 192.168.1.0/24 via 172.16.52.1 metric 10"}NR==5{print "PreDown = ip route del 192.168.1.0/24"}1' "$file" > "${file}.tmp"
+        awk 'NR==5{print "PostUp = ip route add 192.168.1.0/24 via 172.16.7.1 metric 10"}NR==5{print "PreDown = ip route del 192.168.1.0/24"}1' "$file" > "${file}.tmp"
         mv "${file}.tmp" "$file"
         # hetzner net
-        awk 'NR==5{print "PostUp = ip route add 172.18.50.0/24 via 172.16.52.1 metric 10"}NR==5{print "PreDown = ip route del 172.18.50.0/24"}1' "$file" > "${file}.tmp"
+        awk 'NR==5{print "PostUp = ip route add 172.18.50.0/24 via 172.16.7.1 metric 10"}NR==5{print "PreDown = ip route del 172.18.50.0/24"}1' "$file" > "${file}.tmp"
         mv "${file}.tmp" "$file"
         # NOTE only one PreDown line is required as we are using a specific table for this
         # TODO tables do not work as intended
