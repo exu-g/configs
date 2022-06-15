@@ -29,6 +29,10 @@ for file in "${conffiles[@]}"; do
         echo "Skipping $file"
     else
         echo "Patching $file"
+        # persistent keepalive
+        awk 'NR==9{print "PersistentKeepalive = 20"}1' "$file" > "${file}.tmp"
+        mv "${file}.tmp" "$file"
+
         # NOTE route while being connected into my lan
         awk 'NR==5{print "PostUp = ip route add 192.168.1.0/24 via 172.16.7.1 metric 10"}NR==5{print "PreDown = ip route del 192.168.1.0/24"}1' "$file" > "${file}.tmp"
         mv "${file}.tmp" "$file"
