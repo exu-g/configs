@@ -21,6 +21,8 @@ fi
 #--noconfirm
 # Option 2: Will always choose "yes", locale override needed to work all the time (might fail for other locales)
 #yes | LC_ALL=en_US.UTF-8 pacman ...
+#
+# excpect & send
 
 # fix install problems
 echo Updating repos and packages
