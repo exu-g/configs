@@ -25,10 +25,76 @@
   ],
   "profile-id" : 0,
   "tree-views" : {
-    "TrgTorrentTreeView" : {    },
-    "TrgTrackersTreeView" : {    },
-    "TrgFilesTreeView" : {    },
-    "TrgPeersTreeView" : {    }
+    "TrgTorrentTreeView" : {
+      "sort-col" : 22,
+      "sort-type" : 0
+    },
+    "TrgTrackersTreeView" : {
+      "sort-col" : -2,
+      "sort-type" : 0,
+      "widths" : [
+        72,
+        146,
+        85,
+        142,
+        148,
+        149,
+        126,
+        128
+      ],
+      "columns" : [
+        "tier",
+        "announce-url",
+        "last-announce-peer-count",
+        "seeder-count",
+        "leecher-count",
+        "last-announce-time",
+        "last-result",
+        "scrape-url"
+      ]
+    },
+    "TrgFilesTreeView" : {
+      "sort-col" : -2,
+      "sort-type" : 0,
+      "widths" : [
+        189,
+        176,
+        211,
+        220,
+        200
+      ],
+      "columns" : [
+        "name",
+        "size",
+        "progress",
+        "wanted",
+        "priority"
+      ]
+    },
+    "TrgPeersTreeView" : {
+      "sort-col" : -2,
+      "sort-type" : 0,
+      "widths" : [
+        89,
+        107,
+        129,
+        163,
+        142,
+        137,
+        112,
+        117
+      ],
+      "columns" : [
+        "ip",
+        "host",
+        "country",
+        "down-speed",
+        "up-speed",
+        "progress",
+        "flags",
+        "client"
+      ]
+    }
   },
   "start-paused" : false,
   "add-options-dialog" : true,
@@ -41,5 +107,9 @@
   "system-tray" : false,
   "system-tray-minimise" : false,
   "add-notify" : false,
-  "complete-notify" : false
+  "complete-notify" : false,
+  "window-height" : 1056,
+  "window-width" : 1916,
+  "notebook-paned-pos" : 300,
+  "states-paned-pos" : 120
 }
