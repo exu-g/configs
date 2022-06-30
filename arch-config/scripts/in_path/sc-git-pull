@@ -20,7 +20,7 @@ for dir in "${dirs[@]}"; do
     git checkout -q master \
         || git checkout -q main
     git fetch --all
-    git pull origin
+    git pull
 done
 
 exit 0
