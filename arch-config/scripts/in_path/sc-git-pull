@@ -17,8 +17,13 @@ for dir in "${dirs[@]}"; do
     # change into that directory
     cd "$dir"
     # try to check out master or main branch
-    git checkout -q master \
-        || git checkout -q main
+    git checkout -q master 2>/dev/null \
+        || git checkout -q main 2>/dev/null
+    # check whether the previous two commands failed
+    if [ $? -ne 0 ]; then
+        printf "Couldn't find master or main branches\n"
+        exit 1
+    fi
     git fetch --all
     git pull
 done
