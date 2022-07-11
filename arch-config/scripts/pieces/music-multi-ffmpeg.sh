@@ -23,7 +23,7 @@ for opus in "${opusfiles[@]}"; do
     # go to that path for proper output location
     cd "$pathname"
     # convert file
-    ffmpeg-normalize "$opus" -v -pr -c:a libopus -b:a 128k -ext opus &
+    ffmpeg-normalize "$opus" -v -pr -c:a libopus -b:a 128k -vn -ext opus &
 done
 
 # go to musik raw folder
@@ -45,7 +45,7 @@ for m4a in "${m4afiles[@]}"; do
     # go to that path for proper output location
     cd "$pathname"
     # convert file
-    ffmpeg-normalize "$m4a" -v -pr -c:a libopus -b:a 128k -ext opus &
+    ffmpeg-normalize "$m4a" -v -pr -c:a libopus -b:a 128k -vn -ext opus &
 done
 
 # go to musik raw folder
@@ -105,7 +105,7 @@ for flac in "${flacfiles[@]}"; do
     opusfile="${noextfile}.opus"
 
     # convert opus in transcode to normalized
-    ffmpeg-normalize "transcode/$opusfile" -v -pr -c:a libopus -b:a 384k -ext opus &
+    ffmpeg-normalize "transcode/$opusfile" -v -pr -c:a libopus -b:a 384k -vn -ext opus &
 done
 
 # go to musik raw folder
@@ -165,7 +165,7 @@ for mp3 in "${mp3files[@]}"; do
     opusfile="${noextfile}.opus"
 
     # convert opus in transcode to normalized
-    ffmpeg-normalize "transcode/$opusfile" -v -pr -c:a libopus -b:a 192k -ext opus &
+    ffmpeg-normalize "transcode/$opusfile" -v -pr -c:a libopus -b:a 192k -vn -ext opus &
 done
 
 # go to musik raw folder
@@ -225,7 +225,7 @@ for wav in "${wavfiles[@]}"; do
     opusfile="${noextfile}.opus"
 
     # convert opus in transcode to normalized
-    ffmpeg-normalize "transcode/$opusfile" -v -pr -c:a libopus -b:a 384k -ext opus &
+    ffmpeg-normalize "transcode/$opusfile" -v -pr -c:a libopus -b:a 384k -vn -ext opus &
 done
 
 # go to musik raw folder
