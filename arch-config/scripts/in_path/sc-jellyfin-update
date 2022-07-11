@@ -9,7 +9,7 @@ sshkeypath=$HOME/.ssh/id_ed25519
 # see: https://serverfault.com/a/765951
 
 # transfer Music
-#rsync -uvrL --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /home/marc/Musik/ ${user}@${server}:/mnt/media/Musik/
+rsync -uvrL --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /home/marc/Musik/ ${user}@${server}:/mnt/media/Musik/
 
 # transfer Shows
 rsync -uvr --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /mnt/storage/MediaLibrary/Shows/ ${user}@${server}:/mnt/media/Shows/
