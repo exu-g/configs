@@ -76,7 +76,7 @@ for flac in "${flacfiles[@]}"; do
     opusfile="${noextfile}.opus"
 
     # convert to opus in transcode directory
-    if [ -f "${pathname}/cover.jpg"]; then
+    if [ -f "${pathname}/cover.jpg" ]; then
         ffmpeg -nostdin -i "$flac" -i "${pathname}/cover.jpg" -c:a libopus -b:a 384k "${pathname}/transcode/$opusfile" &
     else
         ffmpeg -nostdin -i "$flac" -c:a libopus -b:a 384k "${pathname}/transcode/$opusfile" &
@@ -136,7 +136,7 @@ for mp3 in "${mp3files[@]}"; do
     opusfile="${noextfile}.opus"
 
     # convert to opus in transcode directory
-    if [ -f "${pathname}/cover.jpg"]; then
+    if [ -f "${pathname}/cover.jpg" ]; then
         ffmpeg -nostdin -i "$mp3" -i "${pathname}/cover.jpg" -c:a libopus -b:a 192k "${pathname}/transcode/$opusfile" &
     else
         ffmpeg -nostdin -i "$mp3" -c:a libopus -b:a 192k "${pathname}/transcode/$opusfile" &
@@ -196,7 +196,7 @@ for wav in "${wavfiles[@]}"; do
     opusfile="${noextfile}.opus"
 
     # convert to opus in transcode directory
-    if [ -f "${pathname}/cover.jpg"]; then
+    if [ -f "${pathname}/cover.jpg" ]; then
         ffmpeg -nostdin -i "$wav" -i "${pathname}/cover.jpg" -c:a libopus -b:a 384k "${pathname}/transcode/$opusfile" &
     else
         ffmpeg -nostdin -i "$wav" -c:a libopus -b:a 384k "${pathname}/transcode/$opusfile" &
@@ -235,4 +235,4 @@ while [[ $(jobs | wc -l) -gt 1 ]] ; do sleep 1 ; done
 
 echo Finished!
 
-$(exit 0); echo "$?"
+exit 0
