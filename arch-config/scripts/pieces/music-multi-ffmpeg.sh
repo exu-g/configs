@@ -76,8 +76,11 @@ for flac in "${flacfiles[@]}"; do
     opusfile="${noextfile}.opus"
 
     # convert to opus in transcode directory
-    # TODO include cover picture (prefer file picture, cover.jpg second preference)
-    ffmpeg -nostdin -i "$flac" -i "${pathname}/cover.jpg" -c:a libopus -b:a 384k "${pathname}/transcode/$opusfile" &
+    if [ -f "${pathname}/cover.jpg"]; then
+        ffmpeg -nostdin -i "$flac" -i "${pathname}/cover.jpg" -c:a libopus -b:a 384k "${pathname}/transcode/$opusfile" &
+    else
+        ffmpeg -nostdin -i "$flac" -c:a libopus -b:a 384k "${pathname}/transcode/$opusfile" &
+    fi
 done
 
 # wait for previous jobs to finish
@@ -133,8 +136,11 @@ for mp3 in "${mp3files[@]}"; do
     opusfile="${noextfile}.opus"
 
     # convert to opus in transcode directory
-    # TODO include cover picture (prefer file picture, cover.jpg second preference)
-    ffmpeg -nostdin -i "$mp3" -i "${pathname}/cover.jpg" -c:a libopus -b:a 192k "${pathname}/transcode/$opusfile" &
+    if [ -f "${pathname}/cover.jpg"]; then
+        ffmpeg -nostdin -i "$mp3" -i "${pathname}/cover.jpg" -c:a libopus -b:a 192k "${pathname}/transcode/$opusfile" &
+    else
+        ffmpeg -nostdin -i "$mp3" -c:a libopus -b:a 192k "${pathname}/transcode/$opusfile" &
+    fi
 done
 
 # wait for previous jobs to finish
@@ -190,8 +196,11 @@ for wav in "${wavfiles[@]}"; do
     opusfile="${noextfile}.opus"
 
     # convert to opus in transcode directory
-    # TODO include cover picture (prefer file picture, cover.jpg second preference)
-    ffmpeg -nostdin -i "$wav" -i "${pathname}/cover.jpg" -c:a libopus -b:a 384k "${pathname}/transcode/$opusfile" &
+    if [ -f "${pathname}/cover.jpg"]; then
+        ffmpeg -nostdin -i "$wav" -i "${pathname}/cover.jpg" -c:a libopus -b:a 384k "${pathname}/transcode/$opusfile" &
+    else
+        ffmpeg -nostdin -i "$wav" -c:a libopus -b:a 384k "${pathname}/transcode/$opusfile" &
+    fi
 done
 
 # wait for previous jobs to finish
