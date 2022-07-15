@@ -454,9 +454,6 @@ exec_always --no-startup-id numlockx on
 #Corectrl
 exec --no-startup-id corectrl
 
-#Easystroke
-exec --no-startup-id easystroke
-
 #Transmission
 #exec --no-startup-id transmission-gtk -m
 
