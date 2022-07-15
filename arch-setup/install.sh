@@ -82,7 +82,6 @@ done
 #in_gimp=0
 #in_audacity=0
 #in_mangohud=0
-#in_easystrokes=0
 #in_liferea=0
 #in_fractal=0
 #in_bettergram=0
@@ -104,7 +103,6 @@ options=(0 "VirtManager" off    # any option can be set to default to "on"
          32 "Megatools" off
          40 "Handbrake" off
          41 "Audacity" off
-         50 "Easystroke" on
          60 "Discord" on
          61 "Element" on
          62 "Telegram" on
@@ -163,10 +161,6 @@ do
             #in_audacity=1
             #echo "audacity" >> "$setupdir/selectedpkgs.txt"
             echo "The situation with audacity is unknown right now. Check for FOSS no-telemetry forks"
-            ;;
-        50)
-            #in_easystrokes=1
-            echo "easystroke" >> "$setupdir/aurselectedpkgs.txt"
             ;;
         60)
             #in_discord=1
@@ -555,15 +549,6 @@ if [ $in_mangohud -eq 1 ]; then
     ./MangoHud/build.sh install
 else
     echo "Skipping MangoHud"
-fi
-'
-
-: '
-if [ $in_easystrokes -eq 1 ]; then
-    echo "Installing Easystrokes"
-    paru -S --needed easystroke
-else
-    echo "Skipping Easystrokes"
 fi
 '
 
