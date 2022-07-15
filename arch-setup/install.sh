@@ -95,8 +95,7 @@ options=(0 "VirtManager" off    # any option can be set to default to "on"
          10 "Steam" off
          11 "Lutris" off
          12 "Citra" off
-         13 "Cemu" off
-         14 "Minigalaxy" off
+         13 "Minigalaxy" off
          20 "Krita" off
          21 "Gimp" off
          #30 "Youtube-dl" off
@@ -133,9 +132,6 @@ do
             echo "citra-qt-git" >> "$setupdir/aurselectedpkgs.txt"
             ;;
         13)
-            echo "cemu" >> "$setupdir/aurselectedpkgs.txt"
-            ;;
-        14)
             echo "minigalaxy" >> "$setupdir/aurselectedpkgs.txt"
             ;;
         20)
