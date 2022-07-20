@@ -294,7 +294,7 @@ echo Installed audio programs
 
 #AUR
 echo Installing default AUR programs
-paru -S --needed - < "$setupdir/packages/aurpkgs.txt" 2>/dev/null
+paru -S --needed --noconfirm - < "$setupdir/packages/aurpkgs.txt" 2>/dev/null
 # TODO for btrfsmaintenance, use btrfsmaintenance (1)
 # TODO for jellyfin-media-player, use jellyfin-media-player (1)
 # TODO for java-environment, use jdk-openjdk (1)
@@ -309,12 +309,12 @@ echo Installed AUR programs
 
 # theming
 echo Installing themes and icons
-paru -S --needed - < "$setupdir/packages/theme-packages.txt"
+paru -S --needed --noconfirm - < "$setupdir/packages/theme-packages.txt"
 echo Installed themes and icons
 
 #install wine
 echo Installing wine
-sudo pacman -S --needed - < "$setupdir/packages/winepkgs.txt"
+sudo pacman -S --needed --noconfirm - < "$setupdir/packages/winepkgs.txt"
 echo Installed wine
 
 ###################
