@@ -323,14 +323,18 @@ echo Installed wine
 echo Installing selected programs
 
 # install selected packages
-echo Installing from official repository
-# NOTE || true to continue if no packages have been selected
-sudo pacman -S --needed - < "$setupdir/selectedpkgs.txt" || true
+if [ -f "$setupdir/selectedpkgs.txt" ]; then
+    echo Installing from official repository
+    # NOTE || true to continue if no packages have been selected
+    sudo pacman -S --needed - < "$setupdir/selectedpkgs.txt" || true
+fi
 
 # install selected aur packages
-echo Installing from AUR
-# NOTE || true to continue if no packages have been selected
-paru -S --needed - < "$setupdir/aurselectedpkgs.txt" || true
+if [ -f "$setupdir/aurselectedpkgs.txt" ]; then
+    echo Installing from AUR
+    # NOTE || true to continue if no packages have been selected
+    paru -S --needed - < "$setupdir/aurselectedpkgs.txt" || true
+fi
 
 : '
 if [ $in_vmware15 -eq 1 ]; then
