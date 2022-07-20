@@ -24,7 +24,7 @@ set $menu rofi -show drun
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in @datadir@/backgrounds/sway/)
-output * bg .cache/betterlockscreen/current/wall_dim.png fill
+output * bg /home/exu/.cache/betterlockscreen/current/wall_dim.png fill
 #
 # Example configuration:
 #
