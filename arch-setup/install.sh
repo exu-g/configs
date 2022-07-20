@@ -50,7 +50,7 @@ for choice in $choices; do
             echo "i3-gaps" >> "$setupdir/selectedpkgs.txt"
             ;;
         101)
-            printf '%s\n' 'sway' 'swaylock' 'swayidle' 'xorg-xwayland' >> "$setupdir/selectedpkgs.txt"
+            printf '%s\n' 'sway' 'swaylock' 'swayidle' 'swaybg' 'xorg-xwayland' >> "$setupdir/selectedpkgs.txt"
     esac
 done
 
