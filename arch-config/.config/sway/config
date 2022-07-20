@@ -21,11 +21,20 @@ set $term kitty
 #set $menu dmenu_path | dmenu | xargs swaymsg exec --
 set $menu rofi -show drun
 
-### Keyboard configuration
+### Keyboard, Mouse and others configuration
+# Keyboard config https://man.archlinux.org/man/xkeyboard-config.7
+# Sway input https://man.archlinux.org/man/sway-input.5
+# Keyboard
 input * {
     xkb_layout "ch"
     xkb_variant ""
     #xkb_options "grp:win_space_toggle"
+}
+
+# Touchpad
+input * {
+    tap_button_map lrm
+    scroll_method two_finger
 }
 
 ### Output configuration
