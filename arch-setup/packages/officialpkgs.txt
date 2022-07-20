@@ -90,6 +90,7 @@ python-pip
 qt5-imageformats
 reflector
 restic
+rofi
 rsync
 seahorse
 smartmontools
@@ -110,7 +111,6 @@ vnstat
 webkit2gtk
 wget
 wireguard-tools
-wofi
 xdg-user-dirs
 xf86-input-elographics
 xf86-input-evdev
