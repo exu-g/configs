@@ -66,8 +66,8 @@ output * bg ~/.cache/betterlockscreen/current/wall_dim.png fill
 # -c 000000 sets the color in RGB
 # use -i to set an image
 exec swayidle -w \
-    timeout 20 'swaylock -f -e -c 000000' \
-    timeout 40 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
+    timeout 300 'swaylock -f -e -c 000000' \
+    timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
     before-sleep 'swaylock -f -e -c 000000'
 
 ### Input configuration
