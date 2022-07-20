@@ -35,9 +35,6 @@ set fish_color_cwd yellow
 # SSH Agent
 set SSH_AUTH_SOCK /run/user/1000/ssh-agent.socket; export SSH_AUTH_SOCK
 
-# Set XDG_CURRENT_DESKTOP to sway
-set -gx XDG_CURRENT_DESKTOP sway
-
 # Defined in /home/marc/.config/fish/functions/fish_prompt.fish @ line 2
 # slightly modified from defaults
 function fish_prompt
