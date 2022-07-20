@@ -247,7 +247,7 @@ bindsym $mod+a focus parent
 #################                           change modes                                            #################
 #####################################################################################################################
 
-
+:'
 bindsym $mod+m mode "$main"
 
 set $main Social (s), Gaming (g), Crypto (c), Media (m), Resize (r), Layout (l)
@@ -275,7 +275,7 @@ mode "$social"{
      bindsym e exec --no-startup-id element-desktop;focus
      bindsym b exec --no-startup-id telegram-desktop;focus
      #bindsym s exec --no-startup-id slack;focus
-     #bindsym s exec --no-startup-id signal-desktop;focus
+     bindsym s exec --no-startup-id signal-desktop;focus
      bindsym t exec --no-startup-id teams;focus
 
      bindsym Return mode "default"
@@ -372,7 +372,7 @@ mode "resize" {
         bindsym Return mode "default"
         bindsym Escape mode "default"
 }
-
+'
 
 ##############################################################################
 #################            start normal layout             #################
