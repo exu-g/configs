@@ -21,6 +21,13 @@ set $term kitty
 #set $menu dmenu_path | dmenu | xargs swaymsg exec --
 set $menu rofi -show drun
 
+### Keyboard configuration
+input * {
+    xkb_layout "ch"
+    xkb_variant ""
+    #xkb_options "grp:win_space_toggle"
+}
+
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in @datadir@/backgrounds/sway/)
