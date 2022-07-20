@@ -28,6 +28,7 @@ input * {
     # Keyboard
     xkb_layout "ch"
     xkb_variant ""
+    xkb_model "pc105"
     #xkb_options "grp:win_space_toggle"
     # Touchpad
     tap enabled
