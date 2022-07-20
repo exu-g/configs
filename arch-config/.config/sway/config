@@ -381,4 +381,7 @@ bar {
     }
 }
 
+# Start sway-session.target for sway-specific stuff and import environment
+exec_always "systemctl --user import-environment; systemctl --user start sway-session.target"
+
 include @sysconfdir@/sway/config.d/*
