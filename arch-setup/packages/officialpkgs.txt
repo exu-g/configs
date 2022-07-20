@@ -81,6 +81,7 @@ p7zip
 pacman-contrib
 picom
 piper
+pipewire-jack
 playerctl
 polkit-gnome
 python-dbus
