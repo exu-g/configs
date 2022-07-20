@@ -30,6 +30,7 @@ fwupd-efi
 galculator
 gnome-firmware
 gnome-keyring
+grim
 gsettings-desktop-schemas
 gtk-engine-murrine
 gvfs
@@ -111,6 +112,8 @@ vnstat
 webkit2gtk
 wget
 wireguard-tools
+xdg-desktop-portal
+xdg-desktop-portal-wlr
 xdg-user-dirs
 xf86-input-elographics
 xf86-input-evdev
