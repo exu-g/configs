@@ -24,15 +24,12 @@ set $menu rofi -show drun
 ### Keyboard, Mouse and others configuration
 # Keyboard config https://man.archlinux.org/man/xkeyboard-config.7
 # Sway input https://man.archlinux.org/man/sway-input.5
-# Keyboard
 input * {
+    # Keyboard
     xkb_layout "ch"
     xkb_variant ""
     #xkb_options "grp:win_space_toggle"
-}
-
-# Touchpad
-input * {
+    # Touchpad
     tap_button_map lrm
     scroll_method two_finger
 }
