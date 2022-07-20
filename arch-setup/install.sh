@@ -383,7 +383,8 @@ systemctl --user enable autotrash.timer
 # enable firewall
 echo "Enabling Firewall"
 sudo systemctl enable --now firewalld
-sudo firewall-cmd --zone=public --permanent --remove-service=ssh
+# || true because firewalld doesn't work without a reboot
+sudo firewall-cmd --zone=public --permanent --remove-service=ssh || true
 
 # enable lightdm
 sudo systemctl enable lightdm
