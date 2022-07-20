@@ -25,6 +25,8 @@ fi
 # excpect & send
 
 # fix install problems
+echo Updating keyring
+sudo pacman -Sy --noconfirm archlinux-keyring
 echo Updating repos and packages
 sudo pacman -Syu --noconfirm
 echo Installing pip
