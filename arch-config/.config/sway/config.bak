@@ -121,6 +121,7 @@ bindsym $mod+Shift+0 move container to workspace 10; workspace 10
 
 
 #Press $mod (super) and X to exit - check toolbar for next choices
+# TODO
 bindsym $mod+x mode "$mode_system"
 
 set $mode_system System (k) lock, (l) logout, (r) reboot, (s) shutdown, (u) suspend, (h) hibernate
@@ -248,6 +249,7 @@ bindsym $mod+a focus parent
 #################                           change modes                                            #################
 #####################################################################################################################
 
+# TODO
 #bindsym $mod+m mode "$main"
 
 #set $main Social (s), Gaming (g), Crypto (c), Media (m), Resize (r), Layout (l)
@@ -379,6 +381,7 @@ mode "resize" {
 
 
 # launch programs in the right workspaces
+# TODO
 
 bindsym $mod+w mode "$layout"
 
@@ -398,6 +401,7 @@ mode "$layout" {
 
 
 # change xrandr display configuration
+# TODO
 
 bindsym $mod+d mode "$xrandr"
 
@@ -491,6 +495,7 @@ exec --no-startup-id flameshot &
 # there are some scripts that should work with i3
 # gnome-power-manager
 # mate-power-manager
+# TODO
 exec --no-startup-id xfce4-power-manager &
 
 # notifications
@@ -573,6 +578,7 @@ bindsym Control+Print exec --no-startup-id flameshot gui -d 2000
 ##############################
 ###   floating disabled    ###
 ##############################
+# TODO
 for_window [class="Bleachbit"] floating disable
 for_window [class="Brasero"] floating disable
 for_window [class="Gnome-disks"] floating disable
@@ -702,6 +708,7 @@ bindsym XF86MonBrightnessDown exec --no-startup-id bash $HOME/scripts/dunst-back
 
 
 # Border control
+# TODO
 hide_edge_borders none
 
 bindsym $mod+u mode "$border"
@@ -723,6 +730,7 @@ mode "$border" {
 
 
 #Popups during fullscreen mode
+# TODO
 popup_during_fullscreen smart
 
 
@@ -748,6 +756,7 @@ for_window [class="^.*"] border pixel 2
 
 
 #if you want transparency on non-focused windows, ...
+# TODO
 exec_always --no-startup-id picom -b --config ~/.config/sway/picom.conf
 
 
