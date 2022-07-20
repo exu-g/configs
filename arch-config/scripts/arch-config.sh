@@ -224,7 +224,6 @@ cp -r ~/config/.ssh ~/
 echo Copied folders
 
 #copy single files
-cp -r ~/config/.bashrc ~/
 cp -r ~/config/.face ~/
 cp -r ~/config/.gtkrc-2.0 ~/
 cp -r ~/config/.gitconfig ~/
