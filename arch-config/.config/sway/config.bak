@@ -56,6 +56,7 @@ set $right l
 
 # setting variables for later use
 # use xrandr and/or arandr to know the names of your monitors
+# TODO
 exec --no-startup-id xrandr --output eDP1 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI1 --off --output VIRTUAL1 --off
 exec --no-startup-id xrandr --output HDMI2 --right-of HDMI1 --auto
 
