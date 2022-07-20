@@ -283,7 +283,7 @@ if [[ ! $(pacman -Q | grep paru-bin) ]]; then
     echo "Installing paru-bin"
     git clone https://aur.archlinux.org/paru-bin.git
     cd paru-bin
-    makepkg -si
+    makepkg -si --noconfirm
     cd ..
 fi
 
