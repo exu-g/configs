@@ -565,7 +565,6 @@ else
     echo "Skipping Element"
 fi
 '
->>>>>>> master
 
 #performance and battery life
 if [ $in_acpufreq -eq 1 ]; then
