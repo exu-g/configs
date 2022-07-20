@@ -74,17 +74,16 @@ options=(0 "VirtManager" off    # any option can be set to default to "on"
          10 "Steam" off
          11 "Lutris" off
          12 "Citra" off
-         13 "Cemu" off
+         13 "Minigalaxy" off
          20 "Krita" off
          21 "Gimp" off
          31 "YT-dlp" off
          32 "Megatools" off
          40 "Handbrake" off
          41 "Audacity" off
-         50 "Easystroke" off
-         60 "Discord" off
-         61 "Element" off
-         62 "Telegram" off
+         60 "Discord" on
+         61 "Element" on
+         62 "Telegram" on
          70 "TestSSL" off)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
@@ -107,7 +106,7 @@ do
             echo "citra-qt-git" >> "$setupdir/aurselectedpkgs.txt"
             ;;
         13)
-            echo "cemu" >> "$setupdir/aurselectedpkgs.txt"
+            echo "minigalaxy" >> "$setupdir/aurselectedpkgs.txt"
             ;;
         20)
             echo "krita" >> "$setupdir/selectedpkgs.txt"
@@ -126,9 +125,6 @@ do
             ;;
         41)
             echo "audacity" >> "$setupdir/selectedpkgs.txt"
-            ;;
-        50)
-            echo "easystroke" >> "$setupdir/aurselectedpkgs.txt"
             ;;
         60)
             echo "discord" >> "$setupdir/selectedpkgs.txt"
@@ -335,6 +331,237 @@ sudo pacman -S --needed - < "$setupdir/selectedpkgs.txt" || true
 echo Installing from AUR
 # NOTE || true to continue if no packages have been selected
 paru -S --needed - < "$setupdir/aurselectedpkgs.txt" || true
+
+: '
+if [ $in_vmware15 -eq 1 ]; then
+    echo "Installing VMWare Workstation 15"
+    paru -S --needed vmware-workstation15
+else
+    echo "Skipping VMWare Workstation 15"
+fi
+'
+
+#DEs & WMs
+: '
+if [ $in_xfce -eq 1 ]; then
+    echo "Installing xfce"
+    sudo pacman -S --needed xfce4
+else
+    echo "Skipping xfce"
+fi
+'
+
+: '
+if [ $in_i3gaps -eq 1 ]; then
+    echo "Installing i3-gaps"
+    sudo pacman -S --needed i3-gaps
+else   
+    echo "Skipping i3-gaps"
+fi
+'
+
+: '
+#browsers
+if [ $in_firefox -eq 1 ]; then
+    echo "Installing Firefox"
+    sudo pacman -S --needed firefox
+else
+    echo "Skipping Firefox"
+fi
+'
+
+: '
+if [ $in_chromium -eq 1 ]; then
+    echo "Installing Chromium"
+    sudo pacman -S --needed chromium
+else
+    echo "Skipping Chromium"
+fi
+'
+
+: '
+if [ $in_netsurf -eq 1 ]; then
+    echo "Installing Netsurf"
+    sudo pacman -S --needed netsurf
+else
+    echo "Skipping Netsurf"
+fi
+'
+
+: '
+if [ $in_icecat -eq 1 ]; then
+    echo "Installing Icecat"
+    paru -S --needed icecat-bin
+else
+    echo "Skipping Icecat"
+fi
+'
+
+: '
+if [ $in_tor -eq 1 ]; then
+    echo "Installing Tor"
+    sudo pacman -S --needed torbrowser-launcher
+else
+    echo "Skipping Tor"
+fi
+'
+
+#other programs
+: '
+if [ $in_virtmanager -eq 1 ]; then
+    echo "Installing VirtManager"
+    sudo pacman -S --needed qemu virt-manager
+else
+    echo "Skipping VirtManager"
+fi
+'
+
+: '
+if [ $in_steam -eq 1 ]; then
+    echo "Installing Steam"
+    sudo pacman -S --needed steam steam-native-runtime
+else
+    echo "Skipping Steam"
+fi
+'
+
+: '
+if [ $in_lutris -eq 1 ]; then
+    echo "Installing Lutris"
+    sudo pacman -S --needed lutris
+else
+    echo "Skipping Lutris"
+fi
+'
+
+: '
+if [ $in_blender -eq 1 ]; then
+    echo "Installing Blender"
+    sudo pacman -S --needed blender
+else
+    echo "Skipping Blender"
+fi
+'
+
+: '
+if [ $in_krita -eq 1 ]; then
+    echo "Installing Krita"
+    sudo pacman -S --needed krita
+else
+    echo "Skipping Krita"
+fi
+'
+
+: '
+if [ $in_youtubedl -eq 1 ]; then
+    echo "Installing Youtube-dl"
+    sudo pacman -S --needed youtube-dl
+else
+    echo "Skipping Youtube-dl"
+fi
+'
+
+: '
+if [ $in_discord -eq 1 ]; then
+    echo "Installing Discord"
+    #sudo pacman -S --needed discord
+    paru -S discord_arch_electron
+else
+    echo "Skipping Discord"
+fi
+'
+
+: '
+if [ $in_handbrake -eq 1 ]; then
+    echo "Installing Handbrake"
+    sudo pacman -S --needed handbrake
+else
+    echo "Skipping Handbrake"
+fi
+'
+
+: '
+if [ $in_gimp -eq 1 ]; then
+    echo "Installing Gimp"
+    sudo pacman -S --needed gimp
+else
+    echo "Skipping Gimp"
+fi
+'
+
+: '
+if [ $in_audacity -eq 1 ]; then
+    echo "Installing Audacity"
+    sudo pacman -S --needed audacity
+else
+    echo "Skipping Audacity"
+fi
+'
+
+: '
+if [ $in_mangohud -eq 1 ]; then
+    echo "Installing MangoHud"
+    git clone --recurse-submodules https://github.com/flightlessmango/MangoHud.git
+    ./MangoHud/build.sh install
+else
+    echo "Skipping MangoHud"
+fi
+'
+
+: '
+if [ $in_liferea -eq 1 ]; then
+    echo "Installing Liferea"
+    paru -S --needed liferea
+else
+    echo "Skipping Liferea"
+fi
+'
+
+: '
+if [ $in_fractal -eq 1 ]; then
+    echo "Installing Fractal"
+    sudo pacman -S --needed fractal
+else
+    echo "Skipping Fractal"
+fi
+'
+
+: '
+if [ $in_bettergram -eq 1 ]; then
+    echo "Installing Bettergram"
+    paru -S --needed bettergram
+else
+    echo "Skipping Bettergram"
+fi
+'
+
+: '
+if [ $in_waifu2x -eq 1 ]; then
+    echo "Installing Waifu2x"
+    paru -S --needed waifu2x-ncnn-vulkan
+else
+    echo "Skipping Waifu2x"
+fi
+'
+
+: '
+if [ $in_telegram -eq 1 ]; then
+    echo "Installing Telegram"
+    sudo pacman -S --needed telegram-desktop
+else
+    echo "Skipping Telegram"
+fi
+'
+
+: '
+if [ $in_element -eq 1 ]; then
+    echo "Installing Element"
+    sudo pacman -S --needed element-desktop
+else
+    echo "Skipping Element"
+fi
+'
+>>>>>>> master
 
 #performance and battery life
 if [ $in_acpufreq -eq 1 ]; then
