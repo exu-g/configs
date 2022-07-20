@@ -247,21 +247,20 @@ bindsym $mod+a focus parent
 #################                           change modes                                            #################
 #####################################################################################################################
 
-:'
-bindsym $mod+m mode "$main"
+#bindsym $mod+m mode "$main"
 
-set $main Social (s), Gaming (g), Crypto (c), Media (m), Resize (r), Layout (l)
-mode "$main"{
-     bindsym s mode "$social"
-     bindsym g mode "$gaming"
-     bindsym c mode "$crypto"
-     bindsym m mode "$media"
-     bindsym r mode "resize"
-     bindsym l mode "$layout"
-
-     bindsym Return mode "default"
-     bindsym Escape mode "default"
-}
+#set $main Social (s), Gaming (g), Crypto (c), Media (m), Resize (r), Layout (l)
+#mode "$main"{
+#     bindsym s mode "$social"
+#     bindsym g mode "$gaming"
+#     bindsym c mode "$crypto"
+#     bindsym m mode "$media"
+#     bindsym r mode "resize"
+#     bindsym l mode "$layout"
+#
+#     bindsym Return mode "default"
+#     bindsym Escape mode "default"
+#}
 
 
 #############################################################################
@@ -269,18 +268,18 @@ mode "$main"{
 #############################################################################
 
 
-set $social Discord (d), Element (e), Telegram (b), Signal (s), Teams (t)
-mode "$social"{
-     bindsym d exec --no-startup-id discord --no-sandbox;focus
-     bindsym e exec --no-startup-id element-desktop;focus
-     bindsym b exec --no-startup-id telegram-desktop;focus
+#set $social Discord (d), Element (e), Telegram (b), Signal (s), Teams (t)
+#mode "$social"{
+#     bindsym d exec --no-startup-id discord --no-sandbox;focus
+#     bindsym e exec --no-startup-id element-desktop;focus
+#     bindsym b exec --no-startup-id telegram-desktop;focus
      #bindsym s exec --no-startup-id slack;focus
-     bindsym s exec --no-startup-id signal-desktop;focus
-     bindsym t exec --no-startup-id teams;focus
+#     bindsym s exec --no-startup-id signal-desktop;focus
+#     bindsym t exec --no-startup-id teams;focus
 
-     bindsym Return mode "default"
-     bindsym Escape mode "default"
-}
+#     bindsym Return mode "default"
+#     bindsym Escape mode "default"
+#}
 
 
 #############################################################################
@@ -288,15 +287,15 @@ mode "$social"{
 #############################################################################
 
 
-set $media Tauon (t), Celluloid (c), Jellyfin (j)
-mode "$media"{
-     bindsym t exec --no-startup-id tauon;focus
-     bindsym c exec --no-startup-id celluloid;focus
-     bindsym j exec --no-startup-id jellyfinmediaplayer;focus
-
-     bindsym Return mode "default"
-     bindsym Escape mode "default"
-}
+#set $media Tauon (t), Celluloid (c), Jellyfin (j)
+#mode "$media"{
+#     bindsym t exec --no-startup-id tauon;focus
+#     bindsym c exec --no-startup-id celluloid;focus
+#     bindsym j exec --no-startup-id jellyfinmediaplayer;focus
+#
+#     bindsym Return mode "default"
+#     bindsym Escape mode "default"
+#}
 
 
 ##############################################################################
@@ -304,15 +303,15 @@ mode "$media"{
 ##############################################################################
 
 
-set $crypto Electrum (b), Electon Cash (c), Monero (m)
-mode "$crypto"{
-     bindsym b exec --no-startup-id electrum;focus
-     bindsym c exec --no-startup-id electron-cash;focus
-     bindsym m exec --no-startup-id monero-wallet-gui;focus
-
-     bindsym Return mode "default"
-     bindsym Escape mode "default"
-}
+#set $crypto Electrum (b), Electon Cash (c), Monero (m)
+#mode "$crypto"{
+#     bindsym b exec --no-startup-id electrum;focus
+#     bindsym c exec --no-startup-id electron-cash;focus
+#     bindsym m exec --no-startup-id monero-wallet-gui;focus
+#
+#     bindsym Return mode "default"
+#     bindsym Escape mode "default"
+#}
 
 
 ##############################################################################
@@ -321,17 +320,17 @@ mode "$crypto"{
 
 
 # launch gaming focused programs
-set $gaming Lutris (l), Steam (s), Minigalaxy (g), Itch (i), Citra (3DS) (c)
-mode "$gaming" {
-    bindsym l exec --no-startup-id lutris;focus
-    bindsym s exec --no-startup-id steam-native;focus
-    bindsym g exec --no-startup-id minigalaxy;focus
-    bindsym i exec --no-startup-id itch;focus
-    bindsym c exec --no-startup-id citra-qt;focus
-
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
+#set $gaming Lutris (l), Steam (s), Minigalaxy (g), Itch (i), Citra (3DS) (c)
+#mode "$gaming" {
+#    bindsym l exec --no-startup-id lutris;focus
+#    bindsym s exec --no-startup-id steam-native;focus
+#    bindsym g exec --no-startup-id minigalaxy;focus
+#    bindsym i exec --no-startup-id itch;focus
+#    bindsym c exec --no-startup-id citra-qt;focus
+#
+#    bindsym Return mode "default"
+#    bindsym Escape mode "default"
+#}
 
 
 #############################################################################
@@ -372,7 +371,6 @@ mode "resize" {
         bindsym Return mode "default"
         bindsym Escape mode "default"
 }
-'
 
 ##############################################################################
 #################            start normal layout             #################
