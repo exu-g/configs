@@ -214,20 +214,25 @@ exec swayidle -w \
 # Resizing containers:
 #
 mode "resize" {
-    # left will shrink the containers width
-    # right will grow the containers width
-    # up will shrink the containers height
-    # down will grow the containers height
+    # Resize windows with movement keys
     bindsym $left resize shrink width 10px
+    bindsym Shift+$left resize shrink width 20px
     bindsym $down resize shrink height 10px
+    bindsym Shift+$down resize shrink height 20px
     bindsym $up resize grow height 10px
+    bindsym Shift+$up resize grow height 20px
     bindsym $right resize grow width 10px
+    bindsym Shift+$right resize grow width 20px
 
     # Ditto, with arrow keys
     bindsym Left resize shrink width 10px
+    bindsym Shift+Left resize shrink width 20px
     bindsym Down resize shrink height 10px
+    bindsym Shift+Down resize shrink height 20px
     bindsym Up resize grow height 10px
+    bindsym Shift+Up resize grow height 20px
     bindsym Right resize grow width 10px
+    bindsym Shift+Right resize grow width 20px
 
     # Return to default mode
     bindsym Return mode "default"
