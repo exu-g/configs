@@ -30,6 +30,7 @@ input * {
     xkb_variant ""
     #xkb_options "grp:win_space_toggle"
     # Touchpad
+    tap enabled
     tap_button_map lrm
     scroll_method two_finger
 }
