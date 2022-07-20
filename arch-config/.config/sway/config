@@ -80,9 +80,6 @@ output * bg /home/exu/.cache/betterlockscreen/current/wall_dim.png fill
     # mouse button for dragging.
     floating_modifier $mod normal
 
-    # TODO Restart sway
-    bindsym $mod+Shift+r restart
-
     # Reload the configuration file
     bindsym $mod+Shift+c reload
 
