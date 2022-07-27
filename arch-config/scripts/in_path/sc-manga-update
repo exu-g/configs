@@ -11,7 +11,7 @@ sshkeypath=$HOME/.ssh/id_ed25519
 # transfer to kavita
 # books
 echo Kavita books upload
-rsync -urtzv  --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /home/marc/Nextcloud/Books/Unterhaltung/ ${user}@${server}:/mnt/books/kavita/books/
+rsync -urtzv --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /home/marc/Nextcloud/Books/Unterhaltung/ ${user}@${server}:/mnt/books/kavita/books/
 # manga
 echo Kavita manga upload
 rsync -urtzv --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /home/marc/Nextcloud/Books/Manga/ ${user}@${server}:/mnt/books/kavita/manga/
