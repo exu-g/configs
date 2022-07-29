@@ -83,6 +83,7 @@ options=(0 "VirtManager" off    # any option can be set to default to "on"
          32 "Megatools" off
          40 "Handbrake" off
          41 "Audacity" off
+         42 "k3b" off
          60 "Discord" on
          61 "Element" on
          62 "Telegram" on
@@ -127,6 +128,9 @@ do
             ;;
         41)
             echo "audacity" >> "$setupdir/selectedpkgs.txt"
+            ;;
+        42)
+            printf '%s\n' 'k3b' 'cdparanoia' 'cdrdao' 'cdrtools' 'dvd+rw-tools' 'emovix' 'transcode' 'vcdimager' >> "$setupdir/selectedpkgs.txt"
             ;;
         60)
             echo "discord" >> "$setupdir/selectedpkgs.txt"
