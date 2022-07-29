@@ -103,6 +103,7 @@ options=(0 "VirtManager" off    # any option can be set to default to "on"
          32 "Megatools" off
          40 "Handbrake" off
          41 "Audacity" off
+         42 "k3b" off
          60 "Discord" on
          61 "Element" on
          62 "Telegram" on
@@ -161,6 +162,9 @@ do
             #in_audacity=1
             #echo "audacity" >> "$setupdir/selectedpkgs.txt"
             echo "The situation with audacity is unknown right now. Check for FOSS no-telemetry forks"
+            ;;
+        42)
+            printf '%s\n' 'k3b' 'cdparanoia' 'cdrdao' 'cdrtools' 'dvd+rw-tools' 'emovix' 'transcode' 'vcdimager' >> "$setupdir/selectedpkgs.txt"
             ;;
         60)
             #in_discord=1
