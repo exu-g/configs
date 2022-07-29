@@ -40,17 +40,14 @@ sudo pacman -Syu
 echo Select packages to install
 
 cmd=(dialog --separate-output --checklist "Select Desktop environment/Window manager:" 22 76 16)
-options=(100 "[WM] i3-gaps" off
-         101 "[WM] sway" off)
+options=(100 "[WM] sway" off)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
 for choice in $choices; do
     case $choice in
         100)
-            echo "i3-gaps" >> "$setupdir/selectedpkgs.txt"
-            ;;
-        101)
             printf '%s\n' 'sway' 'swaylock' 'swayidle' 'swaybg' 'xorg-xwayland' >> "$setupdir/selectedpkgs.txt"
+            ;;
     esac
 done
 
@@ -386,8 +383,8 @@ sudo systemctl enable --now firewalld
 # || true because firewalld doesn't work without a reboot
 sudo firewall-cmd --zone=public --permanent --remove-service=ssh || true
 
-# enable lightdm
-sudo systemctl enable lightdm
+# enable greetd
+sudo systemctl enable greetd
 
 # regenerate locale
 # Fixes rofi not launching
