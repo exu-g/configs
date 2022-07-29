@@ -81,7 +81,7 @@ oneplus3
 
 ## Start build
 Full build  
-`$ brunch marlin`  
+`$ brunch DEVICE_CODENAME`  
 
 Kernel only  
 `$ mka bootimage`  
