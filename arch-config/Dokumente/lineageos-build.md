@@ -79,6 +79,9 @@ Device names:
 oneplus3
 ```
 
+If `breakfast` fails, you need to extract the proprietary blobs  
+[Extract blobs from the device](https://wiki.lineageos.org/devices/oneplus3/build#extract-proprietary-blobs) or [Extract blobs from LineageOS zip files](https://wiki.lineageos.org/extracting_blobs_from_zips)  
+
 ## Start build
 Full build  
 `$ brunch DEVICE_CODENAME`  
