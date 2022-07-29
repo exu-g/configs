@@ -74,6 +74,10 @@ Activate the build environment
 
 Finally, download device specific source files  
 `$ breakfast DEVICE_CODENAME`  
+Device names:  
+```
+oneplus3
+```
 
 ## Start build
 Full build  
