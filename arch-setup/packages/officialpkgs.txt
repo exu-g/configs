@@ -62,9 +62,6 @@ libnotify
 libreoffice-fresh
 libreoffice-fresh-de
 libsecret
-lightdm
-lightdm-gtk-greeter
-lightdm-gtk-greeter-settings
 linux-zen
 linux-zen-headers
 lsp-plugins-lv2
