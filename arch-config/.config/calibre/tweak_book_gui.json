@@ -1,0 +1,153 @@
+{
+  "check-book-splitter-state": {
+    "__class__": "bytearray",
+    "__value__": "AAAA/wAAAAEAAAACAAAARgAAAEYA/////wEAAAABAA=="
+  },
+  "custom_colors_for_color_dialog": [
+    [
+      255,
+      255,
+      255,
+      255
+    ],
+    [
+      255,
+      255,
+      255,
+      255
+    ],
+    [
+      255,
+      255,
+      255,
+      255
+    ],
+    [
+      255,
+      255,
+      255,
+      255
+    ],
+    [
+      255,
+      255,
+      255,
+      255
+    ],
+    [
+      255,
+      255,
+      255,
+      255
+    ],
+    [
+      255,
+      255,
+      255,
+      255
+    ],
+    [
+      255,
+      255,
+      255,
+      255
+    ],
+    [
+      255,
+      255,
+      255,
+      255
+    ],
+    [
+      255,
+      255,
+      255,
+      255
+    ],
+    [
+      255,
+      255,
+      255,
+      255
+    ],
+    [
+      255,
+      255,
+      255,
+      255
+    ],
+    [
+      255,
+      255,
+      255,
+      255
+    ],
+    [
+      255,
+      255,
+      255,
+      255
+    ],
+    [
+      255,
+      255,
+      255,
+      255
+    ],
+    [
+      255,
+      255,
+      255,
+      255
+    ]
+  ],
+  "find-widget-state": {
+    "case_sensitive": false,
+    "direction": "down",
+    "dot_all": false,
+    "mode": "normal",
+    "where": "current",
+    "wrap": true
+  },
+  "html-editor-state": {
+    "__class__": "bytearray",
+    "__value__": "AAAA/wAAAAD9AAAAAAAAAgEAAANcAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAMAAAAUAGEAYwB0AGkAbwBuAF8AYgBhAHIBAAAAAP////8AAAAAAAAAAAAAABIAdABvAG8AbABzAF8AYgBhAHIBAAAA3f////8AAAAAAAAAAAAAAB4AaAB0AG0AbABfAGYAbwByAG0AYQB0AF8AYgBhAHIBAAABv/////8AAAAAAAAAAA=="
+  },
+  "main_window_geometry": {
+    "__class__": "bytearray",
+    "__value__": "AdnQywADAAAAAAUCAAAACQAAB3YAAAQaAAAFBAAAAAsAAAd0AAAEGAAAAAAAAAAAB4AAAAUEAAAACwAAB3QAAAQY"
+  },
+  "main_window_state": {
+    "__class__": "bytearray",
+    "__value__": "AAAA/wAAAAD9AAAABAAAAAAAAACsAAADsfwCAAAABfsAAAAkAGYAaQBsAGUAcwAtAGIAcgBvAHcAcwBlAHIALQBkAG8AYwBrAQAAAEIAAAOxAAAAXgD////7AAAAHgB0AG8AYwAtAHYAaQBlAHcAZQByAC0AZABvAGMAawAAAAAA/////wAAAF4A////+wAAACAAdABlAHgAdAAtAHMAZQBhAHIAYwBoAC0AZABvAGMAawAAAAAA/////wAAAJAA////+wAAACAAYwBoAGUAYwBrAHAAbwBpAG4AdABzAC0AZABvAGMAawAAAAAA/////wAAAJQA////+wAAACYAcwBhAHYAZQBkAC0AcwBlAGEAcgBjAGgAZQBzAC0AZABvAGMAawAAAAAA/////wAAAlIA////AAAAAQAAAEEAAAOx/AIAAAAC+wAAABgAcAByAGUAdgBpAGUAdwAtAGQAbwBjAGsBAAAAQgAAA7EAAABbAP////sAAAAaAGwAaQB2AGUALQBjAHMAcwAtAGQAbwBjAGsAAAAAAP////8AAABeAP///wAAAAIAAAAAAAAAAPwBAAAAAfsAAAAeAGMAaABlAGMAawAtAGIAbwBvAGsALQBkAG8AYwBrAAAAAAD/////AAAAkAD///8AAAADAAAAAAAAAAD8AQAAAAH7AAAAHABpAG4AcwBwAGUAYwB0AG8AcgAtAGQAbwBjAGsAAAAAAP////8AAAA/AP///wAAAXgAAAOxAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAMAAAAUAGcAbABvAGIAYQBsAC0AYgBhAHIBAAAAAP////8AAAAAAAAAAAAAABIAdABvAG8AbABzAC0AYgBhAHIBAAABJv////8AAAAAAAAAAAAAABYAcABsAHUAZwBpAG4AcwAtAGIAYQByAAAAAAD/////AAAAAAAAAAA="
+  },
+  "recent-books": [
+    "/home/marc/Nextcloud/Books/Herbert, Frank/Frank Herbert's Dune Saga Collection_ Books 1 - 6/Frank Herbert's Dune Saga Collection_ Books 1 - 6 - Frank Herbert.epub",
+    "/home/marc/Downloads/books/Ignition!_ An Informal History of Liquid Rocket Propellants (Rutgers University Press Classics) - John Drury Clark.epub",
+    "/home/marc/Downloads/books/Kryptowährungen_ Bitcoin, Ethereum, Blockchain, ICO's & Co. einfach erklärt (German Edition) - Julian Hosp.epub",
+    "/home/marc/Downloads/books/12 Stationen der Odyssee - Hürden auf dem Weg zur Berufung (German Edition), Die - Johann Wolfgang Denzinger.epub",
+    "/home/marc/Nextcloud/Books/Unterhaltung/The Sword of Truth [1] - Wizard's First Rule by Terry Goodkind.epub",
+    "/home/marc/The Witcher_ Through the Worlds-ffnet_13520045.epub",
+    "/home/marc/Nextcloud/Books/other/Kill la Kill/Keep Your Shirt On by Geist (Ryuko x Senketsu).epub",
+    "/home/marc/Nextcloud/Books/other/Witcher/Yesterdays Child by HopeofDawn (Ciri x witchers) (incomplete).epub",
+    "/home/marc/Downloads/warmth by satsukichan (Ryuko x Satsuki).epub",
+    "/home/marc/Downloads/Keep Your Shirt On by Geist (Ryuko x Senketsu).epub"
+  ],
+  "reports-ui-state": {},
+  "saved_seaches_state": {
+    "direction": "down",
+    "where": "current",
+    "wrap": true
+  },
+  "search-panel-visible": false,
+  "text_search_widget_state": {
+    "case_sensitive": false,
+    "dot_all": true,
+    "mode": "normal",
+    "where": "current"
+  },
+  "toc_editor_window_geom": {
+    "__class__": "bytearray",
+    "__value__": "AdnQywADAAAAAAHjAAAA0wAABZwAAANMAAAB5QAAANUAAAWaAAADSgAAAAAAAAAAB4AAAAHlAAAA1QAABZoAAANK"
+  }
+}
