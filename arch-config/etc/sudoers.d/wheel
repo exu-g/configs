@@ -1,0 +1,3 @@
+# Commands anybody in the "wheel" group can run without entering a sudo password
+
+%wheel ALL=(ALL) NOPASSWD: /usr/bin/nethogs
