@@ -93,6 +93,7 @@ outputfile = args.output_file
 
 japaneseaudio = args.audio_japanese
 
+# Map english audio, if set
 if args.audio_english is None:
     englishaudio = ""
 else:
@@ -101,6 +102,7 @@ else:
 subtitle = args.subtitle_name
 subtitlestream = args.subtitle_stream
 
+# Flag to actually execute command
 execute = args.execute
 
 ff = ffmpy.FFmpeg(inputs={inputfile:None},
