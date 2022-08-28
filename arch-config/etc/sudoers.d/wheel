@@ -1,3 +1,5 @@
 # Commands anybody in the "wheel" group can run without entering a sudo password
 
 %wheel ALL=(ALL) NOPASSWD: /usr/bin/nethogs
+%wheel ALL=(ALL) NOPASSWD: /usr/bin/btrfs fi usage
+%wheel ALL=(ALL) NOPASSWD: /usr/bin/btrfs filesystem usage
