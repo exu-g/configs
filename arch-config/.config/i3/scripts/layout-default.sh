@@ -14,3 +14,8 @@ i3-msg "workspace 2; append_layout ~/.config/i3/layouts/layout-default/workspace
 (thunderbird &)
 (joplin-desktop &)
 (discord &)
+
+# workspace 3
+i3-msg "workspace 3; append_layout ~/.config/i3/layouts/layout-default/workspace-3.json"
+
+(emacs &)
