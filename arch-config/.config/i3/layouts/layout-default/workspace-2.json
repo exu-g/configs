@@ -43,7 +43,7 @@
             "percent": 0.25,
             "swallows": [
                {
-                "class": "^Thunderbird$",
+                "class": "^thunderbird$",
                 "instance": "^Mail$"
                }
             ],
