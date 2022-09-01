@@ -173,9 +173,6 @@ alias cleanup='sudo pacman -Rns (pacman -Qtdq)'
 # Clean cached packages
 alias cleancache='paru -Sc'
 
-#get the error messages from journalctl
-#alias jctl="journalctl -p 3 -xb"
-
 #cpu-x as sudo
 alias cpu-x="sudo cpu-x"
 
@@ -190,5 +187,5 @@ alias wgqd="sudo wg-quick down"
 # lsblk to list more info
 alias lsblkf="lsblk -o NAME,FSTYPE,LABEL,MOUNTPOINT,SIZE,MODEL,UUID"
 
-#execute stuff
-#neofetch
+# use color for ip command
+alias ip="ip -c"
