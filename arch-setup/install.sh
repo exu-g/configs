@@ -624,7 +624,7 @@ fi
 #devtools
 if [ $in_doomemacs -eq 1 ]; then
     echo "Installing doom-emacs"
-    paru -S --needed git emacs ripgrep fd pandoc shellcheck python-pipenv python-isort python-pytest python-rednose pychecker texlive-core powershell-bin
+    paru -S --needed git emacs ripgrep fd pandoc shellcheck python-pipenv python-isort python-pytest python-rednose pychecker texlive-core powershell-bin python-black
     pip install grip
     npm i bash-language-server
     git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d
