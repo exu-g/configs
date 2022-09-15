@@ -9,6 +9,7 @@ A fast, pure Python library for parsing and serializing ASN.1 structures.
  - [Dependencies](#dependencies)
  - [Installation](#installation)
  - [License](#license)
+ - [Security Policy](#security-policy)
  - [Documentation](#documentation)
  - [Continuous Integration](#continuous-integration)
  - [Testing](#testing)
@@ -109,11 +110,11 @@ faster to an order of magnitude or more.
 
 ## Current Release
 
-1.4.0 - [changelog](changelog.md)
+1.5.0 - [changelog](changelog.md)
 
 ## Dependencies
 
-Python 2.6, 2.7, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9 or pypy. *No third-party
+Python 2.6, 2.7, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9, 3.10 or pypy. *No third-party
 packages required.*
 
 ## Installation
@@ -126,6 +127,11 @@ pip install asn1crypto
 
 *asn1crypto* is licensed under the terms of the MIT license. See the
 [LICENSE](LICENSE) file for the exact license text.
+
+## Security Policy
+
+The security policies for this project are covered in
+[SECURITY.md](https://github.com/wbond/asn1crypto/blob/master/SECURITY.md).
 
 ## Documentation
 

@@ -6,7 +6,7 @@ json:{
   "epub_inline_toc": false,
   "epub_toc_at_end": false,
   "toc_title": null,
-  "preserve_cover_aspect_ratio": false,
+  "preserve_cover_aspect_ratio": true,
   "epub_flatten": false,
   "epub_version": "3"
 }

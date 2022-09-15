@@ -10,7 +10,7 @@ from setuptools.command.egg_info import egg_info
 
 
 PACKAGE_NAME = 'asn1crypto'
-PACKAGE_VERSION = '1.4.0'
+PACKAGE_VERSION = '1.5.1'
 PACKAGE_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 
@@ -138,6 +138,7 @@ setup(
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: Implementation :: CPython',
         'Programming Language :: Python :: Implementation :: PyPy',
 

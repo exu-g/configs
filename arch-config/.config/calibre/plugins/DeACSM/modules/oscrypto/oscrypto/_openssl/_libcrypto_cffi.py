@@ -74,6 +74,16 @@ if version_info < (1, 1):
         void ERR_free_strings(void);
     """)
 
+
+if version_info >= (3, ):
+    ffi.cdef("""
+        typedef ... OSSL_LIB_CTX;
+        typedef ... OSSL_PROVIDER;
+
+        int OSSL_PROVIDER_available(OSSL_LIB_CTX *libctx, const char *name);
+        OSSL_PROVIDER *OSSL_PROVIDER_load(OSSL_LIB_CTX *libctx, const char *name);
+    """)
+
 # The typedef uintptr_t lines here allow us to check for a NULL pointer,
 # without having to redefine the structs in our code. This is kind of a hack,
 # but it should cause problems since we treat these as opaque.
@@ -140,7 +150,6 @@ ffi.cdef("""
     EVP_PKEY *X509_get_pubkey(X509 *x);
     void X509_free(X509 *a);
 
-    int EVP_PKEY_size(EVP_PKEY *pkey);
     RSA *EVP_PKEY_get1_RSA(EVP_PKEY *pkey);
     void RSA_free(RSA *r);
 
@@ -195,6 +204,15 @@ ffi.cdef("""
     int i2o_ECPublicKey(EC_KEY *key, char **out);
     void EC_KEY_free(EC_KEY *key);
 """)
+
+if version_info < (3, ):
+    ffi.cdef("""
+        int EVP_PKEY_size(EVP_PKEY *pkey);
+    """)
+else:
+    ffi.cdef("""
+        int EVP_PKEY_get_size(EVP_PKEY *pkey);
+    """)
 
 if version_info < (1, 1):
     ffi.cdef("""
