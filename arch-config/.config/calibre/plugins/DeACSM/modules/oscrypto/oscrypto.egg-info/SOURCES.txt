@@ -1,3 +1,4 @@
+LICENSE
 setup.py
 oscrypto/__init__.py
 oscrypto/_asn1.py

@@ -1,8 +1,20 @@
 # oscrypto
 
+This is a forked version of oscrypto. It includes all the changes in [this](https://github.com/wbond/oscrypto/pull/61) Pull Request, 
+which makes oscrypto work properly on Ubuntu 22.04 and similar distributions
+that come with OpenSSL3. 
+
+Unfortunately the developer of oscrypto didn't merge that pull request yet, 
+so I had to include my forked version of oscrypto in this plugin. Click [here](https://github.com/wbond/oscrypto) 
+to see the original, un-forked repository. 
+
+Below is the (unmodified) contents of the original readme.md: 
+
+# oscrypto
+
 A compilation-free, always up-to-date encryption library for Python that works
 on Windows, OS X, Linux and BSD. Supports the following versions of Python:
-2.6, 2.7, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8 and pypy.
+2.6, 2.7, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9, 3.10 and pypy.
 
  - [Supported Operating Systems](#supported-operationg-systems)
  - [Features](#features)
@@ -19,8 +31,6 @@ on Windows, OS X, Linux and BSD. Supports the following versions of Python:
  - [CI Tasks](#ci-tasks)
 
 [![GitHub Actions CI](https://github.com/wbond/oscrypto/workflows/CI/badge.svg)](https://github.com/wbond/oscrypto/actions?workflow=CI)
-[![Travis CI](https://api.travis-ci.org/wbond/oscrypto.svg?branch=master)](https://travis-ci.org/wbond/oscrypto)
-[![AppVeyor](https://ci.appveyor.com/api/projects/status/github/wbond/oscrypto?branch=master&svg=true)](https://ci.appveyor.com/project/wbond/oscrypto)
 [![CircleCI](https://circleci.com/gh/wbond/oscrypto.svg?style=shield)](https://circleci.com/gh/wbond/oscrypto)
 [![PyPI](https://img.shields.io/pypi/v/oscrypto.svg)](https://pypi.python.org/pypi/oscrypto)
 
@@ -58,12 +68,15 @@ care of patching vulnerabilities. Supported operating systems include:
      - macOS 10.13 with LibreSSL 2.2.7
      - macOS 10.14
      - macOS 10.15
+     - macOS 10.15 with OpenSSL 3.0
      - macOS 11
+     - macOS 12
  - Linux or BSD
    - Uses one of:
      - [OpenSSL 0.9.8](https://www.openssl.org/docs/man0.9.8/)
      - [OpenSSL 1.0.x](https://www.openssl.org/docs/man1.0.0/)
      - [OpenSSL 1.1.0](https://www.openssl.org/docs/man1.1.0/)
+     - [OpenSSL 3.0](https://www.openssl.org/docs/man3.0/)
      - [LibreSSL](http://www.libressl.org/)
    - Tested on:
      - Arch Linux with OpenSSL 1.0.2
@@ -73,6 +86,7 @@ care of patching vulnerabilities. Supported operating systems include:
      - Ubuntu 15.04 with OpenSSL 1.0.1
      - Ubuntu 16.04 with OpenSSL 1.0.2 on Raspberry Pi 3 (armhf)
      - Ubuntu 18.04 with OpenSSL 1.1.x (amd64, arm64, ppc64el)
+     - Ubuntu 22.04 with OpenSSL 3.0 (amd64)
 
 *OS X 10.6 will not be supported due to a lack of available
 cryptographic primitives and due to lack of vendor support.*
@@ -199,7 +213,10 @@ Some downsides include:
 ## Dependencies
 
  - [*asn1crypto*](https://github.com/wbond/asn1crypto)
- - Python 2.6, 2.7, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8 or pypy
+ - Python 2.6, 2.7, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9, 3.10 or pypy
+ - OpenSSL/LibreSSL if on Linux¹
+
+*¹ On Linux, `ctypes.util.find_library()` is used to located OpenSSL. Alpine Linux does not have an appropriate install by default for `find_library()` to work properly. Instead, `oscrypto.use_openssl()` must be called with the path to the OpenSSL shared libraries.*
 
 ## Installation
 
@@ -220,10 +237,8 @@ pip install oscrypto
 
 Various combinations of platforms and versions of Python are tested via:
 
- - [AppVeyor](https://ci.appveyor.com/project/wbond/oscrypto/history)
- - [CircleCI](https://circleci.com/gh/wbond/oscrypto)
- - [GitHub Actions](https://github.com/wbond/oscrypto/actions)
- - [Travis CI](https://travis-ci.org/wbond/oscrypto/builds)
+ - [macOS, Linux, Windows](https://github.com/wbond/oscrypto/actions/workflows/ci.yml) via GitHub Actions
+ - [arm64](https://circleci.com/gh/wbond/oscrypto) via CircleCI
 
 ## Testing
 
@@ -256,11 +271,36 @@ python run.py tests 20
 python run.py tests aes 20
 ```
 
+#### Backend Options
+
 To run tests using a custom build of OpenSSL, or to use OpenSSL on Windows or
 Mac, add `use_openssl` after `run.py`, like:
 
 ```bash
-python run.py use_openssl=/path/to/libcrypto.dylib,/path/to/libssl.dylib tests
+python run.py use_openssl=/path/to/libcrypto.so,/path/to/libssl.so tests
+```
+
+To run tests forcing the use of ctypes, even if cffi is installed, add
+`use_ctypes` after `run.py`:
+
+```bash
+python run.py use_ctypes=true tests
+```
+
+To run tests using the legacy Windows crypto functions on Windows 7+, add
+`use_winlegacy` after `run.py`:
+
+```bash
+python run.py use_winlegacy=true tests
+```
+
+#### Internet Tests
+
+To skip tests that require an internet connection, add `skip_internet` after
+`run.py`:
+
+```bash
+python run.py skip_internet=true tests
 ```
 
 ### PyPi Source Distribution
@@ -271,6 +311,45 @@ PyPi, the full test suite is run via:
 ```bash
 python setup.py test
 ```
+
+#### Test Options
+
+The following env vars can control aspects of running tests:
+
+##### Force OpenSSL Shared Library Paths
+
+Setting the env var `OSCRYPTO_USE_OPENSSL` to a string in the form:
+
+```
+/path/to/libcrypto.so,/path/to/libssl.so
+```
+
+will force use of specific OpenSSL shared libraries.
+
+This also works on Mac and Windows to force use of OpenSSL instead of using
+native crypto libraries.
+
+##### Force Use of ctypes
+
+By default, oscrypto will use the `cffi` module for FFI if it is installed.
+
+To use the slightly slower, but more widely-tested, `ctypes` FFI layer, set
+the env var `OPENSSL_USE_CTYPES=true`.
+
+##### Force Use of Legacy Windows Crypto APIs
+
+On Windows 7 and newer, oscrypto will use the CNG backend by default.
+
+To force use of the older CryptoAPI, set the env var
+`OPENSSL_USE_WINLEGACY=true`.
+
+##### Skip Tests Requiring an Internet Connection
+
+Some of the TLS tests require an active internet connection to ensure that
+various "bad" server certificates are rejected.
+
+To skip tests requiring an internet connection, set the env var
+`OPENSSL_SKIP_INTERNET_TESTS=true`.
 
 ### Package
 
@@ -345,7 +424,7 @@ PowerShell with `Net.WebClient` is used. This configuration sidesteps issues
 related to getting pip to work properly and messing with `site-packages` for
 the version of Python being used.
 
-The `ci` task runs `lint` (if flake8 is avaiable for the version of Python) and
+The `ci` task runs `lint` (if flake8 is available for the version of Python) and
 `coverage` (or `tests` if coverage is not available for the version of Python).
 If the current directory is a clean git working copy, the coverage data is
 submitted to codecov.io.

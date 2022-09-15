@@ -1,7 +1,7 @@
 {
   "Plugin Updater plugin:plugin updater dialog": {
     "__class__": "bytearray",
-    "__value__": "AdnQywADAAAAAAHDAAABFQAABdUAAAMKAAABxQAAARcAAAXTAAADCAAAAAAAAAAAB4AAAAHFAAABFwAABdMAAAMI"
+    "__value__": "AdnQywADAAAAAAHHAAABFQAABdkAAAMKAAAByQAAARcAAAXXAAADCAAAAAAAAAAAB4AAAAHJAAABFwAABdcAAAMI"
   },
   "action-layout-toolbar": [
     "Add Books",
@@ -80,13 +80,21 @@
     "__value__": "AdnQywADAAAAAAAbAAAAEgAAB1gAAAQbAAAAHQAAABQAAAdWAAAEGQAAAAAAAAAAB4AAAAAdAAAAFAAAB1YAAAQZ"
   },
   "bulk_metadata_window_tab": 0,
+  "choose-merge-dialog-geometry": {
+    "__class__": "bytearray",
+    "__value__": "AdnQywADAAAAAAKEAAABYgAABPsAAAK9AAAChgAAAWQAAAT5AAACuwAAAAAAAAAAB4AAAAKGAAABZAAABPkAAAK7"
+  },
+  "choose-merge-dialog-splitter-state": {
+    "__class__": "bytearray",
+    "__value__": "AAAA/wAAAAEAAAACAAABXgAAAQAA/////wEAAAABAA=="
+  },
   "convert_bulk_dialog_geom": {
     "__class__": "bytearray",
-    "__value__": "AdnQywADAAAAAAASAAAAJAAAB08AAAP7AAAAFAAAACYAAAdNAAAD+QAAAAAAAAAAB4AAAAAUAAAAJgAAB00AAAP5"
+    "__value__": "AdnQywADAAAAAAAeAAAAJAAAB1sAAAP7AAAAIAAAACYAAAdZAAAD+QAAAAAAAAAAB4AAAAAgAAAAJgAAB1kAAAP5"
   },
   "convert_single_dialog_geom": {
     "__class__": "bytearray",
-    "__value__": "AdnQywADAAAAAAAsAAAAEgAAB2kAAAPpAAAALgAAABQAAAdnAAAD5wAAAAAAAAAAB4AAAAAuAAAAFAAAB2cAAAPn"
+    "__value__": "AdnQywADAAAAAAA4AAAAEgAAB3UAAAPpAAAAOgAAABQAAAdzAAAD5wAAAAAAAAAAB4AAAAA6AAAAFAAAB3MAAAPn"
   },
   "cover_browser_splitter_vertical_state": [
     false,
@@ -196,7 +204,7 @@
   },
   "duplicates-question-dialog-geometry": {
     "__class__": "bytearray",
-    "__value__": "AdnQywADAAAAAACGAAABTAAAA2AAAALPAAAAiAAAAU4AAANeAAACzQAAAAAAAAAAB4AAAACIAAABTgAAA14AAALN"
+    "__value__": "AdnQywADAAAAAACOAAABTAAAA2gAAALPAAAAkAAAAU4AAANmAAACzQAAAAAAAAAAB4AAAACQAAABTgAAA2YAAALN"
   },
   "grid view visible": false,
   "jobs view column layout3": {
@@ -208,7 +216,7 @@
     "__value__": "AdnQywADAAAAAAGYAAABEQAABQ4AAAMyAAABmgAAARMAAAUMAAADMAAAAAAAAAAAB4AAAAGaAAABEwAABQwAAAMw"
   },
   "library_usage_stats": {
-    "/home/marc/Calibre-Bibliothek": 184
+    "/home/marc/Calibre-Bibliothek": 200
   },
   "metadata-download-identify-widget-splitter-state": {
     "__class__": "bytearray",
@@ -220,15 +228,15 @@
   },
   "metasingle_window_geometry3": {
     "__class__": "bytearray",
-    "__value__": "AdnQywADAAAAAAA8AAAAEgAAB3kAAAQbAAAAPgAAABQAAAd3AAAEGQAAAAAAAAAAB4AAAAA+AAAAFAAAB3cAAAQZ"
+    "__value__": "AdnQywADAAAAAAA+AAAAEgAAB3sAAAQbAAAAQAAAABQAAAd5AAAEGQAAAAAAAAAAB4AAAABAAAAAFAAAB3kAAAQZ"
   },
   "plugin config dialog:Dateityp:DeACSM": {
     "__class__": "bytearray",
-    "__value__": "AdnQywADAAAAAAMiAAABRAAABKAAAAL9AAADJAAAAUYAAASeAAAC+wAAAAAAAAAAB4AAAAMkAAABRgAABJ4AAAL7"
+    "__value__": "AdnQywADAAAAAAMkAAABRAAABKIAAAL9AAADJgAAAUYAAASgAAAC+wAAAAAAAAAAB4AAAAMmAAABRgAABKAAAAL7"
   },
   "plugin config dialog:Dateityp:DeDRM": {
     "__class__": "bytearray",
-    "__value__": "AdnQywADAAAAAAP8AAAApAAABRYAAAKaAAAD/gAAAKYAAAUUAAACmAAAAAAAAAAAB4AAAAP+AAAApgAABRQAAAKY"
+    "__value__": "AdnQywADAAAAAAQAAAAApAAABRoAAAKaAAAEAgAAAKYAAAUYAAACmAAAAAAAAAAAB4AAAAQCAAAApgAABRgAAAKY"
   },
   "preferences dialog geometry": {
     "__class__": "bytearray",
