@@ -185,6 +185,7 @@ do
     esac
 done
 
+: '
 in_acpufreq=0
 
 cmd=(dialog --separate-output --checklist "Performance and Battery life" 22 76 16)
@@ -205,6 +206,7 @@ do
             ;;
     esac
 done
+'
 
 in_doomemacs=0
 #in_vscodium=0
@@ -610,6 +612,7 @@ else
 fi
 '
 
+: '
 #performance and battery life
 if [ $in_acpufreq -eq 1 ]; then
     echo "Installing auto-cpufreq"
@@ -620,6 +623,7 @@ if [ $in_acpufreq -eq 1 ]; then
 else
     echo "Skipping auto-cpufreq"
 fi
+'
 
 #devtools
 if [ $in_doomemacs -eq 1 ]; then
