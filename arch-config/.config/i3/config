@@ -617,6 +617,9 @@ for_window [title="Rule the Waves II - Version 1.25"] floating disable
 # nextcloud settings
 for_window [title="Nextcloud-Einstellungen"] floating disable
 
+# thunderbird calendar
+for_window [title="^Edit Event:.*"] floating disable
+
 ##############################
 ###   floating enabled     ###
 ##############################
