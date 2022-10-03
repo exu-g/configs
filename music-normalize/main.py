@@ -34,10 +34,11 @@ ffmpeg -i $FILE -c:v libx264 -b:v 4000k -pass 2 -filter:a loudnorm=linear=true:m
 inputfile = (
     '/home/marc/Downloads/FalKKonE - 01 Aria (From "Berserk: The Golden Age Arc").flac'
 )
-inputfile = "/home/marc/Downloads/test441.opus"
+# inputfile = "/home/marc/Downloads/test441.opus"
+outputfile = "/home/marc/Downloads/test441_out.opus"
 
 
-def get_format(inputfile):
+def get_format(inputfile) -> str:
     # get codec format
     # https://stackoverflow.com/a/29610897
     # this shows the codecs of all audio streams present in the file, which shouldn't matter unless you have more than one stream
@@ -93,10 +94,34 @@ def loudness_info(inputfile) -> dict[str, str]:
     return loudness
 
 
-def convert():
-    # ff = ffmpy.FFmpeg()
-    pass
+def convert(inputfile, outputfile, loudness):
+    ff = ffmpy.FFmpeg(
+        inputs={inputfile: None},
+        outputs={
+            outputfile: "-pass 2"
+            " "
+            "-filter:a"
+            " "
+            "loudnorm=I=-30.0:"
+            "measured_I={input_i}:"
+            "measured_LRA={input_lra}:"
+            "measured_tp={input_tp}:measured_thresh={input_thresh}:"
+            "print_format=json"
+            " "
+            "-c:a libopus"
+            " "
+            "-b:a 320k".format(
+                input_i=loudness["input_i"],
+                input_lra=loudness["input_lra"],
+                input_tp=loudness["input_tp"],
+                input_thresh=loudness["input_thresh"],
+            )
+        },
+    )
+    print(ff.cmd)
+    ff.run()
 
 
 if __name__ == "__main__":
     loudness = loudness_info(inputfile=inputfile)
+    convert(inputfile=inputfile, outputfile=outputfile, loudness=loudness)
