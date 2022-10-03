@@ -62,7 +62,7 @@ def get_format(inputfile):
     return format
 
 
-def loudness_info(inputfile):
+def loudness_info(inputfile) -> dict[str, str]:
     # get format from file
     # inputformat = get_format(inputfile)
     # NOTE format is actually unnecessary here
@@ -72,7 +72,22 @@ def loudness_info(inputfile):
         global_options=("-y"),
     )
 
-    print(ff.cmd)
+    # print(ff.cmd)
+    proc = subprocess.Popen(
+        ff.cmd, shell=True, stderr=subprocess.STDOUT, stdout=subprocess.PIPE
+    )
+    # NOTE get loudness info from subprocess
+    # rstrip: remove trailing newline
+    # decode: convert from binary string to utf8
+    # splitlines: list of lines (only 12 last ones, length of the output json)
+    # join: reassembles the list of lines and separates with "\n"
+    loudness_json: str = "\n".join(
+        proc.stdout.read().rstrip().decode("utf8").splitlines()[-12:]
+    )
+    # decode json to dict
+    loudness: dict[str, str] = json.loads(loudness_json)
+    # print(loudness_json)
+    return loudness
 
 
 def convert():
@@ -81,4 +96,4 @@ def convert():
 
 
 if __name__ == "__main__":
-    loudness_info(inputfile)
+    loudness = loudness_info(inputfile=inputfile)
