@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
 
 # ffmpeg wrapper
-from os import sched_get_priority_max
+import multiprocessing
+from os.path import isdir, isfile
 import ffmpy
 
 # argument parsing
 import argparse
+
+# multiprocessing stuff
+from multiprocessing import Pool
+from multiprocessing import cpu_count
 
 # executing some commands
 import subprocess
@@ -13,29 +18,29 @@ import subprocess
 # parsing json output of loudnorm
 import json
 
+# file/directory handling
+import os
+
+# most recent starttime for program
+import time
+
+from random import randint
+
 """
-parser = argparse.ArgumentParser(description="")
 
-# Input file
-parser.add_argument("-i", "--input-file", required=True, type=str, help="Input file")
-
-args = parser.parse_args()
-
-inputfile = args.input_file
-"""
-"""
-ffmpeg -y -i FalKKonE\ -\ 01\ Aria\ \(From\ \"Berserk:\ The\ Golden\ Age\ Arc\"\).flac -pass 1 -filter:a loudnorm=print_format=json -f flac /dev/null
-
-ffmpeg -i FalKKonE\ -\ 01\ Aria\ \(From\ \"Berserk:\ The\ Golden\ Age\ Arc\"\).flac -pass 2 -filter:a loudnorm=I=-30.0:linear=true:measured_I=-4.52:measured_LRA=1.90:measured_thresh=-14.64 -c:a libopus -b:a 320k test441.opus
-ffmpeg -i $FILE -c:v libx264 -b:v 4000k -pass 2 -filter:a loudnorm=linear=true:measured_I=$input_i:measured_LRA=$input_lra:measured_tp=$input_tp:measured_thresh=$input_thresh -c:a aac -b:a 256k $FILE.mkv
 """
 
 # FIXME
-inputfile = (
-    '/home/marc/Downloads/FalKKonE - 01 Aria (From "Berserk: The Golden Age Arc").flac'
-)
+# inputfile = (
+#    '/home/marc/Downloads/FalKKonE - 01 Aria (From "Berserk: The Golden Age Arc").flac'
+# )
 # inputfile = "/home/marc/Downloads/test441.opus"
-outputfile = "/home/marc/Downloads/test441_out.opus"
+# outputfile = "/home/marc/Downloads/test441_out.opus"
+
+# srcfolder = "/home/marc/Downloads/MusikRaw"
+# destfolder = "/home/marc/Downloads/Musik"
+
+musicfile_extensions = (".flac", ".wav", ".mp3", ".m4a", ".aac", ".opus")
 
 
 def get_format(inputfile) -> str:
@@ -45,8 +50,7 @@ def get_format(inputfile) -> str:
     ff = ffmpy.FFprobe(
         inputs={inputfile: None},
         global_options=(
-            "-v",
-            "quiet",
+            "-v quiet",
             "-select_streams a",
             "-show_entries stream=codec_name",
             "-of default=noprint_wrappers=1:nokey=1",
@@ -64,6 +68,25 @@ def get_format(inputfile) -> str:
     )
     # print(format)
     return format
+
+
+def remove_picture(inputfile):
+    """
+    This function makes sure no image is attached to the audio stream.
+    An image might cause problems for the later conversion to opus.
+
+    Parameters:
+        inputfile (str): Path to file
+    """
+    tmpfile = os.path.splitext(inputfile)[0] + ".tmp" + os.path.splitext(inputfile)[1]
+    ff = ffmpy.FFmpeg(
+        inputs={inputfile: None},
+        outputs={tmpfile: "-vn -c:a copy"},
+        global_options=("-v error"),
+    )
+    ff.run()
+    os.remove(inputfile)
+    os.rename(tmpfile, inputfile)
 
 
 def loudness_info(inputfile) -> dict[str, str]:
@@ -91,6 +114,8 @@ def loudness_info(inputfile) -> dict[str, str]:
     # decode json to dict
     loudness: dict[str, str] = json.loads(loudness_json)
     # print(loudness_json)
+    # print(ff.cmd)
+    print("Measuring loudness of ", os.path.basename(inputfile))
     return loudness
 
 
@@ -117,11 +142,107 @@ def convert(inputfile, outputfile, loudness):
                 input_thresh=loudness["input_thresh"],
             )
         },
+        global_options=("-v error"),
     )
-    print(ff.cmd)
+    # print(ff.cmd)
+    print("Working on ", os.path.basename(inputfile))
     ff.run()
 
 
-if __name__ == "__main__":
+def main(inputfile: str):
+    """
+    Main program loop
+
+    Parameters:
+        inputfile (str): Path to input file
+    """
+    # set output folder to parent path + "normalized"
+    outputfolder = os.path.join(os.path.dirname(inputfile), "normalized")
+    # NOTE create output folder
+    # because multiple parallel processes are at work here,
+    # there might be conflicts with one trying to create the directory although it already exists
+    # this while loop makes sure the directory does exist
+    # the try/except block ensures the error is caught and (hopefully) doesn't happen again just after with random sleep
+    # there's very likely a better way to do this, idk
+    while not os.path.isdir(outputfolder):
+        try:
+            os.mkdir(outputfolder)
+        except:
+            time.sleep(randint(0, 4))
+
+    # output file path
+    noext_infile: str = os.path.splitext(os.path.basename(inputfile))[0]
+    outputfile: str = os.path.join(outputfolder, noext_infile + ".opus")
+
+    # print(inputfile)
+    # print(os.path.dirname(inputfile))
+    # print(os.path.basename(inputfile))
+    # print(outputfile)
+
+    remove_picture(inputfile=inputfile)
     loudness = loudness_info(inputfile=inputfile)
     convert(inputfile=inputfile, outputfile=outputfile, loudness=loudness)
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="")
+
+    # Input directory
+    parser.add_argument(
+        "-i", "--input-dir", required=True, type=str, help="Input source directory"
+    )
+
+    # number of cpus/threads to use, defaults to all available
+    parser.add_argument(
+        "-c",
+        "--cpu-count",
+        required=False,
+        type=int,
+        help="Number of cpu cores",
+        default=multiprocessing.cpu_count(),
+    )
+
+    args = parser.parse_args()
+
+    srcfolder = args.input_dir
+
+    cpu = args.cpu_count
+
+    # NOTE DEALING WITH TIME
+    # so it only runs for the modified files since the last run
+    # time of this run
+    starttime = time.time()
+    # file where last run is stored
+    timefile = os.path.join(srcfolder, "run.time")
+
+    # get time of previous run
+    if os.path.isfile(timefile):
+        with open(timefile, "r") as file:
+            timeprev = file.read()
+    else:
+        timeprev = 0
+
+    # FIXME
+    timeprev = 0
+
+    # print(timeprev)
+
+    musicfiles = []
+    for root, dirs, files in os.walk(srcfolder):
+        # ignore the "normalized" subfolder
+        dirs[:] = [d for d in dirs if d not in ["normalized"]]
+        for file in files:
+            if file.endswith(musicfile_extensions):
+                filepath = os.path.join(root, file)
+                # only file newer than the last run are added
+                if os.path.getmtime(filepath) >= float(timeprev):
+                    musicfiles.append(os.path.join(root, file))
+
+    # print(musicfiles)
+
+    with Pool(cpu) as p:
+        p.map(main, musicfiles)
+
+    # write this run's time into file
+    with open(timefile, "w") as file:
+        file.write(str(starttime))
