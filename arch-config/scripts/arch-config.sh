@@ -218,6 +218,7 @@ cp -r ~/config/.gtkrc-2.0 ~/
 cp -r ~/config/.gitconfig ~/
 cp -r ~/config/.tmux.conf ~/
 cp -r ~/config/.xinitrc ~/
+cp -r ~/config/.kopiaignore ~/
 echo Copied files
 
 # make .xinitrc executable
