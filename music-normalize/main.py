@@ -90,6 +90,7 @@ def remove_picture(inputfile):
 
 
 def loudness_info(inputfile) -> dict[str, str]:
+    print("Measuring loudness of ", os.path.basename(inputfile))
     # get format from file
     # inputformat = get_format(inputfile)
     # NOTE format is actually unnecessary here
@@ -115,11 +116,11 @@ def loudness_info(inputfile) -> dict[str, str]:
     loudness: dict[str, str] = json.loads(loudness_json)
     # print(loudness_json)
     # print(ff.cmd)
-    print("Measuring loudness of ", os.path.basename(inputfile))
     return loudness
 
 
 def convert(inputfile, outputfile, loudness):
+    print("Working on ", os.path.basename(inputfile))
     ff = ffmpy.FFmpeg(
         inputs={inputfile: None},
         outputs={
@@ -145,7 +146,6 @@ def convert(inputfile, outputfile, loudness):
         global_options=("-y", "-v error"),
     )
     # print(ff.cmd)
-    print("Working on ", os.path.basename(inputfile))
     ff.run()
 
 
