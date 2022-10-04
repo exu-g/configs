@@ -142,7 +142,7 @@ def convert(inputfile, outputfile, loudness):
                 input_thresh=loudness["input_thresh"],
             )
         },
-        global_options=("-v error"),
+        global_options=("-y", "-v error"),
     )
     # print(ff.cmd)
     print("Working on ", os.path.basename(inputfile))
