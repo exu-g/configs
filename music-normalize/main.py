@@ -202,28 +202,34 @@ if __name__ == "__main__":
         default=multiprocessing.cpu_count(),
     )
 
+    # in case you wanted to rerun the conversion for everything
+    parser.add_argument(
+        "-r",
+        "--reset",
+        required=False,
+        action="store_true",
+        help="Rerun conversion for all files",
+    )
+
     args = parser.parse_args()
 
     srcfolder = args.input_dir
 
     cpu = args.cpu_count
 
-    # NOTE DEALING WITH TIME
-    # so it only runs for the modified files since the last run
-    # time of this run
-    starttime = time.time()
-    # file where last run is stored
+    reset = args.reset
+
+    # file where last run timestamp is stored
     timefile = os.path.join(srcfolder, "run.time")
 
     # get time of previous run
-    if os.path.isfile(timefile):
+    if reset:
+        timeprev = 0
+    elif os.path.isfile(timefile):
         with open(timefile, "r") as file:
             timeprev = file.read()
     else:
         timeprev = 0
-
-    # FIXME
-    timeprev = 0
 
     # print(timeprev)
 
@@ -245,4 +251,4 @@ if __name__ == "__main__":
 
     # write this run's time into file
     with open(timefile, "w") as file:
-        file.write(str(starttime))
+        file.write(str(time.time()))
