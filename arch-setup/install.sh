@@ -107,7 +107,8 @@ options=(0 "VirtManager" off    # any option can be set to default to "on"
          60 "Discord" on
          61 "Element" on
          62 "Telegram" on
-         70 "TestSSL" off)
+         70 "TestSSL" off
+         80 "Onedriver" off)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
 for choice in $choices
@@ -181,6 +182,9 @@ do
             ;;
         70)
             echo "testssl.sh" >> "$setupdir/selectedpkgs.txt"
+            ;;
+        80)
+            echo "onedriver" >> "$setupdir/aurselectedpkgs.txt"
             ;;
     esac
 done
