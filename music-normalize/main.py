@@ -121,31 +121,36 @@ def loudness_info(inputfile) -> dict[str, str]:
 
 def convert(inputfile, outputfile, loudness):
     print("Working on ", os.path.basename(inputfile))
+    # coverpath = os.path.join(os.path.dirname(inputfile), "cover.jpg")
+    # NOTE including covers into ogg/opus containers currently doesn't work
+    # https://trac.ffmpeg.org/ticket/4448
+    inputcmd = {inputfile: None}
+    outputcmd = {
+        outputfile: "-pass 2"
+        " "
+        "-filter:a"
+        " "
+        "loudnorm=I=-30.0:"
+        "measured_I={input_i}:"
+        "measured_LRA={input_lra}:"
+        "measured_tp={input_tp}:measured_thresh={input_thresh}"
+        " "
+        "-c:a libopus"
+        " "
+        "-b:a 320k".format(
+            input_i=loudness["input_i"],
+            input_lra=loudness["input_lra"],
+            input_tp=loudness["input_tp"],
+            input_thresh=loudness["input_thresh"],
+        )
+    }
+
     ff = ffmpy.FFmpeg(
-        inputs={inputfile: None},
-        outputs={
-            outputfile: "-pass 2"
-            " "
-            "-filter:a"
-            " "
-            "loudnorm=I=-30.0:"
-            "measured_I={input_i}:"
-            "measured_LRA={input_lra}:"
-            "measured_tp={input_tp}:measured_thresh={input_thresh}:"
-            "print_format=json"
-            " "
-            "-c:a libopus"
-            " "
-            "-b:a 320k".format(
-                input_i=loudness["input_i"],
-                input_lra=loudness["input_lra"],
-                input_tp=loudness["input_tp"],
-                input_thresh=loudness["input_thresh"],
-            )
-        },
+        inputs=inputcmd,
+        outputs=outputcmd,
         global_options=("-y", "-v error"),
     )
-    # print(ff.cmd)
+    print(ff.cmd)
     ff.run()
 
 
@@ -179,12 +184,15 @@ def main(inputfile: str):
     # print(os.path.basename(inputfile))
     # print(outputfile)
 
-    remove_picture(inputfile=inputfile)
+    # remove_picture(inputfile=inputfile)
     loudness = loudness_info(inputfile=inputfile)
     convert(inputfile=inputfile, outputfile=outputfile, loudness=loudness)
 
 
 if __name__ == "__main__":
+    # start time of program
+    starttime = time.time()
+
     parser = argparse.ArgumentParser(description="")
 
     # Input directory
@@ -251,4 +259,4 @@ if __name__ == "__main__":
 
     # write this run's time into file
     with open(timefile, "w") as file:
-        file.write(str(time.time()))
+        file.write(str(starttime))
