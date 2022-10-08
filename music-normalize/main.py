@@ -150,7 +150,7 @@ def convert(inputfile, outputfile, loudness):
         outputs=outputcmd,
         global_options=("-y", "-v error"),
     )
-    print(ff.cmd)
+    # print(ff.cmd)
     ff.run()
 
 
