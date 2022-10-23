@@ -29,6 +29,8 @@ freetype2
 fwupd
 fwupd-efi
 galculator
+git
+git-lfs
 gnome-firmware
 gnome-keyring
 gsettings-desktop-schemas
