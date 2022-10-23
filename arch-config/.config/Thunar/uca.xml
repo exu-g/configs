@@ -10,4 +10,14 @@
 	<startup-notify/>
 	<directories/>
 </action>
+<action>
+	<icon>preferences-system-search</icon>
+	<name>Search</name>
+	<unique-id>1666516933235505-2</unique-id>
+	<command>catfish --path=%f</command>
+	<description>Search for files and folders</description>
+	<patterns>*</patterns>
+	<startup-notify/>
+	<directories/>
+</action>
 </actions>
