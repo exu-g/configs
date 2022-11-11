@@ -90,6 +90,7 @@ python-dbus
 python-gobject
 python-pip
 qt5-imageformats
+rebuild-detector
 reflector
 restic
 rofi
