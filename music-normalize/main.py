@@ -26,6 +26,8 @@ import time
 
 from random import randint
 
+from itertools import repeat
+
 """
 
 """
@@ -119,7 +121,7 @@ def loudness_info(inputfile) -> dict[str, str]:
     return loudness
 
 
-def convert(inputfile, outputfile, loudness):
+def convert(inputfile, outputfile, loudness, nonlinear):
     print("Working on ", os.path.basename(inputfile))
     # coverpath = os.path.join(os.path.dirname(inputfile), "cover.jpg")
     # NOTE including covers into ogg/opus containers currently doesn't work
@@ -131,9 +133,11 @@ def convert(inputfile, outputfile, loudness):
         "-filter:a"
         " "
         "loudnorm=I=-30.0:"
+        "LRA=5.0:"
         "measured_I={input_i}:"
         "measured_LRA={input_lra}:"
-        "measured_tp={input_tp}:measured_thresh={input_thresh}"
+        "measured_tp={input_tp}:measured_thresh={input_thresh}:"
+        "print_format=json"
         " "
         "-c:a libopus"
         " "
@@ -148,13 +152,28 @@ def convert(inputfile, outputfile, loudness):
     ff = ffmpy.FFmpeg(
         inputs=inputcmd,
         outputs=outputcmd,
-        global_options=("-y", "-v error"),
+        # global_options=("-y", "-v error"),
+        global_options=("-y"),
     )
-    # print(ff.cmd)
-    ff.run()
+    # ff.run()
+    proc = subprocess.Popen(
+        ff.cmd, shell=True, stderr=subprocess.STDOUT, stdout=subprocess.PIPE
+    )
+    # NOTE get loudness info from subprocess
+    # rstrip: remove trailing newline
+    # decode: convert from binary string to utf8
+    # splitlines: list of lines (only 12 last ones, length of the output json)
+    # join: reassembles the list of lines and separates with "\n"
+    loudness_json: str = "\n".join(
+        proc.stdout.read().rstrip().decode("utf8").splitlines()[-12:]
+    )
+    # decode json to dict
+    loudness_new: dict[str, str] = json.loads(loudness_json)
+    if loudness_new["normalization_type"] != "linear":
+        nonlinear.append([inputfile, loudness_new])
 
 
-def main(inputfile: str):
+def main(inputfile: str, nonlinear: list):
     """
     Main program loop
 
@@ -186,7 +205,15 @@ def main(inputfile: str):
 
     # remove_picture(inputfile=inputfile)
     loudness = loudness_info(inputfile=inputfile)
-    convert(inputfile=inputfile, outputfile=outputfile, loudness=loudness)
+    convert(
+        inputfile=inputfile,
+        outputfile=outputfile,
+        loudness=loudness,
+        nonlinear=nonlinear,
+    )
+
+    # FIXME the dictionary works here
+    print(nonlinear)
 
 
 if __name__ == "__main__":
@@ -230,6 +257,9 @@ if __name__ == "__main__":
     # file where last run timestamp is stored
     timefile = os.path.join(srcfolder, "run.time")
 
+    # list of non-linear normalizations
+    nonlinear: list[str] = []
+
     # get time of previous run
     if reset:
         timeprev = 0
@@ -255,8 +285,12 @@ if __name__ == "__main__":
     # print(musicfiles)
 
     with Pool(cpu) as p:
-        p.map(main, musicfiles)
+        p.starmap(main, zip(musicfiles, repeat(nonlinear)))
 
     # write this run's time into file
     with open(timefile, "w") as file:
         file.write(str(starttime))
+
+    # FIXME empty dictionary here
+    print("Dynamically normalized music:")
+    print(nonlinear)
