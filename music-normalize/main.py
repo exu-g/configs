@@ -309,4 +309,20 @@ with ThreadPool(8) as t:
 
 for i in out:
     print(i)
+
+
+from multiprocessing import Pool
+
+def test(i):
+    return([i,{"2":i*2,"3":i*3}])
+
+if __name__ == "__main__":
+    list = [1,2,3,4,5]
+    
+    with Pool(7) as p:
+        out = p.starmap(test,zip(list))
+
+    for i in out:
+        print(i)
 """
+
