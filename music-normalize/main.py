@@ -294,3 +294,19 @@ if __name__ == "__main__":
     # FIXME empty dictionary here
     print("Dynamically normalized music:")
     print(nonlinear)
+
+"""
+from multiprocessing.pool import ThreadPool
+
+def test(i):
+    return([i,{"2":i*2,"3":i*3}])
+
+
+list = [1,2,3,4,5]
+
+with ThreadPool(8) as t:
+    out = t.starmap(test,zip(list))
+
+for i in out:
+    print(i)
+"""
