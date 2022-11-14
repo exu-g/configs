@@ -26,7 +26,7 @@ import time
 
 from random import randint
 
-from itertools import repeat
+from typing import Any, Optional
 
 """
 
@@ -121,7 +121,7 @@ def loudness_info(inputfile) -> dict[str, str]:
     return loudness
 
 
-def convert(inputfile, outputfile, loudness, nonlinear):
+def convert(inputfile, outputfile, loudness) -> Optional[list[Any]]:
     print("Working on ", os.path.basename(inputfile))
     # coverpath = os.path.join(os.path.dirname(inputfile), "cover.jpg")
     # NOTE including covers into ogg/opus containers currently doesn't work
@@ -133,7 +133,7 @@ def convert(inputfile, outputfile, loudness, nonlinear):
         "-filter:a"
         " "
         "loudnorm=I=-30.0:"
-        "LRA=5.0:"
+        "LRA=9.0:"
         "measured_I={input_i}:"
         "measured_LRA={input_lra}:"
         "measured_tp={input_tp}:measured_thresh={input_thresh}:"
@@ -170,10 +170,11 @@ def convert(inputfile, outputfile, loudness, nonlinear):
     # decode json to dict
     loudness_new: dict[str, str] = json.loads(loudness_json)
     if loudness_new["normalization_type"] != "linear":
-        nonlinear.append([inputfile, loudness_new])
+        nonlinear: list[Any] = [inputfile, loudness_new]
+        return nonlinear
 
 
-def main(inputfile: str, nonlinear: list):
+def main(inputfile: str) -> Optional[list[Any]]:
     """
     Main program loop
 
@@ -205,15 +206,13 @@ def main(inputfile: str, nonlinear: list):
 
     # remove_picture(inputfile=inputfile)
     loudness = loudness_info(inputfile=inputfile)
-    convert(
+    nonlinear: Optional[list[Any]] = convert(
         inputfile=inputfile,
         outputfile=outputfile,
         loudness=loudness,
-        nonlinear=nonlinear,
     )
 
-    # FIXME the dictionary works here
-    print(nonlinear)
+    return nonlinear
 
 
 if __name__ == "__main__":
@@ -258,7 +257,7 @@ if __name__ == "__main__":
     timefile = os.path.join(srcfolder, "run.time")
 
     # list of non-linear normalizations
-    nonlinear: list[str] = []
+    nonlinear_all: Optional[list[Any]] = []
 
     # get time of previous run
     if reset:
@@ -271,7 +270,7 @@ if __name__ == "__main__":
 
     # print(timeprev)
 
-    musicfiles = []
+    musicfiles: list[str] = []
     for root, dirs, files in os.walk(srcfolder):
         # ignore the "normalized" subfolder
         dirs[:] = [d for d in dirs if d not in ["normalized"]]
@@ -285,44 +284,14 @@ if __name__ == "__main__":
     # print(musicfiles)
 
     with Pool(cpu) as p:
-        p.starmap(main, zip(musicfiles, repeat(nonlinear)))
+        nonlinear_all: Optional[list[Any]] = p.map(main, musicfiles)
 
     # write this run's time into file
     with open(timefile, "w") as file:
         file.write(str(starttime))
 
-    # FIXME empty dictionary here
     print("Dynamically normalized music:")
-    print(nonlinear)
-
-"""
-from multiprocessing.pool import ThreadPool
-
-def test(i):
-    return([i,{"2":i*2,"3":i*3}])
-
-
-list = [1,2,3,4,5]
-
-with ThreadPool(8) as t:
-    out = t.starmap(test,zip(list))
-
-for i in out:
-    print(i)
-
-
-from multiprocessing import Pool
-
-def test(i):
-    return([i,{"2":i*2,"3":i*3}])
-
-if __name__ == "__main__":
-    list = [1,2,3,4,5]
-    
-    with Pool(7) as p:
-        out = p.starmap(test,zip(list))
-
-    for i in out:
-        print(i)
-"""
-
+    for i in nonlinear_all:
+        # NOTE ignore empty and "None" values
+        if i:
+            print(i)
