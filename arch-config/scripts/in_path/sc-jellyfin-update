@@ -5,8 +5,11 @@ user=exu
 server=172.18.50.102
 port=22
 sshkeypath=$HOME/.ssh/id_ed25519
-# don't transfer to the storage box directly, leads to mangled file names
+# NOTE don't transfer to the storage box directly, leads to mangled file names
 # see: https://serverfault.com/a/765951
+
+# transfer to nas in background
+rsync -uvr --progress /mnt/storage/MediaLibrary/{Movies,other,Patreon,Shows,YouTube} /mnt/lan1nas1/ >/dev/null &
 
 # transfer Music
 rsync -uvrL --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /home/marc/Musik/ ${user}@${server}:/mnt/media/Musik/
@@ -22,3 +25,9 @@ rsync -uvr --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /mnt/storage
 
 # transfer downloaded YouTube videos
 rsync -uvr --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /mnt/storage/MediaLibrary/YouTube/ ${user}@${server}:/mnt/media/YouTube/
+
+# NOTE wait to make sure the transfer to the nas is complete as well
+# https://stackoverflow.com/a/41791336
+wait
+
+echo "Finished transfering data"
