@@ -124,6 +124,7 @@ ff = ffmpy.FFmpeg(inputs={inputfile:None},
                                    subtitle=subtitle)
                            }
                   )
+# NOTE Breaks if filename contains quotes: '
 
 if execute:
     ff.run()
