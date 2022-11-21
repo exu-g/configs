@@ -8,6 +8,9 @@ sshkeypath=$HOME/.ssh/id_ed25519
 # NOTE don't transfer to the storage box directly, leads to mangled file names
 # see: https://serverfault.com/a/765951
 
+# unlock ssh key
+ssh-add "$sshkeypath"
+
 # transfer to nas
 rsync -uvr --progress /mnt/storage/MediaLibrary/{Movies,other,Patreon,Shows,YouTube} /mnt/lan1nas1/
 
