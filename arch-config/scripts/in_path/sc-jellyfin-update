@@ -9,7 +9,9 @@ sshkeypath=$HOME/.ssh/id_ed25519
 # see: https://serverfault.com/a/765951
 
 # unlock ssh key
-ssh-add "$sshkeypath"
+if ! ssh-add -T "${sshkeypath}.pub" &>/dev/null; then
+    ssh-add -q "$sshkeypath"
+fi
 
 # transfer to nas
 rsync -uvr --progress /mnt/storage/MediaLibrary/{Movies,other,Patreon,Shows,YouTube} /mnt/lan1nas1/
@@ -18,23 +20,23 @@ rsync -uvrL --progress /home/marc/Musik /mnt/lan1nas1/
 
 # transfer Music
 #rsync -uvrL --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /home/marc/Musik/ ${user}@${server}:/mnt/media/Musik/
-rsync -uvr --progress --bwlimit=3M -e "ssh -i $sshkeypath -p $port" /mnt/lan1nas1/Musik/ ${user}@${server}:/mnt/media/Musik/
+rsync -uvr --progress --bwlimit=2M -e "ssh -i $sshkeypath -p $port" /mnt/lan1nas1/Musik/ ${user}@${server}:/mnt/media/Musik/
 
 # transfer Shows
 #rsync -uvr --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /mnt/storage/MediaLibrary/Shows/ ${user}@${server}:/mnt/media/Shows/
-rsync -uvr --progress --bwlimit=3M -e "ssh -i $sshkeypath -p $port" /mnt/lan1nas1/Shows/ ${user}@${server}:/mnt/media/Shows/
+rsync -uvr --progress --bwlimit=2M -e "ssh -i $sshkeypath -p $port" /mnt/lan1nas1/Shows/ ${user}@${server}:/mnt/media/Shows/
 
 # transfer Movies
 #rsync -uvr --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /mnt/storage/MediaLibrary/Movies/ ${user}@${server}:/mnt/media/Movies/
-rsync -uvr --progress --bwlimit=3M -e "ssh -i $sshkeypath -p $port" /mnt/lan1nas1/Movies/ ${user}@${server}:/mnt/media/Movies/
+rsync -uvr --progress --bwlimit=2M -e "ssh -i $sshkeypath -p $port" /mnt/lan1nas1/Movies/ ${user}@${server}:/mnt/media/Movies/
 
 # transfer other
 #rsync -uvr --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /mnt/storage/MediaLibrary/other/ ${user}@${server}:/mnt/media/other/
-rsync -uvr --progress --bwlimit=3M -e "ssh -i $sshkeypath -p $port" /mnt/lan1nas1/other/ ${user}@${server}:/mnt/media/other/
+rsync -uvr --progress --bwlimit=2M -e "ssh -i $sshkeypath -p $port" /mnt/lan1nas1/other/ ${user}@${server}:/mnt/media/other/
 
 # transfer downloaded YouTube videos
 #rsync -uvr --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /mnt/storage/MediaLibrary/YouTube/ ${user}@${server}:/mnt/media/YouTube/
-rsync -uvr --progress --bwlimit=3M -e "ssh -i $sshkeypath -p $port" /mnt/lan1nas1/YouTube/ ${user}@${server}:/mnt/media/YouTube/
+rsync -uvr --progress --bwlimit=2M -e "ssh -i $sshkeypath -p $port" /mnt/lan1nas1/YouTube/ ${user}@${server}:/mnt/media/YouTube/
 
 # NOTE wait to make sure the transfer to the nas is complete as well
 # https://stackoverflow.com/a/41791336
