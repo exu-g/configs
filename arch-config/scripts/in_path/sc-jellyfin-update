@@ -14,7 +14,8 @@ if ! ssh-add -T "${sshkeypath}.pub" &>/dev/null; then
 fi
 
 # transfer to nas
-rsync -uvr --progress /mnt/storage/MediaLibrary/{Movies,other,Patreon,Shows,YouTube} /mnt/lan1nas1/
+#rsync -uvr --progress /mnt/storage/MediaLibrary/{Movies,other,Patreon,Shows,YouTube} /mnt/lan1nas1/
+rsync -uvr --progress /mnt/storage/MediaLibrary/{Movies,other,Patreon,Shows} /mnt/lan1nas1/
 
 rsync -uvrL --progress /home/marc/Musik /mnt/lan1nas1/
 
@@ -36,7 +37,7 @@ rsync -uvr --progress --bwlimit=2M -e "ssh -i $sshkeypath -p $port" /mnt/lan1nas
 
 # transfer downloaded YouTube videos
 #rsync -uvr --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /mnt/storage/MediaLibrary/YouTube/ ${user}@${server}:/mnt/media/YouTube/
-rsync -uvr --progress --bwlimit=2M -e "ssh -i $sshkeypath -p $port" /mnt/lan1nas1/YouTube/ ${user}@${server}:/mnt/media/YouTube/
+#rsync -uvr --progress --bwlimit=2M -e "ssh -i $sshkeypath -p $port" /mnt/lan1nas1/YouTube/ ${user}@${server}:/mnt/media/YouTube/
 
 # NOTE wait to make sure the transfer to the nas is complete as well
 # https://stackoverflow.com/a/41791336
