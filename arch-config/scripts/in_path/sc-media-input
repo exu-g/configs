@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+user=exu
+server=37.187.76.126
+sshkeypath=$HOME/.ssh/id_ed25519
+
+# unlock ssh key
+if ! ssh-add -T "${sshkeypath}.pub" &>/dev/null; then
+    ssh-add -q "$sshkeypath"
+fi
+
+# transfer from local storage to input
+rsync -uvr --progress --bwlimit=2M "/mnt/storage/MediaLibrary/input/" ${user}@${server}:/mnt/Media/input/
+
+echo "Finished transfering data"
