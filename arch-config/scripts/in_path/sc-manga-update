@@ -8,6 +8,11 @@ sshkeypath=$HOME/.ssh/id_ed25519
 # don't transfer to the storage box directly, leads to mangled file names
 # see: https://serverfault.com/a/765951
 
+# unlock ssh key
+if ! ssh-add -T "${sshkeypath}.pub" &>/dev/null; then
+    ssh-add -q "$sshkeypath"
+fi
+
 # transfer to kavita
 # books
 echo Kavita books upload
