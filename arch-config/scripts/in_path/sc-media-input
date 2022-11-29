@@ -11,6 +11,6 @@ if ! ssh-add -T "${sshkeypath}.pub" &>/dev/null; then
 fi
 
 # transfer from local storage to input
-rsync -uvr --progress --bwlimit=2M "/mnt/storage/MediaLibrary/input/" ${user}@${server}:/mnt/Media/input/
+rsync -uvr --progress --bwlimit=2M "/mnt/storage/MediaLibrary/tdarrready/" ${user}@${server}:/mnt/Media/input/
 
 echo "Finished transfering data"
