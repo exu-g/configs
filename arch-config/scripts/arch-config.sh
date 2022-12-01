@@ -15,18 +15,17 @@ EOF
 # function to select theme
 function func_seltheme {
     cmd=(dialog --separate-output --checklist "Select theme (Only select one)" 22 76 16)
-    options=(1 "Nyarch" off    # any option can be set to default to "on"
-             2 "Spaceengine Pink" off)
+    options=(1 "Nyarch" off # any option can be set to default to "on"
+        2 "Spaceengine Pink" off)
     choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
     clear
-    for choice in $choices
-    do
+    for choice in $choices; do
         case $choice in
             1)
-                echo "nyarch" > "$HOME/.seltheme"
+                echo "nyarch" >"$HOME/.seltheme"
                 ;;
             2)
-                echo "space-pink" > "$HOME/.seltheme"
+                echo "space-pink" >"$HOME/.seltheme"
                 ;;
         esac
     done
@@ -57,7 +56,7 @@ cd ..
 
 # check if the install scripts are the same
 # NOTE Arguments get passed automatically now
-if ! cmp --silent "$HOME/scripts/arch-config.sh" "$HOME/config/scripts/arch-config.sh" ; then
+if ! cmp --silent "$HOME/scripts/arch-config.sh" "$HOME/config/scripts/arch-config.sh"; then
     echo Removed old config file and launched new one.
     rm "$HOME/scripts/arch-config.sh" && cp "$HOME/config/scripts/arch-config.sh" "$HOME/scripts/" && bash ~/scripts/arch-config.sh "$@"
 fi
@@ -237,9 +236,9 @@ sudo cp -r ~/config/etc /
 #read -r -p "Do you want to overwrite the grub config? [y/N] " response
 #if [[ "$response" =~ ^([yY][eE][sS][jJ]|[yY])$ ]]
 #then
-    # copy config
+# copy config
 #    sudo cp ~/config/etc/default/grub /etc/default/
-    # update grub
+# update grub
 #    sudo grub-mkconfig -o /boot/grub/grub.cfg
 #fi
 
@@ -274,17 +273,17 @@ git clone https://gitlab.com/RealStickman-arch/themes.git &>/dev/null
 seltheme="$(cat "$HOME/.seltheme")"
 if [[ "$seltheme" == "nyarch" ]]; then
     #cp -r "./themes/nyarch/i3" "$HOME/.config/"
-    cat "./themes/nyarch/i3/color" >> "$HOME/.config/i3/config"
+    cat "./themes/nyarch/i3/color" >>"$HOME/.config/i3/config"
     cp -r "./themes/nyarch/polybar" "$HOME/.config/"
     cp -r "./themes/nyarch/neofetch/lowpoly_flamegirl_blue.txt" "$HOME/.config/neofetch/lowpoly_flamegirl.txt"
-    cp "./themes/.fehbg-nyarch" "$HOME/.fehbg"
+    #cp "./themes/.fehbg-nyarch" "$HOME/.fehbg"
     #sed -i 's/^NAME=".*"/NAME="Rawrch Linyux"/' /etc/os-release
 elif [[ "$seltheme" == "space-pink" ]]; then
     #cp -r "./themes/space-pink/i3" "$HOME/.config/"
-    cat "./themes/space-pink/i3/color" >> "$HOME/.config/i3/config"
+    cat "./themes/space-pink/i3/color" >>"$HOME/.config/i3/config"
     cp -r "./themes/space-pink/polybar" "$HOME/.config/"
     cp -r "./themes/space-pink/neofetch/lowpoly_flamegirl_orange.txt" "$HOME/.config/neofetch/lowpoly_flamegirl.txt"
-    cp "./themes/.fehbg-space-pink" "$HOME/.fehbg"
+    #cp "./themes/.fehbg-space-pink" "$HOME/.fehbg"
 fi
 rm -rf ./themes
 
@@ -438,8 +437,8 @@ sudo chmod 600 -R /etc/sudoers.d/
 
 # unzip gimp plugins
 echo Unzipping gimp plugins
-unzip -o ~/.config/GIMP/2.10/plug-ins/export_layers-3.3.1.zip -d ~/.config/GIMP/2.10/plug-ins/ > /dev/null
-rm ~/.config/GIMP/2.10/plug-ins/export_layers-3.3.1.zip > /dev/null
+unzip -o ~/.config/GIMP/2.10/plug-ins/export_layers-3.3.1.zip -d ~/.config/GIMP/2.10/plug-ins/ >/dev/null
+rm ~/.config/GIMP/2.10/plug-ins/export_layers-3.3.1.zip >/dev/null
 
 # xfce settings
 # disable screensaver & locker
@@ -525,4 +524,5 @@ fi
 exec "$(getent passwd $LOGNAME | cut -d: -f7)"
 
 # exit successfully
-$(exit 0); echo "$?"
+$(exit 0)
+echo "$?"
