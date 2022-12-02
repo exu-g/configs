@@ -39,15 +39,16 @@ gvfs
 gvfs-mtp
 htop
 hunspell
+hunspell
 hunspell-de
-hunspell-en_GB
+hunspell-en_gb
+hunspell-en_us
 hyphen
 hyphen-de
 hyphen-en
 jre-openjdk
 kcm-wacomtablet
 kitty
-languagetool
 libaacs
 libbluray
 libcdio
@@ -55,6 +56,7 @@ libdvdcss
 libdvdnav
 libdvdread
 libnotify
+libreoffice-fresh
 libreoffice-fresh-de
 libsecret
 lightdm
@@ -63,6 +65,8 @@ lightdm-gtk-greeter-settings
 linux-zen
 linux-zen-headers
 man-db
+mythes-de
+mythes-en
 nemo
 nemo-fileroller
 nemo-preview
