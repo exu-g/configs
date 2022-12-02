@@ -17,7 +17,8 @@ fi
 #rsync -uvr --progress /mnt/storage/MediaLibrary/{Movies,other,Patreon,Shows,YouTube} /mnt/lan1nas1/
 rsync -uvr --progress /mnt/storage/MediaLibrary/{Movies,other,Patreon,Shows} /mnt/lan1nas1/
 
-rsync -uvrL --progress /home/marc/Musik /mnt/lan1nas1/
+# Music to NAS. Leading source is main PC
+rsync -uvrL --progress --delete /home/marc/Musik /mnt/lan1nas1/
 
 # transfer Music
 #rsync -uvrL --progress --bwlimit=4M -e "ssh -i $sshkeypath -p $port" /home/marc/Musik/ ${user}@${server}:/mnt/media/Musik/
