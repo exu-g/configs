@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-mpv --volume=70 \
+mpv --volume=80 \
     --af=lavfi=[loudnorm=I=-30:TP=-2:LRA=7] \
     --vid=no \
     --shuffle \
