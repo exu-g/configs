@@ -16,30 +16,30 @@ fi
 # transfer to kavita
 # books
 echo Kavita books upload
-rsync -urtzv --progress --bwlimit=3M -e "ssh -i $sshkeypath -p $port" /home/marc/Nextcloud/Books/Unterhaltung/ ${user}@${server}:/mnt/books/kavita/books/
+rsync -urtzv --progress --delete --bwlimit=3M -e "ssh -i $sshkeypath -p $port" /home/marc/Nextcloud/Books/Unterhaltung/ ${user}@${server}:/mnt/books/kavita/books/
 # manga
 echo Kavita manga upload
 rsync -urtzv --progress --bwlimit=3M -e "ssh -i $sshkeypath -p $port" /home/marc/Nextcloud/Books/Manga/ ${user}@${server}:/mnt/books/kavita/manga/
 # Tech
 echo Kavita tech upload
-rsync -urtzv --progress --bwlimit=3M -e "ssh -i $sshkeypath -p $port" /home/marc/Nextcloud/Books/Tech/ ${user}@${server}:/mnt/books/kavita/tech/
+rsync -urtzv --progress --delete --bwlimit=3M -e "ssh -i $sshkeypath -p $port" /home/marc/Nextcloud/Books/Tech/ ${user}@${server}:/mnt/books/kavita/tech/
 # other
 echo Kavita other upload
-rsync -urtzv --progress --bwlimit=3M -e "ssh -i $sshkeypath -p $port" /home/marc/Nextcloud/Books/other/ ${user}@${server}:/mnt/books/kavita/other/
+rsync -urtzv --progress --delete --bwlimit=3M -e "ssh -i $sshkeypath -p $port" /home/marc/Nextcloud/Books/other/ ${user}@${server}:/mnt/books/kavita/other/
 
 # transfer to kavita-nightly
 # books
 echo Kavita Nightly books upload
-rsync -urtzv --progress --bwlimit=3M -e "ssh -i $sshkeypath -p $port" /home/marc/Nextcloud/Books/Unterhaltung/ ${user}@${server}:/mnt/books/kavita-nightly/books/
+rsync -urtzv --progress --delete --bwlimit=3M -e "ssh -i $sshkeypath -p $port" /home/marc/Nextcloud/Books/Unterhaltung/ ${user}@${server}:/mnt/books/kavita-nightly/books/
 # manga
 echo Kavita Nightly manga upload
 rsync -urtzv --progress --bwlimit=3M -e "ssh -i $sshkeypath -p $port" /home/marc/Nextcloud/Books/Manga/ ${user}@${server}:/mnt/books/kavita-nightly/manga/
 # Tech
 echo Kavita Nightly tech upload
-rsync -urtzv --progress --bwlimit=3M -e "ssh -i $sshkeypath -p $port" /home/marc/Nextcloud/Books/Tech/ ${user}@${server}:/mnt/books/kavita-nightly/tech/
+rsync -urtzv --progress --delete --bwlimit=3M -e "ssh -i $sshkeypath -p $port" /home/marc/Nextcloud/Books/Tech/ ${user}@${server}:/mnt/books/kavita-nightly/tech/
 # other
 echo Kavita Nightly other upload
-rsync -urtzv --progress --bwlimit=3M -e "ssh -i $sshkeypath -p $port" /home/marc/Nextcloud/Books/other/ ${user}@${server}:/mnt/books/kavita-nightly/other/
+rsync -urtzv --progress --delete --bwlimit=3M -e "ssh -i $sshkeypath -p $port" /home/marc/Nextcloud/Books/other/ ${user}@${server}:/mnt/books/kavita-nightly/other/
 
 # download from kavita
 # books
