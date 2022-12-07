@@ -24,6 +24,15 @@ def update_firefox():
 
 
 def main():
+    # TODO
+    if not os.path.isfile(os.path.join(home, ".seltheme")):
+        select_theme()
+
+    # TODO remove previous backup
+    # ~/old_dat
+
+    # TODO create new backup
+
     print("works")
 
 
@@ -35,6 +44,11 @@ if os.getuid() != 0:
     subprocess.run("sudo -v", shell=True, check=True)
 
 if __name__ == "__main__":
+    # TODO arguments
+    # -t: select theme
+    # -f: update firefox config
+    # -h: help
+
     # change to home directory
     os.chdir(home)
 
@@ -42,6 +56,7 @@ if __name__ == "__main__":
     configdir = "config-" + str(uuid.uuid1())
 
     # TODO remove old "config-" folder(s)
+    # https://stackoverflow.com/a/70860760
 
     # clone git repo
     subprocess.run(
@@ -50,12 +65,15 @@ if __name__ == "__main__":
         ),
         shell=True,
         check=True,
-        stdout=subprocess.DEVNULL,
     )
 
     os.chdir(configdir)
     subprocess.run(
-        "git checkout master", shell=True, check=True, stdout=subprocess.DEVNULL
+        "git checkout master",
+        shell=True,
+        check=True,
+        stderr=subprocess.STDOUT,
+        stdout=subprocess.DEVNULL,
     )
     os.chdir(home)
 
@@ -65,6 +83,7 @@ if __name__ == "__main__":
         os.path.join(configdir, "scripts/arch-config.py"),
     ):
         print("Found newer config file")
+        # import newer script version
         spec = importlib.util.spec_from_file_location(
             "config",
             os.path.join(configdir, "scripts/arch-config.py"),
@@ -75,3 +94,6 @@ if __name__ == "__main__":
         config.main()
     else:
         print("Config is up to date")
+
+    # call main function now
+    main()
