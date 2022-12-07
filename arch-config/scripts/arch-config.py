@@ -91,9 +91,9 @@ if __name__ == "__main__":
         config = importlib.util.module_from_spec(spec)
         sys.modules["config"] = config
         spec.loader.exec_module(config)
+        # call new main function
         config.main()
     else:
         print("Config is up to date")
-
-    # call main function now
-    main()
+        # call main function
+        main()
