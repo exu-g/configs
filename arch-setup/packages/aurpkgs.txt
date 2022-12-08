@@ -19,6 +19,7 @@ polybar
 protonmail-bridge-bin
 rig
 rustscan
+sublime-music
 tauon-music-box
 tealdeer
 tmpmail-git
