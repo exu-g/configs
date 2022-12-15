@@ -240,7 +240,7 @@ bindsym $mod+t focus mode_toggle
 bindsym $mod+a focus parent
 
 # focus the child container
-#bindsym $mod+d focus child
+bindsym $mod+d focus child
 
 
 #####################################################################################################################
@@ -400,7 +400,7 @@ mode "$layout" {
 
 # change xrandr display configuration
 
-bindsym $mod+d mode "$xrandr"
+#bindsym $mod+d mode "$xrandr"
 
 set $xrandr arco-pc 1x hdmi (h), laptop 1x eDPI (l)
 mode "$xrandr" {
