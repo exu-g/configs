@@ -116,6 +116,7 @@ util-linux
 vnstat
 webkit2gtk
 wget
+whois
 wireguard-tools
 xdg-user-dirs
 xf86-input-elographics
