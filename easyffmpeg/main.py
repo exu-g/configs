@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 # ffmpeg wrapper
+import subprocess
 import ffmpy
 
 # argument parsing
@@ -182,3 +183,28 @@ if execute:
     ff.run()
 else:
     print(ff.cmd)
+
+# NOTE check all files for an intact/valid duration
+# Valid file example output:
+# {
+#     "format": {
+#         "duration": "1425.058000"
+#     }
+# }
+# Invalid file:
+# {
+#     "format": {
+#
+#     }
+# }
+ff = ffmpy.FFprobe(
+    inputs={outputfile: None},
+    global_options=("-show_entries format=duration -v quiet -print_format json"),
+)
+
+proc = subprocess.Popen(
+    ff.cmd, stderr=subprocess.STDOUT, stdout=subprocess.PIPE, shell=True
+)
+
+# TODO continue here
+print(proc.stdout.read().rstrip().decode("utf8"))
