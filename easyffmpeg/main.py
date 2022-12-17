@@ -1,11 +1,56 @@
 #!/usr/bin/env python3
 
-# ffmpeg wrapper
 import subprocess
+
+import json
+
+import csv
+
+# ffmpeg wrapper
 import ffmpy
 
 # argument parsing
 import argparse
+
+
+def valid_duration(filename: str, filetype: str):
+    """
+    Check given file for presence of duration metadata
+
+    Parameters:
+    filename (str): Path to file
+    filetype (str): Should be INPUT or OUTPUT, to define if the issue appeared after encoding or before
+    """
+    # NOTE check all files for an intact/valid duration
+    # Valid file example output:
+    # {
+    #     "format": {
+    #         "duration": "1425.058000"
+    #     }
+    # }
+    # Invalid file:
+    # {
+    #     "format": {
+    #
+    #     }
+    # }
+    ff = ffmpy.FFprobe(
+        inputs={filename: None},
+        global_options=("-show_entries format=duration -v quiet -print_format json"),
+    )
+
+    proc = subprocess.Popen(
+        ff.cmd, stderr=subprocess.STDOUT, stdout=subprocess.PIPE, shell=True
+    )
+
+    info = json.loads(proc.stdout.read().rstrip().decode("utf8"))
+
+    # write broken files to error.csv files in current directory
+    if "duration" not in info["format"]:
+        with open("error.csv", "a", newline="") as file:
+            write = csv.writer(file)
+            write.writerow((filetype, filename))
+
 
 parser = argparse.ArgumentParser(description="")
 
@@ -150,6 +195,9 @@ subtitlestream = args.subtitle_stream
 # Flag to actually execute command
 execute = args.execute
 
+# check input file for valid duration
+valid_duration(inputfile, "INPUT")
+
 # NOTE Breaks if filename contains quotes: '
 ff = ffmpy.FFmpeg(
     inputs={inputfile: None},
@@ -184,27 +232,5 @@ if execute:
 else:
     print(ff.cmd)
 
-# NOTE check all files for an intact/valid duration
-# Valid file example output:
-# {
-#     "format": {
-#         "duration": "1425.058000"
-#     }
-# }
-# Invalid file:
-# {
-#     "format": {
-#
-#     }
-# }
-ff = ffmpy.FFprobe(
-    inputs={outputfile: None},
-    global_options=("-show_entries format=duration -v quiet -print_format json"),
-)
-
-proc = subprocess.Popen(
-    ff.cmd, stderr=subprocess.STDOUT, stdout=subprocess.PIPE, shell=True
-)
-
-# TODO continue here
-print(proc.stdout.read().rstrip().decode("utf8"))
+# check output file for valid duration
+valid_duration(outputfile, "OUTPUT")
