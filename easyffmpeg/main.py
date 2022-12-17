@@ -4,6 +4,8 @@ import subprocess
 
 import json
 
+import os
+
 import csv
 
 # ffmpeg wrapper
@@ -234,3 +236,8 @@ else:
 
 # check output file for valid duration
 valid_duration(outputfile, "OUTPUT")
+
+if os.path.isfile("error.csv"):
+    print(
+        "Some media might have errors. Please check the error.csv file in this directory"
+    )
