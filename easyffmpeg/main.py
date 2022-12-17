@@ -106,7 +106,7 @@ parser.add_argument(
 parser.add_argument(
     "-aj",
     "--audio-japanese",
-    required=True,
+    required=False,
     type=str,
     help="Stream identifier for japanese audio",
 )
@@ -120,12 +120,12 @@ parser.add_argument(
 
 # Subtitle stuff
 parser.add_argument(
-    "-sn", "--subtitle-name", required=True, type=str, help="Name for subtitles"
+    "-sn", "--subtitle-name", required=False, type=str, help="Name for subtitles"
 )
 parser.add_argument(
     "-si",
     "--subtitle-stream",
-    required=True,
+    required=False,
     type=str,
     help="Stream identifier for subtitles",
 )
@@ -183,13 +183,23 @@ else:
 
 outputfile = args.output_file
 
-japaneseaudio = args.audio_japanese
+# Map japanese audio, if set
+if args.audio_japanese is None:
+    japaneseaudio = ""
+else:
+    japaneseaudio = "-map " + args.audio_japanese
 
 # Map english audio, if set
 if args.audio_english is None:
     englishaudio = ""
 else:
     englishaudio = "-map " + args.audio_english
+
+# Audiometadata
+if args.audio_japanese is None:
+    audiometa = "-metadata:s:a:0 title='English' -metadata:s:a:0 language=eng"
+else:
+    audiometa = "-metadata:s:a:0 title='Japanese' -metadata:s:a:0 language=jpn -metadata:s:a:1 title='English' -metadata:s:a:1 language=eng"
 
 subtitle = args.subtitle_name
 subtitlestream = args.subtitle_stream
@@ -208,11 +218,11 @@ ff = ffmpy.FFmpeg(
         " "
         "-c:v {videocodec} -crf {crf} {tune} -preset {preset} -map 0:v:0 -metadata:s:v:0 title='Video' -disposition:v:0 default"
         " "
-        "-c:a {audiocodec} -b:a {audiobitrate} -map {jpnaudiostream}? {engaudiomap}"
+        "-c:a {audiocodec} -b:a {audiobitrate} {jpnaudiomap} {engaudiomap}"
         " "
-        "-metadata:s:a:0 title='Japanese' -metadata:s:a:0 language=jpn -metadata:s:a:1 title='English' -metadata:s:a:1 language=eng -disposition:a:0 default"
+        "{audiometa} -disposition:a:0 default"
         " "
-        "-c:s copy -map {substream} -metadata:s:s:0 title='{subtitle}' -metadata:s:s:0 language=eng -disposition:s:0 default"
+        "-c:s copy -map {substream}? -metadata:s:s:0 title='{subtitle}' -metadata:s:s:0 language=eng -disposition:s:0 default"
         " ".format(
             title=title,
             videocodec=videocodec,
@@ -221,8 +231,9 @@ ff = ffmpy.FFmpeg(
             preset=preset,
             audiocodec=audiocodec,
             audiobitrate=audiobitrate,
-            jpnaudiostream=japaneseaudio,
+            jpnaudiomap=japaneseaudio,
             engaudiomap=englishaudio,
+            audiometa=audiometa,
             substream=subtitlestream,
             subtitle=subtitle,
         )
