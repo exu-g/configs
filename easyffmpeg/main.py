@@ -130,6 +130,14 @@ parser.add_argument(
     help="Stream identifier for subtitles",
 )
 
+parser.add_argument(
+    "-sd",
+    "--set-default-subtitle",
+    required=False,
+    action="store_true",
+    help="If passed, set the first subtitle as default",
+)
+
 # Output file
 parser.add_argument("-o", "--output-file", required=True, type=str, help="Output file")
 
@@ -204,6 +212,11 @@ else:
 subtitle = args.subtitle_name
 subtitlestream = args.subtitle_stream
 
+if args.set_default_subtitle:
+    defaultsub = "-disposition:s:0 default"
+else:
+    defaultsub = ""
+
 # Flag to actually execute command
 execute = args.execute
 
@@ -222,7 +235,7 @@ ff = ffmpy.FFmpeg(
         " "
         "{audiometa} -disposition:a:0 default"
         " "
-        "-c:s copy -map {substream}? -metadata:s:s:0 title='{subtitle}' -metadata:s:s:0 language=eng -disposition:s:0 default"
+        "-c:s copy -map {substream}? -metadata:s:s:0 title='{subtitle}' -metadata:s:s:0 language=eng {defaultsub}"
         " ".format(
             title=title,
             videocodec=videocodec,
@@ -236,6 +249,7 @@ ff = ffmpy.FFmpeg(
             audiometa=audiometa,
             substream=subtitlestream,
             subtitle=subtitle,
+            defaultsub=defaultsub,
         )
     },
 )
