@@ -17,7 +17,7 @@ And some more
 
 ## Additional Licenses
 
-**Location: .local/sounds**
+**Location: .local/sounds**  
 Sounds from [Notification Sounds](https://notificationsounds.com):
 
 - clearly-602.ogg
