@@ -26,4 +26,4 @@ Sounds from [Notification Sounds](https://notificationsounds.com):
 
 - artstation_14224733_55806391\_月半与鬼哭.jpg: by [dk-lan on Artstation](https://www.artstation.com/artwork/Omr2kJ)
 - nyarch.png: By [u/Ishaan_P on Reddit](https://www.reddit.com/r/linuxmasterrace/comments/lxfg9j/someone_posted_uwuntu_so_i_made_nyarch/) with a custom background by me
-- space-pink.png: Created by me using [Space Engine](https://spaceengine.org/) see [EULA](https://store.steampowered.com//eula/314650_eula_0)
+- space-pink.png: Created by me using [Space Engine](https://spaceengine.org/) see [EULA](https://store.steampowered.com//eula/314650_eula_0), upscaled using Waifu2x
