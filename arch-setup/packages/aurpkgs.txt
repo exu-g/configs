@@ -8,9 +8,11 @@ font-manager-git
 jellyamp
 jellyfin-media-player
 joplin-desktop-bin
+lib32-mangohud
 libreoffice-extension-languagetool
 lightdm-settings
 lightdm-slick-greeter
+mangohud
 mpv-mpris
 nemo-audio-tab
 nohang-git
