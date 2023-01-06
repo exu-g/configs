@@ -1,21 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <actions>
 <action>
+	<icon>folder</icon>
+	<name>Als root öffnen</name>
+	<submenu></submenu>
+	<unique-id>1673031093097554-1</unique-id>
+	<command>gksu thunar %f</command>
+	<description>Verzeichnis als root-Nutzer öffnen</description>
+	<range>*</range>
+	<patterns>*</patterns>
+	<directories/>
+</action>
+<action>
 	<icon>utilities-terminal</icon>
-	<name>Terminal hier öffnen</name>
+	<name>Terminal öffnen</name>
+	<submenu></submenu>
 	<unique-id>1666515885637912-1</unique-id>
-	<command>exo-open --working-directory %f --launch TerminalEmulator</command>
-	<description>Beispiel für eine eigene Aktion</description>
+	<command>exo-open --working-dir %f --launch TerminalEmulator</command>
+	<description>Terminal im gewählten Ordner öffnen</description>
+	<range></range>
 	<patterns>*</patterns>
 	<startup-notify/>
 	<directories/>
 </action>
 <action>
 	<icon>preferences-system-search</icon>
-	<name>Search</name>
+	<name>Suchen</name>
+	<submenu></submenu>
 	<unique-id>1666516933235505-2</unique-id>
 	<command>catfish --path=%f</command>
-	<description>Search for files and folders</description>
+	<description>Dateien und Ordner suchen</description>
+	<range></range>
 	<patterns>*</patterns>
 	<startup-notify/>
 	<directories/>
