@@ -24,6 +24,7 @@ rustscan
 sublime-music
 tauon-music-box
 tealdeer
+thunar-nextcloud-plugin
 tmpmail-git
 ttf-iosevka
 ttf-ms-fonts
