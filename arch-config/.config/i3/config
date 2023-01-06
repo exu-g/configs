@@ -527,9 +527,9 @@ bindsym control+mod1+n exec --no-startup-id joplin-desktop;focus
 bindsym ctrl+mod1+e exec --no-startup-id emacs;focus
 
 # file manager
-#bindsym ctrl+mod1+t exec --no-startup-id thunar;focus
+bindsym ctrl+mod1+t exec --no-startup-id thunar;focus
 #bindsym ctrl+mod1+t exec --no-startup-id pcmanfm;focus
-bindsym ctrl+mod1+t exec --no-startup-id nemo;focus
+#bindsym ctrl+mod1+t exec --no-startup-id nemo;focus
 
 #libreoffice
 bindsym ctrl+mod1+l exec --no-startup-id libreoffice;focus
