@@ -97,6 +97,7 @@ rebuild-detector
 reflector
 restic
 rofi
+rofi-emoji
 rsync
 seahorse
 smartmontools
