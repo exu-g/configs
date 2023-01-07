@@ -1,4 +1,4 @@
 configuration {
 	font: "monospace 12";
 }
-@theme "/usr/share/rofi/themes/sidebar.rasi"
+@theme "/usr/share/rofi/themes/purple.rasi"
