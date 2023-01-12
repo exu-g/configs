@@ -6,7 +6,6 @@ base-devel
 brotli
 btrfs-progs
 catfish
-celluloid
 cmake
 cronie
 dconf-editor
@@ -27,7 +26,6 @@ foliate
 freetype2
 fwupd
 fwupd-efi
-galculator
 git
 git-lfs
 gnome-firmware

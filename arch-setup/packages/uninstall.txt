@@ -6,6 +6,7 @@ arcolinux-tweak-tool-git
 arcolinux-welcome-app-git
 atom
 baka-mplayer
+celluloid
 chromium
 clonezilla
 cmus
@@ -15,11 +16,13 @@ engrampa
 evince
 evolution
 evolution-data-server
+galculator
 geany
 gnome-boxes
 guvcview
 kdenlive
 keepass
+libreoffice-extension-languagetool
 matrix-mirage
 nnn
 numix-circle-arc-icons-git
@@ -35,6 +38,7 @@ pulseaudio-equalizer-ladspa
 qbittorrent
 ranger
 sublime-text-dev
+tauon-music-box
 termite
 thefuck
 tmux

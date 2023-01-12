@@ -7,9 +7,8 @@ ffmpeg-normalize-git
 font-manager-git
 jellyamp
 jellyfin-media-player
-joplin-desktop-bin
+joplin-appimage
 lib32-mangohud
-libreoffice-extension-languagetool
 lightdm-settings
 lightdm-slick-greeter
 mangohud
@@ -22,7 +21,6 @@ protonmail-bridge-bin
 rig
 rustscan
 sublime-music
-tauon-music-box
 tealdeer
 thunar-nextcloud-plugin
 tmpmail-git
