@@ -102,6 +102,7 @@ smartmontools
 stress
 system-config-printer
 thunar
+thunar-archive-plugin
 thunderbird
 tmux
 traceroute
