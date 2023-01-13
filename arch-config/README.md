@@ -2,14 +2,18 @@
 
 Configuration files for arch linux. Selection of software:
 
-- i3-gaps (.config/i3)\*
-- doom emacs (.doom.d)
-- polybar (.config/polybar, scripts/polybar)\*
-- dunst (.config/dunst, scripts)
-- nemo (script/nemo-config.sh)
-- kvantum, qt5ct, qt6ct (.config/Kvantum, .config/qt5ct, .config/qt6ct)
-- gtk 2/3 (.gtkrc-2.0, .config/gtk-3.0)
-- neofetch (.config/neofetch)\*
+- i3wm\*: .config/i3
+- DoomEmacs: .doom.d
+- polybar\*: .config/polybar, scripts/polybar
+- dunst: .config/dunst, scripts
+- Kvantum, qt5ct, qt6ct: .config/Kvantum, .config/qt5ct, .config/qt6ct
+- gtk 2/3: .gtkrc-2.0, .config/gtk-3.0
+- neofetch\*: .config/neofetch
+- Thunar: .config/Thunar
+- Templates: .config/Vorlagen
+- rofi: .config/rofi
+- xfce: .config/xfce4
+- Betterlockscreen: .cache/betterlockscreen/current, .config/betterlockscreenrc
 
 And some more
 
