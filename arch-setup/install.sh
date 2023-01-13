@@ -11,7 +11,7 @@ setupdir=$(pwd)
 cd "$HOME"
 
 # check if multilib repo is enabled
-if ! pacman -Sl multilib &> /dev/null; then
+if ! pacman -Sl multilib &>/dev/null; then
     echo "Please enable the multilib repository first"
     exit 1
 fi
@@ -24,20 +24,19 @@ sudo pacman -S --needed python-pip
 #in_i3gaps=0
 
 cmd=(dialog --separate-output --checklist "Select Desktop environment/Window manager:" 22 76 16)
-options=(0 "[DE] xfce4" off    # any option can be set to default to "on"
-         100 "[WM] i3-gaps" off)
+options=(0 "[DE] xfce4" off # any option can be set to default to "on"
+    100 "[WM] i3-gaps" off)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
-for choice in $choices
-do
+for choice in $choices; do
     case $choice in
         0)
             #in_xfce=1
-            echo "xfce4" >> "$setupdir/selectedpkgs.txt"
+            echo "xfce4" >>"$setupdir/selectedpkgs.txt"
             ;;
         100)
             #in_i3gaps=1
-            echo "i3-gaps" >> "$setupdir/selectedpkgs.txt"
+            echo "i3-gaps" >>"$setupdir/selectedpkgs.txt"
             ;;
     esac
 done
@@ -47,25 +46,24 @@ done
 #in_tor=0
 
 cmd=(dialog --separate-output --checklist "Select browsers:" 22 76 16)
-options=(0 "Firefox" on    # any option can be set to default to "on"
-         10 "Chromium" off
-         20 "Torbrowser" off)
+options=(0 "Firefox" on # any option can be set to default to "on"
+    10 "Chromium" off
+    20 "Torbrowser" off)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
-for choice in $choices
-do
+for choice in $choices; do
     case $choice in
         0)
             #in_firefox=1
-            echo "firefox" >> "$setupdir/selectedpkgs.txt"
+            echo "firefox" >>"$setupdir/selectedpkgs.txt"
             ;;
         10)
             #in_chromium=1
-            echo "chromium" >> "$setupdir/selectedpkgs.txt"
+            echo "chromium" >>"$setupdir/selectedpkgs.txt"
             ;;
         20)
             #in_tor=1
-            echo "torbrowser-launcher" >> "$setupdir/selectedpkgs.txt"
+            echo "torbrowser-launcher" >>"$setupdir/selectedpkgs.txt"
             ;;
     esac
 done
@@ -90,73 +88,72 @@ done
 #in_element=0
 
 cmd=(dialog --separate-output --checklist "Select other programs:" 22 76 16)
-options=(0 "VirtManager" off    # any option can be set to default to "on"
-         1 "VMWare Workstation" off
-         10 "Steam" off
-         11 "Lutris" off
-         12 "Citra" off
-         13 "Minigalaxy" off
-         20 "Krita" off
-         21 "Gimp" off
-         #30 "Youtube-dl" off
-         31 "YT-dlp" on
-         32 "Megatools" off
-         40 "Handbrake" off
-         41 "Audacity" off
-         42 "k3b" off
-         60 "Discord" on
-         61 "Element" on
-         62 "Telegram" on
-         70 "TestSSL" off
-         80 "Onedriver" off)
+options=(0 "VirtManager" off # any option can be set to default to "on"
+    1 "VMWare Workstation" off
+    10 "Steam" off
+    11 "Lutris" off
+    12 "Citra" off
+    13 "Minigalaxy" off
+    20 "Krita" off
+    21 "Gimp" off
+    #30 "Youtube-dl" off
+    31 "YT-dlp" on
+    32 "Megatools" off
+    40 "Handbrake" off
+    41 "Audacity" off
+    42 "k3b" off
+    60 "Discord" on
+    61 "Element" on
+    62 "Telegram" on
+    70 "TestSSL" off
+    80 "Onedriver" off)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
-for choice in $choices
-do
+for choice in $choices; do
     case $choice in
         0)
             #in_virtmanager=1
-            printf '%s\n' 'qemu' 'virt-manager' 'ebtables' 'dnsmasq' >> "$setupdir/selectedpkgs.txt"
+            printf '%s\n' 'qemu' 'virt-manager' 'ebtables' 'dnsmasq' >>"$setupdir/selectedpkgs.txt"
             ;;
         1)
             #in_vmware15=1
-            echo "vmware-workstation" >> "$setupdir/aurselectedpkgs.txt"
+            echo "vmware-workstation" >>"$setupdir/aurselectedpkgs.txt"
             ;;
         10)
             #in_steam=1
-            printf '%s\n' 'steam' 'steam-native-runtime' >> "$setupdir/selectedpkgs.txt"
+            printf '%s\n' 'steam' 'steam-native-runtime' >>"$setupdir/selectedpkgs.txt"
             ;;
         11)
             #in_lutris=1
-            echo "lutris" >> "$setupdir/selectedpkgs.txt"
+            echo "lutris" >>"$setupdir/selectedpkgs.txt"
             ;;
         12)
-            echo "citra-qt-git" >> "$setupdir/aurselectedpkgs.txt"
+            echo "citra-qt-git" >>"$setupdir/aurselectedpkgs.txt"
             ;;
         13)
-            echo "minigalaxy" >> "$setupdir/aurselectedpkgs.txt"
+            echo "minigalaxy" >>"$setupdir/aurselectedpkgs.txt"
             ;;
         20)
             #in_krita=1
-            echo "krita" >> "$setupdir/selectedpkgs.txt"
+            echo "krita" >>"$setupdir/selectedpkgs.txt"
             ;;
         21)
             #in_gimp=1
-            echo "gimp" >> "$setupdir/selectedpkgs.txt"
+            echo "gimp" >>"$setupdir/selectedpkgs.txt"
             ;;
         30)
             #in_youtubedl=1
-            echo "youtube-dl" >> "$setupdir/selectedpkgs.txt"
+            echo "youtube-dl" >>"$setupdir/selectedpkgs.txt"
             ;;
         31)
-            printf '%s\n' 'yt-dlp' 'yt-dlp-drop-in' >> "$setupdir/aurselectedpkgs.txt"
+            printf '%s\n' 'yt-dlp' 'yt-dlp-drop-in' >>"$setupdir/aurselectedpkgs.txt"
             ;;
         32)
-            echo "megatools-bin" >> "$setupdir/aurselectedpkgs.txt"
+            echo "megatools-bin" >>"$setupdir/aurselectedpkgs.txt"
             ;;
         40)
             #in_handbrake=1
-            echo "handbrake" >> "$setupdir/selectedpkgs.txt"
+            echo "handbrake" >>"$setupdir/selectedpkgs.txt"
             ;;
         41)
             # TODO
@@ -165,26 +162,26 @@ do
             echo "The situation with audacity is unknown right now. Check for FOSS no-telemetry forks"
             ;;
         42)
-            printf '%s\n' 'k3b' 'cdparanoia' 'cdrdao' 'cdrtools' 'dvd+rw-tools' 'emovix' 'transcode' 'vcdimager' >> "$setupdir/selectedpkgs.txt"
+            printf '%s\n' 'k3b' 'cdparanoia' 'cdrdao' 'cdrtools' 'dvd+rw-tools' 'emovix' 'transcode' 'vcdimager' >>"$setupdir/selectedpkgs.txt"
             ;;
         60)
             #in_discord=1
             #echo "discord" >> "$setupdir/selectedpkgs.txt"
-            echo "discord_arch_electron" >> "$setupdir/aurselectedpkgs.txt"
+            echo "discord_arch_electron" >>"$setupdir/aurselectedpkgs.txt"
             ;;
         61)
             #in_element=1
-            echo "element-desktop" >> "$setupdir/selectedpkgs.txt"
+            echo "element-desktop" >>"$setupdir/selectedpkgs.txt"
             ;;
         62)
             #in_telegram=1
-            echo "telegram-desktop" >> "$setupdir/selectedpkgs.txt"
+            echo "telegram-desktop" >>"$setupdir/selectedpkgs.txt"
             ;;
         70)
-            echo "testssl.sh" >> "$setupdir/selectedpkgs.txt"
+            echo "testssl.sh" >>"$setupdir/selectedpkgs.txt"
             ;;
         80)
-            echo "onedriver" >> "$setupdir/aurselectedpkgs.txt"
+            echo "onedriver" >>"$setupdir/aurselectedpkgs.txt"
             ;;
     esac
 done
@@ -218,23 +215,22 @@ in_podman=0
 
 cmd=(dialog --separate-output --checklist "Devtools" 22 76 16)
 options=(0 "doom-emacs" off
-         1 "vscodium" off
-         10 "Podman" off)
+    1 "vscodium" off
+    10 "Podman" off)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
-for choice in $choices
-do
+for choice in $choices; do
     case $choice in
         0)
             in_doomemacs=1
             # TODO sort pacman and AUR packages
             # pychecker not in AUR anymore
-            printf '%s\n' 'git' 'emacs' 'ripgrep' 'fd' 'pandoc' 'shellcheck' 'python-pipenv' 'python-isort' 'python-pytest' 'python-rednose' 'pychecker' 'texlive-core' 'pyright' 'python-grip' 'prettier' 'shfmt' >> "$setupdir/aurselectedpkgs.txt"
+            printf '%s\n' 'git' 'emacs' 'ripgrep' 'fd' 'pandoc' 'shellcheck' 'python-pipenv' 'python-isort' 'python-pytest' 'python-rednose' 'pychecker' 'texlive-core' 'pyright' 'python-grip' 'prettier' 'shfmt' >>"$setupdir/aurselectedpkgs.txt"
             # TODO handle rest of installation
             ;;
         1)
             #in_vscodium=1
-            echo "vscodium-bin" >> "$setupdir/aurselectedpkgs.txt"
+            echo "vscodium-bin" >>"$setupdir/aurselectedpkgs.txt"
             ;;
         10)
             in_podman=1
@@ -247,24 +243,23 @@ done
 
 cmd=(dialog --separate-output --checklist "School and work communication" 22 76 16)
 options=(0 "Teams" off
-         1 "Slack" off
-         10 "OneNote" off)
+    1 "Slack" off
+    10 "OneNote" off)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
-for choice in $choices
-do
+for choice in $choices; do
     case $choice in
         0)
             #in_teams=1
-            echo "teams" >> "$setupdir/aurselectedpkgs.txt"
+            echo "teams" >>"$setupdir/aurselectedpkgs.txt"
             ;;
         1)
             #in_slack=1
             #echo "slack-desktop" >> "$setupdir/aurselectedpkgs.txt"
-            echo "slack-electron" >> "$setupdir/aurselectedpkgs.txt"
+            echo "slack-electron" >>"$setupdir/aurselectedpkgs.txt"
             ;;
         10)
-            echo "p3x-onenote" >> "$setupdir/aurselectedpkgs.txt"
+            echo "p3x-onenote" >>"$setupdir/aurselectedpkgs.txt"
             ;;
     esac
 done
@@ -275,12 +270,11 @@ cmd=(dialog --separate-output --checklist "Report installed packages?" 22 76 16)
 options=(0 "pkgstats" off)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
-for choice in $choices
-do
+for choice in $choices; do
     case $choice in
         0)
             #in_pkgstats=1
-            echo "pkgstats" >> "$setupdir/selectedpkgs.txt"
+            echo "pkgstats" >>"$setupdir/selectedpkgs.txt"
             ;;
     esac
 done
@@ -291,11 +285,10 @@ in_arco_hp=0
 
 cmd=(dialog --separate-output --checklist "Install system specific packages?" 22 76 16)
 options=(1 "Arco PC" off
-         2 "Arco HP" off)
+    2 "Arco HP" off)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
-for choice in $choices
-do
+for choice in $choices; do
     case $choice in
         1)
             in_arco_pc=1
@@ -308,7 +301,7 @@ done
 
 #uninstalling unused packages
 echo Uninstalling unused packages
-sudo pacman -Rns - < "$setupdir/packages/uninstall.txt"
+sudo pacman -Rns - <"$setupdir/packages/uninstall.txt"
 echo Uninstalled unused packages
 
 # find all repos
@@ -321,7 +314,7 @@ echo Updated packages
 
 #pacman programs
 echo Installing default pacman programs
-sudo pacman -S --needed - < "$setupdir/packages/officialpkgs.txt"
+sudo pacman -S --needed - <"$setupdir/packages/officialpkgs.txt"
 echo Installed official programs
 
 # pip
@@ -355,22 +348,22 @@ fi
 
 # audio
 echo Installing audio programs
-paru -S --needed - < "$setupdir/packages/audiopkgs.txt"
+paru -S --needed - <"$setupdir/packages/audiopkgs.txt"
 echo Installed audio programs
 
 #AUR
 echo Installing default AUR programs
-paru -S --needed - < "$setupdir/packages/aurpkgs.txt"
+paru -S --needed - <"$setupdir/packages/aurpkgs.txt"
 echo Installed AUR programs
 
 # theming
 echo Installing themes and icons
-paru -S --needed - < "$setupdir/packages/theme-packages.txt"
+paru -S --needed - <"$setupdir/packages/theme-packages.txt"
 echo Installed themes and icons
 
 #install wine
 echo Installing wine
-sudo pacman -S --needed - < "$setupdir/packages/winepkgs.txt"
+sudo pacman -S --needed - <"$setupdir/packages/winepkgs.txt"
 echo Installed wine
 
 ###################
@@ -380,11 +373,11 @@ echo Installing selected programs
 
 # install selected packages
 echo Installing from official repository
-sudo pacman -S --needed - < "$setupdir/selectedpkgs.txt"
+sudo pacman -S --needed - <"$setupdir/selectedpkgs.txt"
 
 # install selected aur packages
 echo Installing from AUR
-paru -S --needed - < "$setupdir/aurselectedpkgs.txt"
+paru -S --needed - <"$setupdir/aurselectedpkgs.txt"
 
 : '
 if [ $in_vmware15 -eq 1 ]; then
@@ -696,13 +689,13 @@ fi
 # arco pc
 if [ $in_arco_pc -eq 1 ]; then
     echo "Installing arco pc packages"
-    paru -S --needed - < "$setupdir/packages/lupusregina-packages.txt"
+    paru -S --needed - <"$setupdir/packages/lupusregina-packages.txt"
 fi
 
 # arco hp
 if [ $in_arco_hp -eq 1 ]; then
     echo "Installing arch hp packages"
-    paru -S --needed - < "$setupdir/packages/arch-hp-packages.txt"
+    paru -S --needed - <"$setupdir/packages/arch-hp-packages.txt"
 fi
 
 ##############################
@@ -759,7 +752,7 @@ echo Removed setup files
 echo Setting config
 bash ~/config/install.sh
 
-if [[ $(pacman -Q pkgstats 2>/dev/null > /dev/null) ]]; then
+if [[ $(pacman -Q pkgstats 2>/dev/null >/dev/null) ]]; then
     pkgstats
 fi
 
