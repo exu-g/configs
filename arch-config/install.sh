@@ -1,5 +1,4 @@
-#!/bin/bash
-
+#!/usr/bin/env bash
 set -euo pipefail
 
 #DO NOT MAKE CHANGES TO THE INSTALL SCRIPT HERE. USE arcolinux-config.sh IN ~/scripts FOR THAT
