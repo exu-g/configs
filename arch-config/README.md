@@ -8,7 +8,6 @@ Configuration files for arch linux. Selection of software:
 - dunst: .config/dunst, scripts
 - Kvantum, qt5ct, qt6ct: .config/Kvantum, .config/qt5ct, .config/qt6ct
 - gtk 2/3: .gtkrc-2.0, .config/gtk-3.0
-- neofetch\*: .config/neofetch
 - Thunar: .config/Thunar
 - Templates: .config/Vorlagen
 - rofi: .config/rofi
