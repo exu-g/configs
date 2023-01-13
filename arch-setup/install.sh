@@ -335,11 +335,11 @@ systemctl --user start autotrash
 systemctl --user enable autotrash.timer
 
 # REVIEW Patched neofetch version to remove Color codes
-git clone https://github.com/RealStickman/neofetch
-cd neofetch
-sudo make install
-cd ..
-rm -rf neofetch
+#git clone https://github.com/RealStickman/neofetch
+#cd neofetch
+#sudo make install
+#cd ..
+#rm -rf neofetch
 
 # install paru-bin with yay, or download paru from github
 if [[ $(pacman -Q | grep yay) ]] && [[ ! $(pacman -Q | grep paru) ]]; then
