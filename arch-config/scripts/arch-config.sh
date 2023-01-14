@@ -204,8 +204,8 @@ cp -r ~/config/.config/ ~/
 cp -r ~/config/.local/ ~/
 #cp -r ~/config/Dokumente ~/
 #cp -r ~/config/.mozilla/firefox/default-release/* ~/.mozilla/firefox/*.default-release/
-cp -r ~/config/.easystroke ~/
-cp -r ~/config/.elvish ~/
+#cp -r ~/config/.easystroke ~/
+#cp -r ~/config/.elvish ~/
 cp -r ~/config/.doom.d ~/
 cp -r ~/config/.ssh ~/
 echo Copied folders
