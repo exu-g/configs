@@ -453,7 +453,7 @@ chmod +x -R ~/scripts
 chmod +x -R ~/.local/share/applications
 
 # set settings for nemo
-bash ~/config/scripts/nemo-config.sh
+#bash ~/config/scripts/nemo-config.sh
 
 #remove downloaded folder
 rm -rf ~/config
