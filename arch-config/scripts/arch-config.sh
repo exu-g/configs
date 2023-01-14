@@ -317,8 +317,8 @@ rm -rf ./PSipcalc
 #gimp plugins
 #mkdir ~/.config/GIMP/ || echo Not creating directory
 #mkdir ~/.config/GIMP/2.10/ || echo Not creating directory
-mkdir -p ~/.config/GIMP/2.10/plug-ins/ || echo Not creating directory
-rsync -ah ~/config/gimp-plugins/* ~/.config/GIMP/2.10/plug-ins/
+#mkdir -p ~/.config/GIMP/2.10/plug-ins/ || echo Not creating directory
+#rsync -ah ~/config/gimp-plugins/* ~/.config/GIMP/2.10/plug-ins/
 
 echo
 cat <<EOF
@@ -436,9 +436,9 @@ sudo chown root:root -R /etc/sudoers.d/
 sudo chmod 600 -R /etc/sudoers.d/
 
 # unzip gimp plugins
-echo Unzipping gimp plugins
-unzip -o ~/.config/GIMP/2.10/plug-ins/export_layers-3.3.1.zip -d ~/.config/GIMP/2.10/plug-ins/ >/dev/null
-rm ~/.config/GIMP/2.10/plug-ins/export_layers-3.3.1.zip >/dev/null
+#echo Unzipping gimp plugins
+#unzip -o ~/.config/GIMP/2.10/plug-ins/export_layers-3.3.1.zip -d ~/.config/GIMP/2.10/plug-ins/ >/dev/null
+#rm ~/.config/GIMP/2.10/plug-ins/export_layers-3.3.1.zip >/dev/null
 
 # xfce settings
 # disable screensaver & locker
