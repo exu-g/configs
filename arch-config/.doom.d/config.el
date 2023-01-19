@@ -37,7 +37,6 @@
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type 'relative)
 
-
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
 ;; - `load!' for loading external *.el files relative to this one
@@ -57,6 +56,13 @@
 
 ;; Enables the minimap by default. Use SPC-t-m to toggle
 ;(minimap-mode 1)
+
+(map! :leader :map markdown-mode-map "m p" #'markdown-live-preview-mode)
+
+; split window for markdown-live-preview-mode right
+(setq markdown-split-window-direction 'right)
+
+;(add-hook 'markdown-mode-hook 'markdown-live-preview-mode)
 
 (setq
  projectile-project-search-path '("~/GitProjects/"))
