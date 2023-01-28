@@ -47,7 +47,7 @@ rsync -urtzv --progress --delete --bwlimit=3M -e "ssh -i $sshkeypath -p $port" /
 #rsync -ur --progress --bwlimit=3M -e "ssh -i $sshkeypath -p $port" ${user}@${server}:/mnt/books/kavita/books/ /home/marc/Nextcloud/Books/Unterhaltung/
 # manga
 echo Kavita manga download
-rsync -urtzv --progress --bwlimit=2M -e "ssh -i $sshkeypath -p $port" ${user}@${server}:/mnt/books/kavita/manga/ /home/marc/Nextcloud/Books/Manga/
+rsync -urtzv --progress --bwlimit=3M -e "ssh -i $sshkeypath -p $port" ${user}@${server}:/mnt/books/kavita/manga/ /home/marc/Nextcloud/Books/Manga/
 # Tech
 #echo Downloading tech
 #rsync -ur --progress --bwlimit=3M -e "ssh -i $sshkeypath -p $port" ${user}@${server}:/mnt/books/kavita/tech/ /home/marc/Nextcloud/Books/Tech/
