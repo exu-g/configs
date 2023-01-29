@@ -385,8 +385,6 @@ if [[ $(pacman -Q | grep vmware-workstation) ]]; then
     echo "Setting up group for vmware"
     sudo groupadd -f vmware
     sudo gpasswd -a "$USER" vmware 1>/dev/null
-    sudo chgrp vmware /dev/vmnet*
-    sudo chmod g+rw /dev/vmnet*
 fi
 
 # set group for libvirt
