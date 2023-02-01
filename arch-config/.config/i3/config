@@ -546,6 +546,9 @@ bindsym ctrl+mod1+f exec --no-startup-id firefox;focus
 # jellyamp
 #bindsym ctrl+mod1+m exec --no-startup-id "env DESKTOPINTEGRATION=false /usr/bin/Jellyamp";focus
 
+# sublime music
+bindsym ctrl+mod1+m exec --no-startup-id sublime-music;focus
+
 # jellyfin media player
 bindsym ctrl+mod1+j exec --no-startup-id jellyfinmediaplayer;focus
 
