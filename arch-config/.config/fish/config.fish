@@ -177,15 +177,15 @@ alias cleanup='sudo pacman -Rns (pacman -Qtdq)'
 alias cleancache='paru -Sc'
 
 #cpu-x as sudo
-alias cpu-x="sudo cpu-x"
+#alias cpu-x="sudo cpu-x"
 
 # kill ssh tunnels
-alias killsshtun='pkill -f "ssh\s"'
+#alias killsshtun='pkill -f "ssh\s"'
 
 #wireguard
-alias wgs="sudo wg show"
-alias wgqu="sudo wg-quick up"
-alias wgqd="sudo wg-quick down"
+#alias wgs="sudo wg show"
+#alias wgqu="sudo wg-quick up"
+#alias wgqd="sudo wg-quick down"
 
 # lsblk to list more info
 alias lsblkf="lsblk -o NAME,FSTYPE,LABEL,MOUNTPOINT,SIZE,MODEL,UUID"
