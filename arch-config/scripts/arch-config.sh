@@ -50,9 +50,9 @@ echo "Checking config file"
 git clone https://gitlab.com/RealStickman-arch/config.git &>/dev/null
 
 # make sure to use master branch
-cd config
-git checkout master &>/dev/null
-cd ..
+#cd config
+#git checkout master &>/dev/null
+#cd ..
 
 # check if the install scripts are the same
 # NOTE Arguments get passed automatically now
