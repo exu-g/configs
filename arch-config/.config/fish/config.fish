@@ -170,7 +170,7 @@ alias mirror="sudo reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacma
 alias yta-best="yt-dlp -f bestaudio --extract-audio "
 alias ytv-best="yt-dlp -f bestvideo+bestaudio "
 #alias ytv-complete="yt-dlp -f bestvideo+bestaudio --write-info-json --write-subs --sub-langs \"en.*\"  "
-alias ytv-complete="yt-dlp -f bestvideo+bestaudio --add-metadata --parse-metadata \"%(title)s:%(meta_title)s\" --parse-metadata \"%(uploader)s:%(meta_artist)s\" --write-info-json --embed-thumbnail --embed-subs --sub-langs \"en.*\" --merge-output-format mkv "
+alias ytv-metadata="yt-dlp -f bestvideo+bestaudio --add-metadata --parse-metadata \"%(title)s:%(meta_title)s\" --parse-metadata \"%(uploader)s:%(meta_artist)s\" --write-info-json --write-thumbnail --embed-thumbnail --embed-subs --sub-langs \"en.*\" --merge-output-format mkv "
 
 #Cleanup orphaned packages
 alias cleanup='sudo pacman -Rns (pacman -Qtdq)'
