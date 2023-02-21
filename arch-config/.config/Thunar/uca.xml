@@ -22,6 +22,11 @@
 	<patterns>*</patterns>
 	<startup-notify/>
 	<directories/>
+	<audio-files/>
+	<image-files/>
+	<other-files/>
+	<text-files/>
+	<video-files/>
 </action>
 <action>
 	<icon>preferences-system-search</icon>
