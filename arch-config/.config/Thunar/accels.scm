@@ -13,6 +13,7 @@
 (gtk_accel_path "<Actions>/ThunarWindow/new-window" "")
 ; (gtk_accel_path "<Actions>/ThunarWindow/clear-directory-specific-settings" "")
 (gtk_accel_path "<Actions>/ThunarWindow/close-window" "")
+; (gtk_accel_path "<Actions>/ThunarBookmarks/ac3bbb1429c4180d34b90e935eaeaa7b" "")
 (gtk_accel_path "<Actions>/ThunarWindow/open-parent" "")
 ; (gtk_accel_path "<Actions>/ThunarWindow/view-side-pane-menu" "")
 ; (gtk_accel_path "<Actions>/ThunarStatusBar/toggle-size-in-bytes" "")

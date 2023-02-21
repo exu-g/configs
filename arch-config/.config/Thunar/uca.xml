@@ -35,4 +35,20 @@
 	<startup-notify/>
 	<directories/>
 </action>
+<action>
+	<icon>link</icon>
+	<name>Symlink erstellen</name>
+	<submenu></submenu>
+	<unique-id>1676990164646243-1</unique-id>
+	<command>ln -Ts %f %n&quot; (symlink)&quot;</command>
+	<description>Symbolischen Link erstellen</description>
+	<range>*</range>
+	<patterns>*</patterns>
+	<directories/>
+	<audio-files/>
+	<image-files/>
+	<other-files/>
+	<text-files/>
+	<video-files/>
+</action>
 </actions>
