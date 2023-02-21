@@ -16,7 +16,7 @@
 	<name>Terminal öffnen</name>
 	<submenu></submenu>
 	<unique-id>1666515885637912-1</unique-id>
-	<command>exo-open --working-dir %f --launch TerminalEmulator</command>
+	<command>for f in %F; do if [ -d &quot;$f&quot; ]; then kitty &quot;$f&quot;; elif [ -z &quot;$default&quot; ]; then default=1; kitty; fi done</command>
 	<description>Terminal im gewählten Ordner öffnen</description>
 	<range></range>
 	<patterns>*</patterns>
