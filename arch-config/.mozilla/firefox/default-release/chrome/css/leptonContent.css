@@ -242,7 +242,8 @@
         }
       }
     }
-  } /** Activity Stream - Menu Icons ********************************************/
+  }
+  /** Activity Stream - Menu Icons ********************************************/
   @supports -moz-bool-pref("userChrome.icon.context_menu") {
     .context-menu-list .context-menu-item button {
       padding-inline-start: 0 !important;
@@ -251,6 +252,7 @@
       /* Color */
       -moz-context-properties: fill, fill-opacity, stroke !important;
       fill: currentColor !important;
+      stroke: transparent;
       /* Layout */
       background-size: 16px !important;
       background-repeat: no-repeat !important;
@@ -333,16 +335,20 @@
         transition: background 0.5s var(--animation-easing-function);
       }
       /* Search Bar */
-      .search-inner-wrapper input {
+      .search-wrapper .search-inner-wrapper > input,
+      .search-wrapper .search-inner-wrapper > .search-handoff-button {
         transition: 1s var(--animation-easing-function);
         transition-property: border-color, box-shadow;
       }
-      .search-wrapper .search-inner-wrapper:active input,
-      .search-wrapper input:focus {
+      .search-wrapper .search-inner-wrapper:active > input,
+      .search-wrapper .search-inner-wrapper:active > .search-handoff-button,
+      .search-wrapper .search-inner-wrapper > input:focus,
+      .search-wrapper .search-inner-wrapper > .search-handoff-button:focus {
         transition: border-color 0.5s var(--animation-easing-function), box-shadow 1s var(--animation-easing-function);
       }
       @supports -moz-bool-pref("userContent.page.field_border") {
-        .search-wrapper .search-inner-wrapper:hover input {
+        .search-wrapper .search-inner-wrapper:hover > input,
+        .search-wrapper .search-inner-wrapper:hover > .search-handoff-button {
           border-color: var(--newtab-primary-action-background) !important;
           transition: border-color 0.5s var(--animation-easing-function);
         }
@@ -442,12 +448,19 @@
       fill: var(--newtab-icon-secondary-color) !important;
     }
   }
+  /** Activity Stream - Hide Firefox's logo ***********************************/
+  @supports -moz-bool-pref("userContent.newTab.hidden_logo") {
+    .logo-and-wordmark {
+      display: none !important;
+    }
+    .outer-wrapper:not(.fixed-search) .search-wrapper {
+      padding-top: 0 !important;
+    }
+  }
 }
 /** Error Page - Restore illustrations ****************************************/
 @supports -moz-bool-pref("userContent.page.illustration") {
-  @-moz-document url-prefix("about:neterror"),
-  url("about:restartrequired"), url("chrome://browser/content/aboutRestartRequired.xhtml"),
-  url("about:sessionrestore"),  url("chrome://browser/content/aboutSessionRestore.xhtml")
+  @-moz-document url-prefix("about:neterror"), url("about:restartrequired"), url("chrome://browser/content/aboutRestartRequired.xhtml"), url("about:sessionrestore"), url("chrome://browser/content/aboutSessionRestore.xhtml")
   {
     /* Illustrations Position */
     #errorPageContainer,
@@ -477,12 +490,7 @@
       padding-inline-start: 38%;
     }
   }
-  @-moz-document url-prefix("about:neterror?e=connectionFailure"),
-  url-prefix("about:neterror?e=netInterrupt"),
-  url-prefix("about:neterror?e=netReset"),
-  url-prefix("about:neterror?e=netTimeout"),
-  url-prefix("about:neterror?e=netOffline"),
-  url("about:restartrequired"), url("chrome://browser/content/aboutRestartRequired.xhtml")
+  @-moz-document url-prefix("about:neterror?e=connectionFailure"), url-prefix("about:neterror?e=netInterrupt"), url-prefix("about:neterror?e=netReset"), url-prefix("about:neterror?e=netTimeout"), url-prefix("about:neterror?e=netOffline"), url("about:restartrequired"), url("chrome://browser/content/aboutRestartRequired.xhtml")
   {
     :root {
       --uc-error-llustration: url(../icons/error-connection-failure.svg);
@@ -493,15 +501,12 @@
       --uc-error-llustration: url(../icons/error-server-not-found.svg);
     }
   }
-  @-moz-document url-prefix("about:neterror?e=blockedByPolicy"),
-  url-prefix("about:neterror?e=deniedPortAccess"),
-  url-prefix("about:neterror?e=malformedURI") {
+  @-moz-document url-prefix("about:neterror?e=blockedByPolicy"), url-prefix("about:neterror?e=deniedPortAccess"), url-prefix("about:neterror?e=malformedURI") {
     :root {
       --uc-error-llustration: url(chrome://browser/skin/illustrations/error-malformed-url.svg);
     }
   }
-  @-moz-document url-prefix("about:neterror?e=clockSkewError"),
-  url-prefix("about:neterror?e=nssFailure") {
+  @-moz-document url-prefix("about:neterror?e=clockSkewError"), url-prefix("about:neterror?e=nssFailure") {
     :root {
       --uc-error-llustration: url(../icons/blue-berror.svg);
     }
@@ -553,13 +558,7 @@
 /** Fully Dark Mode ***********************************************************/
 /*= Fully Dark Mode - Dark Mode Colors =======================================*/
 @supports -moz-bool-pref("userContent.page.proton_color") {
-  @-moz-document url-prefix("about:"),
-               url-prefix("chrome://browser/content/places/places.xhtml"),
-               url-prefix("https://addons.mozilla.org"),
-               url-prefix("https://support.mozilla.org"),
-               url-prefix("https://accounts.firefox.com"),
-               url-prefix("view-source"),
-               regexp("^(((jar:)?file:///)|(chrome://)).*/$")
+  @-moz-document url-prefix("about:"), url-prefix("chrome://browser/content/places/places.xhtml"), url-prefix("https://addons.mozilla.org"), url-prefix("https://support.mozilla.org"), url-prefix("https://accounts.firefox.com"), url-prefix("view-source"), regexp("^(((jar:)?file:///)|(chrome://)).*/$")
   {
     /*= Default Colors - Hard Coded ==============================================*/
     /* Based on chrome://global/skin/in-content/common.css */
@@ -1647,12 +1646,7 @@
 /** Fully Proton Mode *********************************************************/
 @supports -moz-bool-pref("userContent.page.proton") {
   /*= Common contents ==========================================================*/ /*= abouts' common ===========================================================*/
-  @-moz-document url-prefix("about:plugins"),
-               url-prefix("about:cache"),
-               url-prefix("about:checkerboard"),
-               url-prefix("about:sync-log"),
-               url-prefix("about:memory"),
-               regexp("^(((jar:)?file:///)|(chrome://)).*/$")
+  @-moz-document url-prefix("about:plugins"), url-prefix("about:cache"), url-prefix("about:checkerboard"), url-prefix("about:sync-log"), url-prefix("about:memory"), regexp("^(((jar:)?file:///)|(chrome://)).*/$")
   {
     /* Base */
     html,
@@ -1714,6 +1708,13 @@
       margin: 4px 8px !important;
       /* Ensure font-size isn't overridden by widget styling (e.g. in forms.css) */
       font-size: 1em !important;
+    }
+    @supports -moz-bool-pref("userChrome.rounding.square_button") {
+      button,
+      select,
+      input[type="color"] {
+        border-radius: 0 !important;
+      }
     }
     button {
       font-weight: 600 !important;
@@ -1788,6 +1789,11 @@
       margin-inline: 0 6px !important;
       flex-shrink: 0 !important; /* avoid shrinking inside flex container */
     }
+    @supports -moz-bool-pref("userChrome.rounding.square_checklabel") {
+      input[type="checkbox"] {
+        border-radius: 0 !important;
+      }
+    }
     input[type="checkbox"]:enabled:hover {
       background-color: var(--checkbox-unchecked-hover-bgcolor) !important;
     }
@@ -1853,16 +1859,13 @@
       width: 100% !important;
     }
   }
-  @-moz-document url-prefix("about:plugins"),
-               url-prefix("about:cache"),
-               url-prefix("about:checkerboard") {
+  @-moz-document url-prefix("about:plugins"), url-prefix("about:cache"), url-prefix("about:checkerboard") {
     table {
       border: 1px solid var(--in-content-table-border-color) !important;
       border-radius: 0 !important;
     }
   }
-  @-moz-document url-prefix("about:cache"),
-               url-prefix("about:checkerboard") {
+  @-moz-document url-prefix("about:cache"), url-prefix("about:checkerboard") {
     th,
     td {
       border: 1px solid var(--in-content-table-border-color) !important;
@@ -1944,8 +1947,7 @@
     }
   }
   /*= Directory View ===========================================================*/
-  @-moz-document url-prefix("about:sync-log"),
-               regexp("^(((jar:)?file:///)|(chrome://)).*/$")
+  @-moz-document url-prefix("about:sync-log"), regexp("^(((jar:)?file:///)|(chrome://)).*/$")
   {
     body {
       background-color: var(--in-content-box-background) !important;
@@ -1994,6 +1996,27 @@
     }
     .opsRowLabel input {
       vertical-align: bottom !important;
+    }
+  }
+  /*= about:preferences ========================================================*/
+  @-moz-document url-prefix("chrome://browser/content")
+  {
+    #sanitizeEverythingWarningIcon {
+      list-style-image: url("chrome://global/skin/icons/warning.svg") !important;
+      -moz-context-properties: fill;
+      fill: #ffa436;
+      width: 48px;
+      height: 48px;
+    }
+    @media (-moz-toolbar-prefers-color-scheme: dark), (prefers-color-scheme: dark) {
+      #sanitizeEverythingWarningIcon {
+        fill: #ffbd4f;
+      }
+    }
+    @media (prefers-contrast) {
+      #sanitizeEverythingWarningIcon {
+        fill: var(--in-content-page-color);
+      }
     }
   }
   /*= chrome://browser/content/places/places.xhtml =============================*/
@@ -2245,6 +2268,11 @@
           padding: 5px !important;
           border-radius: 4px !important;
         }
+        @supports -moz-bool-pref("userChrome.rounding.square_button") {
+          #placesToolbar > toolbarbutton {
+            border-radius: 0 !important;
+          }
+        }
         #placesToolbar > toolbarbutton[disabled] {
           opacity: 0.6 !important;
         }
@@ -2267,10 +2295,15 @@
         #placesMenu > menu {
           appearance: none !important;
           color: var(--organizer-color) !important;
-          border-radius: 4px !important;
           padding-block: 5px !important;
           padding-inline-start: 5px !important;
+          border-radius: 4px !important;
           margin-inline-end: 2px !important;
+        }
+        @supports -moz-bool-pref("userChrome.rounding.square_button") {
+          #placesMenu > menu {
+            border-radius: 0 !important;
+          }
         }
         #placesMenu > menu[_moz-menuactive="true"],
         #placesMenu > menu:hover {
@@ -2297,6 +2330,12 @@
           margin: 0 !important;
           padding-block: 2px !important;
           min-height: 24px !important;
+        }
+        @supports -moz-bool-pref("userChrome.rounding.square_field") {
+          #searchFilter,
+          #detailsPane html|input {
+            border-radius: 0 !important;
+          }
         }
         #searchFilter[focused] {
           box-shadow: var(--organizer-toolbar-field-focus-box-shadow) !important;
@@ -2439,6 +2478,12 @@
           -moz-context-properties: fill !important;
           fill: currentColor !important;
         }
+        @supports -moz-bool-pref("userChrome.rounding.square_button") {
+          #editBookmarkPanelRows .expander-up,
+          #editBookmarkPanelRows .expander-down {
+            border-radius: 0 !important;
+          }
+        }
         #editBookmarkPanelRows .expander-up:hover,
         #editBookmarkPanelRows .expander-down:hover {
           background-color: var(--organizer-hover-background) !important;
@@ -2472,6 +2517,11 @@
           min-height: 20px !important;
           padding-inline: 4px !important;
         }
+        @supports -moz-bool-pref("userChrome.rounding.square_field") {
+          #places input {
+            border-radius: 0 !important;
+          }
+        }
         #places input:focus {
           outline: 2px solid var(--organizer-outline-color) !important;
           outline-offset: -1px !important;
@@ -2489,6 +2539,11 @@
           background-color: var(--organizer-content-background) !important;
           border: 1px solid var(--organizer-border-color) !important;
           border-radius: 4px !important;
+        }
+        @supports -moz-bool-pref("userChrome.rounding.square_field") {
+          #editBMPanel_tagsSelectorRow > richlistbox {
+            border-radius: 0 !important;
+          }
         }
         #editBMPanel_tagsSelectorRow > richlistbox > richlistitem {
           border: 1px solid transparent !important;
@@ -2723,11 +2778,135 @@
     }
   }
 }
+/** Rounding ******************************************************************/
+@supports -moz-bool-pref("userChrome.rounding.square_button") {
+  @-moz-document url-prefix("about:"), url-prefix("chrome://browser/content/"), url-prefix("chrome://pippki/content/")
+  {
+    button,
+    .close-icon,
+    .action-icon::before,
+    .web-appearance-choice,
+    #categories > .category,
+    .sidebar-footer-link {
+      border-radius: 0 !important;
+    }
+  }
+  @-moz-document url-prefix("about:debugging") {
+    .sidebar-item {
+      border-radius: 0 !important;
+    }
+  }
+  @-moz-document url-prefix("chrome://browser/content/places/places.xhtml"), url-prefix("about:downloads")
+  {
+    .downloadButton > .button-box {
+      border-radius: 0 !important;
+    }
+  }
+  @-moz-document url-prefix("about:protections") {
+    #manage-protections,
+    #sign-up-for-monitor-link,
+    #get-proxy-extension-link,
+    #get-vpn-link,
+    #vpn-banner-link,
+    .monitor-partial-breaches-link-wrapper,
+    .monitor-breaches-link-wrapper {
+      border-radius: 0 !important;
+    }
+  }
+}
+@supports -moz-bool-pref("userChrome.rounding.square_dialog") {
+  @-moz-document url-prefix("about:") {
+    .dialogBox {
+      border-radius: 0 !important;
+    }
+  }
+  @-moz-document url("about:home"), url("about:newtab") {
+    .modal {
+      border-radius: 0 !important;
+    }
+  }
+}
+@supports -moz-bool-pref("userChrome.rounding.square_checklabel") {
+  @-moz-document url-prefix("about:"), url-prefix("chrome://browser/content/"), url-prefix("chrome://pippki/content/")
+  {
+    input[type="checkbox"]:not(.toggle-button),
+    .checkbox-check {
+      border-radius: 0 !important;
+    }
+  }
+}
+@supports -moz-bool-pref("userChrome.rounding.square_field") {
+  @-moz-document url-prefix("about:"), url-prefix("chrome://browser/content/"), url-prefix("chrome://pippki/content/")
+  {
+    input:is([type="color"], [type="email"], [type="tel"], [type="text"], [type="password"], [type="url"], [type="number"]),
+    textarea,
+    select,
+    menulist,
+    tree,
+    treecols,
+    listheader,
+    richlistbox,
+    search-textbox {
+      border-radius: 0 !important;
+    }
+  }
+  @-moz-document url-prefix("about:debugging") {
+    .default-input {
+      border-radius: 0 !important;
+    }
+  }
+  @-moz-document url("about:home"), url("about:newtab") {
+    .search-wrapper .search-handoff-button,
+    .search-wrapper input {
+      border-radius: 0 !important;
+    }
+  }
+}
+@supports -moz-bool-pref("userChrome.rounding.square_menupopup") {
+  @-moz-document url-prefix("about:"), url-prefix("chrome://")
+  {
+    menupopup {
+      --panel-border-radius: 0 !important;
+    }
+  }
+  @-moz-document url-prefix("about:addons") {
+    panel-list {
+      border-radius: 0 !important;
+    }
+  }
+  @-moz-document url-prefix("about:logins") {
+    .menu {
+      border-radius: 0 !important;
+    }
+  }
+  @-moz-document url("about:home"), url("about:newtab") {
+    .context-menu {
+      border-radius: 0 !important;
+    }
+  }
+}
+@-moz-document url("chrome://browser/content/places/places.xhtml")
+{
+  /*= Library ==============================================================*/
+  @supports -moz-bool-pref("userChrome.rounding.square_button") {
+    #placesToolbar > toolbarbutton,
+    #placesMenu > menu,
+    #editBookmarkPanelRows .expander-up,
+    #editBookmarkPanelRows .expander-down {
+      border-radius: 0 !important;
+    }
+  }
+  @supports -moz-bool-pref("userChrome.rounding.square_field") {
+    #searchFilter,
+    #detailsPane html|input,
+    #places input #editBMPanel_tagsSelectorRow > richlistbox {
+      border-radius: 0 !important;
+    }
+  }
+}
 /** Monospace *****************************************************************/
 @supports -moz-bool-pref("userContent.page.monospace") {
-  @-moz-document url-prefix("about:"),
-               url-prefix("chrome://browser/content/places/places.xhtml"),
-               regexp("^(((jar:)?file:///)|(chrome://)).*/$")
+  @-moz-document url-prefix("about:"), url-prefix("chrome://browser/content/places/places.xhtml"), regexp("^(((jar:)?file:///)|(chrome://)).*/$")
   {
     * {
       font-family: -moz-fixed;
@@ -2737,8 +2916,8 @@
 /** Menu - Icons Layout *******************************************************/
 @supports not -moz-bool-pref("userChrome.icon.disabled") {
   @supports -moz-bool-pref("userChrome.icon.menu") {
-    @-moz-document url("chrome://browser/content/places/places.xhtml"),
-               url("about:downloads") {
+    @-moz-document url("chrome://browser/content/places/places.xhtml"), url("about:downloads")
+    {
       menupopup menuitem:not([type="checkbox"][checked="true"], [type="radio"]),
       menupopup menu:not([type="checkbox"][checked="true"], [type="radio"]) {
         -moz-appearance: none !important; /* Linux: menulist */
@@ -2753,6 +2932,7 @@
         /* Color */
         -moz-context-properties: fill, fill-opacity, stroke !important;
         fill: currentColor !important;
+        stroke: transparent;
         /* Layout */
         background-size: 16px !important;
         background-repeat: no-repeat !important;
@@ -2791,6 +2971,11 @@
         :root {
           --context-menu-background-padding-default: 2px;
         }
+        @media (-moz-windows-classic) {
+          :root {
+            --context-menu-background-padding-default: -0.5px;
+          }
+        }
       }
       @media (-moz-os-version: windows-win8), (-moz-platform: windows-win8) {
         :root {
@@ -2819,6 +3004,51 @@
           --menu-background-padding-default: calc(
             var(--context-menu-background-padding) + var(--context-menu-text-padding)
           );
+        }
+        @media not (-moz-windows-non-native-menus) {
+          :root {
+            --context-menu-background-padding: 3px;
+            --menu-background-padding-default: 0px;
+          }
+          @supports -moz-bool-pref("userChrome.compatibility.os.win11") {
+            :root {
+              --context-menu-background-padding: 5px;
+            }
+          }
+          menupopup:is(#historyMenuPopup, #bookmarksMenuPopup) .menu-iconic > .menu-iconic-left,
+          menupopup:is(#historyMenuPopup, #bookmarksMenuPopup) .menuitem-iconic > .menu-iconic-left,
+          menupopup:not([placespopup="true"]) .menu-iconic > .menu-iconic-left,
+          menupopup:not([placespopup="true"]) .menuitem-iconic > .menu-iconic-left {
+            appearance: none !important;
+            padding-block: 0 !important;
+            padding-inline-start: 5px !important;
+            margin-inline-end: 8px !important;
+          }
+          @supports -moz-bool-pref("userChrome.compatibility.os.win11") {
+            menupopup:is(#historyMenuPopup, #bookmarksMenuPopup) .menu-iconic > .menu-iconic-left,
+            menupopup:is(#historyMenuPopup, #bookmarksMenuPopup) .menuitem-iconic > .menu-iconic-left,
+            menupopup:not([placespopup="true"]) .menu-iconic > .menu-iconic-left,
+            menupopup:not([placespopup="true"]) .menuitem-iconic > .menu-iconic-left {
+              box-sizing: content-box;
+            }
+          }
+          menupopup:is(#historyMenuPopup, #bookmarksMenuPopup) .menu-accel,
+          menupopup:is(#historyMenuPopup, #bookmarksMenuPopup) .menu-iconic-accel,
+          menupopup:not([placespopup="true"]) .menu-accel,
+          menupopup:not([placespopup="true"]) .menu-iconic-accel {
+            box-sizing: content-box;
+            min-height: 16px;
+          }
+          menupopup:is(#historyMenuPopup, #bookmarksMenuPopup) .menu-accel,
+          menupopup:is(#historyMenuPopup, #bookmarksMenuPopup) .menu-iconic-accel,
+          menupopup:is(#historyMenuPopup, #bookmarksMenuPopup) .menu-text,
+          menupopup:is(#historyMenuPopup, #bookmarksMenuPopup) .menu-iconic-text,
+          menupopup:not([placespopup="true"]) .menu-accel,
+          menupopup:not([placespopup="true"]) .menu-iconic-accel,
+          menupopup:not([placespopup="true"]) .menu-text,
+          menupopup:not([placespopup="true"]) .menu-iconic-text {
+            padding-block: 0 !important;
+          }
         }
         menupopup:is(#placesContext, #placesColumnsContext, #downloadsContextMenu)
           menuitem:not(.menuitem-iconic, .bookmark-item, .in-menulist, [checked="true"]),

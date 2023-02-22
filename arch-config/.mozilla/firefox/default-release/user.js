@@ -39,6 +39,7 @@ user_pref("userChrome.tab.photon_like_padding",        true); // Photon
 user_pref("userChrome.tab.dynamic_separator",         false); // Original, Proton
 user_pref("userChrome.tab.static_separator",           true); // Photon
 user_pref("userChrome.tab.static_separator.selected_accent", false); // Just option
+user_pref("userChrome.tab.bar_separator",             false); // Just option
 
 user_pref("userChrome.tab.newtab_button_like_tab",    false); // Original
 user_pref("userChrome.tab.newtab_button_smaller",      true); // Photon
@@ -69,9 +70,12 @@ user_pref("userChrome.rounding.square_tab",            true);
 // -- User Chrome --------------------------------------------------------------
 // user_pref("userChrome.theme.proton_color.dark_blue_accent", true);
 // user_pref("userChrome.theme.monospace",                     true);
+// user_pref("userChrome.compatibility.os.win11",              true);
 
 // user_pref("userChrome.decoration.disable_panel_animate",    true);
 // user_pref("userChrome.decoration.disable_sidebar_animate",  true);
+// user_pref("userChrome.decoration.panel_button_separator",   true);
+// user_pref("userChrome.decoration.panel_arrow",              true);
 
 // user_pref("userChrome.autohide.tab",                        true);
 // user_pref("userChrome.autohide.tab.opacity",                true);
@@ -91,9 +95,11 @@ user_pref("userChrome.rounding.square_tab",            true);
 // user_pref("userChrome.hidden.tab_icon.always",              true);
 // user_pref("userChrome.hidden.tabbar",                       true);
 // user_pref("userChrome.hidden.navbar",                       true);
+// user_pref("userChrome.hidden.titlebar_container",           true);
 // user_pref("userChrome.hidden.sidebar_header",               true);
 // user_pref("userChrome.hidden.sidebar_header.vertical_tab_only", true);
 // user_pref("userChrome.hidden.urlbar_iconbox",               true);
+// user_pref("userChrome.hidden.urlbar_iconbox.label_only",    true);
 // user_pref("userChrome.hidden.bookmarkbar_icon",             true);
 // user_pref("userChrome.hidden.bookmarkbar_label",            true);
 // user_pref("userChrome.hidden.disabled_menu",                true);
@@ -103,12 +109,25 @@ user_pref("userChrome.rounding.square_tab",            true);
 // user_pref("userChrome.centered.urlbar",                     true);
 // user_pref("userChrome.centered.bookmarkbar",                true);
 
+// user_pref("userChrome.counter.tab",                         true);
+// user_pref("userChrome.counter.bookmark_menu",               true);
+
+// user_pref("userChrome.combined.nav_button",                 true);
+// user_pref("userChrome.combined.nav_button.home_button",     true);
+// user_pref("userChrome.combined.urlbar.nav_button",          true);
+// user_pref("userChrome.combined.urlbar.home_button",         true);
+// user_pref("userChrome.combined.urlbar.reload_button",       true);
+// user_pref("userChrome.combined.sub_button.none_background", true);
+// user_pref("userChrome.combined.sub_button.as_normal",       true);
+
 // user_pref("userChrome.rounding.square_button",              true);
+// user_pref("userChrome.rounding.square_dialog",              true);
 // user_pref("userChrome.rounding.square_panel",               true);
 // user_pref("userChrome.rounding.square_panelitem",           true);
 // user_pref("userChrome.rounding.square_menupopup",           true);
 // user_pref("userChrome.rounding.square_menuitem",            true);
 // user_pref("userChrome.rounding.square_field",               true);
+// user_pref("userChrome.rounding.square_urlView_item",        true);
 // user_pref("userChrome.rounding.square_checklabel",          true);
 
 // user_pref("userChrome.padding.first_tab",                   true);
@@ -116,17 +135,26 @@ user_pref("userChrome.rounding.square_tab",            true);
 // user_pref("userChrome.padding.drag_space",                  true);
 // user_pref("userChrome.padding.drag_space.maximized",        true);
 
+// user_pref("userChrome.padding.toolbar_button.compact",      true);
 // user_pref("userChrome.padding.menu_compact",                true);
 // user_pref("userChrome.padding.bookmark_menu.compact",       true);
 // user_pref("userChrome.padding.urlView_expanding",           true);
 // user_pref("userChrome.padding.urlView_result",              true);
 // user_pref("userChrome.padding.panel_header",                true);
 
+// user_pref("userChrome.urlbar.iconbox_with_separator",       true);
+
+// user_pref("userChrome.urlView.as_commandbar",               true);
+// user_pref("userChrome.urlView.full_width_padding",          true);
+// user_pref("userChrome.urlView.always_show_page_actions",    true);
 // user_pref("userChrome.urlView.move_icon_to_left",           true);
 // user_pref("userChrome.urlView.go_button_when_typing",       true);
-// user_pref("userChrome.urlView.always_show_page_actions",    true);
+// user_pref("userChrome.urlView.focus_item_border",           true);
 
 // user_pref("userChrome.tabbar.as_titlebar",                  true);
+// user_pref("userChrome.tabbar.fill_width",                   true);
+// user_pref("userChrome.tabbar.multi_row",                    true);
+// user_pref("userChrome.tabbar.unscroll",                     true);
 // user_pref("userChrome.tabbar.on_bottom",                    true);
 // user_pref("userChrome.tabbar.on_bottom.above_bookmark",     true); // Need on_bottom
 // user_pref("userChrome.tabbar.on_bottom.menubar_on_top",     true); // Need on_bottom
@@ -136,12 +164,25 @@ user_pref("userChrome.rounding.square_tab",            true);
 // user_pref("userChrome.tabbar.one_liner.tabbar_first",       true); // Need one_liner
 // user_pref("userChrome.tabbar.one_liner.responsive",         true); // Need one_liner
 
+// user_pref("userChrome.tab.bottom_rounded_corner.all",       true);
+// user_pref("userChrome.tab.bottom_rounded_corner.australis", true);
+// user_pref("userChrome.tab.bottom_rounded_corner.edge",      true);
+// user_pref("userChrome.tab.bottom_rounded_corner.chrome",    true);
+// user_pref("userChrome.tab.bottom_rounded_corner.chrome_legacy", true);
+// user_pref("userChrome.tab.bottom_rounded_corner.wave",      true);
 // user_pref("userChrome.tab.always_show_tab_icon",            true);
 // user_pref("userChrome.tab.close_button_at_pinned",          true);
 // user_pref("userChrome.tab.close_button_at_pinned.always",   true);
 // user_pref("userChrome.tab.close_button_at_pinned.background", true);
 // user_pref("userChrome.tab.close_button_at_hover.always",    true); // Need close_button_at_hover
+// user_pref("userChrome.tab.close_button_at_hover.with_selected", true);  // Need close_button_at_hover
 // user_pref("userChrome.tab.sound_show_label",                true); // Need remove sound_hide_label
+
+// user_pref("userChrome.navbar.as_sidebar",                   true);
+
+// user_pref("userChrome.bookmarkbar.multi_row",               true);
+
+// user_pref("userChrome.findbar.floating_on_top",             true);
 
 // user_pref("userChrome.panel.remove_strip",                  true);
 // user_pref("userChrome.panel.full_width_separator",          true);
@@ -157,6 +198,8 @@ user_pref("userChrome.rounding.square_tab",            true);
 
 // -- User Content -------------------------------------------------------------
 // user_pref("userContent.player.ui.twoline",                  true);
+
+// user_pref("userContent.newTab.hidden_logo",                 true);
 
 // user_pref("userContent.page.proton_color.dark_blue_accent", true);
 // user_pref("userContent.page.proton_color.system_accent",    true);
@@ -220,12 +263,12 @@ user_pref("userContent.player.size",           true);
 user_pref("userContent.player.click_to_play",  true);
 user_pref("userContent.player.animate",        true);
 
-user_pref("userContent.newTab.field_border",   true);
 user_pref("userContent.newTab.full_icon",      true);
 user_pref("userContent.newTab.animate",        true);
 user_pref("userContent.newTab.pocket_to_last", true);
 user_pref("userContent.newTab.searchbar",      true);
 
+user_pref("userContent.page.field_border",     true);
 user_pref("userContent.page.illustration",     true);
 user_pref("userContent.page.proton_color",     true);
 user_pref("userContent.page.dark_mode",        true); // Need proton_color
