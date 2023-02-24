@@ -698,6 +698,9 @@ if [ $in_arco_hp -eq 1 ]; then
     paru -S --needed - <"$setupdir/packages/arch-hp-packages.txt"
 fi
 
+# install nix
+curl -sSf -L https://install.determinate.systems/nix | sh -s -- install
+
 ##############################
 #####   Configuration    #####
 ##############################
