@@ -1,4 +1,4 @@
 [Desktop Entry]
 Name=Sonixd Nix
-Exec=nix run "nixpkgs#sonixd"
+Exec=/nix/var/nix/profiles/default/bin/nix run "nixpkgs#sonixd"
 Type=Application
