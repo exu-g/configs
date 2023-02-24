@@ -1,0 +1,4 @@
+[Desktop Entry]
+Name=Sonixd Nix
+Exec=nix run "nixpkgs#sonixd"
+Type=Application
