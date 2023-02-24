@@ -560,7 +560,7 @@ bindsym ctrl+mod1+b exec --no-startup-id thunderbird;focus
 #bindsym $mod+shift+a exec --no-startup-id bash $HOME/scripts/redetect-audio.sh
 
 # Emoji picker
-bindsym ctrl+mod1+p exec rofi -show emoji
+bindsym ctrl+mod1+p exec --no-startup-id rofi -show emoji
 
 
 #####################################################################################################################
