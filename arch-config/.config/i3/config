@@ -622,6 +622,7 @@ for_window [title="Jellyamp"] floating disable
 # rule the waves 2
 for_window [title="Rule the Waves II - Version 1.21"] floating disable
 for_window [title="Rule the Waves II - Version 1.25"] floating disable
+for_window [title="Rule the Waves II - Version 1.26"] floating disable
 
 # nextcloud settings
 for_window [title="Nextcloud-Einstellungen"] floating disable
