@@ -181,6 +181,9 @@ alias cleancache='paru -Sc'
 #cpu-x as sudo
 #alias cpu-x="sudo cpu-x"
 
+# activate venv called "venv"
+alias activate='source venv/bin/activate.fish'
+
 # kill ssh tunnels
 #alias killsshtun='pkill -f "ssh\s"'
 
