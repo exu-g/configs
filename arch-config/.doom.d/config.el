@@ -81,3 +81,7 @@
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 (setq indent-line-function 'insert-tab)
+
+;; work around emacs hanging when opening any python requirements.txt file
+;; see issue https://github.com/doomemacs/doomemacs/issues/5998
+(advice-add #'pip-requirements-fetch-packages :override #'ignore)
