@@ -223,7 +223,7 @@ execute = args.execute
 # check input file for valid duration
 valid_duration(inputfile, "INPUT")
 
-# NOTE Breaks if filename contains quotes: '
+# FIXME Breaks if any field (filename, title, Language) contains quotes: '
 ff = ffmpy.FFmpeg(
     inputs={inputfile: None},
     outputs={
