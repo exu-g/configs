@@ -224,10 +224,11 @@ execute = args.execute
 valid_duration(inputfile, "INPUT")
 
 # FIXME Breaks if any field (filename, title, Language) contains quotes: '
+# Maps the first video stream, selected audio streams, selected subtitle streams and any attachments to the remuxed/reencoded video
 ff = ffmpy.FFmpeg(
     inputs={inputfile: None},
     outputs={
-        outputfile: "-metadata title='{title}' -disposition 0"
+        outputfile: "-metadata title='{title}' -disposition 0 -map 0:t?"
         " "
         "-c:v {videocodec} -crf {crf} {tune} -preset {preset} -map 0:v:0 -metadata:s:v:0 title='Video' -disposition:v:0 default"
         " "
