@@ -62,8 +62,8 @@
  projectile-project-search-path '("~/GitProjects/"))
 
 ;; autoload magit
-(require 'magit-gitflow)
-(add-hook 'magit-mode-hook 'turn-on-magit-gitflow)
+;(require 'magit-gitflow)
+;(add-hook 'magit-mode-hook 'turn-on-magit-gitflow)
 
 (setq hl-todo-keyword-faces
       '(("TODO"   . "#EACD4B")
