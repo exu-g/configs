@@ -708,7 +708,7 @@ sudo systemctl enable vnstat
 sudo systemctl start vnstat
 
 # setup autotrash
-autotrash -d 5 --install
+autotrash -td 5 --install
 systemctl --user start autotrash
 systemctl --user enable autotrash.timer
 
