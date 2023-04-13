@@ -318,14 +318,9 @@ sudo pacman -S --needed - <"$setupdir/packages/officialpkgs.txt"
 echo Installed official programs
 
 # pip
-echo Installing python programs
-pip install --user autotrash
-echo Installed python programs
-
-# setup autotrash
-"$HOME/.local/bin/autotrash" -d 5 --install
-systemctl --user start autotrash
-systemctl --user enable autotrash.timer
+#echo Installing python programs
+#pip install --user autotrash
+#echo Installed python programs
 
 # REVIEW Patched neofetch version to remove Color codes
 #git clone https://github.com/RealStickman/neofetch
@@ -711,6 +706,11 @@ chsh -s /usr/bin/fish "$USER"
 #enable vnstat
 sudo systemctl enable vnstat
 sudo systemctl start vnstat
+
+# setup autotrash
+autotrash -d 5 --install
+systemctl --user start autotrash
+systemctl --user enable autotrash.timer
 
 # enable lockscreen for systemd
 sudo systemctl enable betterlockscreen@$USER
