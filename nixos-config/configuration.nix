@@ -11,6 +11,7 @@ in
 {
   imports = [
       ./hardware-configuration.nix
+      ./system-packages.nix
       ./home-manager.nix
     ];
 
@@ -93,17 +94,6 @@ in
     initialPassword = "pass";
     shell = pkgs.fish;
   };
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    vim
-    wget
-    hyprland
-    wayland
-    xdg-utils
-    pciutils
-  ];
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
