@@ -46,7 +46,6 @@ in
   # Enable the X11 windowing system.
   services.xserver = {
     enable = true;
-    displayManager.defaultSession = "Hyprland";
     displayManager.lightdm = {
       enable = true;
       greeters.gtk.enable = true;
@@ -95,6 +94,9 @@ in
   environment.systemPackages = with pkgs; [
     vim
     xdg-utils
+    pciutils
+    wayland
+    hyprland
   ];
 
   # Allow unfree packages
