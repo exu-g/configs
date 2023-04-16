@@ -14,7 +14,6 @@ in
     home.packages = [
       pkgs.firefox
       pkgs.kitty
-      pkgs.wget
     ];
   };
 }

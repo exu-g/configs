@@ -93,10 +93,11 @@ in
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     vim
+    wget
+    hyprland
+    wayland
     xdg-utils
     pciutils
-    wayland
-    hyprland
   ];
 
   # Allow unfree packages
