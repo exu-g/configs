@@ -46,9 +46,14 @@ in
   # Enable the X11 windowing system.
   services.xserver = {
     enable = true;
-    displayManager.lightdm = {
+    displayManager.defaultSession = "hyprland";
+    #displayManager.lightdm = {
+    #  enable = true;
+    #  greeters.gtk.enable = true;
+    #};
+    displayManager.gdm = {
       enable = true;
-      greeters.gtk.enable = true;
+      wayland = true;
     };
   };
 
