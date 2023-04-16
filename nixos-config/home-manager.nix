@@ -15,6 +15,7 @@ in
       pkgs.firefox # browser
       pkgs.kitty # terminal
       pkgs.pciutils # lspci command
+      pkgs.git # git
     ];
   };
 }
