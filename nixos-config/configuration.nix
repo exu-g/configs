@@ -1,6 +1,6 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
+# and in the NixOS manual (accessible by running `nixos-help`).
 
 { config, pkgs, ... }:
 
@@ -9,10 +9,9 @@ let
   hostname = "nixos";
 in
 {
-  imports =
-    [ # Include the results of the hardware scan.
+  imports = [
       ./hardware-configuration.nix
-      <home-manager/nixos>
+      ./home-manager.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -41,23 +40,17 @@ in
   # Select internationalisation properties.
   i18n.defaultLocale = "de_CH.UTF-8";
   console = {
-  #   font = "Lat2-Terminus16";
     keyMap = "de_CH-latin1";
-  #   useXkbConfig = true; # use xkbOptions in tty.
   };
 
   # Enable the X11 windowing system.
   services.xserver = {
     enable = true;
-    #displayManager.defaultSession = "none+hyprland";
-    #displayManager.startx.enable = true;
+    displayManager.defaultSession = "Hyprland";
     displayManager.lightdm = {
       enable = true;
       greeters.gtk.enable = true;
     };
-    #windowManager.openbox = {
-    #  enable = true;
-    #};
   };
 
   # Hyprland
@@ -68,17 +61,11 @@ in
 
   # Configure keymap in X11
   services.xserver.layout = "ch";
-  # services.xserver.xkbOptions = {
-  #   "eurosign:e";
-  #   "caps:escape" # map caps to escape.
-  # };
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
-  # Enable sound.
-  # sound.enable = true;
-  # hardware.pulseaudio.enable = true;
+  # Enable Pipewire
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -92,19 +79,10 @@ in
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  # users.users.alice = {
-  #   isNormalUser = true;
-  #   extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-  #   packages = with pkgs; [
-  #     firefox
-  #     thunderbird
-  #   ];
-  # };
-
   # Enable fish shell for nix
   programs.fish.enable = true;
 
+  # User config
   users.users.${user} = {
     isNormalUser = true;
     extraGroups = [ "wheel" "video" "audio" "networkmanager" "lp" "scanner" ];
@@ -115,13 +93,8 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    wget
-    hyprland
-    open-vm-tools
-    wayland
+    vim
     xdg-utils
-    pciutils
   ];
 
   # Allow unfree packages
@@ -185,12 +158,4 @@ in
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.11"; # Did you read the comment?
-
-  home-manager.users.${user} = { pkgs, ... }: {
-    home.stateVersion = "22.11";
-    home.packages = [
-      pkgs.firefox
-    ];
-  };
-
 }
