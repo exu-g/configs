@@ -25,6 +25,7 @@ in
       pkgs.fira-code # fira code font
       pkgs.fwupd # firmware updates
       pkgs.fwupd-efi # firmware updates additional EFI stuff
+      pkgs.fish # fish shell
     ];
   };
 
