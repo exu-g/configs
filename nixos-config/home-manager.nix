@@ -14,6 +14,9 @@ in
     home.username = "root";
     home.homeDirectory = "/root";
     home.stateVersion = "22.11";
+    home.packages = with pkgs; [
+      kitty # terminfo support
+    ];
 
     programs = {
       fish = {
