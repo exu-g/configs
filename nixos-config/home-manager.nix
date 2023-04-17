@@ -18,7 +18,7 @@ in
     programs = {
       fish = {
         enable = true;
-        interactiveShellInit = (builtins.readFile .config/fish/conf.d/interactive.fish);
+        interactiveShellInit = (builtins.readFile ./config/fish/conf.d/interactive.fish);
         shellAliases = {
           wget = "wget -c";
         };
@@ -53,7 +53,7 @@ in
     programs = {
       fish = {
         enable = true;
-        interactiveShellInit = (builtins.readFile .config/fish/conf.d/interactive.fish);
+        interactiveShellInit = (builtins.readFile ./config/fish/conf.d/interactive.fish);
         shellAliases = {
           wget = "wget -c";
         };
