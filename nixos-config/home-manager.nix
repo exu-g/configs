@@ -18,10 +18,7 @@ in
     programs = {
       fish = {
         enable = true;
-        interactiveShellInit =
-''
-set fish_greeting "Good Morning! Nice day for fishing ain't it! Hu ha!"
-'';
+        interactiveShellInit = (builtins.readFile .config/fish/conf.d/interactive.fish);
         shellAliases = {
           wget = "wget -c";
         };
@@ -56,10 +53,7 @@ set fish_greeting "Good Morning! Nice day for fishing ain't it! Hu ha!"
     programs = {
       fish = {
         enable = true;
-        interactiveShellInit =
-''
-set fish_greeting "Good Morning! Nice day for fishing ain't it! Hu ha!"
-'';
+        interactiveShellInit = (builtins.readFile .config/fish/conf.d/interactive.fish);
         shellAliases = {
           wget = "wget -c";
         };
