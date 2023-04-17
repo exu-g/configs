@@ -92,7 +92,7 @@ in
     isNormalUser = true;
     extraGroups = [ "wheel" "video" "audio" "networkmanager" "lp" "scanner" ];
     initialPassword = "pass";
-    shell = pkgs.fish;
+    #shell = pkgs.fish;
   };
 
   # Allow unfree packages
