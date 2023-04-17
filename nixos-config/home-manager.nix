@@ -9,26 +9,29 @@ in
     <home-manager/nixos>
   ];
 
+  # root home
+
+  programs.fish.enable = true;
+
   # keep everything using home manager within this block
   home-manager.users.${user} = { pkgs, ... }: {
     home.username = "${user}";
     home.homeDirectory = "/home/${user}";
     home.stateVersion = "22.11";
-    home.packages = [
-      pkgs.firefox # browser
-      pkgs.kitty # terminal
-      pkgs.pciutils # lspci command
-      pkgs.git # git
-      pkgs.emacsPackages.doom # doom emacs
-      pkgs.acpilight # controlling laptop monitor backlight
-      pkgs.networkmanagerapplet # network configuration
-      pkgs.wofi # app launcher (wayland replacement for rofi)
-      pkgs.freetype # font rendering and configuration
-      pkgs.fira # fira sans font
-      pkgs.fira-code # fira code font
-      pkgs.fwupd # firmware updates
-      pkgs.fwupd-efi # firmware updates additional EFI stuff
-      pkgs.fish # fish shell
+    home.packages = with pkgs; [
+      firefox # browser
+      kitty # terminal
+      pciutils # lspci command
+      git # git
+      emacs # emacs editor
+      emacsPackages.doom # doom emacs configuration
+      acpilight # controlling laptop monitor backlight
+      networkmanagerapplet # network configuration
+      wofi # app launcher (wayland replacement for rofi)
+      freetype # font rendering and configuration
+      fira # fira sans font
+      fira-code # fira code font
+      fish # fish shell
     ];
 
     programs = {

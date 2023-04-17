@@ -84,15 +84,11 @@ in
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput.enable = true;
 
-  # Enable fish shell for nix
-  programs.fish.enable = true;
-
   # User config
   users.users.${user} = {
     isNormalUser = true;
     extraGroups = [ "wheel" "video" "audio" "networkmanager" "lp" "scanner" ];
     initialPassword = "pass";
-    #shell = pkgs.fish;
   };
 
   # Allow unfree packages
