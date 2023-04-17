@@ -1,4 +1,4 @@
-{ config, pkgs, home, ... }:
+{ config, pkgs, ... }:
 
 let
   user = "exu";
