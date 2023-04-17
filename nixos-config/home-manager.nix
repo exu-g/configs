@@ -27,4 +27,13 @@ in
       pkgs.fwupd-efi # firmware updates additional EFI stuff
     ];
   };
+
+  programs = {
+    fish = {
+      enable = true;
+      shellAliases = {
+        wget = "wget -c";
+      };
+    };
+  };
 }
