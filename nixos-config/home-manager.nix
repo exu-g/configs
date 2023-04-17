@@ -35,6 +35,10 @@ in
     programs = {
       fish = {
         enable = true;
+        interactiveShellInit =
+''
+set fish_greeting "Good Morning! Nice day for fishing ain't it! Hu ha!"
+'';
         shellAliases = {
           wget = "wget -c";
         };
