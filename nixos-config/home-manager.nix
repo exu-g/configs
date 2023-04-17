@@ -35,7 +35,8 @@ in
         wget = "wget -c";
       };
       functions = {
-        fish_prompt = ''
+        fish_prompt =
+''
 # Defined in /home/marc/.config/fish/functions/fish_prompt.fish @ line 2
 # slightly modified from defaults
     set -l last_pipestatus $pipestatus
