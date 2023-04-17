@@ -89,6 +89,11 @@ in
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput.enable = true;
 
+  # root config
+  users.users.root = {
+    shell = pkgs.fish;
+  }
+
   # User config
   users.users.${user} = {
     isNormalUser = true;
