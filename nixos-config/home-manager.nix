@@ -7,6 +7,7 @@ in
 {
   imports = [
     <home-manager/nixos>
+    <home-manager/modules/programs/fish.nix>
   ];
 
   home-manager.users.${user} = { pkgs, ... }: {
