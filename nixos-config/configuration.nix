@@ -92,7 +92,7 @@ in
   # root config
   users.users.root = {
     shell = pkgs.fish;
-  }
+  };
 
   # User config
   users.users.${user} = {
