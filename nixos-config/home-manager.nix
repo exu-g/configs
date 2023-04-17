@@ -11,8 +11,6 @@ in
 
   # root home
 
-  programs.fish.enable = true;
-
   # keep everything using home manager within this block
   home-manager.users.${user} = { pkgs, ... }: {
     home.username = "${user}";
