@@ -57,6 +57,7 @@ in
       fish # fish shell
       libnotify # notifications
       mako # notification daemon
+      xdg-desktop-portal-hyprland # desktop portal (hyprland fork)
     ];
 
     imports = [
