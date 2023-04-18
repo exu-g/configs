@@ -18,6 +18,10 @@ in
       kitty # terminfo support
     ];
 
+    imports = [
+      ./home-hyprland.nix
+    ];
+
     programs = {
       fish = {
         enable = true;
