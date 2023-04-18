@@ -55,6 +55,7 @@ in
       fira # fira sans font
       fira-code # fira code font
       fish # fish shell
+      libnotify # notifications
       mako # notification daemon
     ];
 
