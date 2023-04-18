@@ -55,6 +55,7 @@ in
       fira # fira sans font
       fira-code # fira code font
       fish # fish shell
+      mako # notification daemon
     ];
 
     imports = [
@@ -73,5 +74,7 @@ in
         };
       };
     };
+
+  services.mako.enable = true;
   };
 }
