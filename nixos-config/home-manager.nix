@@ -57,6 +57,10 @@ in
       fish # fish shell
     ];
 
+    imports = [
+      ./home-hyprland.nix
+    ];
+
     programs = {
       fish = {
         enable = true;
