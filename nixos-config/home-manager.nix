@@ -47,7 +47,7 @@ in
       libnotify # notifications
       mako # notification daemon
       xdg-desktop-portal-hyprland # desktop portal (hyprland fork)
-      neovim # text editor
+      #neovim # text editor
       yt-dlp # video downloader
     ];
 
