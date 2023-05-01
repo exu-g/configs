@@ -47,6 +47,7 @@ in
       # src: https://unix.stackexchange.com/questions/632879/how-to-set-a-system-wide-gtk-theme-in-nixos
       "gtk-2.0/gtkrc".source =  ./config/gtk-2.0/gtkrc;
       "gtk-3.0/settings.ini".source =  ./config/gtk-3.0/settings.ini;
+      "gtk-4.0/settings.ini".source =  ./config/gtk-4.0/settings.ini;
     };
   };
 
