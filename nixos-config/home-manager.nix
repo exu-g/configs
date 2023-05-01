@@ -40,10 +40,6 @@ in
       acpilight # controlling laptop monitor backlight
       networkmanagerapplet # network configuration
       wofi # app launcher (wayland replacement for rofi)
-      freetype # font rendering and configuration
-      fira # fira sans font
-      fira-code # fira code font
-      font-awesome # icons font
       fish # fish shell
       libnotify # notifications
       mako # notification daemon
