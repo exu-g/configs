@@ -12,7 +12,6 @@
     #hyprland # window manager
     wayland # wayland server
     xdg-utils # xdg directories, open, etc
-    sweet # gtk theme
   ];
 
 }
