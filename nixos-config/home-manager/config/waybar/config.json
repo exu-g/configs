@@ -11,7 +11,7 @@
     "sway/scratchpad",
     "custom/media"
   ],
-  "modules-center": ["sway/window"],
+  "modules-center": ["wlr/window"],
   "modules-right": [
     "mpd",
     "idle_inhibitor",
@@ -39,6 +39,10 @@
     },
     "on-scroll-up": "hyprctl dispatch workspace e+1",
     "on-scroll-down": "hyprctl dispatch workspace e-1"
+  },
+  "wlr/window": {
+    "format": "{}",
+    "separate-outputs": true
   },
 
   "sway/workspaces": {
