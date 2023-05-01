@@ -2,31 +2,21 @@
   "layer": "top",
   "position": "bottom",
   "height": 30,
-  "width": 1280,
+  "width": "",
   "spacing": 4,
-  "modules-left": [
-    "sway/workspaces",
-    "sway/mode",
-    "sway/scratchpad",
-    "custom/media"
-  ],
-  "modules-center": ["sway/window"],
-  "modules-right": [
-    "mpd",
-    "idle_inhibitor",
-    "pulseaudio",
-    "network",
-    "cpu",
-    "memory",
-    "temperature",
-    "backlight",
-    "keyboard-state",
-    "sway/language",
-    "battery",
-    "battery#bat2",
-    "clock",
-    "tray"
-  ],
+
+  "modules-left": ["wlr/workspaces"],
+  "modules-center": [],
+  "modules-right": [],
+
+  "wlr/workspaces": {
+    "all-outputs": true,
+    "on-click": "activate",
+    "format": "{name}",
+    "on-scroll-up": "hyprctl dispatch workspace e+1",
+    "on-scroll-down": "hyprctl dispatch workspace e-1"
+  },
+
   "sway/workspaces": {
     "disable-scroll": true,
     "all-outputs": true,
