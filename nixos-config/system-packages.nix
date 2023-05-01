@@ -14,6 +14,8 @@
     xdg-utils # xdg directories, open, etc
     sweet # gtk theme
     capitaine-cursors # cursor theme
+    tumbler # image files thumbnail generator (+ base requirement)
+    ffmpegthumbnailer # video files thumbnail generator
   ];
 
 }
