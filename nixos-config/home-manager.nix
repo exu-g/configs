@@ -108,20 +108,12 @@ in
       style = (builtins.readFile ./home-manager/config/waybar/style.css);
     };
 
-    # gtk theming
-    #gtk = {
-    #  enable = true;
-    #  theme = {
-    #    name = "Sweet-Dark";
-    #  };
-    #  iconTheme = {
-    #    name = "Sweet-Rainbow";
-    #  };
-    #  font = {
-    #    name = "Fira Sans";
-    #    size = 12;
-    #  };
-    #};
+    home.file = {
+      ".scripts/waybar/player-mpris-tail.py" = {
+        source = ./home-manager/scripts/waybar/player-mpris-tail.py;
+        executable = true;
+      };
+    };
 
   services.mako.enable = true;
   };
