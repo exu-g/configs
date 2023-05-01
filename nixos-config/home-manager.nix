@@ -43,6 +43,7 @@ in
       freetype # font rendering and configuration
       fira # fira sans font
       fira-code # fira code font
+      font-awesome # icons font
       fish # fish shell
       libnotify # notifications
       mako # notification daemon
