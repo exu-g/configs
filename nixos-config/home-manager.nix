@@ -49,7 +49,7 @@ in
       xdg-desktop-portal-hyprland # desktop portal (hyprland fork)
       #neovim # text editor
       yt-dlp # video downloader
-      sweet # gtk theme
+      #sweet # gtk theme
     ];
 
     imports = [
@@ -102,19 +102,19 @@ in
     };
 
     # gtk theming
-    gtk = {
-      enable = true;
-      theme = {
-        name = "Sweet-Dark";
-      };
-      iconTheme = {
-        name = "Sweet-Rainbow";
-      };
-      font = {
-        name = "Fira Sans";
-        size = 12;
-      };
-    };
+    #gtk = {
+    #  enable = true;
+    #  theme = {
+    #    name = "Sweet-Dark";
+    #  };
+    #  iconTheme = {
+    #    name = "Sweet-Rainbow";
+    #  };
+    #  font = {
+    #    name = "Fira Sans";
+    #    size = 12;
+    #  };
+    #};
 
   services.mako.enable = true;
   };
