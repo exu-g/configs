@@ -107,6 +107,13 @@ in
         name = "Sweet-Dark";
         package = pkgs.sweet;
       };
+      iconTheme = {
+        name = "Sweet-Rainbow";
+      };
+      font = {
+        name = "Fira Sans";
+        size = 12;
+      };
     };
 
   services.mako.enable = true;
