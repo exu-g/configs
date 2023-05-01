@@ -93,12 +93,14 @@ button:hover {
 
 #battery {
   background-color: #5d0456;
+  color: #f2daf0;
   /*color: #000000;*/
 }
 
 #battery.charging,
 #battery.plugged {
   /*color: #ffffff;*/
+  color: #f2daf0;
   background-color: #1d7b43;
 }
 
@@ -139,7 +141,7 @@ label:focus {
 */
 
 #idle_inhibitor {
-  background-color: #33022f;
+  background-color: #5d0456;
 }
 
 #idle_inhibitor.activated {
