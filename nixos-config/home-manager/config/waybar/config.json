@@ -4,9 +4,9 @@
   "height": 30,
   "spacing": 4,
 
-  "modules-left": ["wlr/workspaces"],
-  "modules-center": ["wlr/window"],
-  "modules-right": ["mpris", "battery", "clock", "tray"],
+  "modules-left": ["wlr/workspaces", "wlr/window"],
+  "modules-center": ["clock"],
+  "modules-right": ["mpris", "battery", "tray"],
 
   "wlr/workspaces": {
     "all-outputs": true,
@@ -42,6 +42,11 @@
     "format-plugged": "{capacity}% ",
     "format-alt": "{time} {icon}",
     "format-icons": ["", "", "", "", ""]
+  },
+  "clock": {
+    "timezone": "Europe/Zurich",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    "format-alt": "{:%Y-%m-%d}"
   },
 
   "sway/workspaces": {
@@ -115,11 +120,7 @@
     "icon-size": 21,
     "spacing": 10
   },
-  "clock": {
-    "timezone": "America/New_York",
-    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-    "format-alt": "{:%Y-%m-%d}"
-  },
+
   "cpu": {
     "format": "{usage}% ",
     "tooltip": false
