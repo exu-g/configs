@@ -100,6 +100,15 @@ in
       };
     };
 
+    # gtk theming
+    gtk = {
+      enable = true;
+      theme = {
+        name = "Sweet-Dark";
+        package = pkgs.sweet;
+      };
+    };
+
   services.mako.enable = true;
   };
 }
