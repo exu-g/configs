@@ -54,19 +54,27 @@ in
       ./home-manager/fish.nix
     ];
 
-    systemd.user.services = {
-      ssh-agent = {
-        Unit = {
-          Description = "SSH key agent";
+    systemd.user = {
+      # user services
+      services = {
+        # ssh-agent user service
+        ssh-agent = {
+          Unit = {
+            Description = "SSH key agent";
+          };
+          Service = {
+            Type = "simple";
+            Environment = "SSH_AUTH_SOCK=%t/ssh-agent.socket";
+            ExecStart = "/run/current-system/sw/bin/ssh-agent -D -a $SSH_AUTH_SOCK";
+          };
+          Install = {
+            WantedBy = [ "default.target" ];
+          };
         };
-        Service = {
-          Type = "simple";
-          Environment = "SSH_AUTH_SOCK=%t/ssh-agent.socket";
-          ExecStart = "/run/current-system/sw/bin/ssh-agent -D -a $SSH_AUTH_SOCK";
-        };
-        Install = {
-          WantedBy = [ "default.target" ];
-        };
+      };
+      # user environment variables
+      sessionVariables = {
+        SSH_AUTH_SOCK = "/run/user/1000/ssh-agent.socket";
       };
     };
 
