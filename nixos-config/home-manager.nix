@@ -20,20 +20,9 @@ in
 
     imports = [
       ./home-manager/hyprland.nix
+      ./home-manager/fish.nix
     ];
 
-    programs = {
-      fish = {
-        enable = true;
-        interactiveShellInit = (builtins.readFile ./config/fish/conf.d/interactive.fish);
-        shellAliases = {
-          wget = "wget -c";
-        };
-        functions = {
-          fish_prompt = (builtins.readFile ./config/fish/functions/fish_prompt.fish);
-        };
-      };
-    };
   };
 
   # keep everything using home manager within this block
@@ -62,20 +51,8 @@ in
 
     imports = [
       ./home-manager/hyprland.nix
+      ./home-manager/fish.nix
     ];
-
-    programs = {
-      fish = {
-        enable = true;
-        interactiveShellInit = (builtins.readFile ./config/fish/conf.d/interactive.fish);
-        shellAliases = {
-          wget = "wget -c";
-        };
-        functions = {
-          fish_prompt = (builtins.readFile ./config/fish/functions/fish_prompt.fish);
-        };
-      };
-    };
 
   services.mako.enable = true;
   };
