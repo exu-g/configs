@@ -4,7 +4,7 @@
   "height": 25,
   "spacing": 10,
 
-  "modules-left": ["wlr/workspaces", "wlr/window"],
+  "modules-left": ["wlr/workspaces", "hyprland/window"],
   "modules-center": ["clock"],
   "modules-right": ["mpris", "battery", "tray"],
 
@@ -19,7 +19,7 @@
     "on-scroll-up": "hyprctl dispatch workspace e+1",
     "on-scroll-down": "hyprctl dispatch workspace e-1"
   },
-  "wlr/window": {
+  "hyprland/window": {
     "format": "{}",
     "separate-outputs": true
   },
