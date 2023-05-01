@@ -80,6 +80,23 @@ in
       };
     };
 
+    # git configuration
+    programs.git.extraConfig = {
+      init = {
+        defaultBranch = "main";
+      };
+      user = {
+        name = "RealStickman";
+        email = "mrc@frm01.net";
+      };
+      gitlab = {
+        user = "RealStickman";
+      };
+      github = {
+        user = "RealStickman";
+      };
+    };
+
   services.mako.enable = true;
   };
 }
