@@ -6,15 +6,7 @@
 
   "modules-left": ["wlr/workspaces"],
   "modules-center": ["wlr/window"],
-  "modules-right": [
-    "mpris",
-    "idle_inhibitor",
-    "keyboard-state",
-    "battery",
-    "battery#bat2",
-    "clock",
-    "tray"
-  ],
+  "modules-right": ["mpris", "battery", "clock", "tray"],
 
   "wlr/workspaces": {
     "all-outputs": true,
@@ -32,14 +24,24 @@
     "separate-outputs": true
   },
   "mpris": {
-    "format": "DEFAULT: {player_icon} {dynamic}",
-    "format-paused": "DEFAULT: {status_icon} <i>{dynamic}</i>",
-    "player-icons": {
-      "default": "▶"
-    },
+    "format": "{status_icon} {dynamic}",
+    "format-paused": "{status_icon} <i>{dynamic}</i>",
     "status-icons": {
+      "playing": "▶",
       "paused": "⏸"
     }
+  },
+  "battery": {
+    "bat": "BAT0",
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{capacity}% {icon}",
+    "format-charging": "{capacity}% ",
+    "format-plugged": "{capacity}% ",
+    "format-alt": "{time} {icon}",
+    "format-icons": ["", "", "", "", ""]
   },
 
   "sway/workspaces": {
@@ -137,20 +139,6 @@
     "device": "acpi_video1",
     "format": "{percent}% {icon}",
     "format-icons": ["", "", "", "", "", "", "", "", ""]
-  },
-  "battery": {
-    "states": {
-      "good": 95,
-      "warning": 30,
-      "critical": 15
-    },
-    "format": "{capacity}% {icon}",
-    "format-charging": "{capacity}% ",
-    "format-plugged": "{capacity}% ",
-    "format-alt": "{time} {icon}",
-    "format-good": "",
-    "format-full": "",
-    "format-icons": ["", "", "", "", ""]
   },
   "battery#bat2": {
     "bat": "BAT2"
