@@ -38,6 +38,7 @@ in
     variables = {
       EDITOR = "nvim";
       VISUAL = "nvim";
+      SUDO_EDITOR = "nvim";
     };
     # remove nano from default packages
     defaultPackages = [ pkgs.perl pkgs.rsync pkgs.strace ];
