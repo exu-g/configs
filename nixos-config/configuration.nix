@@ -30,6 +30,7 @@ in
   programs.fish.enable = true;
 
   # set neovim as default
+  programs.neovim.enable = true;
   programs.neovim.defaultEditor = true;
 
   environment = {
