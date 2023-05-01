@@ -35,8 +35,8 @@ in
   environment = {
     shells = [ pkgs.fish ];
     variables = {
-      EDITOR = "/run/current-system/sw/bin/nvim";
-      VISUAL = "/run/current-system/sw/bin/nvim";
+      EDITOR = "nvim";
+      VISUAL = "nvim";
     };
     # remove nano from default packages
     defaultPackages = [ pkgs.perl pkgs.rsync pkgs.strace ];
