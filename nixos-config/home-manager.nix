@@ -52,6 +52,7 @@ in
       yt-dlp # video downloader
       #sweet # gtk theme
       waybar # status bar
+      playerctl # mpris
     ];
 
     imports = [
