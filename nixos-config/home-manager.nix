@@ -105,7 +105,7 @@ in
     programs.waybar = {
       enable = true;
       settings = {
-        mainBar = (builtins.readFile ./home-manager/config/waybar/config.json);
+        mainBar = (builtins.fromJSON (builtins.readFile ./home-manager/config/waybar/config.json));
       };
     };
 
