@@ -2,7 +2,6 @@
   "layer": "top",
   "position": "bottom",
   "height": 30,
-  "width": "",
   "spacing": 4,
 
   "modules-left": ["wlr/workspaces"],
