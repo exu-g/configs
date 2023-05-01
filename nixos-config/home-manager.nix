@@ -55,7 +55,7 @@ in
     ];
 
     systemd.user.services = {
-      service-name = {
+      ssh-agent = {
         Unit = {
           Description = "SSH key agent";
         };
