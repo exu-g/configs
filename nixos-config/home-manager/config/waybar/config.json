@@ -13,6 +13,7 @@
   ],
   "modules-center": ["wlr/window"],
   "modules-right": [
+    "mpris",
     "mpd",
     "idle_inhibitor",
     "pulseaudio",
@@ -43,6 +44,16 @@
   "wlr/window": {
     "format": "{}",
     "separate-outputs": true
+  },
+  "mpris": {
+    "format": "DEFAULT: {player_icon} {dynamic}",
+    "format-paused": "DEFAULT: {status_icon} <i>{dynamic}</i>",
+    "player-icons": {
+      "default": "▶"
+    },
+    "status-icons": {
+      "paused": "⏸"
+    }
   },
 
   "sway/workspaces": {
