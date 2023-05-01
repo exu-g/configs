@@ -16,6 +16,9 @@
     capitaine-cursors # cursor theme
     xfce.tumbler # image files thumbnail generator (+ base requirement)
     ffmpegthumbnailer # video files thumbnail generator
+    qt6.qtwayland # wayland for qt6
+    libsForQt5.qt5.qtwayland # wayland for at5
+    polkit_gnome # graphical authentication agent for polkit
   ];
 
 }
