@@ -104,7 +104,9 @@ in
 
     programs.waybar = {
       enable = true;
-      settings = (builtins.readFile ./home-manager/config/waybar/config.json);
+      settings = {
+        mainBar = (builtins.readFile ./home-manager/config/waybar/config.json);
+      };
     };
 
     # gtk theming
