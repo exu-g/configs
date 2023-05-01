@@ -19,7 +19,7 @@ in
     ];
 
     imports = [
-      ./home-hyprland.nix
+      ./home-manager/hyprland.nix
     ];
 
     programs = {
