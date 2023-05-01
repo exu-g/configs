@@ -45,7 +45,7 @@ in
     etc = {
       # gtk theme configuration
       # src: https://unix.stackexchange.com/questions/632879/how-to-set-a-system-wide-gtk-theme-in-nixos
-      "gtk-2.0".source =  ./config/gtk-2.0/.gtkrc-2.0;
+      "gtk-2.0".source =  ./config/gtk-2.0/gtkrc;
       "gtk-3.0".source =  ./config/gtk-3.0/settings.ini;
     };
   };
