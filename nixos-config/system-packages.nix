@@ -20,9 +20,11 @@
     libsForQt5.qt5.qtwayland # wayland for at5
     polkit_gnome # graphical authentication agent for polkit
     freetype # font rendering and configuration
+  ];
+
+  fonts.fonts = with pkgs; [
     fira # fira sans font
     fira-code # fira code font
     font-awesome # icons font
   ];
-
 }
