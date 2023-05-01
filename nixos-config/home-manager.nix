@@ -49,6 +49,7 @@ in
       xdg-desktop-portal-hyprland # desktop portal (hyprland fork)
       #neovim # text editor
       yt-dlp # video downloader
+      sweet # gtk theme
     ];
 
     imports = [
@@ -105,7 +106,6 @@ in
       enable = true;
       theme = {
         name = "Sweet-Dark";
-        package = pkgs.sweet;
       };
       iconTheme = {
         name = "Sweet-Rainbow";
