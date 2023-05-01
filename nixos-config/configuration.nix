@@ -42,6 +42,10 @@ in
     };
     # remove nano from default packages
     defaultPackages = [ pkgs.perl pkgs.rsync pkgs.strace ];
+    etc = {
+      "xdg/gtk-2.0".source =  ./config/xdg/gtk-2.0/.gtkrc-2.0;
+      "xdg/gtk-3.0".source =  ./config/xdg/gtk-3.0/settings.ini;
+    };
   };
 
   networking.hostName = "${hostname}"; # Define your hostname.
