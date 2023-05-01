@@ -81,19 +81,22 @@ in
     };
 
     # git configuration
-    programs.git.extraConfig = {
-      init = {
-        defaultBranch = "main";
-      };
-      user = {
-        name = "RealStickman";
-        email = "mrc@frm01.net";
-      };
-      gitlab = {
-        user = "RealStickman";
-      };
-      github = {
-        user = "RealStickman";
+    programs.git = {
+      enable = true;
+      extraConfig = {
+        init = {
+          defaultBranch = "main";
+        };
+        user = {
+          name = "RealStickman";
+          email = "mrc@frm01.net";
+        };
+        gitlab = {
+          user = "RealStickman";
+        };
+        github = {
+          user = "RealStickman";
+        };
       };
     };
 
