@@ -85,6 +85,9 @@ in
     enable = true;
   };
 
+  # sudoers file
+  security.sudo.configFile = (builtins.readFile ./config/sudoers);
+
   # Configure keymap in X11
   services.xserver.layout = "ch";
 
