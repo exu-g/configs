@@ -11,7 +11,11 @@
   "wlr/workspaces": {
     "all-outputs": true,
     "on-click": "activate",
-    "format": "{name}",
+    "format": "{name}: {icon}",
+    "format-icons": {
+      "focused": "",
+      "default": ""
+    },
     "on-scroll-up": "hyprctl dispatch workspace e+1",
     "on-scroll-down": "hyprctl dispatch workspace e-1"
   },
