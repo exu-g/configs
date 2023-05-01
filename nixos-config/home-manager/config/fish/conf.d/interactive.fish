@@ -31,5 +31,5 @@ set fish_color_cwd yellow
 
 # environment variables
 # SSH Agent
-#set SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/ssh-agent.socket"
-#export SSH_AUTH_SOCK
+set SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/ssh-agent.socket"
+export SSH_AUTH_SOCK
