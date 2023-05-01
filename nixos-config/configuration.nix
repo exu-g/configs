@@ -98,6 +98,11 @@ in
   # Configure keymap in X11
   services.xserver.layout = "ch";
 
+  # keyring
+  services.gnome.gnome-keyring.enable = true;
+  security.pam.services.${user}.enableGnomeKeyring = true;
+  programs.seahorse.enable = true;
+
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
