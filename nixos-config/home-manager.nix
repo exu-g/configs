@@ -47,6 +47,8 @@ in
       libnotify # notifications
       mako # notification daemon
       xdg-desktop-portal-hyprland # desktop portal (hyprland fork)
+      neovim # text editor
+      yt-dlp # video downloader
     ];
 
     imports = [
@@ -75,6 +77,8 @@ in
       # user environment variables
       sessionVariables = {
         SSH_AUTH_SOCK = "/run/user/1000/ssh-agent.socket";
+        EDITOR = "nvim";
+        VISUAL = "nvim";
       };
     };
 
