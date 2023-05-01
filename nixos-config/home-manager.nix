@@ -50,6 +50,7 @@ in
       #neovim # text editor
       yt-dlp # video downloader
       #sweet # gtk theme
+      waybar # status bar
     ];
 
     imports = [
@@ -99,6 +100,10 @@ in
           user = "RealStickman";
         };
       };
+    };
+
+    programs.waybar = {
+      enable = true;
     };
 
     # gtk theming
