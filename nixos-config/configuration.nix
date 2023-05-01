@@ -35,6 +35,8 @@ in
       EDITOR = "nvim";
       VISUAL = "nvim";
     };
+    # remove nano from default packages
+    defaultPackages = [ pkgs.perl pkgs.rsync pkgs.strace ];
   };
 
   networking.hostName = "${hostname}"; # Define your hostname.
