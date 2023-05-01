@@ -31,7 +31,8 @@
     "status-icons": {
       "playing": "▶",
       "paused": "⏸"
-    }
+    },
+    "max-length": 40
   },
   "battery": {
     "bat": "BAT0",
