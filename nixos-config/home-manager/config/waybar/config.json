@@ -32,7 +32,7 @@
       "playing": "▶",
       "paused": "⏸"
     },
-    "max-length": 40
+    "max-length": 10
   },
   "battery": {
     "bat": "BAT0",
