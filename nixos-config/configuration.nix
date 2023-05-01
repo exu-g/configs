@@ -36,6 +36,9 @@ in
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
 
+  # disable global firewall for the time being
+  networking.firewall.enable = false;
+
   # Set your time zone.
   time.timeZone = "Europe/Zurich";
 
