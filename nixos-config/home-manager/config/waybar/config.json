@@ -11,6 +11,7 @@
   "wlr/workspaces": {
     "format": "{name}: {icon}",
     "format-icons": {
+      "urgent": "",
       "active": "",
       "default": ""
     },
