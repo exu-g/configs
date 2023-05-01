@@ -4,24 +4,25 @@
   "height": 25,
   "spacing": 10,
 
-  "modules-left": ["wlr/workspaces", "hyprland/window"],
+  "modules-left": ["wlr/workspaces", "hyprland/window", "hyprland/submap"],
   "modules-center": ["clock"],
   "modules-right": ["mpris", "battery", "tray"],
 
   "wlr/workspaces": {
-    "all-outputs": true,
-    "on-click": "activate",
     "format": "{name}: {icon}",
     "format-icons": {
-      "focused": "",
+      "active": "",
       "default": ""
     },
-    "on-scroll-up": "hyprctl dispatch workspace e+1",
-    "on-scroll-down": "hyprctl dispatch workspace e-1"
+    "sort-by-number": true
   },
   "hyprland/window": {
     "format": "{}",
     "separate-outputs": true
+  },
+  "hyprland/submap": {
+    "format": "{}",
+    "tooltip": false
   },
   "mpris": {
     "format": "{status_icon} {dynamic}",
