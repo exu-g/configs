@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, ... }:
 
 let
   user = "exu";
@@ -105,8 +105,7 @@ in
     programs.waybar = {
       enable = true;
       settings = {
-        mainBar = builtins.fromJSON (builtins.readFile ./home-manager/config/waybar/config.json);
-        #mainBar = (lib.importJSON ./home-manager/config/waybar/config.json);
+        mainBar = [ builtins.fromJSON (builtins.readFile ./home-manager/config/waybar/config.json) ];
       };
     };
 
