@@ -104,6 +104,7 @@ in
 
     programs.waybar = {
       enable = true;
+      settings = (builtins.readFile ./config/waybar/config.json);
     };
 
     # gtk theming
