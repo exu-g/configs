@@ -29,7 +29,13 @@ in
   # Enable completions by nix
   programs.fish.enable = true;
 
-  environment.shells = [ pkgs.fish ];
+  environment = {
+    shells = [ pkgs.fish ];
+    variables = {
+      EDITOR = "nvim";
+      VISUAL = "nvim";
+    };
+  };
 
   networking.hostName = "${hostname}"; # Define your hostname.
   # Pick only one of the below networking options.

@@ -34,5 +34,5 @@ set fish_color_cwd yellow
 set SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/ssh-agent.socket"
 export SSH_AUTH_SOCK
 # text editor
-set EDITOR nvim
-set VISUAL nvim
+#set EDITOR nvim
+#set VISUAL nvim
