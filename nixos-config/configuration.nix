@@ -29,6 +29,9 @@ in
   # Enable completions by nix
   programs.fish.enable = true;
 
+  # set neovim as default
+  programs.neovim.defaultEditor = true;
+
   environment = {
     shells = [ pkgs.fish ];
     variables = {
