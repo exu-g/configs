@@ -4,26 +4,12 @@
   "height": 30,
   "spacing": 4,
 
-  "modules-left": [
-    "wlr/workspaces",
-    "sway/workspaces",
-    "sway/mode",
-    "sway/scratchpad",
-    "custom/media"
-  ],
+  "modules-left": ["wlr/workspaces"],
   "modules-center": ["wlr/window"],
   "modules-right": [
     "mpris",
-    "mpd",
     "idle_inhibitor",
-    "pulseaudio",
-    "network",
-    "cpu",
-    "memory",
-    "temperature",
-    "backlight",
     "keyboard-state",
-    "sway/language",
     "battery",
     "battery#bat2",
     "clock",
