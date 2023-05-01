@@ -105,6 +105,7 @@ in
       settings = {
         mainBar = (builtins.fromJSON (builtins.readFile ./home-manager/config/waybar/config.json));
       };
+      style = (builtins.readFile ./home-manager/config/waybar/style.css);
     };
 
     # gtk theming
