@@ -129,7 +129,7 @@ in
         #recursive = true;
       };
       # xfce4 settings
-      ".config/xfce4".source = ./home-manager/config/xfce4;
+      #".config/xfce4".source = ./home-manager/config/xfce4;
       # xdg user dirs
       ".config/user-dirs.dirs".source = ./home-manager/config/user-dirs.dirs;
       # xdg user locales
