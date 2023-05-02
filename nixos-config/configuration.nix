@@ -86,6 +86,9 @@ in
     };
   };
 
+  # enable gvfs service
+  services.gvfs.enable = true;
+
   # Hyprland
   security.polkit.enable = true;
   programs.hyprland = {
