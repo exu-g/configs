@@ -9,6 +9,7 @@
     fwupd # firmware updates
     fwupd-efi # firmware updates additional EFI stuff
     wget # get stuff from the net
+    gvfs # virtual file system support
     #hyprland # window manager
     wayland # wayland server
     xdg-utils # xdg directories, open, etc
