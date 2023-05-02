@@ -45,7 +45,6 @@ in
       mako # notification daemon
       xdg-desktop-portal-hyprland # desktop portal (hyprland fork)
       #neovim # text editor
-      gvfs # virtual file system support
       yt-dlp # video downloader
       #sweet # gtk theme
       waybar # status bar
