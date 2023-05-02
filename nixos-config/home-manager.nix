@@ -49,6 +49,7 @@ in
       #sweet # gtk theme
       waybar # status bar
       playerctl # mpris
+      xfce.thunar # file manager
     ];
 
     imports = [
@@ -109,9 +110,20 @@ in
     };
 
     home.file = {
+      # Scripts
       ".scripts/waybar/player-mpris-tail.py" = {
         source = ./home-manager/scripts/waybar/player-mpris-tail.py;
         executable = true;
+      };
+      # Thunar configuration
+      ".config/Thunar" = {
+        source = ./home-manager/config/Thunar;
+        #recursive = true;
+      };
+      # templates
+      ".config/Vorlagen" = {
+        source = ./home-manager/config/Vorlagen;
+        #recursive = true;
       };
     };
 
