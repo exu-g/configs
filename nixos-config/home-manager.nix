@@ -51,6 +51,7 @@ in
       playerctl # mpris
       xfce.thunar # file manager
       xfce.thunar-archive-plugin # manage archives in thunar
+      xfce.xfce4-settings # xfce settings manager
     ];
 
     imports = [
