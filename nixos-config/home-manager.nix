@@ -119,12 +119,12 @@ in
       # Thunar configuration
       ".config/Thunar" = {
         source = ./home-manager/config/Thunar;
-        #recursive = true;
+        recursive = true;
       };
       # templates
       ".config/Vorlagen" = {
         source = ./home-manager/config/Vorlagen;
-        #recursive = true;
+        recursive = true;
       };
     };
 
