@@ -117,15 +117,17 @@ in
         executable = true;
       };
       # Thunar configuration
-      ".config/Thunar/" = {
+      ".config/Thunar" = {
         source = ./home-manager/config/Thunar;
-        recursive = true;
+        #recursive = true;
       };
       # templates
-      ".config/Vorlagen/" = {
+      ".config/Vorlagen" = {
         source = ./home-manager/config/Vorlagen;
-        recursive = true;
+        #recursive = true;
       };
+      # xfce4 settings
+      ".config/xfce4".source = ./home-manager/config/xfce4;
       # xdg user dirs
       ".config/user-dirs.dirs".source = ./home-manager/config/user-dirs.dirs;
       # xdg user locales
