@@ -50,6 +50,7 @@ in
       waybar # status bar
       playerctl # mpris
       xfce.thunar # file manager
+      xfce.thunar-archive-plugin # manage archives in thunar
     ];
 
     imports = [
