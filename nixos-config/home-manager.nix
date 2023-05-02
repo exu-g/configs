@@ -117,12 +117,12 @@ in
         executable = true;
       };
       # Thunar configuration
-      ".config/Thunar" = {
+      ".config/Thunar/" = {
         source = ./home-manager/config/Thunar;
         recursive = true;
       };
       # templates
-      ".config/Vorlagen" = {
+      ".config/Vorlagen/" = {
         source = ./home-manager/config/Vorlagen;
         recursive = true;
       };
