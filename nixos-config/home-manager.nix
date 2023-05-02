@@ -126,6 +126,10 @@ in
         source = ./home-manager/config/Vorlagen;
         recursive = true;
       };
+      # xdg user dirs
+      ".config/user-dirs.dirs".source = ./home-manager/config/user-dirs.dirs;
+      # xdg user locales
+      ".config/user-dirs.locale".source = ./home-manager/config/user-dirs.locale;
     };
 
   services.mako.enable = true;
