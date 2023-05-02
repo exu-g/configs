@@ -12,6 +12,7 @@
     #hyprland # window manager
     wayland # wayland server
     xdg-utils # xdg directories, open, etc
+    xdg-user-dirs # directories
     sweet # gtk theme
     capitaine-cursors # cursor theme
     xfce.tumbler # image files thumbnail generator (+ base requirement)
