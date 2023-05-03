@@ -178,10 +178,10 @@ in
   swapDevices = [ { device = "/swap/swapfile"; } ];
 
   # Enable automatic package upgrades
-  system.autoUpgrade = {
-    enable = true;
-    channel = "https://nixos.org/channels/nixos-unstable";
-  };
+  #system.autoUpgrade = {
+  #  enable = true;
+  #  channel = "https://nixos.org/channels/nixos-unstable";
+  #};
 
   # Enable automatic garbage collection
   nix = {
