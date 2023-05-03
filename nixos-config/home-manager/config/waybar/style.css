@@ -2,6 +2,8 @@
   /* `otf-font-awesome` is required to be installed for icons */
   font-family: FontAwesome, Fira Sans, sans-serif;
   font-size: 12px;
+  margin-left: 5;
+  margin-right: 5;
 }
 
 window#waybar {
