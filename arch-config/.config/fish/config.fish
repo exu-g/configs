@@ -193,7 +193,7 @@ alias activate='source venv/bin/activate.fish'
 #alias wgqd="sudo wg-quick down"
 
 # lsblk to list more info
-alias lsblkf="lsblk -o NAME,FSTYPE,LABEL,MOUNTPOINT,SIZE,MODEL,UUID"
+alias lsblkf="lsblk -o NAME,LABEL,RM,SIZE,RO,TYPE,FSTYPE,MOUNTPOINTS,MODEL,UUID"
 
 # use color for ip command
 alias ip="ip -c"
