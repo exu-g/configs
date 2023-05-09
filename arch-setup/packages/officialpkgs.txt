@@ -109,6 +109,7 @@ traceroute
 transmission-remote-gtk
 ttf-fira-code
 ttf-fira-sans
+udiskie
 unace
 unrar
 unzip
