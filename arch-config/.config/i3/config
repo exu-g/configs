@@ -497,6 +497,9 @@ exec --no-startup-id xfce4-power-manager &
 # notifications
 exec --no-startup-id /usr/bin/dunst &
 
+# disk management
+exec --no-startup-id udiskie --no-automount --tray &
+
 # thunar daemon
 #exec --no-startup-id /usr/bin/thunar --daemon &
 
