@@ -85,3 +85,6 @@
 ;; work around emacs hanging when opening any python requirements.txt file
 ;; see issue https://github.com/doomemacs/doomemacs/issues/5998
 (advice-add #'pip-requirements-fetch-packages :override #'ignore)
+
+;; Enable nimlangserver for nim files
+(add-hook 'nim-mode-hook #'lsp)
