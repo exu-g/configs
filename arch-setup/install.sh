@@ -42,7 +42,7 @@ fi
 
 # fix install problems
 echo Updating keyring
-sudo pacman -Sy archlinux-keyring
+sudo pacman -Sy --noconfirm archlinux-keyring
 echo Updating repos and packages
 sudo pacman -Syu
 echo Installing pip
@@ -250,11 +250,6 @@ echo Installing default pacman programs
 sudo pacman -S --needed - <"$setupdir/packages/officialpkgs.txt"
 echo Installed official programs
 
-# theming
-echo Installing themes and icons
-paru -S --needed - <"$setupdir/packages/theme-packages.txt"
-echo Installed themes and icons
-
 #install wine
 echo Installing wine
 sudo pacman -S --needed - <"$setupdir/packages/winepkgs.txt"
@@ -286,6 +281,11 @@ paru -S --needed - <"$setupdir/packages/aurpkgs.txt"
 # TODO for ffmpeg-normalize, use ffmpeg-normalize (1)
 # TODO for nohang, use nohang (1)
 echo Installed AUR programs
+
+# theming
+echo Installing themes and icons
+paru -S --needed - <"$setupdir/packages/theme-packages.txt"
+echo Installed themes and icons
 
 ###################
 #selected programs#
