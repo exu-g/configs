@@ -244,7 +244,7 @@ rm "$setupdir/notfoundpackages.txt"
 echo Uninstalling unused packages
 #sudo pacman -Rns - <"$setupdir/packages/uninstall.txt"
 while read package; do
-    yes | sudo pacman -Rns "$package"
+    sudo pacman -Rns --noconfirm "$package"
 done <"$setupdir/packages/uninstall.txt"
 echo Uninstalled unused packages
 
@@ -252,7 +252,7 @@ echo Uninstalled unused packages
 echo Installing default pacman programs
 #sudo pacman -S --needed - <"$setupdir/packages/officialpkgs.txt"
 while read package; do
-    yes | sudo pacman -S --needed "$package" || echo "$package" >>"$setupdir/notfoundpackages.txt"
+    sudo pacman -S --needed --noconfirm "$package" || echo "$package" >>"$setupdir/notfoundpackages.txt"
 done <"$setupdir/packages/officialpkgs.txt"
 echo Installed official programs
 
@@ -260,7 +260,7 @@ echo Installed official programs
 echo Installing wine
 #sudo pacman -S --needed - <"$setupdir/packages/winepkgs.txt"
 while read package; do
-    yes | sudo pacman -S --needed "$package" || echo "$package" >>"$setupdir/notfoundpackages.txt"
+    sudo pacman -S --needed --noconfirm "$package" || echo "$package" >>"$setupdir/notfoundpackages.txt"
 done <"$setupdir/packages/winepkgs.txt"
 echo Installed wine
 
