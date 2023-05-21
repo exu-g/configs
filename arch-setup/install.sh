@@ -253,7 +253,6 @@ echo Installing default pacman programs
 #sudo pacman -S --needed - <"$setupdir/packages/officialpkgs.txt"
 while read package; do
     yes | sudo pacman -S --needed "$package" || echo "$package" >>"$setupdir/notfoundpackages.txt"
-    exit
 done <"$setupdir/packages/officialpkgs.txt"
 echo Installed official programs
 
