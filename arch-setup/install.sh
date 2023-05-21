@@ -238,6 +238,8 @@ for choice in $choices; do
     esac
 done
 
+rm "$setupdir/notfoundpackages.txt"
+
 #uninstalling unused packages
 echo Uninstalling unused packages
 #sudo pacman -Rns - <"$setupdir/packages/uninstall.txt"
@@ -251,6 +253,7 @@ echo Installing default pacman programs
 #sudo pacman -S --needed - <"$setupdir/packages/officialpkgs.txt"
 while read package; do
     sudo pacman -S --needed "$package" || echo "$package" >>"$setupdir/notfoundpackages.txt"
+    exit
 done <"$setupdir/packages/officialpkgs.txt"
 echo Installed official programs
 
