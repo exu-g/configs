@@ -1,5 +1,6 @@
 acpilight
 age
+alsa-utils
 arandr
 bandwhich
 base-devel
@@ -14,6 +15,7 @@ dnsutils
 dosfstools
 dunst
 e2fsprogs
+easyeffects
 exfatprogs
 f2fs-tools
 fakeroot
@@ -83,10 +85,15 @@ os-prober
 os-prober
 p7zip
 pacman-contrib
+pavucontrol
 phonon-qt5-gstreamer
 picom
 piper
+pipewire
+pipewire-alsa
 pipewire-jack
+pipewire-media-session
+pipewire-pulse
 playerctl
 polkit-gnome
 python-dbus
