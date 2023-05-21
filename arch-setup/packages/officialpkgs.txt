@@ -83,8 +83,10 @@ os-prober
 os-prober
 p7zip
 pacman-contrib
+phonon-qt5-gstreamer
 picom
 piper
+pipewire-jack
 playerctl
 polkit-gnome
 python-dbus
@@ -119,6 +121,7 @@ webkit2gtk
 wget
 whois
 wireguard-tools
+wireplumber
 xdg-user-dirs
 xdotool
 xf86-input-elographics

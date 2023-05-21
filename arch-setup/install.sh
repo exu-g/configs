@@ -16,9 +16,22 @@ if ! pacman -Sl multilib &>/dev/null; then
     exit 1
 fi
 
+# NOTE on unattended pacman installing
+# Option 1: Will assume the default choice
+#--noconfirm
+# Option 2: Will always choose "yes", locale override needed to work all the time (might fail for other locales)
+#yes | LC_ALL=en_US.UTF-8 pacman ...
+#
+# excpect & send
+
 # fix install problems
-sudo pacman -Syu
-sudo pacman -S --needed python-pip
+echo Updating keyring
+sudo pacman -Sy --noconfirm archlinux-keyring
+echo Updating repos and packages
+sudo pacman -Syu --noconfirm
+echo Installing pip
+sudo pacman -S --needed --noconfirm python-pip
+echo Select packages to install
 
 cmd=(dialog --separate-output --checklist "Select Desktop environment/Window manager:" 22 76 16)
 options=(0 "[DE] xfce4" off # any option can be set to default to "on"
@@ -213,20 +226,12 @@ done
 
 #uninstalling unused packages
 echo Uninstalling unused packages
-sudo pacman -Rns - <"$setupdir/packages/uninstall.txt"
+sudo pacman -Rns --noconfirm - <"$setupdir/packages/uninstall.txt"
 echo Uninstalled unused packages
-
-# find all repos
-sudo pacman -Sy
-
-#update stuff
-echo Updating packages
-sudo pacman -Syu
-echo Updated packages
 
 #pacman programs
 echo Installing default pacman programs
-sudo pacman -S --needed - <"$setupdir/packages/officialpkgs.txt"
+sudo pacman -S --needed --noconfirm - <"$setupdir/packages/officialpkgs.txt"
 echo Installed official programs
 
 # install paru-bin with yay, or download paru from github
@@ -243,7 +248,7 @@ fi
 
 # audio
 echo Installing audio programs
-paru -S --needed - <"$setupdir/packages/audiopkgs.txt"
+paru -S --needed --noconfirm - <"$setupdir/packages/audiopkgs.txt"
 echo Installed audio programs
 
 #AUR
@@ -253,12 +258,12 @@ echo Installed AUR programs
 
 # theming
 echo Installing themes and icons
-paru -S --needed - <"$setupdir/packages/theme-packages.txt"
+paru -S --needed --noconfirm - <"$setupdir/packages/theme-packages.txt"
 echo Installed themes and icons
 
 #install wine
 echo Installing wine
-sudo pacman -S --needed - <"$setupdir/packages/winepkgs.txt"
+sudo pacman -S --noconfirm --needed - <"$setupdir/packages/winepkgs.txt"
 echo Installed wine
 
 ###################
@@ -267,12 +272,18 @@ echo Installed wine
 echo Installing selected programs
 
 # install selected packages
-echo Installing from official repository
-sudo pacman -S --needed - <"$setupdir/selectedpkgs.txt"
+if [ -f "$setupdir/selectedpkgs.txt" ]; then
+    echo Installing from official repository
+    # NOTE || true to continue if no packages have been selected
+    sudo pacman -S --needed --noconfirm - <"$setupdir/selectedpkgs.txt" || true
+fi
 
 # install selected aur packages
-echo Installing from AUR
-paru -S --needed - <"$setupdir/aurselectedpkgs.txt"
+if [ -f "$setupdir/aurselectedpkgs.txt" ]; then
+    echo Installing from AUR
+    # NOTE || true to continue if no packages have been selected
+    paru -S --needed --noconfirm - <"$setupdir/aurselectedpkgs.txt" || true
+fi
 
 #devtools
 if [ $in_doomemacs -eq 1 ]; then
