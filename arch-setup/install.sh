@@ -42,11 +42,11 @@ fi
 
 # fix install problems
 echo Updating keyring
-sudo pacman -Sy --noconfirm archlinux-keyring
+sudo pacman -Sy archlinux-keyring
 echo Updating repos and packages
-sudo pacman -Syu --noconfirm
+sudo pacman -Syu
 echo Installing pip
-sudo pacman -S --needed --noconfirm python-pip
+sudo pacman -S --needed python-pip
 echo Select packages to install
 
 cmd=(dialog --separate-output --checklist "Select Desktop environment/Window manager:" 22 76 16)
@@ -242,22 +242,22 @@ done
 
 #uninstalling unused packages
 echo Uninstalling unused packages
-sudo pacman -Rns --noconfirm - <"$setupdir/packages/uninstall.txt"
+sudo pacman -Rns - <"$setupdir/packages/uninstall.txt"
 echo Uninstalled unused packages
 
 #pacman programs
 echo Installing default pacman programs
-sudo pacman -S --needed --noconfirm - <"$setupdir/packages/officialpkgs.txt"
+sudo pacman -S --needed - <"$setupdir/packages/officialpkgs.txt"
 echo Installed official programs
 
 # theming
 echo Installing themes and icons
-paru -S --needed --noconfirm - <"$setupdir/packages/theme-packages.txt"
+paru -S --needed - <"$setupdir/packages/theme-packages.txt"
 echo Installed themes and icons
 
 #install wine
 echo Installing wine
-sudo pacman -S --noconfirm --needed - <"$setupdir/packages/winepkgs.txt"
+sudo pacman -S --needed - <"$setupdir/packages/winepkgs.txt"
 echo Installed wine
 
 # install paru-bin with yay, or download paru from github
@@ -296,14 +296,14 @@ echo Installing selected programs
 if [ -f "$setupdir/selectedpkgs.txt" ]; then
     echo Installing from official repository
     # NOTE || true to continue if no packages have been selected
-    sudo pacman -S --needed --noconfirm - <"$setupdir/selectedpkgs.txt" || true
+    sudo pacman -S --needed - <"$setupdir/selectedpkgs.txt" || true
 fi
 
 # install selected aur packages
 if [ -f "$setupdir/aurselectedpkgs.txt" ]; then
     echo Installing from AUR
     # NOTE || true to continue if no packages have been selected
-    paru -S --needed --noconfirm - <"$setupdir/aurselectedpkgs.txt" || true
+    paru -S --needed - <"$setupdir/aurselectedpkgs.txt" || true
 fi
 
 #devtools
