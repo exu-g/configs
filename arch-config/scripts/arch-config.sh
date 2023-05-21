@@ -52,6 +52,7 @@ git clone https://gitlab.com/RealStickman-arch/config.git &>/dev/null
 # make sure to use master branch
 #cd config
 #git checkout master &>/dev/null
+#git checkout wayland &>/dev/null
 #cd ..
 
 # check if the install scripts are the same
@@ -128,8 +129,8 @@ fi
 if [[ -d ~/.config/gtk-3.0 ]]; then
     rsync -ah ~/.config/gtk-3.0 ~/old_dat/.config/
 fi
-if [[ -d ~/.config/i3 ]]; then
-    rsync -ah ~/.config/i3 ~/old_dat/.config/
+if [[ -d ~/.config/sway ]]; then
+    rsync -ah ~/.config/sway ~/old_dat/.config/
 fi
 if [[ -d ~/.config/neofetch ]]; then
     rsync -ah ~/.config/neofetch ~/old_dat/.config/
@@ -206,12 +207,23 @@ cp -r ~/config/.local/ ~/
 #cp -r ~/config/.mozilla/firefox/default-release/* ~/.mozilla/firefox/*.default-release/
 #cp -r ~/config/.easystroke ~/
 #cp -r ~/config/.elvish ~/
+# NOTE find fails if the top level directory is not found
+if [[ -d ~/.mozilla/firefox ]]; then
+    # NOTE check if firefox default-release directory exists. 1 is good, 0 is bad
+    firefoxdir=$(find ~/.mozilla/firefox/ -name \*.default-release | wc -l)
+    if [[ $firefoxdir -eq 1 ]]; then
+        cp -r ~/config/.mozilla/firefox/default-release/* ~/.mozilla/firefox/*.default-release/
+    else
+        echo "Please launch firefox and then update the config again"
+    fi
+else
+    echo "Please launch firefox and then update the config again"
+fi
 cp -r ~/config/.doom.d ~/
 cp -r ~/config/.ssh ~/
 echo Copied folders
 
 #copy single files
-cp -r ~/config/.bashrc ~/
 cp -r ~/config/.face ~/
 cp -r ~/config/.gtkrc-2.0 ~/
 cp -r ~/config/.gitconfig ~/
@@ -273,14 +285,14 @@ git clone https://gitlab.com/RealStickman-arch/themes.git &>/dev/null
 seltheme="$(cat "$HOME/.seltheme")"
 if [[ "$seltheme" == "nyarch" ]]; then
     #cp -r "./themes/nyarch/i3" "$HOME/.config/"
-    cat "./themes/nyarch/i3/color" >>"$HOME/.config/i3/config"
+    cat "./themes/nyarch/i3/color" >>"$HOME/.config/sway/config"
     cp -r "./themes/nyarch/polybar" "$HOME/.config/"
     #cp -r "./themes/nyarch/neofetch/lowpoly_flamegirl_blue.txt" "$HOME/.config/neofetch/lowpoly_flamegirl.txt"
     #cp "./themes/.fehbg-nyarch" "$HOME/.fehbg"
     #sed -i 's/^NAME=".*"/NAME="Rawrch Linyux"/' /etc/os-release
 elif [[ "$seltheme" == "space-pink" ]]; then
     #cp -r "./themes/space-pink/i3" "$HOME/.config/"
-    cat "./themes/space-pink/i3/color" >>"$HOME/.config/i3/config"
+    cat "./themes/space-pink/i3/color" >>"$HOME/.config/sway/config"
     cp -r "./themes/space-pink/polybar" "$HOME/.config/"
     #cp -r "./themes/space-pink/neofetch/lowpoly_flamegirl_orange.txt" "$HOME/.config/neofetch/lowpoly_flamegirl.txt"
     #cp "./themes/.fehbg-space-pink" "$HOME/.fehbg"
@@ -444,7 +456,7 @@ sudo chmod 600 -R /etc/sudoers.d/
 
 #make bash scripts executable
 chmod +x -R ~/.config/polybar/
-chmod +x -R ~/.config/i3/scripts
+chmod +x -R ~/.config/sway/scripts
 chmod +x -R ~/scripts
 
 # make applications executable
@@ -466,8 +478,10 @@ EOF
 # reload applications
 update-desktop-database ~/.local/share/applications/
 
-#sync doom-emacs
-~/.emacs.d/bin/doom sync
+# sync doom-emacs only if it is installed
+if [[ -f ~/.emacs.d/bin/doom ]]; then
+    ~/.emacs.d/bin/doom sync
+fi
 
 # disable freedesktop notification daemon
 if [[ -f "/usr/share/dbus-1/services/org.freedesktop.Notifications.service" ]]; then
@@ -481,12 +495,16 @@ pkill dunst && nohup dunst &
 systemctl --user daemon-reload
 
 # reload .Xresources
+# TODO fails without display
+set +e
 if [[ -f "$HOME/.Xresources" ]]; then
     xrdb ~/.Xresources
 fi
 
 # execute feh
+# TODO fails without display
 "$HOME/.fehbg"
+set -e
 
 # NOTE working now
 # if [[ "$(ps aux | grep "FIXME")" ]]; then ...
@@ -522,5 +540,4 @@ fi
 exec "$(getent passwd $LOGNAME | cut -d: -f7)"
 
 # exit successfully
-$(exit 0)
-echo "$?"
+exit 0
