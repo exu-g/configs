@@ -344,7 +344,7 @@ if [ $in_arco_hp -eq 1 ]; then
 fi
 
 # install nix
-curl -sSf -L https://install.determinate.systems/nix | sh -s -- install
+#curl -sSf -L https://install.determinate.systems/nix | sh -s -- install
 
 ##############################
 #####   Configuration    #####
