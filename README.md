@@ -5,4 +5,7 @@ Mostly focused on ArchLinux, although there is also a NixOS configuration and in
 
 - [arch-config](./arch-config)
 - [arch-setup](./arch-setup)
+- [arch-themes](./arch-themes)
 - [easyffmpeg](./easyffmpeg)
+- [music-normalize](./music-normalize)
+- [nixos-config](./nixos-config)
