@@ -368,7 +368,6 @@ sudo systemctl start vnstat
 
 # setup autotrash
 autotrash -td 5 --install
-systemctl --user start autotrash
 systemctl --user enable autotrash.timer
 
 # enable lockscreen for systemd
@@ -390,11 +389,11 @@ sudo locale-gen
 fc-cache -f
 
 # download grub theme
-git clone https://github.com/xenlism/Grub-themes.git
-cd "Grub-themes/xenlism-grub-arch-1080p/"
-sudo bash install.sh
+#git clone https://github.com/xenlism/Grub-themes.git
+#cd "Grub-themes/xenlism-grub-arch-1080p/"
+#sudo bash install.sh
 # go back
-cd ../../
+#cd ../../
 
 echo Setting config
 bash ~/configs/arch-config/install.sh
