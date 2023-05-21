@@ -234,6 +234,16 @@ echo Installing default pacman programs
 sudo pacman -S --needed --noconfirm - <"$setupdir/packages/officialpkgs.txt"
 echo Installed official programs
 
+# theming
+echo Installing themes and icons
+paru -S --needed --noconfirm - <"$setupdir/packages/theme-packages.txt"
+echo Installed themes and icons
+
+#install wine
+echo Installing wine
+sudo pacman -S --noconfirm --needed - <"$setupdir/packages/winepkgs.txt"
+echo Installed wine
+
 # install paru-bin with yay, or download paru from github
 if [[ $(pacman -Q | grep yay) ]] && [[ ! $(pacman -Q | grep paru) ]]; then
     echo "Installing paru"
@@ -246,25 +256,20 @@ elif [[ ! $(pacman -Q | grep yay) ]] && [[ ! $(pacman -Q | grep paru) ]]; then
     cd ..
 fi
 
-# audio
-echo Installing audio programs
-paru -S --needed --noconfirm - <"$setupdir/packages/audiopkgs.txt"
-echo Installed audio programs
-
 #AUR
 echo Installing default AUR programs
 paru -S --needed - <"$setupdir/packages/aurpkgs.txt"
+# TODO for btrfsmaintenance, use btrfsmaintenance (1)
+# TODO for jellyfin-media-player, use jellyfin-media-player (1)
+# TODO for java-environment, use jdk-openjdk (1)
+# TODO for cargo, use rust (1)
+# TODO for ttf-iosevka, use ttf-iosevka (1)
+# TODO for ttf-ms-fonts, use ttf-ms-fonts (1)
+# TODO for ttf-vista-fonts, use ttf-vista-fonts (1)
+# TODO for wps-office, use wps-office (1)
+# TODO for ffmpeg-normalize, use ffmpeg-normalize (1)
+# TODO for nohang, use nohang (1)
 echo Installed AUR programs
-
-# theming
-echo Installing themes and icons
-paru -S --needed --noconfirm - <"$setupdir/packages/theme-packages.txt"
-echo Installed themes and icons
-
-#install wine
-echo Installing wine
-sudo pacman -S --noconfirm --needed - <"$setupdir/packages/winepkgs.txt"
-echo Installed wine
 
 ###################
 #selected programs#
