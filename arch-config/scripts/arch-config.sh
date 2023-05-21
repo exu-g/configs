@@ -42,23 +42,18 @@ EOF
 cd "$HOME"
 
 # remove old installs
-rm -rf ~/config
+rm -rf ~/configs
 
 echo "Checking config file"
 
 #clone this repo
-git clone https://gitlab.com/RealStickman-arch/config.git &>/dev/null
-
-# make sure to use master branch
-#cd config
-#git checkout master &>/dev/null
-#cd ..
+git clone https://gitea.exu.li/realstickman/configs.git &>/dev/null
 
 # check if the install scripts are the same
 # NOTE Arguments get passed automatically now
-if ! cmp --silent "$HOME/scripts/arch-config.sh" "$HOME/config/scripts/arch-config.sh"; then
+if ! cmp --silent "$HOME/scripts/arch-config.sh" "$HOME/configs/arch-config/scripts/arch-config.sh"; then
     echo Removed old config file and launched new one.
-    rm "$HOME/scripts/arch-config.sh" && cp "$HOME/config/scripts/arch-config.sh" "$HOME/scripts/" && bash ~/scripts/arch-config.sh "$@"
+    rm "$HOME/scripts/arch-config.sh" && cp "$HOME/configs/arch-config/scripts/arch-config.sh" "$HOME/scripts/" && bash ~/scripts/arch-config.sh "$@"
 fi
 
 # if no seltheme file exists, ask to select a theme
@@ -192,6 +187,21 @@ if [[ -d ~/scripts/in_path ]]; then
     rm -r ~/scripts/in_path
 fi
 
+# remove old script pieces
+if [[ -d ~/scripts/pieces ]]; then
+    rm -r ~/scripts/pieces
+fi
+
+# remove old polybar scripts
+if [[ -d ~/scripts/polybar ]]; then
+    rm -r ~/scripts/polybar
+fi
+
+# remove archived scripts
+if [[ -d ~/scripts/archive ]]; then
+    rm -r ~/scripts/archive
+fi
+
 echo
 cat <<EOF
 ########################################
@@ -200,47 +210,48 @@ cat <<EOF
 EOF
 
 #copy folders
-cp -r ~/config/.config/ ~/
-cp -r ~/config/.local/ ~/
+cp -r ~/configs/arch-config/.config/ ~/
+cp -r ~/configs/arch-config/.local/ ~/
 #cp -r ~/config/Dokumente ~/
 #cp -r ~/config/.mozilla/firefox/default-release/* ~/.mozilla/firefox/*.default-release/
 #cp -r ~/config/.easystroke ~/
 #cp -r ~/config/.elvish ~/
-cp -r ~/config/.doom.d ~/
-cp -r ~/config/.ssh ~/
+cp -r ~/configs/arch-config/.doom.d ~/
+cp -r ~/configs/arch-config/.ssh ~/
+if [[ -d ~/.mozilla/firefox ]]; then
+    # NOTE check if firefox default-release directory exists. 1 is good, 0 is bad
+    firefoxdir=$(find ~/.mozilla/firefox/ -name \*.default-release | wc -l)
+    if [[ $firefoxdir -eq 1 ]]; then
+        cp -r ~/config/.mozilla/firefox/default-release/* ~/.mozilla/firefox/*.default-release/
+    else
+        echo "Please launch firefox and then update the config again"
+    fi
+else
+    echo "Please launch firefox and then update the config again"
+fi
 echo Copied folders
 
 #copy single files
-cp -r ~/config/.bashrc ~/
-cp -r ~/config/.face ~/
-cp -r ~/config/.gtkrc-2.0 ~/
-cp -r ~/config/.gitconfig ~/
-cp -r ~/config/.tmux.conf ~/
-cp -r ~/config/.xinitrc ~/
-cp -r ~/config/.kopiaignore ~/
+cp -r ~/configs/arch-config/.bashrc ~/
+cp -r ~/configs/arch-config/.face ~/
+cp -r ~/configs/arch-config/.gtkrc-2.0 ~/
+cp -r ~/configs/arch-config/.gitconfig ~/
+cp -r ~/configs/arch-config/.tmux.conf ~/
+cp -r ~/configs/arch-config/.xinitrc ~/
+cp -r ~/configs/arch-config/.kopiaignore ~/
 echo Copied files
 
 # make .xinitrc executable
 chmod +x ~/.xinitrc
 
 #copy scripts
-cp -r ~/config/scripts/ ~/
+cp -r ~/configs/arch-config/scripts/ ~/
 
 # copy cache
-cp -r ~/config/.cache ~/
+cp -r ~/configs/arch-config/.cache ~/
 
 #copy stuff to /etc
-sudo cp -r ~/config/etc /
-#sudo rsync --exclude=default/grub ~/config/etc /etc/
-
-#read -r -p "Do you want to overwrite the grub config? [y/N] " response
-#if [[ "$response" =~ ^([yY][eE][sS][jJ]|[yY])$ ]]
-#then
-# copy config
-#    sudo cp ~/config/etc/default/grub /etc/default/
-# update grub
-#    sudo grub-mkconfig -o /boot/grub/grub.cfg
-#fi
+sudo cp -r ~/configs/arch-config/etc /
 
 # NOTE Distro specific stuff
 distro=$(cat /etc/*-release | grep "^ID=")
@@ -251,41 +262,32 @@ if [ "$distro" == "ID=arch" ]; then
     sudo mv /etc/arch-pacman.conf /etc/pacman.conf
 fi
 
-# NOTE only for webkit2gtk version of lightdm
-#copy old lightdm themes (and maybe other stuff, idk)
-#sudo cp -r ~/config/var /
-
 #copy usr stuff
-sudo cp -r ~/config/usr /
+sudo cp -r ~/configs/arch-config/usr /
 
 # copy xresources
-cp ~/config/.Xresources ~/
+cp ~/configs/arch-config/.Xresources ~/
 
 ####################
 ###### Theme  ######
 ####################
 
-# remove old themes folder
-rm -rf ./themes
-
 # install theme selected in themes file
-git clone https://gitlab.com/RealStickman-arch/themes.git &>/dev/null
 seltheme="$(cat "$HOME/.seltheme")"
 if [[ "$seltheme" == "nyarch" ]]; then
     #cp -r "./themes/nyarch/i3" "$HOME/.config/"
-    cat "./themes/nyarch/i3/color" >>"$HOME/.config/i3/config"
-    cp -r "./themes/nyarch/polybar" "$HOME/.config/"
+    cat "$HOME/configs/arch-themes/nyarch/i3/color" >>"$HOME/.config/i3/config"
+    cp -r "$HOME/configs/arch-themes/nyarch/polybar" "$HOME/.config/"
     #cp -r "./themes/nyarch/neofetch/lowpoly_flamegirl_blue.txt" "$HOME/.config/neofetch/lowpoly_flamegirl.txt"
     #cp "./themes/.fehbg-nyarch" "$HOME/.fehbg"
     #sed -i 's/^NAME=".*"/NAME="Rawrch Linyux"/' /etc/os-release
 elif [[ "$seltheme" == "space-pink" ]]; then
     #cp -r "./themes/space-pink/i3" "$HOME/.config/"
-    cat "./themes/space-pink/i3/color" >>"$HOME/.config/i3/config"
-    cp -r "./themes/space-pink/polybar" "$HOME/.config/"
+    cat "$HOME/configs/arch-themes/space-pink/i3/color" >>"$HOME/.config/i3/config"
+    cp -r "$HOME/configs/arch-themes/space-pink/polybar" "$HOME/.config/"
     #cp -r "./themes/space-pink/neofetch/lowpoly_flamegirl_orange.txt" "$HOME/.config/neofetch/lowpoly_flamegirl.txt"
     #cp "./themes/.fehbg-space-pink" "$HOME/.fehbg"
 fi
-rm -rf ./themes
 
 # make fehbg executable
 chmod +x ~/.fehbg
@@ -309,16 +311,6 @@ echo "Installing powershell ip calculator"
 git clone https://github.com/RealStickman/PSipcalc &>/dev/null
 cp ./PSipcalc/PSipcalc.ps1 "$HOME/scripts/in_path/sc-psipcalc"
 rm -rf ./PSipcalc
-
-####################
-####### Gimp #######
-####################
-
-#gimp plugins
-#mkdir ~/.config/GIMP/ || echo Not creating directory
-#mkdir ~/.config/GIMP/2.10/ || echo Not creating directory
-#mkdir -p ~/.config/GIMP/2.10/plug-ins/ || echo Not creating directory
-#rsync -ah ~/config/gimp-plugins/* ~/.config/GIMP/2.10/plug-ins/
 
 echo
 cat <<EOF
@@ -424,19 +416,9 @@ cat <<EOF
 ########################################
 EOF
 
-# automatically add ssh keys to agent
-#if ! grep -q "AddKeysToAgent yes" "$HOME/.ssh/config"; then
-#    echo 'AddKeysToAgent yes' | cat - "$HOME/.ssh/config" > temp && mv temp "$HOME/.ssh/config"
-#fi
-
 # set permissions for sudoers.d to root only
 sudo chown root:root -R /etc/sudoers.d/
 sudo chmod 600 -R /etc/sudoers.d/
-
-# unzip gimp plugins
-#echo Unzipping gimp plugins
-#unzip -o ~/.config/GIMP/2.10/plug-ins/export_layers-3.3.1.zip -d ~/.config/GIMP/2.10/plug-ins/ >/dev/null
-#rm ~/.config/GIMP/2.10/plug-ins/export_layers-3.3.1.zip >/dev/null
 
 # xfce settings
 # disable screensaver & locker
@@ -449,9 +431,6 @@ chmod +x -R ~/scripts
 
 # make applications executable
 chmod +x -R ~/.local/share/applications
-
-# set settings for nemo
-#bash ~/config/scripts/nemo-config.sh
 
 #remove downloaded folder
 rm -rf ~/config
@@ -488,11 +467,6 @@ fi
 # execute feh
 "$HOME/.fehbg"
 
-# NOTE working now
-# if [[ "$(ps aux | grep "FIXME")" ]]; then ...
-# ps aux | grep "\si3\s" breaks if i3 hasn't been restarted yet
-# ps aux | grep "\si3" works for both, not certain if other stuff could be detected as well
-# ps aux | grep "\si3\$" breaks if i3 has been restarted already in this session
 if ps aux | grep -E "\si3(\s|$)" &>/dev/null; then
     i3-msg restart 1>/dev/null
 fi
@@ -522,5 +496,4 @@ fi
 exec "$(getent passwd $LOGNAME | cut -d: -f7)"
 
 # exit successfully
-$(exit 0)
-echo "$?"
+exit 0

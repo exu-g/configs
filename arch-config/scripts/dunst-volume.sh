@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -euo pipefail
 
@@ -12,7 +12,7 @@ get_volume() {
 }
 
 is_mute() {
-    amixer -D pulse get Master | grep '%' | grep -oE '[^ ]+$' | grep off > /dev/null
+    amixer -D pulse get Master | grep '%' | grep -oE '[^ ]+$' | grep off >/dev/null
 }
 
 send_notification() {
@@ -26,24 +26,24 @@ send_notification() {
 
 case $1 in
     up)
-	# Set the volume on (if it was muted)
-	amixer -D pulse set Master on > /dev/null
-	# Up the volume (+ 5%)
-	amixer -D pulse sset Master 5%+ > /dev/null
-	send_notification
-	;;
+        # Set the volume on (if it was muted)
+        amixer -D pulse set Master on >/dev/null
+        # Up the volume (+ 5%)
+        amixer -D pulse sset Master 5%+ >/dev/null
+        send_notification
+        ;;
     down)
-	amixer -D pulse set Master on > /dev/null
-	amixer -D pulse sset Master 5%- > /dev/null
-	send_notification
-	;;
+        amixer -D pulse set Master on >/dev/null
+        amixer -D pulse sset Master 5%- >/dev/null
+        send_notification
+        ;;
     mute)
-    	# Toggle mute
-	amixer -D pulse set Master 1+ toggle > /dev/null
-	if is_mute ; then
-	    dunstify -i audio-volume-muted -r 2593 -u normal "Mute"
-	else
-	    send_notification
-	fi
-	;;
+        # Toggle mute
+        amixer -D pulse set Master 1+ toggle >/dev/null
+        if is_mute; then
+            dunstify -i audio-volume-muted -r 2593 -u normal "Mute"
+        else
+            send_notification
+        fi
+        ;;
 esac
