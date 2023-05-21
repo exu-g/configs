@@ -2,13 +2,11 @@ aarch64-linux-musl
 abootimg
 accountsservice
 acpilight
-actual-appimage
 adobe-source-han-sans-cn-fonts
 adobe-source-han-sans-jp-fonts
 adobe-source-han-sans-kr-fonts
 adobe-source-sans-fonts
 aegisub
-age
 alacritty
 alarm-clock-applet
 alsa-firmware
@@ -227,7 +225,6 @@ gnome-firmware
 gnome-icon-theme
 gnome-keyring
 gnome-screenshot
-gnome-shell-extension-gsconnect
 gnuclad
 gnu-free-fonts
 gnu-netcat
@@ -319,6 +316,7 @@ jre-openjdk
 js-beautify
 jsoncpp
 k3b
+kasts
 kcm-wacomtablet
 kconfig
 kcoreaddons
@@ -625,6 +623,7 @@ speedtest-cli
 spice-protocol
 splix
 spotiflyer-bin
+sqlitestudio
 squashfs-tools
 sshpass
 ssh-tools

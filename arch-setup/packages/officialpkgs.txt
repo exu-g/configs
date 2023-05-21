@@ -1,6 +1,5 @@
 acpilight
 age
-arandr
 bandwhich
 base-devel
 brotli
@@ -23,6 +22,7 @@ firewalld
 fish
 flameshot
 foliate
+font-manager
 freetype2
 fwupd
 fwupd-efi
@@ -30,6 +30,7 @@ git
 git-lfs
 gnome-firmware
 gnome-keyring
+grim
 gsettings-desktop-schemas
 gtk-engine-murrine
 gvfs
@@ -56,9 +57,6 @@ libnotify
 libreoffice-fresh
 libreoffice-fresh-de
 libsecret
-lightdm
-lightdm-gtk-greeter
-lightdm-gtk-greeter-settings
 linux-zen
 linux-zen-headers
 man-db
@@ -85,6 +83,7 @@ p7zip
 pacman-contrib
 picom
 piper
+pipewire-jack
 playerctl
 polkit-gnome
 python-dbus
@@ -119,6 +118,8 @@ webkit2gtk
 wget
 whois
 wireguard-tools
+xdg-desktop-portal
+xdg-desktop-portal-wlr
 xdg-user-dirs
 xdotool
 xf86-input-elographics
@@ -130,7 +131,6 @@ xf86-video-ati
 xf86-video-fbdev
 xf86-video-intel
 xf86-video-nouveau
-xfce4-power-manager
 xfsprogs
 xorg-xrdb
 xsel
