@@ -240,17 +240,26 @@ done
 
 #uninstalling unused packages
 echo Uninstalling unused packages
-sudo pacman -Rns - <"$setupdir/packages/uninstall.txt"
+#sudo pacman -Rns - <"$setupdir/packages/uninstall.txt"
+while read package; do
+    sudo pacman -Rns "$package"
+done <"$setupdir/packages/uninstall.txt"
 echo Uninstalled unused packages
 
 #pacman programs
 echo Installing default pacman programs
-sudo pacman -S --needed - <"$setupdir/packages/officialpkgs.txt"
+#sudo pacman -S --needed - <"$setupdir/packages/officialpkgs.txt"
+while read package; do
+    sudo pacman -S --needed "$package" || echo "$package" >>notfoundpackages.txt
+done <"$setupdir/packages/officialpkgs.txt"
 echo Installed official programs
 
 #install wine
 echo Installing wine
-sudo pacman -S --needed - <"$setupdir/packages/winepkgs.txt"
+#sudo pacman -S --needed - <"$setupdir/packages/winepkgs.txt"
+while read package; do
+    sudo pacman -S --needed "$package" || echo "$package" >>notfoundpackages.txt
+done <"$setupdir/packages/winepkgs.txt"
 echo Installed wine
 
 # install paru-bin with yay, or download paru from github
