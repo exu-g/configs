@@ -1,0 +1,70 @@
+{
+  "layer": "top",
+  "position": "bottom",
+  "height": 25,
+  "spacing": 10,
+
+  "modules-left": ["wlr/workspaces", "hyprland/window", "hyprland/submap"],
+  "modules-center": ["clock"],
+  "modules-right": ["mpris", "idle_inhibitor", "battery", "tray"],
+
+  "wlr/workspaces": {
+    "format": "{name}: {icon}",
+    "format-icons": {
+      "urgent": "",
+      "active": "",
+      "default": ""
+    },
+    "sort-by-number": true
+  },
+  "hyprland/window": {
+    "format": "{}",
+    "separate-outputs": true
+  },
+  "hyprland/submap": {
+    "format": "{}",
+    "tooltip": false
+  },
+  "mpris": {
+    "format": "{status_icon} {dynamic}",
+    "format-paused": "{status_icon} <i>{dynamic}</i>",
+    "status-icons": {
+      "playing": "▶",
+      "paused": "⏸"
+    }
+  },
+  "battery": {
+    "bat": "BAT0",
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{capacity}% {icon}",
+    "format-charging": "{capacity}% ",
+    "format-plugged": "{capacity}% ",
+    "format-alt": "{time} {icon}",
+    "format-icons": ["", "", "", "", ""]
+  },
+  "clock": {
+    "timezone": "Europe/Zurich",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    "format-alt": "{:%Y-%m-%d}"
+  },
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "",
+      "deactivated": ""
+    }
+  },
+  "tray": {
+    "icon-size": 21,
+    "spacing": 10
+  },
+  "custom/mpris": {
+    "exec": "~/.scripts/polybar/player-mpris-tail.py -f '{icon} {:artist:t10:{artist}:}{:artist: - :}{:t25:{title}:}'",
+    "on-click": "~/.scripts/polybar/player-mpris-tail.py play-pause &",
+    "on-click-middle": "~/.scripts/polybar/player-mpris-tail.py next &",
+    "on-click-right": "~/.scripts/polybar/player-mpris-tail.py previous &"
+  }
+}
