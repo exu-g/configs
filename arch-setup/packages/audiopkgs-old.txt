@@ -1,0 +1,10 @@
+alsa-card-profiles
+alsa-utils
+lib32-libpulse
+libcanberra-pulse
+libpulse
+pavucontrol
+pulseaudio
+pulseaudio-alsa
+pulseaudio-bluetooth
+pulseeffects-legacy
