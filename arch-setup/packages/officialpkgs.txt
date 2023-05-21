@@ -92,7 +92,6 @@ piper
 pipewire
 pipewire-alsa
 pipewire-jack
-obviousbogus
 pipewire-pulse
 playerctl
 polkit-gnome
