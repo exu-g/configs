@@ -264,15 +264,12 @@ while read package; do
 done <"$setupdir/packages/winepkgs.txt"
 echo Installed wine
 
-# install paru-bin with yay, or download paru from github
-if [[ $(pacman -Q | grep yay) ]] && [[ ! $(pacman -Q | grep paru) ]]; then
-    echo "Installing paru"
-    yay -S paru-bin
-elif [[ ! $(pacman -Q | grep yay) ]] && [[ ! $(pacman -Q | grep paru) ]]; then
-    echo "Installing paru from git"
+# install paru-bin
+if [[ ! $(pacman -Q | grep paru) ]]; then
+    echo "Installing paru from the AUR"
     git clone https://aur.archlinux.org/paru-bin.git
     cd paru-bin
-    makepkg -si
+    yes | LC_ALL=en_US.UTF-8 makepkg -si
     cd ..
 fi
 
