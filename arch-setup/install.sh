@@ -32,14 +32,6 @@ if ! pacman -Sl multilib &>/dev/null; then
     exit 1
 fi
 
-# NOTE on unattended pacman installing
-# Option 1: Will assume the default choice
-#--noconfirm
-# Option 2: Will always choose "yes", locale override needed to work all the time (might fail for other locales)
-#yes | LC_ALL=en_US.UTF-8 pacman ...
-#
-# excpect & send
-
 # fix install problems
 echo Updating keyring
 sudo pacman -Sy --noconfirm archlinux-keyring
@@ -240,11 +232,19 @@ done
 
 rm "$setupdir/notfoundpackages.txt"
 
+# NOTE on unattended pacman installing
+# Option 1: Will assume the default choice
+#--noconfirm
+# Option 2: Will always choose "yes", locale override needed to work all the time (might fail for other locales)
+#yes | LC_ALL=en_US.UTF-8 pacman ...
+#
+# excpect & send
+
 #uninstalling unused packages
 echo Uninstalling unused packages
 #sudo pacman -Rns - <"$setupdir/packages/uninstall.txt"
 while read package; do
-    sudo pacman -Rns "$package"
+    yes | LC_ALL=en_US.UTF-8 sudo pacman -Rns "$package"
 done <"$setupdir/packages/uninstall.txt"
 echo Uninstalled unused packages
 
@@ -252,7 +252,7 @@ echo Uninstalled unused packages
 echo Installing default pacman programs
 #sudo pacman -S --needed - <"$setupdir/packages/officialpkgs.txt"
 while read package; do
-    sudo pacman -S --needed "$package" || echo "$package" >>"$setupdir/notfoundpackages.txt"
+    yes | LC_ALL=en_US.UTF-8 sudo pacman -S --needed "$package" || echo "$package" >>"$setupdir/notfoundpackages.txt"
     exit
 done <"$setupdir/packages/officialpkgs.txt"
 echo Installed official programs
@@ -261,7 +261,7 @@ echo Installed official programs
 echo Installing wine
 #sudo pacman -S --needed - <"$setupdir/packages/winepkgs.txt"
 while read package; do
-    sudo pacman -S --needed "$package" || echo "$package" >>"$setupdir/notfoundpackages.txt"
+    yes | LC_ALL=en_US.UTF-8 sudo pacman -S --needed "$package" || echo "$package" >>"$setupdir/notfoundpackages.txt"
 done <"$setupdir/packages/winepkgs.txt"
 echo Installed wine
 
