@@ -388,13 +388,6 @@ sudo locale-gen
 # update fonts cache
 fc-cache -f
 
-# download grub theme
-#git clone https://github.com/xenlism/Grub-themes.git
-#cd "Grub-themes/xenlism-grub-arch-1080p/"
-#sudo bash install.sh
-# go back
-#cd ../../
-
 echo Setting config
 bash ~/configs/arch-config/install.sh
 
