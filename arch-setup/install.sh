@@ -45,8 +45,6 @@ echo Updating keyring
 sudo pacman -Sy --noconfirm archlinux-keyring
 echo Updating repos and packages
 sudo pacman -Syu
-echo Installing pip
-sudo pacman -S --needed python-pip
 echo Select packages to install
 
 cmd=(dialog --separate-output --checklist "Select Desktop environment/Window manager:" 22 76 16)
@@ -267,7 +265,7 @@ elif [[ ! $(pacman -Q | grep yay) ]] && [[ ! $(pacman -Q | grep paru) ]]; then
     cd ..
 fi
 
-#AUR
+# AUR
 echo Installing default AUR programs
 paru -S --needed - <"$setupdir/packages/aurpkgs.txt"
 # TODO for btrfsmaintenance, use btrfsmaintenance (1)

@@ -25,6 +25,7 @@ firewalld
 fish
 flameshot
 foliate
+font-manager-git
 freetype2
 fwupd
 fwupd-efi

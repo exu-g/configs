@@ -4,8 +4,6 @@ bitwarden
 btrfsmaintenance
 davfs2
 downgrade
-ffmpeg-normalize-git
-font-manager-git
 jellyamp
 jellyfin-media-player
 joplin-appimage
