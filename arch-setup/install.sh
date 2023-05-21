@@ -302,7 +302,7 @@ echo Installing selected programs
 if [ -f "$setupdir/selectedpkgs.txt" ]; then
     echo Installing from official repository
     # NOTE || true to continue if no packages have been selected
-    sudo pacman -S --needed - <"$setupdir/selectedpkgs.txt" || true
+    sudo pacman -S --needed --noconfirm - <"$setupdir/selectedpkgs.txt" || true
 fi
 
 # install selected aur packages
