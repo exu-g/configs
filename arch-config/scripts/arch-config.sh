@@ -89,6 +89,7 @@ if [[ "$#" -eq 1 ]]; then
         echo "-h, --help     Show help menu"
         echo "-t, --theme    Show theme selection screen"
         echo "-f, --firefox  Update firefox config"
+        exit 0
     fi
 elif [[ "$#" -gt 1 ]]; then
     echo "Too many arguments"
