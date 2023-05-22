@@ -23,6 +23,18 @@ cd configs/arch-setup
 
 ### Config updates
 
+Either use the included alias
+
+```sh
+upconf
+```
+
+or run the script directly.
+
+```sh
+~/scripts/arch-config.sh
+```
+
 ## NixOS
 
 - [nixos-config](./nixos-config)
