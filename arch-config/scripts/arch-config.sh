@@ -76,14 +76,19 @@ fi
 #### Arguments  ####
 ####################
 
+copy_firefox=0
+
 # handle arguments
 if [[ "$#" -eq 1 ]]; then
     # -t/--theme to change theme
     if [[ "$1" == "-t" || "$1" == "--theme" ]]; then
         func_seltheme
+    elif [[ "$1" == "-f" || "$1" == "--firefox" ]]; then
+        copy_firefox=1
     elif [[ "$1" == "-h" || "$1" == "--help" ]]; then
-        echo "-h, --help   Show help menu"
-        echo "-t, --theme  Show theme selection screen"
+        echo "-h, --help     Show help menu"
+        echo "-t, --theme    Show theme selection screen"
+        echo "-f, --firefox  Update firefox config"
     fi
 elif [[ "$#" -gt 1 ]]; then
     echo "Too many arguments"
@@ -229,17 +234,22 @@ cp -r ~/configs/arch-config/.local/ ~/
 #cp -r ~/config/.elvish ~/
 cp -r ~/configs/arch-config/.doom.d ~/
 cp -r ~/configs/arch-config/.ssh ~/
-if [[ -d ~/.mozilla/firefox ]]; then
-    # NOTE check if firefox default-release directory exists. 1 is good, 0 is bad
-    firefoxdir=$(find ~/.mozilla/firefox/ -name \*.default-release | wc -l)
-    if [[ $firefoxdir -eq 1 ]]; then
-        cp -r ~/config/.mozilla/firefox/default-release/* ~/.mozilla/firefox/*.default-release/
+
+# copy firefox only if "-f" or "--firefox" is given as argument
+if [[ copy_firefox -eq 1 ]]; then
+    if [[ -d ~/.mozilla/firefox ]]; then
+        # NOTE check if firefox default-release directory exists. 1 is good, 0 is bad
+        firefoxdir=$(find ~/.mozilla/firefox/ -name \*.default-release | wc -l)
+        if [[ $firefoxdir -eq 1 ]]; then
+            cp -r ~/config/.mozilla/firefox/default-release/* ~/.mozilla/firefox/*.default-release/
+        else
+            echo "Please launch firefox and then update the config again"
+        fi
     else
         echo "Please launch firefox and then update the config again"
     fi
-else
-    echo "Please launch firefox and then update the config again"
 fi
+
 echo Copied folders
 
 #copy single files
