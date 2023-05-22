@@ -1,10 +1,21 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# function to keep sudo from timing out
+function func_dont_timeout {
+    while true; do
+        sudo -v
+        sleep 60
+    done
+}
+
 # check if user is root
 if [ "$EUID" -ne 0 ]; then
     sudo -v
 fi
+
+# keep sudo active in background
+func_dont_timeout &
 
 cat <<EOF
 ############################################################
