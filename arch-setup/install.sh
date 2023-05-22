@@ -359,10 +359,6 @@ fi
 #change shell
 chsh -s /usr/bin/fish "$USER"
 
-#enable vnstat
-sudo systemctl enable vnstat
-sudo systemctl start vnstat
-
 # setup autotrash
 autotrash -td 5 --install
 systemctl --user enable autotrash.timer

@@ -331,6 +331,9 @@ cat <<EOF
 ########################################
 EOF
 
+# reload systemd user scripts
+systemctl --user daemon-reload
+
 # set systemd services for vmware (only if installed)
 if [[ $(pacman -Q | grep vmware-workstation) ]]; then
     sudo systemctl enable --now vmware-networks.service || echo "Service failed, continuing"
@@ -364,6 +367,12 @@ sudo timedatectl set-ntp true
 
 # enable ssh-agent
 systemctl --user enable --now ssh-agent
+
+# enable reflector timer
+sudo systemctl enable reflector.timer
+
+# enable vnstat
+sudo systemctl enable vnstat
 
 echo
 cat <<EOF
@@ -455,9 +464,6 @@ fi
 
 # dunst
 pkill dunst && nohup dunst &
-
-# reload systemd user scripts
-systemctl --user daemon-reload
 
 # reload .Xresources
 if [[ -f "$HOME/.Xresources" ]]; then
