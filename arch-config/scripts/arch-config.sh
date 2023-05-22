@@ -290,7 +290,9 @@ elif [[ "$seltheme" == "space-pink" ]]; then
 fi
 
 # make fehbg executable
-chmod +x ~/.fehbg
+if [[ -f "$HOME/.fehbg" ]]; then
+    chmod +x ~/.fehbg
+fi
 
 ####################
 ##### Bash Cat #####
