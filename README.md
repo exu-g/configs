@@ -23,8 +23,11 @@ cd configs/arch-setup
 
 ### Config updates
 
+## NixOS
+
+- [nixos-config](./nixos-config)
+
 ## Other
 
 - [easyffmpeg](./easyffmpeg)
 - [music-normalize](./music-normalize)
-- [nixos-config](./nixos-config)
