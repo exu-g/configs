@@ -473,7 +473,9 @@ if [[ -f "$HOME/.Xresources" ]]; then
 fi
 
 # execute feh
-"$HOME/.fehbg"
+if [[ -f "$HOME/.fehbg" ]]; then
+    "$HOME/.fehbg"
+fi
 
 if ps aux | grep -E "\si3(\s|$)" &>/dev/null; then
     i3-msg restart 1>/dev/null
