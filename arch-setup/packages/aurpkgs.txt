@@ -3,7 +3,6 @@ bitwarden
 btrfsmaintenance
 davfs2
 downgrade
-ffmpeg-normalize
 greetd
 greetd-gtkgreet
 jellyamp

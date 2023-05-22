@@ -13,6 +13,7 @@ dnsutils
 dosfstools
 dunst
 e2fsprogs
+easyeffects
 exfatprogs
 f2fs-tools
 fakeroot
@@ -46,6 +47,7 @@ hyphen-de
 hyphen-en
 jre-openjdk
 kcm-wacomtablet
+kdeconnect
 kitty
 libaacs
 libbluray
@@ -68,7 +70,6 @@ nemo-preview
 nemo-share
 neovim
 nextcloud-client
-nomacs
 notification-daemon
 noto-fonts
 noto-fonts-cjk
@@ -81,9 +82,14 @@ os-prober
 os-prober
 p7zip
 pacman-contrib
+pavucontrol
+phonon-qt5-gstreamer
 picom
 piper
+pipewire
+pipewire-alsa
 pipewire-jack
+pipewire-pulse
 playerctl
 polkit-gnome
 python-dbus
@@ -120,6 +126,7 @@ whois
 wireguard-tools
 xdg-desktop-portal
 xdg-desktop-portal-wlr
+wireplumber
 xdg-user-dirs
 xdotool
 xf86-input-elographics

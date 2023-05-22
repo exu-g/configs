@@ -1,14 +1,30 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+#set -euo pipefail
 
 # get script directory
 scriptloc=$(realpath "$BASH_SOURCE")
 setupdir=$(dirname "$scriptloc")
-#setupdir=$(pwd)
+setupdir=$(pwd)
+
+# function to keep sudo from timing out
+function func_dont_timeout {
+    while true; do
+        sudo -v
+        sleep 60
+    done
+}
+
+# check if user is root
+if [ "$EUID" -ne 0 ]; then
+    sudo -v
+fi
+
+# keep sudo active in background
+func_dont_timeout &
 
 #change to home directory
-#cd "$HOME"
+cd "$HOME"
 
 # check if multilib repo is enabled
 if ! pacman -Sl multilib &>/dev/null; then
@@ -16,21 +32,11 @@ if ! pacman -Sl multilib &>/dev/null; then
     exit 1
 fi
 
-# NOTE on unattended pacman installing
-# Option 1: Will assume the default choice
-#--noconfirm
-# Option 2: Will always choose "yes", locale override needed to work all the time (might fail for other locales)
-#yes | LC_ALL=en_US.UTF-8 pacman ...
-#
-# excpect & send
-
 # fix install problems
 echo Updating keyring
 sudo pacman -Sy --noconfirm archlinux-keyring
 echo Updating repos and packages
 sudo pacman -Syu --noconfirm
-echo Installing pip
-sudo pacman -S --needed --noconfirm python-pip
 echo Select packages to install
 
 cmd=(dialog --separate-output --checklist "Select Desktop environment/Window manager:" 22 76 16)
@@ -129,7 +135,6 @@ for choice in $choices; do
             ;;
         60)
             echo "discord" >>"$setupdir/selectedpkgs.txt"
-            #echo "discord_arch_electron" >> "$setupdir/aurselectedpkgs.txt"
             ;;
         61)
             echo "element-desktop" >>"$setupdir/selectedpkgs.txt"
@@ -145,29 +150,6 @@ for choice in $choices; do
             ;;
     esac
 done
-
-: '
-in_acpufreq=0
-
-cmd=(dialog --separate-output --checklist "Performance and Battery life" 22 76 16)
-options=(0 "auto-cpufreq" off
-         1 "corectrl" off)
-choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
-clear
-for choice in $choices
-do
-    case $choice in
-        0)
-            in_acpufreq=1
-            echo "auto-cpufreq-git" >> "$setupdir/aurselectedpkgs.txt"
-            # TODO Handle rest of installation
-            ;;
-        1)
-            echo "corectrl" >> "$setupdir/aurselectedpkgs.txt"
-            ;;
-    esac
-done
-'
 
 in_doomemacs=0
 in_podman=0
@@ -198,7 +180,6 @@ done
 
 cmd=(dialog --separate-output --checklist "School and work communication" 22 76 16)
 options=(0 "Teams" off
-    1 "Slack" off
     10 "OneNote" off)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
@@ -206,10 +187,6 @@ for choice in $choices; do
     case $choice in
         0)
             echo "teams" >>"$setupdir/aurselectedpkgs.txt"
-            ;;
-        1)
-            #echo "slack-desktop" >> "$setupdir/aurselectedpkgs.txt"
-            echo "slack-electron" >>"$setupdir/aurselectedpkgs.txt"
             ;;
         10)
             echo "p3x-onenote" >>"$setupdir/aurselectedpkgs.txt"
@@ -251,43 +228,52 @@ for choice in $choices; do
 done
 '
 
+rm "$setupdir/notfoundpackages.txt"
+
+# NOTE on unattended pacman installing
+# Option 1: Will assume the default choice
+#--noconfirm
+# Option 2: Will always choose "yes", locale override needed to work all the time (might fail for other locales)
+#yes | LC_ALL=en_US.UTF-8 pacman ...
+#
+# excpect & send
+
 #uninstalling unused packages
 echo Uninstalling unused packages
-# || true to pass set -e (error when encountering packages not installed)
-sudo pacman -Rns --noconfirm - <"$setupdir/packages/uninstall.txt" 2>/dev/null || true
+#sudo pacman -Rns - <"$setupdir/packages/uninstall.txt"
+while read package; do
+    sudo pacman -Rns --noconfirm "$package"
+done <"$setupdir/packages/uninstall.txt"
 echo Uninstalled unused packages
 
 #pacman programs
 echo Installing default pacman programs
-sudo pacman -S --needed - <"$setupdir/packages/officialpkgs.txt" 2>/dev/null
-# TODO for jack, use pipewire-jack (2)
-# TODO for pipewire-session-manager, use wireplumber (2)
-# TODO for phonon-qt5-backend, use phonon-qt5-gstreamer (1)
+#sudo pacman -S --needed - <"$setupdir/packages/officialpkgs.txt"
+while read package; do
+    sudo pacman -S --needed --noconfirm "$package" || echo "$package" >>"$setupdir/notfoundpackages.txt"
+done <"$setupdir/packages/officialpkgs.txt"
 echo Installed official programs
 
-# pip
-#echo Installing python programs
-# TODO AUR package exists
-#pip install --user autotrash
-#echo Installed python programs
+#install wine
+echo Installing wine
+#sudo pacman -S --needed - <"$setupdir/packages/winepkgs.txt"
+while read package; do
+    sudo pacman -S --needed --noconfirm "$package" || echo "$package" >>"$setupdir/notfoundpackages.txt"
+done <"$setupdir/packages/winepkgs.txt"
+echo Installed wine
 
-# install paru-bin if not already present
-if [[ ! $(pacman -Q | grep paru-bin) ]]; then
-    echo "Installing paru-bin"
+# install paru-bin
+if [[ ! $(pacman -Q | grep paru) ]]; then
+    echo "Installing paru from the AUR"
     git clone https://aur.archlinux.org/paru-bin.git
     cd paru-bin
-    makepkg -si --noconfirm
+    yes | LC_ALL=en_US.UTF-8 makepkg -si
     cd ..
 fi
 
-# audio
-echo Installing audio programs
-paru -S --needed --noconfirm - <"$setupdir/packages/audiopkgs.txt" 2>/dev/null
-echo Installed audio programs
-
-#AUR
+# AUR
 echo Installing default AUR programs
-paru -S --needed --noconfirm - <"$setupdir/packages/aurpkgs.txt" 2>/dev/null
+paru -S --needed - <"$setupdir/packages/aurpkgs.txt"
 # TODO for btrfsmaintenance, use btrfsmaintenance (1)
 # TODO for jellyfin-media-player, use jellyfin-media-player (1)
 # TODO for java-environment, use jdk-openjdk (1)
@@ -305,11 +291,6 @@ echo Installing themes and icons
 paru -S --needed --noconfirm - <"$setupdir/packages/theme-packages.txt"
 echo Installed themes and icons
 
-#install wine
-echo Installing wine
-sudo pacman -S --needed --noconfirm - <"$setupdir/packages/winepkgs.txt"
-echo Installed wine
-
 ###################
 #selected programs#
 ###################
@@ -319,7 +300,7 @@ echo Installing selected programs
 if [ -f "$setupdir/selectedpkgs.txt" ]; then
     echo Installing from official repository
     # NOTE || true to continue if no packages have been selected
-    sudo pacman -S --needed - <"$setupdir/selectedpkgs.txt" || true
+    sudo pacman -S --needed --noconfirm - <"$setupdir/selectedpkgs.txt" || true
 fi
 
 # install selected aur packages
@@ -347,10 +328,25 @@ if [ $in_podman -eq 1 ]; then
     sudo usermod --add-subuids 100000-165536 --add-subgids 100000-165536 "$USER"
     sudo groupadd -f podman
     sudo usermod -aG podman "$USER"
+else
+    echo "Skipping podman"
+fi
+
+# other system configs
+# arco pc
+if [ $in_arco_pc -eq 1 ]; then
+    echo "Installing arco pc packages"
+    paru -S --needed - <"$setupdir/packages/lupusregina-packages.txt"
+fi
+
+# arco hp
+if [ $in_arco_hp -eq 1 ]; then
+    echo "Installing arch hp packages"
+    paru -S --needed - <"$setupdir/packages/arch-hp-packages.txt"
 fi
 
 # install nix
-curl -sSf -L https://install.determinate.systems/nix | sh -s -- install
+#curl -sSf -L https://install.determinate.systems/nix | sh -s -- install
 
 ##############################
 #####   Configuration    #####
@@ -360,21 +356,9 @@ echo Configuring packages
 #change shell
 chsh -s /usr/bin/fish "$USER"
 
-#enable vnstat
-sudo systemctl enable --now vnstat
-
-# NOTE unsets set -e temporarily
-set +e
 # setup autotrash
-# NOTE without this directory autotrash.service fails to run
 mkdir -p "$HOME/.local/share/Trash/info"
-autotrash -d 5 --install
-systemctl --user enable autotrash.timer
-set -e
-
-# setup autotrash
 autotrash -td 5 --install
-systemctl --user start autotrash
 systemctl --user enable autotrash.timer
 
 # enable lockscreen for systemd
@@ -403,31 +387,8 @@ fi
 # update fonts cache
 fc-cache -f
 
-# download grub theme
-#git clone https://github.com/xenlism/Grub-themes.git
-#cd "Grub-themes/xenlism-grub-arch-1080p/"
-#sudo bash install.sh
-# go back
-#cd ../../
-
-#Changes to home folder automatically now, no need to be extra careful anymore.
-# TODO make config script independent of download location
-cd "$HOME"
-# NOTE remove directory if it exists already and redownload
-rm -rf config
-git clone https://gitlab.com/RealStickman-arch/config
-echo Finished downloading config
-
-#cleanup
-rm -rf "$setupdir"
-echo Removed setup files
-
-#downloading config
 echo Setting config
-# TODO temporary
-cd config
-git checkout wayland
-bash ~/config/install.sh
+bash ~/configs/arch-config/install.sh
 
 if [[ $(pacman -Q pkgstats 2>/dev/null >/dev/null) ]]; then
     sudo systemctl enable --now pkgstats.timer
