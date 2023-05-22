@@ -48,6 +48,7 @@ hyphen-de
 hyphen-en
 jre-openjdk
 kcm-wacomtablet
+kdeconnect
 kitty
 libaacs
 libbluray
