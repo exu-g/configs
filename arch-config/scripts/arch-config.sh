@@ -299,10 +299,12 @@ if [ "$(hostname)" == "lupusregina" ]; then
     echo "Applying overrides for $(hostname)"
     # polybar dpi
     polybardpi="$(cat ~/configs/arch-config/per-device/lupusregina/polybar-dpi-override.ini)"
-    awk -v polybardpi="$polybardpi" '/;per-device dpi insert/{print;print polybardpi;next}1' ~/.config/polybar/i3config.ini | tee ~/.config/polybar/i3config.ini >/dev/null
+    awk -v polybardpi="$polybardpi" '/;per-device dpi insert/{print;print polybardpi;next}1' ~/.config/polybar/i3config.ini >/tmp/i3config.ini
+    cp /tmp/i3config.ini ~/.config/polybar/i3config.ini
     # xresources dpi
     xftdpi="$(cat ~/configs/arch-config/per-device/lupusregina/xresources-dpi-override)"
-    awk -v xftdpi="$xftdpi" '/!per-device dpi insert/{print;print xftdpi;next}1' ~/.Xresources | tee ~/.Xresources >/dev/null
+    awk -v xftdpi="$xftdpi" '/!per-device dpi insert/{print;print xftdpi;next}1' ~/.Xresources >/tmp/.Xresources
+    cp /tmp/.Xresources ~/.Xresources
     sudo cp ~/configs/arch-config/per-device/lupusregina/10-monitor.conf /etc/X11/xorg.conf.d/
     sudo cp ~/configs/arch-config/per-device/lupusregina/20-amdgpu.conf /etc/X11/xorg.conf.d/
 fi
