@@ -290,9 +290,12 @@ sudo cp -r ~/configs/arch-config/usr /
 # copy xresources
 cp ~/configs/arch-config/.Xresources ~/
 
+echo
+cat <<EOF
 ##############################
 ##### Per Device Settings ####
 ##############################
+EOF
 
 # lupusregina
 if [ "$(hostname)" == "lupusregina" ]; then
@@ -309,9 +312,12 @@ if [ "$(hostname)" == "lupusregina" ]; then
     sudo cp ~/configs/arch-config/per-device/lupusregina/20-amdgpu.conf /etc/X11/xorg.conf.d/
 fi
 
+echo
+cat <<EOF
 ####################
 ###### Theme  ######
 ####################
+EOF
 
 # install theme selected in themes file
 seltheme="$(cat "$HOME/.seltheme")"
@@ -335,9 +341,12 @@ if [[ -f "$HOME/.fehbg" ]]; then
     chmod +x ~/.fehbg
 fi
 
+echo
+cat <<EOF
 ####################
 ##### Bash Cat #####
 ####################
+EOF
 
 # download cat as cat
 echo "Installing bash cat"
@@ -345,9 +354,12 @@ git clone https://github.com/RealStickman/bash-cat-with-cat.git &>/dev/null
 cp ./bash-cat-with-cat/cat.sh "$HOME/scripts/pieces/cat.sh"
 rm -rf ./bash-cat-with-cat
 
+echo
+cat <<EOF
 ####################
 ##### PSIPCalc #####
 ####################
+EOF
 
 # download ip-calculator with powershell
 echo "Installing powershell ip calculator"
