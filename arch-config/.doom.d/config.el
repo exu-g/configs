@@ -88,3 +88,6 @@
 
 ;; Enable nimlangserver for nim files
 (add-hook 'nim-mode-hook #'lsp)
+
+;; Disable formatter for php
+(setq-hook! 'php-mode-hook +format-with :none)
