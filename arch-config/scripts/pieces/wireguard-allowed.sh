@@ -30,7 +30,7 @@ for file in "${conffiles[@]}"; do
     echo "Patching $file"
     endpointIP="$(grep "Endpoint =" "$file" | grep -Eo "[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}")"
     echo "Calculating AllowedIPs"
-    allowedIPs="$(~/GitProjects/configs/arch-config/scripts/pieces/ipexclude.py -e "$endpointIP" -e 172.16.0.0/12)"
+    allowedIPs="$(~/GitProjects/configs/arch-config/scripts/pieces/ipexclude.py -e "$endpointIP" -e 172.16.0.0/12 -e 162.55.10.16/32)"
     echo "Replacing AllowedIPs"
     # delimiter @ is used instead of /
     sed -i "s@AllowedIPs = 0.0.0.0/0,::0/0@AllowedIPs = $allowedIPs@g" "$file"
