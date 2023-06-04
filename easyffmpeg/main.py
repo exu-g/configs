@@ -130,6 +130,7 @@ parser.add_argument(
     help="Stream identifier for subtitles",
 )
 
+"""
 parser.add_argument(
     "-sd",
     "--set-default-subtitle",
@@ -137,10 +138,12 @@ parser.add_argument(
     action="store_true",
     help="If passed, set the first subtitle as default",
 )
+"""
 
 # Output file
 parser.add_argument("-o", "--output-file", required=True, type=str, help="Output file")
 
+"""
 # Execute or print commands
 parser.add_argument(
     "-e",
@@ -148,6 +151,7 @@ parser.add_argument(
     action="store_true",
     help="Execute script. If not set, shows the commands that would be run.",
 )
+"""
 
 args = parser.parse_args()
 
@@ -212,13 +216,19 @@ else:
 subtitle = args.subtitle_name
 subtitlestream = args.subtitle_stream
 
+"""
 if args.set_default_subtitle:
     defaultsub = "-disposition:s:0 default"
 else:
     defaultsub = ""
+"""
+defaultsub = "-disposition:s:0 default"
 
+"""
 # Flag to actually execute command
 execute = args.execute
+"""
+execute = True
 
 # check input file for valid duration
 valid_duration(inputfile, "INPUT")
