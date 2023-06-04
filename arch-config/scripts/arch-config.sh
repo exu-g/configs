@@ -386,6 +386,12 @@ cat <<EOF
 ########################################
 EOF
 
+# betterlockscreen cache image
+imagepath="/home/marc/Bilder/Backgrounds/artstation/dk-lan/artstation_14224733_55806391_月半与鬼哭.jpg"
+if [ -f "$imagepath" ]; then
+    betterlockscreen -u "$imagepath"
+fi
+
 # reload systemd user scripts
 systemctl --user daemon-reload
 
