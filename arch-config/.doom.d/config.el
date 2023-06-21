@@ -91,3 +91,11 @@
 
 ;; Disable formatter for php
 (setq-hook! 'php-mode-hook +format-with :none)
+
+; auto-virtualenv package configuration
+(use-package! auto-virtualenv
+  :init
+  :config
+  (add-hook! 'python-mode-hook 'auto-virtualenv-set-virtualenv)
+  (add-hook! 'projectile-after-switch-project-hook 'auto-virtualenv-set-virtualenv)  ;; If using projectile
+  )
