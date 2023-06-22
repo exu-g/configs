@@ -270,7 +270,7 @@ chmod +x ~/.xinitrc
 cp -r ~/configs/arch-config/scripts/ ~/
 
 # copy cache
-cp -r ~/configs/arch-config/.cache ~/
+#cp -r ~/configs/arch-config/.cache ~/
 
 #copy stuff to /etc
 sudo cp -r ~/configs/arch-config/etc /
