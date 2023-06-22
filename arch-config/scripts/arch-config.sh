@@ -121,7 +121,7 @@ fi
 echo Creating backup
 mkdir -p ~/old_dat/.config
 mkdir -p ~/old_dat/.doom.d
-mkdir -p ~/old_dat/.easystroke
+#mkdir -p ~/old_dat/.easystroke
 mkdir -p ~/old_dat/.mozilla
 mkdir -p ~/old_dat/scripts
 mkdir -p ~/old_dat/.elvish
@@ -143,20 +143,8 @@ fi
 if [[ -d ~/.config/i3 ]]; then
     rsync -ah ~/.config/i3 ~/old_dat/.config/
 fi
-if [[ -d ~/.config/neofetch ]]; then
-    rsync -ah ~/.config/neofetch ~/old_dat/.config/
-fi
-if [[ -d ~/.config/openbox ]]; then
-    rsync -ah ~/.config/openbox ~/old_dat/.config/
-fi
 if [[ -d ~/.config/polybar ]]; then
     rsync -ah ~/.config/polybar ~/old_dat/.config/
-fi
-if [[ -d ~/.config/termite ]]; then
-    rsync -ah ~/.config/termite ~/old_dat/.config/
-fi
-if [[ -d ~/.config/variety ]]; then
-    rsync -ah ~/.config/variety ~/old_dat/.config/
 fi
 
 # doom.d folder
@@ -172,11 +160,6 @@ fi
 # easystroke
 if [[ -d ~/.easystroke ]]; then
     rsync -ah ~/.easystroke ~/old_dat/
-fi
-
-# elvish
-if [[ -d ~/.elvish ]]; then
-    rsync -ah ~/.elvish ~/old_dat/
 fi
 
 # local folder
@@ -251,14 +234,12 @@ if [[ copy_firefox -eq 1 ]]; then
     fi
 fi
 
-echo Copied folders
-
 #copy single files
 cp -r ~/configs/arch-config/.bashrc ~/
 cp -r ~/configs/arch-config/.face ~/
 cp -r ~/configs/arch-config/.gtkrc-2.0 ~/
 cp -r ~/configs/arch-config/.gitconfig ~/
-cp -r ~/configs/arch-config/.tmux.conf ~/
+#cp -r ~/configs/arch-config/.tmux.conf ~/
 cp -r ~/configs/arch-config/.xinitrc ~/
 cp -r ~/configs/arch-config/.kopiaignore ~/
 echo Copied files
@@ -274,6 +255,8 @@ cp -r ~/configs/arch-config/scripts/ ~/
 
 #copy stuff to /etc
 sudo cp -r ~/configs/arch-config/etc /
+
+echo Copied folders
 
 # NOTE Distro specific stuff
 distro=$(cat /etc/*-release | grep "^ID=")
