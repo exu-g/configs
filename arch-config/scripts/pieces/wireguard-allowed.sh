@@ -2,7 +2,7 @@
 set -euo pipefail
 
 if [ $# -eq 0 ]; then
-    echo "Please supply one file"
+    echo "Please supply one zipfile"
     exit 1
     echo "$?"
 elif [ $# -ge 2 ]; then
