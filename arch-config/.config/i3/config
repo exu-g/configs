@@ -473,8 +473,8 @@ exec --no-startup-id protonmail-bridge -no-window
 # Start KopiaUI
 exec --no-startup-id /opt/KopiaUI/kopia-ui
 
-# PulseEffects
-#exec --no-startup-id pulseeffects --gapplication-service
+# Easy Effects
+exec --no-startup-id easyeffects --gapplication-service
 
 # feh background image
 exec --no-startup-id bash $HOME/.fehbg &
