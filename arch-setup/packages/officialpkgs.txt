@@ -16,6 +16,7 @@ dosfstools
 dunst
 e2fsprogs
 easyeffects
+easyeffects
 exfatprogs
 f2fs-tools
 fakeroot
@@ -65,6 +66,7 @@ lightdm-gtk-greeter
 lightdm-gtk-greeter-settings
 linux-zen
 linux-zen-headers
+lsp-plugins-lv2
 man-db
 mythes-de
 mythes-en
