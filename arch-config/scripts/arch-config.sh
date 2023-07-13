@@ -345,10 +345,10 @@ cat <<EOF
 EOF
 
 # download ip-calculator with powershell
-echo "Installing powershell ip calculator"
-git clone https://github.com/RealStickman/PSipcalc &>/dev/null
-cp ./PSipcalc/PSipcalc.ps1 "$HOME/scripts/in_path/sc-psipcalc"
-rm -rf ./PSipcalc
+#echo "Installing powershell ip calculator"
+#git clone https://github.com/RealStickman/PSipcalc &>/dev/null
+#cp ./PSipcalc/PSipcalc.ps1 "$HOME/scripts/in_path/sc-psipcalc"
+#rm -rf ./PSipcalc
 
 echo
 cat <<EOF
