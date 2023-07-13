@@ -8,6 +8,7 @@ brotli
 btrfs-progs
 catfish
 cmake
+cmake
 cronie
 dconf-editor
 dhclient
