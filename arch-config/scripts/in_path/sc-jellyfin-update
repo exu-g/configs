@@ -15,7 +15,7 @@ fi
 
 # transfer to nas
 #rsync -uvr --progress /mnt/storage/MediaLibrary/{Movies,other,Patreon,Shows,YouTube} /mnt/lan1nas1/
-rsync -uvr --progress /mnt/storage/MediaLibrary/{Movies,other,Patreon,Shows,YouTube} /mnt/lan1nas1/
+rsync -uvr --progress --delete /mnt/storage/MediaLibrary/{Movies,other,Patreon,Shows,YouTube} /mnt/lan1nas1/
 
 # Music to NAS. Leading source is main PC
 rsync -uvrL --progress --delete /home/marc/Musik /mnt/lan1nas1/
