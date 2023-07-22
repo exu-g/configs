@@ -1,6 +1,41 @@
 #!/usr/bin/env sh
 set -euo pipefail
 
+# exit thunderbird
+fn_killbird() {
+    # kill thunderbird
+    pkill thunderbird
+    # wait for a bit before checking again
+    sleep 5s
+}
+
+# check if thunderbird is running
+fn_checkbird() {
+    # check for thunderbird using pgrep
+    while [ $(pgrep thunderbird) ]; do
+        # get user input whether to shut down or exit
+        # default is exiting
+        read -p "Thunderbird is running. Do you want to shut it down now? [yN]: " yn
+        case $yn in
+            # handle closing thunderbird
+            [Yy]*)
+                fn_killbird
+                break
+                ;;
+            # explicit no, exit
+            [Nn]*)
+                echo "Please close Thunderbird and try again."
+                exit
+                ;;
+            # implicit no, exit
+            *)
+                echo "Please close Thunderbird and try again."
+                exit
+                ;;
+        esac
+    done
+}
+
 # prompt for password
 echo -n "Password: "
 read -s -r pass
@@ -16,6 +51,9 @@ if [ ! "$pass" = "$pass2" ]; then
     echo "Passwords don't match!"
     exit
 fi
+
+# check if thunderbird is running
+fn_checkbird
 
 # go to home dir
 cd "$HOME"
