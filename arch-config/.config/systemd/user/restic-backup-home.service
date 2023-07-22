@@ -1,8 +1,0 @@
-[Unit]
-Description=Restic home backup
-[Service]
-Type=oneshot
-ExecStartPre=-restic -r $RESTIC_REPOSITORY unlock
-ExecStart=restic backup --verbose --tag systemd-home.timer $BACKUP_EXCLUDES $BACKUP_PATHS --limit-upload=2048
-ExecStartPost=restic forget --verbose --tag systemd-home.timer --group-by "paths,tags" --keep-daily $RETENTION_DAYS --keep-weekly $RETENTION_WEEKS --keep-monthly $RETENTION_MONTHS --keep-yearly $RETENTION_YEARS
-EnvironmentFile=%h/.restic/restic-backup-home.conf
