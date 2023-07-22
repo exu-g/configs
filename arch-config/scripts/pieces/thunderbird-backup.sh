@@ -37,7 +37,7 @@ tar -cv -I"zstd -19 -T0" -f thunderbird-backup-${currdate}.tar.zst thunderbird-b
 rm -rf "$HOME/thunderbird-backup"
 
 # encrypt backup archive
-echo '$pass' | gpg -c --batch --yes --passphrase-fd 0 thunderbird-backup-${currdate}.tar.zst
+echo "$pass" | gpg -c --batch --yes --passphrase-fd 0 thunderbird-backup-${currdate}.tar.zst
 
 # remove unencrypted archive
 rm thunderbird-backup-${currdate}.tar.zst
