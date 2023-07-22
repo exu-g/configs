@@ -13,7 +13,7 @@ cd "$HOME"
 latestbackup="$(find "$HOME/Nextcloud/backups/" -name "thunderbird-backup-*\.tar.zst.gpg" | sort | tail -1)"
 
 # decrypt backup
-echo '$pass' | gpg --decrypt-file --batch --yes --passphrase-fd 0 "$latestbackup"
+echo "$pass" | gpg --decrypt-file --batch --yes --passphrase-fd 0 "$latestbackup"
 
 # name of decrypted file
 latestdecrypted="${latestbackup%.gpg}"
