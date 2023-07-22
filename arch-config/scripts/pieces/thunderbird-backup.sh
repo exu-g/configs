@@ -84,8 +84,7 @@ rm thunderbird-backup-${currdate}.tar.zst
 mv thunderbird-backup-${currdate}.tar.zst.gpg "$HOME/Nextcloud/backups/"
 
 # remove more than the last 3 backups
-#find "$HOME/Nextcloud/backups/" -name "thunderbird-backup-*\.tar.zst.gpg" | sort -r | tail -n +4
-mapfile -t old_backups < <( find "$HOME/Nextcloud/backups/" -name "thunderbird-backup-*\.tar.zst.gpg" | sort -r | tail -n +4 )
+mapfile -t old_backups < <(find "$HOME/Nextcloud/backups/" -name "thunderbird-backup-*\.tar.zst.gpg" | sort -r | tail -n +4)
 
 for backup in "${old_backups[@]}"; do
     echo "Removing old backup. $backup"
