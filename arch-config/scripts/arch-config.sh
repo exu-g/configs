@@ -337,6 +337,7 @@ git clone https://github.com/RealStickman/bash-cat-with-cat.git &>/dev/null
 cp ./bash-cat-with-cat/cat.sh "$HOME/scripts/pieces/cat.sh"
 rm -rf ./bash-cat-with-cat
 
+: '
 echo
 cat <<EOF
 ####################
@@ -345,11 +346,11 @@ cat <<EOF
 EOF
 
 # download ip-calculator with powershell
-#echo "Installing powershell ip calculator"
-#git clone https://github.com/RealStickman/PSipcalc &>/dev/null
-#cp ./PSipcalc/PSipcalc.ps1 "$HOME/scripts/in_path/sc-psipcalc"
-#rm -rf ./PSipcalc
-
+echo "Installing powershell ip calculator"
+git clone https://github.com/RealStickman/PSipcalc &>/dev/null
+cp ./PSipcalc/PSipcalc.ps1 "$HOME/scripts/in_path/sc-psipcalc"
+rm -rf ./PSipcalc
+'
 echo
 cat <<EOF
 ########################################
