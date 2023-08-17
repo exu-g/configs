@@ -321,11 +321,11 @@ mode "$crypto"{
 
 
 # launch gaming focused programs
-set $gaming Lutris (l), Steam (s), Minigalaxy (g), Itch (i), Citra (3DS) (c)
+set $gaming Lutris (l), Steam (s), Heroic (h), Itch (i), Citra (3DS) (c)
 mode "$gaming" {
     bindsym l exec --no-startup-id lutris;focus
     bindsym s exec --no-startup-id mangohud steam-native;focus
-    bindsym g exec --no-startup-id minigalaxy;focus
+    bindsym h exec --no-startup-id heroic;focus
     bindsym i exec --no-startup-id itch;focus
     bindsym c exec --no-startup-id citra-qt;focus
 
