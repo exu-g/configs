@@ -664,6 +664,10 @@ for_window [title="Microsoft Teams-Benachrichtigung"] floating enable
 for_window [class="tufts-vue-VUE" title="Format"] floating enable
 for_window [class="tufts-vue-VUE" title="ColorPopupMenu"] floating enable
 
+##############################
+###  fullscreen enabled    ###
+##############################
+for_window [class="steam_app_261550"] fullscreen enable # Mount & Blade II: Bannerlord
 
 #####################################################################################################################
 #################                          variety for your wallpapers                              #################
