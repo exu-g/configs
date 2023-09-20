@@ -168,7 +168,7 @@ bindsym $mod+q kill
 floating_modifier $mod
 
 # toggle tiling / floating
-bindsym $mod+Shift+f floating toggle
+bindsym $mod+f floating toggle
 
 # change focus
 bindsym $mod+$left focus left
@@ -224,7 +224,7 @@ bindsym $mod+o split h
 bindsym $mod+v split v
 
 # enter fullscreen mode for the focused container
-bindsym $mod+f fullscreen toggle
+bindsym $mod+Shift+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
 # qwerty/azerty issue for letter z
