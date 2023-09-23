@@ -12,7 +12,7 @@
     <property name="dpms-on-ac-sleep" type="uint" value="0"/>
     <property name="dpms-on-ac-off" type="uint" value="0"/>
     <property name="power-button-action" type="empty"/>
-    <property name="lock-screen-suspend-hibernate" type="empty"/>
+    <property name="lock-screen-suspend-hibernate" type="bool" value="false"/>
     <property name="logind-handle-lid-switch" type="empty"/>
     <property name="show-panel-label" type="empty"/>
     <property name="inactivity-sleep-mode-on-ac" type="empty"/>
