@@ -35,7 +35,7 @@
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type 'relative)
+;;(setq display-line-numbers-type 'relative)
 
 
 ;; Here are some additional functions/macros that could help you configure Doom:
@@ -56,14 +56,14 @@
 ;; they are implemented.
 
 ;; Enables the minimap by default. Use SPC-t-m to toggle
-;(minimap-mode 1)
+;;(minimap-mode 1)
 
 (setq
  projectile-project-search-path '("~/GitProjects/"))
 
 ;; autoload magit
-;(require 'magit-gitflow)
-;(add-hook 'magit-mode-hook 'turn-on-magit-gitflow)
+;;(require 'magit-gitflow)
+;;(add-hook 'magit-mode-hook 'turn-on-magit-gitflow)
 
 (setq hl-todo-keyword-faces
       '(("TODO"   . "#EACD4B")
@@ -92,7 +92,7 @@
 ;; Disable formatter for php
 (setq-hook! 'php-mode-hook +format-with :none)
 
-; auto-virtualenv package configuration
+;; auto-virtualenv package configuration
 (use-package! auto-virtualenv
   :init
   :config
