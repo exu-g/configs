@@ -4,4 +4,5 @@ mpv --volume=80 \
     --af=lavfi=[loudnorm=I=-30:TP=-2:LRA=7] \
     --vid=no \
     --shuffle \
+    --loop \
     'https://www.youtube.com/playlist?list=PLw1D9N29TD5KnTi9IWPjsJI1RfcIDf_hU'
