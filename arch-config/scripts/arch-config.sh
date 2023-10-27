@@ -385,6 +385,9 @@ if [[ $(pacman -Q | grep vmware-workstation) ]]; then
     sudo systemctl enable --now vmware-usbarbitrator.service || echo "Service failed, continuing"
 fi
 
+# FIXME temporary
+if [ -f "/etc/pipewire/pipewire.conf" ]; then
+    sudo rm "/etc/pipewire/pipewire.conf"
 fi
 
 # enable fstrim timer
