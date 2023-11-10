@@ -376,6 +376,9 @@ if [ -f "$imagepath" ]; then
     betterlockscreen -u "$imagepath" &
 fi
 
+jobs
+jobs -p
+
 # reload systemd user scripts
 systemctl --user daemon-reload
 
