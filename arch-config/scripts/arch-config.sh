@@ -103,6 +103,9 @@ cat <<EOF
 ########################################
 EOF
 
+# Collect all PIDs of background processes that shoulb be waited for
+pids=""
+
 ####################
 ##### Cleaning #####
 ####################
@@ -374,7 +377,12 @@ EOF
 imagepath="/home/marc/Bilder/Backgrounds/artstation/dk-lan/artstation_14224733_55806391_月半与鬼哭.jpg"
 if [ -f "$imagepath" ]; then
     betterlockscreen -u "$imagepath" &
+    pids="$pids $!"
 fi
+
+echo $pids
+jobs
+jobs -p
 
 # reload systemd user scripts
 systemctl --user daemon-reload
@@ -517,6 +525,12 @@ if ps aux | grep -E "\si3(\s|$)" &>/dev/null; then
     i3-msg restart 1>/dev/null
 fi
 
+jobs
+jobs -p
+
+# wait for all background jobs to finish
+wait $pids && echo "Finished background jobs"
+
 echo
 cat <<EOF
 ########################################
@@ -537,12 +551,6 @@ fi
 if [[ $(pacman -Q | grep podman) ]]; then
     echo -e "\033[38;2;200;20;20mRemember to set \"amdgpu.ppfeaturemask=0xffffffff\" in the kernel!!\033[0m"
 fi
-
-jobs
-jobs -p
-
-# wait for all background jobs to finish
-wait $(jobs -p) && echo "Finished background jobs"
 
 # reload user default shell
 exec "$(getent passwd $LOGNAME | cut -d: -f7)"
