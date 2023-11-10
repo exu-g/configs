@@ -376,9 +376,6 @@ if [ -f "$imagepath" ]; then
     betterlockscreen -u "$imagepath" &
 fi
 
-jobs
-jobs -p
-
 # reload systemd user scripts
 systemctl --user daemon-reload
 
@@ -541,14 +538,14 @@ if [[ $(pacman -Q | grep podman) ]]; then
     echo -e "\033[38;2;200;20;20mRemember to set \"amdgpu.ppfeaturemask=0xffffffff\" in the kernel!!\033[0m"
 fi
 
-# reload user default shell
-exec "$(getent passwd $LOGNAME | cut -d: -f7)"
-
 jobs
 jobs -p
 
 # wait for all background jobs to finish
-wait $(jobs -p)
+wait $(jobs -p) && echo "Finished background jobs"
+
+# reload user default shell
+exec "$(getent passwd $LOGNAME | cut -d: -f7)"
 
 # exit successfully
 exit 0
