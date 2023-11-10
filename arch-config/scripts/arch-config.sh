@@ -544,5 +544,8 @@ exec "$(getent passwd $LOGNAME | cut -d: -f7)"
 # wait for all background jobs to finish
 wait $(jobs -p)
 
+# print one final newline
+echo
+
 # exit successfully
 exit 0
