@@ -542,7 +542,7 @@ fi
 exec "$(getent passwd $LOGNAME | cut -d: -f7)"
 
 # wait for all background jobs to finish
-wait $(jobs -p) && echo "Finished"
+wait && echo "Finished"
 
 # exit successfully
 exit 0
