@@ -380,10 +380,6 @@ if [ -f "$imagepath" ]; then
     pids="$pids $!"
 fi
 
-echo $pids
-jobs
-jobs -p
-
 # reload systemd user scripts
 systemctl --user daemon-reload
 
@@ -524,9 +520,6 @@ fi
 if ps aux | grep -E "\si3(\s|$)" &>/dev/null; then
     i3-msg restart 1>/dev/null
 fi
-
-jobs
-jobs -p
 
 # wait for all background jobs to finish
 wait $pids && echo "Finished background jobs"
