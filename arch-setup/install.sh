@@ -254,6 +254,9 @@ set -e
 
 echo Uninstalled unused packages
 
+# explicitly install pipewire first
+sudo pacman -S --needed pipewire wireplumber pipewire-jack pipewire-pulse pipewire-alsa
+
 #pacman programs
 echo Installing default pacman programs
 #sudo pacman -S --needed - <"$setupdir/packages/officialpkgs.txt"
