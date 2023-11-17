@@ -20,7 +20,8 @@
       "session-update-interval" : 60,
       "custom-headers" : [],
       "exec-commands" : [],
-      "destinations" : []
+      "destinations" : [],
+      "last-add-destination" : "/mnt/arrdata/torrents"
     }
   ],
   "profile-id" : 0,
@@ -33,14 +34,14 @@
       "sort-col" : -2,
       "sort-type" : 0,
       "widths" : [
-        72,
-        146,
-        85,
-        142,
-        148,
-        149,
-        126,
-        128
+        254,
+        346,
+        269,
+        340,
+        348,
+        350,
+        320,
+        323
       ],
       "columns" : [
         "tier",
@@ -57,11 +58,11 @@
       "sort-col" : -2,
       "sort-type" : 0,
       "widths" : [
-        189,
-        176,
-        211,
-        220,
-        200
+        495,
+        480,
+        524,
+        535,
+        516
       ],
       "columns" : [
         "name",
@@ -75,14 +76,14 @@
       "sort-col" : -2,
       "sort-type" : 0,
       "widths" : [
-        89,
-        107,
-        129,
-        163,
-        142,
-        137,
-        112,
-        117
+        272,
+        297,
+        325,
+        367,
+        341,
+        335,
+        302,
+        311
       ],
       "columns" : [
         "ip",
@@ -93,6 +94,72 @@
         "progress",
         "flags",
         "client"
+      ]
+    },
+    "TrgFilesTreeView-dialog" : {
+      "sort-col" : -2,
+      "sort-type" : 0,
+      "widths" : [
+        582,
+        79,
+        94,
+        105,
+        82
+      ],
+      "columns" : [
+        "name",
+        "size",
+        "progress",
+        "wanted",
+        "priority"
+      ]
+    },
+    "TrgPeersTreeView-dialog" : {
+      "sort-col" : -2,
+      "sort-type" : 0,
+      "widths" : [
+        137,
+        56,
+        84,
+        126,
+        100,
+        94,
+        61,
+        170
+      ],
+      "columns" : [
+        "ip",
+        "host",
+        "country",
+        "down-speed",
+        "up-speed",
+        "progress",
+        "flags",
+        "client"
+      ]
+    },
+    "TrgTrackersTreeView-dialog" : {
+      "sort-col" : -2,
+      "sort-type" : 0,
+      "widths" : [
+        49,
+        593,
+        64,
+        135,
+        143,
+        176,
+        115,
+        114
+      ],
+      "columns" : [
+        "tier",
+        "announce-url",
+        "last-announce-peer-count",
+        "seeder-count",
+        "leecher-count",
+        "last-announce-time",
+        "last-result",
+        "scrape-url"
       ]
     }
   },
@@ -108,8 +175,11 @@
   "system-tray-minimise" : false,
   "add-notify" : false,
   "complete-notify" : false,
-  "window-height" : 1056,
-  "window-width" : 1916,
+  "window-height" : 1406,
+  "window-width" : 2554,
   "notebook-paned-pos" : 300,
-  "states-paned-pos" : 120
+  "states-paned-pos" : 253,
+  "dialog-width" : 700,
+  "dialog-height" : 628,
+  "state-selector-last" : 0
 }

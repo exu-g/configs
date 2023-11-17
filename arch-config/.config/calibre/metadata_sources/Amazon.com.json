@@ -1,0 +1,7 @@
+{
+  "domain": "uk",
+  "ignore_fields": [],
+  "prefer_kindle_edition": true,
+  "server": "auto",
+  "use_mobi_asin": true
+}
