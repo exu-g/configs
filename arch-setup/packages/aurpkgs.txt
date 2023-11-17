@@ -10,7 +10,7 @@ lib32-mangohud
 mangohud
 mpv-mpris
 nemo-audio-tab
-nohang-git
+nohang
 pdfsam
 polybar
 protonmail-bridge-bin
