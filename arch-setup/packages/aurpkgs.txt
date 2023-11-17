@@ -7,8 +7,6 @@ jellyamp
 jellyfin-media-player
 joplin-appimage
 lib32-mangohud
-lightdm-settings
-lightdm-slick-greeter
 mangohud
 mpv-mpris
 nemo-audio-tab
