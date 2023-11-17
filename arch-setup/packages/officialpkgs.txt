@@ -31,6 +31,7 @@ font-manager
 freetype2
 fwupd
 fwupd-efi
+gdm
 git
 git-lfs
 gnome-firmware
