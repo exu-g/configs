@@ -1,9 +1,0 @@
-[terminal]
-# The VT to run the greeter on. Can be "next", "current" or a number designating the VT.
-vt = 7
-
-[default_session]
-command = "sway --config /etc/greetd/sway-config"
-
-# The user to run the command as. A graphical greeter requires the "video" group for example
-user = "greeter"
