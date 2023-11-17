@@ -381,10 +381,10 @@ EOF
 
 # generate betterlockscreen cache image in background
 imagepath="/home/marc/Bilder/Backgrounds/artstation/dk-lan/artstation_14224733_55806391_月半与鬼哭.jpg"
-if [ -f "$imagepath" ]; then
-    betterlockscreen -u "$imagepath" &
-    pids="$pids $!"
-fi
+#if [ -f "$imagepath" ]; then
+#    betterlockscreen -u "$imagepath" &
+#    pids="$pids $!"
+#fi
 
 # reload systemd user scripts
 systemctl --user daemon-reload
@@ -513,7 +513,7 @@ if [[ -f "/usr/share/dbus-1/services/org.freedesktop.Notifications.service" ]]; 
 fi
 
 # dunst
-pkill dunst && nohup dunst &
+#pkill dunst && nohup dunst &
 
 # reload .Xresources
 # TODO fails without display
@@ -522,13 +522,13 @@ pkill dunst && nohup dunst &
 #fi
 
 # execute feh
-if [[ -f "$HOME/.fehbg" ]]; then
-    "$HOME/.fehbg"
-fi
+#if [[ -f "$HOME/.fehbg" ]]; then
+#    "$HOME/.fehbg"
+#fi
 
-if ps aux | grep -E "\si3(\s|$)" &>/dev/null; then
-    i3-msg restart 1>/dev/null
-fi
+#if ps aux | grep -E "\si3(\s|$)" &>/dev/null; then
+#    i3-msg restart 1>/dev/null
+#fi
 
 # wait for all background jobs to finish
 wait $pids && echo "Finished background jobs"
