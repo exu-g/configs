@@ -3,6 +3,7 @@ bitwarden
 btrfsmaintenance
 davfs2
 downgrade
+feishin-bin
 jellyfin-media-player
 joplin-appimage
 lib32-mangohud
