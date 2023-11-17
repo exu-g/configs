@@ -503,8 +503,8 @@ EOF
 update-desktop-database ~/.local/share/applications/
 
 # sync doom-emacs only if it is installed
-if [[ -f  ~/.emacs.d/bin/doom ]]; then
-    ~/.emacs.d/bin/doom sync
+if [[ -f  ~/.config/emacs/bin/doom ]]; then
+    ~/.config/emacs/bin/doom sync
 fi
 
 # disable freedesktop notification daemon
@@ -517,11 +517,9 @@ pkill dunst && nohup dunst &
 
 # reload .Xresources
 # TODO fails without display
-set +e
-if [[ -f "$HOME/.Xresources" ]]; then
-    xrdb ~/.Xresources
-fi
-set -e
+#if [[ -f "$HOME/.Xresources" ]]; then
+#    xrdb ~/.Xresources
+#fi
 
 # execute feh
 if [[ -f "$HOME/.fehbg" ]]; then
