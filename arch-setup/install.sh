@@ -346,6 +346,7 @@ if [ $in_podman -eq 1 ]; then
 fi
 
 # other system configs
+: '
 # arco pc
 if [ $in_arco_pc -eq 1 ]; then
     echo "Installing arco pc packages"
@@ -357,6 +358,7 @@ if [ $in_arco_hp -eq 1 ]; then
     echo "Installing arch hp packages"
     paru -S --needed - <"$setupdir/packages/arch-hp-packages.txt"
 fi
+'
 
 # install nix
 #curl -sSf -L https://install.determinate.systems/nix | sh -s -- install
