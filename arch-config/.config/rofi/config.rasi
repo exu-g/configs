@@ -1,5 +1,0 @@
-configuration {
-	font: "monospace 12";
-	modes: "drun,emoji";
-}
-@theme "/usr/share/rofi/themes/purple.rasi"
