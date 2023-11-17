@@ -63,8 +63,6 @@ libnotify
 libreoffice-fresh
 libreoffice-fresh-de
 libsecret
-linux-zen
-linux-zen-headers
 lsp-plugins-lv2
 man-db
 mythes-de
