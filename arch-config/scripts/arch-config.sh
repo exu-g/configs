@@ -222,7 +222,7 @@ cp -r ~/configs/arch-config/.local/ ~/
 #cp -r ~/config/.mozilla/firefox/default-release/* ~/.mozilla/firefox/*.default-release/
 #cp -r ~/config/.easystroke ~/
 #cp -r ~/config/.elvish ~/
-cp -r ~/configs/arch-config/.doom.d ~/
+#cp -r ~/configs/arch-config/.doom.d ~/
 cp -r ~/configs/arch-config/.ssh ~/
 
 # copy firefox only if "-f" or "--firefox" is given as argument
