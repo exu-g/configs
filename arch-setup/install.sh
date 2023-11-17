@@ -238,10 +238,11 @@ fi
 
 #uninstalling unused packages
 echo Uninstalling unused packages
-#sudo pacman -Rns - <"$setupdir/packages/uninstall.txt"
+set +e
 while read package; do
     sudo pacman -Rns --noconfirm "$package"
 done <"$setupdir/packages/uninstall.txt"
+set -e
 
 echo Uninstalled unused packages
 
