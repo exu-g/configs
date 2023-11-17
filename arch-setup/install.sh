@@ -224,7 +224,9 @@ for choice in $choices; do
 done
 '
 
-rm "$setupdir/notfoundpackages.txt"
+if [ -f "$setupdir/notfoundpackages.txt" ]; then
+    rm "$setupdir/notfoundpackages.txt"
+fi
 
 # NOTE on unattended pacman installing
 # Option 1: Will assume the default choice
