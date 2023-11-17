@@ -276,14 +276,10 @@ echo Installing default AUR programs
 paru -S --needed - <"$setupdir/packages/aurpkgs.txt"
 # TODO for btrfsmaintenance, use btrfsmaintenance (1)
 # TODO for jellyfin-media-player, use jellyfin-media-player (1)
-# TODO for java-environment, use jdk-openjdk (1)
-# TODO for cargo, use rust (1)
+# TODO sublimme-music (1)
 # TODO for ttf-iosevka, use ttf-iosevka (1)
 # TODO for ttf-ms-fonts, use ttf-ms-fonts (1)
 # TODO for ttf-vista-fonts, use ttf-vista-fonts (1)
-# TODO for wps-office, use wps-office (1)
-# TODO for ffmpeg-normalize, use ffmpeg-normalize (1)
-# TODO for nohang, use nohang (1)
 echo Installed AUR programs
 
 # theming
