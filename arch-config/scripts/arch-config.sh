@@ -67,7 +67,7 @@ git clone https://gitea.exu.li/realstickman/configs.git &>/dev/null
 # NOTE Arguments get passed automatically now
 if ! cmp --silent "$scriptloc" "$HOME/configs/arch-config/scripts/arch-config.sh"; then
     echo Removed old config file and launched new one.
-    rm "$HOME/scripts/arch-config.sh" && cp "$HOME/configs/arch-config/scripts/arch-config.sh" "$HOME/scripts/" && bash ~/scripts/arch-config.sh "$@"
+    rm "$scriptloc" && cp "$HOME/configs/arch-config/scripts/arch-config.sh" "$HOME/scripts/" && bash ~/scripts/arch-config.sh "$@"
 fi
 
 # if no seltheme file exists, ask to select a theme
