@@ -378,7 +378,7 @@ autotrash -td 5 --install
 #enable vnstat
 sudo systemctl enable --now vnstat
 
-systemctl --user enable autotrash.timer
+#systemctl --user enable autotrash.timer
 
 # enable lockscreen for systemd
 #sudo systemctl enable betterlockscreen@$USER
