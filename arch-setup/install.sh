@@ -280,6 +280,7 @@ paru -S --needed - <"$setupdir/packages/aurpkgs.txt"
 # TODO for ttf-iosevka, use ttf-iosevka (1)
 # TODO for ttf-ms-fonts, use ttf-ms-fonts (1)
 # TODO for ttf-vista-fonts, use ttf-vista-fonts (1)
+# TODO nohang (1)
 echo Installed AUR programs
 
 # theming
