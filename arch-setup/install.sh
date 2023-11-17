@@ -39,6 +39,14 @@ echo Updating repos and packages
 sudo pacman -Syu
 echo Select packages to install
 
+# remove previously selected packages on reruns
+if [ -f "$setupdir/selectedpkgs.txt" ]; then
+    rm "$setupdir/selectedpkgs.txt"
+fi
+if [ -f "$setupdir/aurselectedpkgs.txt" ]; then
+    rm "$setupdir/aurselectedpkgs.txt"
+fi
+
 cmd=(dialog --separate-output --checklist "Select Desktop environment/Window manager:" 22 76 16)
 options=(100 "[WM] sway" off)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
