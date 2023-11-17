@@ -49,6 +49,9 @@ cat <<EOF
 ########################################
 EOF
 
+# get script directory
+scriptloc="$BASH_SOURCE"
+
 # change to home
 cd "$HOME"
 
@@ -62,7 +65,7 @@ git clone https://gitea.exu.li/realstickman/configs.git &>/dev/null
 
 # check if the install scripts are the same
 # NOTE Arguments get passed automatically now
-if ! cmp --silent "$HOME/scripts/arch-config.sh" "$HOME/configs/arch-config/scripts/arch-config.sh"; then
+if ! cmp --silent "$scriptloc" "$HOME/configs/arch-config/scripts/arch-config.sh"; then
     echo Removed old config file and launched new one.
     rm "$HOME/scripts/arch-config.sh" && cp "$HOME/configs/arch-config/scripts/arch-config.sh" "$HOME/scripts/" && bash ~/scripts/arch-config.sh "$@"
 fi
