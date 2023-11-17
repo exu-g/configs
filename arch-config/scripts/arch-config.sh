@@ -241,7 +241,7 @@ if [[ copy_firefox -eq 1 ]]; then
 fi
 
 #copy single files
-cp -r ~/configs/arch-config/.bashrc ~/
+#cp -r ~/configs/arch-config/.bashrc ~/
 cp -r ~/configs/arch-config/.face ~/
 cp -r ~/configs/arch-config/.gtkrc-2.0 ~/
 cp -r ~/configs/arch-config/.gitconfig ~/
