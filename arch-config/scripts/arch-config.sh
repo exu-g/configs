@@ -61,7 +61,7 @@ rm -rf ~/configs
 echo "Checking config file"
 
 #clone this repo
-git clone https://gitea.exu.li/realstickman/configs.git &>/dev/null
+git clone -b arch-wayland2 https://gitea.exu.li/realstickman/configs.git &>/dev/null
 
 # check if the install scripts are the same
 # NOTE Arguments get passed automatically now
