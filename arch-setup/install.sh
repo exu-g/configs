@@ -267,7 +267,7 @@ if [[ ! $(pacman -Q paru) ]]; then
     echo "Installing paru from the AUR"
     git clone https://aur.archlinux.org/paru-bin.git
     cd paru-bin
-    yes | LC_ALL=en_US.UTF-8 makepkg -si
+    makepkg -si
     cd ..
 fi
 
