@@ -373,12 +373,13 @@ echo Configuring packages
 chsh -s /usr/bin/fish "$USER"
 
 # setup autotrash
-autotrash -td 5 --install
+#autotrash -td 5 --install
+
+#systemctl --user enable autotrash.timer
 
 #enable vnstat
 sudo systemctl enable --now vnstat
 
-#systemctl --user enable autotrash.timer
 
 # enable lockscreen for systemd
 #sudo systemctl enable betterlockscreen@$USER
