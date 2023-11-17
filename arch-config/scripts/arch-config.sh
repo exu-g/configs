@@ -364,6 +364,9 @@ cat <<EOF
 ########################################
 EOF
 
+# create autostart directory
+mkdir -p ~/.config/autostart/
+
 # copy corectrl desktop file
 if [[ $(pacman -Q | grep corectrl) ]]; then
     cp /usr/share/applications/org.corectrl.corectrl.desktop ~/.config/autostart/org.corectrl.corectrl.desktop
