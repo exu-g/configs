@@ -177,7 +177,6 @@ in_podman=0
 
 cmd=(dialog --separate-output --checklist "Devtools" 22 76 16)
 options=(0 "doom-emacs" off
-    1 "vscodium" off
     10 "Podman" off)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
@@ -383,8 +382,8 @@ sudo systemctl enable --now firewalld
 # || true because firewalld doesn't work without a reboot
 sudo firewall-cmd --zone=public --permanent --remove-service=ssh || true
 
-# enable greetd
-sudo systemctl enable greetd
+# enable gdm
+sudo systemctl enable gdm
 
 # regenerate locale
 # Fixes rofi not launching
