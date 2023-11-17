@@ -535,11 +535,6 @@ EOF
 echo -e "\033[38;2;20;200;20mFinished updating everything!\033[0m"
 echo Launching new shell!
 
-# remind user of cgroupsv2 if using podman
-if [[ $(pacman -Q | grep podman) ]]; then
-    echo -e "\033[38;2;200;20;20mRemember to set \"systemd.unified_cgroup_hierarchy=1\" in the kernel!!\033[0m"
-fi
-
 # reminder for enable additional gpu features for corectrl with amd gpus
 if [[ $(pacman -Q | grep podman) ]]; then
     echo -e "\033[38;2;200;20;20mRemember to set \"amdgpu.ppfeaturemask=0xffffffff\" in the kernel!!\033[0m"
