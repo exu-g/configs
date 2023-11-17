@@ -408,7 +408,8 @@ fi
 fc-cache -f
 
 echo Setting config
-bash ~/configs/arch-config/install.sh
+# FIXME not found
+bash "$setupdir/../arch-config/install.sh"
 
 if [[ $(pacman -Q pkgstats 2>/dev/null >/dev/null) ]]; then
     pkgstats
