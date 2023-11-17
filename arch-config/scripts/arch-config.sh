@@ -504,7 +504,8 @@ update-desktop-database ~/.local/share/applications/
 
 # sync doom-emacs only if it is installed
 if [[ -f  ~/.config/emacs/bin/doom ]]; then
-    ~/.config/emacs/bin/doom sync
+    ~/.config/emacs/bin/doom sync &
+    pids="$pids $!"
 fi
 
 # disable freedesktop notification daemon
