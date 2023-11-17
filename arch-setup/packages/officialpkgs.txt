@@ -1,6 +1,7 @@
 acpilight
 age
 alsa-utils
+amd-ucode
 arandr
 bandwhich
 base-devel
@@ -49,10 +50,13 @@ hunspell-en_us
 hyphen
 hyphen-de
 hyphen-en
+intel-media-driver
+intel-ucode
 jre-openjdk
 kcm-wacomtablet
 kdeconnect
 kitty
+lib32-mesa
 libaacs
 libbluray
 libcdio
@@ -63,8 +67,13 @@ libnotify
 libreoffice-fresh
 libreoffice-fresh-de
 libsecret
+libva-intel-driver
+libva-mesa-driver
+libva-utils
 lsp-plugins-lv2
 man-db
+mesa
+mesa-vdpau
 mythes-de
 mythes-en
 nemo
@@ -120,7 +129,10 @@ unace
 unrar
 unzip
 util-linux
+vdpauinfo
 vnstat
+vulkan-intel
+vulkan-radeon
 webkit2gtk
 wget
 whois
