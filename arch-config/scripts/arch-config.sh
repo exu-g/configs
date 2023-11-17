@@ -536,7 +536,7 @@ echo -e "\033[38;2;20;200;20mFinished updating everything!\033[0m"
 echo Launching new shell!
 
 # reminder for enable additional gpu features for corectrl with amd gpus
-if [[ $(pacman -Q | grep podman) ]]; then
+if [[ $(pacman -Q corectrl) ]]; then
     echo -e "\033[38;2;200;20;20mRemember to set \"amdgpu.ppfeaturemask=0xffffffff\" in the kernel!!\033[0m"
 fi
 
