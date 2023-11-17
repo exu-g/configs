@@ -19,7 +19,6 @@ rustscan
 sublime-music
 tealdeer
 thunar-nextcloud-plugin
-tmpmail-git
 ttf-iosevka
 ttf-ms-fonts
 ttf-vista-fonts
