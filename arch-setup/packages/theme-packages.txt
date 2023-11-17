@@ -3,7 +3,6 @@ breeze-icons
 candy-icons-git
 capitaine-cursors
 kvantum
-kvantum-theme-sweet-git
 kwindowsystem5
 lxappearance
 qt5ct
