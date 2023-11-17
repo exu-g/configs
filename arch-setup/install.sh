@@ -77,7 +77,6 @@ options=(0 "VirtManager" off # any option can be set to default to "on"
     10 "Steam" off
     11 "Lutris" off
     12 "Citra" off
-    13 "Minigalaxy" off
     20 "Krita" off
     21 "Gimp" off
     31 "YT-dlp" on
@@ -86,8 +85,8 @@ options=(0 "VirtManager" off # any option can be set to default to "on"
     41 "Audacity" off
     42 "k3b" off
     60 "Discord" on
-    61 "Element" on
-    62 "Telegram" on
+    61 "Element" off
+    62 "Telegram" off
     70 "TestSSL" off
     80 "Onedriver" off)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
@@ -108,9 +107,6 @@ for choice in $choices; do
             ;;
         12)
             echo "citra-qt-git" >>"$setupdir/aurselectedpkgs.txt"
-            ;;
-        13)
-            echo "minigalaxy" >>"$setupdir/aurselectedpkgs.txt"
             ;;
         20)
             echo "krita" >> "$setupdir/selectedpkgs.txt"
@@ -167,7 +163,6 @@ do
             ;;
         1)
             echo "corectrl" >> "$setupdir/aurselectedpkgs.txt"
->>>>>>> e733d5d1 (Prepare for sway. Remove old comments)
             ;;
     esac
 done
