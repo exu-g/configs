@@ -331,9 +331,9 @@ if [ $in_doomemacs -eq 1 ]; then
     paru -S --needed git emacs ripgrep fd pandoc shellcheck python-pipenv python-isort python-pytest texlive-core python-black clang
     #pip install grip
     #npm i bash-language-server
-    git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d
-    ~/.emacs.d/bin/doom install
-    export PATH="$PATH":$HOME/.emacs.d/bin
+    git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
+    ~/.config/emacs/bin/doom install
+    export PATH="$PATH":$HOME/.config/emacs/bin
 fi
 
 if [ $in_podman -eq 1 ]; then
