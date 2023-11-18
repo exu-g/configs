@@ -278,7 +278,7 @@ fi
 sudo cp -r ~/configs/arch-config/usr /
 
 # copy xresources
-cp ~/configs/arch-config/.Xresources ~/
+cp ~/configs/arch-config/.Xdefaults ~/
 
 echo
 cat <<EOF
@@ -296,8 +296,8 @@ if [ "$(hostname)" == "lupusregina" ]; then
     cp /tmp/i3config.ini ~/.config/polybar/i3config.ini
     # xresources dpi
     xftdpi="$(cat ~/configs/arch-config/per-device/lupusregina/xresources-dpi-override)"
-    awk -v xftdpi="$xftdpi" '/!per-device dpi insert/{print;print xftdpi;next}1' ~/.Xresources >/tmp/.Xresources
-    cp /tmp/.Xresources ~/.Xresources
+    awk -v xftdpi="$xftdpi" '/!per-device dpi insert/{print;print xftdpi;next}1' ~/.Xdefaults >/tmp/.Xdefaults
+    cp /tmp/.Xdefaults ~/.Xdefaults
     sudo cp ~/configs/arch-config/per-device/lupusregina/10-monitor.conf /etc/X11/xorg.conf.d/
     sudo cp ~/configs/arch-config/per-device/lupusregina/20-amdgpu.conf /etc/X11/xorg.conf.d/
 fi
