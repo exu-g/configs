@@ -36,6 +36,19 @@ set $menu wofi --show drun | xargs swaymsg exec --
 ### Keyboard, Mouse and others configuration
 # Keyboard config https://man.archlinux.org/man/xkeyboard-config.7
 # Sway input https://man.archlinux.org/man/sway-input.5
+### Input configuration
+#
+# Example configuration:
+#
+#   input "2:14:SynPS/2_Synaptics_TouchPad" {
+#       dwt enabled
+#       tap enabled
+#       natural_scroll enabled
+#       middle_emulation enabled
+#   }
+#
+# You can get the names of your inputs by running: swaymsg -t get_inputs
+# Read `man 5 sway-input` for more information about this section.#
 input * {
     # Keyboard
     xkb_layout "ch"
@@ -78,20 +91,6 @@ exec swayidle -w \
     timeout 300 'swaylock -f -e -i "$HOME/.cache/backgrounds/lockscreen"' \
     timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
     before-sleep 'swaylock -f -e -i "$HOME/.cache/backgrounds/lockscreen"'
-
-### Input configuration
-#
-# Example configuration:
-#
-#   input "2:14:SynPS/2_Synaptics_TouchPad" {
-#       dwt enabled
-#       tap enabled
-#       natural_scroll enabled
-#       middle_emulation enabled
-#   }
-#
-# You can get the names of your inputs by running: swaymsg -t get_inputs
-# Read `man 5 sway-input` for more information about this section.
 
 ### Key bindings
 #
@@ -252,7 +251,7 @@ for_window [shell="xwayland"] title_format "[XWayland] %title"
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 # choose your font
-font pango:Noto Mono Regular 9
+font pango:Fira Mono 9
 
 
 ##############################
