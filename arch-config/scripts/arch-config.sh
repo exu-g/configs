@@ -327,9 +327,12 @@ elif [[ "$seltheme" == "space-pink" ]]; then
 fi
 
 # make fehbg executable
-if [[ -f "$HOME/.fehbg" ]]; then
-    chmod +x ~/.fehbg
-fi
+#if [[ -f "$HOME/.fehbg" ]]; then
+#    chmod +x ~/.fehbg
+#fi
+
+bash "$scriptloc/gsettings.sh"
+echo "Set theme using gsettings"
 
 echo
 cat <<EOF
