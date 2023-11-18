@@ -534,6 +534,7 @@ fi
 
 if [ $XDG_SESSION_DESKTOP == "sway" ]; then
     swaymsg reload
+    echo "Reloaded sway"
 fi
 
 # wait for all background jobs to finish
