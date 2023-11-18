@@ -362,7 +362,8 @@ bindsym XF86MonBrightnessDown exec --no-startup-id bash $HOME/scripts/dunst-back
 #          Borders           #
 ##############################
 
-default_border pixel 2
+#default_border pixel 2
+default_border normal 2
 
 ############################################################
 #####           More from the sample config            #####
