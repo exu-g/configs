@@ -189,7 +189,7 @@ for choice in $choices; do
             in_doomemacs=1
             # TODO sort pacman and AUR packages
             # pychecker not in AUR anymore
-            printf '%s\n' 'git' 'emacs' 'ripgrep' 'fd' 'pandoc' 'shellcheck' 'python-pipenv' 'python-isort' 'python-pytest' 'python-rednose' 'pychecker' 'texlive-core' 'pyright' 'python-grip' 'prettier' 'shfmt' >>"$setupdir/aurselectedpkgs.txt"
+            printf '%s\n' 'git' 'emacs-wayland' 'ripgrep' 'fd' 'pandoc' 'shellcheck' 'python-pipenv' 'python-isort' 'python-pytest' 'python-rednose' 'pychecker' 'texlive-core' 'pyright' 'python-grip' 'prettier' 'shfmt' >>"$setupdir/aurselectedpkgs.txt"
             # TODO handle rest of installation
             ;;
         10)
@@ -331,7 +331,7 @@ fi
 if [ $in_doomemacs -eq 1 ]; then
     echo "Installing doom-emacs"
     #paru -S --needed git emacs ripgrep fd pandoc shellcheck python-pipenv python-isort python-pytest python-rednose pychecker texlive-core python-black clang
-    paru -S --needed git emacs ripgrep fd pandoc shellcheck python-pipenv python-isort python-pytest texlive-core python-black clang
+    paru -S --needed git emacs-wayland ripgrep fd pandoc shellcheck python-pipenv python-isort python-pytest texlive-core python-black clang
     #pip install grip
     #npm i bash-language-server
     rm -rf ~/.config/emacs
