@@ -41,6 +41,8 @@ gsettings-desktop-schemas
 gtk-engine-murrine
 gvfs
 gvfs-mtp
+gvfs-nfs
+gvfs-smb
 htop
 hunspell
 hunspell
