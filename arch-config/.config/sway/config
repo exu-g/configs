@@ -240,10 +240,10 @@ bindsym $mod+r mode "resize"
 
 # detect XWayland windows and hightlight them differently
 for_window [shell="xwayland"] title_format "[XWayland] %title"
-for_window [shell="xwayland"] client.focused          #592c2c #592c2c #eeeeee #592c2c
-for_window [shell="xwayland"] client.unfocused        #310202 #310202 #eeeeee #310202
-for_window [shell="xwayland"] client.focused_inactive #310202 #310202 #eeeeee #310202
-for_window [shell="xwayland"] client.urgent           #a50909 #a50909 #eeeeee #a50909
+#for_window [shell="xwayland"] client.focused          #592c2c #592c2c #eeeeee #592c2c
+#for_window [shell="xwayland"] client.unfocused        #310202 #310202 #eeeeee #310202
+#for_window [shell="xwayland"] client.focused_inactive #310202 #310202 #eeeeee #310202
+#for_window [shell="xwayland"] client.urgent           #a50909 #a50909 #eeeeee #a50909
 
 ############################################################
 #####               Stuff from old config              #####
@@ -377,7 +377,7 @@ bar {
 
     # When the status_command prints a new line to stdout, swaybar updates.
     # The default just shows the current date and time.
-    status_command while date +'%Y-%m-%d %H:%M:%S %p'; do sleep 1; done
+    status_command while date +'%Y-%m-%d %H:%M %p'; do sleep 1; done
 
     colors {
         statusline #ffffff
