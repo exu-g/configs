@@ -75,9 +75,9 @@ output "Acer Technologies XV272U V R307036FE4208" adaptive_sync on
 # -c 000000 sets the color in RGB
 # use -i to set an image
 exec swayidle -w \
-    timeout 300 'swaylock -f -e -i "$HOME/.cache/backgrounds/lockscreen.png"' \
+    timeout 300 'swaylock -f -e -i "$HOME/.cache/backgrounds/lockscreen"' \
     timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
-    before-sleep 'swaylock -f -e -i "$HOME/.cache/backgrounds/lockscreen.png"'
+    before-sleep 'swaylock -f -e -i "$HOME/.cache/backgrounds/lockscreen"'
 
 ### Input configuration
 #
