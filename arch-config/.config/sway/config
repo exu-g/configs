@@ -33,7 +33,7 @@ set $term kitty
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
 #set $menu dmenu_path | dmenu | xargs swaymsg exec --
-set $menu rofi -show drun
+set $menu wofi -show drun
 
 ### Keyboard, Mouse and others configuration
 # Keyboard config https://man.archlinux.org/man/xkeyboard-config.7
@@ -295,7 +295,7 @@ exec --no-startup-id /opt/KopiaUI/kopia-ui
 exec --no-startup-id flameshot &
 
 # notifications
-exec --no-startup-id /usr/bin/dunst &
+#exec --no-startup-id /usr/bin/dunst &
 
 ##############################
 #     Keyboard shortcuts     #
@@ -320,7 +320,7 @@ bindsym ctrl+mod1+l exec --no-startup-id libreoffice;focus
 bindsym control+mod1+f exec --no-startup-id firefox;focus
 
 # jellyamp
-bindsym ctrl+mod1+m exec --no-startup-id "env DESKTOPINTEGRATION=false /usr/bin/Jellyamp";focus
+#bindsym ctrl+mod1+m exec --no-startup-id "env DESKTOPINTEGRATION=false /usr/bin/Jellyamp";focus
 
 # jellyfin media player
 bindsym ctrl+mod1+j exec --no-startup-id jellyfinmediaplayer;focus
