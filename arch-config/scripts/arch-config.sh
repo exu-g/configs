@@ -52,6 +52,7 @@ EOF
 
 # get script directory
 scriptloc="$BASH_SOURCE"
+scriptpath="$(dirname "$scriptloc")"
 
 # change to home
 cd "$HOME"
@@ -331,7 +332,8 @@ fi
 #    chmod +x ~/.fehbg
 #fi
 
-bash "$scriptloc/gsettings.sh"
+chmod +x "$scriptpath/gsettings.sh"
+bash "$scriptpath/gsettings.sh"
 echo "Set theme using gsettings"
 
 echo
