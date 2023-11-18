@@ -330,7 +330,12 @@ fi
 # make fehbg executable
 #if [[ -f "$HOME/.fehbg" ]]; then
 #    chmod +x ~/.fehbg
-#fi
+
+# copy chosen image for lockscreen and desktop
+backgroundimage="/home/exu/Bilder/Backgrounds/artstation/dk-lan/artstation_14224733_55806391_月半与鬼哭.jpg"
+
+cp "$backgroundimage" "$HOME/.cache/backgrounds/desktop"
+cp "$backgroundimage" "$HOME/.cache/backgrounds/lockscreen"
 
 chmod +x "$scriptpath/gsettings.sh"
 bash "$scriptpath/gsettings.sh"
