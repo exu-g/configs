@@ -55,7 +55,7 @@ input "1133:16500:Logitech_G305" pointer_accel -0.3
 ### Output configuration
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 output "Acer Technologies XV272U V R307036FE4208" mode 2560x1440@170Hz
-output "Acer Technologies XV272U V R307036FE4208" scale 1.25
+output "Acer Technologies XV272U V R307036FE4208" scale 1.2
 output "Acer Technologies XV272U V R307036FE4208" subpixel rgb
 output "Acer Technologies XV272U V R307036FE4208" adaptive_sync on
 
