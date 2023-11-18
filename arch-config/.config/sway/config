@@ -1,6 +1,4 @@
-# Default config for sway
-#
-# Copy this to ~/.config/sway/config and edit it to your liking.
+# Config for sway
 #
 # Read `man 5 sway` for a complete reference.
 
@@ -33,7 +31,7 @@ set $term kitty
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
 #set $menu dmenu_path | dmenu | xargs swaymsg exec --
-set $menu wofi -show drun
+set $menu wofi -show drun | xargs swaymsg exec --
 
 ### Keyboard, Mouse and others configuration
 # Keyboard config https://man.archlinux.org/man/xkeyboard-config.7
@@ -48,22 +46,18 @@ input * {
     tap enabled
     tap_button_map lrm
     scroll_method two_finger
+    natural_scroll disabled
 }
 
+# slightly decrease mouse speed
+input "Logitech G305" pointer_accel -0.3
+
 ### Output configuration
-
-# Default wallpaper (more resolutions are available in @datadir@/backgrounds/sway/)
-#output * bg $HOME/.cache/backgrounds/desktop.png fill
-
-# Example configuration:
-#
-#   output HDMI-A-1 resolution 1920x1080 position 1920,0
-#
 # You can get the names of your outputs by running: swaymsg -t get_outputs
-output DP-1 mode 2560x1440@170Hz
-output DP-1 scale 1.25
-output DP-1 subpixel rgb
-output DP-1 adaptive_sync on
+output "Acer Technologies XV272U V R307036FE4208" mode 2560x1440@170Hz
+output "Acer Technologies XV272U V R307036FE4208" scale 1.25
+output "Acer Technologies XV272U V R307036FE4208" subpixel rgb
+output "Acer Technologies XV272U V R307036FE4208" adaptive_sync on
 
 ### Idle configuration
 #
@@ -80,10 +74,10 @@ output DP-1 adaptive_sync on
 
 # -c 000000 sets the color in RGB
 # use -i to set an image
-#exec swayidle -w \
-#    timeout 300 'swaylock -f -e -i "$HOME/.cache/backgrounds/lockscreen.png"' \
-#    timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-#    before-sleep 'swaylock -f -e -i "$HOME/.cache/backgrounds/lockscreen.png"'
+exec swayidle -w \
+    timeout 300 'swaylock -f -e -i "$HOME/.cache/backgrounds/lockscreen.png"' \
+    timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+    before-sleep 'swaylock -f -e -i "$HOME/.cache/backgrounds/lockscreen.png"'
 
 ### Input configuration
 #

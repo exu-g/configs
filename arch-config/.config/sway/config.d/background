@@ -1,0 +1,2 @@
+#output * bg $HOME/.cache/backgrounds/desktop.png fill
+output * background #ff0000 solid_color
