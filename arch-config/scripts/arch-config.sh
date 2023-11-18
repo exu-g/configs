@@ -531,6 +531,10 @@ fi
 #    i3-msg restart 1>/dev/null
 #fi
 
+if [ $XDG_SESSION_DESKTOP == "sway" ]; then
+    swaymsg reload
+fi
+
 # wait for all background jobs to finish
 wait $pids && echo "Finished background jobs"
 
