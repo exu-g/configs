@@ -57,6 +57,8 @@ kcm-wacomtablet
 kdeconnect
 kitty
 lib32-mesa
+lib32-vulkan-intel
+lib32-vulkan-radeon
 libaacs
 libbluray
 libcdio
