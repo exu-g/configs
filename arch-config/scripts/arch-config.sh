@@ -313,15 +313,15 @@ EOF
 seltheme="$(cat "$HOME/.seltheme")"
 if [[ "$seltheme" == "nyarch" ]]; then
     #cp -r "./themes/nyarch/i3" "$HOME/.config/"
-    cat "$HOME/configs/arch-themes/nyarch/i3/color" >>"$HOME/.config/sway/config"
-    cp -r "$HOME/configs/arch-themes/nyarch/polybar" "$HOME/.config/"
+    cp "$HOME/configs/arch-themes/nyarch/sway/color" "$HOME/.config/sway/config.d/"
+    #cp -r "$HOME/configs/arch-themes/nyarch/polybar" "$HOME/.config/"
     #cp -r "./themes/nyarch/neofetch/lowpoly_flamegirl_blue.txt" "$HOME/.config/neofetch/lowpoly_flamegirl.txt"
     #cp "./themes/.fehbg-nyarch" "$HOME/.fehbg"
     #sed -i 's/^NAME=".*"/NAME="Rawrch Linyux"/' /etc/os-release
 elif [[ "$seltheme" == "space-pink" ]]; then
     #cp -r "./themes/space-pink/i3" "$HOME/.config/"
-    cat "$HOME/configs/arch-themes/space-pink/i3/color" >>"$HOME/.config/sway/config"
-    cp -r "$HOME/configs/arch-themes/space-pink/polybar" "$HOME/.config/"
+    cp "$HOME/configs/arch-themes/space-pink/sway/color" "$HOME/.config/sway/config.d/"
+    #cp -r "$HOME/configs/arch-themes/space-pink/polybar" "$HOME/.config/"
     #cp -r "./themes/space-pink/neofetch/lowpoly_flamegirl_orange.txt" "$HOME/.config/neofetch/lowpoly_flamegirl.txt"
     #cp "./themes/.fehbg-space-pink" "$HOME/.fehbg"
 fi
