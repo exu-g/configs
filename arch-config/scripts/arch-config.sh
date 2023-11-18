@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+#!/usr/bin/bash
+
 set -euo pipefail
 
 # function to keep sudo from timing out
