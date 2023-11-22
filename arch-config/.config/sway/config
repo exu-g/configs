@@ -395,7 +395,7 @@ default_border normal 2
 ##############################
 
 # Any application using gamescope (mainly games)
-for_window [app_id: "gamescope"] fullscreen enable
+for_window [app_id="gamescope"] fullscreen enable
 
 #########################################
 #####           statusbar           #####
