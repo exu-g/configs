@@ -208,9 +208,10 @@ bindsym $mod+a focus parent
 # Show the next scratchpad window or hide the focused scratchpad window.
 # If there are multiple scratchpad windows, this command cycles through them.
 #bindsym $mod+minus scratchpad show
-#
+
 # Resizing containers:
-#
+bindsym $mod+r mode "resize"
+
 mode "resize" {
     # Resize windows with movement keys
     bindsym $left resize shrink width 10px
@@ -236,7 +237,23 @@ mode "resize" {
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
-bindsym $mod+r mode "resize"
+
+# Screenlock, logout, reboot, shutdown...
+# press $mod (super) and X to exit - check toolbar for next choices
+bindsym $mod+x mode "$mode_system"
+
+set $mode_system System (l) lock, (e) logout, (r) reboot, (s) shutdown, (u) suspend
+mode "$mode_system" {
+    bindsym l exec PLACEHOLDER, mode "default"
+    bindsym e exec PLACEHOLDER, mode "default"
+    bindsym r exec PLACEHOLDER, mode "default"
+    bindsym s exec PLACEHOLDER, mode "default"
+    bindsym u exec PLACEHOLDER, mode "default"
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
 
 # detect XWayland windows and hightlight them differently
 for_window [shell="xwayland"] title_format "[XWayland] %title"
