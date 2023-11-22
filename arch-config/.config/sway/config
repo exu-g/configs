@@ -24,14 +24,6 @@ set $down j
 set $up k
 set $right l
 
-# Your preferred terminal emulator
-set $term kitty
-
-# Your preferred application launcher
-# Note: pass the final command to swaymsg so that the resulting window can be opened
-# on the original workspace that the command was run on.
-set $menu wofi --show drun | xargs swaymsg exec --
-
 ##############################
 ########### Input ############
 ##############################
@@ -94,15 +86,10 @@ exec swayidle -w \
 ### Key bindings
 #
 # Basics:
-#
-# Start a terminal
-bindsym ctrl+mod1+Return exec $term
 
 # Kill focused window
 bindsym $mod+q kill
-
-# Start your launcher
-bindsym ctrl+mod1+a exec $menu
+bindsym $mod+Shift+q kill
 
 # Drag floating windows by holding down $mod and left mouse button.
 # Resize them with right mouse button + $mod.
@@ -116,35 +103,34 @@ bindsym $mod+Shift+r reload
 
 # Exit sway (logs you out of your Wayland session)
 #bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
-#
-# Moving around:
-#
+
+# Window focus
 # Move your focus around
 bindsym $mod+$left focus left
 bindsym $mod+$down focus down
 bindsym $mod+$up focus up
 bindsym $mod+$right focus right
-
 # Or use $mod+[up|down|left|right]
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
+# Move windows
 # Move the focused window with the same, but add Shift
 bindsym $mod+Shift+$left move left
 bindsym $mod+Shift+$down move down
 bindsym $mod+Shift+$up move up
 bindsym $mod+Shift+$right move right
-
 # Ditto, with arrow keys
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
-#
-# Workspaces:
-#
+
+##############################
+######### Workspaces #########
+##############################
 # Switch to workspace
 bindsym $mod+1 workspace number 1
 bindsym $mod+2 workspace number 2
@@ -170,14 +156,18 @@ bindsym $mod+Shift+9 move container to workspace number 9; workspace 9
 bindsym $mod+Shift+0 move container to workspace number 10; workspace 10
 # Note: workspaces can have any name you want, not just numbers.
 # We just use 1-10 as the default.
-#
+
+# next/previous workspace
+bindsym $mod+Tab workspace next
+bindsym $mod+Shift+Tab workspace prev
+
 # Layout stuff:
 #
 # You can "split" the current object of your focus with
 # $mod+b or $mod+v, for horizontal and vertical splits
 # respectively.
-bindsym $mod+o splith
-bindsym $mod+v splitv
+bindsym $mod+o split h
+bindsym $mod+v split v
 
 # Switch the current container between different layout styles
 bindsym $mod+s layout stacking
@@ -185,18 +175,22 @@ bindsym $mod+z layout tabbed
 bindsym $mod+e layout toggle split
 
 # Make the current focus fullscreen
-bindsym $mod+f fullscreen
+bindsym $mod+Shift+f fullscreen toggle
 
 # Toggle the current focus between tiling and floating mode
-bindsym $mod+Shift+f floating toggle
+bindsym $mod+f floating toggle
 
 # Swap focus between the tiling area and the floating area
 # TODO haven't ever used this afaik
-bindsym $mod+space focus mode_toggle
+#bindsym $mod+space focus mode_toggle
 
 # Move focus to the parent container
 bindsym $mod+a focus parent
-#
+
+# focus the child container
+bindsym $mod+d focus child
+
+
 # Scratchpad:
 #
 # Sway has a "scratchpad", which is a bag of holding for windows.
@@ -214,24 +208,24 @@ bindsym $mod+r mode "resize"
 
 mode "resize" {
     # Resize windows with movement keys
-    bindsym $left resize shrink width 10px
-    bindsym Shift+$left resize shrink width 20px
-    bindsym $down resize shrink height 10px
-    bindsym Shift+$down resize shrink height 20px
-    bindsym $up resize grow height 10px
-    bindsym Shift+$up resize grow height 20px
-    bindsym $right resize grow width 10px
-    bindsym Shift+$right resize grow width 20px
+    bindsym $left resize shrink width 10ppt
+    bindsym Shift+$left resize shrink width 20ppt
+    bindsym $down resize shrink height 10ppt
+    bindsym Shift+$down resize shrink height 20ppt
+    bindsym $up resize grow height 10ppt
+    bindsym Shift+$up resize grow height 20ppt
+    bindsym $right resize grow width 10ppt
+    bindsym Shift+$right resize grow width 20ppt
 
     # Ditto, with arrow keys
-    bindsym Left resize shrink width 10px
-    bindsym Shift+Left resize shrink width 20px
-    bindsym Down resize shrink height 10px
-    bindsym Shift+Down resize shrink height 20px
-    bindsym Up resize grow height 10px
-    bindsym Shift+Up resize grow height 20px
-    bindsym Right resize grow width 10px
-    bindsym Shift+Right resize grow width 20px
+    bindsym Left resize shrink width 10ppt
+    bindsym Shift+Left resize shrink width 20ppt
+    bindsym Down resize shrink height 10ppt
+    bindsym Shift+Down resize shrink height 20ppt
+    bindsym Up resize grow height 10ppt
+    bindsym Shift+Up resize grow height 20ppt
+    bindsym Right resize grow width 10ppt
+    bindsym Shift+Right resize grow width 20ppt
 
     # Return to default mode
     bindsym Return mode "default"
@@ -255,6 +249,17 @@ mode "$mode_system" {
     bindsym Escape mode "default"
 }
 
+# launch programs in the right workspaces
+bindsym $mod+w mode "$layout"
+
+set $layout full (f)
+mode "$layout" {
+    bindsym f exec PLACEHOLDER
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
 # detect XWayland windows and hightlight them differently
 for_window [shell="xwayland"] title_format "[XWayland] %title"
 #for_window [shell="xwayland"] client.focused          #592c2c #592c2c #eeeeee #592c2c
@@ -262,15 +267,10 @@ for_window [shell="xwayland"] title_format "[XWayland] %title"
 #for_window [shell="xwayland"] client.focused_inactive #310202 #310202 #eeeeee #310202
 #for_window [shell="xwayland"] client.urgent           #a50909 #a50909 #eeeeee #a50909
 
-############################################################
-#####               Stuff from old config              #####
-############################################################
-
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 # choose your font
 font pango:Fira Mono 9
-
 
 ##############################
 #    Applications at boot    #
@@ -291,54 +291,65 @@ exec_always --no-startup-id numlockx on
 #Corectrl
 exec --no-startup-id corectrl
 
-#Transmission
-#exec --no-startup-id transmission-gtk -m
-
-#Polybar
-#exec_always --no-startup-id ~/.config/polybar/launch.sh &
-
-#startup functions
-#exec_always --no-startup-id ~/scritps/startup.sh
-
 # Protonmail Bridge
 exec --no-startup-id protonmail-bridge -no-window
 
 # Start KopiaUI
 exec --no-startup-id /opt/KopiaUI/kopia-ui
 
-# PulseEffects
-#exec --no-startup-id pulseeffects --gapplication-service
+# Easy Effects
+exec --no-startup-id easyeffects --gapplication-service
 
 # activate flameshot
 exec --no-startup-id flameshot &
 
 # notifications
-#exec --no-startup-id /usr/bin/dunst &
+# TODO
+
+# disk management
+exec --no-startup-id udiskie --no-automount --tray &
+
+# kde connect
+exec --no-startup-id kdeconnect-indicator &
+
+# Start sway-session.target for sway-specific stuff and import environment
+exec_always "systemctl --user import-environment; systemctl --user start sway-session.target"
 
 ##############################
 #     Keyboard shortcuts     #
 ##############################
 
-#pavucontrol
+# Your preferred application launcher
+# Note: pass the final command to swaymsg so that the resulting window can be opened
+# on the original workspace that the command was run on.
+set $menu wofi --show drun | xargs swaymsg exec --
+
+# Start your launcher
+bindsym ctrl+mod1+a exec $menu
+
+# preferred terminal emulator
+set $term kitty
+
+# terminal
+bindsym ctrl+mod1+Return exec $term;focus
+
+# pavucontrol
 bindsym control+mod1+u exec --no-startup-id pavucontrol;focus
 
 # joplin
 bindsym control+mod1+n exec --no-startup-id joplin-desktop;focus
 
-#texteditors
+# texteditor
 bindsym ctrl+mod1+e exec --no-startup-id emacs;focus
 
 # file manager
 bindsym ctrl+mod1+t exec --no-startup-id thunar;focus
 
-#libreoffice
+# libreoffice
 bindsym ctrl+mod1+l exec --no-startup-id libreoffice;focus
 
-#browsers
+# browser
 bindsym control+mod1+f exec --no-startup-id firefox;focus
-
-# jellyamp
-#bindsym ctrl+mod1+m exec --no-startup-id "env DESKTOPINTEGRATION=false /usr/bin/Jellyamp";focus
 
 # jellyfin media player
 bindsym ctrl+mod1+j exec --no-startup-id jellyfinmediaplayer;focus
@@ -346,13 +357,9 @@ bindsym ctrl+mod1+j exec --no-startup-id jellyfinmediaplayer;focus
 # mail
 bindsym ctrl+mod1+b exec --no-startup-id thunderbird;focus
 
-##############################
-#        Screenshots         #
-##############################
-
+# Screenshots
 bindsym Print exec --no-startup-id flameshot gui
 bindsym Control+Print exec --no-startup-id flameshot gui -d 2000
-
 
 ##############################
 #   Audio & Media Control    #
@@ -370,6 +377,7 @@ bindsym XF86AudioStop exec --no-startup-id playerctl stop
 #         xbacklight         #
 ##############################
 
+# TODO test
 bindsym $mod+Shift+u exec --no-startup-id bash $HOME/scripts/dunst-backlight.sh up # increase screen brightness
 bindsym $mod+Shift+d exec --no-startup-id bash $HOME/scripts/dunst-backlight.sh down # decrease screen brightness
 bindsym XF86MonBrightnessUp exec --no-startup-id bash $HOME/scripts/dunst-backlight.sh up # increase screen brightness
@@ -382,9 +390,9 @@ bindsym XF86MonBrightnessDown exec --no-startup-id bash $HOME/scripts/dunst-back
 #default_border pixel 2
 default_border normal 2
 
-############################################################
-#####           More from the sample config            #####
-############################################################
+#########################################
+#####           statusbar           #####
+#########################################
 
 #
 # Status Bar:
@@ -404,8 +412,9 @@ bar {
     }
 }
 
-# Start sway-session.target for sway-specific stuff and import environment
-exec_always "systemctl --user import-environment; systemctl --user start sway-session.target"
+#######################################
+##### inluce other configurations #####
+#######################################
 
 # include local configurations
 include ./config.d/*
