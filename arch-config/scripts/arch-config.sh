@@ -392,7 +392,7 @@ cat <<EOF
 EOF
 
 # generate betterlockscreen cache image in background
-imagepath="/home/marc/Bilder/Backgrounds/artstation/dk-lan/artstation_14224733_55806391_月半与鬼哭.jpg"
+#imagepath="/home/exu/Bilder/Backgrounds/artstation/dk-lan/artstation_14224733_55806391_月半与鬼哭.jpg"
 #if [ -f "$imagepath" ]; then
 #    betterlockscreen -u "$imagepath" &
 #    pids="$pids $!"
