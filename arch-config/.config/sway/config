@@ -395,7 +395,8 @@ default_border normal 2
 ##############################
 
 # Any application using gamescope (mainly games)
-for_window [app_id="gamescope"] fullscreen enable
+# FIXME not working yet
+#for_window [app_id="gamescope"] fullscreen enable
 
 #########################################
 #####           statusbar           #####
