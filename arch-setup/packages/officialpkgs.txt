@@ -1,4 +1,5 @@
 mako
+waybar
 acpilight
 age
 alsa-utils
