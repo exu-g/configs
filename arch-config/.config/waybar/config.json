@@ -4,7 +4,7 @@
   "height": 25,
   "spacing": 10,
 
-  "modules-left": ["wlr/workspaces", "hyprland/window", "hyprland/submap"],
+  "modules-left": ["wlr/workspaces", "sway/window", "sway/mode"],
   "modules-center": ["clock"],
   "modules-right": ["mpris", "idle_inhibitor", "battery", "tray"],
 
@@ -17,12 +17,10 @@
     },
     "sort-by-number": true
   },
-  "hyprland/window": {
-    "format": "{}",
-    "separate-outputs": true
+  "sway/window": {
+    "max-length": 40
   },
-  "hyprland/submap": {
-    "format": "{}",
+  "sway/mode": {
     "tooltip": false
   },
   "mpris": {
