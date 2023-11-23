@@ -1,3 +1,4 @@
+mako
 acpilight
 age
 alsa-utils
