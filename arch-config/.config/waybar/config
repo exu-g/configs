@@ -15,7 +15,8 @@
       "default": ""
     },
     "sort-by-number": true,
-    "spacing": 2
+    "spacing": 2,
+    "disable-scroll": true
   },
   "sway/window": {
     "max-length": 40
