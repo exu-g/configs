@@ -1,6 +1,3 @@
-mako
-waybar
-otf-font-awesome
 acpilight
 age
 alsa-utils
@@ -78,6 +75,7 @@ libva-intel-driver
 libva-mesa-driver
 libva-utils
 lsp-plugins-lv2
+mako
 man-db
 mesa
 mesa-vdpau
@@ -99,6 +97,7 @@ okular
 openresolv
 os-prober
 os-prober
+otf-font-awesome
 p7zip
 pacman-contrib
 pavucontrol
@@ -140,6 +139,7 @@ vdpauinfo
 vnstat
 vulkan-intel
 vulkan-radeon
+waybar
 webkit2gtk
 wget
 whois
