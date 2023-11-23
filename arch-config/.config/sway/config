@@ -394,6 +394,9 @@ default_border normal 2
 ####### window control #######
 ##############################
 
+# don't idle for these windows
+for_window [app_id="org.jellyfin.jellyfinmediaplayer"] inhibit_idle visible
+
 # Any application using gamescope (mainly games)
 # FIXME not working yet
 #for_window [app_id="gamescope"] fullscreen enable
