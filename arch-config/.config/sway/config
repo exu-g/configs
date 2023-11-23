@@ -405,19 +405,20 @@ for_window [app_id="gamescope"] fullscreen enable
 # Status Bar:
 #
 # Read `man 5 sway-bar` for more information about this section.
-bar {
-    position bottom
+bar swaybar_command waybar
+#bar {
+#    position bottom
 
     # When the status_command prints a new line to stdout, swaybar updates.
     # The default just shows the current date and time.
-    status_command while date +'%H:%M | %Y-%m-%d %p'; do sleep 1; done
+#    status_command while date +'%H:%M | %Y-%m-%d %p'; do sleep 1; done
 
-    colors {
-        statusline #ffffff
-        background #323232
-        inactive_workspace #323232 #323232 #5c5c5c
-    }
-}
+#    colors {
+#        statusline #ffffff
+#        background #323232
+#        inactive_workspace #323232 #323232 #5c5c5c
+#    }
+#}
 
 #######################################
 ##### inluce other configurations #####
