@@ -1,14 +1,13 @@
 {
   "layer": "top",
   "position": "bottom",
-  "height": 25,
-  "spacing": 10,
+  "spacing": 5,
 
-  "modules-left": ["wlr/workspaces", "sway/window", "sway/mode"],
+  "modules-left": ["sway/workspaces", "sway/window", "sway/mode"],
   "modules-center": ["clock"],
   "modules-right": ["mpris", "idle_inhibitor", "battery", "tray"],
 
-  "wlr/workspaces": {
+  "sway/workspaces": {
     "format": "{name}: {icon}",
     "format-icons": {
       "urgent": "",
