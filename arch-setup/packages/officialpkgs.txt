@@ -1,5 +1,6 @@
 mako
 waybar
+otf-font-awesome
 acpilight
 age
 alsa-utils
