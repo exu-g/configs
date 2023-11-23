@@ -20,6 +20,9 @@ rsync -urtzv --progress --delete --bwlimit=3M -e "ssh -i $sshkeypath -p $port" /
 # manga
 echo Kavita manga upload
 rsync -urtzv --progress --bwlimit=3M -e "ssh -i $sshkeypath -p $port" /home/marc/Nextcloud/Books/Manga/ ${user}@${server}:/mnt/books/kavita/manga/
+# guides
+echo Kavita guides upload
+rsync -urtzv --progress --delete --bwlimit=3M -e "ssh -i $sshkeypath -p $port" /home/marc/Nextcloud/Books/Guides/ ${user}@${server}:/mnt/books/kavita/guides/
 # Tech
 echo Kavita tech upload
 rsync -urtzv --progress --delete --bwlimit=3M -e "ssh -i $sshkeypath -p $port" /home/marc/Nextcloud/Books/Tech/ ${user}@${server}:/mnt/books/kavita/tech/
@@ -48,6 +51,9 @@ rsync -urtzv --progress --delete --bwlimit=3M -e "ssh -i $sshkeypath -p $port" /
 # manga
 echo Kavita Nightly manga upload
 rsync -urtzv --progress --bwlimit=3M -e "ssh -i $sshkeypath -p $port" /home/marc/Nextcloud/Books/Manga/ ${user}@${server}:/mnt/books/kavita-nightly/manga/
+# guides
+echo Kavita guides upload
+rsync -urtzv --progress --delete --bwlimit=3M -e "ssh -i $sshkeypath -p $port" /home/marc/Nextcloud/Books/Guides/ ${user}@${server}:/mnt/books/kavita-nightly/guides/
 # Tech
 echo Kavita Nightly tech upload
 rsync -urtzv --progress --delete --bwlimit=3M -e "ssh -i $sshkeypath -p $port" /home/marc/Nextcloud/Books/Tech/ ${user}@${server}:/mnt/books/kavita-nightly/tech/
