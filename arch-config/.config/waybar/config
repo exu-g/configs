@@ -1,7 +1,7 @@
 {
   "layer": "top",
   "position": "bottom",
-  "spacing": 5,
+  "spacing": 10,
 
   "modules-left": ["sway/workspaces", "sway/window", "sway/mode"],
   "modules-center": ["clock"],
@@ -14,7 +14,8 @@
       "active": "",
       "default": ""
     },
-    "sort-by-number": true
+    "sort-by-number": true,
+    "spacing": 2
   },
   "sway/window": {
     "max-length": 40
@@ -55,8 +56,8 @@
     }
   },
   "tray": {
-    "icon-size": 21,
-    "spacing": 10
+    "icon-size": 16,
+    "spacing": 5
   },
   "custom/mpris": {
     "exec": "~/.scripts/polybar/player-mpris-tail.py -f '{icon} {:artist:t10:{artist}:}{:artist: - :}{:t25:{title}:}'",
