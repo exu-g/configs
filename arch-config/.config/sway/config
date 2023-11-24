@@ -398,7 +398,7 @@ for_window [app_id=".*"] inhibit_idle fullscreen # fullscreen wayland
 for_window [app_id="org.jellyfin.jellyfinmediaplayer"] inhibit_idle visible
 
 # enable floating
-for_window [title="Dateivorgangsfortschritt"] floating disable
+for_window [app_id="thunar" title="Dateivorgangsfortschritt"] floating disable
 
 #########################################
 #####           statusbar           #####
