@@ -393,6 +393,8 @@ default_border normal 2
 ##############################
 
 # don't idle for these windows
+for_window [class=".*"] inhibit_idle fullscreen # fullscreen xorg
+for_window [app_id=".*"] inhibit_idle fullscreen # fullscreen wayland
 for_window [app_id="org.jellyfin.jellyfinmediaplayer"] inhibit_idle visible
 
 # Any application using gamescope (mainly games)
