@@ -1,5 +1,4 @@
 acpilight
-age
 alsa-utils
 amd-ucode
 arandr
