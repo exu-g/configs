@@ -397,9 +397,8 @@ for_window [class=".*"] inhibit_idle fullscreen # fullscreen xorg
 for_window [app_id=".*"] inhibit_idle fullscreen # fullscreen wayland
 for_window [app_id="org.jellyfin.jellyfinmediaplayer"] inhibit_idle visible
 
-# Any application using gamescope (mainly games)
-# FIXME not working yet
-#for_window [app_id="gamescope"] fullscreen enable
+# enable floating
+for_window [title="Dateivorgangsfortschritt"] floating disable
 
 #########################################
 #####           statusbar           #####
