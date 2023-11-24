@@ -235,9 +235,9 @@ mode "resize" {
 
 # Screenlock, logout, reboot, shutdown...
 # press $mod (super) and X to exit - check toolbar for next choices
-bindsym $mod+x mode "$mode_system"
+set $mode_system "System (l) lock, (e) logout, (r) reboot, (s) shutdown, (u) suspend"
 
-set $mode_system System (l) lock, (e) logout, (r) reboot, (s) shutdown, (u) suspend
+bindsym $mod+x mode $mode_system
 mode "$mode_system" {
     bindsym l exec --no-startup-id ~/.config/sway/sway-scripts/exit.sh lock, mode "default"
     bindsym e exec --no-startup-id ~/.config/sway/sway-scripts/exit.sh logout, mode "default"
