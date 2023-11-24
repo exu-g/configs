@@ -3,7 +3,7 @@
   "position": "bottom",
   "spacing": 5,
 
-  "modules-left": ["sway/workspaces", "sway/window", "sway/mode"],
+  "modules-left": ["sway/workspaces", "sway/mode", "sway/window"],
   "modules-center": ["clock"],
   "modules-right": ["mpris", "idle_inhibitor", "battery", "tray"],
 
