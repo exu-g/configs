@@ -1,20 +1,17 @@
-#!/bin/sh
-
+#!/usr/bin/env sh
 
 case "$1" in
     lock)
-        #betterlockscreen -l; dunstctl set-paused true
-        betterlockscreen -l
+        swaylock -f -e -i "$HOME/.cache/backgrounds/lockscreen"
         ;;
     logout)
-        i3-msg exit
+        swaymsg exit
         ;;
     suspend)
-        #betterlockscreen -s
         systemctl suspend
         ;;
     hibernate)
-        systemctl hibernate
+        exit 1
         ;;
     reboot)
         systemctl reboot
