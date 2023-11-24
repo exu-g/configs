@@ -285,9 +285,6 @@ exec --no-startup-id nextcloud
 # network
 exec --no-startup-id nm-applet
 
-# num lock activated
-exec_always --no-startup-id numlockx on
-
 #Corectrl
 exec --no-startup-id corectrl --minimize-systray
 
@@ -301,16 +298,16 @@ exec --no-startup-id /opt/KopiaUI/kopia-ui
 exec --no-startup-id easyeffects --gapplication-service
 
 # activate flameshot
-exec --no-startup-id flameshot &
+exec --no-startup-id flameshot
 
 # notifications
-# TODO
+exec --no-startup-id mako
 
 # disk management
-exec --no-startup-id udiskie --no-automount --tray &
+exec --no-startup-id udiskie --no-automount --tray
 
 # kde connect
-exec --no-startup-id kdeconnect-indicator &
+exec --no-startup-id kdeconnect-indicator
 
 # Start sway-session.target for sway-specific stuff and import environment
 exec_always "systemctl --user import-environment; systemctl --user start sway-session.target"
