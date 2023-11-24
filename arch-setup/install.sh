@@ -330,10 +330,27 @@ fi
 #devtools
 if [ $in_doomemacs -eq 1 ]; then
     echo "Installing doom-emacs"
-    #paru -S --needed git emacs ripgrep fd pandoc shellcheck python-pipenv python-isort python-pytest python-rednose pychecker texlive-core python-black clang
-    paru -S --needed git emacs-wayland ripgrep fd pandoc shellcheck python-pipenv python-isort python-pytest texlive-core python-black clang
-    #pip install grip
-    #npm i bash-language-server
+    # doom emacs
+    sudo pacman -S --needed emacs-wayland git
+    # unsorted
+    paru -S --needed fd pandoc python-pipenv python-isort python-pytest texlive-core clang
+    # python
+    sudo pacman -S --needed pyright python-black python-debugpy
+    # shell
+    sudo pacman -S --needed shellcheck bash-language-server shfmt
+    # markdown
+    sudo pacman -S --needed prettier
+    # debugger
+    sudo pacman -S --needed nodejs lldb lldb-mi gdb unzip
+    # docker
+    paru -S --needed dockerfile-language-server
+    # lookup
+    sudo pacman -S --needed ripgrep
+    # terraform
+    sudo pacman -S --needed terraform
+    # grammar
+    sudo pacman -S --needed languagetool
+    # rest of installation
     rm -rf ~/.config/emacs
     git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
     ~/.config/emacs/bin/doom install
