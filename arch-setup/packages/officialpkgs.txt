@@ -85,6 +85,7 @@ nemo-fileroller
 nemo-preview
 nemo-share
 neovim
+network-manager-applet
 nextcloud-client
 notification-daemon
 noto-fonts
