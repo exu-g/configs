@@ -20,14 +20,16 @@ while read -r artdir; do
         # create directory in music
         mkdir -p "$HOME/Musik/${artdir}/$dir"
 
-        # link cover.jpg
-        if [[ -f cover.jpg ]]; then
-            ln -vf "$HOME/Nextcloud/MusikRaw/${artdir}/$dir/cover."* "$HOME/Musik/${artdir}/$dir/"
+        # link cover image (jpg or png)
+        if [ -f cover.jpg ]; then
+            ln -vf "$HOME/Nextcloud/MusikRaw/${artdir}/$dir/cover.jpg" "$HOME/Musik/${artdir}/$dir/"
+        elif [ -f cover.png ]; then
+            ln -vf "$HOME/Nextcloud/MusikRaw/${artdir}/$dir/cover.png" "$HOME/Musik/${artdir}/$dir/"
         fi
 
         # make symbolic link to music
         # if the "normalized" directory exists, links are created
-        if [[ -d "normalized" ]]; then
+        if [ -d "normalized" ]; then
             ln -svf "$HOME/Nextcloud/MusikRaw/${artdir}/$dir/normalized/"* "$HOME/Musik/${artdir}/$dir/"
         fi
 
