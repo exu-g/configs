@@ -92,6 +92,7 @@ options=(0 "VirtManager" off # any option can be set to default to "on"
     40 "Handbrake" off
     41 "Audacity" off
     42 "k3b" off
+    43 "kid3" off
     60 "Discord" on
     61 "Element" off
     62 "Telegram" off
@@ -136,6 +137,9 @@ for choice in $choices; do
             ;;
         42)
             printf '%s\n' 'k3b' 'cdparanoia' 'cdrdao' 'cdrtools' 'dvd+rw-tools' 'emovix' 'transcode' 'vcdimager' >>"$setupdir/selectedpkgs.txt"
+            ;;
+        43)
+            echo "kid3" >>"$setupdir/selectedpkgs.txt"
             ;;
         60)
             echo "discord" >>"$setupdir/selectedpkgs.txt"
