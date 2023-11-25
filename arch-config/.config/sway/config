@@ -329,7 +329,7 @@ exec --no-startup-id easyeffects --gapplication-service
 exec --no-startup-id flameshot
 
 # notifications
-exec --no-startup-id mako
+exec --no-startup-id swaync
 
 # disk management
 exec --no-startup-id udiskie --no-automount --tray
