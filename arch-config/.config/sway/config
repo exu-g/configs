@@ -70,6 +70,10 @@ output "Acer Technologies XV272U V R307036FE4208" scale 1.2
 output "Acer Technologies XV272U V R307036FE4208" subpixel rgb
 output "Acer Technologies XV272U V R307036FE4208" adaptive_sync on
 
+output "Dell Inc. DELL P2419H GDZ22Y2" mode 1920x1080@60Hz
+output "Dell Inc. DELL P2419H GDZ22Y2" scale 1.0
+output "Dell Inc. DELL P2419H GDZ22Y2" subpixel rgb
+
 ##############################
 ############ Idle ############
 ##############################
