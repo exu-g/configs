@@ -548,8 +548,6 @@ if [ $XDG_SESSION_DESKTOP == "sway" ]; then
     echo "Reloaded sway"
 fi
 
-makoctl reload
-
 # wait for all background jobs to finish
 wait $pids && echo "Finished background jobs"
 
