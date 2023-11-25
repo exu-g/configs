@@ -74,7 +74,6 @@ libva-intel-driver
 libva-mesa-driver
 libva-utils
 lsp-plugins-lv2
-mako
 man-db
 mesa
 mesa-vdpau
@@ -121,6 +120,7 @@ rsync
 seahorse
 smartmontools
 stress
+swaync
 system-config-printer
 thunar
 thunar-archive-plugin
