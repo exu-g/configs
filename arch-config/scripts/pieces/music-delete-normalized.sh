@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -euo pipefail
 
 # change into music raw folder
-cd "$HOME/MusikRaw"
+cd "$HOME/Nextcloud/MusikRaw"
 
 # get directories
 ls -d */ > artistdirectories
@@ -15,11 +15,11 @@ while read -r artdir; do
     while read -r dir; do
         cd "$dir"
         rm -rf normalized
-        cd "$HOME/MusikRaw/$artdir"
+        cd "$HOME/Nextcloud/MusikRaw/$artdir"
     done < directories
     # cleanup
     rm directories
-    cd "$HOME/MusikRaw"
+    cd "$HOME/Nextcloud/MusikRaw"
 done < artistdirectories
 # cleanup
 rm artistdirectories
