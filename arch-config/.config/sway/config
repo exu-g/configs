@@ -425,8 +425,8 @@ for_window [app_id=".*"] inhibit_idle fullscreen # fullscreen wayland
 for_window [app_id="org.jellyfin.jellyfinmediaplayer"] inhibit_idle visible
 
 # enable floating
-for_window [app_id="thunar" title="Dateivorgangsfortschritt"] floating enable
-for_window [app_id="thunar" title="Ersetzen von Dateien bestätigen"] floating enable
+for_window [app_id="[Tt]hunar" title="Dateivorgangsfortschritt"] floating enable
+for_window [app_id="[Tt]hunar" title="Ersetzen von Dateien bestätigen"] floating enable
 
 #########################################
 #####           statusbar           #####
