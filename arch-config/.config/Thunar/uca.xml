@@ -5,7 +5,7 @@
 	<name>Als root öffnen</name>
 	<submenu></submenu>
 	<unique-id>1673031093097554-1</unique-id>
-	<command>gksu thunar %f</command>
+	<command>thunar admin://%f</command>
 	<description>Verzeichnis als root-Nutzer öffnen</description>
 	<range>*</range>
 	<patterns>*</patterns>
