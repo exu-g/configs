@@ -71,10 +71,11 @@ output $output-1 scale 1.2
 output $output-1 subpixel rgb
 output $output-1 adaptive_sync on
 
-set $output-2 "Dell Inc. DELL P2419H GDZ22Y2"
-output $output-2 mode 1920x1080@60Hz
-output $output-2 scale 1.0
+set $output-2 "HP Inc. OMEN 27q CNC3131C9P"
+output $output-2 mode 2560x1440@165Hz
+output $output-2 scale 1.2
 output $output-2 subpixel rgb
+output $output-2 adaptive_sync on
 
 # workspace to displays
 workspace 1 output $output-1
