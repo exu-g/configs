@@ -54,7 +54,7 @@ clear
 for choice in $choices; do
     case $choice in
         100)
-            printf '%s\n' 'sway' 'swaylock' 'swayidle' 'swaybg' 'xorg-xwayland' >> "$setupdir/selectedpkgs.txt"
+            printf '%s\n' 'sway' 'swaylock' 'swayidle' 'swaybg' 'xorg-xwayland' 'qt5-wayland' 'qt6-wayland' >> "$setupdir/selectedpkgs.txt"
             ;;
     esac
 done
