@@ -6,31 +6,24 @@
   "add a plugin dialog": "/home/marc/Downloads/DeDRM_tools_10.0.3",
   "add books dialog dir": "/home/marc/Downloads",
   "add books dialog dir-last-used-filter-spec-all-files": false,
+  "choose calibre library": "/home/exu/.local/share/Calibre-Library",
   "database location dialog": "/home/marc/Nextcloud/Books",
   "library_delete_books_again": false,
   "notified-version-updates": {
     "__class__": "set",
     "__value__": [
+      "5.24",
       "5.25",
       "6.0",
-      "5.28",
-      "5.24"
+      "5.28"
     ]
   },
   "recursive book import root dir dialog": "/home/marc/Nextcloud/Books/Unterhaltung",
-  "save to disk dialog": "/home/marc/Downloads/newBooks",
+  "save to disk dialog": "/home/exu/Downloads",
   "sort_history": [
     [
-      "title",
-      true
-    ],
-    [
-      "series",
-      true
-    ],
-    [
-      "title",
-      true
+      "timestamp",
+      false
     ],
     [
       "timestamp",
