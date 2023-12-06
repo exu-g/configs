@@ -26,7 +26,7 @@
   "installation_uuid": "95258752-0a69-416a-90ff-c20df0267b24",
   "isbndb_com_key": "",
   "language": "de",
-  "library_path": "/home/marc/Calibre-Bibliothek",
+  "library_path": "/home/exu/.local/share/Calibre-Library",
   "limit_search_columns": false,
   "limit_search_columns_to": [
     "title",

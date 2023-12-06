@@ -14,7 +14,7 @@
   "plugins": {
     "DeACSM": "/home/marc/.config/calibre/plugins/DeACSM.zip",
     "DeDRM": "/home/marc/.config/calibre/plugins/DeDRM.zip",
-    "KFX Input": "/home/marc/.config/calibre/plugins/KFX Input.zip",
+    "KFX Input": "/home/exu/.config/calibre/plugins/KFX Input.zip",
     "Obok DeDRM": "/home/marc/.config/calibre/plugins/Obok DeDRM.zip"
   }
 }

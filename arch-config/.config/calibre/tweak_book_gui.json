@@ -3,6 +3,10 @@
     "__class__": "bytearray",
     "__value__": "AAAA/wAAAAEAAAACAAAARgAAAEYA/////wEAAAABAA=="
   },
+  "css-editor-state": {
+    "__class__": "bytearray",
+    "__value__": "AAAA/wAAAAD9AAAAAAAABXwAAAOQAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAIAAAAUAGEAYwB0AGkAbwBuAF8AYgBhAHIBAAAAAP////8AAAAAAAAAAAAAABIAdABvAG8AbABzAF8AYgBhAHIBAAAA2f////8AAAAAAAAAAA=="
+  },
   "custom_colors_for_color_dialog": [
     [
       255,
@@ -109,9 +113,60 @@
     "where": "current",
     "wrap": true
   },
+  "geometry-of-main_window_geometry": {
+    "frame_geometry": {
+      "height": 1154,
+      "width": 2129,
+      "x": 2133,
+      "y": 0
+    },
+    "full_screened": false,
+    "geometry": {
+      "height": 1154,
+      "width": 2129,
+      "x": 2133,
+      "y": 0
+    },
+    "maximized": false,
+    "normal_geometry": {
+      "height": 1154,
+      "width": 2129,
+      "x": 2133,
+      "y": 0
+    },
+    "qt": {
+      "__class__": "bytearray",
+      "__value__": "AdnQywADAAAAAAhVAAAAAAAAEKUAAASBAAAIVQAAAAAAABClAAAEgQAAAAEAAAAACFUAAAhVAAAAAAAAEKUAAASB"
+    },
+    "screen": {
+      "depth": 32,
+      "device_pixel_ratio": 2.0,
+      "geometry_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133,
+        "x": 2133,
+        "y": 0
+      },
+      "index_in_screens_list": 1,
+      "manufacturer": "HP Inc.",
+      "model": "OMEN 27q",
+      "name": "DP-2",
+      "serial": "",
+      "size_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133
+      },
+      "virtual_geometry": {
+        "height": 1200,
+        "width": 4266,
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
   "html-editor-state": {
     "__class__": "bytearray",
-    "__value__": "AAAA/wAAAAD9AAAAAAAAAgEAAANcAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAMAAAAUAGEAYwB0AGkAbwBuAF8AYgBhAHIBAAAAAP////8AAAAAAAAAAAAAABIAdABvAG8AbABzAF8AYgBhAHIBAAAA3f////8AAAAAAAAAAAAAAB4AaAB0AG0AbABfAGYAbwByAG0AYQB0AF8AYgBhAHIBAAABv/////8AAAAAAAAAAA=="
+    "__value__": "AAAA/wAAAAD9AAAAAAAABXwAAAPwAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAMAAAAUAGEAYwB0AGkAbwBuAF8AYgBhAHIBAAAAAP////8AAAAAAAAAAAAAABIAdABvAG8AbABzAF8AYgBhAHIBAAAA2f////8AAAAAAAAAAAAAAB4AaAB0AG0AbABfAGYAbwByAG0AYQB0AF8AYgBhAHIBAAABt/////8AAAAAAAAAAA=="
   },
   "main_window_geometry": {
     "__class__": "bytearray",
@@ -119,9 +174,11 @@
   },
   "main_window_state": {
     "__class__": "bytearray",
-    "__value__": "AAAA/wAAAAD9AAAABAAAAAAAAACsAAADsfwCAAAABfsAAAAkAGYAaQBsAGUAcwAtAGIAcgBvAHcAcwBlAHIALQBkAG8AYwBrAQAAAEIAAAOxAAAAXgD////7AAAAHgB0AG8AYwAtAHYAaQBlAHcAZQByAC0AZABvAGMAawAAAAAA/////wAAAF4A////+wAAACAAdABlAHgAdAAtAHMAZQBhAHIAYwBoAC0AZABvAGMAawAAAAAA/////wAAAJAA////+wAAACAAYwBoAGUAYwBrAHAAbwBpAG4AdABzAC0AZABvAGMAawAAAAAA/////wAAAJQA////+wAAACYAcwBhAHYAZQBkAC0AcwBlAGEAcgBjAGgAZQBzAC0AZABvAGMAawAAAAAA/////wAAAlIA////AAAAAQAAAEEAAAOx/AIAAAAC+wAAABgAcAByAGUAdgBpAGUAdwAtAGQAbwBjAGsBAAAAQgAAA7EAAABbAP////sAAAAaAGwAaQB2AGUALQBjAHMAcwAtAGQAbwBjAGsAAAAAAP////8AAABeAP///wAAAAIAAAAAAAAAAPwBAAAAAfsAAAAeAGMAaABlAGMAawAtAGIAbwBvAGsALQBkAG8AYwBrAAAAAAD/////AAAAkAD///8AAAADAAAAAAAAAAD8AQAAAAH7AAAAHABpAG4AcwBwAGUAYwB0AG8AcgAtAGQAbwBjAGsAAAAAAP////8AAAA/AP///wAAAXgAAAOxAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAMAAAAUAGcAbABvAGIAYQBsAC0AYgBhAHIBAAAAAP////8AAAAAAAAAAAAAABIAdABvAG8AbABzAC0AYgBhAHIBAAABJv////8AAAAAAAAAAAAAABYAcABsAHUAZwBpAG4AcwAtAGIAYQByAAAAAAD/////AAAAAAAAAAA="
+    "__value__": "AAAA/wAAAAD9AAAABAAAAAAAAAKHAAAEL/wCAAAABfsAAAAkAGYAaQBsAGUAcwAtAGIAcgBvAHcAcwBlAHIALQBkAG8AYwBrAQAAADsAAAQvAAAAPwD////7AAAAHgB0AG8AYwAtAHYAaQBlAHcAZQByAC0AZABvAGMAawAAAAAA/////wAAAD8A////+wAAACAAdABlAHgAdAAtAHMAZQBhAHIAYwBoAC0AZABvAGMAawAAAAAA/////wAAAIQA////+wAAACAAYwBoAGUAYwBrAHAAbwBpAG4AdABzAC0AZABvAGMAawAAAAAA/////wAAAHIA////+wAAACYAcwBhAHYAZQBkAC0AcwBlAGEAcgBjAGgAZQBzAC0AZABvAGMAawAAAAAA/////wAAAiUA////AAAAAQAAAEIAAAQv/AIAAAAC+wAAABgAcAByAGUAdgBpAGUAdwAtAGQAbwBjAGsBAAAAOwAABC8AAABRAP////sAAAAaAGwAaQB2AGUALQBjAHMAcwAtAGQAbwBjAGsAAAAAAP////8AAABLAP///wAAAAIAAAAAAAAAAPwBAAAAAfsAAAAeAGMAaABlAGMAawAtAGIAbwBvAGsALQBkAG8AYwBrAAAAAAD/////AAAAWAD///8AAAADAAAAAAAAAAD8AQAAAAH7AAAAHABpAG4AcwBwAGUAYwB0AG8AcgAtAGQAbwBjAGsAAAAAAP////8AAAA8AP///wAABXwAAAQvAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAMAAAAUAGcAbABvAGIAYQBsAC0AYgBhAHIBAAAAAP////8AAAAAAAAAAAAAABIAdABvAG8AbABzAC0AYgBhAHIBAAABIv////8AAAAAAAAAAAAAABYAcABsAHUAZwBpAG4AcwAtAGIAYQByAAAAAAD/////AAAAAAAAAAA="
   },
   "recent-books": [
+    "/home/exu/.local/share/Calibre-Library/Anthony Ryan/The Waking Fire [DL] (13)/The Waking Fire [DL] - Anthony Ryan.epub",
+    "/home/exu/.local/share/Calibre-Library/Anthony Ryan/The Waking Fire [DL] (12)/The Waking Fire [DL] - Anthony Ryan.epub",
     "/home/marc/Nextcloud/Books/Herbert, Frank/Frank Herbert's Dune Saga Collection_ Books 1 - 6/Frank Herbert's Dune Saga Collection_ Books 1 - 6 - Frank Herbert.epub",
     "/home/marc/Downloads/books/Ignition!_ An Informal History of Liquid Rocket Propellants (Rutgers University Press Classics) - John Drury Clark.epub",
     "/home/marc/Downloads/books/Kryptowährungen_ Bitcoin, Ethereum, Blockchain, ICO's & Co. einfach erklärt (German Edition) - Julian Hosp.epub",
@@ -129,9 +186,7 @@
     "/home/marc/Nextcloud/Books/Unterhaltung/The Sword of Truth [1] - Wizard's First Rule by Terry Goodkind.epub",
     "/home/marc/The Witcher_ Through the Worlds-ffnet_13520045.epub",
     "/home/marc/Nextcloud/Books/other/Kill la Kill/Keep Your Shirt On by Geist (Ryuko x Senketsu).epub",
-    "/home/marc/Nextcloud/Books/other/Witcher/Yesterdays Child by HopeofDawn (Ciri x witchers) (incomplete).epub",
-    "/home/marc/Downloads/warmth by satsukichan (Ryuko x Satsuki).epub",
-    "/home/marc/Downloads/Keep Your Shirt On by Geist (Ryuko x Senketsu).epub"
+    "/home/marc/Nextcloud/Books/other/Witcher/Yesterdays Child by HopeofDawn (Ciri x witchers) (incomplete).epub"
   ],
   "reports-ui-state": {},
   "saved_seaches_state": {
@@ -139,7 +194,7 @@
     "where": "current",
     "wrap": true
   },
-  "search-panel-visible": false,
+  "search-panel-visible": true,
   "text_search_widget_state": {
     "case_sensitive": false,
     "dot_all": true,
