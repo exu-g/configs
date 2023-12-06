@@ -339,7 +339,7 @@ if [ $in_doomemacs -eq 1 ]; then
     # unsorted
     paru -S --needed fd pandoc python-pipenv python-isort python-pytest texlive-core clang
     # python
-    sudo pacman -S --needed pyright python-black python-debugpy
+    sudo pacman -S --needed pyright python-black python-debugpy python-pyflakes
     # shell
     sudo pacman -S --needed shellcheck bash-language-server shfmt
     # markdown
@@ -347,13 +347,18 @@ if [ $in_doomemacs -eq 1 ]; then
     # debugger
     sudo pacman -S --needed nodejs lldb lldb-mi gdb unzip
     # docker
-    paru -S --needed dockerfile-language-server
+    paru -S --needed dockerfile-language-server dockfmt
     # lookup
     sudo pacman -S --needed ripgrep
     # terraform
     sudo pacman -S --needed terraform
     # grammar
     sudo pacman -S --needed languagetool
+    # php
+    sudo pacman -S --needed php composer
+    # web
+    sudo pacman -S --needed tidy stylelint
+    paru -S --needed js-beautify
     # rest of installation
     rm -rf ~/.config/emacs
     git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
