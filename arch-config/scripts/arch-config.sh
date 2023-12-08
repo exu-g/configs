@@ -52,24 +52,29 @@ EOF
 
 # get script directory
 scriptloc="$BASH_SOURCE"
-scriptpath="$(dirname "$scriptloc")"
+#scriptpath="$(dirname "$scriptloc")"
 
 # change to home
-cd "$HOME"
+#cd "$HOME"
 
 # remove old installs
-rm -rf ~/configs
+#rm -rf ~/configs
+
+# Use temporary directory for download
+# FIXME probably lots of issues at first
+tempdir="$(mktemp -d)"
+#cd "$tempdir"
 
 echo "Checking config file"
 
 #clone this repo
-git clone https://gitea.exu.li/realstickman/configs.git &>/dev/null
+git clone -b temporary-dir https://gitea.exu.li/realstickman/configs.git "$tempdir" &>/dev/null
 
 # check if the install scripts are the same
 # NOTE Arguments get passed automatically now
-if ! cmp --silent "$scriptloc" "$HOME/configs/arch-config/scripts/arch-config.sh"; then
+if ! cmp --silent "$scriptloc" "$HOME/scripts/arch-config.sh"; then
     echo Removed old config file and launched new one.
-    rm "$scriptloc" && cp "$HOME/configs/arch-config/scripts/arch-config.sh" "$HOME/scripts/" && bash ~/scripts/arch-config.sh "$@"
+    cp "$tempdir/arch-config/scripts/arch-config.sh" "$HOME/scripts/" && bash ~/scripts/arch-config.sh "$@"
 fi
 
 # if no seltheme file exists, ask to select a theme
@@ -218,14 +223,9 @@ cat <<EOF
 EOF
 
 #copy folders
-cp -r ~/configs/arch-config/.config/ ~/
-cp -r ~/configs/arch-config/.local/ ~/
-#cp -r ~/config/Dokumente ~/
-#cp -r ~/config/.mozilla/firefox/default-release/* ~/.mozilla/firefox/*.default-release/
-#cp -r ~/config/.easystroke ~/
-#cp -r ~/config/.elvish ~/
-#cp -r ~/configs/arch-config/.doom.d ~/
-cp -r ~/configs/arch-config/.ssh ~/
+cp -r "$tempdir/arch-config/.config/" ~/
+cp -r "$tempdir/arch-config/.local/" ~/
+cp -r "$tempdir/arch-config/.ssh" ~/
 
 # copy firefox only if "-f" or "--firefox" is given as argument
 if [[ copy_firefox -eq 1 ]]; then
@@ -233,7 +233,7 @@ if [[ copy_firefox -eq 1 ]]; then
         # NOTE check if firefox default-release directory exists. 1 is good, 0 is bad
         firefoxdir=$(find ~/.mozilla/firefox/ -name \*.default-release | wc -l)
         if [[ $firefoxdir -eq 1 ]]; then
-            cp -r ~/configs/arch-config/.mozilla/firefox/default-release/* ~/.mozilla/firefox/*.default-release/
+            cp -r "$tempdir/configs/arch-config/.mozilla/firefox/default-release/"* ~/.mozilla/firefox/*.default-release/
         else
             echo "Please launch firefox and then update the config again"
         fi
@@ -243,43 +243,36 @@ if [[ copy_firefox -eq 1 ]]; then
 fi
 
 #copy single files
-#cp -r ~/configs/arch-config/.bashrc ~/
-cp -r ~/configs/arch-config/.face ~/
-cp -r ~/configs/arch-config/.gtkrc-2.0 ~/
-cp -r ~/configs/arch-config/.gitconfig ~/
-#cp -r ~/configs/arch-config/.tmux.conf ~/
-cp -r ~/configs/arch-config/.xinitrc ~/
-cp -r ~/configs/arch-config/.kopiaignore ~/
+cp -r "$tempdir/arch-config/.face" ~/
+cp -r "$tempdir/arch-config/.gtkrc-2.0" ~/
+cp -r "$tempdir/arch-config/.gitconfig" ~/
+cp -r "$tempdir/arch-config/.xinitrc" ~/
+cp -r "$tempdir/arch-config/.kopiaignore" ~/
 echo Copied files
 
 # make .xinitrc executable
 chmod +x ~/.xinitrc
 
 #copy scripts
-cp -r ~/configs/arch-config/scripts/ ~/
-
-# copy cache
-#cp -r ~/configs/arch-config/.cache ~/
+cp -r "$tempdir/arch-config/scripts/" ~/
 
 #copy stuff to /etc
-sudo cp -r ~/configs/arch-config/etc /
+sudo cp -r "$tempdir/arch-config/etc" /
 
 echo Copied folders
 
 # NOTE Distro specific stuff
+# TODO simplify for Arch only
 distro=$(cat /etc/*-release | grep "^ID=")
-if [ "$distro" == "ID=arcolinux" ]; then
-    sudo mv /etc/arco-pacman.conf /etc/pacman.conf
-fi
 if [ "$distro" == "ID=arch" ]; then
     sudo mv /etc/arch-pacman.conf /etc/pacman.conf
 fi
 
 #copy usr stuff
-sudo cp -r ~/configs/arch-config/usr /
+sudo cp -r "$tempdir/arch-config/usr" /
 
-# copy xresources
-cp ~/configs/arch-config/.Xdefaults ~/
+# copy xresources for sway
+cp "$tempdir/arch-config/.Xdefaults" ~/
 
 echo
 cat <<EOF
@@ -289,6 +282,7 @@ cat <<EOF
 EOF
 
 # lupusregina
+# TODO analyse parts necessary for Wayland with Alita
 if [ "$(hostname)" == "lupusregina" ]; then
     echo "Applying overrides for $(hostname)"
     # polybar dpi
@@ -314,14 +308,14 @@ EOF
 seltheme="$(cat "$HOME/.seltheme")"
 if [[ "$seltheme" == "nyarch" ]]; then
     #cp -r "./themes/nyarch/i3" "$HOME/.config/"
-    cp "$HOME/configs/arch-themes/nyarch/sway/color" "$HOME/.config/sway/config.d/"
+    cp "$tempdir/arch-themes/nyarch/sway/color" "$HOME/.config/sway/config.d/"
     #cp -r "$HOME/configs/arch-themes/nyarch/polybar" "$HOME/.config/"
     #cp -r "./themes/nyarch/neofetch/lowpoly_flamegirl_blue.txt" "$HOME/.config/neofetch/lowpoly_flamegirl.txt"
     #cp "./themes/.fehbg-nyarch" "$HOME/.fehbg"
     #sed -i 's/^NAME=".*"/NAME="Rawrch Linyux"/' /etc/os-release
 elif [[ "$seltheme" == "space-pink" ]]; then
     #cp -r "./themes/space-pink/i3" "$HOME/.config/"
-    cp "$HOME/configs/arch-themes/space-pink/sway/color" "$HOME/.config/sway/config.d/"
+    cp "$tempdir/arch-themes/space-pink/sway/color" "$HOME/.config/sway/config.d/"
     #cp -r "$HOME/configs/arch-themes/space-pink/polybar" "$HOME/.config/"
     #cp -r "./themes/space-pink/neofetch/lowpoly_flamegirl_orange.txt" "$HOME/.config/neofetch/lowpoly_flamegirl.txt"
     #cp "./themes/.fehbg-space-pink" "$HOME/.fehbg"
@@ -338,8 +332,8 @@ mkdir -p "$HOME/.cache/backgrounds"
 cp "$backgroundimage" "$HOME/.cache/backgrounds/desktop"
 cp "$backgroundimage" "$HOME/.cache/backgrounds/lockscreen"
 
-chmod +x "$scriptpath/gsettings.sh"
-bash "$scriptpath/gsettings.sh"
+chmod +x "$HOME/scripts/gsettings.sh"
+bash "$HOME/scripts/gsettings.sh"
 echo "Set theme using gsettings"
 
 echo
@@ -351,24 +345,11 @@ EOF
 
 # download cat as cat
 echo "Installing bash cat"
-git clone https://github.com/RealStickman/bash-cat-with-cat.git &>/dev/null
-cp ./bash-cat-with-cat/cat.sh "$HOME/scripts/pieces/cat.sh"
-rm -rf ./bash-cat-with-cat
+mkdir "$tempdir/bash-cat-with-cat"
+git clone https://github.com/RealStickman/bash-cat-with-cat.git "$tempdir/bash-cat-with-cat" &>/dev/null
+cp "$tempdir/bash-cat-with-cat/cat.sh" "$HOME/scripts/pieces/cat.sh"
+#rm -rf ./bash-cat-with-cat
 
-: '
-echo
-cat <<EOF
-####################
-##### PSIPCalc #####
-####################
-EOF
-
-# download ip-calculator with powershell
-echo "Installing powershell ip calculator"
-git clone https://github.com/RealStickman/PSipcalc &>/dev/null
-cp ./PSipcalc/PSipcalc.ps1 "$HOME/scripts/in_path/sc-psipcalc"
-rm -rf ./PSipcalc
-'
 echo
 cat <<EOF
 ########################################
@@ -408,9 +389,9 @@ if [[ $(pacman -Q | grep vmware-workstation) ]]; then
 fi
 
 # FIXME temporary
-if [ -f "/etc/pipewire/pipewire.conf" ]; then
-    sudo rm "/etc/pipewire/pipewire.conf"
-fi
+#if [ -f "/etc/pipewire/pipewire.conf" ]; then
+#    sudo rm "/etc/pipewire/pipewire.conf"
+#fi
 
 # enable fstrim timer
 sudo systemctl enable fstrim.timer
