@@ -393,6 +393,12 @@ fi
 #    sudo rm "/etc/pipewire/pipewire.conf"
 #fi
 
+# FIXME temporary migrate container store
+if [ -f "$HOME/.config/containers/storage.conf" ]; then
+    rm "$HOME/.config/containers/storage.conf"
+    podman system reset -f
+fi
+
 # enable fstrim timer
 sudo systemctl enable fstrim.timer
 
