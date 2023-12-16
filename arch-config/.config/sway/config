@@ -337,6 +337,7 @@ exec --no-startup-id swaync
 exec --no-startup-id udiskie --no-automount --tray
 
 # kde connect
+exec --no-startup-id /usr/lib/kdeconnectd
 exec --no-startup-id kdeconnect-indicator
 
 # Start sway-session.target for sway-specific stuff and import environment
