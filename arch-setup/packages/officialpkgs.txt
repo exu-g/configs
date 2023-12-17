@@ -21,7 +21,6 @@ easyeffects
 exfatprogs
 f2fs-tools
 fakeroot
-feh
 ffmpeg
 firewalld
 fish
@@ -51,6 +50,7 @@ hunspell-en_us
 hyphen
 hyphen-de
 hyphen-en
+imv
 intel-media-driver
 intel-ucode
 jre-openjdk
