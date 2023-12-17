@@ -81,7 +81,7 @@ set EDITOR /usr/bin/nvim
 set VISUAL /usr/bin/nvim
 
 # add paths
-set fish_user_paths "$HOME/.emacs.d/bin/" $fish_user_paths # old path
+set fish_user_paths /usr/bin/vendor_perl/ $fish_user_paths # global perl tools
 set fish_user_paths "$HOME/.config/emacs/bin/" $fish_user_paths # new path
 set fish_user_paths "$HOME/scripts/in_path" $fish_user_paths
 set fish_user_paths "$HOME/.local/bin" $fish_user_paths
