@@ -35,6 +35,7 @@ git
 git-lfs
 gnome-firmware
 gnome-keyring
+grim
 gsettings-desktop-schemas
 gtk-engine-murrine
 gvfs
