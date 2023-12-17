@@ -124,7 +124,7 @@ for choice in $choices; do
             echo "gimp" >> "$setupdir/selectedpkgs.txt"
             ;;
         31)
-            printf '%s\n' 'yt-dlp' 'yt-dlp-drop-in' >>"$setupdir/aurselectedpkgs.txt"
+            printf '%s\n' 'yt-dlp' >>"$setupdir/aurselectedpkgs.txt"
             ;;
         32)
             echo "megatools-bin" >>"$setupdir/aurselectedpkgs.txt"
