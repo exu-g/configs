@@ -68,7 +68,7 @@ tempdir="$(mktemp -d)"
 echo "Checking config file"
 
 #clone this repo
-git clone -b temporary-dir https://gitea.exu.li/realstickman/configs.git "$tempdir" &>/dev/null
+git clone -b main https://gitea.exu.li/realstickman/configs.git "$tempdir" &>/dev/null
 
 # check if the install scripts are the same
 # NOTE Arguments get passed automatically now
