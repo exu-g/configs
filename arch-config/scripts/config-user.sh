@@ -2,12 +2,6 @@
 
 set -euo pipefail
 
-cat <<EOF
-############################################################
-###################### INSTALL CONFIG ######################
-############################################################
-EOF
-
 # function to select theme
 function func_seltheme {
     cmd=(dialog --separate-output --checklist "Select theme (Only select one)" 22 76 16)
@@ -79,7 +73,6 @@ mkdir -p ~/old_dat/.config
 mkdir -p ~/old_dat/.doom.d
 mkdir -p ~/old_dat/.mozilla
 mkdir -p ~/old_dat/scripts
-mkdir -p ~/old_dat/.elvish
 mkdir -p ~/old_dat/.ssh
 
 # make subdirectories

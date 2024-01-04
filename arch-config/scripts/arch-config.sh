@@ -19,6 +19,12 @@ fi
 func_dont_timeout &
 
 cat <<EOF
+############################################################
+###################### INSTALL CONFIG ######################
+############################################################
+EOF
+
+cat <<EOF
 ########################################
 ################ Setup  ################
 ########################################
@@ -42,20 +48,6 @@ if ! cmp --silent "$scriptloc" "$HOME/scripts/arch-config.sh"; then
     cp "$tempdir/arch-config/scripts/arch-config.sh" "$HOME/scripts/" && bash ~/scripts/arch-config.sh "$@"
 fi
 
-# FIXME compare correct script
-# check config-user script
-#if ! cmp --silent "$scriptloc" "$HOME/scripts/config-user.sh"; then
-#    echo Updated config-user script.
-#    cp "$tempdir/arch-config/scripts/config-user.sh" "$HOME/scripts/"
-#fi
-
-# FIXME compare correct script
-# check config-root script
-#if ! cmp --silent "$scriptloc" "$HOME/scripts/config-root.sh"; then
-#    echo Updated config-root script.
-#    cp "$tempdir/arch-config/scripts/config-root.sh" "$HOME/scripts/"
-#fi
-
 cat <<EOF
 ########################################
 ############## Start Setup #############
@@ -66,7 +58,7 @@ EOF
 pids=""
 
 # call user script
-bash "$tempdir/arch-config/scripts/config-user.sh" &
+python "$tempdir/arch-config/scripts/config-user.py" &
 pids="$pids $!"
 
 # call root script
