@@ -309,8 +309,9 @@ font pango:Fira Mono 9
 #Authentication dialog
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
-#nextcloud
-exec --no-startup-id nextcloud --background
+# nextcloud
+# **VERY BAD** workaround for issue https://github.com/Alexays/Waybar/issues/2437
+exec --no-startup-id sleep 20; nextcloud --background
 
 # network
 exec --no-startup-id nm-applet
