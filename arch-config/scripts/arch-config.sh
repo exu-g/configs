@@ -233,7 +233,7 @@ if [[ copy_firefox -eq 1 ]]; then
         # NOTE check if firefox default-release directory exists. 1 is good, 0 is bad
         firefoxdir=$(find ~/.mozilla/firefox/ -name \*.default-release | wc -l)
         if [[ $firefoxdir -eq 1 ]]; then
-            cp -r "$tempdir/configs/arch-config/.mozilla/firefox/default-release/"* ~/.mozilla/firefox/*.default-release/
+            cp -r "$tempdir/arch-config/.mozilla/firefox/default-release/"* ~/.mozilla/firefox/*.default-release/
         else
             echo "Please launch firefox and then update the config again"
         fi
