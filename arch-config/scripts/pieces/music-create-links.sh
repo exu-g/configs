@@ -11,10 +11,15 @@ cd "$HOME/Nextcloud/MusikRaw"
 ls -d */ > artistdirectories
 
 while read -r artdir; do
+    # FIXME remove trailing slash
+    artdir="${artdir%/}"
+    # change into artist directory
     cd "$artdir"
     # get albums
     ls -d */ > directories
     while read -r dir; do
+        # FIXME remove trailing slash
+        dir="${dir%/}"
         # change into directory
         cd "$dir"
         # create directory in music
