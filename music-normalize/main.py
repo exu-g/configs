@@ -133,7 +133,7 @@ def convert(inputfile, outputfile, loudness) -> Optional[list[Any]]:
         "-filter:a"
         " "
         "loudnorm=I=-30.0:"
-        "LRA=9.0:"
+        "LRA=10.0:"
         "measured_I={input_i}:"
         "measured_LRA={input_lra}:"
         "measured_tp={input_tp}:measured_thresh={input_thresh}:"
