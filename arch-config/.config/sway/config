@@ -333,6 +333,9 @@ exec --no-startup-id flameshot
 # notifications
 exec --no-startup-id swaync
 
+# hp printer
+exec --no-startup-id python /usr/bin/hp-systray --force-startup
+
 # disk management
 exec --no-startup-id udiskie --no-automount --tray
 
