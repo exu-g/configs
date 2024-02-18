@@ -28,6 +28,7 @@ flameshot
 foliate
 font-manager
 freetype2
+fuseiso
 fwupd
 fwupd-efi
 gdm
