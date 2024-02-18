@@ -1,15 +1,25 @@
+[user]
+    name = exu
+    email = mrc@frm01.net
 [init]
     defaultBranch = main
+# Some popular options to test:
+# https://jvns.ca/blog/2024/02/16/popular-git-config-options/#merge-conflictstyle-zdiff3
+#[merge]
+#    conflictstyle = zdiff3
+#[diff]
+#    algorithm = histogram
+#[branch]
+#    sort = -committerdate
+#[tag]
+#    sort = taggerdate
+[gitlab]
+    user = exu
+[github]
+    user = exu
 [alias]
     # use like this: git mr [REPO] [MERGE REQUEST]
     # see https://stackoverflow.com/a/50834005 (GitLab)
     # see https://gist.github.com/gnarf/5406589 (GitHub, modified to be similar to GitLab)
     mr = !sh -c 'git fetch -fu $1 merge-requests/$2/head:mr-$1-$2 && git checkout mr-$1-$2' -
     pr = !sh -c 'git fetch -fu $1 refs/pull/$2/head:pr-$1-$2 && git checkout pr-$1-$2' -
-[user]
-    name = exu
-    email = mrc@frm01.net
-[gitlab]
-    user = exu
-[github]
-    user = exu
