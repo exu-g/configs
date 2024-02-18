@@ -56,4 +56,26 @@
 	<text-files/>
 	<video-files/>
 </action>
+<action>
+	<icon>drive-optical</icon>
+	<name>ISO-Datei hier einhängen</name>
+	<submenu></submenu>
+	<unique-id>1708204340305596-1</unique-id>
+	<command>fuseiso -p %f %f.mount</command>
+	<description>ISO-Datei im aktuellen Verzeichnis als Ordner einhängen</description>
+	<range>*</range>
+	<patterns>*.iso;*.nrg;*.bin;*.mdf;*.img</patterns>
+	<other-files/>
+</action>
+<action>
+	<icon>drive-optical</icon>
+	<name>ISO-Datei aushängen</name>
+	<submenu></submenu>
+	<unique-id>1708253344784089-1</unique-id>
+	<command>fusermount -u %f</command>
+	<description>Eingehängtes ISO-Verzeichnis aushängen</description>
+	<range>*</range>
+	<patterns>*.mount</patterns>
+	<directories/>
+</action>
 </actions>
