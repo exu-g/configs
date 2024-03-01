@@ -1,13 +1,11 @@
 breeze
 breeze-icons
-candy-icons-git
 capitaine-cursors
 kvantum
 kwindowsystem5
 lxappearance
+plasma5-themes-sweet-full-git
 qt5ct
 qt6ct
 sardi-icons
 surfn-icons-git
-sweet-folders-icons-git
-sweet-gtk-theme-dark
