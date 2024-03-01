@@ -3,7 +3,7 @@
 set -euo pipefail
 
 # set GTK theme
-gsettings set org.gnome.desktop.interface gtk-theme Sweet-Dark
+gsettings set org.gnome.desktop.interface gtk-theme sweet
 # prefer dark variant
 gsettings set org.gnome.desktop.interface color-scheme prefer-dark
 
