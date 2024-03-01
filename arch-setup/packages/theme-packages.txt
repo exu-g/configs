@@ -3,7 +3,6 @@ breeze-icons
 capitaine-cursors
 kvantum
 kwindowsystem5
-lxappearance
 plasma5-themes-sweet-full-git
 qt5ct
 qt6ct
