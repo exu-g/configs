@@ -10,8 +10,10 @@ gsettings set org.gnome.desktop.interface color-scheme prefer-dark
 # icon theme
 gsettings set org.gnome.desktop.interface icon-theme Sweet-Rainbow
 
-# Font
+# font config
 gsettings set org.gnome.desktop.interface font-name "Fira Sans 12"
+gsettings set org.gnome.desktop.interface font-hinting "slight"
+gsettings set org.gnome.desktop.interface font-antialiasing "rgba"
 
 # cursor theme
 gsettings set org.gnome.desktop.interface cursor-theme "capitaine-cursors-light"
