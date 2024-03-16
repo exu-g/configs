@@ -435,7 +435,9 @@ for_window [app_id="[Tt]hunar" title="Dateivorgangsfortschritt"] floating enable
 for_window [app_id="[Tt]hunar" title="Ersetzen von Dateien bestätigen"] floating enable
 for_window [app_id="file-roller" title="Archiv entpacken"] floating enable
 for_window [app_id="qalculate-gtk"] floating enable
-for_window [app_id="org.kde.kdeconnect.daemon" title="Dateien werden empfangen — KDE Connect-Dienst"] floating enable
+for_window [app_id="org.kde.kdeconnect.daemon" title="^Datei(en)? (wird|werden) empfangen .* KDE Connect-Dienst$"] floating enable
+    # Datei wird empfangen (28 % von 25.5 MiB ) — KDE Connect-Dienst
+    # Dateien werden empfangen — KDE Connect-Dienst
 
 #########################################
 #####           statusbar           #####
