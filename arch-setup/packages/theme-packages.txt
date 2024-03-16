@@ -2,6 +2,7 @@ breeze
 breeze-icons
 capitaine-cursors
 kvantum
+kvantum-qt5
 kwindowsystem5
 plasma5-themes-sweet-full-git
 qt5ct
