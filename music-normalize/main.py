@@ -32,80 +32,32 @@ from typing import Any, Optional
 
 """
 
-# FIXME
-# inputfile = (
-#    '/home/marc/Downloads/FalKKonE - 01 Aria (From "Berserk: The Golden Age Arc").flac'
-# )
-# inputfile = "/home/marc/Downloads/test441.opus"
-# outputfile = "/home/marc/Downloads/test441_out.opus"
-
-# srcfolder = "/home/marc/Downloads/MusikRaw"
-# destfolder = "/home/marc/Downloads/Musik"
-
 musicfile_extensions = (".flac", ".wav", ".mp3", ".m4a", ".aac", ".opus")
 
 
-def get_format(inputfile) -> str:
-    # get codec format
-    # https://stackoverflow.com/a/29610897
-    # this shows the codecs of all audio streams present in the file, which shouldn't matter unless you have more than one stream
-    ff = ffmpy.FFprobe(
-        inputs={inputfile: None},
-        global_options=(
-            "-v quiet",
-            "-select_streams a",
-            "-show_entries stream=codec_name",
-            "-of default=noprint_wrappers=1:nokey=1",
-        ),
-    )
-    # print(ff.cmd)
-    proc = subprocess.Popen(ff.cmd, shell=True, stdout=subprocess.PIPE)
-    # NOTE read output from previous command
-    # rstrip: remove trailing newline
-    # decode: convert from binary string to normal string
-    format: str = (
-        proc.stdout.read()  # pyright: ignore[reportOptionalMemberAccess]
-        .rstrip()
-        .decode("utf8")
-    )
-    # print(format)
-    return format
-
-
-def remove_picture(inputfile):
+def loudness_info(inputfile) -> dict[str, str]:
     """
-    This function makes sure no image is attached to the audio stream.
-    An image might cause problems for the later conversion to opus.
+    Measure loudness of the given input file
 
     Parameters:
-        inputfile (str): Path to file
+        inputfile
+
+    Output:
+        loudness (dict[str, str]): decoded json dictionary containing all loudness information
     """
-    tmpfile = os.path.splitext(inputfile)[0] + ".tmp" + os.path.splitext(inputfile)[1]
-    ff = ffmpy.FFmpeg(
-        inputs={inputfile: None},
-        outputs={tmpfile: "-vn -c:a copy"},
-        global_options=("-v error"),
-    )
-    ff.run()
-    os.remove(inputfile)
-    os.rename(tmpfile, inputfile)
 
-
-def loudness_info(inputfile) -> dict[str, str]:
     print("Measuring loudness of ", os.path.basename(inputfile))
-    # get format from file
-    # inputformat = get_format(inputfile)
-    # NOTE format is actually unnecessary here
+
     ff = ffmpy.FFmpeg(
         inputs={inputfile: None},
         outputs={"/dev/null": "-pass 1 -filter:a loudnorm=print_format=json -f null"},
         global_options=("-y"),
     )
 
-    # print(ff.cmd)
     proc = subprocess.Popen(
         ff.cmd, shell=True, stderr=subprocess.STDOUT, stdout=subprocess.PIPE
     )
+
     # NOTE get loudness info from subprocess
     # rstrip: remove trailing newline
     # decode: convert from binary string to utf8
@@ -116,17 +68,35 @@ def loudness_info(inputfile) -> dict[str, str]:
     )
     # decode json to dict
     loudness: dict[str, str] = json.loads(loudness_json)
-    # print(loudness_json)
-    # print(ff.cmd)
     return loudness
 
 
-def convert(inputfile, outputfile, loudness) -> Optional[list[Any]]:
+def convert(
+    inputfile: str,
+    outputfile: str,
+    codec: str,
+    compression: int,
+    loudness: dict[str, str],
+    bitrate: str = "0k",
+) -> Optional[list[Any]]:
+    """
+    Convert the input file to the desired format
+
+    Parameters:
+        inputfile (str)
+        outputfile (str)
+        loudness (dict[str, str])
+
+    Output:
+        dynamically normalised files (list)
+    """
+
     print("Working on ", os.path.basename(inputfile))
-    # coverpath = os.path.join(os.path.dirname(inputfile), "cover.jpg")
+
     # NOTE including covers into ogg/opus containers currently doesn't work
     # https://trac.ffmpeg.org/ticket/4448
     inputcmd = {inputfile: None}
+    # NOTE bitrate is set to 0k when converting to flac. This does not have any effect however and is simply ignored
     outputcmd = {
         outputfile: "-pass 2"
         " "
@@ -139,26 +109,31 @@ def convert(inputfile, outputfile, loudness) -> Optional[list[Any]]:
         "measured_tp={input_tp}:measured_thresh={input_thresh}:"
         "print_format=json"
         " "
-        "-c:a libopus"
+        "-c:a {codec}"
         " "
-        "-b:a 320k".format(
+        "-b:a {bitrate}"
+        " "
+        "-compression_level {compression}".format(
             input_i=loudness["input_i"],
             input_lra=loudness["input_lra"],
             input_tp=loudness["input_tp"],
             input_thresh=loudness["input_thresh"],
+            codec=codec,
+            bitrate=bitrate,
+            compression=compression,
         )
     }
 
     ff = ffmpy.FFmpeg(
         inputs=inputcmd,
         outputs=outputcmd,
-        # global_options=("-y", "-v error"),
         global_options=("-y"),
     )
-    # ff.run()
+
     proc = subprocess.Popen(
         ff.cmd, shell=True, stderr=subprocess.STDOUT, stdout=subprocess.PIPE
     )
+
     # NOTE get loudness info from subprocess
     # rstrip: remove trailing newline
     # decode: convert from binary string to utf8
@@ -167,6 +142,7 @@ def convert(inputfile, outputfile, loudness) -> Optional[list[Any]]:
     loudness_json: str = "\n".join(
         proc.stdout.read().rstrip().decode("utf8").splitlines()[-12:]
     )
+
     # decode json to dict
     loudness_new: dict[str, str] = json.loads(loudness_json)
     if loudness_new["normalization_type"] != "linear":
@@ -180,9 +156,14 @@ def main(inputfile: str) -> Optional[list[Any]]:
 
     Parameters:
         inputfile (str): Path to input file
+
+    Output:
+        dynamically normalised audio files (list)
     """
+
     # set output folder to parent path + "normalized"
     outputfolder = os.path.join(os.path.dirname(inputfile), "normalized")
+
     # NOTE create output folder
     # because multiple parallel processes are at work here,
     # there might be conflicts with one trying to create the directory although it already exists
@@ -196,26 +177,41 @@ def main(inputfile: str) -> Optional[list[Any]]:
             time.sleep(randint(0, 4))
 
     # output file path
-    noext_infile: str = os.path.splitext(os.path.basename(inputfile))[0]
-    outputfile: str = os.path.join(outputfolder, noext_infile + ".opus")
+    infile_noextension: str = os.path.splitext(os.path.basename(inputfile))[0]
+    infile_extension: str = os.path.splitext(os.path.basename(inputfile))[1]
 
-    # print(inputfile)
-    # print(os.path.dirname(inputfile))
-    # print(os.path.basename(inputfile))
-    # print(outputfile)
+    match infile_extension:
+        case ".flac" | ".wav":
+            outputfile: str = os.path.join(outputfolder, infile_noextension + ".flac")
+            codec: str = "flac"
+            compression: int = 12  # best compression
+            bitrate: str = "0k"
+        case ".mp3" | ".m4a" | ".aac" | ".opus":
+            outputfile: str = os.path.join(outputfolder, infile_noextension + ".opus")
+            codec: str = "libopus"
+            compression: int = 10  # best compression
+            bitrate: str = "192k"
+        case _:
+            print(inputfile, "does not use a known extension. Conversion skipped")
+            return
 
-    # remove_picture(inputfile=inputfile)
-    loudness = loudness_info(inputfile=inputfile)
+    loudness: dict[str, str] = loudness_info(inputfile=inputfile)
     nonlinear: Optional[list[Any]] = convert(
         inputfile=inputfile,
         outputfile=outputfile,
+        codec=codec,
+        compression=compression,
         loudness=loudness,
+        bitrate=bitrate,
     )
 
     return nonlinear
 
 
 if __name__ == "__main__":
+    """
+    Handle arguments and other details for interactive usage
+    """
     # start time of program
     starttime = time.time()
 
@@ -268,8 +264,6 @@ if __name__ == "__main__":
     else:
         timeprev = 0
 
-    # print(timeprev)
-
     musicfiles: list[str] = []
     for root, dirs, files in os.walk(srcfolder):
         # ignore the "normalized" subfolder
@@ -280,8 +274,6 @@ if __name__ == "__main__":
                 # only file newer than the last run are added
                 if os.path.getmtime(filepath) >= float(timeprev):
                     musicfiles.append(os.path.join(root, file))
-
-    # print(musicfiles)
 
     with Pool(cpu) as p:
         nonlinear_all: Optional[list[Any]] = p.map(main, musicfiles)
