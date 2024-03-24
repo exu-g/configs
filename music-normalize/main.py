@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
-# ffmpeg wrapper
+# multithreading
 import multiprocessing
-from os.path import isdir, isfile
+
+# audio format conversions
 import ffmpy
 
 # argument parsing
@@ -10,13 +11,9 @@ import argparse
 
 # multiprocessing stuff
 from multiprocessing import Pool
-from multiprocessing import cpu_count
 
 # executing some commands
 import subprocess
-
-# parsing json output of loudnorm
-import json
 
 # file/directory handling
 import os
@@ -24,130 +21,94 @@ import os
 # most recent starttime for program
 import time
 
+# randomness
 from random import randint
 
+# typing hints
 from typing import Any, Optional
 
-"""
+import tempfile
 
+# working with sound files
+import soundfile
+
+# loudness normalization
+import pyloudnorm
+
+"""
+Normalize loudness of all music files in a given directory and its subdirectories.
 """
 
 musicfile_extensions = (".flac", ".wav", ".mp3", ".m4a", ".aac", ".opus")
 
 
-def loudness_info(inputfile) -> dict[str, str]:
+def loudnorm(inputfile: str, outputfile: str):
     """
-    Measure loudness of the given input file
+    Normalize audio to EBU R 128 standard using pyloudnorm
 
     Parameters:
-        inputfile
-
-    Output:
-        loudness (dict[str, str]): decoded json dictionary containing all loudness information
+        inputfile (str): Path to input file. Format must be supported by python-soundfile module
+        outputfile (str): Path to output file
     """
+    data, rate = soundfile.read(file=inputfile)
 
-    print("Measuring loudness of ", os.path.basename(inputfile))
+    # measure loudness
+    meter = pyloudnorm.Meter(rate=rate)
+    loudness = meter.integrated_loudness(data=data)
 
-    ff = ffmpy.FFmpeg(
-        inputs={inputfile: None},
-        outputs={"/dev/null": "-pass 1 -filter:a loudnorm=print_format=json -f null"},
-        global_options=("-y"),
+    # normalize audio
+    file_normalized = pyloudnorm.normalize.loudness(
+        data=data, input_loudness=loudness, target_loudness=-30.0
     )
 
-    proc = subprocess.Popen(
-        ff.cmd, shell=True, stderr=subprocess.STDOUT, stdout=subprocess.PIPE
-    )
-
-    # NOTE get loudness info from subprocess
-    # rstrip: remove trailing newline
-    # decode: convert from binary string to utf8
-    # splitlines: list of lines (only 12 last ones, length of the output json)
-    # join: reassembles the list of lines and separates with "\n"
-    loudness_json: str = "\n".join(
-        proc.stdout.read().rstrip().decode("utf8").splitlines()[-12:]
-    )
-    # decode json to dict
-    loudness: dict[str, str] = json.loads(loudness_json)
-    return loudness
+    # write normalized audio to file
+    soundfile.write(file=outputfile, data=file_normalized, samplerate=rate)
 
 
-def convert(
-    inputfile: str,
-    outputfile: str,
-    codec: str,
-    compression: int,
-    loudness: dict[str, str],
-    bitrate: str = "0k",
-) -> Optional[list[Any]]:
+def ffmpeg_to_wav(inputfile: str, outputfile: str):
     """
-    Convert the input file to the desired format
+    Convert a file into .wav for further processing
 
     Parameters:
-        inputfile (str)
-        outputfile (str)
-        loudness (dict[str, str])
-
-    Output:
-        dynamically normalised files (list)
+        inputfile (str): Path to input file
+        outputfile (str): Path to output file
     """
 
-    print("Working on ", os.path.basename(inputfile))
-
-    # NOTE including covers into ogg/opus containers currently doesn't work
-    # https://trac.ffmpeg.org/ticket/4448
-    inputcmd = {inputfile: None}
-    # NOTE bitrate is set to 0k when converting to flac. This does not have any effect however and is simply ignored
-    outputcmd = {
-        outputfile: "-pass 2"
-        " "
-        "-filter:a"
-        " "
-        "loudnorm=I=-30.0:"
-        "LRA=10.0:"
-        "measured_I={input_i}:"
-        "measured_LRA={input_lra}:"
-        "measured_tp={input_tp}:measured_thresh={input_thresh}:"
-        "print_format=json"
-        " "
-        "-c:a {codec}"
-        " "
-        "-b:a {bitrate}"
-        " "
-        "-compression_level {compression}".format(
-            input_i=loudness["input_i"],
-            input_lra=loudness["input_lra"],
-            input_tp=loudness["input_tp"],
-            input_thresh=loudness["input_thresh"],
-            codec=codec,
-            bitrate=bitrate,
-            compression=compression,
+    # convert to wav in temporary directory
+    with tempfile.TemporaryDirectory() as tempdir:
+        # temporary input file
+        temp_input: str = os.path.join(
+            tempdir, os.path.splitext(os.path.basename(inputfile))[0] + ".wav"
         )
-    }
 
-    ff = ffmpy.FFmpeg(
-        inputs=inputcmd,
-        outputs=outputcmd,
-        global_options=("-y"),
-    )
+        # temporary output file
+        temp_output: str = os.path.join(
+            tempdir,
+            "normalized",
+            os.path.splitext(os.path.basename(inputfile))[0] + ".wav",
+        )
+        os.mkdir(os.path.join(tempdir, "normalized"))
 
-    proc = subprocess.Popen(
-        ff.cmd, shell=True, stderr=subprocess.STDOUT, stdout=subprocess.PIPE
-    )
+        # convert audio to wav
+        ff = ffmpy.FFmpeg(
+            inputs={inputfile: None}, outputs={temp_input: None}, global_options=("-y")
+        )
 
-    # NOTE get loudness info from subprocess
-    # rstrip: remove trailing newline
-    # decode: convert from binary string to utf8
-    # splitlines: list of lines (only 12 last ones, length of the output json)
-    # join: reassembles the list of lines and separates with "\n"
-    loudness_json: str = "\n".join(
-        proc.stdout.read().rstrip().decode("utf8").splitlines()[-12:]
-    )
+        subprocess.run(ff.cmd, shell=True, capture_output=True)
 
-    # decode json to dict
-    loudness_new: dict[str, str] = json.loads(loudness_json)
-    if loudness_new["normalization_type"] != "linear":
-        nonlinear: list[Any] = [inputfile, loudness_new]
-        return nonlinear
+        # normalize loudness
+        loudnorm(inputfile=temp_input, outputfile=temp_output)
+
+        # convert audio back to lossy format
+        outputcmd = {
+            outputfile: "-c:a libopus" " " "-b:a 192k" " " "-compression_level 10"
+        }
+
+        ff = ffmpy.FFmpeg(
+            inputs={temp_output: None}, outputs=outputcmd, global_options=("-y")
+        )
+
+        subprocess.run(ff.cmd, shell=True, capture_output=True)
 
 
 def main(inputfile: str) -> Optional[list[Any]]:
@@ -182,36 +143,30 @@ def main(inputfile: str) -> Optional[list[Any]]:
 
     match infile_extension:
         case ".flac" | ".wav":
+            print("Working on", inputfile)
             outputfile: str = os.path.join(outputfolder, infile_noextension + ".flac")
-            codec: str = "flac"
-            compression: int = 12  # best compression
-            bitrate: str = "0k"
+            # direct conversion start
+            loudnorm(inputfile=inputfile, outputfile=outputfile)
+            print("Completed", inputfile)
         case ".mp3" | ".m4a" | ".aac" | ".opus":
+            print("Working on", inputfile)
             outputfile: str = os.path.join(outputfolder, infile_noextension + ".opus")
-            codec: str = "libopus"
-            compression: int = 10  # best compression
-            bitrate: str = "192k"
+            # conversion is started within the ffmpeg_to_wav function
+            ffmpeg_to_wav(inputfile=inputfile, outputfile=outputfile)
+            print("Completed", inputfile)
         case _:
-            print(inputfile, "does not use a known extension. Conversion skipped")
+            print(
+                inputfile,
+                "does not use a known extension. This error shouldn't be happening actually",
+            )
             return
-
-    loudness: dict[str, str] = loudness_info(inputfile=inputfile)
-    nonlinear: Optional[list[Any]] = convert(
-        inputfile=inputfile,
-        outputfile=outputfile,
-        codec=codec,
-        compression=compression,
-        loudness=loudness,
-        bitrate=bitrate,
-    )
-
-    return nonlinear
 
 
 if __name__ == "__main__":
     """
     Handle arguments and other details for interactive usage
     """
+
     # start time of program
     starttime = time.time()
 
@@ -281,9 +236,3 @@ if __name__ == "__main__":
     # write this run's time into file
     with open(timefile, "w") as file:
         file.write(str(starttime))
-
-    print("Dynamically normalized music:")
-    for i in nonlinear_all:
-        # NOTE ignore empty and "None" values
-        if i:
-            print(i)

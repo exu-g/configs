@@ -1,1 +1,3 @@
 ffmpy
+soundfile
+pyloudnorm
