@@ -35,6 +35,9 @@ import soundfile
 # loudness normalization
 import pyloudnorm
 
+# file copy
+import shutil
+
 """
 Normalize loudness of all music files in a given directory and its subdirectories.
 """
@@ -111,6 +114,28 @@ def ffmpeg_to_wav(inputfile: str, outputfile: str):
         subprocess.run(ff.cmd, shell=True, capture_output=True)
 
 
+def ffmpeg_copy_metadata(inputfile: str, outputfile: str):
+    """
+    Copy all metadata from the input file to the output file.
+    A temporary file is used in an intermediate step
+
+    Parameters:
+        inputfile (str): Path to input file
+        outputfile (str): Path to output file
+    """
+
+    # store output file as temporary file. FFMPEG can't work on files in-place
+    with tempfile.NamedTemporaryFile() as temp_audio:
+        shutil.copyfile(outputfile, temp_audio.name)
+
+        inputcmd = {inputfile: None, temp_audio.name: None}
+        outputcmd = {outputfile: "-map 1 -c copy -map_metadata 0"}
+
+        ff = ffmpy.FFmpeg(inputs=inputcmd, outputs=outputcmd, global_options=("-y"))
+
+        subprocess.run(ff.cmd, shell=True, capture_output=True)
+
+
 def main(inputfile: str) -> Optional[list[Any]]:
     """
     Main program loop
@@ -147,12 +172,14 @@ def main(inputfile: str) -> Optional[list[Any]]:
             outputfile: str = os.path.join(outputfolder, infile_noextension + ".flac")
             # direct conversion start
             loudnorm(inputfile=inputfile, outputfile=outputfile)
+            ffmpeg_copy_metadata(inputfile=inputfile, outputfile=outputfile)
             print("Completed", inputfile)
         case ".mp3" | ".m4a" | ".aac" | ".opus":
             print("Working on", inputfile)
             outputfile: str = os.path.join(outputfolder, infile_noextension + ".opus")
             # conversion is started within the ffmpeg_to_wav function
             ffmpeg_to_wav(inputfile=inputfile, outputfile=outputfile)
+            ffmpeg_copy_metadata(inputfile=inputfile, outputfile=outputfile)
             print("Completed", inputfile)
         case _:
             print(
