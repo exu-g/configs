@@ -24,7 +24,6 @@ fakeroot
 ffmpeg
 firewalld
 fish
-flameshot
 foliate
 font-manager
 freetype2
@@ -120,8 +119,10 @@ reflector
 restic
 rsync
 seahorse
+slurp
 smartmontools
 stress
+swappy
 swaync
 system-config-printer
 thunar
