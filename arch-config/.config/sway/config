@@ -327,9 +327,6 @@ exec --no-startup-id /opt/KopiaUI/kopia-ui
 # Easy Effects
 exec --no-startup-id easyeffects --gapplication-service
 
-# activate flameshot
-exec --no-startup-id flameshot
-
 # notifications
 exec --no-startup-id swaync
 
@@ -389,8 +386,8 @@ bindsym ctrl+mod1+j exec --no-startup-id jellyfinmediaplayer;focus
 bindsym ctrl+mod1+b exec --no-startup-id thunderbird;focus
 
 # Screenshots
-bindsym Print exec --no-startup-id flameshot gui
-bindsym Control+Print exec --no-startup-id flameshot gui -d 2000
+bindsym Print exec --no-startup-id grim -g "$(slurp)" - | swappy -f -
+bindsym Control+Print exec --no-startup-id sleep 2s && grim -g "$(slurp)" - | swappy -f -
 
 ##############################
 #   Audio & Media Control    #
