@@ -18,6 +18,7 @@ dunst
 e2fsprogs
 easyeffects
 easyeffects
+engrampa
 exfatprogs
 f2fs-tools
 fakeroot
@@ -80,10 +81,6 @@ mesa
 mesa-vdpau
 mythes-de
 mythes-en
-nemo
-nemo-fileroller
-nemo-preview
-nemo-share
 neovim
 network-manager-applet
 nextcloud-client
