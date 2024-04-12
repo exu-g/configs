@@ -368,7 +368,7 @@ fi
 
 if [ $in_podman -eq 1 ]; then
     echo "Installing podman"
-    sudo pacman -S --needed podman podman-dnsname fuse-overlayfs buildah aardvark-dns
+    sudo pacman -S --needed podman fuse-overlayfs buildah aardvark-dns
     sudo touch /etc/subuid /etc/subgid
     sudo usermod --add-subuids 100000-165536 --add-subgids 100000-165536 "$USER"
     sudo groupadd -f podman
