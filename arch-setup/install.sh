@@ -103,7 +103,7 @@ clear
 for choice in $choices; do
     case $choice in
         0)
-            printf '%s\n' 'qemu' 'virt-manager' 'ebtables' 'dnsmasq' >> "$setupdir/selectedpkgs.txt"
+            printf '%s\n' 'qemu' 'virt-manager' 'ebtables' 'dnsmasq' 'edk2-ovmf' >> "$setupdir/selectedpkgs.txt"
             ;;
         1)
             echo "vmware-workstation" >> "$setupdir/aurselectedpkgs.txt"
