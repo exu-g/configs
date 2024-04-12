@@ -348,9 +348,7 @@ exec_always "systemctl --user import-environment; systemctl --user start sway-se
 ##############################
 
 # Your preferred application launcher
-# Note: pass the final command to swaymsg so that the resulting window can be opened
-# on the original workspace that the command was run on.
-set $menu wofi --show drun | xargs swaymsg exec --
+set $menu wofi --show drun
 
 # Start your launcher
 bindsym ctrl+mod1+a exec $menu
