@@ -348,7 +348,7 @@ exec_always "systemctl --user import-environment; systemctl --user start sway-se
 ##############################
 
 # Your preferred application launcher
-set $menu wofi --show drun
+set $menu wofi --show drun -i --matching fuzzy
 
 # Start your launcher
 bindsym ctrl+mod1+a exec $menu
