@@ -16,30 +16,33 @@ fi
 # transfer to kavita
 # books
 echo Kavita books upload
-rsync -urtzv --progress --delete --bwlimit=3M -e "ssh -i $sshkeypath -p $port" /home/exu/Nextcloud/Reading/books/ ${user}@${server}:/mnt/books/kavita/books/
+rsync -urtzv --progress --delete -e "ssh -i $sshkeypath -p $port" /home/exu/Nextcloud/Reading/books/ ${user}@${server}:/mnt/books/kavita/books/
+# light novels
+echo Kavita light novels upload
+rsync -urtzv --progress --delete -e "ssh -i $sshkeypath -p $port" "/home/exu/Nextcloud/Reading/light novels/" "${user}@${server}:/mnt/books/kavita/light novels/"
 # manga
 echo Kavita manga upload
-rsync -urtzv --progress --bwlimit=3M -e "ssh -i $sshkeypath -p $port" /home/exu/Nextcloud/Reading/manga/ ${user}@${server}:/mnt/books/kavita/manga/
+rsync -urtzv --progress -e "ssh -i $sshkeypath -p $port" /home/exu/Nextcloud/Reading/manga/ ${user}@${server}:/mnt/books/kavita/manga/
 # guides
 echo Kavita guides upload
-rsync -urtzv --progress --delete --bwlimit=3M -e "ssh -i $sshkeypath -p $port" /home/exu/Nextcloud/Reading/guides/ ${user}@${server}:/mnt/books/kavita/guides/
+rsync -urtzv --progress --delete -e "ssh -i $sshkeypath -p $port" /home/exu/Nextcloud/Reading/guides/ ${user}@${server}:/mnt/books/kavita/guides/
 # Tech
 echo Kavita tech upload
-rsync -urtzv --progress --delete --bwlimit=3M -e "ssh -i $sshkeypath -p $port" /home/exu/Nextcloud/Reading/tech/ ${user}@${server}:/mnt/books/kavita/tech/
+rsync -urtzv --progress --delete -e "ssh -i $sshkeypath -p $port" /home/exu/Nextcloud/Reading/tech/ ${user}@${server}:/mnt/books/kavita/tech/
 # other
 echo Kavita other upload
-rsync -urtzv --progress --delete --bwlimit=3M -e "ssh -i $sshkeypath -p $port" /home/exu/Nextcloud/Reading/other/ ${user}@${server}:/mnt/books/kavita/other/
+rsync -urtzv --progress --delete -e "ssh -i $sshkeypath -p $port" /home/exu/Nextcloud/Reading/other/ ${user}@${server}:/mnt/books/kavita/other/
 
 # download from kavita
 # books
 #echo Downloading books
-#rsync -ur --progress --bwlimit=3M -e "ssh -i $sshkeypath -p $port" ${user}@${server}:/mnt/books/kavita/books/ /home/exu/Nextcloud/Reading/Unterhaltung/
+#rsync -ur --progress -e "ssh -i $sshkeypath -p $port" ${user}@${server}:/mnt/books/kavita/books/ /home/exu/Nextcloud/Reading/Unterhaltung/
 # manga
 echo Kavita manga download
-rsync -urtzv --progress --bwlimit=3M -e "ssh -i $sshkeypath -p $port" ${user}@${server}:/mnt/books/kavita/manga/ /home/exu/Nextcloud/Reading/manga/
+rsync -urtzv --progress -e "ssh -i $sshkeypath -p $port" ${user}@${server}:/mnt/books/kavita/manga/ /home/exu/Nextcloud/Reading/manga/
 # Tech
 #echo Downloading tech
-#rsync -ur --progress --bwlimit=3M -e "ssh -i $sshkeypath -p $port" ${user}@${server}:/mnt/books/kavita/tech/ /home/exu/Nextcloud/Reading/Tech/
+#rsync -ur --progress -e "ssh -i $sshkeypath -p $port" ${user}@${server}:/mnt/books/kavita/tech/ /home/exu/Nextcloud/Reading/Tech/
 # other
 #echo Downloading other
-#rsync -ur --progress --bwlimit=3M -e "ssh -i $sshkeypath -p $port" ${user}@${server}:/mnt/books/kavita/other/ /home/exu/Nextcloud/Reading/other/
+#rsync -ur --progress -e "ssh -i $sshkeypath -p $port" ${user}@${server}:/mnt/books/kavita/other/ /home/exu/Nextcloud/Reading/other/
