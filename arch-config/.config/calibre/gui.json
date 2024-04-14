@@ -55,7 +55,7 @@
   ],
   "basic_metadata_widget_splitter_state": {
     "__class__": "bytearray",
-    "__value__": "AAAA/wAAAAEAAAADAAAA6wAAAZwAAAEKAf////8BAAAAAQA="
+    "__value__": "AAAA/wAAAAEAAAADAAAA6wAAAdoAAAEKAf////8BAAAAAQA="
   },
   "book_details_splitter_horizontal_state": [
     true,
@@ -257,6 +257,57 @@
       }
     }
   },
+  "geometry-of-bulk_metadata_window_geometry": {
+    "frame_geometry": {
+      "height": 1030,
+      "width": 1850,
+      "x": 0,
+      "y": 0
+    },
+    "full_screened": false,
+    "geometry": {
+      "height": 1030,
+      "width": 1850,
+      "x": 0,
+      "y": 0
+    },
+    "maximized": false,
+    "normal_geometry": {
+      "height": 1030,
+      "width": 1850,
+      "x": 0,
+      "y": 0
+    },
+    "qt": {
+      "__class__": "bytearray",
+      "__value__": "AdnQywADAAAAAAAAAAAAAAAABzkAAAQFAAAAAAAAAAAAAAc5AAAEBQAAAAEAAAAACFUAAAAAAAAAAAAABzkAAAQF"
+    },
+    "screen": {
+      "depth": 32,
+      "device_pixel_ratio": 2.0,
+      "geometry_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133,
+        "x": 2133,
+        "y": 0
+      },
+      "index_in_screens_list": 1,
+      "manufacturer": "HP Inc.",
+      "model": "OMEN 27q",
+      "name": "DP-2",
+      "serial": "",
+      "size_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133
+      },
+      "virtual_geometry": {
+        "height": 1200,
+        "width": 4266,
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
   "geometry-of-calibre_main_window_geometry": {
     "frame_geometry": {
       "height": 1154,
@@ -359,18 +410,457 @@
       }
     }
   },
+  "geometry-of-diff_dialog_geom": {
+    "frame_geometry": {
+      "height": 980,
+      "width": 1210,
+      "x": 2133,
+      "y": 0
+    },
+    "full_screened": false,
+    "geometry": {
+      "height": 980,
+      "width": 1210,
+      "x": 2133,
+      "y": 0
+    },
+    "maximized": false,
+    "normal_geometry": {
+      "height": 980,
+      "width": 1210,
+      "x": 2133,
+      "y": 0
+    },
+    "qt": {
+      "__class__": "bytearray",
+      "__value__": "AdnQywADAAAAAAhVAAAAAAAADQ4AAAPTAAAIVQAAAAAAAA0OAAAD0wAAAAEAAAAACFUAAAhVAAAAAAAADQ4AAAPT"
+    },
+    "screen": {
+      "depth": 32,
+      "device_pixel_ratio": 2.0,
+      "geometry_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133,
+        "x": 2133,
+        "y": 0
+      },
+      "index_in_screens_list": 1,
+      "manufacturer": "HP Inc.",
+      "model": "OMEN 27q",
+      "name": "DP-2",
+      "serial": "",
+      "size_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133
+      },
+      "virtual_geometry": {
+        "height": 1200,
+        "width": 4266,
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "geometry-of-duplicates-question-dialog-geometry": {
+    "frame_geometry": {
+      "height": 384,
+      "width": 748,
+      "x": 2133,
+      "y": 0
+    },
+    "full_screened": false,
+    "geometry": {
+      "height": 384,
+      "width": 748,
+      "x": 2133,
+      "y": 0
+    },
+    "maximized": false,
+    "normal_geometry": {
+      "height": 384,
+      "width": 748,
+      "x": 2133,
+      "y": 0
+    },
+    "qt": {
+      "__class__": "bytearray",
+      "__value__": "AdnQywADAAAAAAhVAAAAAAAAC0AAAAF/AAAIVQAAAAAAAAtAAAABfwAAAAEAAAAACFUAAAhVAAAAAAAAC0AAAAF/"
+    },
+    "screen": {
+      "depth": 32,
+      "device_pixel_ratio": 2.0,
+      "geometry_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133,
+        "x": 2133,
+        "y": 0
+      },
+      "index_in_screens_list": 1,
+      "manufacturer": "HP Inc.",
+      "model": "OMEN 27q",
+      "name": "DP-2",
+      "serial": "",
+      "size_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133
+      },
+      "virtual_geometry": {
+        "height": 1200,
+        "width": 4266,
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "geometry-of-jobs_dialog_geometry": {
+    "frame_geometry": {
+      "height": 542,
+      "width": 883,
+      "x": 2133,
+      "y": 0
+    },
+    "full_screened": false,
+    "geometry": {
+      "height": 542,
+      "width": 883,
+      "x": 2133,
+      "y": 0
+    },
+    "maximized": false,
+    "normal_geometry": {
+      "height": 542,
+      "width": 883,
+      "x": 2133,
+      "y": 0
+    },
+    "qt": {
+      "__class__": "bytearray",
+      "__value__": "AdnQywADAAAAAAhVAAAAAAAAC8cAAAIdAAAIVQAAAAAAAAvHAAACHQAAAAEAAAAACFUAAAhVAAAAAAAAC8cAAAId"
+    },
+    "screen": {
+      "depth": 32,
+      "device_pixel_ratio": 2.0,
+      "geometry_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133,
+        "x": 2133,
+        "y": 0
+      },
+      "index_in_screens_list": 1,
+      "manufacturer": "HP Inc.",
+      "model": "OMEN 27q",
+      "name": "DP-2",
+      "serial": "",
+      "size_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133
+      },
+      "virtual_geometry": {
+        "height": 1200,
+        "width": 4266,
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "geometry-of-metadata_single_gui_geom": {
+    "frame_geometry": {
+      "height": 600,
+      "width": 850,
+      "x": 2133,
+      "y": 0
+    },
+    "full_screened": false,
+    "geometry": {
+      "height": 600,
+      "width": 850,
+      "x": 2133,
+      "y": 0
+    },
+    "maximized": false,
+    "normal_geometry": {
+      "height": 600,
+      "width": 850,
+      "x": 2133,
+      "y": 0
+    },
+    "qt": {
+      "__class__": "bytearray",
+      "__value__": "AdnQywADAAAAAAhVAAAAAAAAC6YAAAJXAAAIVQAAAAAAAAumAAACVwAAAAEAAAAACFUAAAhVAAAAAAAAC6YAAAJX"
+    },
+    "screen": {
+      "depth": 32,
+      "device_pixel_ratio": 2.0,
+      "geometry_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133,
+        "x": 2133,
+        "y": 0
+      },
+      "index_in_screens_list": 1,
+      "manufacturer": "HP Inc.",
+      "model": "OMEN 27q",
+      "name": "DP-2",
+      "serial": "",
+      "size_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133
+      },
+      "virtual_geometry": {
+        "height": 1200,
+        "width": 4266,
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "geometry-of-metasingle_window_geometry3": {
+    "frame_geometry": {
+      "height": 1030,
+      "width": 1850,
+      "x": 2133,
+      "y": 0
+    },
+    "full_screened": false,
+    "geometry": {
+      "height": 1030,
+      "width": 1850,
+      "x": 2133,
+      "y": 0
+    },
+    "maximized": false,
+    "normal_geometry": {
+      "height": 1030,
+      "width": 1850,
+      "x": 2133,
+      "y": 0
+    },
+    "qt": {
+      "__class__": "bytearray",
+      "__value__": "AdnQywADAAAAAAhVAAAAAAAAD44AAAQFAAAIVQAAAAAAAA+OAAAEBQAAAAEAAAAACFUAAAhVAAAAAAAAD44AAAQF"
+    },
+    "screen": {
+      "depth": 32,
+      "device_pixel_ratio": 2.0,
+      "geometry_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133,
+        "x": 2133,
+        "y": 0
+      },
+      "index_in_screens_list": 1,
+      "manufacturer": "HP Inc.",
+      "model": "OMEN 27q",
+      "name": "DP-2",
+      "serial": "",
+      "size_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133
+      },
+      "virtual_geometry": {
+        "height": 1200,
+        "width": 4266,
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "geometry-of-preferences dialog geometry": {
+    "frame_geometry": {
+      "height": 720,
+      "width": 1295,
+      "x": 2133,
+      "y": 0
+    },
+    "full_screened": false,
+    "geometry": {
+      "height": 720,
+      "width": 1295,
+      "x": 2133,
+      "y": 0
+    },
+    "maximized": false,
+    "normal_geometry": {
+      "height": 720,
+      "width": 1295,
+      "x": 2133,
+      "y": 0
+    },
+    "qt": {
+      "__class__": "bytearray",
+      "__value__": "AdnQywADAAAAAAhVAAAAAAAADWMAAALPAAAIVQAAAAAAAA1jAAACzwAAAAEAAAAACFUAAAhVAAAAAAAADWMAAALP"
+    },
+    "screen": {
+      "depth": 32,
+      "device_pixel_ratio": 2.0,
+      "geometry_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133,
+        "x": 2133,
+        "y": 0
+      },
+      "index_in_screens_list": 1,
+      "manufacturer": "HP Inc.",
+      "model": "OMEN 27q",
+      "name": "DP-2",
+      "serial": "",
+      "size_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133
+      },
+      "virtual_geometry": {
+        "height": 1200,
+        "width": 4266,
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "geometry-of-single-cover-fetch-dialog-geometry": {
+    "frame_geometry": {
+      "height": 600,
+      "width": 850,
+      "x": 0,
+      "y": 0
+    },
+    "full_screened": false,
+    "geometry": {
+      "height": 600,
+      "width": 850,
+      "x": 0,
+      "y": 0
+    },
+    "maximized": false,
+    "normal_geometry": {
+      "height": 600,
+      "width": 850,
+      "x": 0,
+      "y": 0
+    },
+    "qt": {
+      "__class__": "bytearray",
+      "__value__": "AdnQywADAAAAAAAAAAAAAAAAA1EAAAJXAAAAAAAAAAAAAANRAAACVwAAAAEAAAAACFUAAAAAAAAAAAAAA1EAAAJX"
+    },
+    "screen": {
+      "depth": 32,
+      "device_pixel_ratio": 2.0,
+      "geometry_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133,
+        "x": 2133,
+        "y": 0
+      },
+      "index_in_screens_list": 1,
+      "manufacturer": "HP Inc.",
+      "model": "OMEN 27q",
+      "name": "DP-2",
+      "serial": "",
+      "size_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133
+      },
+      "virtual_geometry": {
+        "height": 1200,
+        "width": 4266,
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "geometry-of-template_editor_dialog_geometry": {
+    "frame_geometry": {
+      "height": 478,
+      "width": 706,
+      "x": 2133,
+      "y": 0
+    },
+    "full_screened": false,
+    "geometry": {
+      "height": 478,
+      "width": 706,
+      "x": 2133,
+      "y": 0
+    },
+    "maximized": false,
+    "normal_geometry": {
+      "height": 478,
+      "width": 706,
+      "x": 2133,
+      "y": 0
+    },
+    "qt": {
+      "__class__": "bytearray",
+      "__value__": "AdnQywADAAAAAAhVAAAAAAAACxYAAAHdAAAIVQAAAAAAAAsWAAAB3QAAAAEAAAAACFUAAAhVAAAAAAAACxYAAAHd"
+    },
+    "screen": {
+      "depth": 32,
+      "device_pixel_ratio": 2.0,
+      "geometry_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133,
+        "x": 2133,
+        "y": 0
+      },
+      "index_in_screens_list": 1,
+      "manufacturer": "HP Inc.",
+      "model": "OMEN 27q",
+      "name": "DP-2",
+      "serial": "",
+      "size_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133
+      },
+      "virtual_geometry": {
+        "height": 1200,
+        "width": 4266,
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "gpm_template_editor_font": "Fira Sans",
+  "gpm_template_editor_word_wrap_mode": true,
   "grid view visible": false,
   "jobs view column layout3": {
     "__class__": "bytearray",
-    "__value__": "AAAA/wAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA04AAAAFAQEBAAAAAAAAAAAAAAAAAGT/////AAAAhAAAAAAAAAAFAAABRAAAAAEAAAAAAAAAtgAAAAEAAAAAAAAAjAAAAAEAAAAAAAAAZAAAAAEAAAAAAAAAZAAAAAEAAAAAAAAD6AAAAAAA"
+    "__value__": "AAAA/wAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA04AAAAFAQEBAAAAAAAAAAAAAAAAAGT/////AAAAhAAAAAAAAAAFAAABRAAAAAEAAAAAAAAAtgAAAAEAAAAAAAAAjAAAAAEAAAAAAAAAZAAAAAEAAAAAAAAAZAAAAAEAAAAAAAAD6AAAAAAAAAAAAA=="
   },
   "jobs_dialog_geometry": {
     "__class__": "bytearray",
     "__value__": "AdnQywADAAAAAAGYAAABEQAABQ4AAAMyAAABmgAAARMAAAUMAAADMAAAAAAAAAAAB4AAAAGaAAABEwAABQwAAAMw"
   },
   "library_usage_stats": {
-    "/home/exu/.local/share/Calibre-Library": 2,
+    "/home/exu/.local/share/Calibre-Library": 18,
     "/home/marc/Calibre-Bibliothek": 200
+  },
+  "main_window_central_widget_state": {
+    "layout": "wide",
+    "narrow_desires": {
+      "book_details_height": 0.23066202090592333,
+      "cover_browser_width": 0.34992954438703616,
+      "quick_view_height": 0.2564459930313589,
+      "tag_browser_width": 0.2498825739783936
+    },
+    "narrow_visibility": {
+      "book_details": true,
+      "book_list": true,
+      "cover_browser": false,
+      "quick_view": false,
+      "tag_browser": true
+    },
+    "wide_desires": {
+      "book_details_width": 0.21042743071864725,
+      "cover_browser_height": 0.21367521367521367,
+      "quick_view_height": 0.2621082621082621,
+      "tag_browser_width": 0.09394081728511038
+    },
+    "wide_visibility": {
+      "book_details": true,
+      "book_list": true,
+      "cover_browser": false,
+      "quick_view": false,
+      "tag_browser": true
+    }
   },
   "metadata-download-identify-widget-splitter-state": {
     "__class__": "bytearray",
@@ -400,6 +890,7 @@
     "authors": true,
     "rating": true,
     "series": true,
+    "timestamp": false,
     "title": true
   },
   "quick_start_guide_added": true,
@@ -419,6 +910,7 @@
     "¤ ¤ ¤"
   ],
   "search bar visible": true,
+  "show_files_after_save": false,
   "single-cover-fetch-dialog-geometry": {
     "__class__": "bytearray",
     "__value__": "AdnQywADAAAAAAIhAAAA5wAABXYAAANCAAACIwAAAOkAAAV0AAADQAAAAAAAAAAAB4AAAAIjAAAA6QAABXQAAANA"
@@ -432,5 +924,9 @@
     "__class__": "bytearray",
     "__value__": "AdnQywADAAAAAAKTAAAAyAAABRYAAANlAAAClQAAAMoAAAUUAAADYwAAAAAAAAAAB4AAAAKVAAAAygAABRQAAANj"
   },
-  "tag_editor_last_filter": "add_tag_input"
+  "tag_editor_last_filter": "add_tag_input",
+  "template_editor_table_widths": [
+    90,
+    551
+  ]
 }
