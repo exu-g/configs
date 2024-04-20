@@ -1,5 +1,3 @@
-#vi mode for fish
-#fish_vi_key_bindings
 fish_default_key_bindings
 
 # change greeting
@@ -30,11 +28,9 @@ set fish_color_host cyan
 set fish_color_cwd yellow
 
 # environment variables
-# for ranger
-#set RANGER_LOAD_DEFAULT_RC FALSE
 # SSH Agent
-#set SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/ssh-agent.socket"
-set SSH_AUTH_SOCK /run/user/1000/ssh-agent.socket
+set SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/ssh-agent.socket"
+#set SSH_AUTH_SOCK /run/user/1000/ssh-agent.socket
 export SSH_AUTH_SOCK
 
 # Defined in /home/marc/.config/fish/functions/fish_prompt.fish @ line 2
@@ -90,9 +86,6 @@ set fish_user_paths "$HOME/node_modules/.bin/" $fish_user_paths
 # edit with emacs
 alias emacs="/usr/bin/emacs --no-window-system"
 
-# use neovim instead of vim
-#alias vim="/usr/bin/nvim"
-
 # alias cat
 alias cat="$HOME/scripts/pieces/cat.sh"
 
@@ -115,16 +108,9 @@ alias powershell='pwsh'
 
 #list
 alias ls='ls --color=auto'
-#alias la='ls -a'
-#alias ll='ls -la'
-#alias l='ls'
-#alias l.="ls -A | egrep '^\.'"
 
-# fix obvious typo's
-#alias cd..='cd ..'
-
-# kill all wine processes
-alias killwine='ls -l /proc/*/exe 2>/dev/null | grep -E \'wine(64)?-preloader|wineserver\' | perl -pe \'s;^.*/proc/(\d+)/exe.*$;$1;g;\' | xargs -n 1 kill'
+# kill all wine and proton processes
+alias killwine='ls -l /proc/*/exe 2>/dev/null | grep -P \'wine(64)?-preloader|wineserver|proton[^mail|\-bridge]\' | perl -pe \'s;^.*/proc/(\d+)/exe.*$;$1;g;\' | xargs -n 1 kill'
 
 ## Colorize the grep command output for ease of use (good for log files)##
 alias grep='grep --color=auto'
@@ -136,8 +122,6 @@ alias wget="wget -c"
 
 # Aliases for software managment
 alias pacman='pacman --color auto'
-#alias update='yay -Syu --sudoloop'
-#alias update='paru -Syu --sudoloop --newsonupgrade --upgrademenu --combinedupgrade; notify'
 
 # Update pip packages
 alias pip-update="$HOME/scripts/pieces/pip-update.py"
@@ -150,27 +134,10 @@ alias microcode='grep . /sys/devices/system/cpu/vulnerabilities/*'
 
 #get fastest mirrors in your neighborhood
 alias mirror="sudo reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacman.d/mirrorlist"
-#alias mirror-delay="sudo reflector --latest 50 --number 20 --sort delay --save /etc/pacman.d/mirrorlist"
-#alias mirror-score="sudo reflector --latest 50 --number 20 --sort score --save /etc/pacman.d/mirrorlist"
-#alias mirror-age="sudo reflector --latest 50 --number 20 --sort age --save /etc/pacman.d/mirrorlist"
-
-#mounting the folder Public for exchange between host and guest on virtualbox
-#alias vbm="sudo mount -t vboxsf -o rw,uid=1000,gid=1000 Public /home/$USER/Public"
-
-#youtube-dl
-#alias yta-aac="youtube-dl --extract-audio --audio-format aac "
-#alias yta-best="youtube-dl --extract-audio --audio-format best "
-#alias yta-flac="youtube-dl --extract-audio --audio-format flac "
-#alias yta-m4a="youtube-dl --extract-audio --audio-format m4a "
-#alias yta-mp3="youtube-dl --extract-audio --audio-format mp3 "
-#alias yta-opus="youtube-dl --extract-audio --audio-format opus "
-#alias yta-vorbis="youtube-dl --extract-audio --audio-format vorbis "
-#alias yta-wav="youtube-dl --extract-audio --audio-format wav "
 
 # yt-dlp
 alias yta-best="yt-dlp -f bestaudio --extract-audio "
 alias ytv-best="yt-dlp -f bestvideo+bestaudio "
-#alias ytv-complete="yt-dlp -f bestvideo+bestaudio --write-info-json --write-subs --sub-langs \"en.*\"  "
 alias ytv-metadata="yt-dlp -f bestvideo+bestaudio --add-metadata --parse-metadata \"%(title)s:%(meta_title)s\" --parse-metadata \"%(uploader)s:%(meta_artist)s\" --write-info-json --write-thumbnail --embed-thumbnail --embed-subs --sub-langs \"en.*\" --merge-output-format mkv "
 
 #Cleanup orphaned packages
@@ -179,19 +146,8 @@ alias cleanup='sudo pacman -Rns (pacman -Qtdq)'
 # Clean cached packages
 alias cleancache='paru -Sc'
 
-#cpu-x as sudo
-#alias cpu-x="sudo cpu-x"
-
 # activate venv called "venv"
 alias activate='source venv/bin/activate.fish'
-
-# kill ssh tunnels
-#alias killsshtun='pkill -f "ssh\s"'
-
-#wireguard
-#alias wgs="sudo wg show"
-#alias wgqu="sudo wg-quick up"
-#alias wgqd="sudo wg-quick down"
 
 # lsblk to list more info
 alias lsblkf="lsblk -o NAME,LABEL,RM,SIZE,RO,TYPE,FSTYPE,MOUNTPOINTS,MODEL,UUID"
