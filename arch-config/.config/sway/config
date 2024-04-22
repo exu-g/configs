@@ -232,35 +232,6 @@ bindsym $mod+d focus child
 # Show the next scratchpad window or hide the focused scratchpad window.
 # If there are multiple scratchpad windows, this command cycles through them.
 #bindsym $mod+minus scratchpad show
-#
-# Resizing containers:
-bindsym $mod+r mode "resize"
-
-mode "resize" {
-    # Resize windows with movement keys
-    bindsym $left resize shrink width 10ppt
-    bindsym Shift+$left resize shrink width 20ppt
-    bindsym $down resize shrink height 10ppt
-    bindsym Shift+$down resize shrink height 20ppt
-    bindsym $up resize grow height 10ppt
-    bindsym Shift+$up resize grow height 20ppt
-    bindsym $right resize grow width 10ppt
-    bindsym Shift+$right resize grow width 20ppt
-
-    # Ditto, with arrow keys
-    bindsym Left resize shrink width 10ppt
-    bindsym Shift+Left resize shrink width 20ppt
-    bindsym Down resize shrink height 10ppt
-    bindsym Shift+Down resize shrink height 20ppt
-    bindsym Up resize grow height 10ppt
-    bindsym Shift+Up resize grow height 20ppt
-    bindsym Right resize grow width 10ppt
-    bindsym Shift+Right resize grow width 20ppt
-
-    # Return to default mode
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
 
 # Screenlock, logout, reboot, shutdown...
 # press $mod (super) and X to exit - check toolbar for next choices
