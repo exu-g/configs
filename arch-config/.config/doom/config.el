@@ -82,6 +82,11 @@
 (setq-default tab-width 4)
 (setq indent-line-function 'insert-tab)
 
+;; enable case insensitive matching for 'auto-mode-alist'
+;; see https://www.gnu.org/software/emacs/manual/html_node/emacs/Choosing-Modes.html
+;; disabled by doom-start.el
+(setq auto-mode-case-fold t)
+
 ;; work around emacs hanging when opening any python requirements.txt file
 ;; see issue https://github.com/doomemacs/doomemacs/issues/5998
 (advice-add #'pip-requirements-fetch-packages :override #'ignore)
