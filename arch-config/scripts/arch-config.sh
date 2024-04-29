@@ -274,6 +274,9 @@ sudo cp -r "$tempdir/arch-config/usr" /
 # copy xresources for sway
 cp "$tempdir/arch-config/.Xdefaults" ~/
 
+# Set xdg-user-dirs as environment variables
+ln -sf "$HOME/.config/user-dirs.dirs" "$HOME/.config/environment.d/user-dirs.dirs.conf"
+
 echo
 cat <<EOF
 ##############################
