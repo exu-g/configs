@@ -103,3 +103,14 @@
 ;; python debugging
 (after! dap-mode
   (setq dap-python-debugger 'debugpy))
+
+;; justfile recipe execution
+(use-package! justl
+  :config
+  (map! :leader
+        (:prefix ("j" . "justl")
+         :desc "Open the justl buffer"
+         "j" 'justl
+         :desc "List and execute recipes"
+         "e" 'justl-exec-recipe-in-dir))
+  (map! :n "e" 'justl-exec-recipe))
