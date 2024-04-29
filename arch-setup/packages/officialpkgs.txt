@@ -1,6 +1,7 @@
 acpilight
 alsa-utils
 amd-ucode
+ansible
 arandr
 bandwhich
 base-devel
@@ -56,6 +57,7 @@ imv
 intel-media-driver
 intel-ucode
 jre-openjdk
+just
 kcm-wacomtablet
 kdeconnect
 kitty
