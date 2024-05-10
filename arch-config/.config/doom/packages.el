@@ -57,3 +57,6 @@
 
 ;; justfile recipe execution
 (package! justl)
+
+;; pkgbuild files
+(package! pkgbuild-mode)
