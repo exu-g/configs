@@ -151,3 +151,6 @@ alias lsblkf="lsblk -o NAME,LABEL,RM,SIZE,RO,TYPE,FSTYPE,MOUNTPOINTS,MODEL,UUID"
 
 # use color for ip command
 alias ip="ip -c"
+
+# rebuild broken packages
+alias rebuild="checkrebuild | awk '{print $2}' | paru -S --rebuild=yes -"
