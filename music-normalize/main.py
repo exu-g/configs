@@ -61,7 +61,7 @@ def loudnorm(inputfile: str, outputfile: str):
 
     # normalize audio
     file_normalized = pyloudnorm.normalize.loudness(
-        data=data, input_loudness=loudness, target_loudness=-30.0
+        data=data, input_loudness=loudness, target_loudness=-18.0
     )
 
     # write normalized audio to file
