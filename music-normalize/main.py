@@ -128,8 +128,16 @@ def ffmpeg_copy_metadata(inputfile: str, outputfile: str):
     with tempfile.NamedTemporaryFile() as temp_audio:
         shutil.copyfile(outputfile, temp_audio.name)
 
+        # get input file extension
+        extension = os.path.splitext(os.path.basename(inputfile))[1]
+
         inputcmd = {inputfile: None, temp_audio.name: None}
-        outputcmd = {outputfile: "-map 1 -c copy -map_metadata 0"}
+
+        # NOTE opus maps metadata to the first audio stream. Other formats like flac, mp3 and m4a/aac by contrast map it to the input directly
+        if extension == ".opus":
+            outputcmd = {outputfile: "-map 1 -c copy -map_metadata 0:s"}
+        else:
+            outputcmd = {outputfile: "-map 1 -c copy -map_metadata 0"}
 
         ff = ffmpy.FFmpeg(inputs=inputcmd, outputs=outputcmd, global_options=("-y"))
 
