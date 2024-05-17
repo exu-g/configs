@@ -44,6 +44,7 @@ gvfs
 gvfs-mtp
 gvfs-nfs
 gvfs-smb
+hdparm
 htop
 hunspell
 hunspell
