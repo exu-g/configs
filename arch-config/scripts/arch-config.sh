@@ -329,11 +329,15 @@ fi
 #    chmod +x ~/.fehbg
 
 # copy chosen image for lockscreen and desktop
-backgroundimage="/home/exu/Bilder/Backgrounds/artstation/dk-lan/artstation_14224733_55806391_月半与鬼哭.jpg"
+backgroundimage="/home/exu/Bilder/Art/artstation/dk-lan/artstation_14224733_55806391_月半与鬼哭.jpg"
 
 mkdir -p "$HOME/.cache/backgrounds"
-cp "$backgroundimage" "$HOME/.cache/backgrounds/desktop"
-cp "$backgroundimage" "$HOME/.cache/backgrounds/lockscreen"
+if [ -f "$backgroundimage" ]; then
+    cp "$backgroundimage" "$HOME/.cache/backgrounds/desktop"
+    cp "$backgroundimage" "$HOME/.cache/backgrounds/lockscreen"
+else
+    printf "\033[38;2;200;20;20mCouldn't find background image\n\033[0m"
+fi
 
 chmod +x "$HOME/scripts/gsettings.sh"
 bash "$HOME/scripts/gsettings.sh"
