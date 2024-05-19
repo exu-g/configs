@@ -261,13 +261,6 @@ sudo cp -r "$tempdir/arch-config/etc" /
 
 echo Copied folders
 
-# NOTE Distro specific stuff
-# TODO simplify for Arch only
-distro=$(cat /etc/*-release | grep "^ID=")
-if [ "$distro" == "ID=arch" ]; then
-    sudo mv /etc/arch-pacman.conf /etc/pacman.conf
-fi
-
 #copy usr stuff
 sudo cp -r "$tempdir/arch-config/usr" /
 
