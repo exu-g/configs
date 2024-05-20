@@ -154,3 +154,6 @@ alias ip="ip -c"
 
 # rebuild broken packages
 alias rebuild="checkrebuild | awk '{print $2}' | paru -S --rebuild=yes -"
+
+# process cpu usage per core instead of overall
+alias btm="btm -n"
