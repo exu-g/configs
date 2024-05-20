@@ -20,7 +20,6 @@ rsync -uvr --progress --delete /mnt/storage/MediaLibrary/{Movies,other,Patreon,S
 rsync -uvrL --progress --delete /home/exu/Musik /mnt/lan1nas1/
 
 # transfer Music
-#rsync -uvr --progress --delete --bwlimit=2M -e "ssh -i $sshkeypath -p $port" /mnt/lan1nas1/Musik/ ${user}@${server}:/mnt/media/Musik/
 rsync -uvr --progress --delete -e "ssh -i $sshkeypath -p $port" /mnt/lan1nas1/Musik/ ${user}@${server}:/mnt/media/Musik/
 
 # transfer Shows
@@ -31,8 +30,5 @@ rsync -uvr --progress --delete --bwlimit=2M -e "ssh -i $sshkeypath -p $port" /mn
 
 # transfer other
 rsync -uvr --progress --delete --bwlimit=2M -e "ssh -i $sshkeypath -p $port" /mnt/lan1nas1/other/ ${user}@${server}:/mnt/media/other/
-
-# transfer downloaded YouTube videos
-#rsync -uvr --progress --delete --bwlimit=2M -e "ssh -i $sshkeypath -p $port" /mnt/lan1nas1/YouTube/ ${user}@${server}:/mnt/media/YouTube/
 
 echo "Finished transfering data"
