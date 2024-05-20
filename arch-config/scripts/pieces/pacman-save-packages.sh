@@ -7,6 +7,6 @@ set -euo pipefail
 
 echo "Saving explicitly installed packages"
 
-pacman -Qeq > "$HOME/GitProjects/setup/packages/"$(hostname)"-packages.txt"
+pacman -Qeq > "$HOME/GitProjects/configs/arch-setup/packages/"$(hostname)"-packages.txt"
 
-"$HOME/GitProjects/setup/packages/sort-lists.sh"
+"$HOME/GitProjects/configs/arch-setup/packages/sort-lists.sh"
