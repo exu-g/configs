@@ -11,6 +11,7 @@ mangohud
 mpv-mpris
 nemo-audio-tab
 nohang
+opentabletdriver
 pdfsam
 polybar
 protonmail-bridge-bin

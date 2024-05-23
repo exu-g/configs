@@ -59,7 +59,6 @@ intel-media-driver
 intel-ucode
 jre-openjdk
 just
-kcm-wacomtablet
 kdeconnect
 kitty
 lib32-mesa
