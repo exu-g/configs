@@ -210,26 +210,26 @@
     "frame_geometry": {
       "height": 498,
       "width": 1039,
-      "x": 2133,
+      "x": 0,
       "y": 0
     },
     "full_screened": false,
     "geometry": {
       "height": 498,
       "width": 1039,
-      "x": 2133,
+      "x": 0,
       "y": 0
     },
     "maximized": false,
     "normal_geometry": {
       "height": 498,
       "width": 1039,
-      "x": 2133,
+      "x": 0,
       "y": 0
     },
     "qt": {
       "__class__": "bytearray",
-      "__value__": "AdnQywADAAAAAAhVAAAAAAAADGMAAAHxAAAIVQAAAAAAAAxjAAAB8QAAAAEAAAAACFUAAAhVAAAAAAAADGMAAAHx"
+      "__value__": "AdnQywADAAAAAAAAAAAAAAAABA4AAAHxAAAAAAAAAAAAAAQOAAAB8QAAAAAAAAAACFUAAAAAAAAAAAAABA4AAAHx"
     },
     "screen": {
       "depth": 32,
@@ -237,13 +237,13 @@
       "geometry_in_logical_pixels": {
         "height": 1200,
         "width": 2133,
-        "x": 2133,
+        "x": 0,
         "y": 0
       },
-      "index_in_screens_list": 1,
-      "manufacturer": "HP Inc.",
-      "model": "OMEN 27q",
-      "name": "DP-2",
+      "index_in_screens_list": 0,
+      "manufacturer": "Acer Technologies",
+      "model": "XV272U V",
+      "name": "DP-1",
       "serial": "",
       "size_in_logical_pixels": {
         "height": 1200,
@@ -312,26 +312,26 @@
     "frame_geometry": {
       "height": 1154,
       "width": 2129,
-      "x": 2133,
+      "x": 0,
       "y": 0
     },
     "full_screened": false,
     "geometry": {
       "height": 1154,
       "width": 2129,
-      "x": 2133,
+      "x": 0,
       "y": 0
     },
     "maximized": false,
     "normal_geometry": {
       "height": 1154,
       "width": 2129,
-      "x": 2133,
+      "x": 0,
       "y": 0
     },
     "qt": {
       "__class__": "bytearray",
-      "__value__": "AdnQywADAAAAAAhVAAAAAAAAEKUAAASBAAAIVQAAAAAAABClAAAEgQAAAAEAAAAACFUAAAhVAAAAAAAAEKUAAASB"
+      "__value__": "AdnQywADAAAAAAAAAAAAAAAACFAAAASBAAAAAAAAAAAAAAhQAAAEgQAAAAAAAAAACFUAAAAAAAAAAAAACFAAAASB"
     },
     "screen": {
       "depth": 32,
@@ -339,13 +339,13 @@
       "geometry_in_logical_pixels": {
         "height": 1200,
         "width": 2133,
-        "x": 2133,
+        "x": 0,
         "y": 0
       },
-      "index_in_screens_list": 1,
-      "manufacturer": "HP Inc.",
-      "model": "OMEN 27q",
-      "name": "DP-2",
+      "index_in_screens_list": 0,
+      "manufacturer": "Acer Technologies",
+      "model": "XV272U V",
+      "name": "DP-1",
       "serial": "",
       "size_in_logical_pixels": {
         "height": 1200,
@@ -669,26 +669,26 @@
     "frame_geometry": {
       "height": 720,
       "width": 1295,
-      "x": 2133,
+      "x": 0,
       "y": 0
     },
     "full_screened": false,
     "geometry": {
       "height": 720,
       "width": 1295,
-      "x": 2133,
+      "x": 0,
       "y": 0
     },
     "maximized": false,
     "normal_geometry": {
       "height": 720,
       "width": 1295,
-      "x": 2133,
+      "x": 0,
       "y": 0
     },
     "qt": {
       "__class__": "bytearray",
-      "__value__": "AdnQywADAAAAAAhVAAAAAAAADWMAAALPAAAIVQAAAAAAAA1jAAACzwAAAAEAAAAACFUAAAhVAAAAAAAADWMAAALP"
+      "__value__": "AdnQywADAAAAAAAAAAAAAAAABQ4AAALPAAAAAAAAAAAAAAUOAAACzwAAAAAAAAAACFUAAAAAAAAAAAAABQ4AAALP"
     },
     "screen": {
       "depth": 32,
@@ -696,13 +696,13 @@
       "geometry_in_logical_pixels": {
         "height": 1200,
         "width": 2133,
-        "x": 2133,
+        "x": 0,
         "y": 0
       },
-      "index_in_screens_list": 1,
-      "manufacturer": "HP Inc.",
-      "model": "OMEN 27q",
-      "name": "DP-2",
+      "index_in_screens_list": 0,
+      "manufacturer": "Acer Technologies",
+      "model": "XV272U V",
+      "name": "DP-1",
       "serial": "",
       "size_in_logical_pixels": {
         "height": 1200,
@@ -830,7 +830,7 @@
     "__value__": "AdnQywADAAAAAAGYAAABEQAABQ4AAAMyAAABmgAAARMAAAUMAAADMAAAAAAAAAAAB4AAAAGaAAABEwAABQwAAAMw"
   },
   "library_usage_stats": {
-    "/home/exu/.local/share/Calibre-Library": 18,
+    "/home/exu/.local/share/Calibre-Library": 22,
     "/home/marc/Calibre-Bibliothek": 200
   },
   "main_window_central_widget_state": {
@@ -895,6 +895,7 @@
   },
   "quick_start_guide_added": true,
   "quickview visible": false,
+  "qv_open_at_shutdown": false,
   "recently_used_languages": [
     "Englisch"
   ],

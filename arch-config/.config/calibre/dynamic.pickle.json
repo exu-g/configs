@@ -13,27 +13,15 @@
     "__class__": "set",
     "__value__": [
       "6.0",
+      "5.25",
       "5.28",
-      "5.24",
-      "5.25"
+      "5.24"
     ]
   },
   "recursive book import root dir dialog": "/home/exu/Nextcloud/Reading/books",
   "save to disk dialog": "/home/exu/Downloads/newBooks",
   "sort_history": [
     [
-      "authors",
-      true
-    ],
-    [
-      "series",
-      true
-    ],
-    [
-      "series",
-      false
-    ],
-    [
       "series",
       true
     ],
@@ -44,10 +32,6 @@
     [
       "series",
       true
-    ],
-    [
-      "timestamp",
-      false
     ],
     [
       "timestamp",
