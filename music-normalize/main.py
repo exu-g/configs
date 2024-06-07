@@ -286,9 +286,6 @@ if __name__ == "__main__":
     # file where last run timestamp is stored
     timefile = os.path.join(srcfolder, "run.time")
 
-    # list of non-linear normalizations
-    nonlinear_all: Optional[list[Any]] = []
-
     # get time of previous run
     if reset:
         timeprev = 0
