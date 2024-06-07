@@ -10,7 +10,7 @@ import ffmpy
 import argparse
 
 # multiprocessing stuff
-from multiprocessing import Pool
+from multiprocessing import Pool, Value, parent_process
 
 # executing some commands
 import subprocess
@@ -38,11 +38,29 @@ import pyloudnorm
 # file copy
 import shutil
 
+# signal handling
+import signal
+
+# exiting
+import sys
+
 """
 Normalize loudness of all music files in a given directory and its subdirectories.
 """
 
 musicfile_extensions = (".flac", ".wav", ".mp3", ".m4a", ".aac", ".opus")
+
+
+class CleanupRequired(Exception):
+    pass
+
+
+def sigint_handler(signum, frame):
+    # set workers to clean up
+    cleanup_required.value = 1
+    # Output only once
+    if parent_process() is None:
+        print("\nReceived KeyboardInterrupt. Process cleaning up and stopping...")
 
 
 def loudnorm(inputfile: str, outputfile: str):
@@ -58,6 +76,10 @@ def loudnorm(inputfile: str, outputfile: str):
     # measure loudness
     meter = pyloudnorm.Meter(rate=rate)
     loudness = meter.integrated_loudness(data=data)
+
+    # cleanup check
+    if bool(cleanup_required.value):
+        raise CleanupRequired()
 
     # normalize audio
     file_normalized = pyloudnorm.normalize.loudness(
@@ -76,6 +98,9 @@ def ffmpeg_to_wav(inputfile: str, outputfile: str):
         inputfile (str): Path to input file
         outputfile (str): Path to output file
     """
+    # cleanup check
+    if bool(cleanup_required.value):
+        raise CleanupRequired()
 
     # convert to wav in temporary directory
     with tempfile.TemporaryDirectory() as tempdir:
@@ -99,6 +124,10 @@ def ffmpeg_to_wav(inputfile: str, outputfile: str):
 
         subprocess.run(ff.cmd, shell=True, capture_output=True)
 
+        # cleanup check
+        if bool(cleanup_required.value):
+            raise CleanupRequired()
+
         # normalize loudness
         loudnorm(inputfile=temp_input, outputfile=temp_output)
 
@@ -106,6 +135,10 @@ def ffmpeg_to_wav(inputfile: str, outputfile: str):
         outputcmd = {
             outputfile: "-c:a libopus" " " "-b:a 192k" " " "-compression_level 10"
         }
+
+        # cleanup check
+        if bool(cleanup_required.value):
+            raise CleanupRequired()
 
         ff = ffmpy.FFmpeg(
             inputs={temp_output: None}, outputs=outputcmd, global_options=("-y")
@@ -123,6 +156,9 @@ def ffmpeg_copy_metadata(inputfile: str, outputfile: str):
         inputfile (str): Path to input file
         outputfile (str): Path to output file
     """
+    # cleanup check
+    if bool(cleanup_required.value):
+        raise CleanupRequired()
 
     # store output file as temporary file. FFMPEG can't work on files in-place
     with tempfile.NamedTemporaryFile() as temp_audio:
@@ -154,9 +190,12 @@ def main(inputfile: str) -> Optional[list[Any]]:
     Output:
         dynamically normalised audio files (list)
     """
-
     # set output folder to parent path + "normalized"
     outputfolder = os.path.join(os.path.dirname(inputfile), "normalized")
+
+    # cleanup check
+    if bool(cleanup_required.value):
+        raise CleanupRequired()
 
     # NOTE create output folder
     # because multiple parallel processes are at work here,
@@ -201,6 +240,11 @@ if __name__ == "__main__":
     """
     Handle arguments and other details for interactive usage
     """
+    # global cleanup variable
+    cleanup_required = Value("i", 0)
+
+    # handle KeyboardInterrupt
+    signal.signal(signal.SIGINT, sigint_handler)
 
     # start time of program
     starttime = time.time()
@@ -265,8 +309,11 @@ if __name__ == "__main__":
                 if os.path.getmtime(filepath) >= float(timeprev):
                     musicfiles.append(os.path.join(root, file))
 
+    # process pool
     with Pool(cpu) as p:
-        nonlinear_all: Optional[list[Any]] = p.map(main, musicfiles)
+        result = p.map_async(main, musicfiles)
+        # wait for all processes to finish
+        result.wait()
 
     # write this run's time into file
     with open(timefile, "w") as file:
