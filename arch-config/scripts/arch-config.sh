@@ -460,6 +460,11 @@ echo "Setting group for backlight"
 sudo groupadd -f video
 sudo gpasswd -a "$USER" video 1>/dev/null
 
+# render group
+echo "Setting group for GPU passing"
+sudo groupadd -f render
+sudo gpasswd -a "$USER" render 1>/dev/null
+
 # group for monitoring wireguard
 echo "Setting group for wireguard"
 sudo groupadd -f wireguard
