@@ -27,6 +27,7 @@ from random import randint
 # typing hints
 from typing import Any, Optional
 
+# temporary file/directory management
 import tempfile
 
 # working with sound files
@@ -40,9 +41,6 @@ import shutil
 
 # signal handling
 import signal
-
-# exiting
-import sys
 
 """
 Normalize loudness of all music files in a given directory and its subdirectories.
