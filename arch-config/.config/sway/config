@@ -405,6 +405,7 @@ for_window [app_id="org.kde.kdeconnect.daemon" title="^Datei(en)? (wird|werden) 
     # Dateien werden empfangen — KDE Connect-Dienst
 for_window [app_id="engrampa" title="Archiv entpacken"] floating enable
 for_window [app_id="engrampa" title="Komprimieren"] floating enable
+for_window [app_id="engrampa" title="Entpacken"] floating enable
 
 #########################################
 #####           statusbar           #####
