@@ -413,27 +413,27 @@
   "geometry-of-diff_dialog_geom": {
     "frame_geometry": {
       "height": 980,
-      "width": 1210,
-      "x": 2133,
+      "width": 1306,
+      "x": 0,
       "y": 0
     },
     "full_screened": false,
     "geometry": {
       "height": 980,
-      "width": 1210,
-      "x": 2133,
+      "width": 1306,
+      "x": 0,
       "y": 0
     },
     "maximized": false,
     "normal_geometry": {
       "height": 980,
-      "width": 1210,
-      "x": 2133,
+      "width": 1306,
+      "x": 0,
       "y": 0
     },
     "qt": {
       "__class__": "bytearray",
-      "__value__": "AdnQywADAAAAAAhVAAAAAAAADQ4AAAPTAAAIVQAAAAAAAA0OAAAD0wAAAAEAAAAACFUAAAhVAAAAAAAADQ4AAAPT"
+      "__value__": "AdnQywADAAAAAAAAAAAAAAAABRkAAAPTAAAAAAAAAAAAAAUZAAAD0wAAAAAAAAAACFUAAAAAAAAAAAAABRkAAAPT"
     },
     "screen": {
       "depth": 32,
@@ -441,13 +441,13 @@
       "geometry_in_logical_pixels": {
         "height": 1200,
         "width": 2133,
-        "x": 2133,
+        "x": 0,
         "y": 0
       },
-      "index_in_screens_list": 1,
-      "manufacturer": "HP Inc.",
-      "model": "OMEN 27q",
-      "name": "DP-2",
+      "index_in_screens_list": 0,
+      "manufacturer": "Acer Technologies",
+      "model": "XV272U V",
+      "name": "DP-1",
       "serial": "",
       "size_in_logical_pixels": {
         "height": 1200,
@@ -484,7 +484,7 @@
     },
     "qt": {
       "__class__": "bytearray",
-      "__value__": "AdnQywADAAAAAAhVAAAAAAAAC0AAAAF/AAAIVQAAAAAAAAtAAAABfwAAAAEAAAAACFUAAAhVAAAAAAAAC0AAAAF/"
+      "__value__": "AdnQywADAAAAAAhVAAAAAAAAC0AAAAF/AAAIVQAAAAAAAAtAAAABfwAAAAAAAAAACFUAAAhVAAAAAAAAC0AAAAF/"
     },
     "screen": {
       "depth": 32,
@@ -492,13 +492,13 @@
       "geometry_in_logical_pixels": {
         "height": 1200,
         "width": 2133,
-        "x": 2133,
+        "x": 0,
         "y": 0
       },
-      "index_in_screens_list": 1,
-      "manufacturer": "HP Inc.",
-      "model": "OMEN 27q",
-      "name": "DP-2",
+      "index_in_screens_list": 0,
+      "manufacturer": "Acer Technologies",
+      "model": "XV272U V",
+      "name": "DP-1",
       "serial": "",
       "size_in_logical_pixels": {
         "height": 1200,
@@ -830,7 +830,7 @@
     "__value__": "AdnQywADAAAAAAGYAAABEQAABQ4AAAMyAAABmgAAARMAAAUMAAADMAAAAAAAAAAAB4AAAAGaAAABEwAABQwAAAMw"
   },
   "library_usage_stats": {
-    "/home/exu/.local/share/Calibre-Library": 22,
+    "/home/exu/.local/share/Calibre-Library": 26,
     "/home/marc/Calibre-Bibliothek": 200
   },
   "main_window_central_widget_state": {
