@@ -2,27 +2,27 @@
   "geometry-of-main_window_geometry": {
     "frame_geometry": {
       "height": 1154,
-      "width": 2129,
+      "width": 1062,
       "x": 0,
       "y": 0
     },
     "full_screened": false,
     "geometry": {
       "height": 1154,
-      "width": 2129,
+      "width": 1062,
       "x": 0,
       "y": 0
     },
     "maximized": false,
     "normal_geometry": {
       "height": 1154,
-      "width": 2129,
+      "width": 1062,
       "x": 0,
       "y": 0
     },
     "qt": {
       "__class__": "bytearray",
-      "__value__": "AdnQywADAAAAAAAAAAAAAAAACFAAAASBAAAAAAAAAAAAAAhQAAAEgQAAAAEAAAAACFUAAAAAAAAAAAAACFAAAASB"
+      "__value__": "AdnQywADAAAAAAAAAAAAAAAABCUAAASBAAAAAAAAAAAAAAQlAAAEgQAAAAAAAAAACFUAAAAAAAAAAAAABCUAAASB"
     },
     "screen": {
       "depth": 32,
@@ -30,13 +30,13 @@
       "geometry_in_logical_pixels": {
         "height": 1200,
         "width": 2133,
-        "x": 2133,
+        "x": 0,
         "y": 0
       },
-      "index_in_screens_list": 1,
-      "manufacturer": "HP Inc.",
-      "model": "OMEN 27q",
-      "name": "DP-2",
+      "index_in_screens_list": 0,
+      "manufacturer": "Acer Technologies",
+      "model": "XV272U V",
+      "name": "DP-1",
       "serial": "",
       "size_in_logical_pixels": {
         "height": 1200,
@@ -56,7 +56,7 @@
   },
   "main_window_state": {
     "__class__": "bytearray",
-    "__value__": "AAAA/wAAAAH9AAAAAgAAAAAAAAAAAAAAAPwCAAAAAvsAAAAQAHQAbwBjAC0AZABvAGMAawAAAAAA/////wAAAI0A////+wAAABYAcwBlAGEAcgBjAGgALQBkAG8AYwBrAAAAAAD/////AAAAnwD///8AAAABAAAAAAAAAAD8AgAAAAT7AAAAFgBsAG8AbwBrAHUAcAAtAGQAbwBjAGsAAAAAAP////8AAACKAP////sAAAAcAGIAbwBvAGsAbQBhAHIAawBzAC0AZABvAGMAawAAAAAA/////wAAAP0A////+wAAABwAaQBuAHMAcABlAGMAdABvAHIALQBkAG8AYwBrAAAAAAD/////AAAAFQD////7AAAAHgBoAGkAZwBoAGwAaQBnAGgAdABzAC0AZABvAGMAawAAAAAA/////wAAANsA////AAAIUQAABIIAAAAEAAAABAAAAAgAAAAI/AAAAAEAAAAAAAAAAQAAAB4AYQBjAHQAaQBvAG4AcwBfAHQAbwBvAGwAYgBhAHICAAAAAP////8AAAAAAAAAAA=="
+    "__value__": "AAAA/wAAAAH9AAAAAgAAAAAAAAAAAAAAAPwCAAAAAvsAAAAQAHQAbwBjAC0AZABvAGMAawAAAAAA/////wAAAI0A////+wAAABYAcwBlAGEAcgBjAGgALQBkAG8AYwBrAAAAAAD/////AAAAnwD///8AAAABAAAAAAAAAAD8AgAAAAT7AAAAFgBsAG8AbwBrAHUAcAAtAGQAbwBjAGsAAAAAAP////8AAACKAP////sAAAAcAGIAbwBvAGsAbQBhAHIAawBzAC0AZABvAGMAawAAAAAA/////wAAAP0A////+wAAABwAaQBuAHMAcABlAGMAdABvAHIALQBkAG8AYwBrAAAAAAD/////AAAAFQD////7AAAAHgBoAGkAZwBoAGwAaQBnAGgAdABzAC0AZABvAGMAawAAAAAA/////wAAAN4A////AAAEJgAABIIAAAAEAAAABAAAAAgAAAAI/AAAAAEAAAAAAAAAAQAAAB4AYQBjAHQAaQBvAG4AcwBfAHQAbwBvAGwAYgBhAHICAAAAAP////8AAAAAAAAAAA=="
   },
   "old_prefs_migrated": true,
   "session_data": {
@@ -76,6 +76,15 @@
       "singleinstance": false
     },
     "standalone_recently_opened": [
+      {
+        "authors": [
+          "Michael W Lucas"
+        ],
+        "key": "/home/exu/.local/share/Calibre-Library/Michael W Lucas/SSH Mastery_ OpenSSH, PuTTY, Tunnels and Keys (193)/SSH Mastery_ OpenSSH, PuTTY, Tunnels and K - Michael W Lucas.epub",
+        "pathtoebook": "/home/exu/.local/share/Calibre-Library/Michael W Lucas/SSH Mastery_ OpenSSH, PuTTY, Tunnels and Keys (193)/SSH Mastery_ OpenSSH, PuTTY, Tunnels and K - Michael W Lucas.epub",
+        "timestamp": "2024-06-16T16:48:14.639Z",
+        "title": "SSH Mastery: OpenSSH, PuTTY, Tunnels and Keys"
+      },
       {
         "authors": [
           "Anthony Ryan"
