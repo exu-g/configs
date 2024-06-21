@@ -13,7 +13,6 @@ Configuration files for arch linux. Selection of software:
 - rofi: .config/rofi
 - xfce: .config/xfce4
 - Betterlockscreen: .cache/betterlockscreen/current, .config/betterlockscreenrc
-- Swaync: Shamelessly copied from [zDyanTB/HyprNova](https://github.com/zDyanTB/HyprNova) on GitHub
 
 And some more
 
