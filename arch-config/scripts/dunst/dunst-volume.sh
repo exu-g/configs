@@ -16,34 +16,37 @@ is_mute() {
 }
 
 send_notification() {
-    volume=$(get_volume)
     # Make the bar with the special character ─ (it's not dash -)
     # https://en.wikipedia.org/wiki/Box-drawing_character
-    bar=$(seq -s "─" $(($volume / 5)) | sed 's/[0-9]//g')
+    #bar=$(seq -s "─" $(($volume / 5)) | sed 's/[0-9]//g')
     # Send the notification
-    dunstify -i audio-volume-high -r 2593 -a volume-script "$volume    $bar    "
+    #dunstify -i audio-volume-high -r 2593 -a volume-script "$volume    $bar    "
+    dunstify -i audio-volume-high -a volume-script -h int:value:$volume "Volume"
 }
+
+
+volume=$(get_volume)
 
 case $1 in
     up)
-        # Set the volume on (if it was muted)
-        amixer -D pulse set Master on >/dev/null
-        # Up the volume (+ 5%)
-        amixer -D pulse sset Master 5%+ >/dev/null
         send_notification
+        # Set the volume on (if it was muted)
+        amixer -D pipewire set Master on >/dev/null
+        # Up the volume (+ 5%)
+        amixer -D pipewire sset Master 5%+ >/dev/null
         ;;
     down)
-        amixer -D pulse set Master on >/dev/null
-        amixer -D pulse sset Master 5%- >/dev/null
         send_notification
+        amixer -D pipewire set Master on >/dev/null
+        amixer -D pipewire sset Master 5%- >/dev/null
         ;;
     mute)
-        # Toggle mute
-        amixer -D pulse set Master 1+ toggle >/dev/null
         if is_mute; then
-            dunstify -i audio-volume-muted -r 2593 -u normal "Mute"
+            dunstify -i audio-volume-muted -a volume-script -h int:value:$volume "Mute"
         else
             send_notification
         fi
+        # Toggle mute
+        amixer -D pipewire set Master 1+ toggle >/dev/null
         ;;
 esac
