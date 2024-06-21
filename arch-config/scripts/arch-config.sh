@@ -518,7 +518,7 @@ if [[ -f "/usr/share/dbus-1/services/org.freedesktop.Notifications.service" ]]; 
 fi
 
 # dunst
-#pkill dunst && nohup dunst &
+pkill dunst && nohup dunst &
 
 # reload .Xresources
 # TODO fails without display
