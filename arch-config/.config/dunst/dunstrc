@@ -281,7 +281,7 @@
 
     # Uncomment this if you want to let notifications appear under fullscreen
     # applications (default: overlay)
-    layer = top
+    layer = overlay
 
     # Set this to true to use X11 output on Wayland.
     #force_xwayland = false
@@ -427,8 +427,8 @@
 #        If the notification is already drawn, it won't get undrawn.
 # pushback: same as delay, but when switching into fullscreen, the notification will get
 #           withdrawn from screen again and will get delayed like a new notification
-#[fullscreen_delay_everything]
-#    fullscreen = delay
+[fullscreen_delay_everything]
+    fullscreen = delay
 #[fullscreen_show_critical]
 #    msg_urgency = critical
 #    fullscreen = show
@@ -496,11 +496,13 @@
     format = "<b>%s</b>\n%b"
     timeout = 1
     script = "$HOME/scripts/dunst/dunst-notification-sound.sh"
+    fullscreen = show
 
 [backlight-script]
     appname = "backlight-script"
     format = "<b>%s</b>\n%b"
     timeout = 1
     script = "$HOME/scripts/dunst/dunst-notification-sound.sh"
+    fullscreen = show
 
 # vim: ft=cfg
