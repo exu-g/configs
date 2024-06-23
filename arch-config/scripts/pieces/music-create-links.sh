@@ -14,7 +14,7 @@ for artdir in */; do
     # FIXME remove trailing slash
     artdir="${artdir%/}"
     # change into artist directory
-    cd "$artdir"
+    pushd "$artdir"
 
     for dir in */; do
         # FIXME remove trailing slash
@@ -64,16 +64,11 @@ for artdir in */; do
                     ln -svf "$HOME/Nextcloud/MusikRaw/${artdir}/$dir/normalized/"* "$HOME/Musik/${artdir}/$dir/"
                 fi
             fi
-
-            popd
         done
-
-        # go back to music raw
-        cd "$HOME/Nextcloud/MusikRaw/$artdir"
+        popd
     done
-    cd "$HOME/Nextcloud/MusikRaw"
+    popd
 done
-
 popd
 
 echo Finished!
