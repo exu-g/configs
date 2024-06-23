@@ -5,48 +5,76 @@ set -euo pipefail
 rm -rf "$HOME/Musik/"*
 
 # change into music raw folder
-cd "$HOME/Nextcloud/MusikRaw"
+pushd "$HOME/Nextcloud/MusikRaw"
 
-# get directories
-ls -d */ > artistdirectories
+# disable expansion of empty globs
+shopt -s nullglob
 
-while read -r artdir; do
+for artdir in */; do
     # FIXME remove trailing slash
     artdir="${artdir%/}"
     # change into artist directory
     cd "$artdir"
-    # get albums
-    ls -d */ > directories
-    while read -r dir; do
+
+    for dir in */; do
         # FIXME remove trailing slash
         dir="${dir%/}"
         # change into directory
-        cd "$dir"
-        # create directory in music
-        mkdir -p "$HOME/Musik/${artdir}/$dir"
+        pushd "$dir"
 
-        # link cover image (jpg or png)
-        if [ -f cover.jpg ]; then
-            ln -vf "$HOME/Nextcloud/MusikRaw/${artdir}/$dir/cover.jpg" "$HOME/Musik/${artdir}/$dir/"
-        elif [ -f cover.png ]; then
-            ln -vf "$HOME/Nextcloud/MusikRaw/${artdir}/$dir/cover.png" "$HOME/Musik/${artdir}/$dir/"
-        fi
+        for subdir in */; do
+            if [ "$subdir" != "normalized/" ]; then
+                # NOTE handle new paths with streaming services included
+                # FIXME remove trailing slash
+                subdir="${subdir%/}"
+                # go into subdirectory
+                pushd "$subdir"
+                # create directory in music
+                mkdir -p "$HOME/Musik/${artdir}/$subdir"
 
-        # make symbolic link to music
-        # if the "normalized" directory exists, links are created
-        if [ -d "normalized" ]; then
-            ln -svf "$HOME/Nextcloud/MusikRaw/${artdir}/$dir/normalized/"* "$HOME/Musik/${artdir}/$dir/"
-        fi
+                # link cover image (jpg or png)
+                if [ -f cover.jpg ]; then
+                    ln -vf "$HOME/Nextcloud/MusikRaw/${artdir}/$dir/$subdir/cover.jpg" "$HOME/Musik/${artdir}/$subdir/"
+                elif [ -f cover.png ]; then
+                    ln -vf "$HOME/Nextcloud/MusikRaw/${artdir}/$dir/$subdir/cover.png" "$HOME/Musik/${artdir}/$subdir/"
+                fi
+
+                # make symbolic link to music
+                # if the "normalized" directory exists, links are created
+                if [ -d "normalized" ]; then
+                    ln -svf "$HOME/Nextcloud/MusikRaw/${artdir}/$dir/$subdir/normalized/"* "$HOME/Musik/${artdir}/$subdir/"
+                fi
+
+                popd
+            else
+                # NOTE this stays the same, without streaming services included
+
+                # create directory in music
+                mkdir -p "$HOME/Musik/${artdir}/$dir"
+                # link cover image (jpg or png)
+                if [ -f cover.jpg ]; then
+                    ln -vf "$HOME/Nextcloud/MusikRaw/${artdir}/$dir/cover.jpg" "$HOME/Musik/${artdir}/$dir/"
+                elif [ -f cover.png ]; then
+                    ln -vf "$HOME/Nextcloud/MusikRaw/${artdir}/$dir/cover.png" "$HOME/Musik/${artdir}/$dir/"
+                fi
+
+                # make symbolic link to music
+                # if the "normalized" directory exists, links are created
+                if [ -d "normalized" ]; then
+                    ln -svf "$HOME/Nextcloud/MusikRaw/${artdir}/$dir/normalized/"* "$HOME/Musik/${artdir}/$dir/"
+                fi
+            fi
+
+            popd
+        done
 
         # go back to music raw
         cd "$HOME/Nextcloud/MusikRaw/$artdir"
-    done < directories
-    # cleanup
-    rm directories
+    done
     cd "$HOME/Nextcloud/MusikRaw"
-done < artistdirectories
-# cleanup
-rm artistdirectories
+done
+
+popd
 
 echo Finished!
 
