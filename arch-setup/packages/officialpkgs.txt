@@ -83,7 +83,7 @@ mesa
 mesa-vdpau
 mythes-de
 mythes-en
-neovim
+vim
 network-manager-applet
 nextcloud-client
 notification-daemon

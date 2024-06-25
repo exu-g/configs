@@ -73,8 +73,8 @@ end
 # text editor
 #set EDITOR "/usr/bin/emacs --no-window-system"
 #set VISUAL "/usr/bin/emacs --no-window-system"
-set EDITOR /usr/bin/nvim
-set VISUAL /usr/bin/nvim
+set EDITOR /usr/bin/vim
+set VISUAL /usr/bin/vim
 
 # add paths
 set fish_user_paths /usr/bin/vendor_perl/ $fish_user_paths # global perl tools
