@@ -1,0 +1,4 @@
+[Desktop Entry]
+Name=Unigine Superposition (compatibility)
+Exec=QT_QPA_PLATFORM=xcb /usr/bin/unigine-superposition
+Type=Application
