@@ -286,9 +286,6 @@ exec --no-startup-id nextcloud --background
 # network
 exec --no-startup-id nm-applet
 
-#Corectrl
-exec --no-startup-id corectrl --minimize-systray
-
 # Protonmail Bridge
 exec --no-startup-id protonmail-bridge -no-window
 
