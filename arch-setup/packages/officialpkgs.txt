@@ -47,7 +47,6 @@ gvfs-smb
 hdparm
 htop
 hunspell
-hunspell
 hunspell-de
 hunspell-en_gb
 hunspell-en_us
@@ -95,7 +94,7 @@ nvme-cli
 obs-studio
 okular
 openresolv
-os-prober
+opentofu
 os-prober
 otf-font-awesome
 p7zip

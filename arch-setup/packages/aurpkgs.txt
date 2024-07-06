@@ -12,13 +12,11 @@ mpv-mpris
 nemo-audio-tab
 nohang
 opentabletdriver
-pdfsam
 polybar
 protonmail-bridge-bin
 rig
 rustscan
 sublime-music
-tealdeer
 thunar-nextcloud-plugin
 ttf-iosevka
 ttf-ms-fonts
