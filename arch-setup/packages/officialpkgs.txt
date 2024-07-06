@@ -83,7 +83,7 @@ mesa
 mesa-vdpau
 mythes-de
 mythes-en
-vim
+nerd-fonts
 network-manager-applet
 nextcloud-client
 notification-daemon
@@ -139,6 +139,7 @@ unrar
 unzip
 util-linux
 vdpauinfo
+vim
 vnstat
 vulkan-intel
 vulkan-radeon
