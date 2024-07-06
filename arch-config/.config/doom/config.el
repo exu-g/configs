@@ -92,7 +92,7 @@
 (advice-add #'pip-requirements-fetch-packages :override #'ignore)
 
 ;; Enable nimlangserver for nim files
-(add-hook 'nim-mode-hook #'lsp)
+;;(add-hook 'nim-mode-hook #'lsp)
 
 ;; Disable formatter for php
 (setq-hook! 'php-mode-hook +format-with :none)
