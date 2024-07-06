@@ -68,13 +68,14 @@ input "1133:16500:Logitech_G305" pointer_accel -0.3
 set $output-1 "Acer Technologies XV272U V R307036FE4208"
 output $output-1 mode 2560x1440@170Hz
 output $output-1 position 0 0
-output $output-1 scale 1.2
+output $output-1 scale 1.25
 output $output-1 subpixel rgb
 output $output-1 adaptive_sync on
 
 set $output-2 "HP Inc. OMEN 27q CNC3131C9P"
 output $output-2 mode 2560x1440@165Hz
-output $output-2 scale 1.2
+output $output-1 position 2048 0
+output $output-2 scale 1.25
 output $output-2 subpixel rgb
 output $output-2 adaptive_sync on
 
