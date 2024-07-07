@@ -18,7 +18,6 @@ dosfstools
 dunst
 e2fsprogs
 easyeffects
-easyeffects
 engrampa
 exfatprogs
 f2fs-tools
@@ -76,10 +75,14 @@ libsecret
 libva-intel-driver
 libva-mesa-driver
 libva-utils
+linux
+linux-firmware
+linux-headers
 lsp-plugins-lv2
 man-db
 mesa
 mesa-vdpau
+mtools
 mythes-de
 mythes-en
 nerd-fonts
@@ -94,6 +97,7 @@ nvme-cli
 obs-studio
 okular
 openresolv
+openssh
 opentofu
 os-prober
 otf-font-awesome
@@ -132,6 +136,7 @@ traceroute
 transmission-remote-gtk
 ttf-fira-code
 ttf-fira-sans
+udftools
 udiskie
 unace
 unrar
