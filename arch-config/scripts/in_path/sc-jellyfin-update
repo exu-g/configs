@@ -14,7 +14,7 @@ if ! ssh-add -T "${sshkeypath}.pub" &>/dev/null; then
 fi
 
 # Server: sync other files from audiobooks
-rsync -uvr --progress -e "ssh -i $sshkeypath -p $port" "${user}@${server}:/mnt/media/" "/mnt/storage/MediaLibrary/Audiobooks"
+rsync -uvr --progress -e "ssh -i $sshkeypath -p $port" "${user}@${server}:/mnt/media/Audiobooks" "/mnt/storage/MediaLibrary/"
 
 # NAS: video files
 rsync -uvr --progress --delete /mnt/storage/MediaLibrary/{Movies,other,Patreon,Shows} /mnt/lan1nas1/ &
