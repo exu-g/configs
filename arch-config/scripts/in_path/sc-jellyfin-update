@@ -19,10 +19,19 @@ rsync -uvr --progress --delete /mnt/storage/MediaLibrary/{Movies,other,Patreon,S
 # NAS: music
 rsync -uvrL --progress --delete /home/exu/Musik /mnt/lan1nas1/ &
 
+# NAS: audiobooks
+rsync -uvrL --progress "/mnt/storage/MediaLibrary/Audiobooks" /mnt/lan1nas1/ &
+
 # Server: music
 rsync -uvrL --progress --delete -e "ssh -i $sshkeypath -p $port" /home/exu/Musik/ ${user}@${server}:/mnt/media/Musik/
 
 # Server: video files
 rsync -uvr --progress --delete -e "ssh -i $sshkeypath -p $port" /mnt/storage/MediaLibrary/{Movies,Shows,other} ${user}@${server}:/mnt/media/
+
+# Server: audiobooks
+rsync -uvr --progress -e "ssh -i $sshkeypath -p $port" "/mnt/storage/MediaLibrary/Audiobooks" "${user}@${server}:/mnt/media/"
+
+# wait for background jobs
+wait
 
 echo "Finished transfering data"
