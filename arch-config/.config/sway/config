@@ -278,10 +278,10 @@ font pango:Fira Mono 9
 #    Applications at boot    #
 ##############################
 
-#Authentication dialog
+# Authentication dialog
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
-#nextcloud
+# nextcloud
 exec --no-startup-id nextcloud --background
 
 # network
@@ -295,6 +295,9 @@ exec --no-startup-id /opt/KopiaUI/kopia-ui
 
 # Easy Effects
 exec --no-startup-id easyeffects --gapplication-service
+
+# Blueman
+exec --no-startup-id blueman-applet
 
 # notifications
 exec --no-startup-id dunst
