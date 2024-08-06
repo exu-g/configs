@@ -153,8 +153,7 @@ alias lsblkf="lsblk -o NAME,LABEL,RM,SIZE,RO,TYPE,FSTYPE,MOUNTPOINTS,MODEL,UUID"
 alias ip="ip -c"
 
 # rebuild broken packages
-alias rebuild="paru -S --rebuild=yes (checkrebuild | awk '{print $2}')"
-#alias rebuild="checkrebuild | awk '{print $2}' | paru -S --rebuild=yes -"
+alias rebuild='paru -S --rebuild=yes (checkrebuild | awk \'{print $2}\')'
 
 # process cpu usage per core instead of overall
 alias btm="btm -n"
