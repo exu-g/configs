@@ -13,26 +13,17 @@ if ! ssh-add -T "${sshkeypath}.pub" &>/dev/null; then
     ssh-add -q "$sshkeypath"
 fi
 
-# Server: sync other files from audiobooks
-rsync -uvr --progress -e "ssh -i $sshkeypath -p $port" "${user}@${server}:/mnt/media/Audiobooks" "/mnt/storage/MediaLibrary/"
-
 # NAS: video files
 rsync -uvr --progress --delete /mnt/storage/MediaLibrary/{Movies,other,Patreon,Shows} /mnt/lan1nas1/ &
 
 # NAS: music
 rsync -uvrL --progress --delete /home/exu/Musik /mnt/lan1nas1/ &
 
-# NAS: audiobooks
-rsync -uvrL --progress --delete "/mnt/storage/MediaLibrary/Audiobooks" /mnt/lan1nas1/ &
-
 # Server: music
 rsync -uvrL --progress --delete -e "ssh -i $sshkeypath -p $port" /home/exu/Musik/ ${user}@${server}:/mnt/media/Musik/
 
 # Server: video files
 rsync -uvr --progress --delete -e "ssh -i $sshkeypath -p $port" /mnt/storage/MediaLibrary/{Movies,Shows,other} ${user}@${server}:/mnt/media/
-
-# Server: audiobooks
-rsync -uvr --progress --delete -e "ssh -i $sshkeypath -p $port" "/mnt/storage/MediaLibrary/Audiobooks" "${user}@${server}:/mnt/media/"
 
 # wait for background jobs
 wait
