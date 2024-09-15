@@ -33,12 +33,12 @@ function func_seltheme {
     clear
     for choice in $choices; do
         case $choice in
-            1)
-                echo "nyarch" >"$HOME/.seltheme"
-                ;;
-            2)
-                echo "space-pink" >"$HOME/.seltheme"
-                ;;
+        1)
+            echo "nyarch" >"$HOME/.seltheme"
+            ;;
+        2)
+            echo "space-pink" >"$HOME/.seltheme"
+            ;;
         esac
     done
 }
@@ -332,10 +332,6 @@ else
     printf "\033[38;2;200;20;20mCouldn't find background image\n\033[0m"
 fi
 
-chmod +x "$HOME/scripts/gsettings.sh"
-bash "$HOME/scripts/gsettings.sh"
-echo "Set theme using gsettings"
-
 echo
 cat <<EOF
 ####################
@@ -507,7 +503,7 @@ EOF
 update-desktop-database ~/.local/share/applications/
 
 # sync doom-emacs only if it is installed
-if [[ -f  ~/.config/emacs/bin/doom ]]; then
+if [[ -f ~/.config/emacs/bin/doom ]]; then
     ~/.config/emacs/bin/doom sync &
     pids="$pids $!"
 fi
