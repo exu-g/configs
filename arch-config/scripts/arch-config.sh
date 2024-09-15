@@ -24,25 +24,6 @@ cat <<EOF
 ############################################################
 EOF
 
-# function to select theme
-function func_seltheme {
-    cmd=(dialog --separate-output --checklist "Select theme (Only select one)" 22 76 16)
-    options=(1 "Nyarch" off # any option can be set to default to "on"
-        2 "Spaceengine Pink" off)
-    choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
-    clear
-    for choice in $choices; do
-        case $choice in
-        1)
-            echo "nyarch" >"$HOME/.seltheme"
-            ;;
-        2)
-            echo "space-pink" >"$HOME/.seltheme"
-            ;;
-        esac
-    done
-}
-
 echo
 cat <<EOF
 ########################################
@@ -77,11 +58,6 @@ if ! cmp --silent "$scriptloc" "$HOME/scripts/arch-config.sh"; then
     cp "$tempdir/arch-config/scripts/arch-config.sh" "$HOME/scripts/" && bash ~/scripts/arch-config.sh "$@"
 fi
 
-# if no seltheme file exists, ask to select a theme
-if [[ ! -f "$HOME/.seltheme" ]]; then
-    func_seltheme
-fi
-
 ####################
 #### Arguments  ####
 ####################
@@ -90,14 +66,10 @@ copy_firefox=0
 
 # handle arguments
 if [[ "$#" -eq 1 ]]; then
-    # -t/--theme to change theme
-    if [[ "$1" == "-t" || "$1" == "--theme" ]]; then
-        func_seltheme
-    elif [[ "$1" == "-f" || "$1" == "--firefox" ]]; then
+    if [[ "$1" == "-f" || "$1" == "--firefox" ]]; then
         copy_firefox=1
     elif [[ "$1" == "-h" || "$1" == "--help" ]]; then
         echo "-h, --help     Show help menu"
-        echo "-t, --theme    Show theme selection screen"
         echo "-f, --firefox  Update firefox config"
         exit 0
     fi
@@ -292,34 +264,6 @@ if [ "$(hostname)" == "lupusregina" ]; then
     sudo cp ~/configs/arch-config/per-device/lupusregina/10-monitor.conf /etc/X11/xorg.conf.d/
     sudo cp ~/configs/arch-config/per-device/lupusregina/20-amdgpu.conf /etc/X11/xorg.conf.d/
 fi
-
-echo
-cat <<EOF
-####################
-###### Theme  ######
-####################
-EOF
-
-# install theme selected in themes file
-seltheme="$(cat "$HOME/.seltheme")"
-if [[ "$seltheme" == "nyarch" ]]; then
-    #cp -r "./themes/nyarch/i3" "$HOME/.config/"
-    cp "$tempdir/arch-themes/nyarch/sway/color" "$HOME/.config/sway/config.d/"
-    #cp -r "$HOME/configs/arch-themes/nyarch/polybar" "$HOME/.config/"
-    #cp -r "./themes/nyarch/neofetch/lowpoly_flamegirl_blue.txt" "$HOME/.config/neofetch/lowpoly_flamegirl.txt"
-    #cp "./themes/.fehbg-nyarch" "$HOME/.fehbg"
-    #sed -i 's/^NAME=".*"/NAME="Rawrch Linyux"/' /etc/os-release
-elif [[ "$seltheme" == "space-pink" ]]; then
-    #cp -r "./themes/space-pink/i3" "$HOME/.config/"
-    cp "$tempdir/arch-themes/space-pink/sway/color" "$HOME/.config/sway/config.d/"
-    #cp -r "$HOME/configs/arch-themes/space-pink/polybar" "$HOME/.config/"
-    #cp -r "./themes/space-pink/neofetch/lowpoly_flamegirl_orange.txt" "$HOME/.config/neofetch/lowpoly_flamegirl.txt"
-    #cp "./themes/.fehbg-space-pink" "$HOME/.fehbg"
-fi
-
-# make fehbg executable
-#if [[ -f "$HOME/.fehbg" ]]; then
-#    chmod +x ~/.fehbg
 
 # copy chosen image for lockscreen and desktop
 backgroundimage="/home/exu/Bilder/Art/artstation/dk-lan/artstation_14224733_55806391_月半与鬼哭.jpg"

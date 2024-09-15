@@ -1,11 +1,7 @@
-# qt theming with qt5ct
-QT_QPA_PLATFORMTHEME=qt5ct
 # wayland for qt
 QT_QPA_PLATFORM=wayland
 # default editor
 EDITOR=vim
-# desktop env
-XDG_CURRENT_DESKTOP=sway
 # wayland for clutter
 CLUTTER_BACKEND=wayland
 # wayland for sdl

@@ -1,4 +1,0 @@
-#!/bin/sh
-
-# nyarch
-feh --no-fehbg --bg-scale "/usr/share/backgrounds/custom/nyarch.png"
