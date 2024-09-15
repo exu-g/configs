@@ -1,4 +1,0 @@
-#!/bin/sh
-
-# space-pink
-feh --no-fehbg --bg-scale "/usr/share/backgrounds/custom/space-pink.png"

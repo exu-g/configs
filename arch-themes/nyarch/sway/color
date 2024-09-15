@@ -1,8 +1,0 @@
-# Nyarch
-# class                 border  backgr. text    indicator
-client.placeholder      #00ff00 #00ff00 #00ff00
-client.background       #00ff00 #00ff00 #00ff00
-client.focused          #0c374c #0c374c #eeeeee #0c374c
-client.unfocused        #162833 #162833 #eeeeee #162833
-client.focused_inactive #162833 #162833 #eeeeee #162833
-client.urgent           #1a77a5 #1a77a5 #eeeeee #1a77a5
