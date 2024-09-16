@@ -21,10 +21,6 @@ func_dont_timeout &
 # get script directory
 scriptloc="$BASH_SOURCE"
 setupdir=$(dirname "$scriptloc")
-#setupdir=$(pwd)
-
-#change to home directory
-#cd "$HOME"
 
 # check if multilib repo is enabled
 if ! pacman -Sl multilib &>/dev/null; then
@@ -53,9 +49,9 @@ choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
 for choice in $choices; do
     case $choice in
-        100)
-            printf '%s\n' 'sway' 'swaylock' 'swayidle' 'swaybg' 'xorg-xwayland' 'xdg-desktop-portal-wlr' 'xdg-desktop-portal-gtk' 'qt5-wayland' 'qt6-wayland' >> "$setupdir/selectedpkgs.txt"
-            ;;
+    100)
+        printf '%s\n' 'sway' 'swaylock' 'swayidle' 'swaybg' 'xorg-xwayland' 'xdg-desktop-portal-wlr' 'xdg-desktop-portal-gtk' 'qt5-wayland' 'qt6-wayland' >>"$setupdir/selectedpkgs.txt"
+        ;;
     esac
 done
 
@@ -67,15 +63,15 @@ choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
 for choice in $choices; do
     case $choice in
-        0)
-            echo "firefox" >> "$setupdir/selectedpkgs.txt"
-            ;;
-        10)
-            echo "chromium" >> "$setupdir/selectedpkgs.txt"
-            ;;
-        20)
-            echo "torbrowser-launcher" >> "$setupdir/selectedpkgs.txt"
-            ;;
+    0)
+        echo "firefox" >>"$setupdir/selectedpkgs.txt"
+        ;;
+    10)
+        echo "chromium" >>"$setupdir/selectedpkgs.txt"
+        ;;
+    20)
+        echo "torbrowser-launcher" >>"$setupdir/selectedpkgs.txt"
+        ;;
     esac
 done
 
@@ -102,59 +98,60 @@ choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
 for choice in $choices; do
     case $choice in
-        0)
-            printf '%s\n' 'qemu' 'virt-manager' 'ebtables' 'dnsmasq' 'edk2-ovmf' >> "$setupdir/selectedpkgs.txt"
-            ;;
-        1)
-            echo "vmware-workstation" >> "$setupdir/aurselectedpkgs.txt"
-            ;;
-        10)
-            printf '%s\n' 'steam' 'steam-native-runtime' >> "$setupdir/selectedpkgs.txt"
-            ;;
-        11)
-            echo "lutris" >> "$setupdir/selectedpkgs.txt"
-            ;;
-        12)
-            echo "citra-qt-git" >>"$setupdir/aurselectedpkgs.txt"
-            ;;
-        20)
-            echo "krita" >> "$setupdir/selectedpkgs.txt"
-            ;;
-        21)
-            echo "gimp" >> "$setupdir/selectedpkgs.txt"
-            ;;
-        31)
-            printf '%s\n' 'yt-dlp' >>"$setupdir/aurselectedpkgs.txt"
-            ;;
-        32)
-            echo "megatools-bin" >>"$setupdir/aurselectedpkgs.txt"
-            ;;
-        40)
-            echo "handbrake" >>"$setupdir/selectedpkgs.txt"
-            ;;
-        41)
-            echo "audacity" >>"$setupdir/selectedpkgs.txt"
-            ;;
-        42)
-            printf '%s\n' 'k3b' 'cdparanoia' 'cdrdao' 'cdrtools' 'dvd+rw-tools' 'emovix' 'transcode' 'vcdimager' >>"$setupdir/selectedpkgs.txt"
-            ;;
-        43)
-            echo "kid3" >>"$setupdir/selectedpkgs.txt"
-            ;;
-        60)
-            echo "discord" >>"$setupdir/selectedpkgs.txt"
-            ;;
-        61)
-            echo "element-desktop" >>"$setupdir/selectedpkgs.txt"
-            ;;
-        62)
-            echo "telegram-desktop" >>"$setupdir/selectedpkgs.txt"
-            ;;
-        70)
-            echo "testssl.sh" >>"$setupdir/selectedpkgs.txt"
-            ;;
-        80)
-            echo "onedriver" >>"$setupdir/aurselectedpkgs.txt"
+    0)
+        printf '%s\n' 'qemu' 'virt-manager' 'ebtables' 'dnsmasq' 'edk2-ovmf' >>"$setupdir/selectedpkgs.txt"
+        ;;
+    1)
+        echo "vmware-workstation" >>"$setupdir/aurselectedpkgs.txt"
+        ;;
+    10)
+        printf '%s\n' 'steam' 'steam-native-runtime' >>"$setupdir/selectedpkgs.txt"
+        ;;
+    11)
+        echo "lutris" >>"$setupdir/selectedpkgs.txt"
+        ;;
+    12)
+        echo "citra-qt-git" >>"$setupdir/aurselectedpkgs.txt"
+        ;;
+    20)
+        echo "krita" >>"$setupdir/selectedpkgs.txt"
+        ;;
+    21)
+        echo "gimp" >>"$setupdir/selectedpkgs.txt"
+        ;;
+    31)
+        printf '%s\n' 'yt-dlp' >>"$setupdir/aurselectedpkgs.txt"
+        ;;
+    32)
+        echo "megatools-bin" >>"$setupdir/aurselectedpkgs.txt"
+        ;;
+    40)
+        echo "handbrake" >>"$setupdir/selectedpkgs.txt"
+        ;;
+    41)
+        echo "audacity" >>"$setupdir/selectedpkgs.txt"
+        ;;
+    42)
+        printf '%s\n' 'k3b' 'cdparanoia' 'cdrdao' 'cdrtools' 'dvd+rw-tools' 'emovix' 'transcode' 'vcdimager' >>"$setupdir/selectedpkgs.txt"
+        ;;
+    43)
+        echo "kid3" >>"$setupdir/selectedpkgs.txt"
+        ;;
+    60)
+        echo "discord" >>"$setupdir/selectedpkgs.txt"
+        ;;
+    61)
+        echo "element-desktop" >>"$setupdir/selectedpkgs.txt"
+        ;;
+    62)
+        echo "telegram-desktop" >>"$setupdir/selectedpkgs.txt"
+        ;;
+    70)
+        echo "testssl.sh" >>"$setupdir/selectedpkgs.txt"
+        ;;
+    80)
+        echo "onedriver" >>"$setupdir/aurselectedpkgs.txt"
+        ;;
     esac
 done
 
@@ -162,20 +159,19 @@ in_acpufreq=0
 
 cmd=(dialog --separate-output --checklist "Performance and Battery life" 22 76 16)
 options=(0 "auto-cpufreq" off
-         1 "corectrl" off)
+    1 "corectrl" off)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
-for choice in $choices
-do
+for choice in $choices; do
     case $choice in
-        0)
-            in_acpufreq=1
-            echo "auto-cpufreq-git" >> "$setupdir/aurselectedpkgs.txt"
-            # TODO Handle rest of installation
-            ;;
-        1)
-            echo "corectrl" >> "$setupdir/aurselectedpkgs.txt"
-            ;;
+    0)
+        in_acpufreq=1
+        echo "auto-cpufreq-git" >>"$setupdir/aurselectedpkgs.txt"
+        # TODO Handle rest of installation
+        ;;
+    1)
+        echo "corectrl" >>"$setupdir/aurselectedpkgs.txt"
+        ;;
     esac
 done
 
@@ -189,16 +185,16 @@ choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
 for choice in $choices; do
     case $choice in
-        0)
-            in_doomemacs=1
-            # TODO sort pacman and AUR packages
-            # pychecker not in AUR anymore
-            printf '%s\n' 'git' 'emacs-wayland' 'ripgrep' 'fd' 'pandoc' 'shellcheck' 'python-pipenv' 'python-isort' 'python-pytest' 'python-rednose' 'pychecker' 'texlive-core' 'pyright' 'python-grip' 'prettier' 'shfmt' 'vscode-css-languageserver' 'ruby-sass' >>"$setupdir/aurselectedpkgs.txt"
-            # TODO handle rest of installation
-            ;;
-        10)
-            in_podman=1
-            ;;
+    0)
+        in_doomemacs=1
+        # TODO sort pacman and AUR packages
+        # pychecker not in AUR anymore
+        printf '%s\n' 'git' 'emacs-wayland' 'ripgrep' 'fd' 'pandoc' 'shellcheck' 'python-pipenv' 'python-isort' 'python-pytest' 'python-rednose' 'pychecker' 'texlive-core' 'pyright' 'python-grip' 'prettier' 'shfmt' 'vscode-css-languageserver' 'ruby-sass' >>"$setupdir/aurselectedpkgs.txt"
+        # TODO handle rest of installation
+        ;;
+    10)
+        in_podman=1
+        ;;
     esac
 done
 
@@ -208,33 +204,11 @@ choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 clear
 for choice in $choices; do
     case $choice in
-        0)
-            echo "pkgstats" >>"$setupdir/selectedpkgs.txt"
-            ;;
+    0)
+        echo "pkgstats" >>"$setupdir/selectedpkgs.txt"
+        ;;
     esac
 done
-
-: '
-# Packages installed on different systems
-in_arco_pc=0
-in_arco_hp=0
-
-cmd=(dialog --separate-output --checklist "Install system specific packages?" 22 76 16)
-options=(1 "Arco PC" off
-    2 "Arco HP" off)
-choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
-clear
-for choice in $choices; do
-    case $choice in
-        1)
-            in_arco_pc=1
-            ;;
-        2)
-            in_arco_hp=1
-            ;;
-    esac
-done
-'
 
 if [ -f "$setupdir/notfoundpackages.txt" ]; then
     rm "$setupdir/notfoundpackages.txt"
@@ -375,24 +349,6 @@ if [ $in_podman -eq 1 ]; then
     sudo usermod -aG podman "$USER"
 fi
 
-# other system configs
-: '
-# arco pc
-if [ $in_arco_pc -eq 1 ]; then
-    echo "Installing arco pc packages"
-    paru -S --needed - <"$setupdir/packages/lupusregina-packages.txt"
-fi
-
-# arco hp
-if [ $in_arco_hp -eq 1 ]; then
-    echo "Installing arch hp packages"
-    paru -S --needed - <"$setupdir/packages/arch-hp-packages.txt"
-fi
-'
-
-# install nix
-#curl -sSf -L https://install.determinate.systems/nix | sh -s -- install
-
 ##############################
 #####   Configuration    #####
 ##############################
@@ -401,17 +357,8 @@ echo Configuring packages
 #change shell
 chsh -s /usr/bin/fish "$USER"
 
-# setup autotrash
-#autotrash -td 5 --install
-
-#systemctl --user enable autotrash.timer
-
 #enable vnstat
 sudo systemctl enable --now vnstat
-
-
-# enable lockscreen for systemd
-#sudo systemctl enable betterlockscreen@$USER
 
 # enable firewall
 echo "Enabling Firewall"
@@ -421,17 +368,6 @@ sudo firewall-cmd --zone=public --permanent --remove-service=ssh || true
 
 # enable gdm
 sudo systemctl enable gdm
-
-# regenerate locale
-# Fixes rofi not launching
-#sudo locale-gen
-
-: '
-if [[ $(pacman -Q | grep sway) ]]; then
-    sudo systemctl enable --now seatd.service
-    sudo gpasswd -a "$USER" seat 1>/dev/null
-fi
-'
 
 # update fonts cache
 fc-cache -f
