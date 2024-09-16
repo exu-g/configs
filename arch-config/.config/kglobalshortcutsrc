@@ -3,7 +3,7 @@ _k_friendly_name=Aktivitätenverwaltung
 switch-to-activity-64664544-a062-48cf-a713-e4045da575e9=none,none,Zu Aktivität „Standard“ wechseln
 
 [KDE Keyboard Layout Switcher]
-Switch to Last-Used Keyboard Layout=none,Meta+Alt+L,Switch to Last-Used Keyboard Layout
+Switch to Last-Used Keyboard Layout=none,Meta+Alt+L,Auf zuletzt verwendete Tastaturbelegung umschalten
 Switch to Next Keyboard Layout=none,Meta+Alt+K,Auf nächste Tastaturbelegung umschalten
 _k_friendly_name=Umschaltung der Tastaturbelegung
 
@@ -82,7 +82,7 @@ KrohnkiteSpreadLayout=none,none,Krohnkite: Spread Layout
 KrohnkiteStackedLayout=none,none,Krohnkite: Stacked Layout
 KrohnkiteStairLayout=Meta+S,none,Krohnkite: Stair Layout
 KrohnkiteTileLayout=none,none,Krohnkite: Tile Layout
-KrohnkiteToggleFloat=none,none,Krohnkite: Toggle Float
+KrohnkiteToggleFloat=Meta+F,none,Krohnkite: Toggle Float
 KrohnkiteTreeColumnLayout=none,none,Krohnkite: Tree Column Layout
 KrohnkitegrowWidth=none,none,Krohnkite: Grow Width
 Move Tablet to Next Output=none,none,Move the tablet to the next output
