@@ -256,7 +256,9 @@ sudo timedatectl set-ntp true
 systemctl --user enable --now ssh-agent
 
 # enable reflector timer
-sudo systemctl enable reflector.timer
+if [[ $(pacman -Q | grep reflector) ]]; then
+    sudo systemctl enable reflector.timer
+fi
 
 # enable vnstat
 sudo systemctl enable vnstat
