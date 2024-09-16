@@ -33,18 +33,9 @@ EOF
 
 # get script directory
 scriptloc="$BASH_SOURCE"
-#scriptpath="$(dirname "$scriptloc")"
-
-# change to home
-#cd "$HOME"
-
-# remove old installs
-#rm -rf ~/configs
 
 # Use temporary directory for download
-# FIXME probably lots of issues at first
 tempdir="$(mktemp -d)"
-#cd "$tempdir"
 
 echo "Checking config file"
 
@@ -104,47 +95,22 @@ fi
 
 # make new backup
 echo Creating backup
-mkdir -p ~/old_dat/.config
-mkdir -p ~/old_dat/.doom.d
-#mkdir -p ~/old_dat/.easystroke
+mkdir -p ~/old_dat/
 mkdir -p ~/old_dat/.mozilla
 mkdir -p ~/old_dat/scripts
-mkdir -p ~/old_dat/.elvish
 mkdir -p ~/old_dat/.ssh
 
 # make subdirectories
 mkdir -p ~/old_dat/.local/share
 
 #config folders
-if [[ -d ~/.config/MangoHud ]]; then
-    rsync -ah ~/.config/MangoHud ~/old_dat/.config/
-fi
-if [[ -d ~/.config/fish ]]; then
-    rsync -ah ~/.config/fish ~/old_dat/.config/
-fi
-if [[ -d ~/.config/gtk-3.0 ]]; then
-    rsync -ah ~/.config/gtk-3.0 ~/old_dat/.config/
-fi
-if [[ -d ~/.config/sway ]]; then
-    rsync -ah ~/.config/sway ~/old_dat/.config/
-fi
-if [[ -d ~/.config/polybar ]]; then
-    rsync -ah ~/.config/polybar ~/old_dat/.config/
-fi
-
-# doom.d folder
-if [[ -d ~/.doom.d ]]; then
-    rsync -ah ~/.doom.d ~/old_dat/
+if [[ -d ~/.config/ ]]; then
+    rsync -ah ~/.config/ ~/old_dat/
 fi
 
 # .ssh folder
 if [[ -d ~/.ssh ]]; then
     rsync -ah ~/.ssh ~/old_dat/
-fi
-
-# easystroke
-if [[ -d ~/.easystroke ]]; then
-    rsync -ah ~/.easystroke ~/old_dat/
 fi
 
 # local folder
@@ -218,12 +184,7 @@ fi
 cp -r "$tempdir/arch-config/.face" ~/
 cp -r "$tempdir/arch-config/.gtkrc-2.0" ~/
 cp -r "$tempdir/arch-config/.gitconfig" ~/
-cp -r "$tempdir/arch-config/.xinitrc" ~/
-cp -r "$tempdir/arch-config/.kopiaignore" ~/
 echo Copied files
-
-# make .xinitrc executable
-chmod +x ~/.xinitrc
 
 #copy scripts
 cp -r "$tempdir/arch-config/scripts/" ~/
@@ -244,40 +205,6 @@ ln -sf "$HOME/.config/user-dirs.dirs" "$HOME/.config/environment.d/user-dirs.dir
 
 echo
 cat <<EOF
-##############################
-##### Per Device Settings ####
-##############################
-EOF
-
-# lupusregina
-# TODO analyse parts necessary for Wayland with Alita
-if [ "$(hostname)" == "lupusregina" ]; then
-    echo "Applying overrides for $(hostname)"
-    # polybar dpi
-    polybardpi="$(cat ~/configs/arch-config/per-device/lupusregina/polybar-dpi-override.ini)"
-    awk -v polybardpi="$polybardpi" '/;per-device dpi insert/{print;print polybardpi;next}1' ~/.config/polybar/i3config.ini >/tmp/i3config.ini
-    cp /tmp/i3config.ini ~/.config/polybar/i3config.ini
-    # xresources dpi
-    xftdpi="$(cat ~/configs/arch-config/per-device/lupusregina/xresources-dpi-override)"
-    awk -v xftdpi="$xftdpi" '/!per-device dpi insert/{print;print xftdpi;next}1' ~/.Xdefaults >/tmp/.Xdefaults
-    cp /tmp/.Xdefaults ~/.Xdefaults
-    sudo cp ~/configs/arch-config/per-device/lupusregina/10-monitor.conf /etc/X11/xorg.conf.d/
-    sudo cp ~/configs/arch-config/per-device/lupusregina/20-amdgpu.conf /etc/X11/xorg.conf.d/
-fi
-
-# copy chosen image for lockscreen and desktop
-backgroundimage="/home/exu/Bilder/Art/artstation/dk-lan/artstation_14224733_55806391_月半与鬼哭.jpg"
-
-mkdir -p "$HOME/.cache/backgrounds"
-if [ -f "$backgroundimage" ]; then
-    cp "$backgroundimage" "$HOME/.cache/backgrounds/desktop"
-    cp "$backgroundimage" "$HOME/.cache/backgrounds/lockscreen"
-else
-    printf "\033[38;2;200;20;20mCouldn't find background image\n\033[0m"
-fi
-
-echo
-cat <<EOF
 ####################
 ##### Bash Cat #####
 ####################
@@ -288,22 +215,6 @@ echo "Installing bash cat"
 mkdir "$tempdir/bash-cat-with-cat"
 git clone https://github.com/RealStickman/bash-cat-with-cat.git "$tempdir/bash-cat-with-cat" &>/dev/null
 cp "$tempdir/bash-cat-with-cat/cat.sh" "$HOME/scripts/pieces/cat.sh"
-#rm -rf ./bash-cat-with-cat
-
-echo
-cat <<EOF
-########################################
-############### Autostart ##############
-########################################
-EOF
-
-# create autostart directory
-mkdir -p ~/.config/autostart/
-
-# copy corectrl desktop file
-if [[ $(pacman -Q | grep corectrl) ]]; then
-    cp /usr/share/applications/org.corectrl.CoreCtrl.desktop ~/.config/autostart/org.corectrl.CoreCtrl.desktop
-fi
 
 echo
 cat <<EOF
@@ -311,13 +222,6 @@ cat <<EOF
 ############### Services ###############
 ########################################
 EOF
-
-# generate betterlockscreen cache image in background
-#imagepath="/home/exu/Bilder/Backgrounds/artstation/dk-lan/artstation_14224733_55806391_月半与鬼哭.jpg"
-#if [ -f "$imagepath" ]; then
-#    betterlockscreen -u "$imagepath" &
-#    pids="$pids $!"
-#fi
 
 # reload systemd user scripts
 systemctl --user daemon-reload
@@ -327,11 +231,6 @@ if [[ $(pacman -Q | grep vmware-workstation) ]]; then
     sudo systemctl enable --now vmware-networks.service || echo "Service failed, continuing"
     sudo systemctl enable --now vmware-usbarbitrator.service || echo "Service failed, continuing"
 fi
-
-# FIXME temporary
-#if [ -f "/etc/pipewire/pipewire.conf" ]; then
-#    sudo rm "/etc/pipewire/pipewire.conf"
-#fi
 
 # FIXME temporary migrate container store
 if [ -f "$HOME/.config/containers/storage.conf" ]; then
@@ -421,13 +320,7 @@ EOF
 sudo chown root:root -R /etc/sudoers.d/
 sudo chmod 600 -R /etc/sudoers.d/
 
-# xfce settings
-# disable screensaver & locker
-/usr/bin/xfconf-query -c xfce4-session -n -t bool -p /startup/screensaver/enabled -s false
-
 #make bash scripts executable
-chmod +x -R ~/.config/polybar/
-chmod +x -R ~/.config/sway/scripts
 chmod +x -R ~/scripts
 
 # make applications executable
@@ -453,32 +346,9 @@ if [[ -f ~/.config/emacs/bin/doom ]]; then
 fi
 
 # disable freedesktop notification daemon
-if [[ -f "/usr/share/dbus-1/services/org.freedesktop.Notifications.service" ]]; then
-    sudo mv /usr/share/dbus-1/services/org.freedesktop.Notifications.service /usr/share/dbus-1/services/org.freedesktop.Notifications.service.disabled
-fi
-
-# dunst
-pkill dunst && nohup dunst &
-
-# reload .Xresources
-# TODO fails without display
-#if [[ -f "$HOME/.Xresources" ]]; then
-#    xrdb ~/.Xresources
+#if [[ -f "/usr/share/dbus-1/services/org.freedesktop.Notifications.service" ]]; then
+#    sudo mv /usr/share/dbus-1/services/org.freedesktop.Notifications.service /usr/share/dbus-1/services/org.freedesktop.Notifications.service.disabled
 #fi
-
-# execute feh
-#if [[ -f "$HOME/.fehbg" ]]; then
-#    "$HOME/.fehbg"
-#fi
-
-#if ps aux | grep -E "\si3(\s|$)" &>/dev/null; then
-#    i3-msg restart 1>/dev/null
-#fi
-
-if [ $XDG_SESSION_DESKTOP == "sway" ]; then
-    swaymsg reload
-    echo "Reloaded sway"
-fi
 
 # wait for all background jobs to finish
 wait $pids && echo "Finished background jobs"
