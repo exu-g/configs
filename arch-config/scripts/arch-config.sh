@@ -193,6 +193,12 @@ cp -r "$tempdir/arch-config/scripts/" ~/
 #copy stuff to /etc
 sudo cp -r "$tempdir/arch-config/etc" /
 
+# Copy pacman config depending on system architecture
+# This is required due to differences in available repos between Arch on x86_64 and ALARM for aarch64
+if [ "$(uname --machine)" == "x86_64" ]; then
+    sudo cp "/etc/pacman-x86_64.conf" "/etc/pacman.conf"
+fi
+
 echo Copied folders
 
 # Set xdg-user-dirs as environment variables
