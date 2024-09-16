@@ -187,18 +187,13 @@ cp -r "$tempdir/arch-config/.gitconfig" ~/
 echo Copied files
 
 #copy scripts
+mkdir -p "$HOME/scripts"
 cp -r "$tempdir/arch-config/scripts/" ~/
 
 #copy stuff to /etc
 sudo cp -r "$tempdir/arch-config/etc" /
 
 echo Copied folders
-
-#copy usr stuff
-sudo cp -r "$tempdir/arch-config/usr" /
-
-# copy xresources for sway
-cp "$tempdir/arch-config/.Xdefaults" ~/
 
 # Set xdg-user-dirs as environment variables
 ln -sf "$HOME/.config/user-dirs.dirs" "$HOME/.config/environment.d/user-dirs.dirs.conf"
