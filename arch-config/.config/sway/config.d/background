@@ -1,2 +1,0 @@
-output * background "$HOME/.cache/backgrounds/desktop" fill
-#output * background '#31022d' solid_color
