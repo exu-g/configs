@@ -1,4 +1,4 @@
-Main repository location is [https://gitea.exu.li/RealStickman/configs](https://gitea.exu.li/RealStickman/configs)
+Main repository location is [https://gitea.exu.li/exu/configs](https://gitea.exu.li/exu/configs)
 
 # Configs
 
