@@ -119,3 +119,7 @@
          :desc "List and execute recipes"
          "e" 'justl-exec-recipe-in-dir))
   (map! :n "e" 'justl-exec-recipe))
+
+;; quit doom without confirmation
+;; https://github.com/doomemacs/doomemacs/issues/2688#issuecomment-596684817
+(setq confirm-kill-emacs nil)
