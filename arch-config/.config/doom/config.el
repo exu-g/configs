@@ -123,3 +123,11 @@
 ;; quit doom without confirmation
 ;; https://github.com/doomemacs/doomemacs/issues/2688#issuecomment-596684817
 (setq confirm-kill-emacs nil)
+
+;; comment/uncomment keybinding
+(map! :leader
+      (:prefix ("t")
+       :desc "Comment/Uncomment region"
+       "k" 'comment-or-uncomment-region
+       :desc "Sort lines"
+       "s" 'sort-lines))
