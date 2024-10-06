@@ -16,7 +16,8 @@
 
     - name: Install official packages
       community.general.pacman:
-        state: latest
+        state: present
+        update_cache: true
         # select the lines and use 'M-x sort-lines'
         name:
           #- gnome-keyring
