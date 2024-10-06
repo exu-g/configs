@@ -128,7 +128,6 @@
           - podman # containers
           - power-profiles-daemon # power management
           - prettier # code
-          - pychecker # code
           - pyright # code
           - python-black # code
           - python-debugpy # code
