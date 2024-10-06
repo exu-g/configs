@@ -3,7 +3,7 @@
   become: yes
   tasks:
     - name: Install official packages
-      ansible.general.pacman:
+      community.general.pacman:
         state: latest
         # select the lines and use 'M-x sort-lines'
         name:
