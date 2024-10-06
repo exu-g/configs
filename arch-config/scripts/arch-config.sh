@@ -56,6 +56,7 @@ fi
 copy_firefox=0
 
 # handle arguments
+# TODO
 if [[ "$#" -eq 1 ]]; then
     if [[ "$1" == "-f" || "$1" == "--firefox" ]]; then
         copy_firefox=1
@@ -166,6 +167,7 @@ cp -r "$tempdir/arch-config/.local/" ~/
 cp -r "$tempdir/arch-config/.ssh" ~/
 
 # copy firefox only if "-f" or "--firefox" is given as argument
+# TODO
 if [[ copy_firefox -eq 1 ]]; then
     if [[ -d ~/.mozilla/firefox ]]; then
         # NOTE check if firefox default-release directory exists. 1 is good, 0 is bad
@@ -195,6 +197,7 @@ sudo cp -r "$tempdir/arch-config/etc" /
 
 # Copy pacman config depending on system architecture
 # This is required due to differences in available repos between Arch on x86_64 and ALARM for aarch64
+# TODO
 if [ "$(uname --machine)" == "x86_64" ]; then
     sudo cp "/etc/pacman-x86_64.conf" "/etc/pacman.conf"
 fi
@@ -223,6 +226,8 @@ cat <<EOF
 ############### Services ###############
 ########################################
 EOF
+
+# TODO continue here
 
 # reload systemd user scripts
 systemctl --user daemon-reload

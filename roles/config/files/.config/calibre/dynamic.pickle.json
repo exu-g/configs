@@ -1,0 +1,43 @@
+{
+  "DeDRMexport_Kindle_for_Mac_and_PC_Key_keys": "/home/marc/Downloads/default_key.k4i",
+  "DeDRMimport_Adobe_Digital_Editions_Key_keys": "/home/marc/Nextcloud/backups",
+  "Export ADE activation files": "/home/marc/Nextcloud/backups/adobe_account_backup_uuid_2d6cfbec-33fd-43ca-bcf9-e8b281114a17.zip",
+  "Export ADE keys": "/home/marc/Nextcloud/backups/adobe_uuid_2d6cfbec-33fd-43ca-bcf9-e8b281114a17.der",
+  "add a plugin dialog": "/home/marc/Downloads/DeDRM_tools_10.0.3",
+  "add books dialog dir": "/home/exu/Nextcloud/Reading/books/Sanderson, Brandon/Oathbringer",
+  "add books dialog dir-last-used-filter-spec-all-files": false,
+  "choose calibre library": "/home/exu/.local/share/Calibre-Library",
+  "database location dialog": "/home/marc/Nextcloud/Books",
+  "library_delete_books_again": false,
+  "notified-version-updates": {
+    "__class__": "set",
+    "__value__": [
+      "6.0",
+      "5.24",
+      "5.25",
+      "5.28"
+    ]
+  },
+  "recursive book import root dir dialog": "/home/exu/Nextcloud/Reading/books",
+  "save to disk dialog": "/home/exu/Downloads/newBooks",
+  "sort_history": [
+    [
+      "series",
+      true
+    ],
+    [
+      "authors",
+      true
+    ],
+    [
+      "series",
+      true
+    ],
+    [
+      "timestamp",
+      false
+    ]
+  ],
+  "welcome_wizard_device": "default",
+  "welcome_wizard_was_run": true
+}

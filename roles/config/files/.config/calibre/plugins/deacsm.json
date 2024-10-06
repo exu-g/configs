@@ -1,0 +1,7 @@
+{
+  "configured": true,
+  "delete_acsm_after_fulfill": false,
+  "detailed_logging": false,
+  "list_of_rented_books": [],
+  "notify_fulfillment": true
+}

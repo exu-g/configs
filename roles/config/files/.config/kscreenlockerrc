@@ -1,0 +1,6 @@
+[$Version]
+update_info=kscreenlocker.upd:0.1-autolock
+
+[Greeter][Wallpaper][org.kde.image][General]
+Image=/home/exu/Bilder/Art/artstation/dk-lan/artstation_14224733_55806391_月半与鬼哭.jpg
+PreviewImage=/home/exu/Bilder/Art/artstation/dk-lan/artstation_14224733_55806391_月半与鬼哭.jpg

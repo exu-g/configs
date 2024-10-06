@@ -1,0 +1,8 @@
+---
+- name: Include tasks from preparation.yml
+  ansible.builtin.include_tasks:
+    file: preparation.yml
+
+- name: Include tasks from copy_new.yml
+  ansible.builtin.include_tasks:
+    file: copy_new.yml

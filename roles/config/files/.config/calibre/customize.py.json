@@ -1,0 +1,20 @@
+{
+  "disabled_plugins": {
+    "__class__": "set",
+    "__value__": []
+  },
+  "enabled_plugins": {
+    "__class__": "set",
+    "__value__": [
+      "DeDRM"
+    ]
+  },
+  "filetype_mapping": {},
+  "plugin_customization": {},
+  "plugins": {
+    "DeACSM": "/home/marc/.config/calibre/plugins/DeACSM.zip",
+    "DeDRM": "/home/marc/.config/calibre/plugins/DeDRM.zip",
+    "KFX Input": "/home/exu/.config/calibre/plugins/KFX Input.zip",
+    "Obok DeDRM": "/home/marc/.config/calibre/plugins/Obok DeDRM.zip"
+  }
+}

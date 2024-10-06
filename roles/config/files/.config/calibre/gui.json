@@ -1,0 +1,933 @@
+{
+  "Plugin Updater plugin:plugin updater dialog": {
+    "__class__": "bytearray",
+    "__value__": "AdnQywADAAAAAAHHAAABFQAABdkAAAMKAAAByQAAARcAAAXXAAADCAAAAAAAAAAAB4AAAAHJAAABFwAABdcAAAMI"
+  },
+  "action-layout-toolbar": [
+    "Add Books",
+    "Edit Metadata",
+    null,
+    "Convert Books",
+    "View",
+    null,
+    "Store",
+    "Donate",
+    "Fetch News",
+    "Help",
+    null,
+    "Remove Books",
+    "Choose Library",
+    "Save To Disk",
+    "Connect Share",
+    "Tweak ePub",
+    "Preferences",
+    "Obok DeDRM"
+  ],
+  "action-layout-toolbar-device": [
+    "Add Books",
+    "Edit Metadata",
+    null,
+    "Convert Books",
+    "View",
+    "Send To Device",
+    null,
+    null,
+    "Location Manager",
+    null,
+    null,
+    "Fetch News",
+    "Save To Disk",
+    "Store",
+    "Connect Share",
+    null,
+    "Remove Books",
+    null,
+    "Help",
+    "Preferences",
+    "Obok DeDRM"
+  ],
+  "advanced search dialog current tab": 3,
+  "advanced_search_template_tab_program_field": "",
+  "advanced_search_template_tab_test_field": "0",
+  "advanced_search_template_tab_value_field": "",
+  "ask_to_manage_device": [
+    "9d273cd5"
+  ],
+  "basic_metadata_widget_splitter_state": {
+    "__class__": "bytearray",
+    "__value__": "AAAA/wAAAAEAAAADAAAA6wAAAdoAAAEKAf////8BAAAAAQA="
+  },
+  "book_details_splitter_horizontal_state": [
+    true,
+    448
+  ],
+  "book_info_dialog_layout": [
+    {
+      "__class__": "bytearray",
+      "__value__": "AdnQywADAAAAAAH3AAAAJAAABYgAAAP7AAAB+QAAACYAAAWGAAAD+QAAAAAAAAAAB4AAAAH5AAAAJgAABYYAAAP5"
+    },
+    {
+      "__class__": "bytearray",
+      "__value__": "AAAA/wAAAAEAAAACAAABXgAAAV4B/////wEAAAABAA=="
+    }
+  ],
+  "book_list_pin_splitter_state": {
+    "__class__": "bytearray",
+    "__value__": "AAAA/wAAAAEAAAACAAABAAAAAEYA/////wEAAAABAA=="
+  },
+  "bulk_metadata_window_geometry": {
+    "__class__": "bytearray",
+    "__value__": "AdnQywADAAAAAAAbAAAAEgAAB1gAAAQbAAAAHQAAABQAAAdWAAAEGQAAAAAAAAAAB4AAAAAdAAAAFAAAB1YAAAQZ"
+  },
+  "bulk_metadata_window_tab": 0,
+  "choose-merge-dialog-geometry": {
+    "__class__": "bytearray",
+    "__value__": "AdnQywADAAAAAAKEAAABYgAABPsAAAK9AAAChgAAAWQAAAT5AAACuwAAAAAAAAAAB4AAAAKGAAABZAAABPkAAAK7"
+  },
+  "choose-merge-dialog-splitter-state": {
+    "__class__": "bytearray",
+    "__value__": "AAAA/wAAAAEAAAACAAABXgAAAQAA/////wEAAAABAA=="
+  },
+  "convert_bulk_dialog_geom": {
+    "__class__": "bytearray",
+    "__value__": "AdnQywADAAAAAAAeAAAAJAAAB1sAAAP7AAAAIAAAACYAAAdZAAAD+QAAAAAAAAAAB4AAAAAgAAAAJgAAB1kAAAP5"
+  },
+  "convert_single_dialog_geom": {
+    "__class__": "bytearray",
+    "__value__": "AdnQywADAAAAAAA4AAAAEgAAB3UAAAPpAAAAOgAAABQAAAdzAAAD5wAAAAAAAAAAB4AAAAA6AAAAFAAAB3MAAAPn"
+  },
+  "cover_browser_splitter_vertical_state": [
+    false,
+    300
+  ],
+  "custom_colors_for_color_dialog": [
+    [
+      255,
+      255,
+      255,
+      255
+    ],
+    [
+      255,
+      255,
+      255,
+      255
+    ],
+    [
+      255,
+      255,
+      255,
+      255
+    ],
+    [
+      255,
+      255,
+      255,
+      255
+    ],
+    [
+      255,
+      255,
+      255,
+      255
+    ],
+    [
+      255,
+      255,
+      255,
+      255
+    ],
+    [
+      255,
+      255,
+      255,
+      255
+    ],
+    [
+      255,
+      255,
+      255,
+      255
+    ],
+    [
+      255,
+      255,
+      255,
+      255
+    ],
+    [
+      255,
+      255,
+      255,
+      255
+    ],
+    [
+      255,
+      255,
+      255,
+      255
+    ],
+    [
+      255,
+      255,
+      255,
+      255
+    ],
+    [
+      255,
+      255,
+      255,
+      255
+    ],
+    [
+      255,
+      255,
+      255,
+      255
+    ],
+    [
+      255,
+      255,
+      255,
+      255
+    ],
+    [
+      255,
+      255,
+      255,
+      255
+    ]
+  ],
+  "diff_dialog_geom": {
+    "__class__": "bytearray",
+    "__value__": "AdnQywADAAAAAAJnAAAAJgAABv8AAAP9AAACaQAAACgAAAb9AAAD+wAAAAAAAAAAB4AAAAJpAAAAKAAABv0AAAP7"
+  },
+  "duplicates-question-dialog-geometry": {
+    "__class__": "bytearray",
+    "__value__": "AdnQywADAAAAAACOAAABTAAAA2gAAALPAAAAkAAAAU4AAANmAAACzQAAAAAAAAAAB4AAAACQAAABTgAAA2YAAALN"
+  },
+  "geometry-of-Plugin Updater plugin:plugin updater dialog": {
+    "frame_geometry": {
+      "height": 498,
+      "width": 1039,
+      "x": 0,
+      "y": 0
+    },
+    "full_screened": false,
+    "geometry": {
+      "height": 498,
+      "width": 1039,
+      "x": 0,
+      "y": 0
+    },
+    "maximized": false,
+    "normal_geometry": {
+      "height": 498,
+      "width": 1039,
+      "x": 0,
+      "y": 0
+    },
+    "qt": {
+      "__class__": "bytearray",
+      "__value__": "AdnQywADAAAAAAAAAAAAAAAABA4AAAHxAAAAAAAAAAAAAAQOAAAB8QAAAAAAAAAACFUAAAAAAAAAAAAABA4AAAHx"
+    },
+    "screen": {
+      "depth": 32,
+      "device_pixel_ratio": 2.0,
+      "geometry_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133,
+        "x": 0,
+        "y": 0
+      },
+      "index_in_screens_list": 0,
+      "manufacturer": "Acer Technologies",
+      "model": "XV272U V",
+      "name": "DP-1",
+      "serial": "",
+      "size_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133
+      },
+      "virtual_geometry": {
+        "height": 1200,
+        "width": 4266,
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "geometry-of-bulk_metadata_window_geometry": {
+    "frame_geometry": {
+      "height": 1030,
+      "width": 1850,
+      "x": 0,
+      "y": 0
+    },
+    "full_screened": false,
+    "geometry": {
+      "height": 1030,
+      "width": 1850,
+      "x": 0,
+      "y": 0
+    },
+    "maximized": false,
+    "normal_geometry": {
+      "height": 1030,
+      "width": 1850,
+      "x": 0,
+      "y": 0
+    },
+    "qt": {
+      "__class__": "bytearray",
+      "__value__": "AdnQywADAAAAAAAAAAAAAAAABzkAAAQFAAAAAAAAAAAAAAc5AAAEBQAAAAEAAAAACFUAAAAAAAAAAAAABzkAAAQF"
+    },
+    "screen": {
+      "depth": 32,
+      "device_pixel_ratio": 2.0,
+      "geometry_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133,
+        "x": 2133,
+        "y": 0
+      },
+      "index_in_screens_list": 1,
+      "manufacturer": "HP Inc.",
+      "model": "OMEN 27q",
+      "name": "DP-2",
+      "serial": "",
+      "size_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133
+      },
+      "virtual_geometry": {
+        "height": 1200,
+        "width": 4266,
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "geometry-of-calibre_main_window_geometry": {
+    "frame_geometry": {
+      "height": 1154,
+      "width": 2129,
+      "x": 0,
+      "y": 0
+    },
+    "full_screened": false,
+    "geometry": {
+      "height": 1154,
+      "width": 2129,
+      "x": 0,
+      "y": 0
+    },
+    "maximized": false,
+    "normal_geometry": {
+      "height": 1154,
+      "width": 2129,
+      "x": 0,
+      "y": 0
+    },
+    "qt": {
+      "__class__": "bytearray",
+      "__value__": "AdnQywADAAAAAAAAAAAAAAAACFAAAASBAAAAAAAAAAAAAAhQAAAEgQAAAAAAAAAACFUAAAAAAAAAAAAACFAAAASB"
+    },
+    "screen": {
+      "depth": 32,
+      "device_pixel_ratio": 2.0,
+      "geometry_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133,
+        "x": 0,
+        "y": 0
+      },
+      "index_in_screens_list": 0,
+      "manufacturer": "Acer Technologies",
+      "model": "XV272U V",
+      "name": "DP-1",
+      "serial": "",
+      "size_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133
+      },
+      "virtual_geometry": {
+        "height": 1200,
+        "width": 4266,
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "geometry-of-convert_single_dialog_geom": {
+    "frame_geometry": {
+      "height": 980,
+      "width": 1850,
+      "x": 2133,
+      "y": 0
+    },
+    "full_screened": false,
+    "geometry": {
+      "height": 980,
+      "width": 1850,
+      "x": 2133,
+      "y": 0
+    },
+    "maximized": false,
+    "normal_geometry": {
+      "height": 980,
+      "width": 1850,
+      "x": 2133,
+      "y": 0
+    },
+    "qt": {
+      "__class__": "bytearray",
+      "__value__": "AdnQywADAAAAAAhVAAAAAAAAD44AAAPTAAAIVQAAAAAAAA+OAAAD0wAAAAEAAAAACFUAAAhVAAAAAAAAD44AAAPT"
+    },
+    "screen": {
+      "depth": 32,
+      "device_pixel_ratio": 2.0,
+      "geometry_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133,
+        "x": 2133,
+        "y": 0
+      },
+      "index_in_screens_list": 1,
+      "manufacturer": "HP Inc.",
+      "model": "OMEN 27q",
+      "name": "DP-2",
+      "serial": "",
+      "size_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133
+      },
+      "virtual_geometry": {
+        "height": 1200,
+        "width": 4266,
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "geometry-of-diff_dialog_geom": {
+    "frame_geometry": {
+      "height": 980,
+      "width": 1306,
+      "x": 0,
+      "y": 0
+    },
+    "full_screened": false,
+    "geometry": {
+      "height": 980,
+      "width": 1306,
+      "x": 0,
+      "y": 0
+    },
+    "maximized": false,
+    "normal_geometry": {
+      "height": 980,
+      "width": 1306,
+      "x": 0,
+      "y": 0
+    },
+    "qt": {
+      "__class__": "bytearray",
+      "__value__": "AdnQywADAAAAAAAAAAAAAAAABRkAAAPTAAAAAAAAAAAAAAUZAAAD0wAAAAAAAAAACFUAAAAAAAAAAAAABRkAAAPT"
+    },
+    "screen": {
+      "depth": 32,
+      "device_pixel_ratio": 2.0,
+      "geometry_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133,
+        "x": 0,
+        "y": 0
+      },
+      "index_in_screens_list": 0,
+      "manufacturer": "Acer Technologies",
+      "model": "XV272U V",
+      "name": "DP-1",
+      "serial": "",
+      "size_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133
+      },
+      "virtual_geometry": {
+        "height": 1200,
+        "width": 4266,
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "geometry-of-duplicates-question-dialog-geometry": {
+    "frame_geometry": {
+      "height": 384,
+      "width": 748,
+      "x": 2133,
+      "y": 0
+    },
+    "full_screened": false,
+    "geometry": {
+      "height": 384,
+      "width": 748,
+      "x": 2133,
+      "y": 0
+    },
+    "maximized": false,
+    "normal_geometry": {
+      "height": 384,
+      "width": 748,
+      "x": 2133,
+      "y": 0
+    },
+    "qt": {
+      "__class__": "bytearray",
+      "__value__": "AdnQywADAAAAAAhVAAAAAAAAC0AAAAF/AAAIVQAAAAAAAAtAAAABfwAAAAAAAAAACFUAAAhVAAAAAAAAC0AAAAF/"
+    },
+    "screen": {
+      "depth": 32,
+      "device_pixel_ratio": 2.0,
+      "geometry_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133,
+        "x": 0,
+        "y": 0
+      },
+      "index_in_screens_list": 0,
+      "manufacturer": "Acer Technologies",
+      "model": "XV272U V",
+      "name": "DP-1",
+      "serial": "",
+      "size_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133
+      },
+      "virtual_geometry": {
+        "height": 1200,
+        "width": 4266,
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "geometry-of-jobs_dialog_geometry": {
+    "frame_geometry": {
+      "height": 542,
+      "width": 883,
+      "x": 2133,
+      "y": 0
+    },
+    "full_screened": false,
+    "geometry": {
+      "height": 542,
+      "width": 883,
+      "x": 2133,
+      "y": 0
+    },
+    "maximized": false,
+    "normal_geometry": {
+      "height": 542,
+      "width": 883,
+      "x": 2133,
+      "y": 0
+    },
+    "qt": {
+      "__class__": "bytearray",
+      "__value__": "AdnQywADAAAAAAhVAAAAAAAAC8cAAAIdAAAIVQAAAAAAAAvHAAACHQAAAAEAAAAACFUAAAhVAAAAAAAAC8cAAAId"
+    },
+    "screen": {
+      "depth": 32,
+      "device_pixel_ratio": 2.0,
+      "geometry_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133,
+        "x": 2133,
+        "y": 0
+      },
+      "index_in_screens_list": 1,
+      "manufacturer": "HP Inc.",
+      "model": "OMEN 27q",
+      "name": "DP-2",
+      "serial": "",
+      "size_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133
+      },
+      "virtual_geometry": {
+        "height": 1200,
+        "width": 4266,
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "geometry-of-metadata_single_gui_geom": {
+    "frame_geometry": {
+      "height": 600,
+      "width": 850,
+      "x": 2133,
+      "y": 0
+    },
+    "full_screened": false,
+    "geometry": {
+      "height": 600,
+      "width": 850,
+      "x": 2133,
+      "y": 0
+    },
+    "maximized": false,
+    "normal_geometry": {
+      "height": 600,
+      "width": 850,
+      "x": 2133,
+      "y": 0
+    },
+    "qt": {
+      "__class__": "bytearray",
+      "__value__": "AdnQywADAAAAAAhVAAAAAAAAC6YAAAJXAAAIVQAAAAAAAAumAAACVwAAAAEAAAAACFUAAAhVAAAAAAAAC6YAAAJX"
+    },
+    "screen": {
+      "depth": 32,
+      "device_pixel_ratio": 2.0,
+      "geometry_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133,
+        "x": 2133,
+        "y": 0
+      },
+      "index_in_screens_list": 1,
+      "manufacturer": "HP Inc.",
+      "model": "OMEN 27q",
+      "name": "DP-2",
+      "serial": "",
+      "size_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133
+      },
+      "virtual_geometry": {
+        "height": 1200,
+        "width": 4266,
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "geometry-of-metasingle_window_geometry3": {
+    "frame_geometry": {
+      "height": 1030,
+      "width": 1850,
+      "x": 2133,
+      "y": 0
+    },
+    "full_screened": false,
+    "geometry": {
+      "height": 1030,
+      "width": 1850,
+      "x": 2133,
+      "y": 0
+    },
+    "maximized": false,
+    "normal_geometry": {
+      "height": 1030,
+      "width": 1850,
+      "x": 2133,
+      "y": 0
+    },
+    "qt": {
+      "__class__": "bytearray",
+      "__value__": "AdnQywADAAAAAAhVAAAAAAAAD44AAAQFAAAIVQAAAAAAAA+OAAAEBQAAAAEAAAAACFUAAAhVAAAAAAAAD44AAAQF"
+    },
+    "screen": {
+      "depth": 32,
+      "device_pixel_ratio": 2.0,
+      "geometry_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133,
+        "x": 2133,
+        "y": 0
+      },
+      "index_in_screens_list": 1,
+      "manufacturer": "HP Inc.",
+      "model": "OMEN 27q",
+      "name": "DP-2",
+      "serial": "",
+      "size_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133
+      },
+      "virtual_geometry": {
+        "height": 1200,
+        "width": 4266,
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "geometry-of-preferences dialog geometry": {
+    "frame_geometry": {
+      "height": 720,
+      "width": 1295,
+      "x": 0,
+      "y": 0
+    },
+    "full_screened": false,
+    "geometry": {
+      "height": 720,
+      "width": 1295,
+      "x": 0,
+      "y": 0
+    },
+    "maximized": false,
+    "normal_geometry": {
+      "height": 720,
+      "width": 1295,
+      "x": 0,
+      "y": 0
+    },
+    "qt": {
+      "__class__": "bytearray",
+      "__value__": "AdnQywADAAAAAAAAAAAAAAAABQ4AAALPAAAAAAAAAAAAAAUOAAACzwAAAAAAAAAACFUAAAAAAAAAAAAABQ4AAALP"
+    },
+    "screen": {
+      "depth": 32,
+      "device_pixel_ratio": 2.0,
+      "geometry_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133,
+        "x": 0,
+        "y": 0
+      },
+      "index_in_screens_list": 0,
+      "manufacturer": "Acer Technologies",
+      "model": "XV272U V",
+      "name": "DP-1",
+      "serial": "",
+      "size_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133
+      },
+      "virtual_geometry": {
+        "height": 1200,
+        "width": 4266,
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "geometry-of-single-cover-fetch-dialog-geometry": {
+    "frame_geometry": {
+      "height": 600,
+      "width": 850,
+      "x": 0,
+      "y": 0
+    },
+    "full_screened": false,
+    "geometry": {
+      "height": 600,
+      "width": 850,
+      "x": 0,
+      "y": 0
+    },
+    "maximized": false,
+    "normal_geometry": {
+      "height": 600,
+      "width": 850,
+      "x": 0,
+      "y": 0
+    },
+    "qt": {
+      "__class__": "bytearray",
+      "__value__": "AdnQywADAAAAAAAAAAAAAAAAA1EAAAJXAAAAAAAAAAAAAANRAAACVwAAAAEAAAAACFUAAAAAAAAAAAAAA1EAAAJX"
+    },
+    "screen": {
+      "depth": 32,
+      "device_pixel_ratio": 2.0,
+      "geometry_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133,
+        "x": 2133,
+        "y": 0
+      },
+      "index_in_screens_list": 1,
+      "manufacturer": "HP Inc.",
+      "model": "OMEN 27q",
+      "name": "DP-2",
+      "serial": "",
+      "size_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133
+      },
+      "virtual_geometry": {
+        "height": 1200,
+        "width": 4266,
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "geometry-of-template_editor_dialog_geometry": {
+    "frame_geometry": {
+      "height": 478,
+      "width": 706,
+      "x": 2133,
+      "y": 0
+    },
+    "full_screened": false,
+    "geometry": {
+      "height": 478,
+      "width": 706,
+      "x": 2133,
+      "y": 0
+    },
+    "maximized": false,
+    "normal_geometry": {
+      "height": 478,
+      "width": 706,
+      "x": 2133,
+      "y": 0
+    },
+    "qt": {
+      "__class__": "bytearray",
+      "__value__": "AdnQywADAAAAAAhVAAAAAAAACxYAAAHdAAAIVQAAAAAAAAsWAAAB3QAAAAEAAAAACFUAAAhVAAAAAAAACxYAAAHd"
+    },
+    "screen": {
+      "depth": 32,
+      "device_pixel_ratio": 2.0,
+      "geometry_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133,
+        "x": 2133,
+        "y": 0
+      },
+      "index_in_screens_list": 1,
+      "manufacturer": "HP Inc.",
+      "model": "OMEN 27q",
+      "name": "DP-2",
+      "serial": "",
+      "size_in_logical_pixels": {
+        "height": 1200,
+        "width": 2133
+      },
+      "virtual_geometry": {
+        "height": 1200,
+        "width": 4266,
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "gpm_template_editor_font": "Fira Sans",
+  "gpm_template_editor_word_wrap_mode": true,
+  "grid view visible": false,
+  "jobs view column layout3": {
+    "__class__": "bytearray",
+    "__value__": "AAAA/wAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA04AAAAFAQEBAAAAAAAAAAAAAAAAAGT/////AAAAhAAAAAAAAAAFAAABRAAAAAEAAAAAAAAAtgAAAAEAAAAAAAAAjAAAAAEAAAAAAAAAZAAAAAEAAAAAAAAAZAAAAAEAAAAAAAAD6AAAAAAAAAAAAA=="
+  },
+  "jobs_dialog_geometry": {
+    "__class__": "bytearray",
+    "__value__": "AdnQywADAAAAAAGYAAABEQAABQ4AAAMyAAABmgAAARMAAAUMAAADMAAAAAAAAAAAB4AAAAGaAAABEwAABQwAAAMw"
+  },
+  "library_usage_stats": {
+    "/home/exu/.local/share/Calibre-Library": 26,
+    "/home/marc/Calibre-Bibliothek": 200
+  },
+  "main_window_central_widget_state": {
+    "layout": "wide",
+    "narrow_desires": {
+      "book_details_height": 0.23066202090592333,
+      "cover_browser_width": 0.34992954438703616,
+      "quick_view_height": 0.2564459930313589,
+      "tag_browser_width": 0.2498825739783936
+    },
+    "narrow_visibility": {
+      "book_details": true,
+      "book_list": true,
+      "cover_browser": false,
+      "quick_view": false,
+      "tag_browser": true
+    },
+    "wide_desires": {
+      "book_details_width": 0.21042743071864725,
+      "cover_browser_height": 0.21367521367521367,
+      "quick_view_height": 0.2621082621082621,
+      "tag_browser_width": 0.09394081728511038
+    },
+    "wide_visibility": {
+      "book_details": true,
+      "book_list": true,
+      "cover_browser": false,
+      "quick_view": false,
+      "tag_browser": true
+    }
+  },
+  "metadata-download-identify-widget-splitter-state": {
+    "__class__": "bytearray",
+    "__value__": "AAAA/wAAAAEAAAACAAACAAAAAQAA/////wEAAAABAA=="
+  },
+  "metadata_single_gui_geom": {
+    "__class__": "bytearray",
+    "__value__": "AdnQywADAAAAAAIiAAAA6QAABXcAAANEAAACJAAAAOsAAAV1AAADQgAAAAAAAAAAB4AAAAIkAAAA6wAABXUAAANC"
+  },
+  "metasingle_window_geometry3": {
+    "__class__": "bytearray",
+    "__value__": "AdnQywADAAAAAAA+AAAAEgAAB3sAAAQbAAAAQAAAABQAAAd5AAAEGQAAAAAAAAAAB4AAAABAAAAAFAAAB3kAAAQZ"
+  },
+  "plugin config dialog:Dateityp:DeACSM": {
+    "__class__": "bytearray",
+    "__value__": "AdnQywADAAAAAAMkAAABRAAABKIAAAL9AAADJgAAAUYAAASgAAAC+wAAAAAAAAAAB4AAAAMmAAABRgAABKAAAAL7"
+  },
+  "plugin config dialog:Dateityp:DeDRM": {
+    "__class__": "bytearray",
+    "__value__": "AdnQywADAAAAAAQAAAAApAAABRoAAAKaAAAEAgAAAKYAAAUYAAACmAAAAAAAAAAAB4AAAAQCAAAApgAABRgAAAKY"
+  },
+  "preferences dialog geometry": {
+    "__class__": "bytearray",
+    "__value__": "AdnQywADAAAAAAHtAAAApgAABZIAAAN5AAAB7wAAAKgAAAWQAAADdwAAAAAAAAAAB4AAAAHvAAAAqAAABZAAAAN3"
+  },
+  "previous_sort_order_BooksView": {
+    "authors": true,
+    "rating": true,
+    "series": true,
+    "timestamp": false,
+    "title": true
+  },
+  "quick_start_guide_added": true,
+  "quickview visible": false,
+  "qv_open_at_shutdown": false,
+  "recently_used_languages": [
+    "Englisch"
+  ],
+  "replace_scene_breaks_history": [
+    "",
+    "<hr />",
+    "∗ ∗ ∗",
+    "• • •",
+    "♦ ♦ ♦",
+    "† †",
+    "‡ ‡ ‡",
+    "∞ ∞ ∞",
+    "¤ ¤ ¤"
+  ],
+  "search bar visible": true,
+  "show_files_after_save": false,
+  "single-cover-fetch-dialog-geometry": {
+    "__class__": "bytearray",
+    "__value__": "AdnQywADAAAAAAIhAAAA5wAABXYAAANCAAACIwAAAOkAAAV0AAADQAAAAAAAAAAAB4AAAAIjAAAA6QAABXQAAANA"
+  },
+  "tag browser search box visible": false,
+  "tag_browser_splitter_horizontal_state": [
+    true,
+    200
+  ],
+  "tag_editor_geometry": {
+    "__class__": "bytearray",
+    "__value__": "AdnQywADAAAAAAKTAAAAyAAABRYAAANlAAAClQAAAMoAAAUUAAADYwAAAAAAAAAAB4AAAAKVAAAAygAABRQAAANj"
+  },
+  "tag_editor_last_filter": "add_tag_input",
+  "template_editor_table_widths": [
+    90,
+    551
+  ]
+}
