@@ -132,7 +132,6 @@
           - python-pipenv # code
           - python-pyflakes # code
           - python-pytest # code
-          - python-rednose # code
           - qemu-full # virtualization
           - rebuild-detector # packages
           - refind-theme-nord # bootmenu
