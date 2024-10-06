@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+user=exu
+server=he1app14
+port=22
+sshkeypath=$HOME/.ssh/id_ed25519
+# NOTE don't transfer to the storage box directly, leads to mangled file names
+# see: https://serverfault.com/a/765951
+
+# unlock ssh key
+if ! ssh-add -T "${sshkeypath}.pub" &>/dev/null; then
+    ssh-add -q "$sshkeypath"
+fi
+
+# NAS: audiobooks
+rsync -uvr --progress --delete "/mnt/storage/MediaLibrary/Audiobooks" /mnt/lan1nas1/ &
+
+# Server: audiobooks
+rsync -uvr --progress --delete -e "ssh -i $sshkeypath -p $port" "/mnt/storage/MediaLibrary/Audiobooks" "${user}@${server}:/mnt/media/"
+
+# wait for background jobs
+wait
+
+echo "Finished transfering data"

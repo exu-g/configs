@@ -56,7 +56,6 @@ fi
 copy_firefox=0
 
 # handle arguments
-# TODO
 if [[ "$#" -eq 1 ]]; then
     if [[ "$1" == "-f" || "$1" == "--firefox" ]]; then
         copy_firefox=1
@@ -195,9 +194,10 @@ cp -r "$tempdir/arch-config/scripts/" ~/
 #copy stuff to /etc
 sudo cp -r "$tempdir/arch-config/etc" /
 
+# TODO continue here
+
 # Copy pacman config depending on system architecture
 # This is required due to differences in available repos between Arch on x86_64 and ALARM for aarch64
-# TODO
 if [ "$(uname --machine)" == "x86_64" ]; then
     sudo cp "/etc/pacman-x86_64.conf" "/etc/pacman.conf"
 fi
@@ -226,8 +226,6 @@ cat <<EOF
 ############### Services ###############
 ########################################
 EOF
-
-# TODO continue here
 
 # reload systemd user scripts
 systemctl --user daemon-reload

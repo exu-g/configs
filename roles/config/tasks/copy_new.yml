@@ -1,0 +1,31 @@
+---
+- name: Copy new files and directories
+  ansible.builtin.copy:
+    src: "files/{{ item }}"
+    dest: "~/{{ item }}"
+  loop:
+    - ".config"
+    - ".face"
+    - ".gitconfig"
+    - ".gtkrc-2.0"
+    - ".local"
+    - ".ssh"
+    - "etc"
+    - "scripts"
+
+- name: Symlink xdg environment variables
+  ansible.builtin.file:
+    src: "~/.config/user-dirs.dirs"
+    dest: "~/.config/environment.d/user-dirs.dirs.conf"
+    state: "link"
+
+- name: Download bash cat
+  ansible.builtin.git:
+    repo: https://github.com/exu-g/bash-cat-with-cat.git
+    dest: "/tmp/bash-cat-with-cat"
+
+- name: Copy bash cat to scripts
+  ansible.builtin.copy:
+    src: "/tmp/bash-cat-with-cat/cat.sh"
+    dest: "~/scripts/pieces/cat.sh"
+    mode: "0755"
