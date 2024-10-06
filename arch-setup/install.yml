@@ -170,3 +170,6 @@
           - xdg-utils # standards
           - xfsprogs # xfs
           - yt-dlp
+
+    - name: Install config
+      ansible.builtin.script: ../arch-config/scripts/arch-config.sh
