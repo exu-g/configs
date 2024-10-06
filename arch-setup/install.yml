@@ -131,7 +131,6 @@
           - pyright # code
           - python-black # code
           - python-debugpy # code
-          - python-grip # code
           - python-isort # code
           - python-pip # code
           - python-pipenv # code
