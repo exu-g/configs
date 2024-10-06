@@ -2,6 +2,18 @@
 - hosts: localhost
   become: yes
   tasks:
+    - name: Enable multilib repository
+      ansible.builtin.lineinfile:
+        path: /etc/pacman.conf
+        search_string: "#[multilib]"
+        line: "[multilib]"
+
+    - name: Enable multilib repository (2)
+      ansible.builtin.lineinfile:
+        path: /etc/pacman.conf
+        search_string: "#Include = /etc/pacman.d/mirrorlist"
+        line: Include = /etc/pacman.d/mirrorlist
+
     - name: Install official packages
       community.general.pacman:
         state: latest
