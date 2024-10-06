@@ -30,7 +30,6 @@
           - composer
           - discord
           - dnsmasq # virtualization
-          - dockfmt
           - dosfstools # fat
           - e2fsprogs # ext4
           - easyeffects # audio effects
@@ -173,3 +172,4 @@
     - name: Install config
       ansible.builtin.script: ../arch-config/scripts/arch-config.sh
 # - dockerfile-language-server # code
+# - dockfmt
