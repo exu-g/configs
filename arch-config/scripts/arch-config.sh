@@ -227,12 +227,11 @@ cat <<EOF
 ########################################
 EOF
 
-# TODO continue here
-
 # reload systemd user scripts
 systemctl --user daemon-reload
 
 # set systemd services for vmware (only if installed)
+# TODO
 if [[ $(pacman -Q | grep vmware-workstation) ]]; then
     sudo systemctl enable --now vmware-networks.service || echo "Service failed, continuing"
     sudo systemctl enable --now vmware-usbarbitrator.service || echo "Service failed, continuing"
@@ -248,6 +247,7 @@ fi
 sudo systemctl enable fstrim.timer
 
 # enable btrfs maintenance timers
+# TODO
 if [[ $(pacman -Q | grep btrfsmaintenance) ]]; then
     sudo systemctl restart btrfsmaintenance-refresh.service
     sudo systemctl enable btrfs-balance.timer
@@ -261,6 +261,7 @@ sudo timedatectl set-ntp true
 systemctl --user enable --now ssh-agent
 
 # enable reflector timer
+# TODO
 if [[ $(pacman -Q | grep reflector) ]]; then
     sudo systemctl enable reflector.timer
 fi
@@ -276,11 +277,14 @@ cat <<EOF
 EOF
 
 # set systemd and group for vmware (only if installed)
+# TODO
 if [[ $(pacman -Q | grep vmware-workstation) ]]; then
     echo "Setting up group for vmware"
     sudo groupadd -f vmware
     sudo gpasswd -a "$USER" vmware 1>/dev/null
 fi
+
+# TODO continue here
 
 # set group for libvirt
 if [[ $(pacman -Q | grep libvirt) ]]; then
