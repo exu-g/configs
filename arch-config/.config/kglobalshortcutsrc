@@ -7,6 +7,19 @@ Switch to Last-Used Keyboard Layout=none,Meta+Alt+L,Auf zuletzt verwendete Tasta
 Switch to Next Keyboard Layout=none,Meta+Alt+K,Auf nächste Tastaturbelegung umschalten
 _k_friendly_name=Umschaltung der Tastaturbelegung
 
+[juk]
+_k_friendly_name=JuK
+back=Ctrl+Alt+Left,Ctrl+Alt+Left,Vorheriger
+forward=Ctrl+Alt+Right,Ctrl+Alt+Right,Nächster
+forwardAlbum=Ctrl+Alt+Up,Ctrl+Alt+Up,Nächstes Album abspielen
+mute=Ctrl+Alt+M,Ctrl+Alt+M,Stumm
+playPause=Ctrl+Alt+P,Ctrl+Alt+P,Wiedergabe / Pause
+seekBack=Ctrl+Alt+Shift+Left,Ctrl+Alt+Shift+Left,Rückwärts suchen
+seekForward=Ctrl+Alt+Shift+Right,Ctrl+Alt+Shift+Right,Vorwärts suchen
+stop=Ctrl+Alt+S,Ctrl+Alt+S,Stopp
+volumeDown=Ctrl+Alt+Shift+Down,Ctrl+Alt+Shift+Down,Leiser
+volumeUp=Ctrl+Alt+Shift+Up,Ctrl+Alt+Shift+Up,Lauter
+
 [kaccess]
 Toggle Screen Reader On and Off=none,Meta+Alt+S,Screenreader ein-/ausschalten
 _k_friendly_name=Zugangshilfen

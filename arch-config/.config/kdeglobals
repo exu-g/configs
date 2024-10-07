@@ -135,16 +135,20 @@ ForegroundNormal=252,252,252
 ForegroundPositive=39,174,96
 ForegroundVisited=155,89,182
 
+[DirSelect Dialog]
+DirSelectDialog Size=843,162
+History Items[$e]=file:$HOME/Downloads/newBooks,file:$HOME/Downloads/newBooks,file:$HOME/Downloads/newBooks,file:$HOME/Downloads/newBooks,file:$HOME/Downloads/newBooks,file:$HOME/Downloads/newBooks,file:$HOME/Downloads/newBooks,file:$HOME/Downloads/newBooks,file:$HOME/Downloads/newBooks,file:$HOME/Downloads/newBooks,file:$HOME/Downloads/newBooks,file:$HOME/Downloads/newBooks,file:$HOME/Downloads/newBooks,file:$HOME/Downloads/newBooks,file:$HOME/Downloads/newBooks,file:$HOME/Downloads/newBooks,file:$HOME/Nextcloud/Reading/books/Brandon Sanderson - The Stormlight Archive
+
 [General]
 ColorSchemeHash=4a48bd34ba53d580d8594cb0216221e77518509f
 XftAntialias=true
 XftHintStyle=hintslight
 XftSubPixel=rgb
-fixed=Hack,11,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
-font=Noto Sans,11,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
-menuFont=Noto Sans,11,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
-smallestReadableFont=Noto Sans,9,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
-toolBarFont=Noto Sans,11,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
+fixed=Roboto Mono [GOOG],12,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
+font=Noto Sans,12,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
+menuFont=Noto Sans,12,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
+smallestReadableFont=Noto Sans,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
+toolBarFont=Noto Sans,12,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
 
 [KDE]
 AnimationDurationFactor=0
@@ -172,7 +176,7 @@ Speedbar Width=181
 View Style=Detail
 
 [KShortcutsDialog Settings]
-Dialog Size=611,390
+Dialog Size=950,611
 
 [PreviewSettings]
 MaximumRemoteSize=0
@@ -192,7 +196,7 @@ ZoomOut=
 [WM]
 activeBackground=49,54,59
 activeBlend=252,252,252
-activeFont=Noto Sans,11,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
+activeFont=Noto Sans,12,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
 activeForeground=252,252,252
 inactiveBackground=42,46,50
 inactiveBlend=161,169,177

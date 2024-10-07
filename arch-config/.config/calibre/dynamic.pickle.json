@@ -4,7 +4,7 @@
   "Export ADE activation files": "/home/marc/Nextcloud/backups/adobe_account_backup_uuid_2d6cfbec-33fd-43ca-bcf9-e8b281114a17.zip",
   "Export ADE keys": "/home/marc/Nextcloud/backups/adobe_uuid_2d6cfbec-33fd-43ca-bcf9-e8b281114a17.der",
   "add a plugin dialog": "/home/marc/Downloads/DeDRM_tools_10.0.3",
-  "add books dialog dir": "/home/exu/Nextcloud/Reading/books/Sanderson, Brandon/Oathbringer",
+  "add books dialog dir": "/home/exu/Nextcloud/Reading/books/Brandon Sanderson - The Stormlight Archive",
   "add books dialog dir-last-used-filter-spec-all-files": false,
   "choose calibre library": "/home/exu/.local/share/Calibre-Library",
   "database location dialog": "/home/marc/Nextcloud/Books",
@@ -14,11 +14,13 @@
     "__value__": [
       "6.0",
       "5.24",
+      "5.28",
       "5.25",
-      "5.28"
+      "7.19",
+      "7.18"
     ]
   },
-  "recursive book import root dir dialog": "/home/exu/Nextcloud/Reading/books",
+  "recursive book import root dir dialog": "/home/exu/Nextcloud/Reading/books/Brandon Sanderson - The Stormlight Archive",
   "save to disk dialog": "/home/exu/Downloads/newBooks",
   "sort_history": [
     [
