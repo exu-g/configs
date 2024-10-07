@@ -55,7 +55,7 @@
   ],
   "basic_metadata_widget_splitter_state": {
     "__class__": "bytearray",
-    "__value__": "AAAA/wAAAAEAAAADAAAA6wAAAdoAAAEKAf////8BAAAAAQA="
+    "__value__": "AAAA/wAAAAEAAAADAAAA6wAAAeoAAAEKAf////8BAAAAAQA="
   },
   "book_details_splitter_horizontal_state": [
     true,
@@ -208,50 +208,50 @@
   },
   "geometry-of-Plugin Updater plugin:plugin updater dialog": {
     "frame_geometry": {
-      "height": 498,
-      "width": 1039,
+      "height": 460,
+      "width": 1036,
       "x": 0,
       "y": 0
     },
     "full_screened": false,
     "geometry": {
-      "height": 498,
-      "width": 1039,
+      "height": 460,
+      "width": 1036,
       "x": 0,
       "y": 0
     },
     "maximized": false,
     "normal_geometry": {
-      "height": 498,
-      "width": 1039,
+      "height": 460,
+      "width": 1036,
       "x": 0,
       "y": 0
     },
     "qt": {
       "__class__": "bytearray",
-      "__value__": "AdnQywADAAAAAAAAAAAAAAAABA4AAAHxAAAAAAAAAAAAAAQOAAAB8QAAAAAAAAAACFUAAAAAAAAAAAAABA4AAAHx"
+      "__value__": "AdnQywADAAAAAAAAAAAAAAAABAsAAAHLAAAAAAAAAAAAAAQLAAABywAAAAAAAAAACAAAAAAAAAAAAAAABAsAAAHL"
     },
     "screen": {
       "depth": 32,
       "device_pixel_ratio": 2.0,
       "geometry_in_logical_pixels": {
-        "height": 1200,
-        "width": 2133,
+        "height": 1152,
+        "width": 2048,
         "x": 0,
         "y": 0
       },
       "index_in_screens_list": 0,
       "manufacturer": "Acer Technologies",
-      "model": "XV272U V",
+      "model": "XV272U V/R307036FE4208",
       "name": "DP-1",
       "serial": "",
       "size_in_logical_pixels": {
-        "height": 1200,
-        "width": 2133
+        "height": 1152,
+        "width": 2048
       },
       "virtual_geometry": {
-        "height": 1200,
-        "width": 4266,
+        "height": 1152,
+        "width": 4096,
         "x": 0,
         "y": 0
       }
@@ -310,50 +310,101 @@
   },
   "geometry-of-calibre_main_window_geometry": {
     "frame_geometry": {
-      "height": 1154,
-      "width": 2129,
+      "height": 1120,
+      "width": 2048,
       "x": 0,
       "y": 0
     },
     "full_screened": false,
     "geometry": {
-      "height": 1154,
-      "width": 2129,
+      "height": 1120,
+      "width": 2048,
       "x": 0,
       "y": 0
     },
     "maximized": false,
     "normal_geometry": {
-      "height": 1154,
-      "width": 2129,
+      "height": 1120,
+      "width": 2048,
       "x": 0,
       "y": 0
     },
     "qt": {
       "__class__": "bytearray",
-      "__value__": "AdnQywADAAAAAAAAAAAAAAAACFAAAASBAAAAAAAAAAAAAAhQAAAEgQAAAAAAAAAACFUAAAAAAAAAAAAACFAAAASB"
+      "__value__": "AdnQywADAAAAAAAAAAAAAAAAB/8AAARfAAAAAAAAAAAAAAf/AAAEXwAAAAAAAAAACAAAAAAAAAAAAAAAB/8AAARf"
     },
     "screen": {
       "depth": 32,
       "device_pixel_ratio": 2.0,
       "geometry_in_logical_pixels": {
-        "height": 1200,
-        "width": 2133,
+        "height": 1152,
+        "width": 2048,
         "x": 0,
         "y": 0
       },
       "index_in_screens_list": 0,
       "manufacturer": "Acer Technologies",
-      "model": "XV272U V",
+      "model": "XV272U V/R307036FE4208",
       "name": "DP-1",
       "serial": "",
       "size_in_logical_pixels": {
-        "height": 1200,
-        "width": 2133
+        "height": 1152,
+        "width": 2048
       },
       "virtual_geometry": {
-        "height": 1200,
-        "width": 4266,
+        "height": 1152,
+        "width": 4096,
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "geometry-of-config_widget_dialog_geometry_Sharing_Metadata download": {
+    "frame_geometry": {
+      "height": 525,
+      "width": 680,
+      "x": 617,
+      "y": 137
+    },
+    "full_screened": false,
+    "geometry": {
+      "height": 525,
+      "width": 680,
+      "x": 617,
+      "y": 137
+    },
+    "maximized": false,
+    "normal_geometry": {
+      "height": 525,
+      "width": 680,
+      "x": 617,
+      "y": 137
+    },
+    "qt": {
+      "__class__": "bytearray",
+      "__value__": "AdnQywADAAAAAAJpAAAAiQAABRAAAAKVAAACaQAAAIkAAAUQAAAClQAAAAAAAAAACAAAAAJpAAAAiQAABRAAAAKV"
+    },
+    "screen": {
+      "depth": 32,
+      "device_pixel_ratio": 2.0,
+      "geometry_in_logical_pixels": {
+        "height": 1152,
+        "width": 2048,
+        "x": 0,
+        "y": 0
+      },
+      "index_in_screens_list": 0,
+      "manufacturer": "Acer Technologies",
+      "model": "XV272U V/R307036FE4208",
+      "name": "DP-1",
+      "serial": "",
+      "size_in_logical_pixels": {
+        "height": 1152,
+        "width": 2048
+      },
+      "virtual_geometry": {
+        "height": 1152,
+        "width": 4096,
         "x": 0,
         "y": 0
       }
@@ -412,50 +463,50 @@
   },
   "geometry-of-diff_dialog_geom": {
     "frame_geometry": {
-      "height": 980,
-      "width": 1306,
+      "height": 912,
+      "width": 1300,
       "x": 0,
       "y": 0
     },
     "full_screened": false,
     "geometry": {
-      "height": 980,
-      "width": 1306,
+      "height": 912,
+      "width": 1300,
       "x": 0,
       "y": 0
     },
     "maximized": false,
     "normal_geometry": {
-      "height": 980,
-      "width": 1306,
+      "height": 912,
+      "width": 1300,
       "x": 0,
       "y": 0
     },
     "qt": {
       "__class__": "bytearray",
-      "__value__": "AdnQywADAAAAAAAAAAAAAAAABRkAAAPTAAAAAAAAAAAAAAUZAAAD0wAAAAAAAAAACFUAAAAAAAAAAAAABRkAAAPT"
+      "__value__": "AdnQywADAAAAAAAAAAAAAAAABRMAAAOPAAAAAAAAAAAAAAUTAAADjwAAAAAAAAAACAAAAAAAAAAAAAAABRMAAAOP"
     },
     "screen": {
       "depth": 32,
       "device_pixel_ratio": 2.0,
       "geometry_in_logical_pixels": {
-        "height": 1200,
-        "width": 2133,
+        "height": 1152,
+        "width": 2048,
         "x": 0,
         "y": 0
       },
       "index_in_screens_list": 0,
       "manufacturer": "Acer Technologies",
-      "model": "XV272U V",
+      "model": "XV272U V/R307036FE4208",
       "name": "DP-1",
       "serial": "",
       "size_in_logical_pixels": {
-        "height": 1200,
-        "width": 2133
+        "height": 1152,
+        "width": 2048
       },
       "virtual_geometry": {
-        "height": 1200,
-        "width": 4266,
+        "height": 1152,
+        "width": 4096,
         "x": 0,
         "y": 0
       }
@@ -514,50 +565,101 @@
   },
   "geometry-of-jobs_dialog_geometry": {
     "frame_geometry": {
-      "height": 542,
-      "width": 883,
-      "x": 2133,
+      "height": 504,
+      "width": 880,
+      "x": 0,
       "y": 0
     },
     "full_screened": false,
     "geometry": {
-      "height": 542,
-      "width": 883,
-      "x": 2133,
+      "height": 504,
+      "width": 880,
+      "x": 0,
       "y": 0
     },
     "maximized": false,
     "normal_geometry": {
-      "height": 542,
-      "width": 883,
-      "x": 2133,
+      "height": 504,
+      "width": 880,
+      "x": 0,
       "y": 0
     },
     "qt": {
       "__class__": "bytearray",
-      "__value__": "AdnQywADAAAAAAhVAAAAAAAAC8cAAAIdAAAIVQAAAAAAAAvHAAACHQAAAAEAAAAACFUAAAhVAAAAAAAAC8cAAAId"
+      "__value__": "AdnQywADAAAAAAAAAAAAAAAAA28AAAH3AAAAAAAAAAAAAANvAAAB9wAAAAAAAAAACAAAAAAAAAAAAAAAA28AAAH3"
     },
     "screen": {
       "depth": 32,
       "device_pixel_ratio": 2.0,
       "geometry_in_logical_pixels": {
-        "height": 1200,
-        "width": 2133,
-        "x": 2133,
+        "height": 1152,
+        "width": 2048,
+        "x": 0,
         "y": 0
       },
-      "index_in_screens_list": 1,
-      "manufacturer": "HP Inc.",
-      "model": "OMEN 27q",
-      "name": "DP-2",
+      "index_in_screens_list": 0,
+      "manufacturer": "Acer Technologies",
+      "model": "XV272U V/R307036FE4208",
+      "name": "DP-1",
       "serial": "",
       "size_in_logical_pixels": {
-        "height": 1200,
-        "width": 2133
+        "height": 1152,
+        "width": 2048
       },
       "virtual_geometry": {
-        "height": 1200,
-        "width": 4266,
+        "height": 1152,
+        "width": 4096,
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "geometry-of-manage-data-files-xx-geometry": {
+    "frame_geometry": {
+      "height": 462,
+      "width": 397,
+      "x": 710,
+      "y": 168
+    },
+    "full_screened": false,
+    "geometry": {
+      "height": 462,
+      "width": 397,
+      "x": 710,
+      "y": 168
+    },
+    "maximized": false,
+    "normal_geometry": {
+      "height": 462,
+      "width": 397,
+      "x": 710,
+      "y": 168
+    },
+    "qt": {
+      "__class__": "bytearray",
+      "__value__": "AdnQywADAAAAAALGAAAAqAAABFIAAAJ1AAACxgAAAKgAAARSAAACdQAAAAAAAAAACAAAAALGAAAAqAAABFIAAAJ1"
+    },
+    "screen": {
+      "depth": 32,
+      "device_pixel_ratio": 2.0,
+      "geometry_in_logical_pixels": {
+        "height": 1152,
+        "width": 2048,
+        "x": 0,
+        "y": 0
+      },
+      "index_in_screens_list": 0,
+      "manufacturer": "Acer Technologies",
+      "model": "XV272U V/R307036FE4208",
+      "name": "DP-1",
+      "serial": "",
+      "size_in_logical_pixels": {
+        "height": 1152,
+        "width": 2048
+      },
+      "virtual_geometry": {
+        "height": 1152,
+        "width": 4096,
         "x": 0,
         "y": 0
       }
@@ -616,50 +718,50 @@
   },
   "geometry-of-metasingle_window_geometry3": {
     "frame_geometry": {
-      "height": 1030,
-      "width": 1850,
-      "x": 2133,
+      "height": 770,
+      "width": 1783,
+      "x": 0,
       "y": 0
     },
     "full_screened": false,
     "geometry": {
-      "height": 1030,
-      "width": 1850,
-      "x": 2133,
+      "height": 770,
+      "width": 1783,
+      "x": 0,
       "y": 0
     },
     "maximized": false,
     "normal_geometry": {
-      "height": 1030,
-      "width": 1850,
-      "x": 2133,
+      "height": 770,
+      "width": 1783,
+      "x": 0,
       "y": 0
     },
     "qt": {
       "__class__": "bytearray",
-      "__value__": "AdnQywADAAAAAAhVAAAAAAAAD44AAAQFAAAIVQAAAAAAAA+OAAAEBQAAAAEAAAAACFUAAAhVAAAAAAAAD44AAAQF"
+      "__value__": "AdnQywADAAAAAAAAAAAAAAAABvYAAAMBAAAAAAAAAAAAAAb2AAADAQAAAAAAAAAACAAAAAAAAAAAAAAABvYAAAMB"
     },
     "screen": {
       "depth": 32,
       "device_pixel_ratio": 2.0,
       "geometry_in_logical_pixels": {
-        "height": 1200,
-        "width": 2133,
-        "x": 2133,
+        "height": 1152,
+        "width": 2048,
+        "x": 0,
         "y": 0
       },
-      "index_in_screens_list": 1,
-      "manufacturer": "HP Inc.",
-      "model": "OMEN 27q",
-      "name": "DP-2",
+      "index_in_screens_list": 0,
+      "manufacturer": "Acer Technologies",
+      "model": "XV272U V/R307036FE4208",
+      "name": "DP-1",
       "serial": "",
       "size_in_logical_pixels": {
-        "height": 1200,
-        "width": 2133
+        "height": 1152,
+        "width": 2048
       },
       "virtual_geometry": {
-        "height": 1200,
-        "width": 4266,
+        "height": 1152,
+        "width": 4096,
         "x": 0,
         "y": 0
       }
@@ -667,50 +769,50 @@
   },
   "geometry-of-preferences dialog geometry": {
     "frame_geometry": {
-      "height": 720,
-      "width": 1295,
+      "height": 682,
+      "width": 1292,
       "x": 0,
       "y": 0
     },
     "full_screened": false,
     "geometry": {
-      "height": 720,
-      "width": 1295,
+      "height": 682,
+      "width": 1292,
       "x": 0,
       "y": 0
     },
     "maximized": false,
     "normal_geometry": {
-      "height": 720,
-      "width": 1295,
+      "height": 682,
+      "width": 1292,
       "x": 0,
       "y": 0
     },
     "qt": {
       "__class__": "bytearray",
-      "__value__": "AdnQywADAAAAAAAAAAAAAAAABQ4AAALPAAAAAAAAAAAAAAUOAAACzwAAAAAAAAAACFUAAAAAAAAAAAAABQ4AAALP"
+      "__value__": "AdnQywADAAAAAAAAAAAAAAAABQsAAAKpAAAAAAAAAAAAAAULAAACqQAAAAAAAAAACAAAAAAAAAAAAAAABQsAAAKp"
     },
     "screen": {
       "depth": 32,
       "device_pixel_ratio": 2.0,
       "geometry_in_logical_pixels": {
-        "height": 1200,
-        "width": 2133,
+        "height": 1152,
+        "width": 2048,
         "x": 0,
         "y": 0
       },
       "index_in_screens_list": 0,
       "manufacturer": "Acer Technologies",
-      "model": "XV272U V",
+      "model": "XV272U V/R307036FE4208",
       "name": "DP-1",
       "serial": "",
       "size_in_logical_pixels": {
-        "height": 1200,
-        "width": 2133
+        "height": 1152,
+        "width": 2048
       },
       "virtual_geometry": {
-        "height": 1200,
-        "width": 4266,
+        "height": 1152,
+        "width": 4096,
         "x": 0,
         "y": 0
       }
@@ -830,7 +932,7 @@
     "__value__": "AdnQywADAAAAAAGYAAABEQAABQ4AAAMyAAABmgAAARMAAAUMAAADMAAAAAAAAAAAB4AAAAGaAAABEwAABQwAAAMw"
   },
   "library_usage_stats": {
-    "/home/exu/.local/share/Calibre-Library": 26,
+    "/home/exu/.local/share/Calibre-Library": 32,
     "/home/marc/Calibre-Bibliothek": 200
   },
   "main_window_central_widget_state": {
@@ -849,7 +951,7 @@
       "tag_browser": true
     },
     "wide_desires": {
-      "book_details_width": 0.21042743071864725,
+      "book_details_width": 0.1376953125,
       "cover_browser_height": 0.21367521367521367,
       "quick_view_height": 0.2621082621082621,
       "tag_browser_width": 0.09394081728511038
