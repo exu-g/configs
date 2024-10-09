@@ -1,8 +1,143 @@
 ---
-- name: Include tasks from preparation.yml
-  ansible.builtin.include_tasks:
-    file: preparation.yml
+# - name: Include tasks from preparation.yml
+#   ansible.builtin.include_tasks:
+#     file: preparation.yml
 
-- name: Include tasks from copy_new.yml
-  ansible.builtin.include_tasks:
-    file: copy_new.yml
+- name: Gather the package facts
+  ansible.builtin.package_facts:
+
+- name: Create backup structure
+  ansible.builtin.file:
+    path: "~/old_dat"
+    state: "directory"
+
+- name: Copy files to backup
+  ansible.builtin.copy:
+    src: "~/{{ item }}"
+    dest: "~/old_dat/{{ item }}"
+  loop:
+    - ".config"
+    - ".ssh"
+    - ".local/share/applications"
+    - ".mozilla"
+    - "scripts"
+
+- name: Remove old files and directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: "absent"
+  loop:
+    - "~/.config/Vorlagen"
+    - "~/scripts/in_path"
+    - "~/scripts/pieces"
+    - "~/scripts/polybar"
+    - "~/scripts/archive"
+
+# - name: Include tasks from copy_new.yml
+#   ansible.builtin.include_tasks:
+#     file: copy_new.yml
+
+- name: Copy new files and directories
+  ansible.builtin.copy:
+    #src: "files/{{ item }}"
+    src: "{{ item }}"
+    dest: "~/{{ item }}"
+  loop:
+    - ".config"
+    - ".face"
+    - ".gitconfig"
+    - ".gtkrc-2.0"
+    - ".local"
+    - ".ssh"
+    - "scripts"
+
+- name: Copy new files and directories (root)
+  ansible.builtin.copy:
+    #src: "files/{{ item }}"
+    src: "{{ item }}"
+    dest: "~/{{ item }}"
+  loop:
+    - "etc"
+  become: true
+
+- name: x86_64 | Copy files (root)
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "/etc/pacman.conf"
+  loop:
+    - "/etc/pacman-x86_64.conf"
+  when: ansible_architecture == "x86_64"
+  become: true
+
+- name: Symlink xdg environment variables
+  ansible.builtin.file:
+    src: "~/.config/user-dirs.dirs"
+    dest: "~/.config/environment.d/user-dirs.dirs.conf"
+    state: "link"
+
+- name: Bash cat | Download
+  ansible.builtin.git:
+    repo: https://github.com/exu-g/bash-cat-with-cat.git
+    dest: "/tmp/bash-cat-with-cat"
+
+- name: Bash cat | Copy to scripts
+  ansible.builtin.copy:
+    src: "/tmp/bash-cat-with-cat/cat.sh"
+    dest: "~/scripts/pieces/cat.sh"
+    mode: "0755"
+
+- name: Reload user systemd services
+  ansible.builtin.systemd_service:
+    daemon_reload: true
+
+- name: Enable fstrim
+  ansible.builtin.systemd_service:
+    name: fstrim.timer
+    state: "started"
+    enabled: true
+  become: true
+
+- name: Enable btrfsmaintenance timers
+  ansible.builtin.systemd_service:
+    name: "{{ item }}"
+    enabled: true
+  loop:
+    - "btrfs-balance.timer"
+    - "btrfs-scrub.timer"
+  when: ('btrfsmaintenance' in ansible_facts.packages)
+  become: true
+
+- name: Enable btrfsmaintenance services
+  ansible.builtin.systemd_service:
+    name: "{{ item }}"
+    state: "restarted"
+  loop:
+    - "btrfsmaintenance-refresh.service"
+  when: ('btrfsmaintenance' in ansible_facts.packages)
+  become: true
+
+- name: Enable reflector
+  ansible.builtin.systemd_service:
+    name: "{{ item }}"
+    enabled: true
+  loop:
+    - "reflector.timer"
+  when: ('reflector' in ansible_facts.packages)
+  become: true
+
+- name: Enable NTP
+  ansible.builtin.command: timedatectl set-ntp true
+  become: true
+
+- name: Enable ssh-agent
+  ansible.builtin.systemd_service:
+    name: ssh-agent
+    state: "restarted"
+    enabled: true
+
+- name: Enable vnstat
+  ansible.builtin.systemd_service:
+    name: vnstat
+    state: "started"
+    enabled: true
+  become: true

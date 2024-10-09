@@ -197,7 +197,6 @@ sudo cp -r "$tempdir/arch-config/etc" /
 
 # Copy pacman config depending on system architecture
 # This is required due to differences in available repos between Arch on x86_64 and ALARM for aarch64
-# TODO
 if [ "$(uname --machine)" == "x86_64" ]; then
     sudo cp "/etc/pacman-x86_64.conf" "/etc/pacman.conf"
 fi
@@ -231,7 +230,6 @@ EOF
 systemctl --user daemon-reload
 
 # set systemd services for vmware (only if installed)
-# TODO
 if [[ $(pacman -Q | grep vmware-workstation) ]]; then
     sudo systemctl enable --now vmware-networks.service || echo "Service failed, continuing"
     sudo systemctl enable --now vmware-usbarbitrator.service || echo "Service failed, continuing"
@@ -247,7 +245,6 @@ fi
 sudo systemctl enable fstrim.timer
 
 # enable btrfs maintenance timers
-# TODO
 if [[ $(pacman -Q | grep btrfsmaintenance) ]]; then
     sudo systemctl restart btrfsmaintenance-refresh.service
     sudo systemctl enable btrfs-balance.timer
@@ -261,7 +258,6 @@ sudo timedatectl set-ntp true
 systemctl --user enable --now ssh-agent
 
 # enable reflector timer
-# TODO
 if [[ $(pacman -Q | grep reflector) ]]; then
     sudo systemctl enable reflector.timer
 fi
@@ -277,7 +273,6 @@ cat <<EOF
 EOF
 
 # set systemd and group for vmware (only if installed)
-# TODO
 if [[ $(pacman -Q | grep vmware-workstation) ]]; then
     echo "Setting up group for vmware"
     sudo groupadd -f vmware
