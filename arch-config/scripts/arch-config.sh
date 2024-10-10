@@ -279,8 +279,6 @@ if [[ $(pacman -Q | grep vmware-workstation) ]]; then
     sudo gpasswd -a "$USER" vmware 1>/dev/null
 fi
 
-# TODO continue here
-
 # set group for libvirt
 if [[ $(pacman -Q | grep libvirt) ]]; then
     echo "Setting group for libvirt"
@@ -288,6 +286,7 @@ if [[ $(pacman -Q | grep libvirt) ]]; then
 fi
 
 # set group for wireshark (only if installed)
+# TODO
 if [[ $(pacman -Q | grep wireshark-qt) ]]; then
     echo "Setting up group for wireshark"
     sudo groupadd -f wireshark
@@ -334,6 +333,7 @@ chmod +x -R ~/scripts
 chmod +x -R ~/.local/share/applications
 
 #remove downloaded folder
+# TODO
 rm -rf ~/config
 
 echo
@@ -347,6 +347,7 @@ EOF
 update-desktop-database ~/.local/share/applications/
 
 # sync doom-emacs only if it is installed
+# TODO
 if [[ -f ~/.config/emacs/bin/doom ]]; then
     ~/.config/emacs/bin/doom sync &
     pids="$pids $!"
