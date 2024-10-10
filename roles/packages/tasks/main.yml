@@ -24,6 +24,7 @@
         - pipewire-alsa # audio
         - pipewire-jack # audio
         - pipewire-pulse # audio
+  become: true
 
 - name: Install other packages
   community.general.pacman:
