@@ -136,11 +136,3 @@
     state: "restarted"
     enabled: true
     scope: user
-
-- name: Enable vnstat
-  ansible.builtin.systemd_service:
-    name: vnstat
-    state: "started"
-    enabled: true
-  when: ('vnstat' in ansible_facts.packages)
-  become: true
