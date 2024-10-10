@@ -142,4 +142,5 @@
     name: vnstat
     state: "started"
     enabled: true
+  when: ('vnstat' in ansible_facts.packages)
   become: true
