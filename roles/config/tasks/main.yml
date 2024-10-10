@@ -136,3 +136,9 @@
     state: "restarted"
     enabled: true
     scope: user
+
+- name: Enable sddm
+  ansible.builtin.systemd_service:
+    name: sddm
+    enabled: true
+  become: true
