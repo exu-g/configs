@@ -3,21 +3,18 @@ Main repository location is [https://gitea.exu.li/exu/configs](https://gitea.exu
 # Configs
 
 All my config files, scripts and other in one place.  
-Mostly focused on ArchLinux, although there is also a NixOS configuration and independent Python programs.
 
 ## ArchLinux
 
-- [arch-config](./arch-config)
-- [arch-setup](./arch-setup)
-
-### First time installation
-
-Enable the `multilib` repository in `/etc/pacman.conf`
+First time installation:  
 
 ```sh
-git clone https://gitea.exu.li/realstickman/configs.git
-cd configs/arch-setup
-./install.sh
+pacman -Syu
+pacman -S git ansible
+cd $(mktemp -d)
+git clone https://gitea.exu.li/exu/configs.git
+cd configs
+ansible-playbook setup.yml
 ```
 
 ### Config updates
@@ -34,11 +31,6 @@ or run the script directly.
 ~/scripts/arch-config.sh
 ```
 
-## NixOS
-
-- [nixos-config](./nixos-config)
-
 ## Other
 
-- [easyffmpeg](./easyffmpeg)
 - [music-normalize](./music-normalize)
