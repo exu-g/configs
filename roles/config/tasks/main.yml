@@ -22,6 +22,7 @@
     - ".local/share/applications"
     - ".mozilla"
     - "scripts"
+  ignore_errors: true
 
 - name: Remove old files and directories
   ansible.builtin.file:
