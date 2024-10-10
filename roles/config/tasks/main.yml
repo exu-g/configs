@@ -143,3 +143,53 @@
     name: sddm
     enabled: true
   become: true
+
+- name: Add group for libvirt
+  ansible.builtin.user:
+    name: "{{ ansible_user_id }}"
+    groups:
+      - libvirt
+    append: true
+  when: ('libvirt' in ansible_facts.packages)
+  become: true
+
+- name: Create groups
+  ansible.builtin.group:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - video # backlight
+    - render # GPU passing
+    - wireguard # wireguard
+  become: true
+
+- name: Add user to groups
+  ansible.builtin.user:
+    name: "{{ ansible_user_id }}"
+    groups:
+      - video # backlight
+      - render # GPU passing
+      - wireguard # wireguard
+    append: true
+
+- name: Set sudoers.d permissions
+  ansible.builtin.file:
+    path: /etc/sudoers.d
+    mode: "600"
+    owner: root
+    group: root
+    recurse: true
+  become: true
+
+- name: Make scripts executable
+  ansible.builin.file:
+    path: "{{ item }}"
+    mode: u+x,g+x,o+x
+    recurse: true
+  loop:
+    - "~/scripts"
+    - "~/.local/share/applications"
+
+- name: Reload applications
+  ansible.builtin.shell:
+    cmd: "update-desktop-database ~/.local/share/applications/"
