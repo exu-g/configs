@@ -14,7 +14,7 @@
 - name: Copy files to backup
   ansible.builtin.copy:
     src: "~/{{ item }}"
-    dest: "~/old_dat/{{ item }}"
+    dest: "~/old_dat/"
     remote_src: true
   loop:
     - ".config"
