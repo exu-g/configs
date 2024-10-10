@@ -41,7 +41,6 @@
 
 - name: Copy new files and directories
   ansible.builtin.copy:
-    #src: "files/{{ item }}"
     src: "{{ item }}"
     dest: "~/{{ item }}"
   loop:
@@ -55,9 +54,8 @@
 
 - name: Copy new files and directories (root)
   ansible.builtin.copy:
-    #src: "files/{{ item }}"
     src: "{{ item }}"
-    dest: "~/{{ item }}"
+    dest: "/{{ item }}"
   loop:
     - "etc"
   become: true
@@ -67,7 +65,7 @@
     src: "{{ item }}"
     dest: "/etc/pacman.conf"
   loop:
-    - "/etc/pacman-x86_64.conf"
+    - "etc/pacman-x86_64.conf"
   when: ansible_architecture == "x86_64"
   become: true
 
