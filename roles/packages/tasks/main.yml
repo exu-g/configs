@@ -1,11 +1,30 @@
 ---
+- name: Enable multilib repo
+  ansible.builtin.blockinfile:
+        path: /etc/pacman.conf
+        prepend_newline: true
+        block: |
+              [multilib]
+              Include = /etc/pacman.d/mirrorlist
+
 - name: Update packages
   community.general.pacman:
         update_cache: true
         upgrade: true
   become: true
 
-- name: Install official packages
+- name: Install priority packages
+  community.general.pacman:
+        state: present
+        # select the lines and use 'M-x sort-lines'
+        name: "{{ item }}"
+  loop:
+        - pipewire # audio
+        - pipewire-alsa # audio
+        - pipewire-jack # audio
+        - pipewire-pulse # audio
+
+- name: Install other packages
   community.general.pacman:
         state: present
         # select the lines and use 'M-x sort-lines'
@@ -100,10 +119,6 @@
         - pandoc
         - php # code
         - piper # mouse
-        - pipewire # audio
-        - pipewire-alsa # audio
-        - pipewire-jack # audio
-        - pipewire-pulse # audio
         - pkgstats
         - podman # containers
         - power-profiles-daemon # power management
