@@ -6,6 +6,7 @@
         block: |
               [multilib]
               Include = /etc/pacman.d/mirrorlist
+  become: true
 
 - name: Update packages
   community.general.pacman:
