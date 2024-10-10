@@ -42,7 +42,7 @@
 - name: Copy new files and directories
   ansible.builtin.copy:
     src: "{{ item }}"
-    dest: "~/{{ item }}"
+    dest: "~/"
   loop:
     - ".config"
     - ".face"
@@ -55,7 +55,7 @@
 - name: Copy new files and directories (root)
   ansible.builtin.copy:
     src: "{{ item }}"
-    dest: "/{{ item }}"
+    dest: "/"
   loop:
     - "etc"
   become: true
