@@ -15,6 +15,7 @@
   ansible.builtin.copy:
     src: "~/{{ item }}"
     dest: "~/old_dat/{{ item }}"
+    remote_src: true
   loop:
     - ".config"
     - ".ssh"
