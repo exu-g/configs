@@ -18,22 +18,23 @@
     remote_src: true
   loop:
     - ".config"
-    - ".ssh"
     - ".local/share/applications"
     - ".mozilla"
+    - ".ssh"
     - "scripts"
   ignore_errors: true
 
-- name: Remove old files and directories
+- name: Remove old/unnecessary files and directories
   ansible.builtin.file:
     path: "{{ item }}"
     state: "absent"
   loop:
     - "~/.config/Vorlagen"
+    - "~/.emacs.d"
+    - "~/scripts/archive"
     - "~/scripts/in_path"
     - "~/scripts/pieces"
     - "~/scripts/polybar"
-    - "~/scripts/archive"
 
 # - name: Include tasks from copy_new.yml
 #   ansible.builtin.include_tasks:
