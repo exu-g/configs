@@ -1,192 +1,193 @@
 ---
 - name: Enable multilib repo
   ansible.builtin.blockinfile:
-    path: /etc/pacman.conf
-    prepend_newline: true
-    block: |
-      [multilib]
-      Include = /etc/pacman.d/mirrorlist
+      path: /etc/pacman.conf
+      prepend_newline: true
+      block: |
+          [multilib]
+          Include = /etc/pacman.d/mirrorlist
   become: true
 
 - name: Update packages
   community.general.pacman:
-    update_cache: true
-    upgrade: true
+      update_cache: true
+      upgrade: true
   become: true
 
 - name: Install priority packages
   community.general.pacman:
-    state: present
-    # select the lines and use 'M-x sort-lines'
-    name: "{{ item }}"
+      state: present
+      # select the lines and use 'M-x sort-lines'
+      name: "{{ item }}"
   loop:
-    - pipewire # audio
-    - pipewire-alsa # audio
-    - pipewire-jack # audio
-    - pipewire-pulse # audio
+      - pipewire # audio
+      - pipewire-alsa # audio
+      - pipewire-jack # audio
+      - pipewire-pulse # audio
   become: true
 
 - name: Install other packages
   community.general.pacman:
-    state: present
-    # select the lines and use 'M-x sort-lines'
-    name: "{{ item }}"
+      state: present
+      # select the lines and use 'M-x sort-lines'
+      name: "{{ item }}"
   loop:
-    - aardvark-dns # containers
-    - amd-ucode # microcode
-    - ansible # iac
-    - base-devel # devel stuff
-    - bind # dnsutils (nslookup, dig)
-    - btrfs-progs # btrfs
-    - buildah # containers
-    - clang
-    - cmake
-    - composer
-    - discord
-    - dnsmasq # virtualization
-    - dosfstools # fat
-    - e2fsprogs # ext4
-    - easyeffects # audio effects
-    - edk2-ovmf # virtualization
-    - emacs-wayland
-    - exfatprogs # exfat
-    - f2fs-tools # f2fs
-    - fd
-    - ffmpeg # multimedia
-    - firefox # browser
-    - firewalld # firewall
-    - fish # shell
-    - flatpak # packages
-    - freetype2 # fonts
-    - fuse-overlayfs # containers
-    - fwupd # firmware
-    - fwupd-efi # firmware
-    - gdb
-    - git # code
-    - git-lfs # code
-    - hunspell # spelling
-    - hunspell-de # spelling
-    - hunspell-en_gb # spelling
-    - hunspell-en_us # spelling
-    - hyphen # spelling
-    - hyphen-de # spelling
-    - hyphen-en # spelling
-    - imv # image viewer
-    - intel-media-driver # VAAPI
-    - intel-ucode # microcode
-    - jre-openjdk # java
-    - just # command runner
-    - kde-applications-meta # kde
-    - kid3 # music metadata
-    - krita
-    - languagetool
-    - lib32-mesa # video driver
-    - lib32-vulkan-intel # video driver
-    - lib32-vulkan-radeon # video driver
-    - libreoffice-fresh # office
-    - libreoffice-fresh-de # office
-    - libva-intel-driver # VAAPI
-    - libva-mesa-driver # VAAPI
-    - libva-utils # VAAPI
-    - libvirt # virtualization
-    - linux # kernel
-    - linux-firmware # kernel
-    - linux-headers # kernel
-    - lldb
-    - lldb-mi
-    - lutris # games
-    - man-db # docs
-    - mesa # video driver
-    - mesa-vdpau # VDPAU
-    - mosh # remote shell
-    - mtools # fat
-    - mythes-de # thesaurus
-    - mythes-en # thesaurus
-    - nerd-fonts # fonts
-    - nextcloud-client # cloud
-    - nodejs
-    - noto-fonts # fonts
-    - noto-fonts-cjk # fonts
-    - noto-fonts-emoji # fonts
-    - ntfs-3g # ntfs
-    - nvme-cli # nvme ssd
-    - obs-studio # recording
-    - okular # pdf
-    - openssh # remote shell
-    - opentofu # iac
-    - otf-font-awesome # fonts
-    - p7zip # compression
-    - packagekit-qt6
-    - pacman-contrib # scripts
-    - pandoc
-    - php # code
-    - piper # mouse
-    - pkgstats
-    - podman # containers
-    - power-profiles-daemon # power management
-    - prettier # code
-    - pyright # code
-    - python-black # code
-    - python-debugpy # code
-    - python-isort # code
-    - python-pip # code
-    - python-pipenv # code
-    - python-pyflakes # code
-    - python-pytest # code
-    - qemu-full # virtualization
-    - rebuild-detector # packages
-    - reflector # mirrors
-    - restic # backup
-    - ripgrep # doom emacs
-    - rsync # file sync
-    - ruby-sass # code
-    - shellcheck # code
-    - shfmt # code
-    - smartmontools # disks
-    - steam # games
-    - stress # benchmark
-    - stylelint # code
-    - tesseract-data-deu
-    - tesseract-data-eng
-    - texlive-core
-    - thunderbird # email
-    - tidy
-    - traceroute # network
-    - transmission-remote-gtk # torrent
-    - ttf-fira-code # fonts
-    - ttf-fira-sans # fonts
-    - udftools # udf
-    - unrar # compression
-    - unzip # compression
-    - util-linux # various utils
-    - vdpauinfo # VDPAU
-    - vim # editor
-    - virt-manager # virtualization
-    - vscode-css-languageserver
-    - vulkan-intel # video driver
-    - vulkan-radeon # video driver
-    - wget # network
-    - wine # windows
-    - wireguard-tools # vpn
-    - wireplumber # audio
-    - xdg-desktop-portal-gtk # flatpak theming
-    - xdg-user-dirs # standards
-    - xdg-utils # standards
-    - xfsprogs # xfs
-    - yt-dlp
-    #- gnome-keyring
-    #- hdparm
-    #- libaacs
-    #- libbluray
-    #- libcdio
-    #- libdvdcss
-    #- libdvdnav
-    #- libdvdread
-    #- libsecret
-    #- phonon-qt5-gstreamer
-    #- seahorse
-    # - dockerfile-language-server # code # AUR
-    # - dockfmt # AUR
-    # - refind-theme-nord # bootmenu # AUR
-    # - btrfsmaintenance # AUR
+      - aardvark-dns # containers
+      - amd-ucode # microcode
+      - ansible # iac
+      - base-devel # devel stuff
+      - bind # dnsutils (nslookup, dig)
+      - btrfs-progs # btrfs
+      - buildah # containers
+      - clang
+      - cmake
+      - composer
+      - discord
+      - dnsmasq # virtualization
+      - dosfstools # fat
+      - e2fsprogs # ext4
+      - easyeffects # audio effects
+      - edk2-ovmf # virtualization
+      - emacs-wayland
+      - exfatprogs # exfat
+      - f2fs-tools # f2fs
+      - fd
+      - ffmpeg # multimedia
+      - firefox # browser
+      - firewalld # firewall
+      - fish # shell
+      - flatpak # packages
+      - freetype2 # fonts
+      - fuse-overlayfs # containers
+      - fwupd # firmware
+      - fwupd-efi # firmware
+      - gdb
+      - git # code
+      - git-lfs # code
+      - hunspell # spelling
+      - hunspell-de # spelling
+      - hunspell-en_gb # spelling
+      - hunspell-en_us # spelling
+      - hyphen # spelling
+      - hyphen-de # spelling
+      - hyphen-en # spelling
+      - imv # image viewer
+      - intel-media-driver # VAAPI
+      - intel-ucode # microcode
+      - jre-openjdk # java
+      - just # command runner
+      - kde-applications-meta # kde
+      - kid3 # music metadata
+      - krita
+      - languagetool
+      - lib32-mesa # video driver
+      - lib32-vulkan-intel # video driver
+      - lib32-vulkan-radeon # video driver
+      - libreoffice-fresh # office
+      - libreoffice-fresh-de # office
+      - libva-intel-driver # VAAPI
+      - libva-mesa-driver # VAAPI
+      - libva-utils # VAAPI
+      - libvirt # virtualization
+      - linux # kernel
+      - linux-firmware # kernel
+      - linux-headers # kernel
+      - lldb
+      - lldb-mi
+      - lutris # games
+      - man-db # docs
+      - mesa # video driver
+      - mesa-vdpau # VDPAU
+      - mosh # remote shell
+      - mtools # fat
+      - mythes-de # thesaurus
+      - mythes-en # thesaurus
+      - nerd-fonts # fonts
+      - nextcloud-client # cloud
+      - nodejs
+      - noto-fonts # fonts
+      - noto-fonts-cjk # fonts
+      - noto-fonts-emoji # fonts
+      - ntfs-3g # ntfs
+      - nvme-cli # nvme ssd
+      - obs-studio # recording
+      - okular # pdf
+      - openssh # remote shell
+      - opentofu # iac
+      - otf-font-awesome # fonts
+      - p7zip # compression
+      - packagekit-qt6
+      - pacman-contrib # scripts
+      - pandoc
+      - php # code
+      - piper # mouse
+      - pkgstats
+      - plasma-meta
+      - podman # containers
+      - power-profiles-daemon # power management
+      - prettier # code
+      - pyright # code
+      - python-black # code
+      - python-debugpy # code
+      - python-isort # code
+      - python-pip # code
+      - python-pipenv # code
+      - python-pyflakes # code
+      - python-pytest # code
+      - qemu-full # virtualization
+      - rebuild-detector # packages
+      - reflector # mirrors
+      - restic # backup
+      - ripgrep # doom emacs
+      - rsync # file sync
+      - ruby-sass # code
+      - shellcheck # code
+      - shfmt # code
+      - smartmontools # disks
+      - steam # games
+      - stress # benchmark
+      - stylelint # code
+      - tesseract-data-deu
+      - tesseract-data-eng
+      - texlive-core
+      - thunderbird # email
+      - tidy
+      - traceroute # network
+      - transmission-remote-gtk # torrent
+      - ttf-fira-code # fonts
+      - ttf-fira-sans # fonts
+      - udftools # udf
+      - unrar # compression
+      - unzip # compression
+      - util-linux # various utils
+      - vdpauinfo # VDPAU
+      - vim # editor
+      - virt-manager # virtualization
+      - vscode-css-languageserver
+      - vulkan-intel # video driver
+      - vulkan-radeon # video driver
+      - wget # network
+      - wine # windows
+      - wireguard-tools # vpn
+      - wireplumber # audio
+      - xdg-desktop-portal-gtk # flatpak theming
+      - xdg-user-dirs # standards
+      - xdg-utils # standards
+      - xfsprogs # xfs
+      - yt-dlp
+      #- gnome-keyring
+      #- hdparm
+      #- libaacs
+      #- libbluray
+      #- libcdio
+      #- libdvdcss
+      #- libdvdnav
+      #- libdvdread
+      #- libsecret
+      #- phonon-qt5-gstreamer
+      #- seahorse
+      # - dockerfile-language-server # code # AUR
+      # - dockfmt # AUR
+      # - refind-theme-nord # bootmenu # AUR
+      # - btrfsmaintenance # AUR
   become: true
