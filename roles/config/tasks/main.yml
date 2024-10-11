@@ -1,6 +1,7 @@
 ---
 - name: Gather the package facts
   ansible.builtin.package_facts:
+  tags: always
 
 - name: Create backup structure
   ansible.builtin.file:
