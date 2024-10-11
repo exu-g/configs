@@ -1,8 +1,4 @@
 ---
-# - name: Include tasks from preparation.yml
-#   ansible.builtin.include_tasks:
-#     file: preparation.yml
-
 - name: Gather the package facts
   ansible.builtin.package_facts:
 
@@ -10,6 +6,7 @@
   ansible.builtin.file:
     path: "~/old_dat"
     state: "directory"
+  tags: config
 
 - name: Copy files to backup
   ansible.builtin.copy:
@@ -23,6 +20,7 @@
     - ".ssh"
     - "scripts"
   ignore_errors: true
+  tags: config
 
 - name: Remove old/unnecessary files and directories
   ansible.builtin.file:
@@ -35,10 +33,7 @@
     - "~/scripts/in_path"
     - "~/scripts/pieces"
     - "~/scripts/polybar"
-
-# - name: Include tasks from copy_new.yml
-#   ansible.builtin.include_tasks:
-#     file: copy_new.yml
+  tags: config
 
 - name: Copy new files and directories
   ansible.builtin.copy:
@@ -52,6 +47,7 @@
     - ".local"
     - ".ssh"
     - "scripts"
+  tags: config
 
 - name: Copy new files and directories (root)
   ansible.builtin.copy:
@@ -60,6 +56,7 @@
   loop:
     - "etc"
   become: true
+  tags: config
 
 - name: x86_64 | Copy files (root)
   ansible.builtin.copy:
@@ -69,28 +66,33 @@
     - "etc/pacman-x86_64.conf"
   when: ansible_architecture == "x86_64"
   become: true
+  tags: config
 
 - name: Symlink xdg environment variables
   ansible.builtin.file:
     src: "~/.config/user-dirs.dirs"
     dest: "~/.config/environment.d/user-dirs.dirs.conf"
     state: "link"
+  tags: config
 
 - name: Bash cat | Download
   ansible.builtin.git:
     repo: https://github.com/exu-g/bash-cat-with-cat.git
     dest: "/tmp/bash-cat-with-cat"
+  tags: config
 
 - name: Bash cat | Copy to scripts
   ansible.builtin.copy:
     src: "/tmp/bash-cat-with-cat/cat.sh"
     dest: "~/scripts/pieces/cat.sh"
     mode: "0755"
+  tags: config
 
 - name: Reload user systemd services
   ansible.builtin.systemd_service:
     daemon_reload: true
     scope: user
+  tags: services
 
 - name: Enable fstrim
   ansible.builtin.systemd_service:
@@ -98,6 +100,7 @@
     state: "started"
     enabled: true
   become: true
+  tags: services
 
 - name: Enable btrfsmaintenance timers
   ansible.builtin.systemd_service:
@@ -108,6 +111,7 @@
     - "btrfs-scrub.timer"
   when: ('btrfsmaintenance' in ansible_facts.packages)
   become: true
+  tags: services
 
 - name: Enable btrfsmaintenance services
   ansible.builtin.systemd_service:
@@ -117,6 +121,7 @@
     - "btrfsmaintenance-refresh.service"
   when: ('btrfsmaintenance' in ansible_facts.packages)
   become: true
+  tags: services
 
 - name: Enable reflector
   ansible.builtin.systemd_service:
@@ -126,10 +131,12 @@
     - "reflector.timer"
   when: ('reflector' in ansible_facts.packages)
   become: true
+  tags: services
 
 - name: Enable NTP
   ansible.builtin.command: timedatectl set-ntp true
   become: true
+  tags: services
 
 - name: Enable ssh-agent
   ansible.builtin.systemd_service:
@@ -137,12 +144,14 @@
     state: "restarted"
     enabled: true
     scope: user
+  tags: services
 
 - name: Enable sddm
   ansible.builtin.systemd_service:
     name: sddm
     enabled: true
   become: true
+  tags: services
 
 - name: Add group for libvirt
   ansible.builtin.user:
@@ -152,6 +161,7 @@
     append: true
   when: ('libvirt' in ansible_facts.packages)
   become: true
+  tags: config
 
 - name: Create groups
   ansible.builtin.group:
@@ -162,6 +172,7 @@
     - render # GPU passing
     - wireguard # wireguard
   become: true
+  tags: config
 
 - name: Add user to groups
   ansible.builtin.user:
@@ -171,6 +182,7 @@
       - render # GPU passing
       - wireguard # wireguard
     append: true
+  tags: config
 
 - name: Set sudoers.d permissions
   ansible.builtin.file:
@@ -180,16 +192,31 @@
     group: root
     recurse: true
   become: true
+  tags: config
 
 - name: Make scripts executable
-  ansible.builin.file:
+  ansible.builtin.file:
     path: "{{ item }}"
     mode: u+x,g+x,o+x
     recurse: true
   loop:
     - "~/scripts"
     - "~/.local/share/applications"
+  tags: config
 
 - name: Reload applications
   ansible.builtin.shell:
     cmd: "update-desktop-database ~/.local/share/applications/"
+  tags: config
+
+- name: Doom Emacs | Check if installed
+  ansible.builtin.stat:
+    path: "~/.config/emacs/bin/doom"
+  register: doom_emacs
+  tags: config
+
+- name: Doom Emacs | Update if present
+  ansible.builtin.shell:
+    cmd: "~/.config/emacs/bin/doom sync"
+  when: doom_emacs.exists
+  tags: config

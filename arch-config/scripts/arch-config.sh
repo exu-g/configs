@@ -347,7 +347,6 @@ EOF
 update-desktop-database ~/.local/share/applications/
 
 # sync doom-emacs only if it is installed
-# TODO
 if [[ -f ~/.config/emacs/bin/doom ]]; then
     ~/.config/emacs/bin/doom sync &
     pids="$pids $!"

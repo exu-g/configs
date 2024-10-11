@@ -6,12 +6,14 @@
     block: |
       [multilib]
       Include = /etc/pacman.d/mirrorlist
+  tags: first
   become: true
 
 - name: Update packages
   community.general.pacman:
     update_cache: true
     upgrade: true
+  tags: packages
   become: true
 
 - name: Install priority packages
@@ -24,6 +26,7 @@
     - pipewire-alsa # audio
     - pipewire-jack # audio
     - pipewire-pulse # audio
+  tags: packages
   become: true
 
 - name: Install other packages
@@ -192,4 +195,5 @@
     # - dockfmt # AUR
     # - refind-theme-nord # bootmenu # AUR
     # - btrfsmaintenance # AUR
+  tags: packages
   become: true
