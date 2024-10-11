@@ -219,5 +219,5 @@
 - name: Doom Emacs | Update if present
   ansible.builtin.shell:
     cmd: "~/.config/emacs/bin/doom sync"
-  when: doom_emacs.exists
+  when: doom_emacs.stat.exists
   tags: config
