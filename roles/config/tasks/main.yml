@@ -182,6 +182,7 @@
       - render # GPU passing
       - wireguard # wireguard
     append: true
+  become: true
   tags: config
 
 - name: Set sudoers.d permissions
