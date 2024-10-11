@@ -65,14 +65,15 @@
 ;;(require 'magit-gitflow)
 ;;(add-hook 'magit-mode-hook 'turn-on-magit-gitflow)
 
-(setq hl-todo-keyword-faces
-      '(("TODO"   . "#EACD4B")
-        ("FIXME"   . "#F43633")
-        ("NOTE"           . "#8ED34E")
-        ("DEPRECATED"     . "#7F7F7F")
-        ("HACK"           . "#7D5587")
-        ("REVIEW"         . "#3DADC6")
-        ("OHGODTHEHORROR"   . "#FC7702")))
+(after! hl-todo
+  (setq hl-todo-keyword-faces
+        '(("TODO"   . "#EACD4B")
+          ("FIXME"   . "#F43633")
+          ("NOTE"           . "#8ED34E")
+          ("DEPRECATED"     . "#7F7F7F")
+          ("HACK"           . "#7D5587")
+          ("REVIEW"         . "#3DADC6")
+          ("OHGODTHEHORROR"   . "#FC7702"))))
 
 ;; Less delay for company to show up
 (setq company-idle-delay 0)
@@ -131,3 +132,6 @@
        "k" 'comment-or-uncomment-region
        :desc "Sort lines"
        "s" 'sort-lines))
+
+(after! yaml-mode
+  (setq yaml-indent 2))
