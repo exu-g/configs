@@ -175,6 +175,17 @@
   become: true
   tags: config
 
+- name: Set fish for user
+  ansible.builtin.user:
+    name: "{{ ansible_user_id }}"
+    shell: "/usr/bin/fish"
+
+- name: Set fish for root
+  ansible.builtin.user:
+    name: "root"
+    shell: "/usr/bin/fish"
+  become: true
+
 - name: Add user to groups
   ansible.builtin.user:
     name: "{{ ansible_user_id }}"
