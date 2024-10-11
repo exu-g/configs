@@ -13,10 +13,10 @@
 #    sort = -committerdate
 #[tag]
 #    sort = taggerdate
-[gitlab]
-    user = exu
-[github]
-    user = exu
+# [gitlab]
+#     user = exu
+# [github]
+#     user = exu
 [alias]
     # use like this: git mr [REPO] [MERGE REQUEST]
     # see https://stackoverflow.com/a/50834005 (GitLab)
@@ -25,3 +25,6 @@
     pr = !sh -c 'git fetch -fu $1 refs/pull/$2/head:pr-$1-$2 && git checkout pr-$1-$2' -
     # checkout latest tag
     latest = !sh -c 'git describe --tags $(git rev-list --tags --max-count=1) | xargs git checkout' -
+# conditonal config
+[includeIf "gitdir:**/occ/**"]
+    path = ~/.gitconfig-occ
