@@ -60,3 +60,6 @@
 
 ;; pkgbuild files
 (package! pkgbuild-mode)
+
+;; catppuccin
+(package! catppuccin-theme)
