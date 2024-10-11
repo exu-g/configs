@@ -207,5 +207,5 @@
 
 - name: Install doom emacs
   ansible.builtin.shell:
-    cmd: "~/.config/emacs/bin/doom install"
+    cmd: "~/.config/emacs/bin/doom install --aot --force"
   tags: doomemacs
