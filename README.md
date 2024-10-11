@@ -10,25 +10,23 @@ First time installation:
 
 ```sh
 pacman -Syu
-pacman -S git ansible
+pacman -S git ansible just
 cd $(mktemp -d)
 git clone https://gitea.exu.li/exu/configs.git
 cd configs
-ansible-playbook setup.yml
+just setup
 ```
 
 ### Config updates
 
-Either use the included alias
-
 ```sh
-upconf
+just config
 ```
 
-or run the script directly.
+### Package installation
 
-```sh
-~/scripts/arch-config.sh
+``` sh
+just packages
 ```
 
 ## Other

@@ -89,9 +89,6 @@ alias emacs="/usr/bin/emacs --no-window-system"
 # alias cat
 alias cat="$HOME/scripts/pieces/cat.sh"
 
-#update config
-alias upconf='~/scripts/arch-config.sh'
-
 #notification
 alias notify='notify-send "Terminal" "Your command finished!" --icon=dialog-information'
 
