@@ -179,6 +179,7 @@
   ansible.builtin.user:
     name: "{{ ansible_user_id }}"
     shell: "/usr/bin/fish"
+  become: true
   tags: config
 
 - name: Set fish for root
