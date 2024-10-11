@@ -198,14 +198,14 @@
   tags: packages
   become: true
 
-- name: Clone doom emacs
+- name: Doom Emacs | Clone
   ansible.builtin.git:
     repo: https://github.com/doomemacs/doomemacs
     dest: "~/.config/emacs"
     depth: 1
   tags: doomemacs
 
-- name: Install doom emacs
+- name: Doom Emacs | Install
   ansible.builtin.shell:
     cmd: "~/.config/emacs/bin/doom install --aot --force"
   tags: doomemacs
