@@ -200,7 +200,7 @@
 
 - name: Clone doom emacs
   ansible.builtin.git:
-    repo: https://github.com/SillyTavern/SillyTavern
+    repo: https://github.com/doomemacs/doomemacs
     dest: "~/.config/emacs"
     depth: 1
   tags: doomemacs
