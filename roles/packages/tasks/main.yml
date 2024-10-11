@@ -197,3 +197,15 @@
     # - btrfsmaintenance # AUR
   tags: packages
   become: true
+
+- name: Clone doom emacs
+  ansible.builtin.git:
+    repo: https://github.com/SillyTavern/SillyTavern
+    dest: "~/.config/emacs"
+    depth: 1
+  tags: doomemacs
+
+- name: Install doom emacs
+  ansible.builtin.shell:
+    cmd: "~/.config/emacs/bin/doom install"
+  tags: doomemacs
