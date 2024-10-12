@@ -1,0 +1,4 @@
+[Plugins]
+kdeconnect_notificationsEnabled=false
+kdeconnect_screensaver_inhibitEnabled=false
+kdeconnect_sendnotificationsEnabled=false

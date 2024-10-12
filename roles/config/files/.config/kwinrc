@@ -15,6 +15,9 @@ Id_9=a2e4ade7-53e1-4ad6-a7d7-adb904bb8060
 Number=10
 Rows=1
 
+[EdgeBarrier]
+EdgeBarrier=50
+
 [Effect-overview]
 BorderActivate=9
 
@@ -63,3 +66,7 @@ SeparateScreenFocus=true
 
 [Xwayland]
 Scale=1.25
+
+[org.kde.kdecoration2]
+library=org.kde.kwin.aurorae
+theme=__aurorae__svg__CatppuccinMacchiato-Modern
