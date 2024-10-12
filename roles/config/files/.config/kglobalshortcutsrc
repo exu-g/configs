@@ -7,6 +7,19 @@ Switch to Last-Used Keyboard Layout=none,Meta+Alt+L,Auf zuletzt verwendete Tasta
 Switch to Next Keyboard Layout=none,Meta+Alt+K,Auf nächste Tastaturbelegung umschalten
 _k_friendly_name=Umschaltung der Tastaturbelegung
 
+[juk]
+_k_friendly_name=JuK
+back=Ctrl+Alt+Left,Ctrl+Alt+Left,Vorheriger
+forward=Ctrl+Alt+Right,Ctrl+Alt+Right,Nächster
+forwardAlbum=Ctrl+Alt+Up,Ctrl+Alt+Up,Nächstes Album abspielen
+mute=Ctrl+Alt+M,Ctrl+Alt+M,Stumm
+playPause=Ctrl+Alt+P,Ctrl+Alt+P,Wiedergabe / Pause
+seekBack=Ctrl+Alt+Shift+Left,Ctrl+Alt+Shift+Left,Rückwärts suchen
+seekForward=Ctrl+Alt+Shift+Right,Ctrl+Alt+Shift+Right,Vorwärts suchen
+stop=Ctrl+Alt+S,Ctrl+Alt+S,Stopp
+volumeDown=Ctrl+Alt+Shift+Down,Ctrl+Alt+Shift+Down,Leiser
+volumeUp=Ctrl+Alt+Shift+Up,Ctrl+Alt+Shift+Up,Lauter
+
 [kaccess]
 Toggle Screen Reader On and Off=none,Meta+Alt+S,Screenreader ein-/ausschalten
 _k_friendly_name=Zugangshilfen
@@ -53,8 +66,9 @@ Grid View=none,Meta+G,Toggle Grid View
 Increase Opacity=none,,Die Deckkraft des aktiven Fensters um 5 % erhöhen
 Kill Window=none,Meta+Ctrl+Esc,Fenster beseitigen
 KrohnkiteBTreeLayout=Meta+B,none,Krohnkite: BTree Layout
+KrohnkiteColumnsLayout=none,none,Krohnkite: Columns Layout
 KrohnkiteDecrease=none,none,Krohnkite: Decrease
-KrohnkiteFloatAll=none,none,Krohnkite: Float All
+KrohnkiteFloatAll=none,none,Krohnkite: Toggle Float All
 KrohnkiteFloatingLayout=none,none,Krohnkite: Floating Layout
 KrohnkiteFocusDown=Meta+J,none,Krohnkite: Focus Down
 KrohnkiteFocusLeft=Meta+H,none,Krohnkite: Focus Left
@@ -271,7 +285,7 @@ PowerOff=Power Off,Power Off,Ausschalten
 Sleep=Sleep,Sleep,Standby-Modus
 Toggle Keyboard Backlight=Keyboard Light On/Off,Keyboard Light On/Off,Hintergrundbeleuchtung der Tastatur umschalten
 Turn Off Screen=none,none,Bildschirm ausschalten
-_k_friendly_name=KDE-Energieverwaltungssystem
+_k_friendly_name=Energieverwaltung
 powerProfile=Battery,Battery\tMeta+B,Energieprofil wechseln
 
 [plasmashell]
@@ -297,7 +311,7 @@ next activity=none,none,Zwischen Aktivitäten wechseln
 previous activity=none,none,Zwischen Aktivitäten wechseln (Gegenrichtung)
 repeat_action=none,Meta+Ctrl+R,Aktionen der aktuellen Zwischenablage manuell aufrufen
 show dashboard=none,Ctrl+F12,Arbeitsfläche anzeigen
-show-barcode=none,,Strichcode anzeigen ...
+show-barcode=none,,Strichcode anzeigen …
 show-on-mouse-pos=Meta+V,Meta+V,Elemente der Zwischenablage an Mausposition anzeigen
 stop current activity=none,Meta+S,Aktuelle Aktivität anhalten
 switch to next activity=none,,Zur nächsten Aktivität wechseln
