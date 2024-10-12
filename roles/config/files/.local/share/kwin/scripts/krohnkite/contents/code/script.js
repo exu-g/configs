@@ -1,13 +1,4 @@
 "use strict";
-var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-        }
-    }
-    return to.concat(ar || Array.prototype.slice.call(from));
-};
 var Shortcut;
 (function (Shortcut) {
     Shortcut[Shortcut["FocusNext"] = 0] = "FocusNext";
@@ -43,17 +34,16 @@ var Shortcut;
     Shortcut[Shortcut["Rotate"] = 30] = "Rotate";
     Shortcut[Shortcut["RotatePart"] = 31] = "RotatePart";
 })(Shortcut || (Shortcut = {}));
-var CONFIG;
-var KWinConfig = (function () {
-    function KWinConfig() {
-        var _this = this;
+let CONFIG;
+class KWinConfig {
+    constructor() {
         function commaSeparate(str) {
             if (!str || typeof str !== "string")
                 return [];
             return str
                 .split(",")
-                .map(function (part) { return part.trim(); })
-                .filter(function (part) { return part != ""; });
+                .map((part) => part.trim())
+                .filter((part) => part != "");
         }
         DEBUG.enabled = DEBUG.enabled || KWIN.readConfig("debug", false);
         this.layoutOrder = [];
@@ -61,6 +51,7 @@ var KWinConfig = (function () {
         [
             ["enableTileLayout", true, TileLayout],
             ["enableMonocleLayout", true, MonocleLayout],
+            ["enableColumnsLayout", true, ColumnsLayout],
             ["enableThreeColumnLayout", true, ThreeColumnLayout],
             ["enableSpreadLayout", true, SpreadLayout],
             ["enableStairLayout", true, StairLayout],
@@ -70,20 +61,21 @@ var KWinConfig = (function () {
             ["enableFloatingLayout", false, FloatingLayout],
             ["enableBTreeLayout", false, BTreeLayout],
             ["enableCascadeLayout", false, CascadeLayout],
-        ].forEach(function (_a) {
-            var configKey = _a[0], defaultValue = _a[1], layoutClass = _a[2];
+        ].forEach(([configKey, defaultValue, layoutClass]) => {
             if (KWIN.readConfig(configKey, defaultValue))
-                _this.layoutOrder.push(layoutClass.id);
-            _this.layoutFactories[layoutClass.id] = function () { return new layoutClass(); };
+                this.layoutOrder.push(layoutClass.id);
+            this.layoutFactories[layoutClass.id] = () => new layoutClass();
         });
         this.maximizeSoleTile = KWIN.readConfig("maximizeSoleTile", false);
+        this.tileLayoutInitialAngle = KWIN.readConfig("tileLayoutInitialRotationAngle", "0");
+        this.columnsLayoutInitialAngle = KWIN.readConfig("columnsLayoutInitialRotationAngle", "0");
         this.monocleMaximize = KWIN.readConfig("monocleMaximize", true);
         this.monocleMinimizeRest = KWIN.readConfig("monocleMinimizeRest", false);
         this.stairReverse = KWIN.readConfig("stairReverse", false);
         this.adjustLayout = KWIN.readConfig("adjustLayout", true);
         this.adjustLayoutLive = KWIN.readConfig("adjustLayoutLive", true);
         this.keepFloatAbove = KWIN.readConfig("keepFloatAbove", true);
-        this.keepTilingOnDrag = KWIN.readConfig("keepTilingOnDrag", false);
+        this.keepTilingOnDrag = KWIN.readConfig("keepTilingOnDrag", true);
         this.noTileBorder = KWIN.readConfig("noTileBorder", false);
         this.limitTileWidthRatio = 0;
         if (KWIN.readConfig("limitTileWidth", false))
@@ -93,8 +85,8 @@ var KWinConfig = (function () {
         this.screenGapRight = KWIN.readConfig("screenGapRight", 0);
         this.screenGapTop = KWIN.readConfig("screenGapTop", 0);
         this.tileLayoutGap = KWIN.readConfig("tileLayoutGap", 0);
-        var directionalKeyDwm = KWIN.readConfig("directionalKeyDwm", false);
-        var directionalKeyFocus = KWIN.readConfig("directionalKeyFocus", true);
+        const directionalKeyDwm = KWIN.readConfig("directionalKeyDwm", false);
+        const directionalKeyFocus = KWIN.readConfig("directionalKeyFocus", true);
         this.directionalKeyMode = directionalKeyDwm ? "dwm" : "focus";
         this.newWindowPosition = KWIN.readConfig("newWindowPosition", 0);
         this.layoutPerActivity = KWIN.readConfig("layoutPerActivity", true);
@@ -109,108 +101,88 @@ var KWinConfig = (function () {
         this.ignoreClass = commaSeparate(KWIN.readConfig("ignoreClass", "krunner,yakuake,spectacle,kded5,xwaylandvideobridge,plasmashell,ksplashqml"));
         this.ignoreRole = commaSeparate(KWIN.readConfig("ignoreRole", "quake"));
         this.ignoreScreen = commaSeparate(KWIN.readConfig("ignoreScreen", ""));
+        this.ignoreVDesktop = commaSeparate(KWIN.readConfig("ignoreVDesktop", ""));
         this.ignoreTitle = commaSeparate(KWIN.readConfig("ignoreTitle", ""));
         this.screenDefaultLayout = commaSeparate(KWIN.readConfig("screenDefaultLayout", ""));
         if (this.preventMinimize && this.monocleMinimizeRest) {
-            debug(function () { return "preventMinimize is disabled because of monocleMinimizeRest."; });
+            debug(() => "preventMinimize is disabled because of monocleMinimizeRest.");
             this.preventMinimize = false;
         }
     }
-    KWinConfig.prototype.toString = function () {
+    toString() {
         return "Config(" + JSON.stringify(this, undefined, 2) + ")";
-    };
-    return KWinConfig;
-}());
+    }
+}
 var KWINCONFIG;
 var KWIN;
-var KWinDriver = (function () {
-    function KWinDriver(api) {
-        var _this = this;
+class KWinDriver {
+    get backend() {
+        return KWinDriver.backendName;
+    }
+    get currentSurface() {
+        return new KWinSurface(this.workspace.activeWindow
+            ? this.workspace.activeWindow.output
+            : this.workspace.activeScreen, this.workspace.currentActivity, this.workspace.currentDesktop, this.workspace);
+    }
+    set currentSurface(value) {
+        const ksrf = value;
+        if (this.workspace.currentDesktop.name !== ksrf.desktop.name)
+            this.workspace.currentDesktop = ksrf.desktop;
+        if (this.workspace.currentActivity !== ksrf.activity)
+            this.workspace.currentActivity = ksrf.activity;
+    }
+    get currentWindow() {
+        const client = this.workspace.activeWindow;
+        return client ? this.windowMap.get(client) : null;
+    }
+    set currentWindow(window) {
+        if (window !== null)
+            this.workspace.activeWindow = window.window.window;
+    }
+    get screens() {
+        const screens = [];
+        this.workspace.screens.forEach((screen) => {
+            screens.push(new KWinSurface(screen, this.workspace.currentActivity, this.workspace.currentDesktop, this.workspace));
+        });
+        return screens;
+    }
+    get cursorPosition() {
+        return this.mousePoller.mousePosition;
+    }
+    constructor(api) {
         KWIN = api.kwin;
         this.workspace = api.workspace;
         this.shortcuts = api.shortcuts;
         this.engine = new TilingEngine();
         this.control = new TilingController(this.engine);
-        this.windowMap = new WrapperMap(function (client) { return KWinWindow.generateID(client); }, function (client) {
-            return new WindowClass(new KWinWindow(client, _this.workspace));
-        });
+        this.windowMap = new WrapperMap((client) => KWinWindow.generateID(client), (client) => new WindowClass(new KWinWindow(client, this.workspace)));
         this.entered = false;
         this.mousePoller = new KWinMousePoller();
     }
-    Object.defineProperty(KWinDriver.prototype, "backend", {
-        get: function () {
-            return KWinDriver.backendName;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(KWinDriver.prototype, "currentSurface", {
-        get: function () {
-            return new KWinSurface(this.workspace.activeWindow
-                ? this.workspace.activeWindow.output
-                : this.workspace.activeScreen, this.workspace.currentActivity, this.workspace.currentDesktop, this.workspace);
-        },
-        set: function (value) {
-            var ksrf = value;
-            if (this.workspace.currentDesktop.name !== ksrf.desktop.name)
-                this.workspace.currentDesktop = ksrf.desktop;
-            if (this.workspace.currentActivity !== ksrf.activity)
-                this.workspace.currentActivity = ksrf.activity;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(KWinDriver.prototype, "currentWindow", {
-        get: function () {
-            var client = this.workspace.activeWindow;
-            return client ? this.windowMap.get(client) : null;
-        },
-        set: function (window) {
-            if (window !== null)
-                this.workspace.activeWindow = window.window.window;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(KWinDriver.prototype, "screens", {
-        get: function () {
-            var _this = this;
-            var screens = [];
-            this.workspace.screens.forEach(function (screen) {
-                screens.push(new KWinSurface(screen, _this.workspace.currentActivity, _this.workspace.currentDesktop, _this.workspace));
-            });
-            return screens;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(KWinDriver.prototype, "cursorPosition", {
-        get: function () {
-            return this.mousePoller.mousePosition;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    KWinDriver.prototype.main = function () {
+    main() {
         CONFIG = KWINCONFIG = new KWinConfig();
-        debug(function () { return "Config: " + KWINCONFIG; });
+        debug(() => "Config: " + KWINCONFIG);
         this.bindEvents();
         this.bindShortcut();
-        var clients = this.workspace.stackingOrder;
-        for (var i = 0; i < clients.length; i++) {
+        const clients = this.workspace.stackingOrder;
+        for (let i = 0; i < clients.length; i++) {
             this.addWindow(clients[i]);
         }
-    };
-    KWinDriver.prototype.addWindow = function (client) {
-        if (client.normalWindow &&
+    }
+    addWindow(client) {
+        if (!client.deleted &&
+            client.pid > 1 &&
+            !client.popupWindow &&
+            client.normalWindow &&
             !client.hidden &&
             client.width * client.height > 10) {
             if (KWIN.readConfig("debugActiveWin", false))
                 print(debugWin(client));
-            var window = this.windowMap.add(client);
+            const window = this.windowMap.add(client);
             this.control.onWindowAdded(this, window);
             if (window.state !== WindowState.Unmanaged) {
                 this.bindWindowEvents(window, client);
+                return window;
             }
             else {
                 this.windowMap.remove(client);
@@ -222,19 +194,18 @@ var KWinDriver = (function () {
             if (KWIN.readConfig("debugActiveWin", false))
                 print("Filtered: " + debugWin(client));
         }
-    };
-    KWinDriver.prototype.setTimeout = function (func, timeout) {
-        var _this = this;
-        KWinSetTimeout(function () { return _this.enter(func); }, timeout);
-    };
-    KWinDriver.prototype.showNotification = function (text) {
+        return null;
+    }
+    setTimeout(func, timeout) {
+        KWinSetTimeout(() => this.enter(func), timeout);
+    }
+    showNotification(text) {
         popupDialog.show(text);
-    };
-    KWinDriver.prototype.bindShortcut = function () {
-        var _this = this;
-        var callbackShortcut = function (shortcut) {
-            return function () {
-                _this.enter(function () { return _this.control.onShortcut(_this, shortcut); });
+    }
+    bindShortcut() {
+        const callbackShortcut = (shortcut) => {
+            return () => {
+                this.enter(() => this.control.onShortcut(this, shortcut));
             };
         };
         this.shortcuts
@@ -306,11 +277,9 @@ var KWinDriver = (function () {
         this.shortcuts
             .getSetMaster()
             .activated.connect(callbackShortcut(Shortcut.SetMaster));
-        var callbackShortcutLayout = function (layoutClass) {
-            return function () {
-                _this.enter(function () {
-                    return _this.control.onShortcut(_this, Shortcut.SetLayout, layoutClass.id);
-                });
+        const callbackShortcutLayout = (layoutClass) => {
+            return () => {
+                this.enter(() => this.control.onShortcut(this, Shortcut.SetLayout, layoutClass.id));
             };
         };
         this.shortcuts
@@ -338,28 +307,26 @@ var KWinDriver = (function () {
             .getStackedLayout()
             .activated.connect(callbackShortcutLayout(StackedLayout));
         this.shortcuts
+            .getColumnsLayout()
+            .activated.connect(callbackShortcutLayout(ColumnsLayout));
+        this.shortcuts
             .getSpiralLayout()
             .activated.connect(callbackShortcutLayout(SpiralLayout));
         this.shortcuts
             .getBTreeLayout()
             .activated.connect(callbackShortcutLayout(BTreeLayout));
-    };
-    KWinDriver.prototype.connect = function (signal, handler) {
-        var _this = this;
-        var wrapper = function () {
-            var args = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                args[_i] = arguments[_i];
-            }
-            if (typeof _this.workspace === "undefined")
+    }
+    connect(signal, handler) {
+        const wrapper = (...args) => {
+            if (typeof this.workspace === "undefined")
                 signal.disconnect(wrapper);
             else
-                _this.enter(function () { return handler.apply(_this, args); });
+                this.enter(() => handler.apply(this, args));
         };
         signal.connect(wrapper);
         return wrapper;
-    };
-    KWinDriver.prototype.enter = function (callback) {
+    }
+    enter(callback) {
         if (this.entered)
             return;
         this.entered = true;
@@ -367,158 +334,140 @@ var KWinDriver = (function () {
             callback();
         }
         catch (e) {
-            debug(function () { return "Error raised from line " + e.lineNumber; });
-            debug(function () { return e; });
+            debug(() => "Error raised from line " + e.lineNumber);
+            debug(() => e);
         }
         finally {
             this.entered = false;
         }
-    };
-    KWinDriver.prototype.bindEvents = function () {
-        var _this = this;
-        this.connect(this.workspace.screensChanged, function () {
-            return _this.control.onSurfaceUpdate(_this, "screens (Outputs) changed");
+    }
+    bindEvents() {
+        this.connect(this.workspace.screensChanged, () => this.control.onSurfaceUpdate(this, "screens (Outputs) changed"));
+        this.connect(this.workspace.virtualScreenGeometryChanged, () => {
+            this.control.onSurfaceUpdate(this, "virtualScreenGeometryChanged");
         });
-        this.connect(this.workspace.virtualScreenGeometryChanged, function () {
-            _this.control.onSurfaceUpdate(_this, "virtualScreenGeometryChanged");
+        this.connect(this.workspace.currentActivityChanged, (activityId) => this.control.onCurrentActivityChanged(this, activityId));
+        this.connect(this.workspace.currentDesktopChanged, (virtualDesktop) => this.control.onSurfaceUpdate(this, "currentDesktopChanged"));
+        this.connect(this.workspace.windowAdded, (client) => {
+            const window = this.addWindow(client);
+            if (client.active && window !== null)
+                this.control.onWindowFocused(this, window);
         });
-        this.connect(this.workspace.currentActivityChanged, function (activityId) {
-            return _this.control.onCurrentActivityChanged(_this, activityId);
+        this.connect(this.workspace.windowActivated, (client) => {
+            const window = this.windowMap.get(client);
+            if (client.active && window !== null)
+                this.control.onWindowFocused(this, window);
         });
-        this.connect(this.workspace.currentDesktopChanged, function (virtualDesktop) {
-            return _this.control.onSurfaceUpdate(_this, "currentDesktopChanged");
-        });
-        this.connect(this.workspace.windowAdded, function (client) {
-            _this.addWindow(client);
-        });
-        this.connect(this.workspace.windowRemoved, function (client) {
-            var window = _this.windowMap.get(client);
+        this.connect(this.workspace.windowRemoved, (client) => {
+            const window = this.windowMap.get(client);
             if (window) {
-                _this.control.onWindowRemoved(_this, window);
-                _this.windowMap.remove(client);
+                this.control.onWindowRemoved(this, window);
+                this.windowMap.remove(client);
             }
         });
-    };
-    KWinDriver.prototype.bindWindowEvents = function (window, client) {
-        var _this = this;
-        var moving = false;
-        var resizing = false;
-        this.connect(client.maximizedAboutToChange, function (mode) {
-            var maximized = mode === 3;
+    }
+    bindWindowEvents(window, client) {
+        let moving = false;
+        let resizing = false;
+        this.connect(client.maximizedAboutToChange, (mode) => {
+            const maximized = mode === 3;
             window.window.maximized = maximized;
-            _this.control.onWindowMaximizeChanged(_this, window, maximized);
+            this.control.onWindowMaximizeChanged(this, window, maximized);
         });
-        this.connect(client.minimizedChanged, function () {
+        this.connect(client.minimizedChanged, () => {
             if (KWINCONFIG.preventMinimize) {
                 client.minimized = false;
-                _this.workspace.activeWindow = client;
+                this.workspace.activeWindow = client;
             }
             else {
                 var comment = client.minimized ? "minimized" : "unminimized";
-                _this.control.onWindowChanged(_this, window, comment);
+                this.control.onWindowChanged(this, window, comment);
             }
         });
-        this.connect(client.fullScreenChanged, function () {
-            return _this.control.onWindowChanged(_this, window, "fullscreen=" + client.fullScreen);
+        this.connect(client.fullScreenChanged, () => this.control.onWindowChanged(this, window, "fullscreen=" + client.fullScreen));
+        this.connect(client.interactiveMoveResizeStepped, (geometry) => {
+            if (client.resize)
+                return;
+            this.control.onWindowDragging(this, window, geometry);
         });
-        this.connect(client.moveResizedChanged, function () {
-            debugObj(function () { return [
+        this.connect(client.moveResizedChanged, () => {
+            debugObj(() => [
                 "moveResizedChanged",
-                { window: window, move: client.move, resize: client.resize },
-            ]; });
+                { window, move: client.move, resize: client.resize },
+            ]);
             if (moving !== client.move) {
                 moving = client.move;
                 if (moving) {
-                    _this.mousePoller.start();
-                    _this.control.onWindowMoveStart(window);
+                    this.mousePoller.start();
+                    this.control.onWindowMoveStart(window);
                 }
                 else {
-                    _this.control.onWindowMoveOver(_this, window);
-                    _this.mousePoller.stop();
+                    this.control.onWindowMoveOver(this, window);
+                    this.mousePoller.stop();
                 }
             }
             if (resizing !== client.resize) {
                 resizing = client.resize;
                 if (resizing)
-                    _this.control.onWindowResizeStart(window);
+                    this.control.onWindowResizeStart(window);
                 else
-                    _this.control.onWindowResizeOver(_this, window);
+                    this.control.onWindowResizeOver(this, window);
             }
         });
-        this.connect(client.bufferGeometryChanged, function () {
+        this.connect(client.bufferGeometryChanged, () => {
             if (moving)
-                _this.control.onWindowMove(window);
+                this.control.onWindowMove(window);
             else if (resizing)
-                _this.control.onWindowResize(_this, window);
+                this.control.onWindowResize(this, window);
             else {
                 if (!window.actualGeometry.equals(window.geometry))
-                    _this.control.onWindowGeometryChanged(_this, window);
+                    this.control.onWindowGeometryChanged(this, window);
             }
         });
-        this.connect(client.activeChanged, function () {
-            if (client.active)
-                _this.control.onWindowFocused(_this, window);
-        });
-        this.connect(client.outputChanged, function () {
-            return _this.control.onWindowChanged(_this, window, "screen=" + client.output.name);
-        });
-        this.connect(client.activitiesChanged, function () {
-            return _this.control.onWindowChanged(_this, window, "activity=" + client.activities.join(","));
-        });
-        this.connect(client.desktopsChanged, function () {
-            return _this.control.onWindowChanged(_this, window, "Window's desktop changed.");
-        });
-    };
-    KWinDriver.backendName = "kwin";
-    return KWinDriver;
-}());
-var KWinMousePoller = (function () {
-    function KWinMousePoller() {
-        var _this = this;
+        this.connect(client.outputChanged, () => this.control.onWindowChanged(this, window, "screen=" + client.output.name));
+        this.connect(client.activitiesChanged, () => this.control.onWindowChanged(this, window, "activity=" + client.activities.join(",")));
+        this.connect(client.desktopsChanged, () => this.control.onWindowChanged(this, window, "Window's desktop changed."));
+    }
+}
+KWinDriver.backendName = "kwin";
+class KWinMousePoller {
+    get started() {
+        return this.startCount > 0;
+    }
+    get mousePosition() {
+        return this.parseResult();
+    }
+    constructor() {
         this.startCount = 0;
         this.cmdResult = null;
         mousePoller.interval = 0;
-        mousePoller.onNewData.connect(function (sourceName, data) {
-            _this.cmdResult = data["exit code"] === 0 ? data["stdout"] : null;
+        mousePoller.onNewData.connect((sourceName, data) => {
+            this.cmdResult = data["exit code"] === 0 ? data["stdout"] : null;
             mousePoller.disconnectSource(KWinMousePoller.COMMAND);
-            KWinSetTimeout(function () {
-                if (_this.started)
+            KWinSetTimeout(() => {
+                if (this.started)
                     mousePoller.connectSource(KWinMousePoller.COMMAND);
             }, KWinMousePoller.INTERVAL);
         });
     }
-    Object.defineProperty(KWinMousePoller.prototype, "started", {
-        get: function () {
-            return this.startCount > 0;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(KWinMousePoller.prototype, "mousePosition", {
-        get: function () {
-            return this.parseResult();
-        },
-        enumerable: false,
-        configurable: true
-    });
-    KWinMousePoller.prototype.start = function () {
+    start() {
         this.startCount += 1;
         if (KWINCONFIG.pollMouseXdotool)
             mousePoller.connectSource(KWinMousePoller.COMMAND);
-    };
-    KWinMousePoller.prototype.stop = function () {
+    }
+    stop() {
         this.startCount = Math.max(this.startCount - 1, 0);
-    };
-    KWinMousePoller.prototype.parseResult = function () {
+    }
+    parseResult() {
         if (!this.cmdResult)
             return null;
-        var x = null;
-        var y = null;
+        let x = null;
+        let y = null;
         this.cmdResult
             .split(" ")
             .slice(0, 2)
-            .forEach(function (part) {
-            var _a = part.split(":"), key = _a[0], value = _a[1], _ = _a[2];
+            .forEach((part) => {
+            const [key, value, _] = part.split(":");
             if (key === "x")
                 x = parseInt(value, 10);
             if (key === "y")
@@ -527,25 +476,23 @@ var KWinMousePoller = (function () {
         if (x === null || y === null)
             return null;
         return [x, y];
-    };
-    KWinMousePoller.COMMAND = "xdotool getmouselocation";
-    KWinMousePoller.INTERVAL = 50;
-    return KWinMousePoller;
-}());
-var KWinTimerPool = (function () {
-    function KWinTimerPool() {
+    }
+}
+KWinMousePoller.COMMAND = "xdotool getmouselocation";
+KWinMousePoller.INTERVAL = 50;
+class KWinTimerPool {
+    constructor() {
         this.timers = [];
         this.numTimers = 0;
     }
-    KWinTimerPool.prototype.setTimeout = function (func, timeout) {
-        var _this = this;
+    setTimeout(func, timeout) {
         if (this.timers.length === 0) {
             this.numTimers++;
-            debugObj(function () { return ["setTimeout/newTimer", { numTimers: _this.numTimers }]; });
+            debugObj(() => ["setTimeout/newTimer", { numTimers: this.numTimers }]);
         }
-        var timer = this.timers.pop() ||
+        const timer = this.timers.pop() ||
             Qt.createQmlObject("import QtQuick 2.0; Timer {}", scriptRoot);
-        var callback = function () {
+        const callback = () => {
             try {
                 timer.triggered.disconnect(callback);
             }
@@ -556,50 +503,104 @@ var KWinTimerPool = (function () {
             }
             catch (e) {
             }
-            _this.timers.push(timer);
+            this.timers.push(timer);
         };
         timer.interval = timeout;
         timer.repeat = false;
         timer.triggered.connect(callback);
         timer.start();
-    };
-    KWinTimerPool.instance = new KWinTimerPool();
-    return KWinTimerPool;
-}());
+    }
+}
+KWinTimerPool.instance = new KWinTimerPool();
 function KWinSetTimeout(func, timeout) {
     KWinTimerPool.instance.setTimeout(func, timeout);
 }
-var KWinSurface = (function () {
-    function KWinSurface(output, activity, desktop, workspace) {
-        this.id = KWinSurface.generateId(output.name, activity, desktop.name);
-        this.ignore =
-            KWINCONFIG.ignoreActivity.indexOf(activity) >= 0 ||
-                KWINCONFIG.ignoreScreen.indexOf(output.name) >= 0;
-        this.workingArea = toRect(workspace.clientArea(0, output, desktop));
-        this.output = output;
-        this.activity = activity;
-        this.desktop = desktop;
-    }
-    KWinSurface.generateId = function (screenName, activity, desktopName) {
-        var path = screenName;
+class KWinSurface {
+    static generateId(screenName, activity, desktopName) {
+        let path = screenName;
         if (KWINCONFIG.layoutPerActivity)
             path += "@" + activity;
         if (KWINCONFIG.layoutPerDesktop)
             path += "#" + desktopName;
         return path;
-    };
-    KWinSurface.prototype.next = function () {
+    }
+    constructor(output, activity, desktop, workspace) {
+        this.id = KWinSurface.generateId(output.name, activity, desktop.name);
+        this.ignore =
+            KWINCONFIG.ignoreActivity.indexOf(activity) >= 0 ||
+                KWINCONFIG.ignoreScreen.indexOf(output.name) >= 0 ||
+                KWINCONFIG.ignoreVDesktop.indexOf(desktop.name) >= 0;
+        this.workingArea = toRect(workspace.clientArea(0, output, desktop));
+        this.output = output;
+        this.activity = activity;
+        this.desktop = desktop;
+    }
+    next() {
         return null;
-    };
-    KWinSurface.prototype.toString = function () {
+    }
+    toString() {
         return ("KWinSurface(" +
             [this.output.name, this.activity, this.desktop.name].join(", ") +
             ")");
-    };
-    return KWinSurface;
-}());
-var KWinWindow = (function () {
-    function KWinWindow(window, workspace) {
+    }
+}
+class KWinWindow {
+    static generateID(w) {
+        return w.internalId.toString();
+    }
+    get fullScreen() {
+        return this.window.fullScreen;
+    }
+    get geometry() {
+        return toRect(this.window.frameGeometry);
+    }
+    get shouldIgnore() {
+        if (this.window.deleted)
+            return true;
+        const resourceClass = String(this.window.resourceClass);
+        const resourceName = String(this.window.resourceName);
+        const windowRole = String(this.window.windowRole);
+        return (this.window.specialWindow ||
+            resourceClass === "plasmashell" ||
+            KWINCONFIG.ignoreClass.indexOf(resourceClass) >= 0 ||
+            KWINCONFIG.ignoreClass.indexOf(resourceName) >= 0 ||
+            matchWords(this.window.caption, KWINCONFIG.ignoreTitle) >= 0 ||
+            KWINCONFIG.ignoreRole.indexOf(windowRole) >= 0);
+    }
+    get shouldFloat() {
+        const resourceClass = String(this.window.resourceClass);
+        const resourceName = String(this.window.resourceName);
+        const moreOneDesktop = this.window.desktops.length !== 1;
+        return (moreOneDesktop ||
+            this.window.onAllDesktops ||
+            this.window.modal ||
+            this.window.transient ||
+            !this.window.resizeable ||
+            (KWINCONFIG.floatUtility &&
+                (this.window.dialog || this.window.splash || this.window.utility)) ||
+            KWINCONFIG.floatingClass.indexOf(resourceClass) >= 0 ||
+            KWINCONFIG.floatingClass.indexOf(resourceName) >= 0 ||
+            matchWords(this.window.caption, KWINCONFIG.floatingTitle) >= 0);
+    }
+    get surface() {
+        let activity;
+        if (this.window.activities.length === 0)
+            activity = this.workspace.currentActivity;
+        else if (this.window.activities.indexOf(this.workspace.currentActivity) >= 0)
+            activity = this.workspace.currentActivity;
+        else
+            activity = this.window.activities[0];
+        const desktop = this.window.desktops[0];
+        return new KWinSurface(this.window.output, activity, desktop, this.workspace);
+    }
+    set surface(srf) {
+        const ksrf = srf;
+        if (this.window.desktops[0] !== ksrf.desktop)
+            this.window.desktops = [ksrf.desktop];
+        if (this.window.activities[0] !== ksrf.activity)
+            this.window.activities = [ksrf.activity];
+    }
+    constructor(window, workspace) {
         this.workspace = workspace;
         this.window = window;
         this.id = KWinWindow.generateID(window);
@@ -607,81 +608,8 @@ var KWinWindow = (function () {
         this.noBorderManaged = false;
         this.noBorderOriginal = window.noBorder;
     }
-    KWinWindow.generateID = function (w) {
-        return w.internalId.toString();
-    };
-    Object.defineProperty(KWinWindow.prototype, "fullScreen", {
-        get: function () {
-            return this.window.fullScreen;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(KWinWindow.prototype, "geometry", {
-        get: function () {
-            return toRect(this.window.bufferGeometry);
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(KWinWindow.prototype, "shouldIgnore", {
-        get: function () {
-            var resourceClass = String(this.window.resourceClass);
-            var resourceName = String(this.window.resourceName);
-            var windowRole = String(this.window.windowRole);
-            return (this.window.specialWindow ||
-                resourceClass === "plasmashell" ||
-                KWINCONFIG.ignoreClass.indexOf(resourceClass) >= 0 ||
-                KWINCONFIG.ignoreClass.indexOf(resourceName) >= 0 ||
-                matchWords(this.window.caption, KWINCONFIG.ignoreTitle) >= 0 ||
-                KWINCONFIG.ignoreRole.indexOf(windowRole) >= 0);
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(KWinWindow.prototype, "shouldFloat", {
-        get: function () {
-            var resourceClass = String(this.window.resourceClass);
-            var resourceName = String(this.window.resourceName);
-            var moreOneDesktop = this.window.desktops.length !== 1;
-            return (moreOneDesktop ||
-                this.window.onAllDesktops ||
-                this.window.modal ||
-                this.window.transient ||
-                !this.window.resizeable ||
-                (KWINCONFIG.floatUtility &&
-                    (this.window.dialog || this.window.splash || this.window.utility)) ||
-                KWINCONFIG.floatingClass.indexOf(resourceClass) >= 0 ||
-                KWINCONFIG.floatingClass.indexOf(resourceName) >= 0 ||
-                matchWords(this.window.caption, KWINCONFIG.floatingTitle) >= 0);
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(KWinWindow.prototype, "surface", {
-        get: function () {
-            var activity;
-            if (this.window.activities.length === 0)
-                activity = this.workspace.currentActivity;
-            else if (this.window.activities.indexOf(this.workspace.currentActivity) >= 0)
-                activity = this.workspace.currentActivity;
-            else
-                activity = this.window.activities[0];
-            var desktop = this.window.desktops[0];
-            return new KWinSurface(this.window.output, activity, desktop, this.workspace);
-        },
-        set: function (srf) {
-            var ksrf = srf;
-            if (this.window.desktops[0] !== ksrf.desktop)
-                this.window.desktops = [ksrf.desktop];
-            if (this.window.activities[0] !== ksrf.activity)
-                this.window.activities = [ksrf.activity];
-        },
-        enumerable: false,
-        configurable: true
-    });
-    KWinWindow.prototype.commit = function (geometry, noBorder, keepAbove) {
-        debugObj(function () { return ["KWinWindow#commit", { geometry: geometry, noBorder: noBorder, keepAbove: keepAbove }]; });
+    commit(geometry, noBorder, keepAbove) {
+        debugObj(() => ["KWinWindow#commit", { geometry, noBorder, keepAbove }]);
         if (this.window.move || this.window.resize)
             return;
         if (noBorder !== undefined) {
@@ -700,37 +628,39 @@ var KWinWindow = (function () {
         if (geometry !== undefined) {
             geometry = this.adjustGeometry(geometry);
             if (KWINCONFIG.preventProtrusion) {
-                var area = toRect(this.workspace.clientArea(0, this.window.output, this.workspace.currentDesktop));
+                const area = toRect(this.workspace.clientArea(0, this.window.output, this.workspace.currentDesktop));
                 if (!area.includes(geometry)) {
-                    var x = geometry.x + Math.min(area.maxX - geometry.maxX, 0);
-                    var y = geometry.y + Math.min(area.maxY - geometry.maxY, 0);
+                    const x = geometry.x + Math.min(area.maxX - geometry.maxX, 0);
+                    const y = geometry.y + Math.min(area.maxY - geometry.maxY, 0);
                     geometry = new Rect(x, y, geometry.width, geometry.height);
                     geometry = this.adjustGeometry(geometry);
                 }
             }
+            if (this.window.deleted)
+                return;
             this.window.frameGeometry = toQRect(geometry);
-            this.window.rect;
         }
-    };
-    KWinWindow.prototype.toString = function () {
+    }
+    toString() {
         return ("KWin(" +
             this.window.internalId.toString() +
             "." +
             this.window.resourceClass +
             ")");
-    };
-    KWinWindow.prototype.visible = function (srf) {
-        var ksrf = srf;
-        return (!this.window.minimized &&
+    }
+    visible(srf) {
+        const ksrf = srf;
+        return (!this.window.deleted &&
+            !this.window.minimized &&
             (this.window.onAllDesktops ||
                 this.window.desktops.indexOf(ksrf.desktop) !== -1) &&
             (this.window.activities.length === 0 ||
                 this.window.activities.indexOf(ksrf.activity) !== -1) &&
             this.window.output === ksrf.output);
-    };
-    KWinWindow.prototype.adjustGeometry = function (geometry) {
-        var width = geometry.width;
-        var height = geometry.height;
+    }
+    adjustGeometry(geometry) {
+        let width = geometry.width;
+        let height = geometry.height;
         if (!this.window.resizeable) {
             width = this.window.width;
             height = this.window.height;
@@ -740,9 +670,8 @@ var KWinWindow = (function () {
             height = clip(height, this.window.minSize.height, this.window.maxSize.height);
         }
         return new Rect(geometry.x, geometry.y, width, height);
-    };
-    return KWinWindow;
-}());
+    }
+}
 function debugWin(win) {
     var w_props = [
         { name: "caption", opt: win.caption },
@@ -796,7 +725,7 @@ function debugWin(win) {
         { name: "opacity", opt: win.opacity },
     ];
     var s = "krohnkite:";
-    w_props.forEach(function (el) {
+    w_props.forEach((el) => {
         if (typeof el.opt !== "undefined" &&
             (el.opt || el.opt === 0 || el.opt === "0")) {
             s += "<";
@@ -808,73 +737,59 @@ function debugWin(win) {
     });
     return s;
 }
-var TestDriver = (function () {
-    function TestDriver() {
+class TestDriver {
+    constructor() {
         this.currentScreen = 0;
         this.currentWindow = 0;
         this.numScreen = 1;
         this.screenSize = new Rect(0, 0, 10000, 10000);
         this.windows = [];
     }
-    TestDriver.prototype.forEachScreen = function (func) {
-        for (var screen = 0; screen < this.numScreen; screen++)
+    forEachScreen(func) {
+        for (let screen = 0; screen < this.numScreen; screen++)
             func(new TestSurface(this, screen));
-    };
-    TestDriver.prototype.getCurrentContext = function () {
-        var window = this.getCurrentWindow();
+    }
+    getCurrentContext() {
+        const window = this.getCurrentWindow();
         if (window)
             return window.surface;
         return new TestSurface(this, 0);
-    };
-    TestDriver.prototype.getCurrentWindow = function () {
+    }
+    getCurrentWindow() {
         return this.windows.length !== 0 ? this.windows[this.currentWindow] : null;
-    };
-    TestDriver.prototype.getWorkingArea = function (srf) {
+    }
+    getWorkingArea(srf) {
         return this.screenSize;
-    };
-    TestDriver.prototype.setCurrentWindow = function (window) {
-        var idx = this.windows.indexOf(window);
+    }
+    setCurrentWindow(window) {
+        const idx = this.windows.indexOf(window);
         if (idx !== -1)
             this.currentWindow = idx;
-    };
-    TestDriver.prototype.setTimeout = function (func, timeout) {
+    }
+    setTimeout(func, timeout) {
         setTimeout(func, timeout);
-    };
-    return TestDriver;
-}());
-var TestSurface = (function () {
-    function TestSurface(driver, screen) {
+    }
+}
+class TestSurface {
+    get id() {
+        return String(this.screen);
+    }
+    get ignore() {
+        return false;
+    }
+    get workingArea() {
+        return this.driver.screenSize;
+    }
+    constructor(driver, screen) {
         this.driver = driver;
         this.screen = screen;
     }
-    Object.defineProperty(TestSurface.prototype, "id", {
-        get: function () {
-            return String(this.screen);
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(TestSurface.prototype, "ignore", {
-        get: function () {
-            return false;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(TestSurface.prototype, "workingArea", {
-        get: function () {
-            return this.driver.screenSize;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    TestSurface.prototype.next = function () {
+    next() {
         return new TestSurface(this.driver, this.screen + 1);
-    };
-    return TestSurface;
-}());
-var TestWindow = (function () {
-    function TestWindow(srf, geometry, ignore, float) {
+    }
+}
+class TestWindow {
+    constructor(srf, geometry, ignore, float) {
         this.id = String(TestWindow.windowCount);
         TestWindow.windowCount += 1;
         this.shouldFloat = float !== undefined ? float : false;
@@ -886,53 +801,54 @@ var TestWindow = (function () {
         this.maximized = false;
         this.noBorder = false;
     }
-    TestWindow.prototype.commit = function (geometry, noBorder, keepAbove) {
+    commit(geometry, noBorder, keepAbove) {
         if (geometry)
             this.geometry = geometry;
         if (noBorder !== undefined)
             this.noBorder = noBorder;
         if (keepAbove !== undefined)
             this.keepAbove = keepAbove;
-    };
-    TestWindow.prototype.focus = function () {
-    };
-    TestWindow.prototype.visible = function (srf) {
-        var tctx = srf;
+    }
+    focus() {
+    }
+    visible(srf) {
+        const tctx = srf;
         return this.surface.screen === tctx.screen;
-    };
-    TestWindow.windowCount = 0;
-    return TestWindow;
-}());
+    }
+}
+TestWindow.windowCount = 0;
 function setTestConfig(name, value) {
     if (!CONFIG)
         CONFIG = {};
     CONFIG[name] = value;
 }
-var TilingController = (function () {
-    function TilingController(engine) {
+class TilingController {
+    constructor(engine) {
         this.engine = engine;
+        this.isDragging = false;
+        this.dragCompleteTime = null;
     }
-    TilingController.prototype.onSurfaceUpdate = function (ctx, comment) {
-        debugObj(function () { return ["onSurfaceUpdate", { comment: comment }]; });
+    onSurfaceUpdate(ctx, comment) {
+        debugObj(() => ["onSurfaceUpdate", { comment }]);
         this.engine.arrange(ctx);
-    };
-    TilingController.prototype.onCurrentActivityChanged = function (ctx, activityId) {
-        debugObj(function () { return ["onCurrentActivityChanged", { activityId: activityId }]; });
+    }
+    onCurrentActivityChanged(ctx, activityId) {
+        debugObj(() => ["onCurrentActivityChanged", { activityId: activityId }]);
         this.engine.arrange(ctx);
-    };
-    TilingController.prototype.onCurrentSurfaceChanged = function (ctx) {
-        debugObj(function () { return ["onCurrentSurfaceChanged", { srf: ctx.currentSurface }]; });
+    }
+    onCurrentSurfaceChanged(ctx) {
+        debugObj(() => ["onCurrentSurfaceChanged", { srf: ctx.currentSurface }]);
         this.engine.arrange(ctx);
-    };
-    TilingController.prototype.onWindowAdded = function (ctx, window) {
-        debugObj(function () { return ["onWindowAdded", { window: window }]; });
+    }
+    onWindowAdded(ctx, window) {
+        debugObj(() => ["onWindowAdded", { window }]);
         this.engine.manage(window);
         if (window.tileable) {
-            var srf = ctx.currentSurface;
-            var tiles = this.engine.windows.getVisibleTiles(srf);
-            var layoutCapcity = this.engine.layouts.getCurrentLayout(srf).capacity;
+            const srf = ctx.currentSurface;
+            const tiles = this.engine.windows.getVisibleTiles(srf);
+            const layoutCapcity = this.engine.layouts.getCurrentLayout(srf).capacity;
             if (layoutCapcity !== undefined && tiles.length > layoutCapcity) {
-                var nsrf = ctx.currentSurface.next();
+                const nsrf = ctx.currentSurface.next();
                 if (nsrf) {
                     window.surface = nsrf;
                     ctx.currentSurface = nsrf;
@@ -940,24 +856,49 @@ var TilingController = (function () {
             }
         }
         this.engine.arrange(ctx);
-    };
-    TilingController.prototype.onWindowRemoved = function (ctx, window) {
-        debugObj(function () { return ["onWindowRemoved", { window: window }]; });
+    }
+    onWindowRemoved(ctx, window) {
+        debugObj(() => ["onWindowRemoved", { window }]);
         this.engine.unmanage(window);
         this.engine.arrange(ctx);
-    };
-    TilingController.prototype.onWindowMoveStart = function (window) {
-    };
-    TilingController.prototype.onWindowMove = function (window) {
-    };
-    TilingController.prototype.onWindowMoveOver = function (ctx, window) {
-        debugObj(function () { return ["onWindowMoveOver", { window: window }]; });
+    }
+    onWindowMoveStart(window) {
+    }
+    onWindowMove(window) {
+    }
+    onWindowDragging(ctx, window, windowRect) {
+        if (this.isDragging)
+            return;
+        if (this.dragCompleteTime !== null &&
+            Date.now() - this.dragCompleteTime < 100)
+            return;
+        const srf = ctx.currentSurface;
+        const layout = this.engine.layouts.getCurrentLayout(srf);
+        if (!layout.drag)
+            return;
         if (window.state === WindowState.Tiled) {
-            var tiles = this.engine.windows.getVisibleTiles(ctx.currentSurface);
-            var cursorPos_1 = ctx.cursorPosition || window.actualGeometry.center;
-            var targets = tiles.filter(function (tile) {
-                return tile !== window && tile.actualGeometry.includesPoint(cursorPos_1);
-            });
+            window.setDraggingState();
+        }
+        if (window.state === WindowState.Dragging) {
+            const wr = toRect(windowRect);
+            if (layout.drag(new EngineContext(ctx, this.engine), wr.activationPoint, window, srf.workingArea)) {
+                this.engine.arrange(ctx);
+            }
+            this.dragCompleteTime = Date.now();
+        }
+        this.isDragging = false;
+    }
+    onWindowMoveOver(ctx, window) {
+        debugObj(() => ["onWindowMoveOver", { window }]);
+        if (window.state === WindowState.Dragging) {
+            window.removeDraggingState(WindowState.Tiled);
+            this.engine.arrange(ctx);
+            return;
+        }
+        if (window.state === WindowState.Tiled) {
+            const tiles = this.engine.windows.getVisibleTiles(ctx.currentSurface);
+            const cursorPos = ctx.cursorPosition || window.actualGeometry.center;
+            const targets = tiles.filter((tile) => tile !== window && tile.actualGeometry.includesPoint(cursorPos));
             if (targets.length === 1) {
                 this.engine.windows.swap(window, targets[0]);
                 this.engine.arrange(ctx);
@@ -965,8 +906,8 @@ var TilingController = (function () {
             }
         }
         if (!CONFIG.keepTilingOnDrag && window.state === WindowState.Tiled) {
-            var diff = window.actualGeometry.subtract(window.geometry);
-            var distance = Math.sqrt(Math.pow(diff.x, 2) + Math.pow(diff.y, 2));
+            const diff = window.actualGeometry.subtract(window.geometry);
+            const distance = Math.sqrt(Math.pow(diff.x, 2) + Math.pow(diff.y, 2));
             if (distance > 30) {
                 window.floatGeometry = window.actualGeometry;
                 window.state = WindowState.Floating;
@@ -975,46 +916,46 @@ var TilingController = (function () {
             }
         }
         window.commit();
-    };
-    TilingController.prototype.onWindowResizeStart = function (window) {
-    };
-    TilingController.prototype.onWindowResize = function (ctx, window) {
-        debugObj(function () { return ["onWindowResize", { window: window }]; });
+    }
+    onWindowResizeStart(window) {
+    }
+    onWindowResize(ctx, window) {
+        debugObj(() => ["onWindowResize", { window }]);
         if (CONFIG.adjustLayout && CONFIG.adjustLayoutLive) {
             if (window.state === WindowState.Tiled) {
                 this.engine.adjustLayout(window);
                 this.engine.arrange(ctx);
             }
         }
-    };
-    TilingController.prototype.onWindowResizeOver = function (ctx, window) {
-        debugObj(function () { return ["onWindowResizeOver", { window: window }]; });
+    }
+    onWindowResizeOver(ctx, window) {
+        debugObj(() => ["onWindowResizeOver", { window }]);
         if (CONFIG.adjustLayout && window.tiled) {
             this.engine.adjustLayout(window);
             this.engine.arrange(ctx);
         }
         else if (!CONFIG.adjustLayout)
             this.engine.enforceSize(ctx, window);
-    };
-    TilingController.prototype.onWindowMaximizeChanged = function (ctx, window, maximized) {
+    }
+    onWindowMaximizeChanged(ctx, window, maximized) {
         this.engine.arrange(ctx);
-    };
-    TilingController.prototype.onWindowGeometryChanged = function (ctx, window) {
-        debugObj(function () { return ["onWindowGeometryChanged", { window: window }]; });
+    }
+    onWindowGeometryChanged(ctx, window) {
+        debugObj(() => ["onWindowGeometryChanged", { window }]);
         this.engine.enforceSize(ctx, window);
-    };
-    TilingController.prototype.onWindowChanged = function (ctx, window, comment) {
+    }
+    onWindowChanged(ctx, window, comment) {
         if (window) {
-            debugObj(function () { return ["onWindowChanged", { window: window, comment: comment }]; });
+            debugObj(() => ["onWindowChanged", { window, comment }]);
             if (comment === "unminimized")
                 ctx.currentWindow = window;
             this.engine.arrange(ctx);
         }
-    };
-    TilingController.prototype.onWindowFocused = function (ctx, window) {
+    }
+    onWindowFocused(ctx, window) {
         window.timestamp = new Date().getTime();
-    };
-    TilingController.prototype.onShortcut = function (ctx, input, data) {
+    }
+    onShortcut(ctx, input, data) {
         if (CONFIG.directionalKeyMode === "dwm") {
             switch (input) {
                 case Shortcut.FocusUp:
@@ -1051,7 +992,7 @@ var TilingController = (function () {
             this.engine.arrange(ctx);
             return;
         }
-        var window = ctx.currentWindow;
+        const window = ctx.currentWindow;
         switch (input) {
             case Shortcut.FocusNext:
                 this.engine.focusOrder(ctx, -1);
@@ -1132,28 +1073,30 @@ var TilingController = (function () {
                 break;
         }
         this.engine.arrange(ctx);
-    };
-    return TilingController;
-}());
-var TilingEngine = (function () {
-    function TilingEngine() {
+    }
+}
+class TilingEngine {
+    constructor() {
         this.layouts = new LayoutStore();
         this.windows = new WindowStore();
     }
-    TilingEngine.prototype.adjustLayout = function (basis) {
-        var srf = basis.surface;
-        var layout = this.layouts.getCurrentLayout(srf);
+    adjustLayout(basis) {
+        let delta = basis.geometryDelta;
+        if (delta === null)
+            return;
+        const srf = basis.surface;
+        const layout = this.layouts.getCurrentLayout(srf);
         if (layout.adjust) {
-            var area = srf.workingArea.gap(CONFIG.screenGapLeft, CONFIG.screenGapRight, CONFIG.screenGapTop, CONFIG.screenGapBottom);
-            var tiles = this.windows.getVisibleTiles(srf);
-            layout.adjust(area, tiles, basis, basis.geometryDelta);
+            const area = srf.workingArea.gap(CONFIG.screenGapLeft, CONFIG.screenGapRight, CONFIG.screenGapTop, CONFIG.screenGapBottom);
+            const tiles = this.windows.getVisibleTiles(srf);
+            layout.adjust(area, tiles, basis, delta);
         }
-    };
-    TilingEngine.prototype.resizeFloat = function (window, dir, step) {
-        var srf = window.surface;
-        var hStepSize = srf.workingArea.width * 0.05;
-        var vStepSize = srf.workingArea.height * 0.05;
-        var hStep, vStep;
+    }
+    resizeFloat(window, dir, step) {
+        const srf = window.surface;
+        const hStepSize = srf.workingArea.width * 0.05;
+        const vStepSize = srf.workingArea.height * 0.05;
+        let hStep, vStep;
         switch (dir) {
             case "east":
                 (hStep = step), (vStep = 0);
@@ -1168,36 +1111,36 @@ var TilingEngine = (function () {
                 (hStep = 0), (vStep = -step);
                 break;
         }
-        var geometry = window.actualGeometry;
-        var width = geometry.width + hStepSize * hStep;
-        var height = geometry.height + vStepSize * vStep;
+        const geometry = window.actualGeometry;
+        const width = geometry.width + hStepSize * hStep;
+        const height = geometry.height + vStepSize * vStep;
         window.forceSetGeometry(new Rect(geometry.x, geometry.y, width, height));
-    };
-    TilingEngine.prototype.resizeTile = function (basis, dir, step) {
-        var srf = basis.surface;
+    }
+    resizeTile(basis, dir, step) {
+        const srf = basis.surface;
         if (dir === "east") {
-            var maxX_1 = basis.geometry.maxX;
-            var easternNeighbor = this.windows
+            const maxX = basis.geometry.maxX;
+            const easternNeighbor = this.windows
                 .getVisibleTiles(srf)
-                .filter(function (tile) { return tile.geometry.x >= maxX_1; });
+                .filter((tile) => tile.geometry.x >= maxX);
             if (easternNeighbor.length === 0) {
                 dir = "west";
                 step *= -1;
             }
         }
         else if (dir === "south") {
-            var maxY_1 = basis.geometry.maxY;
-            var southernNeighbor = this.windows
+            const maxY = basis.geometry.maxY;
+            const southernNeighbor = this.windows
                 .getVisibleTiles(srf)
-                .filter(function (tile) { return tile.geometry.y >= maxY_1; });
+                .filter((tile) => tile.geometry.y >= maxY);
             if (southernNeighbor.length === 0) {
                 dir = "north";
                 step *= -1;
             }
         }
-        var hStepSize = srf.workingArea.width * 0.03;
-        var vStepSize = srf.workingArea.height * 0.03;
-        var delta;
+        const hStepSize = srf.workingArea.width * 0.03;
+        const vStepSize = srf.workingArea.height * 0.03;
+        let delta;
         switch (dir) {
             case "east":
                 delta = new RectDelta(hStepSize * step, 0, 0, 0);
@@ -1213,50 +1156,49 @@ var TilingEngine = (function () {
                 delta = new RectDelta(0, 0, 0, vStepSize * step);
                 break;
         }
-        var layout = this.layouts.getCurrentLayout(srf);
+        const layout = this.layouts.getCurrentLayout(srf);
         if (layout.adjust) {
-            var area = srf.workingArea.gap(CONFIG.screenGapLeft, CONFIG.screenGapRight, CONFIG.screenGapTop, CONFIG.screenGapBottom);
+            const area = srf.workingArea.gap(CONFIG.screenGapLeft, CONFIG.screenGapRight, CONFIG.screenGapTop, CONFIG.screenGapBottom);
             layout.adjust(area, this.windows.getVisibleTileables(srf), basis, delta);
         }
-    };
-    TilingEngine.prototype.resizeWindow = function (window, dir, step) {
-        var state = window.state;
+    }
+    resizeWindow(window, dir, step) {
+        const state = window.state;
         if (WindowClass.isFloatingState(state))
             this.resizeFloat(window, dir, step);
         else if (WindowClass.isTiledState(state))
             this.resizeTile(window, dir, step);
-    };
-    TilingEngine.prototype.arrange = function (ctx) {
-        var _this = this;
-        debug(function () { return "arrange"; });
-        ctx.screens.forEach(function (srf) {
-            _this.arrangeScreen(ctx, srf);
+    }
+    arrange(ctx) {
+        debug(() => "arrange");
+        ctx.screens.forEach((srf) => {
+            this.arrangeScreen(ctx, srf);
         });
-    };
-    TilingEngine.prototype.arrangeScreen = function (ctx, srf) {
-        var layout = this.layouts.getCurrentLayout(srf);
-        var workingArea = srf.workingArea;
-        var tilingArea;
+    }
+    arrangeScreen(ctx, srf) {
+        const layout = this.layouts.getCurrentLayout(srf);
+        const workingArea = srf.workingArea;
+        let tilingArea;
         if (CONFIG.monocleMaximize && layout instanceof MonocleLayout)
             tilingArea = workingArea;
         else
             tilingArea = workingArea.gap(CONFIG.screenGapLeft, CONFIG.screenGapRight, CONFIG.screenGapTop, CONFIG.screenGapBottom);
-        var visibles = this.windows.getVisibleWindows(srf);
-        debugObj(function () { return [
+        const visibles = this.windows.getVisibleWindows(srf);
+        debugObj(() => [
             "arrangeScreen",
             {
-                layout: layout,
-                srf: srf,
+                layout,
+                srf,
                 visibles: visibles.length,
             },
-        ]; });
-        visibles.forEach(function (window) {
+        ]);
+        visibles.forEach((window) => {
             if (window.state === WindowState.Undecided)
                 window.state = window.shouldFloat
                     ? WindowState.Floating
                     : WindowState.Tiled;
         });
-        var tileables = this.windows.getVisibleTileables(srf);
+        const tileables = this.windows.getVisibleTileables(srf);
         if (CONFIG.maximizeSoleTile && tileables.length === 1) {
             tileables[0].state = WindowState.Maximized;
             tileables[0].geometry = workingArea;
@@ -1264,25 +1206,25 @@ var TilingEngine = (function () {
         else if (tileables.length > 0)
             layout.apply(new EngineContext(ctx, this), tileables, tilingArea);
         if (CONFIG.limitTileWidthRatio > 0 && !(layout instanceof MonocleLayout)) {
-            var maxWidth_1 = Math.floor(workingArea.height * CONFIG.limitTileWidthRatio);
+            const maxWidth = Math.floor(workingArea.height * CONFIG.limitTileWidthRatio);
             tileables
-                .filter(function (tile) { return tile.tiled && tile.geometry.width > maxWidth_1; })
-                .forEach(function (tile) {
-                var g = tile.geometry;
-                tile.geometry = new Rect(g.x + Math.floor((g.width - maxWidth_1) / 2), g.y, maxWidth_1, g.height);
+                .filter((tile) => tile.tiled && tile.geometry.width > maxWidth)
+                .forEach((tile) => {
+                const g = tile.geometry;
+                tile.geometry = new Rect(g.x + Math.floor((g.width - maxWidth) / 2), g.y, maxWidth, g.height);
             });
         }
-        visibles.forEach(function (window) { return window.commit(); });
-        debugObj(function () { return ["arrangeScreen/finished", { srf: srf }]; });
-    };
-    TilingEngine.prototype.enforceSize = function (ctx, window) {
+        visibles.forEach((window) => window.commit());
+        debugObj(() => ["arrangeScreen/finished", { srf }]);
+    }
+    enforceSize(ctx, window) {
         if (window.tiled && !window.actualGeometry.equals(window.geometry))
-            ctx.setTimeout(function () {
+            ctx.setTimeout(() => {
                 if (window.tiled)
                     window.commit();
             }, 10);
-    };
-    TilingEngine.prototype.manage = function (window) {
+    }
+    manage(window) {
         if (!window.shouldIgnore) {
             window.state = WindowState.Undecided;
             if (CONFIG.newWindowPosition === 1)
@@ -1293,69 +1235,69 @@ var TilingEngine = (function () {
             else
                 this.windows.push(window);
         }
-    };
-    TilingEngine.prototype.unmanage = function (window) {
+    }
+    unmanage(window) {
         this.windows.remove(window);
-    };
-    TilingEngine.prototype.focusOrder = function (ctx, step) {
-        var window = ctx.currentWindow;
+    }
+    focusOrder(ctx, step) {
+        const window = ctx.currentWindow;
         if (window === null) {
-            var tiles = this.windows.getVisibleTiles(ctx.currentSurface);
+            const tiles = this.windows.getVisibleTiles(ctx.currentSurface);
             if (tiles.length > 1)
                 ctx.currentWindow = tiles[0];
             return;
         }
-        var visibles = this.windows.getVisibleWindows(ctx.currentSurface);
+        const visibles = this.windows.getVisibleWindows(ctx.currentSurface);
         if (visibles.length === 0)
             return;
-        var idx = visibles.indexOf(window);
+        const idx = visibles.indexOf(window);
         if (!window || idx < 0) {
             ctx.currentWindow = visibles[0];
             return;
         }
-        var num = visibles.length;
-        var newIndex = (idx + (step % num) + num) % num;
+        const num = visibles.length;
+        const newIndex = (idx + (step % num) + num) % num;
         ctx.currentWindow = visibles[newIndex];
-    };
-    TilingEngine.prototype.focusDir = function (ctx, dir) {
-        var window = ctx.currentWindow;
+    }
+    focusDir(ctx, dir) {
+        const window = ctx.currentWindow;
         if (window === null) {
-            var tiles = this.windows.getVisibleTiles(ctx.currentSurface);
+            const tiles = this.windows.getVisibleTiles(ctx.currentSurface);
             if (tiles.length > 1)
                 ctx.currentWindow = tiles[0];
             return;
         }
-        var neighbor = this.getNeighborByDirection(ctx, window, dir);
+        const neighbor = this.getNeighborByDirection(ctx, window, dir);
         if (neighbor)
             ctx.currentWindow = neighbor;
-    };
-    TilingEngine.prototype.swapOrder = function (window, step) {
-        var srf = window.surface;
-        var visibles = this.windows.getVisibleWindows(srf);
+    }
+    swapOrder(window, step) {
+        const srf = window.surface;
+        const visibles = this.windows.getVisibleWindows(srf);
         if (visibles.length < 2)
             return;
-        var vsrc = visibles.indexOf(window);
-        var vdst = wrapIndex(vsrc + step, visibles.length);
-        var dstWin = visibles[vdst];
+        const vsrc = visibles.indexOf(window);
+        const vdst = wrapIndex(vsrc + step, visibles.length);
+        const dstWin = visibles[vdst];
         this.windows.move(window, dstWin);
-    };
-    TilingEngine.prototype.swapDirection = function (ctx, dir) {
-        var window = ctx.currentWindow;
+    }
+    swapDirection(ctx, dir) {
+        const window = ctx.currentWindow;
         if (window === null) {
-            var tiles = this.windows.getVisibleTiles(ctx.currentSurface);
+            const tiles = this.windows.getVisibleTiles(ctx.currentSurface);
             if (tiles.length > 1)
                 ctx.currentWindow = tiles[0];
             return;
         }
-        var neighbor = this.getNeighborByDirection(ctx, window, dir);
+        const neighbor = this.getNeighborByDirection(ctx, window, dir);
         if (neighbor)
             this.windows.swap(window, neighbor);
-    };
-    TilingEngine.prototype.moveFloat = function (window, dir) {
-        var srf = window.surface;
-        var hStepSize = srf.workingArea.width * 0.05;
-        var vStepSize = srf.workingArea.height * 0.05;
-        var hStep, vStep;
+    }
+    moveFloat(window, dir) {
+        const srf = window.surface;
+        const hStepSize = srf.workingArea.width * 0.05;
+        const vStepSize = srf.workingArea.height * 0.05;
+        let hStep, vStep;
         switch (dir) {
             case "up":
                 (hStep = 0), (vStep = -1);
@@ -1370,65 +1312,65 @@ var TilingEngine = (function () {
                 (hStep = 1), (vStep = 0);
                 break;
         }
-        var geometry = window.actualGeometry;
-        var x = geometry.x + hStepSize * hStep;
-        var y = geometry.y + vStepSize * vStep;
+        const geometry = window.actualGeometry;
+        const x = geometry.x + hStepSize * hStep;
+        const y = geometry.y + vStepSize * vStep;
         window.forceSetGeometry(new Rect(x, y, geometry.width, geometry.height));
-    };
-    TilingEngine.prototype.swapDirOrMoveFloat = function (ctx, dir) {
-        var window = ctx.currentWindow;
+    }
+    swapDirOrMoveFloat(ctx, dir) {
+        const window = ctx.currentWindow;
         if (!window)
             return;
-        var state = window.state;
+        const state = window.state;
         if (WindowClass.isFloatingState(state))
             this.moveFloat(window, dir);
         else if (WindowClass.isTiledState(state))
             this.swapDirection(ctx, dir);
-    };
-    TilingEngine.prototype.toggleFloat = function (window) {
+    }
+    toggleFloat(window) {
         window.state = !window.tileable ? WindowState.Tiled : WindowState.Floating;
-    };
-    TilingEngine.prototype.floatAll = function (ctx, srf) {
-        var windows = this.windows.getVisibleWindows(srf);
-        var numFloats = windows.reduce(function (count, window) {
+    }
+    floatAll(ctx, srf) {
+        const windows = this.windows.getVisibleWindows(srf);
+        const numFloats = windows.reduce((count, window) => {
             return window.state === WindowState.Floating ? count + 1 : count;
         }, 0);
         if (numFloats < windows.length / 2) {
-            windows.forEach(function (window) {
+            windows.forEach((window) => {
                 window.floatGeometry = window.actualGeometry.gap(4, 4, 4, 4);
                 window.state = WindowState.Floating;
             });
             ctx.showNotification("Float All");
         }
         else {
-            windows.forEach(function (window) {
+            windows.forEach((window) => {
                 window.state = WindowState.Tiled;
             });
             ctx.showNotification("Tile All");
         }
-    };
-    TilingEngine.prototype.setMaster = function (window) {
+    }
+    setMaster(window) {
         this.windows.setMaster(window);
-    };
-    TilingEngine.prototype.cycleLayout = function (ctx, step) {
-        var layout = this.layouts.cycleLayout(ctx.currentSurface, step);
+    }
+    cycleLayout(ctx, step) {
+        const layout = this.layouts.cycleLayout(ctx.currentSurface, step);
         if (layout)
             ctx.showNotification(layout.description);
-    };
-    TilingEngine.prototype.setLayout = function (ctx, layoutClassID) {
-        var layout = this.layouts.setLayout(ctx.currentSurface, layoutClassID);
+    }
+    setLayout(ctx, layoutClassID) {
+        const layout = this.layouts.setLayout(ctx.currentSurface, layoutClassID);
         if (layout)
             ctx.showNotification(layout.description);
-    };
-    TilingEngine.prototype.handleLayoutShortcut = function (ctx, input, data) {
-        var layout = this.layouts.getCurrentLayout(ctx.currentSurface);
+    }
+    handleLayoutShortcut(ctx, input, data) {
+        const layout = this.layouts.getCurrentLayout(ctx.currentSurface);
         if (layout.handleShortcut)
             return layout.handleShortcut(new EngineContext(ctx, this), input, data);
         return false;
-    };
-    TilingEngine.prototype.getNeighborByDirection = function (ctx, basis, dir) {
-        var vertical;
-        var sign;
+    }
+    getNeighborByDirection(ctx, basis, dir) {
+        let vertical;
+        let sign;
         switch (dir) {
             case "up":
                 vertical = true;
@@ -1449,88 +1391,88 @@ var TilingEngine = (function () {
             default:
                 return null;
         }
-        var candidates = this.windows
+        const candidates = this.windows
             .getVisibleTiles(ctx.currentSurface)
             .filter(vertical
-            ? function (tile) { return tile.geometry.y * sign > basis.geometry.y * sign; }
-            : function (tile) { return tile.geometry.x * sign > basis.geometry.x * sign; })
+            ? (tile) => tile.geometry.y * sign > basis.geometry.y * sign
+            : (tile) => tile.geometry.x * sign > basis.geometry.x * sign)
             .filter(vertical
-            ? function (tile) {
-                return overlap(basis.geometry.x, basis.geometry.maxX, tile.geometry.x, tile.geometry.maxX);
-            }
-            : function (tile) {
-                return overlap(basis.geometry.y, basis.geometry.maxY, tile.geometry.y, tile.geometry.maxY);
-            });
+            ? (tile) => overlap(basis.geometry.x, basis.geometry.maxX, tile.geometry.x, tile.geometry.maxX)
+            : (tile) => overlap(basis.geometry.y, basis.geometry.maxY, tile.geometry.y, tile.geometry.maxY));
         if (candidates.length === 0)
             return null;
-        var min = sign *
+        const min = sign *
             candidates.reduce(vertical
-                ? function (prevMin, tile) { return Math.min(tile.geometry.y * sign, prevMin); }
-                : function (prevMin, tile) {
-                    return Math.min(tile.geometry.x * sign, prevMin);
-                }, Infinity);
-        var closest = candidates.filter(vertical
-            ? function (tile) { return tile.geometry.y === min; }
-            : function (tile) { return tile.geometry.x === min; });
-        return closest.sort(function (a, b) { return b.timestamp - a.timestamp; })[0];
-    };
-    return TilingEngine;
-}());
-var EngineContext = (function () {
-    function EngineContext(drvctx, engine) {
+                ? (prevMin, tile) => Math.min(tile.geometry.y * sign, prevMin)
+                : (prevMin, tile) => Math.min(tile.geometry.x * sign, prevMin), Infinity);
+        const closest = candidates.filter(vertical
+            ? (tile) => tile.geometry.y === min
+            : (tile) => tile.geometry.x === min);
+        return closest.sort((a, b) => b.timestamp - a.timestamp)[0];
+    }
+}
+class EngineContext {
+    get backend() {
+        return this.drvctx.backend;
+    }
+    get currentWindow() {
+        return this.drvctx.currentWindow;
+    }
+    set currentWindow(window) {
+        this.drvctx.currentWindow = window;
+    }
+    constructor(drvctx, engine) {
         this.drvctx = drvctx;
         this.engine = engine;
     }
-    Object.defineProperty(EngineContext.prototype, "backend", {
-        get: function () {
-            return this.drvctx.backend;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(EngineContext.prototype, "currentWindow", {
-        get: function () {
-            return this.drvctx.currentWindow;
-        },
-        set: function (window) {
-            this.drvctx.currentWindow = window;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    EngineContext.prototype.setTimeout = function (func, timeout) {
+    setTimeout(func, timeout) {
         this.drvctx.setTimeout(func, timeout);
-    };
-    EngineContext.prototype.cycleFocus = function (step) {
+    }
+    cycleFocus(step) {
         this.engine.focusOrder(this.drvctx, step);
-    };
-    EngineContext.prototype.moveWindow = function (window, target, after) {
+    }
+    moveWindow(window, target, after) {
         this.engine.windows.move(window, target, after);
-    };
-    EngineContext.prototype.showNotification = function (text) {
+    }
+    moveWindowByWinId(window, targetId, after) {
+        let target = this.engine.windows.getWindowById(targetId);
+        if (target === null)
+            return;
+        this.engine.windows.moveNew(window, target, after);
+    }
+    showNotification(text) {
         this.drvctx.showNotification(text);
-    };
-    return EngineContext;
-}());
-var LayoutStoreEntry = (function () {
-    function LayoutStoreEntry(output_name, desktop_name) {
-        var _this = this;
-        var layouts_str = CONFIG.layoutOrder.map(function (layout, i) { return i + "." + layout + ", "; });
-        print("Krohnkite: Screen(output):".concat(output_name, ", Desktop(name):").concat(desktop_name, ", layouts: ").concat(layouts_str));
+    }
+}
+class LayoutStoreEntry {
+    get currentLayout() {
+        return this.loadLayout(this.currentID);
+    }
+    constructor(output_name, desktop_name) {
+        let layouts = CONFIG.layoutOrder.map((layout) => layout.toLowerCase());
+        let layouts_str = layouts.map((layout, i) => i + "." + layout + " ");
+        print(`Krohnkite: Screen(output):${output_name}, Desktop(name):${desktop_name}, layouts: ${layouts_str}`);
         this.currentIndex = 0;
         this.currentID = CONFIG.layoutOrder[0];
-        CONFIG.screenDefaultLayout.some(function (entry) {
-            var cfg = entry.split(":");
-            var cfg_output = cfg[0];
-            var cfg_desktop = cfg.length == 2 ? undefined : cfg[1];
-            var cfg_screen_id_str = cfg.length == 2 ? cfg[1] : cfg[2];
-            var cfg_screen_id = parseInt(cfg_screen_id_str);
-            if ((output_name === cfg_output || cfg_output === '') &&
+        CONFIG.screenDefaultLayout.some((entry) => {
+            let cfg = entry.split(":");
+            let cfg_output = cfg[0];
+            let cfg_desktop = cfg.length == 2 ? undefined : cfg[1];
+            let cfg_screen_id_str = cfg.length == 2 ? cfg[1] : cfg[2];
+            let cfg_screen_id = parseInt(cfg_screen_id_str);
+            if (isNaN(cfg_screen_id)) {
+                cfg_screen_id = layouts.indexOf(cfg_screen_id_str.toLowerCase());
+                cfg_screen_id =
+                    cfg_screen_id >= 0
+                        ? cfg_screen_id
+                        : layouts.indexOf(cfg_screen_id_str.toLowerCase() + "layout");
+            }
+            if ((output_name === cfg_output || cfg_output === "") &&
                 (desktop_name === cfg_desktop || cfg_desktop === undefined) &&
                 cfg_screen_id >= 0 &&
                 cfg_screen_id < CONFIG.layoutOrder.length) {
-                _this.currentIndex = cfg_screen_id;
-                _this.currentID = CONFIG.layoutOrder[_this.currentIndex];
+                this.currentIndex = cfg_screen_id;
+                this.currentID = CONFIG.layoutOrder[this.currentIndex];
                 return true;
             }
         });
@@ -1538,14 +1480,7 @@ var LayoutStoreEntry = (function () {
         this.previousID = this.currentID;
         this.loadLayout(this.currentID);
     }
-    Object.defineProperty(LayoutStoreEntry.prototype, "currentLayout", {
-        get: function () {
-            return this.loadLayout(this.currentID);
-        },
-        enumerable: false,
-        configurable: true
-    });
-    LayoutStoreEntry.prototype.cycleLayout = function (step) {
+    cycleLayout(step) {
         this.previousID = this.currentID;
         this.currentIndex =
             this.currentIndex !== null
@@ -1553,9 +1488,9 @@ var LayoutStoreEntry = (function () {
                 : 0;
         this.currentID = CONFIG.layoutOrder[this.currentIndex];
         return this.loadLayout(this.currentID);
-    };
-    LayoutStoreEntry.prototype.setLayout = function (targetID) {
-        var targetLayout = this.loadLayout(targetID);
+    }
+    setLayout(targetID) {
+        const targetLayout = this.loadLayout(targetID);
         if (targetLayout instanceof MonocleLayout &&
             this.currentLayout instanceof MonocleLayout) {
             this.currentID = this.previousID;
@@ -1567,57 +1502,55 @@ var LayoutStoreEntry = (function () {
         }
         this.updateCurrentIndex();
         return targetLayout;
-    };
-    LayoutStoreEntry.prototype.updateCurrentIndex = function () {
-        var idx = CONFIG.layoutOrder.indexOf(this.currentID);
+    }
+    updateCurrentIndex() {
+        const idx = CONFIG.layoutOrder.indexOf(this.currentID);
         this.currentIndex = idx === -1 ? null : idx;
-    };
-    LayoutStoreEntry.prototype.loadLayout = function (ID) {
-        var layout = this.layouts[ID];
+    }
+    loadLayout(ID) {
+        let layout = this.layouts[ID];
         if (!layout)
             layout = this.layouts[ID] = CONFIG.layoutFactories[ID]();
         return layout;
-    };
-    return LayoutStoreEntry;
-}());
-var LayoutStore = (function () {
-    function LayoutStore() {
+    }
+}
+class LayoutStore {
+    constructor() {
         this.store = {};
     }
-    LayoutStore.prototype.getCurrentLayout = function (srf) {
+    getCurrentLayout(srf) {
         return srf.ignore
             ? FloatingLayout.instance
             : this.getEntry(srf.id).currentLayout;
-    };
-    LayoutStore.prototype.cycleLayout = function (srf, step) {
+    }
+    cycleLayout(srf, step) {
         if (srf.ignore)
             return null;
         return this.getEntry(srf.id).cycleLayout(step);
-    };
-    LayoutStore.prototype.setLayout = function (srf, layoutClassID) {
+    }
+    setLayout(srf, layoutClassID) {
         if (srf.ignore)
             return null;
         return this.getEntry(srf.id).setLayout(layoutClassID);
-    };
-    LayoutStore.prototype.getEntry = function (key) {
+    }
+    getEntry(key) {
         if (!this.store[key]) {
-            var i1 = key.indexOf("@");
-            var i2 = key.indexOf("#");
-            var key_without_activity = key.slice(0, i1 + 1) + key.slice(i2);
+            let i1 = key.indexOf("@");
+            let i2 = key.indexOf("#");
+            let key_without_activity = key.slice(0, i1 + 1) + key.slice(i2);
             if (i1 > 0 && i2 > 0 && i2 - i1 > 1 && this.store[key_without_activity]) {
                 this.store[key] = this.store[key_without_activity];
                 delete this.store[key_without_activity];
             }
             else {
-                var output_name = key.slice(0, key.indexOf("@"));
-                var desktop_name = i2 !== -1 ? key.slice(i2 + 1) : undefined;
+                let output_name = key.slice(0, key.indexOf("@"));
+                let desktop_name = i2 !== -1 ? key.slice(i2 + 1) : undefined;
                 this.store[key] = new LayoutStoreEntry(output_name, desktop_name);
             }
         }
         return this.store[key];
-    };
-    return LayoutStore;
-}());
+    }
+}
 var WindowState;
 (function (WindowState) {
     WindowState[WindowState["Unmanaged"] = 0] = "Unmanaged";
@@ -1628,9 +1561,89 @@ var WindowState;
     WindowState[WindowState["Tiled"] = 5] = "Tiled";
     WindowState[WindowState["TiledAfloat"] = 6] = "TiledAfloat";
     WindowState[WindowState["Undecided"] = 7] = "Undecided";
+    WindowState[WindowState["Dragging"] = 8] = "Dragging";
 })(WindowState || (WindowState = {}));
-var WindowClass = (function () {
-    function WindowClass(window) {
+class WindowClass {
+    static isTileableState(state) {
+        return (state === WindowState.Dragging ||
+            state === WindowState.Tiled ||
+            state === WindowState.Maximized ||
+            state === WindowState.TiledAfloat);
+    }
+    static isTiledState(state) {
+        return state === WindowState.Tiled || state === WindowState.Maximized;
+    }
+    static isFloatingState(state) {
+        return state === WindowState.Floating || state === WindowState.TiledAfloat;
+    }
+    get actualGeometry() {
+        return this.window.geometry;
+    }
+    get shouldFloat() {
+        return this.window.shouldFloat;
+    }
+    get shouldIgnore() {
+        return this.window.shouldIgnore;
+    }
+    get tileable() {
+        return WindowClass.isTileableState(this.state);
+    }
+    get tiled() {
+        return WindowClass.isTiledState(this.state);
+    }
+    get floating() {
+        return WindowClass.isFloatingState(this.state);
+    }
+    get geometryDelta() {
+        if (this.geometry === this.actualGeometry)
+            return null;
+        return RectDelta.fromRects(this.geometry, this.actualGeometry);
+    }
+    get state() {
+        if (this.window.fullScreen)
+            return WindowState.NativeFullscreen;
+        if (this.window.maximized)
+            return WindowState.NativeMaximized;
+        return this.internalState;
+    }
+    set state(value) {
+        const state = this.state;
+        if (state === value || state === WindowState.Dragging)
+            return;
+        if ((state === WindowState.Unmanaged || WindowClass.isTileableState(state)) &&
+            WindowClass.isFloatingState(value))
+            this.shouldCommitFloat = true;
+        else if (WindowClass.isFloatingState(state) &&
+            WindowClass.isTileableState(value))
+            this.floatGeometry = this.actualGeometry;
+        this.internalState = value;
+    }
+    setDraggingState() {
+        this.internalState = WindowState.Dragging;
+    }
+    removeDraggingState(value) {
+        this.internalState = value;
+    }
+    get surface() {
+        return this.window.surface;
+    }
+    set surface(srf) {
+        this.window.surface = srf;
+    }
+    get weight() {
+        const srfID = this.window.surface.id;
+        const weight = this.weightMap[srfID];
+        if (weight === undefined) {
+            this.weightMap[srfID] = 1.0;
+            return 1.0;
+        }
+        return weight;
+    }
+    set weight(value) {
+        const srfID = this.window.surface.id;
+        this.weightMap[srfID] = value;
+    }
+    constructor(window) {
         this.id = window.id;
         this.window = window;
         this.floatGeometry = window.geometry;
@@ -1640,120 +1653,12 @@ var WindowClass = (function () {
         this.shouldCommitFloat = this.shouldFloat;
         this.weightMap = {};
     }
-    WindowClass.isTileableState = function (state) {
-        return (state === WindowState.Tiled ||
-            state === WindowState.Maximized ||
-            state === WindowState.TiledAfloat);
-    };
-    WindowClass.isTiledState = function (state) {
-        return state === WindowState.Tiled || state === WindowState.Maximized;
-    };
-    WindowClass.isFloatingState = function (state) {
-        return state === WindowState.Floating || state === WindowState.TiledAfloat;
-    };
-    Object.defineProperty(WindowClass.prototype, "actualGeometry", {
-        get: function () {
-            return this.window.geometry;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(WindowClass.prototype, "shouldFloat", {
-        get: function () {
-            return this.window.shouldFloat;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(WindowClass.prototype, "shouldIgnore", {
-        get: function () {
-            return this.window.shouldIgnore;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(WindowClass.prototype, "tileable", {
-        get: function () {
-            return WindowClass.isTileableState(this.state);
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(WindowClass.prototype, "tiled", {
-        get: function () {
-            return WindowClass.isTiledState(this.state);
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(WindowClass.prototype, "floating", {
-        get: function () {
-            return WindowClass.isFloatingState(this.state);
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(WindowClass.prototype, "geometryDelta", {
-        get: function () {
-            return RectDelta.fromRects(this.geometry, this.actualGeometry);
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(WindowClass.prototype, "state", {
-        get: function () {
-            if (this.window.fullScreen)
-                return WindowState.NativeFullscreen;
-            if (this.window.maximized)
-                return WindowState.NativeMaximized;
-            return this.internalState;
-        },
-        set: function (value) {
-            var state = this.state;
-            if (state === value)
-                return;
-            if ((state === WindowState.Unmanaged || WindowClass.isTileableState(state)) &&
-                WindowClass.isFloatingState(value))
-                this.shouldCommitFloat = true;
-            else if (WindowClass.isFloatingState(state) &&
-                WindowClass.isTileableState(value))
-                this.floatGeometry = this.actualGeometry;
-            this.internalState = value;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(WindowClass.prototype, "surface", {
-        get: function () {
-            return this.window.surface;
-        },
-        set: function (srf) {
-            this.window.surface = srf;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(WindowClass.prototype, "weight", {
-        get: function () {
-            var srfID = this.window.surface.id;
-            var weight = this.weightMap[srfID];
-            if (weight === undefined) {
-                this.weightMap[srfID] = 1.0;
-                return 1.0;
-            }
-            return weight;
-        },
-        set: function (value) {
-            var srfID = this.window.surface.id;
-            this.weightMap[srfID] = value;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    WindowClass.prototype.commit = function () {
-        var state = this.state;
-        debugObj(function () { return ["Window#commit", { state: WindowState[state] }]; });
+    commit() {
+        const state = this.state;
+        debugObj(() => ["Window#commit", { state: WindowState[state] }]);
         switch (state) {
+            case WindowState.Dragging:
+                break;
             case WindowState.NativeMaximized:
                 this.window.commit(undefined, undefined, false);
                 break;
@@ -1779,113 +1684,121 @@ var WindowClass = (function () {
                 this.shouldCommitFloat = false;
                 break;
         }
-    };
-    WindowClass.prototype.forceSetGeometry = function (geometry) {
+    }
+    forceSetGeometry(geometry) {
         this.window.commit(geometry);
-    };
-    WindowClass.prototype.visible = function (srf) {
+    }
+    visible(srf) {
         return this.window.visible(srf);
-    };
-    WindowClass.prototype.toString = function () {
+    }
+    toString() {
         return "Window(" + String(this.window) + ")";
-    };
-    return WindowClass;
-}());
-var WindowStore = (function () {
-    function WindowStore(windows) {
+    }
+}
+class WindowStore {
+    constructor(windows) {
         this.list = windows || [];
     }
-    WindowStore.prototype.move = function (srcWin, destWin, after) {
-        var srcIdx = this.list.indexOf(srcWin);
-        var destIdx = this.list.indexOf(destWin);
+    move(srcWin, destWin, after) {
+        const srcIdx = this.list.indexOf(srcWin);
+        const destIdx = this.list.indexOf(destWin);
         if (srcIdx === -1 || destIdx === -1)
             return;
         this.list.splice(srcIdx, 1);
         this.list.splice(after ? destIdx + 1 : destIdx, 0, srcWin);
-    };
-    WindowStore.prototype.setMaster = function (window) {
-        var idx = this.list.indexOf(window);
+    }
+    moveNew(srcWin, destWin, after) {
+        const srcIdx = this.list.indexOf(srcWin);
+        const destIdx = this.list.indexOf(destWin);
+        if (srcIdx === -1 || destIdx === -1)
+            return;
+        if (srcIdx > destIdx) {
+            this.list.splice(srcIdx, 1);
+            this.list.splice(after ? destIdx + 1 : destIdx, 0, srcWin);
+        }
+        else if (destIdx > srcIdx) {
+            this.list.splice(srcIdx, 1);
+            this.list.splice(after ? destIdx : destIdx - 1, 0, srcWin);
+        }
+    }
+    getWindowById(id) {
+        let idx = this.list.map((w) => w.id).indexOf(id);
+        return idx < 0 ? null : this.list[idx];
+    }
+    setMaster(window) {
+        const idx = this.list.indexOf(window);
         if (idx === -1)
             return;
         this.list.splice(idx, 1);
         this.list.splice(0, 0, window);
-    };
-    WindowStore.prototype.swap = function (alpha, beta) {
-        var alphaIndex = this.list.indexOf(alpha);
-        var betaIndex = this.list.indexOf(beta);
+    }
+    swap(alpha, beta) {
+        const alphaIndex = this.list.indexOf(alpha);
+        const betaIndex = this.list.indexOf(beta);
         if (alphaIndex < 0 || betaIndex < 0)
             return;
         this.list[alphaIndex] = beta;
         this.list[betaIndex] = alpha;
-    };
-    Object.defineProperty(WindowStore.prototype, "length", {
-        get: function () {
-            return this.list.length;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    WindowStore.prototype.at = function (idx) {
+    }
+    get length() {
+        return this.list.length;
+    }
+    at(idx) {
         return this.list[idx];
-    };
-    WindowStore.prototype.indexOf = function (window) {
+    }
+    indexOf(window) {
         return this.list.indexOf(window);
-    };
-    WindowStore.prototype.push = function (window) {
+    }
+    push(window) {
         this.list.push(window);
-    };
-    WindowStore.prototype.beside_first = function (window) {
+    }
+    beside_first(window) {
         this.list.splice(1, 0, window);
-    };
-    WindowStore.prototype.remove = function (window) {
-        var idx = this.list.indexOf(window);
+    }
+    remove(window) {
+        const idx = this.list.indexOf(window);
         if (idx >= 0)
             this.list.splice(idx, 1);
-    };
-    WindowStore.prototype.unshift = function (window) {
+    }
+    unshift(window) {
         this.list.unshift(window);
-    };
-    WindowStore.prototype.getVisibleWindows = function (srf) {
-        return this.list.filter(function (win) { return win.visible(srf); });
-    };
-    WindowStore.prototype.getVisibleTiles = function (srf) {
-        return this.list.filter(function (win) { return win.tiled && win.visible(srf); });
-    };
-    WindowStore.prototype.getVisibleTileables = function (srf) {
-        return this.list.filter(function (win) { return win.tileable && win.visible(srf); });
-    };
-    return WindowStore;
-}());
-var BTreeLayout = (function () {
-    function BTreeLayout() {
+    }
+    getVisibleWindows(srf) {
+        return this.list.filter((win) => win.visible(srf));
+    }
+    getVisibleTiles(srf) {
+        return this.list.filter((win) => win.tiled && win.visible(srf));
+    }
+    getVisibleTileables(srf) {
+        return this.list.filter((win) => win.tileable && win.visible(srf));
+    }
+}
+class BTreeLayout {
+    get description() {
+        return "BTree";
+    }
+    constructor() {
         this.classID = BTreeLayout.id;
         this.parts = new HalfSplitLayoutPart(new FillLayoutPart(), new FillLayoutPart());
         this.parts.angle = 0;
         this.parts.gap = CONFIG.tileLayoutGap;
     }
-    Object.defineProperty(BTreeLayout.prototype, "description", {
-        get: function () {
-            return "BTree";
-        },
-        enumerable: false,
-        configurable: true
-    });
-    BTreeLayout.prototype.apply = function (ctx, tileables, area) {
-        tileables.forEach(function (tileable) { return (tileable.state = WindowState.Tiled); });
+    apply(ctx, tileables, area) {
+        tileables.forEach((tileable) => (tileable.state = WindowState.Tiled));
         this.create_parts(tileables.length);
-        var rectangles = this.parts.apply(area, tileables);
-        rectangles.forEach(function (geometry, i) {
+        let rectangles = this.parts.apply(area, tileables);
+        rectangles.forEach((geometry, i) => {
             tileables[i].geometry = geometry;
         });
-    };
-    BTreeLayout.prototype.create_parts = function (tiles_len) {
-        var head = this.get_head();
+    }
+    create_parts(tiles_len) {
+        let head = this.get_head();
         head.angle = 0;
         head.gap = CONFIG.tileLayoutGap;
         if (tiles_len > 2) {
-            var level = Math.ceil(Math.log(tiles_len) * 1.442695);
-            var level_capacity = Math.pow(2, (level - 1));
-            var half_level_capacity = Math.pow(2, (level - 2));
+            let level = Math.ceil(Math.log(tiles_len) * 1.442695);
+            let level_capacity = Math.pow(2, (level - 1));
+            let half_level_capacity = Math.pow(2, (level - 2));
             if (tiles_len > level_capacity + half_level_capacity) {
                 head.primarySize = tiles_len - level_capacity;
             }
@@ -1895,11 +1808,11 @@ var BTreeLayout = (function () {
             this.build_binary_tree(head, level, 2, tiles_len);
         }
         this.parts = head;
-    };
-    BTreeLayout.prototype.build_binary_tree = function (head, max_level, current_level, tiles_len) {
+    }
+    build_binary_tree(head, max_level, current_level, tiles_len) {
         if (current_level <= max_level) {
             if (head.primarySize > 1) {
-                var primary = this.get_head();
+                let primary = this.get_head();
                 primary.primarySize = Math.floor(head.primarySize / 2);
                 primary.gap = CONFIG.tileLayoutGap;
                 primary.angle = current_level % 2 ? 0 : 90;
@@ -1907,7 +1820,7 @@ var BTreeLayout = (function () {
                 this.build_binary_tree(primary, max_level, current_level + 1, head.primarySize);
             }
             if (tiles_len - head.primarySize > 1) {
-                var secondary = this.get_head();
+                let secondary = this.get_head();
                 secondary.primarySize = Math.floor((tiles_len - head.primarySize) / 2);
                 secondary.gap = CONFIG.tileLayoutGap;
                 secondary.angle = current_level % 2 ? 0 : 90;
@@ -1915,20 +1828,19 @@ var BTreeLayout = (function () {
                 this.build_binary_tree(secondary, max_level, current_level + 1, tiles_len - head.primarySize);
             }
         }
-    };
-    BTreeLayout.prototype.get_head = function () {
+    }
+    get_head() {
         return new HalfSplitLayoutPart(new FillLayoutPart(), new FillLayoutPart());
-    };
-    BTreeLayout.prototype.clone = function () {
-        var other = new StackedLayout();
+    }
+    clone() {
+        const other = new StackedLayout();
         return other;
-    };
-    BTreeLayout.prototype.toString = function () {
+    }
+    toString() {
         return "BTreeLayout()";
-    };
-    BTreeLayout.id = "BTreeLayout";
-    return BTreeLayout;
-}());
+    }
+}
+BTreeLayout.id = "BTreeLayout";
 var CascadeDirection;
 (function (CascadeDirection) {
     CascadeDirection[CascadeDirection["NorthWest"] = 0] = "NorthWest";
@@ -1940,13 +1852,8 @@ var CascadeDirection;
     CascadeDirection[CascadeDirection["SouthWest"] = 6] = "SouthWest";
     CascadeDirection[CascadeDirection["West"] = 7] = "West";
 })(CascadeDirection || (CascadeDirection = {}));
-var CascadeLayout = (function () {
-    function CascadeLayout(dir) {
-        if (dir === void 0) { dir = CascadeDirection.SouthEast; }
-        this.dir = dir;
-        this.classID = CascadeLayout.id;
-    }
-    CascadeLayout.decomposeDirection = function (dir) {
+class CascadeLayout {
+    static decomposeDirection(dir) {
         switch (dir) {
             case CascadeDirection.NorthWest:
                 return [-1, -1];
@@ -1965,37 +1872,37 @@ var CascadeLayout = (function () {
             case CascadeDirection.West:
                 return [0, -1];
         }
-    };
-    Object.defineProperty(CascadeLayout.prototype, "description", {
-        get: function () {
-            return "Cascade [" + CascadeDirection[this.dir] + "]";
-        },
-        enumerable: false,
-        configurable: true
-    });
-    CascadeLayout.prototype.apply = function (ctx, tileables, area) {
-        var _a = CascadeLayout.decomposeDirection(this.dir), vertStep = _a[0], horzStep = _a[1];
-        var stepSize = 25;
-        var windowWidth = horzStep !== 0
+    }
+    get description() {
+        return "Cascade [" + CascadeDirection[this.dir] + "]";
+    }
+    constructor(dir = CascadeDirection.SouthEast) {
+        this.dir = dir;
+        this.classID = CascadeLayout.id;
+    }
+    apply(ctx, tileables, area) {
+        const [vertStep, horzStep] = CascadeLayout.decomposeDirection(this.dir);
+        const stepSize = 25;
+        const windowWidth = horzStep !== 0
             ? area.width - stepSize * (tileables.length - 1)
             : area.width;
-        var windowHeight = vertStep !== 0
+        const windowHeight = vertStep !== 0
             ? area.height - stepSize * (tileables.length - 1)
             : area.height;
-        var baseX = horzStep >= 0 ? area.x : area.maxX - windowWidth;
-        var baseY = vertStep >= 0 ? area.y : area.maxY - windowHeight;
-        var x = baseX, y = baseY;
-        tileables.forEach(function (tile) {
+        const baseX = horzStep >= 0 ? area.x : area.maxX - windowWidth;
+        const baseY = vertStep >= 0 ? area.y : area.maxY - windowHeight;
+        let x = baseX, y = baseY;
+        tileables.forEach((tile) => {
             tile.state = WindowState.Tiled;
             tile.geometry = new Rect(x, y, windowWidth, windowHeight);
             x += horzStep * stepSize;
             y += vertStep * stepSize;
         });
-    };
-    CascadeLayout.prototype.clone = function () {
+    }
+    clone() {
         return new CascadeLayout(this.dir);
-    };
-    CascadeLayout.prototype.handleShortcut = function (ctx, input, data) {
+    }
+    handleShortcut(ctx, input, data) {
         switch (input) {
             case Shortcut.Increase:
                 this.dir = (this.dir + 1 + 8) % 8;
@@ -2009,46 +1916,444 @@ var CascadeLayout = (function () {
                 return false;
         }
         return true;
-    };
-    CascadeLayout.id = "CascadeLayout";
-    return CascadeLayout;
-}());
-var FloatingLayout = (function () {
-    function FloatingLayout() {
+    }
+}
+CascadeLayout.id = "CascadeLayout";
+class ColumnLayout {
+    get description() {
+        return "Column";
+    }
+    toString() {
+        let s = `ColumnLayout${this.windowIds.size}:`;
+        this.windowIds.forEach((id) => (s = s + id + ","));
+        return s;
+    }
+    constructor() {
+        this.classID = ColumnLayout.id;
+        this.position = "single";
+        this.weight = 1.0;
+        this.parts = new RotateLayoutPart(new StackLayoutPart());
+        this.parts.inner.gap = CONFIG.tileLayoutGap;
+        this.windowIds = new Set();
+        this.renderedWindowsIds = [];
+        this.renderedWindowsRects = [];
+    }
+    set isHorizontal(value) {
+        if (value)
+            this.parts.angle = 270;
+        else
+            this.parts.angle = 0;
+    }
+    apply(ctx, tileables, area) {
+        this.renderedWindowsIds = [];
+        let columnTileables = tileables.filter((w) => {
+            if (this.windowIds.has(w.id)) {
+                this.renderedWindowsIds.push(w.id);
+                return true;
+            }
+        });
+        this.renderedWindowsRects = [];
+        this.parts.apply(area, columnTileables).forEach((geometry, i) => {
+            columnTileables[i].geometry = geometry;
+            this.renderedWindowsRects.push(geometry);
+        });
+    }
+    getUpperWindowId(id) {
+        let winId = this.renderedWindowsIds.indexOf(id);
+        if (winId < 1)
+            return null;
+        return this.renderedWindowsIds[winId - 1];
+    }
+    getLowerWindowId(id) {
+        let winId = this.renderedWindowsIds.indexOf(id);
+        if (winId < 0 || winId === this.renderedWindowsIds.length - 1)
+            return null;
+        return this.renderedWindowsIds[winId + 1];
+    }
+    adjust(area, tiles, basis, delta) {
+        let columnTiles = tiles.filter((t) => this.windowIds.has(t.id));
+        this.parts.adjust(area, columnTiles, basis, delta);
+    }
+    actualizeWindowIds(ids) {
+        this.windowIds = new Set([...this.windowIds].filter((id) => ids.has(id)));
+    }
+}
+ColumnLayout.id = "Column";
+class ColumnsLayout {
+    get description() {
+        return "Columns";
+    }
+    constructor() {
+        this.classID = ColumnsLayout.id;
+        this.parts = [new ColumnLayout()];
+        this.direction = new windRose(CONFIG.columnsLayoutInitialAngle);
+    }
+    adjust(area, tiles, basis, delta) {
+        let columnId = this.getColumnId(basis);
+        if (columnId === null)
+            return;
+        let isReverse = this.direction.east || this.direction.south;
+        let columnsLength = this.parts.length;
+        if (((this.direction.east || this.direction.west) &&
+            (delta.east !== 0 || delta.west !== 0)) ||
+            ((this.direction.north || this.direction.south) &&
+                (delta.north !== 0 || delta.south !== 0))) {
+            let oldWeights;
+            if (isReverse) {
+                oldWeights = this.parts
+                    .slice(0)
+                    .reverse()
+                    .map((column) => column.weight);
+            }
+            else {
+                oldWeights = this.parts.map((column) => column.weight);
+            }
+            const weights = LayoutUtils.adjustAreaWeights(area, oldWeights, CONFIG.tileLayoutGap, isReverse ? columnsLength - 1 - columnId : columnId, delta, this.direction.east || this.direction.west);
+            weights.forEach((weight, i) => {
+                this.parts[isReverse ? columnsLength - 1 - i : i].weight =
+                    weight * columnsLength;
+            });
+        }
+        if (((delta.north !== 0 || delta.south !== 0) &&
+            (this.direction.east || this.direction.west)) ||
+            ((delta.east !== 0 || delta.west !== 0) &&
+                (this.direction.north || this.direction.south))) {
+            this.parts[columnId].adjust(area, tiles, basis, delta);
+        }
+    }
+    apply(ctx, tileables, area) {
+        print(`columnsApply: ${this.direction}`);
+        this.arrangeTileables(tileables);
+        let weights;
+        if (this.direction.east || this.direction.south) {
+            weights = this.parts
+                .slice(0)
+                .reverse()
+                .map((tile) => tile.weight);
+        }
+        else {
+            weights = this.parts.map((tile) => tile.weight);
+        }
+        const rects = LayoutUtils.splitAreaWeighted(area, weights, CONFIG.tileLayoutGap, this.direction.east || this.direction.west);
+        if (this.direction.east || this.direction.south) {
+            let i = 0;
+            for (var idx = this.parts.length - 1; idx >= 0; idx--) {
+                this.parts[idx].isHorizontal = this.direction.south;
+                this.parts[idx].apply(ctx, tileables, rects[i]);
+                i++;
+            }
+        }
+        else {
+            for (var idx = 0; idx < this.parts.length; idx++) {
+                this.parts[idx].isHorizontal = this.direction.north;
+                this.parts[idx].apply(ctx, tileables, rects[idx]);
+            }
+        }
+    }
+    drag(ctx, activationPoint, window, workingArea) {
+        if (this.parts.length === 1 && this.parts[0].windowIds.size === 1)
+            return false;
+        let columnId = this.getColumnId(window);
+        let windowId = window.id;
+        if (((this.direction.north && workingArea.isTopZone(activationPoint)) ||
+            (this.direction.south && workingArea.isBottomZone(activationPoint)) ||
+            (this.direction.west && workingArea.isLeftZone(activationPoint)) ||
+            (this.direction.east && workingArea.isRightZone(activationPoint))) &&
+            !(this.parts[0].windowIds.size === 1 &&
+                this.parts[0].windowIds.has(windowId))) {
+            if (columnId !== null)
+                this.parts[columnId].windowIds.delete(windowId);
+            this.insertColumn(0);
+            this.parts[0].windowIds.add(windowId);
+            return true;
+        }
+        if (((this.direction.north && workingArea.isBottomZone(activationPoint)) ||
+            (this.direction.south && workingArea.isTopZone(activationPoint)) ||
+            (this.direction.west && workingArea.isRightZone(activationPoint)) ||
+            (this.direction.east && workingArea.isLeftZone(activationPoint))) &&
+            !(this.parts[this.parts.length - 1].windowIds.size === 1 &&
+                this.parts[this.parts.length - 1].windowIds.has(windowId))) {
+            if (columnId !== null)
+                this.parts[columnId].windowIds.delete(windowId);
+            this.insertColumn(this.parts.length);
+            this.parts[this.parts.length - 1].windowIds.add(windowId);
+            return true;
+        }
+        for (let colIdx = 0; colIdx < this.parts.length; colIdx++) {
+            const column = this.parts[colIdx];
+            for (let i = 0; i < column.renderedWindowsRects.length; i++) {
+                const renderedRect = column.renderedWindowsRects[i];
+                if ((this.direction.west &&
+                    renderedRect.includesPoint(activationPoint, 0)) ||
+                    (this.direction.north &&
+                        renderedRect.includesPoint(activationPoint, 2)) ||
+                    (this.direction.east &&
+                        renderedRect.includesPoint(activationPoint, 0)) ||
+                    (this.direction.south &&
+                        renderedRect.includesPoint(activationPoint, 2))) {
+                    if (column.renderedWindowsIds[i] === windowId)
+                        return false;
+                    if (i > 0 && column.renderedWindowsIds[i - 1] === windowId)
+                        return false;
+                    const renderedId = column.renderedWindowsIds[i];
+                    if (columnId !== null && columnId !== colIdx)
+                        this.parts[columnId].windowIds.delete(windowId);
+                    column.windowIds.add(windowId);
+                    ctx.moveWindowByWinId(window, renderedId);
+                    return true;
+                }
+                if ((this.direction.west &&
+                    renderedRect.includesPoint(activationPoint, 1)) ||
+                    (this.direction.north &&
+                        renderedRect.includesPoint(activationPoint, 3)) ||
+                    (this.direction.east &&
+                        renderedRect.includesPoint(activationPoint, 1)) ||
+                    (this.direction.south &&
+                        renderedRect.includesPoint(activationPoint, 3))) {
+                    if (column.renderedWindowsIds[i] === windowId)
+                        return false;
+                    if (i < column.renderedWindowsIds.length - 1 &&
+                        column.renderedWindowsIds[i + 1] === windowId)
+                        return false;
+                    const renderedId = column.renderedWindowsIds[i];
+                    if (columnId !== null && columnId !== colIdx)
+                        this.parts[columnId].windowIds.delete(windowId);
+                    column.windowIds.add(windowId);
+                    ctx.moveWindowByWinId(window, renderedId, true);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    arrangeTileables(tileables) {
+        let latestTimestamp = 0;
+        let columnId = null;
+        let newWindows = new Set();
+        let tileableIds = new Set();
+        let currentColumnId = 0;
+        tileables.forEach((tileable) => {
+            tileable.state = WindowState.Tiled;
+            columnId = this.getColumnId(tileable);
+            if (columnId !== null) {
+                if (tileable.timestamp > latestTimestamp) {
+                    latestTimestamp = tileable.timestamp;
+                    currentColumnId = columnId;
+                }
+            }
+            else {
+                newWindows.add(tileable.id);
+            }
+            tileableIds.add(tileable.id);
+        });
+        this.parts[currentColumnId].windowIds = new Set([
+            ...this.parts[currentColumnId].windowIds,
+            ...newWindows,
+        ]);
+        this.parts.forEach((column) => {
+            column.actualizeWindowIds(tileableIds);
+        });
+        this.parts = this.parts.filter((column) => column.windowIds.size !== 0);
+        if (this.parts.length === 0)
+            this.parts.push(new ColumnLayout());
+        this.applyColumnsPosition();
+    }
+    getColumnId(t) {
+        for (var i = 0; i < this.parts.length; i++) {
+            if (this.parts[i].windowIds.has(t.id))
+                return i;
+        }
+        return null;
+    }
+    getCurrentWinId(ctx) {
+        return ctx.currentWindow === null ? null : ctx.currentWindow.id;
+    }
+    getCurrentColumnIdx(currentWindowId) {
+        if (currentWindowId !== null) {
+            for (const [i, column] of this.parts.entries()) {
+                if (column.windowIds.has(currentWindowId))
+                    return i;
+            }
+        }
+        return null;
+    }
+    applyColumnsPosition() {
+        const length = this.parts.length;
+        if (length === 1) {
+            this.parts[0].position = "single";
+        }
+        else if (length > 1) {
+            this.parts[0].position = "left";
+            this.parts[length - 1].position = "right";
+            for (let i = 1; i < length - 1; i++) {
+                this.parts[i].position = "middle";
+            }
+        }
+    }
+    toColumnWithBiggerIndex(ctx) {
+        let currentWindowId = this.getCurrentWinId(ctx);
+        let activeColumnId = this.getCurrentColumnIdx(currentWindowId);
+        if (currentWindowId === null ||
+            activeColumnId === null ||
+            (this.parts[activeColumnId].windowIds.size < 2 &&
+                (this.parts[activeColumnId].position === "right" ||
+                    this.parts[activeColumnId].position === "single")))
+            return;
+        if (this.parts[activeColumnId].position === "single" ||
+            this.parts[activeColumnId].position === "right") {
+            this.insertColumn(this.parts.length);
+        }
+        this.parts[activeColumnId].windowIds.delete(currentWindowId);
+        this.parts[activeColumnId + 1].windowIds.add(currentWindowId);
+    }
+    toColumnWithSmallerIndex(ctx) {
+        let currentWindowId = this.getCurrentWinId(ctx);
+        let activeColumnId = this.getCurrentColumnIdx(currentWindowId);
+        if (currentWindowId === null ||
+            activeColumnId === null ||
+            (this.parts[activeColumnId].windowIds.size < 2 &&
+                (this.parts[activeColumnId].position === "left" ||
+                    this.parts[activeColumnId].position === "single")))
+            return;
+        if (this.parts[activeColumnId].position === "single" ||
+            this.parts[activeColumnId].position === "left") {
+            this.insertColumn(0);
+            this.parts[1].windowIds.delete(currentWindowId);
+            this.parts[0].windowIds.add(currentWindowId);
+        }
+        else {
+            this.parts[activeColumnId].windowIds.delete(currentWindowId);
+            this.parts[activeColumnId - 1].windowIds.add(currentWindowId);
+        }
+    }
+    toUpOrLeft(ctx) {
+        let currentWindow = ctx.currentWindow;
+        let currentWindowId = currentWindow !== null ? currentWindow.id : null;
+        let activeColumnId = this.getCurrentColumnIdx(currentWindowId);
+        if (currentWindow === null ||
+            currentWindowId === null ||
+            activeColumnId === null ||
+            this.parts[activeColumnId].windowIds.size < 2)
+            return;
+        let upperWinId = this.parts[activeColumnId].getUpperWindowId(currentWindowId);
+        if (upperWinId === null)
+            return;
+        ctx.moveWindowByWinId(currentWindow, upperWinId);
+    }
+    toBottomOrRight(ctx) {
+        let currentWindow = ctx.currentWindow;
+        let currentWindowId = currentWindow !== null ? currentWindow.id : null;
+        let activeColumnId = this.getCurrentColumnIdx(currentWindowId);
+        if (currentWindow === null ||
+            currentWindowId === null ||
+            activeColumnId === null ||
+            this.parts[activeColumnId].windowIds.size < 2)
+            return;
+        let lowerWinId = this.parts[activeColumnId].getLowerWindowId(currentWindowId);
+        if (lowerWinId === null)
+            return;
+        ctx.moveWindowByWinId(currentWindow, lowerWinId, true);
+    }
+    handleShortcut(ctx, input) {
+        switch (input) {
+            case Shortcut.SwapLeft:
+                if (this.direction.north || this.direction.south) {
+                    this.toUpOrLeft(ctx);
+                }
+                else if (this.direction.east) {
+                    this.toColumnWithBiggerIndex(ctx);
+                }
+                else
+                    this.toColumnWithSmallerIndex(ctx);
+                break;
+            case Shortcut.SwapRight:
+                if (this.direction.north || this.direction.south) {
+                    this.toBottomOrRight(ctx);
+                }
+                else if (this.direction.east) {
+                    this.toColumnWithSmallerIndex(ctx);
+                }
+                else
+                    this.toColumnWithBiggerIndex(ctx);
+                break;
+            case Shortcut.SwapUp:
+                if (this.direction.north) {
+                    this.toColumnWithSmallerIndex(ctx);
+                }
+                else if (this.direction.south) {
+                    this.toColumnWithBiggerIndex(ctx);
+                }
+                else
+                    this.toUpOrLeft(ctx);
+                break;
+            case Shortcut.SwapDown:
+                if (this.direction.north) {
+                    this.toColumnWithBiggerIndex(ctx);
+                }
+                else if (this.direction.south) {
+                    print("hello");
+                    this.toColumnWithSmallerIndex(ctx);
+                }
+                else
+                    this.toBottomOrRight(ctx);
+                break;
+            case Shortcut.Rotate:
+                this.direction.cwRotation();
+                print(`cwRotation: north:${this.direction.north},east:${this.direction.east},south:${this.direction.south},west:${this.direction.west}`);
+                break;
+            case Shortcut.RotatePart:
+                this.direction.ccwRotation();
+                print(`ccwRotation: north:${this.direction.north},east:${this.direction.east},south:${this.direction.south},west:${this.direction.west}`);
+                break;
+            default:
+                return false;
+        }
+        return true;
+    }
+    insertColumn(index) {
+        this.parts.splice(index, 0, new ColumnLayout());
+        this.applyColumnsPosition();
+    }
+}
+ColumnsLayout.id = "Columns";
+class FloatingLayout {
+    constructor() {
         this.classID = FloatingLayout.id;
         this.description = "Floating";
     }
-    FloatingLayout.prototype.apply = function (ctx, tileables, area) {
-        tileables.forEach(function (tileable) { return (tileable.state = WindowState.TiledAfloat); });
-    };
-    FloatingLayout.prototype.clone = function () {
-        return this;
-    };
-    FloatingLayout.prototype.toString = function () {
-        return "FloatingLayout()";
-    };
-    FloatingLayout.id = "FloatingLayout ";
-    FloatingLayout.instance = new FloatingLayout();
-    return FloatingLayout;
-}());
-var FillLayoutPart = (function () {
-    function FillLayoutPart() {
+    apply(ctx, tileables, area) {
+        tileables.forEach((tileable) => (tileable.state = WindowState.TiledAfloat));
     }
-    FillLayoutPart.prototype.adjust = function (area, tiles, basis, delta) {
+    clone() {
+        return this;
+    }
+    toString() {
+        return "FloatingLayout()";
+    }
+}
+FloatingLayout.id = "FloatingLayout ";
+FloatingLayout.instance = new FloatingLayout();
+class FillLayoutPart {
+    adjust(area, tiles, basis, delta) {
         return delta;
-    };
-    FillLayoutPart.prototype.apply = function (area, tiles) {
-        return tiles.map(function (tile) {
+    }
+    apply(area, tiles) {
+        return tiles.map((tile) => {
             return area;
         });
-    };
-    FillLayoutPart.prototype.toString = function () {
-        return "FillLayoutPart";
-    };
-    return FillLayoutPart;
-}());
-var HalfSplitLayoutPart = (function () {
-    function HalfSplitLayoutPart(primary, secondary) {
+    }
+    toString() {
+        return `FillLayoutPart`;
+    }
+}
+class HalfSplitLayoutPart {
+    get horizontal() {
+        return this.angle === 0 || this.angle === 180;
+    }
+    get reversed() {
+        return this.angle === 180 || this.angle === 270;
+    }
+    constructor(primary, secondary) {
         this.primary = primary;
         this.secondary = secondary;
         this.angle = 0;
@@ -2056,22 +2361,8 @@ var HalfSplitLayoutPart = (function () {
         this.primarySize = 1;
         this.ratio = 0.5;
     }
-    Object.defineProperty(HalfSplitLayoutPart.prototype, "horizontal", {
-        get: function () {
-            return this.angle === 0 || this.angle === 180;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(HalfSplitLayoutPart.prototype, "reversed", {
-        get: function () {
-            return this.angle === 180 || this.angle === 270;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    HalfSplitLayoutPart.prototype.adjust = function (area, tiles, basis, delta) {
-        var basisIndex = tiles.indexOf(basis);
+    adjust(area, tiles, basis, delta) {
+        const basisIndex = tiles.indexOf(basis);
         if (basisIndex < 0)
             return delta;
         if (tiles.length <= this.primarySize) {
@@ -2081,7 +2372,7 @@ var HalfSplitLayoutPart = (function () {
             return this.secondary.adjust(area, tiles, basis, delta);
         }
         else {
-            var targetIndex = basisIndex < this.primarySize ? 0 : 1;
+            const targetIndex = basisIndex < this.primarySize ? 0 : 1;
             if (targetIndex === 0) {
                 delta = this.primary.adjust(area, tiles.slice(0, this.primarySize), basis, delta);
             }
@@ -2107,11 +2398,11 @@ var HalfSplitLayoutPart = (function () {
             }
             return delta;
         }
-    };
-    HalfSplitLayoutPart.prototype.toString = function () {
-        return "<HalfSplitLayout: angle:".concat(this.angle, ",ratio:").concat(this.ratio, ",pr_size:").concat(this.primarySize, ".<<<Primary:").concat(this.primary, "---Secondary:").concat(this.secondary, ">>>");
-    };
-    HalfSplitLayoutPart.prototype.apply = function (area, tiles) {
+    }
+    toString() {
+        return `<HalfSplitLayout: angle:${this.angle},ratio:${this.ratio},pr_size:${this.primarySize}.<<<Primary:${this.primary}---Secondary:${this.secondary}>>>`;
+    }
+    apply(area, tiles) {
         if (tiles.length <= this.primarySize) {
             return this.primary.apply(area, tiles);
         }
@@ -2119,41 +2410,38 @@ var HalfSplitLayoutPart = (function () {
             return this.secondary.apply(area, tiles);
         }
         else {
-            var reversed = this.reversed;
-            var ratio = reversed ? 1 - this.ratio : this.ratio;
-            var _a = LayoutUtils.splitAreaHalfWeighted(area, ratio, this.gap, this.horizontal), area1 = _a[0], area2 = _a[1];
-            var result1 = this.primary.apply(reversed ? area2 : area1, tiles.slice(0, this.primarySize));
-            var result2 = this.secondary.apply(reversed ? area1 : area2, tiles.slice(this.primarySize));
+            const reversed = this.reversed;
+            const ratio = reversed ? 1 - this.ratio : this.ratio;
+            const [area1, area2] = LayoutUtils.splitAreaHalfWeighted(area, ratio, this.gap, this.horizontal);
+            const result1 = this.primary.apply(reversed ? area2 : area1, tiles.slice(0, this.primarySize));
+            const result2 = this.secondary.apply(reversed ? area1 : area2, tiles.slice(this.primarySize));
             return result1.concat(result2);
         }
-    };
-    return HalfSplitLayoutPart;
-}());
-var StackLayoutPart = (function () {
-    function StackLayoutPart() {
+    }
+}
+class StackLayoutPart {
+    constructor() {
         this.gap = 0;
     }
-    StackLayoutPart.prototype.adjust = function (area, tiles, basis, delta) {
-        var weights = LayoutUtils.adjustAreaWeights(area, tiles.map(function (tile) { return tile.weight; }), CONFIG.tileLayoutGap, tiles.indexOf(basis), delta, false);
-        weights.forEach(function (weight, i) {
+    adjust(area, tiles, basis, delta) {
+        const weights = LayoutUtils.adjustAreaWeights(area, tiles.map((tile) => tile.weight), CONFIG.tileLayoutGap, tiles.indexOf(basis), delta, false);
+        weights.forEach((weight, i) => {
             tiles[i].weight = weight * tiles.length;
         });
-        var idx = tiles.indexOf(basis);
+        const idx = tiles.indexOf(basis);
         return new RectDelta(delta.east, delta.west, idx === tiles.length - 1 ? delta.south : 0, idx === 0 ? delta.north : 0);
-    };
-    StackLayoutPart.prototype.apply = function (area, tiles) {
-        var weights = tiles.map(function (tile) { return tile.weight; });
+    }
+    apply(area, tiles) {
+        const weights = tiles.map((tile) => tile.weight);
         return LayoutUtils.splitAreaWeighted(area, weights, this.gap);
-    };
-    return StackLayoutPart;
-}());
-var RotateLayoutPart = (function () {
-    function RotateLayoutPart(inner, angle) {
-        if (angle === void 0) { angle = 0; }
+    }
+}
+class RotateLayoutPart {
+    constructor(inner, angle = 0) {
         this.inner = inner;
         this.angle = angle;
     }
-    RotateLayoutPart.prototype.adjust = function (area, tiles, basis, delta) {
+    adjust(area, tiles, basis, delta) {
         switch (this.angle) {
             case 0:
                 break;
@@ -2185,8 +2473,8 @@ var RotateLayoutPart = (function () {
                 break;
         }
         return delta;
-    };
-    RotateLayoutPart.prototype.apply = function (area, tiles) {
+    }
+    apply(area, tiles) {
         switch (this.angle) {
             case 0:
                 break;
@@ -2199,133 +2487,118 @@ var RotateLayoutPart = (function () {
                 area = new Rect(area.y, area.x, area.height, area.width);
                 break;
         }
-        var innerResult = this.inner.apply(area, tiles);
+        const innerResult = this.inner.apply(area, tiles);
         switch (this.angle) {
             case 0:
                 return innerResult;
             case 90:
-                return innerResult.map(function (g) { return new Rect(g.y, g.x, g.height, g.width); });
+                return innerResult.map((g) => new Rect(g.y, g.x, g.height, g.width));
             case 180:
-                return innerResult.map(function (g) {
-                    var rx = g.x - area.x;
-                    var newX = area.x + area.width - (rx + g.width);
+                return innerResult.map((g) => {
+                    const rx = g.x - area.x;
+                    const newX = area.x + area.width - (rx + g.width);
                     return new Rect(newX, g.y, g.width, g.height);
                 });
             case 270:
-                return innerResult.map(function (g) {
-                    var rx = g.x - area.x;
-                    var newY = area.x + area.width - (rx + g.width);
+                return innerResult.map((g) => {
+                    const rx = g.x - area.x;
+                    const newY = area.x + area.width - (rx + g.width);
                     return new Rect(g.y, newY, g.height, g.width);
                 });
         }
-    };
-    RotateLayoutPart.prototype.rotate = function (amount) {
-        var angle = this.angle + amount;
+    }
+    rotate(amount) {
+        let angle = this.angle + amount;
         if (angle < 0)
             angle = 270;
         else if (angle >= 360)
             angle = 0;
         this.angle = angle;
-    };
-    return RotateLayoutPart;
-}());
-var LayoutUtils = (function () {
-    function LayoutUtils() {
     }
-    LayoutUtils.splitWeighted = function (_a, weights, gap) {
-        var begin = _a[0], length = _a[1];
+}
+class LayoutUtils {
+    static splitWeighted([begin, length], weights, gap) {
         gap = gap !== undefined ? gap : 0;
-        var n = weights.length;
-        var actualLength = length - (n - 1) * gap;
-        var weightSum = weights.reduce(function (sum, weight) { return sum + weight; }, 0);
-        var weightAcc = 0;
-        return weights.map(function (weight, i) {
-            var partBegin = (actualLength * weightAcc) / weightSum + i * gap;
-            var partLength = (actualLength * weight) / weightSum;
+        const n = weights.length;
+        const actualLength = length - (n - 1) * gap;
+        const weightSum = weights.reduce((sum, weight) => sum + weight, 0);
+        let weightAcc = 0;
+        return weights.map((weight, i) => {
+            const partBegin = (actualLength * weightAcc) / weightSum + i * gap;
+            const partLength = (actualLength * weight) / weightSum;
             weightAcc += weight;
             return [begin + Math.floor(partBegin), Math.floor(partLength)];
         });
-    };
-    LayoutUtils.splitAreaWeighted = function (area, weights, gap, horizontal) {
+    }
+    static splitAreaWeighted(area, weights, gap, horizontal) {
         gap = gap !== undefined ? gap : 0;
         horizontal = horizontal !== undefined ? horizontal : false;
-        var line = horizontal
+        const line = horizontal
             ? [area.x, area.width]
             : [area.y, area.height];
-        var parts = LayoutUtils.splitWeighted(line, weights, gap);
-        return parts.map(function (_a) {
-            var begin = _a[0], length = _a[1];
-            return horizontal
-                ? new Rect(begin, area.y, length, area.height)
-                : new Rect(area.x, begin, area.width, length);
-        });
-    };
-    LayoutUtils.splitAreaHalfWeighted = function (area, weight, gap, horizontal) {
+        const parts = LayoutUtils.splitWeighted(line, weights, gap);
+        return parts.map(([begin, length]) => horizontal
+            ? new Rect(begin, area.y, length, area.height)
+            : new Rect(area.x, begin, area.width, length));
+    }
+    static splitAreaHalfWeighted(area, weight, gap, horizontal) {
         return LayoutUtils.splitAreaWeighted(area, [weight, 1 - weight], gap, horizontal);
-    };
-    LayoutUtils.adjustWeights = function (_a, weights, gap, target, deltaFw, deltaBw) {
-        var begin = _a[0], length = _a[1];
-        var minLength = 1;
-        var parts = this.splitWeighted([begin, length], weights, gap);
-        var _b = parts[target], targetBase = _b[0], targetLength = _b[1];
+    }
+    static adjustWeights([begin, length], weights, gap, target, deltaFw, deltaBw) {
+        const minLength = 1;
+        const parts = this.splitWeighted([begin, length], weights, gap);
+        const [targetBase, targetLength] = parts[target];
         if (target > 0 && deltaBw !== 0) {
-            var neighbor = target - 1;
-            var _c = parts[neighbor], neighborBase = _c[0], neighborLength = _c[1];
-            var delta = clip(deltaBw, minLength - targetLength, neighborLength - minLength);
+            const neighbor = target - 1;
+            const [neighborBase, neighborLength] = parts[neighbor];
+            const delta = clip(deltaBw, minLength - targetLength, neighborLength - minLength);
             parts[target] = [targetBase - delta, targetLength + delta];
             parts[neighbor] = [neighborBase, neighborLength - delta];
         }
         if (target < parts.length - 1 && deltaFw !== 0) {
-            var neighbor = target + 1;
-            var _d = parts[neighbor], neighborBase = _d[0], neighborLength = _d[1];
-            var delta = clip(deltaFw, minLength - targetLength, neighborLength - minLength);
+            const neighbor = target + 1;
+            const [neighborBase, neighborLength] = parts[neighbor];
+            const delta = clip(deltaFw, minLength - targetLength, neighborLength - minLength);
             parts[target] = [targetBase, targetLength + delta];
             parts[neighbor] = [neighborBase + delta, neighborLength - delta];
         }
         return LayoutUtils.calculateWeights(parts);
-    };
-    LayoutUtils.adjustAreaWeights = function (area, weights, gap, target, delta, horizontal) {
-        var line = horizontal
+    }
+    static adjustAreaWeights(area, weights, gap, target, delta, horizontal) {
+        const line = horizontal
             ? [area.x, area.width]
             : [area.y, area.height];
-        var _a = horizontal
+        const [deltaFw, deltaBw] = horizontal
             ? [delta.east, delta.west]
-            : [delta.south, delta.north], deltaFw = _a[0], deltaBw = _a[1];
+            : [delta.south, delta.north];
         return LayoutUtils.adjustWeights(line, weights, gap, target, deltaFw, deltaBw);
-    };
-    LayoutUtils.adjustAreaHalfWeights = function (area, weight, gap, target, delta, horizontal) {
-        var weights = [weight, 1 - weight];
-        var newWeights = LayoutUtils.adjustAreaWeights(area, weights, gap, target, delta, horizontal);
+    }
+    static adjustAreaHalfWeights(area, weight, gap, target, delta, horizontal) {
+        const weights = [weight, 1 - weight];
+        const newWeights = LayoutUtils.adjustAreaWeights(area, weights, gap, target, delta, horizontal);
         return newWeights[0];
-    };
-    LayoutUtils.calculateWeights = function (parts) {
-        var totalLength = parts.reduce(function (acc, _a) {
-            var base = _a[0], length = _a[1];
-            return acc + length;
-        }, 0);
-        return parts.map(function (_a) {
-            var base = _a[0], length = _a[1];
-            return length / totalLength;
-        });
-    };
-    LayoutUtils.calculateAreaWeights = function (area, geometries, gap, horizontal) {
+    }
+    static calculateWeights(parts) {
+        const totalLength = parts.reduce((acc, [base, length]) => acc + length, 0);
+        return parts.map(([base, length]) => length / totalLength);
+    }
+    static calculateAreaWeights(area, geometries, gap, horizontal) {
         gap = gap !== undefined ? gap : 0;
         horizontal = horizontal !== undefined ? horizontal : false;
-        var line = horizontal ? area.width : area.height;
-        var parts = horizontal
-            ? geometries.map(function (geometry) { return [geometry.x, geometry.width]; })
-            : geometries.map(function (geometry) { return [geometry.y, geometry.height]; });
+        const line = horizontal ? area.width : area.height;
+        const parts = horizontal
+            ? geometries.map((geometry) => [geometry.x, geometry.width])
+            : geometries.map((geometry) => [geometry.y, geometry.height]);
         return LayoutUtils.calculateWeights(parts);
-    };
-    return LayoutUtils;
-}());
-var MonocleLayout = (function () {
-    function MonocleLayout() {
+    }
+}
+class MonocleLayout {
+    constructor() {
         this.description = "Monocle";
         this.classID = MonocleLayout.id;
     }
-    MonocleLayout.prototype.apply = function (ctx, tileables, area) {
-        tileables.forEach(function (tile) {
+    apply(ctx, tileables, area) {
+        tileables.forEach((tile) => {
             tile.state = CONFIG.monocleMaximize
                 ? WindowState.Maximized
                 : WindowState.Tiled;
@@ -2333,22 +2606,22 @@ var MonocleLayout = (function () {
         });
         if (ctx.backend === KWinDriver.backendName &&
             KWINCONFIG.monocleMinimizeRest) {
-            var tiles_1 = __spreadArray([], tileables, true);
-            ctx.setTimeout(function () {
-                var current = ctx.currentWindow;
+            const tiles = [...tileables];
+            ctx.setTimeout(() => {
+                const current = ctx.currentWindow;
                 if (current && current.tiled) {
-                    tiles_1.forEach(function (window) {
+                    tiles.forEach((window) => {
                         if (window !== current)
                             window.window.window.minimized = true;
                     });
                 }
             }, 50);
         }
-    };
-    MonocleLayout.prototype.clone = function () {
+    }
+    clone() {
         return this;
-    };
-    MonocleLayout.prototype.handleShortcut = function (ctx, input, data) {
+    }
+    handleShortcut(ctx, input, data) {
         switch (input) {
             case Shortcut.DWMLeft:
             case Shortcut.FocusNext:
@@ -2365,32 +2638,27 @@ var MonocleLayout = (function () {
             default:
                 return false;
         }
-    };
-    MonocleLayout.prototype.toString = function () {
+    }
+    toString() {
         return "MonocleLayout()";
-    };
-    MonocleLayout.id = "MonocleLayout";
-    return MonocleLayout;
-}());
-var QuarterLayout = (function () {
-    function QuarterLayout() {
+    }
+}
+MonocleLayout.id = "MonocleLayout";
+class QuarterLayout {
+    get capacity() {
+        return 4;
+    }
+    constructor() {
         this.classID = QuarterLayout.id;
         this.description = "Quarter";
         this.lhsplit = 0.5;
         this.rhsplit = 0.5;
         this.vsplit = 0.5;
     }
-    Object.defineProperty(QuarterLayout.prototype, "capacity", {
-        get: function () {
-            return 4;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    QuarterLayout.prototype.adjust = function (area, tiles, basis, delta) {
+    adjust(area, tiles, basis, delta) {
         if (tiles.length <= 1 || tiles.length > 4)
             return;
-        var idx = tiles.indexOf(basis);
+        const idx = tiles.indexOf(basis);
         if (idx < 0)
             return;
         if ((idx === 0 || idx === 3) && delta.east !== 0)
@@ -2418,63 +2686,62 @@ var QuarterLayout = (function () {
         this.vsplit = clip(this.vsplit, 1 - QuarterLayout.MAX_PROPORTION, QuarterLayout.MAX_PROPORTION);
         this.lhsplit = clip(this.lhsplit, 1 - QuarterLayout.MAX_PROPORTION, QuarterLayout.MAX_PROPORTION);
         this.rhsplit = clip(this.rhsplit, 1 - QuarterLayout.MAX_PROPORTION, QuarterLayout.MAX_PROPORTION);
-    };
-    QuarterLayout.prototype.clone = function () {
-        var other = new QuarterLayout();
+    }
+    clone() {
+        const other = new QuarterLayout();
         other.lhsplit = this.lhsplit;
         other.rhsplit = this.rhsplit;
         other.vsplit = this.vsplit;
         return other;
-    };
-    QuarterLayout.prototype.apply = function (ctx, tileables, area) {
-        for (var i = 0; i < 4 && i < tileables.length; i++)
+    }
+    apply(ctx, tileables, area) {
+        for (let i = 0; i < 4 && i < tileables.length; i++)
             tileables[i].state = WindowState.Tiled;
         if (tileables.length > 4)
             tileables
                 .slice(4)
-                .forEach(function (tile) { return (tile.state = WindowState.TiledAfloat); });
+                .forEach((tile) => (tile.state = WindowState.TiledAfloat));
         if (tileables.length === 1) {
             tileables[0].geometry = area;
             return;
         }
-        var gap1 = Math.floor(CONFIG.tileLayoutGap / 2);
-        var gap2 = CONFIG.tileLayoutGap - gap1;
-        var leftWidth = Math.floor(area.width * this.vsplit);
-        var rightWidth = area.width - leftWidth;
-        var rightX = area.x + leftWidth;
+        const gap1 = Math.floor(CONFIG.tileLayoutGap / 2);
+        const gap2 = CONFIG.tileLayoutGap - gap1;
+        const leftWidth = Math.floor(area.width * this.vsplit);
+        const rightWidth = area.width - leftWidth;
+        const rightX = area.x + leftWidth;
         if (tileables.length === 2) {
             tileables[0].geometry = new Rect(area.x, area.y, leftWidth, area.height).gap(0, gap1, 0, 0);
             tileables[1].geometry = new Rect(rightX, area.y, rightWidth, area.height).gap(gap2, 0, 0, 0);
             return;
         }
-        var rightTopHeight = Math.floor(area.height * this.rhsplit);
-        var rightBottomHeight = area.height - rightTopHeight;
-        var rightBottomY = area.y + rightTopHeight;
+        const rightTopHeight = Math.floor(area.height * this.rhsplit);
+        const rightBottomHeight = area.height - rightTopHeight;
+        const rightBottomY = area.y + rightTopHeight;
         if (tileables.length === 3) {
             tileables[0].geometry = new Rect(area.x, area.y, leftWidth, area.height).gap(0, gap1, 0, 0);
             tileables[1].geometry = new Rect(rightX, area.y, rightWidth, rightTopHeight).gap(gap2, 0, 0, gap1);
             tileables[2].geometry = new Rect(rightX, rightBottomY, rightWidth, rightBottomHeight).gap(gap2, 0, gap2, 0);
             return;
         }
-        var leftTopHeight = Math.floor(area.height * this.lhsplit);
-        var leftBottomHeight = area.height - leftTopHeight;
-        var leftBottomY = area.y + leftTopHeight;
+        const leftTopHeight = Math.floor(area.height * this.lhsplit);
+        const leftBottomHeight = area.height - leftTopHeight;
+        const leftBottomY = area.y + leftTopHeight;
         if (tileables.length >= 4) {
             tileables[0].geometry = new Rect(area.x, area.y, leftWidth, leftTopHeight).gap(0, gap1, 0, gap1);
             tileables[1].geometry = new Rect(rightX, area.y, rightWidth, rightTopHeight).gap(gap2, 0, 0, gap1);
             tileables[2].geometry = new Rect(rightX, rightBottomY, rightWidth, rightBottomHeight).gap(gap2, 0, gap2, 0);
             tileables[3].geometry = new Rect(area.x, leftBottomY, leftWidth, leftBottomHeight).gap(0, gap2, gap2, 0);
         }
-    };
-    QuarterLayout.prototype.toString = function () {
+    }
+    toString() {
         return "QuarterLayout()";
-    };
-    QuarterLayout.MAX_PROPORTION = 0.8;
-    QuarterLayout.id = "QuarterLayout";
-    return QuarterLayout;
-}());
-var SpiralLayout = (function () {
-    function SpiralLayout() {
+    }
+}
+QuarterLayout.MAX_PROPORTION = 0.8;
+QuarterLayout.id = "QuarterLayout";
+class SpiralLayout {
+    constructor() {
         this.description = "Spiral";
         this.classID = SpiralLayout.id;
         this.depth = 1;
@@ -2482,81 +2749,67 @@ var SpiralLayout = (function () {
         this.parts.angle = 0;
         this.parts.gap = CONFIG.tileLayoutGap;
     }
-    SpiralLayout.prototype.adjust = function (area, tiles, basis, delta) {
+    adjust(area, tiles, basis, delta) {
         this.parts.adjust(area, tiles, basis, delta);
-    };
-    SpiralLayout.prototype.apply = function (ctx, tileables, area) {
-        tileables.forEach(function (tileable) { return (tileable.state = WindowState.Tiled); });
+    }
+    apply(ctx, tileables, area) {
+        tileables.forEach((tileable) => (tileable.state = WindowState.Tiled));
         this.bore(tileables.length);
-        this.parts.apply(area, tileables).forEach(function (geometry, i) {
+        this.parts.apply(area, tileables).forEach((geometry, i) => {
             tileables[i].geometry = geometry;
         });
-    };
-    SpiralLayout.prototype.toString = function () {
+    }
+    toString() {
         return "Spiral()";
-    };
-    SpiralLayout.prototype.bore = function (depth) {
+    }
+    bore(depth) {
         if (this.depth >= depth)
             return;
-        var hpart = this.parts;
-        var i;
+        let hpart = this.parts;
+        let i;
         for (i = 0; i < this.depth - 1; i++) {
             hpart = hpart.secondary;
         }
-        var lastFillPart = hpart.secondary;
-        var npart;
+        const lastFillPart = hpart.secondary;
+        let npart;
         while (i < depth - 1) {
             npart = new HalfSplitLayoutPart(new FillLayoutPart(), lastFillPart);
             npart.gap = CONFIG.tileLayoutGap;
-            switch ((i + 1) % 4) {
-                case 0:
-                    npart.angle = 0;
-                    break;
-                case 1:
-                    npart.angle = 90;
-                    break;
-                case 2:
-                    npart.angle = 180;
-                    break;
-                case 3:
-                    npart.angle = 270;
-                    break;
-            }
+            npart.angle = (((i + 1) % 4) * 90);
             hpart.secondary = npart;
             hpart = npart;
             i++;
         }
         this.depth = depth;
-    };
-    SpiralLayout.id = "SpiralLayout";
-    return SpiralLayout;
-}());
-var SpreadLayout = (function () {
-    function SpreadLayout() {
+    }
+}
+SpiralLayout.id = "SpiralLayout";
+class SpreadLayout {
+    constructor() {
         this.classID = SpreadLayout.id;
         this.description = "Spread";
         this.space = 0.07;
     }
-    SpreadLayout.prototype.apply = function (ctx, tileables, area) {
-        tileables.forEach(function (tileable) { return (tileable.state = WindowState.Tiled); });
-        var tiles = tileables;
-        var numTiles = tiles.length;
-        var spaceWidth = Math.floor(area.width * this.space);
-        var cardWidth = area.width - spaceWidth * (numTiles - 1);
-        var miniumCardWidth = area.width * 0.4;
+    apply(ctx, tileables, area) {
+        tileables.forEach((tileable) => (tileable.state = WindowState.Tiled));
+        const tiles = tileables;
+        let numTiles = tiles.length;
+        const spaceWidth = Math.floor(area.width * this.space);
+        let cardWidth = area.width - spaceWidth * (numTiles - 1);
+        const miniumCardWidth = area.width * 0.4;
         while (cardWidth < miniumCardWidth) {
             cardWidth += spaceWidth;
             numTiles -= 1;
         }
-        for (var i = 0; i < tiles.length; i++)
+        for (let i = 0; i < tiles.length; i++)
             tiles[i].geometry = new Rect(area.x + (i < numTiles ? spaceWidth * (numTiles - i - 1) : 0), area.y, cardWidth, area.height);
-    };
-    SpreadLayout.prototype.clone = function () {
-        var other = new SpreadLayout();
+    }
+    clone() {
+        const other = new SpreadLayout();
         other.space = this.space;
         return other;
-    };
-    SpreadLayout.prototype.handleShortcut = function (ctx, input) {
+    }
+    handleShortcut(ctx, input) {
         switch (input) {
             case Shortcut.Decrease:
                 this.space = Math.max(0.04, this.space - 0.01);
@@ -2568,46 +2821,41 @@ var SpreadLayout = (function () {
                 return false;
         }
         return true;
-    };
-    SpreadLayout.prototype.toString = function () {
+    }
+    toString() {
         return "SpreadLayout(" + this.space + ")";
-    };
-    SpreadLayout.id = "SpreadLayout";
-    return SpreadLayout;
-}());
-var StackedLayout = (function () {
-    function StackedLayout() {
+    }
+}
+SpreadLayout.id = "SpreadLayout";
+class StackedLayout {
+    get description() {
+        return "Stacked";
+    }
+    constructor() {
         this.classID = StackedLayout.id;
         this.parts = new RotateLayoutPart(new HalfSplitLayoutPart(new StackLayoutPart(), new StackLayoutPart()));
-        var masterPart = this.parts.inner;
+        const masterPart = this.parts.inner;
         masterPart.gap =
             masterPart.secondary.gap =
                 CONFIG.tileLayoutGap;
     }
-    Object.defineProperty(StackedLayout.prototype, "description", {
-        get: function () {
-            return "Stacked";
-        },
-        enumerable: false,
-        configurable: true
-    });
-    StackedLayout.prototype.adjust = function (area, tiles, basis, delta) {
+    adjust(area, tiles, basis, delta) {
         this.parts.adjust(area, tiles, basis, delta);
-    };
-    StackedLayout.prototype.apply = function (ctx, tileables, area) {
-        tileables.forEach(function (tileable) { return (tileable.state = WindowState.Tiled); });
+    }
+    apply(ctx, tileables, area) {
+        tileables.forEach((tileable) => (tileable.state = WindowState.Tiled));
         if (tileables.length > 1) {
             this.parts.inner.angle = 90;
         }
-        this.parts.apply(area, tileables).forEach(function (geometry, i) {
+        this.parts.apply(area, tileables).forEach((geometry, i) => {
             tileables[i].geometry = geometry;
         });
-    };
-    StackedLayout.prototype.clone = function () {
-        var other = new StackedLayout();
+    }
+    clone() {
+        const other = new StackedLayout();
         return other;
-    };
-    StackedLayout.prototype.handleShortcut = function (ctx, input) {
+    }
+    handleShortcut(ctx, input) {
         switch (input) {
             case Shortcut.Rotate:
                 this.parts.rotate(90);
@@ -2616,37 +2864,36 @@ var StackedLayout = (function () {
                 return false;
         }
         return true;
-    };
-    StackedLayout.prototype.toString = function () {
+    }
+    toString() {
         return ("StackedLayout()");
-    };
-    StackedLayout.id = "StackedLayout";
-    return StackedLayout;
-}());
-var StairLayout = (function () {
-    function StairLayout() {
+    }
+}
+StackedLayout.id = "StackedLayout";
+class StairLayout {
+    constructor() {
         this.classID = StairLayout.id;
         this.description = "Stair";
         this.space = 24;
     }
-    StairLayout.prototype.apply = function (ctx, tileables, area) {
-        tileables.forEach(function (tileable) { return (tileable.state = WindowState.Tiled); });
-        var tiles = tileables;
-        var len = tiles.length;
-        var space = this.space;
-        var alignRight = Number(!KWINCONFIG.stairReverse);
-        for (var i = 0; i < len; i++) {
-            var dx = space * (len - i - 1);
-            var dy = space * i;
+    apply(ctx, tileables, area) {
+        tileables.forEach((tileable) => (tileable.state = WindowState.Tiled));
+        const tiles = tileables;
+        const len = tiles.length;
+        const space = this.space;
+        const alignRight = Number(!KWINCONFIG.stairReverse);
+        for (let i = 0; i < len; i++) {
+            const dx = space * (len - i - 1);
+            const dy = space * i;
             tiles[i].geometry = new Rect(area.x + alignRight * dx, area.y + dy, area.width - dx, area.height - dy);
         }
-    };
-    StairLayout.prototype.clone = function () {
-        var other = new StairLayout();
+    }
+    clone() {
+        const other = new StairLayout();
         other.space = this.space;
         return other;
-    };
-    StairLayout.prototype.handleShortcut = function (ctx, input) {
+    }
+    handleShortcut(ctx, input) {
         switch (input) {
             case Shortcut.Decrease:
                 this.space = Math.max(16, this.space - 8);
@@ -2658,98 +2905,91 @@ var StairLayout = (function () {
                 return false;
         }
         return true;
-    };
-    StairLayout.prototype.toString = function () {
+    }
+    toString() {
         return "StairLayout(" + this.space + ")";
-    };
-    StairLayout.id = "StairLayout";
-    return StairLayout;
-}());
-var ThreeColumnLayout = (function () {
-    function ThreeColumnLayout() {
+    }
+}
+StairLayout.id = "StairLayout";
+class ThreeColumnLayout {
+    get description() {
+        return "Three-Column [" + this.masterSize + "]";
+    }
+    constructor() {
         this.classID = ThreeColumnLayout.id;
         this.masterRatio = 0.6;
         this.masterSize = 1;
     }
-    Object.defineProperty(ThreeColumnLayout.prototype, "description", {
-        get: function () {
-            return "Three-Column [" + this.masterSize + "]";
-        },
-        enumerable: false,
-        configurable: true
-    });
-    ThreeColumnLayout.prototype.adjust = function (area, tiles, basis, delta) {
-        var basisIndex = tiles.indexOf(basis);
+    adjust(area, tiles, basis, delta) {
+        const basisIndex = tiles.indexOf(basis);
         if (basisIndex < 0)
             return;
         if (tiles.length === 0)
             return;
         else if (tiles.length <= this.masterSize) {
-            LayoutUtils.adjustAreaWeights(area, tiles.map(function (tile) { return tile.weight; }), CONFIG.tileLayoutGap, tiles.indexOf(basis), delta).forEach(function (newWeight, i) { return (tiles[i].weight = newWeight * tiles.length); });
+            LayoutUtils.adjustAreaWeights(area, tiles.map((tile) => tile.weight), CONFIG.tileLayoutGap, tiles.indexOf(basis), delta).forEach((newWeight, i) => (tiles[i].weight = newWeight * tiles.length));
         }
         else if (tiles.length === this.masterSize + 1) {
             this.masterRatio = LayoutUtils.adjustAreaHalfWeights(area, this.masterRatio, CONFIG.tileLayoutGap, basisIndex < this.masterSize ? 0 : 1, delta, true);
             if (basisIndex < this.masterSize) {
-                var masterTiles_1 = tiles.slice(0, -1);
-                LayoutUtils.adjustAreaWeights(area, masterTiles_1.map(function (tile) { return tile.weight; }), CONFIG.tileLayoutGap, basisIndex, delta).forEach(function (newWeight, i) {
-                    return (masterTiles_1[i].weight = newWeight * masterTiles_1.length);
-                });
+                const masterTiles = tiles.slice(0, -1);
+                LayoutUtils.adjustAreaWeights(area, masterTiles.map((tile) => tile.weight), CONFIG.tileLayoutGap, basisIndex, delta).forEach((newWeight, i) => (masterTiles[i].weight = newWeight * masterTiles.length));
             }
         }
         else if (tiles.length > this.masterSize + 1) {
-            var basisGroup = void 0;
+            let basisGroup;
             if (basisIndex < this.masterSize)
                 basisGroup = 1;
             else if (basisIndex < Math.floor((this.masterSize + tiles.length) / 2))
                 basisGroup = 2;
             else
                 basisGroup = 0;
-            var stackRatio = 1 - this.masterRatio;
-            var newRatios = LayoutUtils.adjustAreaWeights(area, [stackRatio, this.masterRatio, stackRatio], CONFIG.tileLayoutGap, basisGroup, delta, true);
-            var newMasterRatio = newRatios[1];
-            var newStackRatio = basisGroup === 0 ? newRatios[0] : newRatios[2];
+            const stackRatio = 1 - this.masterRatio;
+            const newRatios = LayoutUtils.adjustAreaWeights(area, [stackRatio, this.masterRatio, stackRatio], CONFIG.tileLayoutGap, basisGroup, delta, true);
+            const newMasterRatio = newRatios[1];
+            const newStackRatio = basisGroup === 0 ? newRatios[0] : newRatios[2];
             this.masterRatio = newMasterRatio / (newMasterRatio + newStackRatio);
-            var rstackNumTile = Math.floor((tiles.length - this.masterSize) / 2);
-            var _a = partitionArrayBySizes(tiles, [
+            const rstackNumTile = Math.floor((tiles.length - this.masterSize) / 2);
+            const [masterTiles, rstackTiles, lstackTiles] = partitionArrayBySizes(tiles, [
                 this.masterSize,
                 rstackNumTile,
-            ]), masterTiles = _a[0], rstackTiles = _a[1], lstackTiles = _a[2];
-            var groupTiles_1 = [lstackTiles, masterTiles, rstackTiles][basisGroup];
-            LayoutUtils.adjustAreaWeights(area, groupTiles_1.map(function (tile) { return tile.weight; }), CONFIG.tileLayoutGap, groupTiles_1.indexOf(basis), delta).forEach(function (newWeight, i) { return (groupTiles_1[i].weight = newWeight * groupTiles_1.length); });
+            ]);
+            const groupTiles = [lstackTiles, masterTiles, rstackTiles][basisGroup];
+            LayoutUtils.adjustAreaWeights(area, groupTiles.map((tile) => tile.weight), CONFIG.tileLayoutGap, groupTiles.indexOf(basis), delta).forEach((newWeight, i) => (groupTiles[i].weight = newWeight * groupTiles.length));
         }
-    };
-    ThreeColumnLayout.prototype.apply = function (ctx, tileables, area) {
-        tileables.forEach(function (tileable) { return (tileable.state = WindowState.Tiled); });
-        var tiles = tileables;
+    }
+    apply(ctx, tileables, area) {
+        tileables.forEach((tileable) => (tileable.state = WindowState.Tiled));
+        const tiles = tileables;
         if (tiles.length <= this.masterSize) {
-            LayoutUtils.splitAreaWeighted(area, tiles.map(function (tile) { return tile.weight; }), CONFIG.tileLayoutGap).forEach(function (tileArea, i) { return (tiles[i].geometry = tileArea); });
+            LayoutUtils.splitAreaWeighted(area, tiles.map((tile) => tile.weight), CONFIG.tileLayoutGap).forEach((tileArea, i) => (tiles[i].geometry = tileArea));
         }
         else if (tiles.length === this.masterSize + 1) {
-            var _a = LayoutUtils.splitAreaHalfWeighted(area, this.masterRatio, CONFIG.tileLayoutGap, true), masterArea = _a[0], stackArea = _a[1];
-            var masterTiles_2 = tiles.slice(0, this.masterSize);
-            LayoutUtils.splitAreaWeighted(masterArea, masterTiles_2.map(function (tile) { return tile.weight; }), CONFIG.tileLayoutGap).forEach(function (tileArea, i) { return (masterTiles_2[i].geometry = tileArea); });
+            const [masterArea, stackArea] = LayoutUtils.splitAreaHalfWeighted(area, this.masterRatio, CONFIG.tileLayoutGap, true);
+            const masterTiles = tiles.slice(0, this.masterSize);
+            LayoutUtils.splitAreaWeighted(masterArea, masterTiles.map((tile) => tile.weight), CONFIG.tileLayoutGap).forEach((tileArea, i) => (masterTiles[i].geometry = tileArea));
             tiles[tiles.length - 1].geometry = stackArea;
         }
         else if (tiles.length > this.masterSize + 1) {
-            var stackRatio = 1 - this.masterRatio;
-            var groupAreas_1 = LayoutUtils.splitAreaWeighted(area, [stackRatio, this.masterRatio, stackRatio], CONFIG.tileLayoutGap, true);
-            var rstackSize = Math.floor((tiles.length - this.masterSize) / 2);
-            var _b = partitionArrayBySizes(tiles, [
+            const stackRatio = 1 - this.masterRatio;
+            const groupAreas = LayoutUtils.splitAreaWeighted(area, [stackRatio, this.masterRatio, stackRatio], CONFIG.tileLayoutGap, true);
+            const rstackSize = Math.floor((tiles.length - this.masterSize) / 2);
+            const [masterTiles, rstackTiles, lstackTiles] = partitionArrayBySizes(tiles, [
                 this.masterSize,
                 rstackSize,
-            ]), masterTiles = _b[0], rstackTiles = _b[1], lstackTiles = _b[2];
-            [lstackTiles, masterTiles, rstackTiles].forEach(function (groupTiles, group) {
-                LayoutUtils.splitAreaWeighted(groupAreas_1[group], groupTiles.map(function (tile) { return tile.weight; }), CONFIG.tileLayoutGap).forEach(function (tileArea, i) { return (groupTiles[i].geometry = tileArea); });
+            ]);
+            [lstackTiles, masterTiles, rstackTiles].forEach((groupTiles, group) => {
+                LayoutUtils.splitAreaWeighted(groupAreas[group], groupTiles.map((tile) => tile.weight), CONFIG.tileLayoutGap).forEach((tileArea, i) => (groupTiles[i].geometry = tileArea));
             });
         }
-    };
-    ThreeColumnLayout.prototype.clone = function () {
-        var other = new ThreeColumnLayout();
+    }
+    clone() {
+        const other = new ThreeColumnLayout();
         other.masterRatio = this.masterRatio;
         other.masterSize = this.masterSize;
         return other;
-    };
-    ThreeColumnLayout.prototype.handleShortcut = function (ctx, input, data) {
+    }
+    handleShortcut(ctx, input, data) {
         switch (input) {
             case Shortcut.Increase:
                 this.resizeMaster(ctx, +1);
@@ -2766,72 +3006,73 @@ var ThreeColumnLayout = (function () {
             default:
                 return false;
         }
-    };
-    ThreeColumnLayout.prototype.toString = function () {
+    }
+    toString() {
         return "ThreeColumnLayout(nmaster=" + this.masterSize + ")";
-    };
-    ThreeColumnLayout.prototype.resizeMaster = function (ctx, step) {
+    }
+    resizeMaster(ctx, step) {
         this.masterSize = clip(this.masterSize + step, 1, 10);
         ctx.showNotification(this.description);
-    };
-    ThreeColumnLayout.MIN_MASTER_RATIO = 0.2;
-    ThreeColumnLayout.MAX_MASTER_RATIO = 0.75;
-    ThreeColumnLayout.id = "ThreeColumnLayout";
-    return ThreeColumnLayout;
-}());
-var TileLayout = (function () {
-    function TileLayout() {
+    }
+}
+ThreeColumnLayout.MIN_MASTER_RATIO = 0.2;
+ThreeColumnLayout.MAX_MASTER_RATIO = 0.75;
+ThreeColumnLayout.id = "ThreeColumnLayout";
+class TileLayout {
+    get description() {
+        return "Tile [" + this.numMaster + "]";
+    }
+    get numMaster() {
+        return this.parts.inner.primarySize;
+    }
+    set numMaster(value) {
+        this.parts.inner.primarySize = value;
+    }
+    get masterRatio() {
+        return this.parts.inner.ratio;
+    }
+    set masterRatio(value) {
+        this.parts.inner.ratio = value;
+    }
+    constructor() {
         this.classID = TileLayout.id;
         this.parts = new RotateLayoutPart(new HalfSplitLayoutPart(new RotateLayoutPart(new StackLayoutPart()), new StackLayoutPart()));
-        var masterPart = this.parts.inner;
+        switch (CONFIG.tileLayoutInitialAngle) {
+            case "1": {
+                this.parts.angle = 90;
+                break;
+            }
+            case "2": {
+                this.parts.angle = 180;
+                break;
+            }
+            case "3": {
+                this.parts.angle = 270;
+                break;
+            }
+        }
+        const masterPart = this.parts.inner;
         masterPart.gap =
             masterPart.primary.inner.gap =
                 masterPart.secondary.gap =
                     CONFIG.tileLayoutGap;
     }
-    Object.defineProperty(TileLayout.prototype, "description", {
-        get: function () {
-            return "Tile [" + this.numMaster + "]";
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(TileLayout.prototype, "numMaster", {
-        get: function () {
-            return this.parts.inner.primarySize;
-        },
-        set: function (value) {
-            this.parts.inner.primarySize = value;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(TileLayout.prototype, "masterRatio", {
-        get: function () {
-            return this.parts.inner.ratio;
-        },
-        set: function (value) {
-            this.parts.inner.ratio = value;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    TileLayout.prototype.adjust = function (area, tiles, basis, delta) {
+    adjust(area, tiles, basis, delta) {
         this.parts.adjust(area, tiles, basis, delta);
-    };
-    TileLayout.prototype.apply = function (ctx, tileables, area) {
-        tileables.forEach(function (tileable) { return (tileable.state = WindowState.Tiled); });
-        this.parts.apply(area, tileables).forEach(function (geometry, i) {
+    }
+    apply(ctx, tileables, area) {
+        tileables.forEach((tileable) => (tileable.state = WindowState.Tiled));
+        this.parts.apply(area, tileables).forEach((geometry, i) => {
             tileables[i].geometry = geometry;
         });
-    };
-    TileLayout.prototype.clone = function () {
-        var other = new TileLayout();
+    }
+    clone() {
+        const other = new TileLayout();
         other.masterRatio = this.masterRatio;
         other.numMaster = this.numMaster;
         return other;
-    };
-    TileLayout.prototype.handleShortcut = function (ctx, input) {
+    }
+    handleShortcut(ctx, input) {
         switch (input) {
             case Shortcut.DWMLeft:
                 this.masterRatio = clip(slide(this.masterRatio, -0.05), TileLayout.MIN_MASTER_RATIO, TileLayout.MAX_MASTER_RATIO);
@@ -2859,35 +3100,34 @@ var TileLayout = (function () {
                 return false;
         }
         return true;
-    };
-    TileLayout.prototype.toString = function () {
+    }
+    toString() {
         return ("TileLayout(nmaster=" +
             this.numMaster +
             ", ratio=" +
             this.masterRatio +
             ")");
-    };
-    TileLayout.MIN_MASTER_RATIO = 0.2;
-    TileLayout.MAX_MASTER_RATIO = 0.8;
-    TileLayout.id = "TileLayout";
-    return TileLayout;
-}());
-var DEBUG = {
+    }
+}
+TileLayout.MIN_MASTER_RATIO = 0.2;
+TileLayout.MAX_MASTER_RATIO = 0.8;
+TileLayout.id = "TileLayout";
+const DEBUG = {
     enabled: false,
     started: new Date().getTime(),
 };
 function debug(f) {
     if (DEBUG.enabled) {
-        var timestamp = (new Date().getTime() - DEBUG.started) / 1000;
+        const timestamp = (new Date().getTime() - DEBUG.started) / 1000;
         console.log("[" + timestamp + "]", f());
     }
 }
 function debugObj(f) {
     if (DEBUG.enabled) {
-        var timestamp = (new Date().getTime() - DEBUG.started) / 1000;
-        var _a = f(), name = _a[0], obj = _a[1];
-        var buf = [];
-        for (var i in obj)
+        const timestamp = (new Date().getTime() - DEBUG.started) / 1000;
+        const [name, obj] = f();
+        const buf = [];
+        for (const i in obj)
             buf.push(i + "=" + obj[i]);
         console.log("[" + timestamp + "]", name + ": " + buf.join(" "));
     }
@@ -2905,7 +3145,7 @@ function slide(value, step) {
     return Math.floor(value / step + 1.000001) * step;
 }
 function matchWords(str, words) {
-    for (var i = 0; i < words.length; i++) {
+    for (let i = 0; i < words.length; i++) {
         if (str.indexOf(words[i]) >= 0)
             return i;
     }
@@ -2919,15 +3159,15 @@ function wrapIndex(index, length) {
     return index;
 }
 function partitionArray(array, predicate) {
-    return array.reduce(function (parts, item, index) {
+    return array.reduce((parts, item, index) => {
         parts[predicate(item, index) ? 0 : 1].push(item);
         return parts;
     }, [[], []]);
 }
 function partitionArrayBySizes(array, sizes) {
-    var base = 0;
-    var chunks = sizes.map(function (size) {
-        var chunk = array.slice(base, base + size);
+    let base = 0;
+    const chunks = sizes.map((size) => {
+        const chunk = array.slice(base, base + size);
         base += size;
         return chunk;
     });
@@ -2935,9 +3175,9 @@ function partitionArrayBySizes(array, sizes) {
     return chunks;
 }
 function overlap(min1, max1, min2, max2) {
-    var min = Math.min;
-    var max = Math.max;
-    var dx = max(0, min(max1, max2) - max(min1, min2));
+    const min = Math.min;
+    const max = Math.max;
+    const dx = max(0, min(max1, max2) - max(min1, min2));
     return dx > 0;
 }
 function toQRect(rect) {
@@ -2946,86 +3186,123 @@ function toQRect(rect) {
 function toRect(qrect) {
     return new Rect(qrect.x, qrect.y, qrect.width, qrect.height);
 }
-var Rect = (function () {
-    function Rect(x, y, width, height) {
+class Rect {
+    constructor(x, y, width, height) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
     }
-    Object.defineProperty(Rect.prototype, "maxX", {
-        get: function () {
-            return this.x + this.width;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(Rect.prototype, "maxY", {
-        get: function () {
-            return this.y + this.height;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(Rect.prototype, "center", {
-        get: function () {
-            return [
-                this.x + Math.floor(this.width / 2),
-                this.y + Math.floor(this.height / 2),
-            ];
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Rect.prototype.clone = function () {
+    get maxX() {
+        return this.x + this.width;
+    }
+    get maxY() {
+        return this.y + this.height;
+    }
+    get center() {
+        return [
+            this.x + Math.floor(this.width / 2),
+            this.y + Math.floor(this.height / 2),
+        ];
+    }
+    get activationPoint() {
+        return [this.x + Math.floor(this.width / 2), this.y + 10];
+    }
+    clone() {
         return new Rect(this.x, this.y, this.width, this.height);
-    };
-    Rect.prototype.equals = function (other) {
+    }
+    equals(other) {
         return (this.x === other.x &&
             this.y === other.y &&
             this.width === other.width &&
             this.height === other.height);
-    };
-    Rect.prototype.gap = function (left, right, top, bottom) {
+    }
+    gap(left, right, top, bottom) {
         return new Rect(this.x + left, this.y + top, this.width - (left + right), this.height - (top + bottom));
-    };
-    Rect.prototype.gap_mut = function (left, right, top, bottom) {
+    }
+    gap_mut(left, right, top, bottom) {
         this.x += left;
         this.y += top;
         this.width -= left + right;
         this.height -= top + bottom;
         return this;
-    };
-    Rect.prototype.includes = function (other) {
+    }
+    includes(other) {
         return (this.x <= other.x &&
             this.y <= other.y &&
             other.maxX < this.maxX &&
             other.maxY < this.maxY);
-    };
-    Rect.prototype.includesPoint = function (_a) {
-        var x = _a[0], y = _a[1];
-        return this.x <= x && x <= this.maxX && this.y <= y && y <= this.maxY;
-    };
-    Rect.prototype.subtract = function (other) {
+    }
+    includesPoint([x, y], part = 4) {
+        if (part === 0)
+            return (this.x <= x &&
+                x <= this.maxX &&
+                this.y <= y &&
+                y <= this.y + this.height / 2);
+        else if (part === 1)
+            return (this.x <= x &&
+                x <= this.maxX &&
+                y > this.y + this.height / 2 &&
+                y <= this.maxY);
+        else if (part === 2) {
+            return (this.y <= y &&
+                y <= this.maxY &&
+                this.x <= x &&
+                x <= this.x + this.height / 2);
+        }
+        else if (part === 3) {
+            return (this.y <= y &&
+                y <= this.maxY &&
+                x > this.x + this.width / 2 &&
+                x <= this.maxX);
+        }
+        else {
+            return this.x <= x && x <= this.maxX && this.y <= y && y <= this.maxY;
+        }
+    }
+    isTopZone([x, y], activeZone = 10) {
+        return (this.y <= y &&
+            y <= this.y + (this.height * activeZone) / 100 &&
+            this.x <= x &&
+            x <= this.maxX);
+    }
+    isBottomZone([x, y], activeZone = 10) {
+        return (y >= this.maxY - (this.height * activeZone) / 100 &&
+            y <= this.maxY &&
+            this.x <= x &&
+            x <= this.maxX);
+    }
+    isLeftZone([x, y], activeZone = 10) {
+        return (this.x <= x &&
+            x <= this.x + (this.width * activeZone) / 100 &&
+            this.y <= y &&
+            y <= this.maxY);
+    }
+    isRightZone([x, y], activeZone = 10) {
+        return (x >= this.maxX - (this.width * activeZone) / 100 &&
+            x <= this.maxX &&
+            this.y <= y &&
+            y <= this.maxY);
+    }
+    subtract(other) {
         return new Rect(this.x - other.x, this.y - other.y, this.width - other.width, this.height - other.height);
-    };
-    Rect.prototype.toString = function () {
+    }
+    toString() {
         return "Rect(" + [this.x, this.y, this.width, this.height].join(", ") + ")";
-    };
-    return Rect;
-}());
-var RectDelta = (function () {
-    function RectDelta(east, west, south, north) {
+    }
+}
+class RectDelta {
+    static fromRects(basis, target) {
+        const diff = target.subtract(basis);
+        return new RectDelta(diff.width + diff.x, -diff.x, diff.height + diff.y, -diff.y);
+    }
+    constructor(east, west, south, north) {
         this.east = east;
         this.west = west;
         this.south = south;
         this.north = north;
     }
-    RectDelta.fromRects = function (basis, target) {
-        var diff = target.subtract(basis);
-        return new RectDelta(diff.width + diff.x, -diff.x, diff.height + diff.y, -diff.y);
-    };
-    RectDelta.prototype.toString = function () {
+    toString() {
         return ("WindowResizeDelta(" +
             [
                 "east=" + this.east,
@@ -3034,36 +3311,91 @@ var RectDelta = (function () {
                 "south=" + this.south,
             ].join(" ") +
             ")");
-    };
-    return RectDelta;
-}());
-var WrapperMap = (function () {
-    function WrapperMap(hasher, wrapper) {
+    }
+}
+class windRose {
+    constructor(direction) {
+        switch (direction) {
+            case "0":
+                this.direction = 0;
+                break;
+            case "1":
+                this.direction = 1;
+                break;
+            case "2":
+                this.direction = 2;
+                break;
+            case "3":
+                this.direction = 3;
+                break;
+            default:
+                this.direction = 0;
+        }
+    }
+    get north() {
+        return this.direction === 0;
+    }
+    get east() {
+        return this.direction === 1;
+    }
+    get south() {
+        return this.direction === 2;
+    }
+    get west() {
+        return this.direction === 3;
+    }
+    cwRotation() {
+        this.direction = (this.direction + 1) % 4;
+    }
+    ccwRotation() {
+        this.direction = this.direction - 1 >= 0 ? this.direction - 1 : 3;
+    }
+    toString() {
+        switch (this.direction) {
+            case 0: {
+                return "North";
+            }
+            case 1: {
+                return "East";
+            }
+            case 2: {
+                return "South";
+            }
+            case 3: {
+                return "West";
+            }
+            default: {
+                return "Unknown";
+            }
+        }
+    }
+}
+class WrapperMap {
+    constructor(hasher, wrapper) {
         this.hasher = hasher;
         this.wrapper = wrapper;
         this.items = {};
     }
-    WrapperMap.prototype.add = function (item) {
-        var key = this.hasher(item);
+    add(item) {
+        const key = this.hasher(item);
         if (this.items[key] !== undefined)
             throw "WrapperMap: the key [" + key + "] already exists!";
-        var wrapped = this.wrapper(item);
+        const wrapped = this.wrapper(item);
         this.items[key] = wrapped;
         return wrapped;
-    };
-    WrapperMap.prototype.get = function (item) {
-        var key = this.hasher(item);
+    }
+    get(item) {
+        const key = this.hasher(item);
         return this.items[key] || null;
-    };
-    WrapperMap.prototype.getByKey = function (key) {
+    }
+    getByKey(key) {
         return this.items[key] || null;
-    };
-    WrapperMap.prototype.remove = function (item) {
-        var key = this.hasher(item);
+    }
+    remove(item) {
+        const key = this.hasher(item);
         return delete this.items[key];
-    };
-    WrapperMap.prototype.length = function () {
+    }
+    length() {
         return Object.keys(this.items).length;
-    };
-    return WrapperMap;
-}());
+    }
+}

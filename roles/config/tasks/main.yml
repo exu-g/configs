@@ -43,10 +43,12 @@
   loop:
     - ".config"
     - ".face"
+    - ".fonts"
     - ".gitconfig"
     - ".gtkrc-2.0"
     - ".local"
     - ".ssh"
+    - ".themes"
     - "scripts"
   tags: config
 
