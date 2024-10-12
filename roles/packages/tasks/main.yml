@@ -1,5 +1,5 @@
 ---
-- name: Enable multilib repo
+- name: x86_64 | Enable multilib repo
   ansible.builtin.blockinfile:
       path: /etc/pacman.conf
       prepend_newline: true
@@ -193,7 +193,7 @@
   tags: packages
   become: true
 
-- name: Install multilib packages
+- name: x86_64 | Install multilib packages
   community.general.pacman:
       state: present
       # select the lines and use 'M-x sort-lines'
