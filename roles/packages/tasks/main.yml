@@ -68,7 +68,6 @@
       - firefox # browser
       - firewalld # firewall
       - fish # shell
-      - flatpak
       - flatpak # packages
       - freetype2 # fonts
       - fuse-overlayfs # containers
