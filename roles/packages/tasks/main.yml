@@ -6,6 +6,7 @@
       block: |
           [multilib]
           Include = /etc/pacman.d/mirrorlist
+  when: ansible_architecture == "x86_64"
   tags: first
   become: true
 
@@ -95,9 +96,6 @@
       - kid3 # music metadata
       - krita
       - languagetool
-      - lib32-mesa # video driver
-      - lib32-vulkan-intel # video driver
-      - lib32-vulkan-radeon # video driver
       - libreoffice-fresh # office
       - libreoffice-fresh-de # office
       - libva-intel-driver # VAAPI
@@ -158,7 +156,6 @@
       - shellcheck # code
       - shfmt # code
       - smartmontools # disks
-      - steam # games
       - stress # benchmark
       - stylelint # code
       - tesseract-data-deu
@@ -181,7 +178,6 @@
       - vulkan-intel # video driver
       - vulkan-radeon # video driver
       - wget # network
-      - wine # windows
       - wireguard-tools # vpn
       - wireplumber # audio
       - xdg-desktop-portal-gtk # flatpak theming
@@ -194,6 +190,21 @@
       # - dockfmt # AUR
       # - refind-theme-nord # bootmenu # AUR
       # - btrfsmaintenance # AUR
+  tags: packages
+  become: true
+
+- name: Install multilib packages
+  community.general.pacman:
+      state: present
+      # select the lines and use 'M-x sort-lines'
+      name: "{{ item }}"
+  loop:
+      - steam # games
+      - wine # windows
+      - lib32-mesa # video driver
+      - lib32-vulkan-intel # video driver
+      - lib32-vulkan-radeon # video driver
+  when: ansible_architecture == "x86_64"
   tags: packages
   become: true
 
