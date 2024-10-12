@@ -58,6 +58,7 @@
     dest: "/"
   loop:
     - "etc"
+    - "usr"
   become: true
   tags: config
 
