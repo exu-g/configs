@@ -110,16 +110,13 @@
       - noto-fonts-emoji # fonts
       - ntfs-3g # ntfs
       - nvme-cli # nvme ssd
-      - obs-studio # recording
       - okular # pdf
       - openssh # remote shell
       - opentofu # iac
       - otf-font-awesome # fonts
       - p7zip # compression
       - pacman-contrib # scripts
-      - pandoc
       - php # code
-      - piper # mouse
       - pkgstats
       - plasma-meta
       - podman # containers
@@ -134,7 +131,6 @@
       - python-pyflakes # code
       - python-pytest # code
       - rebuild-detector # packages
-      - reflector # mirrors
       - restic # backup
       - ripgrep # doom emacs
       - rsync # file sync
@@ -176,7 +172,7 @@
   tags: packages
   become: true
 
-- name: x86_64 | Install other packages unavailable on ALARM
+- name: x86_64 | Install other packages unavailable/unnecessary on ALARM
   community.general.pacman:
       state: present
       # select the lines and use 'M-x sort-lines'
@@ -194,7 +190,11 @@
       - linux # kernel
       - linux-firmware # kernel
       - linux-headers # kernel
+      - obs-studio # recording
+      - pandoc
+      - piper # mouse
       - qemu-full # virtualization
+      - reflector # mirrors
       - virt-manager # virtualization
       - vulkan-intel # video driver
       - vulkan-radeon # video driver
