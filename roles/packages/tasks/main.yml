@@ -135,7 +135,6 @@
       - ripgrep # doom emacs
       - rsync # file sync
       - ruby-sass # code
-      - shellcheck # code
       - shfmt # code
       - smartmontools # disks
       - stress # benchmark
@@ -195,6 +194,7 @@
       - piper # mouse
       - qemu-full # virtualization
       - reflector # mirrors
+      - shellcheck # code
       - virt-manager # virtualization
       - vulkan-intel # video driver
       - vulkan-radeon # video driver
