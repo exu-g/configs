@@ -1,8 +1,0 @@
-[applications]
-1\value=@Variant(\0\0\0\x7f\0\0\0\x15NotifyingApplication\0\xff\xff\xff\xff\xff\xff\xff\xff\0\xff\xff\xff\xff)
-2\value=@Variant(\0\0\0\x7f\0\0\0\x15NotifyingApplication\0\0\0\0$\0N\0\x65\0t\0z\0w\0\x65\0r\0k\0v\0\x65\0r\0w\0\x61\0l\0t\0u\0n\0g\0\0\0&\0n\0\x65\0t\0w\0o\0r\0k\0-\0u\0n\0\x61\0v\0\x61\0i\0l\0\x61\0\x62\0l\0\x65\x1\xff\xff\xff\xff)
-3\value=@Variant(\0\0\0\x7f\0\0\0\x15NotifyingApplication\0\0\0\0\x16\0T\0h\0u\0n\0\x64\0\x65\0r\0\x62\0i\0r\0\x64\0\0\0\0\x1\xff\xff\xff\xff)
-4\value=@Variant(\0\0\0\x7f\0\0\0\x15NotifyingApplication\0\0\0\0.\0\x45\0-\0M\0\x61\0i\0l\0-\0\x42\0\x65\0n\0\x61\0\x63\0h\0r\0i\0\x63\0h\0t\0i\0g\0u\0n\0g\0\0\0\n\0k\0m\0\x61\0i\0l\x1\xff\xff\xff\xff)
-5\value=@Invalid()
-6\value=@Invalid()
-size=4
