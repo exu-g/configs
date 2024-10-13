@@ -33,7 +33,6 @@
 - name: Install other packages
   community.general.pacman:
     state: present
-    # select the lines and use 'M-x sort-lines'
     name: "{{ item }}"
   loop:
     #- gnome-keyring
@@ -176,7 +175,6 @@
 - name: x86_64 | Install other packages unavailable/unnecessary on ALARM
   community.general.pacman:
     state: present
-    # select the lines and use 'M-x sort-lines'
     name: "{{ item }}"
   loop:
     - amd-ucode # microcode
@@ -207,7 +205,6 @@
 - name: x86_64 | Install multilib packages
   community.general.pacman:
     state: present
-    # select the lines and use 'M-x sort-lines'
     name: "{{ item }}"
   loop:
     - lib32-mesa # video driver
@@ -218,6 +215,27 @@
   when: ansible_architecture == "x86_64"
   tags: packages
   become: true
+
+- name: Host | Check if host variables exist
+  ansible.builtin.stat:
+    path: "host_vars/{{ ansible_hostname }}.yml"
+  register: host_file
+  tags: packages
+
+- name: Host | Get host specific variables
+  include_vars:
+    file: "host_vars/{{ ansible_hostname }}.yml"
+  when: host_file.stat.exists
+  tags: packages
+
+- name: Host | Install host specific packages
+  community.general.pacman:
+    state: present
+    name: "{{ item }}"
+  loop: "{{ additional_pacman_packages|default([]) }}"
+  when: host_file.stat.exists
+  become: true
+  tags: packages
 
 - name: Doom Emacs | Clone
   ansible.builtin.git:
