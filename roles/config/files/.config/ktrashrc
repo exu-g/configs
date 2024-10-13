@@ -11,3 +11,17 @@ LimitReachedAction=1
 Percent=10
 UseSizeLimit=true
 UseTimeLimit=true
+
+[/mnt/hetznerbox/.Trash-1000]
+Days=7
+LimitReachedAction=1
+Percent=10
+UseSizeLimit=true
+UseTimeLimit=true
+
+[/mnt/lan1nas1/.Trash-1000]
+Days=7
+LimitReachedAction=1
+Percent=10
+UseSizeLimit=true
+UseTimeLimit=true

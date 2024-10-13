@@ -101,8 +101,7 @@
  </ToolBar>
  <ActionProperties scheme="Default">
   <Action name="fullscreen" priority="0"/>
-  <Action name="deletefile" shortcut="Del"/>
   <Action name="edit_cut" shortcut="Ctrl+X"/>
-  <Action name="file_trash" shortcut="; "/>
+  <Action name="file_trash" shortcut="Del; "/>
  </ActionProperties>
 </gui>
