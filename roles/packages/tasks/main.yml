@@ -163,6 +163,7 @@
     - xfsprogs # xfs
     - yaml-language-server # code
     - yt-dlp
+    - zram-generator # zram
     # - dockerfile-language-server # code # AUR
     # - dockfmt # AUR
     # - refind-theme-nord # bootmenu # AUR
