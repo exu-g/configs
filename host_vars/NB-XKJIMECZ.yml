@@ -1,3 +1,5 @@
+---
 additional_pacman_packages:
   - mattermost-desktop
   - wireguard-tools
+#additional_aur_packages:
