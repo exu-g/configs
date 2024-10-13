@@ -28,12 +28,8 @@
     path: "{{ item }}"
     state: "absent"
   loop:
-    - "~/.config/Vorlagen"
     - "~/.emacs.d"
-    - "~/scripts/archive"
-    - "~/scripts/in_path"
-    - "~/scripts/pieces"
-    - "~/scripts/polybar"
+    - "~/scripts"
   tags: config
 
 - name: Copy new files and directories
