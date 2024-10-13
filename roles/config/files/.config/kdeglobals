@@ -165,6 +165,7 @@ View Style=Detail
 Dialog Size=950,611
 
 [PreviewSettings]
+EnableRemoteFolderThumbnail=false
 MaximumRemoteSize=0
 
 [Shortcuts]

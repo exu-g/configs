@@ -3,17 +3,13 @@ MenuBar=Disabled
 [$Version]
 update_info=dolphin_detailsmodesettings.upd:rename-leading-padding,dolphin_detailsmodesettings.upd:move-content-display,dolphin_directorysizemode.upd:convert-directorysizecount-to-directorysizemode
 
-[ContentDisplay]
-UsePermissionsFormat=NumericFormat
-UseShortRelativeDates=false
-
 [DetailsMode]
+ExpandableFolders=false
 PreviewSize=22
 
 [General]
 BrowseThroughArchives=true
-EditableUrl=true
-ShowFullPath=true
+LockPanels=false
 Version=202
 ViewPropsTimestamp=2024,8,22,12,38,26.974
 
