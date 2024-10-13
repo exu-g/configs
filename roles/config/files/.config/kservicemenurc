@@ -29,6 +29,7 @@ kompare=true
 makefileactions=true
 mediainfo-gui=true
 mountisoaction=true
+movetonewfolderitemaction=true
 nextclouddolphinactionplugin=true
 plasmavaultfileitemaction=true
 runInKonsole=true
