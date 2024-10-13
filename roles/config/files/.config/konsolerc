@@ -6,6 +6,9 @@ DefaultProfile=Catppuccin.profile
 [General]
 ConfigVersion=1
 
+[MainWindow]
+ToolBarsMovable=Disabled
+
 [MainWindow][Toolbar sessionToolbar]
 ToolButtonStyle=IconOnly
 
