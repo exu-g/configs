@@ -134,5 +134,6 @@
        :desc "Sort lines"
        "s" 'sort-lines))
 
-(after! yaml-mode
-  (setq yaml-indent 2))
+;; set yaml indentation
+(setq-hook! 'yaml-mode-hook yaml-indent 2)
+(setq-hook! 'yaml-mode-hook yaml-indent-offset 2)
