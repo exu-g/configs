@@ -38,6 +38,7 @@
     dest: "~/"
     owner: false
     group: false
+    checksum: true
   loop:
     - ".config"
     - ".face"
@@ -56,6 +57,7 @@
     dest: "/"
     owner: false
     group: false
+    checksum: true
   loop:
     - "etc"
     - "usr"
