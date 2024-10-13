@@ -1,5 +1,6 @@
 # save kde and plasma settings to gitprojects/configs
 function kdesave
+    rm -rf ~/.config/konsave
     rm -rf ./konsave-export-main ./konsave-export-main.knsv
     ~/gitprojects/konsave/venv/bin/python -m konsave --save konsave-export-main --force
     ~/gitprojects/konsave/venv/bin/python -m konsave --export-profile konsave-export-main
