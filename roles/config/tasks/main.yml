@@ -37,9 +37,11 @@
   tags: config
 
 - name: Copy new files and directories
-  ansible.builtin.copy:
+  ansible.posix.synchronize:
     src: "{{ item }}"
     dest: "~/"
+    owner: false
+    group: false
   loop:
     - ".config"
     - ".face"
@@ -53,9 +55,11 @@
   tags: config
 
 - name: Copy new files and directories (root)
-  ansible.builtin.copy:
+  ansible.posix.synchronize:
     src: "{{ item }}"
     dest: "/"
+    owner: false
+    group: false
   loop:
     - "etc"
     - "usr"
