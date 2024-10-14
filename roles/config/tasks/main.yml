@@ -111,11 +111,28 @@
     scope: user
   tags: services
 
+- name: Reload system systemd services
+  ansible.builtin.systemd_service:
+    daemon_reload: true
+  become: true
+  tags: services
+
 - name: Enable fstrim
   ansible.builtin.systemd_service:
     name: fstrim.timer
     state: "started"
     enabled: true
+  become: true
+  tags: services
+
+- name: Enable zram generator
+  ansible.builtin.systemd_service:
+    name: "systemd-zram-setup@zram0.service"
+    state: "started"
+    enabled: true
+  when:
+    - ('zram-generator' in ansible_facts.packages)
+    - ('zswap.enabled=0' in {{ lookup('ansible.builtin.file', '/proc/cmdline') }})
   become: true
   tags: services
 
