@@ -93,6 +93,7 @@
     - lldb
     - lldb-mi
     - lutris # games
+    - maliit-keyboard # virtual keyboard
     - man-db # docs
     - mesa # video driver
     - mesa-vdpau # VDPAU
