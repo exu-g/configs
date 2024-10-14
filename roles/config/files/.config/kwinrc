@@ -27,9 +27,12 @@ poloniumEnabled=false
 
 [Script-krohnkite]
 enableBTreeLayout=true
+enableColumnsLayout=false
 enableSpiralLayout=false
 enableSpreadLayout=false
+enableThreeColumnLayout=false
 enableTileLayout=false
+ignoreClass=krunner,yakuake,spectacle,kded5,xwaylandvideobridge,plasmashell,ksplashqml,org.kde.plasmashell,org.kde.polkit-kde-authentication-agent-1,org.kde.kruler,kcalc
 noTileBorder=true
 screenDefaultLayout=:3
 
@@ -54,6 +57,9 @@ tiles={"layoutDirection":"horizontal","tiles":[]}
 
 [Tiling][b65f2134-780c-59b0-baae-322e8d76e8dd]
 tiles={"layoutDirection":"horizontal","tiles":[]}
+
+[Wayland]
+InputMethod[$e]=/usr/share/applications/com.github.maliit.keyboard.desktop
 
 [Windows]
 ActiveMouseScreen=false
