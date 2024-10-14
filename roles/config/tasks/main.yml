@@ -132,7 +132,7 @@
     enabled: true
   when:
     - ('zram-generator' in ansible_facts.packages)
-    - ('zswap.enabled=0' in {{ lookup('ansible.builtin.file', '/proc/cmdline') }})
+    - ('zswap.enabled=0' in lookup('ansible.builtin.file', '/proc/cmdline'))
   become: true
   tags: services
 
