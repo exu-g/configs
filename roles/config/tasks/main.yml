@@ -63,15 +63,15 @@
   tags: config
 
 - name: Copy config for SDDM (root)
-  ansible.posix.synchronize:
-    src: "{{ item }}"
+  ansible.builtin.copy:
+    src: "{{ ansible_env['HOME'] }}/{{ item }}"
     dest: "/var/lib/sddm/.config/"
     owner: sddm
     group: sddm
     remote_src: true
   loop:
-    - "~/.config/kwinoutputconfig.json"
-    - "~/.config/kcminputrc"
+    - ".config/kwinoutputconfig.json"
+    - ".config/kcminputrc"
   become: true
   tags: config
 
