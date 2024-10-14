@@ -63,7 +63,7 @@
   tags: config
 
 - name: Copy config for SDDM (root)
-  ansible.builtin.copy:
+  ansible.posix.synchronize:
     src: "{{ item }}"
     dest: "/var/lib/sddm/.config/"
     owner: sddm
