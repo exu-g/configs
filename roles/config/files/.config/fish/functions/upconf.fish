@@ -1,7 +1,8 @@
 # update config
 function upconf
-    cd (mktemp -d)
+    pushd (mktemp -d)
     git clone https://gitea.exu.li/exu/configs.git
     cd configs
     just config
+    popd
 end
