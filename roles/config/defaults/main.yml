@@ -1,0 +1,2 @@
+---
+ssh_key_git: "{{ ansible_user_dir }}/.ssh/id_ed25519_git"

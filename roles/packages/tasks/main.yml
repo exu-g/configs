@@ -217,18 +217,6 @@
   tags: packages
   become: true
 
-- name: Host | Check if host variables exist
-  ansible.builtin.stat:
-    path: "host_vars/{{ ansible_hostname }}.yml"
-  register: host_file
-  tags: packages
-
-- name: Host | Get host specific variables
-  include_vars:
-    file: "host_vars/{{ ansible_hostname }}.yml"
-  when: host_file.stat.exists
-  tags: packages
-
 - name: Host | Install host specific packages
   community.general.pacman:
     state: present

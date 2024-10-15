@@ -1,5 +1,17 @@
 ---
 - hosts: localhost
+  pre_tasks:
+    - name: Host | Check if host variables exist
+      ansible.builtin.stat:
+        path: "host_vars/{{ ansible_hostname }}.yml"
+      register: host_file
+      tags: always
+
+    - name: Host | Get host specific variables
+      include_vars:
+        file: "host_vars/{{ ansible_hostname }}.yml"
+      when: host_file.stat.exists
+      tags: always
   roles:
     # install packages
     - role: packages

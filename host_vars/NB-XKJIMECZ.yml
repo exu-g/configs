@@ -3,3 +3,5 @@ additional_pacman_packages:
   - mattermost-desktop
   - wireguard-tools
 #additional_aur_packages:
+
+ssh_key_git: "{{ ansible_user_dir }}/.ssh/id_ed25519"
