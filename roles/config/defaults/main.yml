@@ -1,2 +1,5 @@
 ---
+# path to ssh key for git servers
 ssh_key_git: "{{ ansible_user_dir }}/.ssh/id_ed25519_git"
+# desktop background image
+background_image: "{{ ansible_user_dir }}/Bilder/Art/artstation/dk-lan/artstation_14224733_55806391_月半与鬼哭.jpg"
