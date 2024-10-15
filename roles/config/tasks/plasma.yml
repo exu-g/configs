@@ -1,0 +1,19 @@
+---
+- name: Set desktop wallpaper
+  ansible.builtin.shell: |
+    qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript "
+                 desktops().forEach((d) => {
+                     d.currentConfigGroup = [
+                         'Wallpaper',
+                         'org.kde.image',
+                         'General',
+                     ]
+                     d.writeConfig('Image', 'file://{{ background_image }}')
+                     d.reloadConfig()
+                 })
+             "
+
+- name: Set Lockscreen wallpaper
+  ansible.builtin.shell: |
+    kwriteconfig6 --file ~/.config/kscreenlockerrc --group Greeter --group Wallpaper --group org.kde.image --group General --key Image '{{ background_image }}'
+    kwriteconfig6 --file ~/.config/kscreenlockerrc --group Greeter --group Wallpaper --group org.kde.image --group General --key PreviewImage '{{ background_image }}'
