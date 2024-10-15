@@ -204,6 +204,15 @@
   become: true
   tags: config
 
+- name: Enable libvirt socket
+  ansible.builtin.systemd_service:
+    name: "libvirtd.socket"
+    state: "started"
+    enabled: true
+  when: ('libvirt' in ansible_facts.packages)
+  become: true
+  tags: services
+
 - name: Create groups
   ansible.builtin.group:
     name: "{{ item }}"
