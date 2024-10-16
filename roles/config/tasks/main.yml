@@ -297,5 +297,5 @@
   tags: config
 
 - name: Include Tasks from plasma.yml
-  ansible.builtin.include_tasks:
+  ansible.builtin.import_tasks:
     file: plasma.yml
