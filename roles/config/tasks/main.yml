@@ -276,7 +276,7 @@
     recurse: true
   loop:
     - "~/scripts"
-    - "~/.local/share/applications"
+    - "~/.local/share/applications/*.desktop"
   tags: config
 
 - name: Reload applications
