@@ -8,7 +8,7 @@
                          'org.kde.image',
                          'General',
                      ]
-                     d.writeConfig('Image', 'file://{{ background_image }}')
+                     d.writeConfig('Image', '{{ background_image }}')
                      d.writeConfig('FillMode', '1')
                      d.reloadConfig()
                  })
