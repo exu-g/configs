@@ -9,7 +9,6 @@
                          'General',
                      ]
                      d.writeConfig('Image', '{{ background_image }}')
-                     d.writeConfig('FillMode', '1')
                      d.reloadConfig()
                  })
              "
