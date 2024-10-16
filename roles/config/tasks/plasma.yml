@@ -1,5 +1,5 @@
 ---
-- name: Set desktop wallpaper
+- name: Plasma | Set desktop wallpaper
   ansible.builtin.shell: |
     qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript "
                  desktops().forEach((d) => {
@@ -14,7 +14,7 @@
                  })
              "
 
-- name: Set Lockscreen wallpaper
+- name: Plasma | Set Lockscreen wallpaper
   ansible.builtin.shell: |
     kwriteconfig6 --file ~/.config/kscreenlockerrc --group Greeter --group Wallpaper --group org.kde.image --group General --key Image '{{ background_image }}'
     kwriteconfig6 --file ~/.config/kscreenlockerrc --group Greeter --group Wallpaper --group org.kde.image --group General --key PreviewImage '{{ background_image }}'
