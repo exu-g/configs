@@ -49,6 +49,7 @@
     - ansible # iac
     - base-devel # devel stuff
     - bind # dnsutils (nslookup, dig)
+    - bottom # htop alternative
     - btrfs-progs # btrfs
     - buildah # containers
     - clang
