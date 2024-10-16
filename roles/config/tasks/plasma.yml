@@ -1,24 +1,26 @@
 ---
-# - name: Plasma | Set desktop wallpaper
-#   ansible.builtin.shell: |
-#     qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript "
-#                  desktops().forEach((d) => {
-#                      d.currentConfigGroup = [
-#                          'Wallpaper',
-#                          'org.kde.image',
-#                          'General',
-#                      ]
-#                      d.writeConfig('Image', '{{ background_image }}')
-#                      d.writeConfig('FillMode', '1')
-#                      d.reloadConfig()
-#                  })
-#              "
-#   tags: config
+- name: Plasma | Remove previously set wallpapers
+  ansible.builtin.shell: |
+    kwriteconfig6 --file ~/.config/plasma-org.kde.plasma.desktop-appletsrc --group Containments --group 1 --group Wallpaper --group org.kde.image --group General --key Image --delete
+    kwriteconfig6 --file ~/.config/plasma-org.kde.plasma.desktop-appletsrc --group Containments --group 1 --group Wallpaper --group org.kde.image --group General --key FillMode --delete
+    kwriteconfig6 --file ~/.config/plasma-org.kde.plasma.desktop-appletsrc --group Containments --group 2 --group Wallpaper --group org.kde.image --group General --key Image --delete
+    kwriteconfig6 --file ~/.config/plasma-org.kde.plasma.desktop-appletsrc --group Containments --group 1 --group Wallpaper --group org.kde.image --group General --key FillMode --delete
+  tags: config
 
 - name: Plasma | Set desktop wallpaper
   ansible.builtin.shell: |
-    kwriteconfig6 --file ~/.config/plasma-org.kde.plasma.desktop-appletsrc --group Containments --group 1 --group Wallpaper --group org.kde.image --group General --key Image '{{ background_image }}'
-    kwriteconfig6 --file ~/.config/plasma-org.kde.plasma.desktop-appletsrc --group Containments --group 2 --group Wallpaper --group org.kde.image --group General --key Image '{{ background_image }}'
+    qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript "
+                 desktops().forEach((d) => {
+                     d.currentConfigGroup = [
+                         'Wallpaper',
+                         'org.kde.image',
+                         'General',
+                     ]
+                     d.writeConfig('Image', '{{ background_image }}')
+                     d.writeConfig('FillMode', '1')
+                     d.reloadConfig()
+                 })
+             "
   tags: config
 
 - name: Plasma | Set Lockscreen wallpaper
