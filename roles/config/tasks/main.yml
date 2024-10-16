@@ -112,23 +112,48 @@
     mode: "0755"
   tags: config
 
-- name: Reload user systemd services
-  ansible.builtin.systemd_service:
-    daemon_reload: true
-    scope: user
-  tags: services
-
 - name: Reload system systemd services
   ansible.builtin.systemd_service:
     daemon_reload: true
   become: true
   tags: services
 
-- name: Enable fstrim
+- name: Reload user systemd services
   ansible.builtin.systemd_service:
-    name: fstrim.timer
+    daemon_reload: true
+    scope: user
+  tags: services
+
+- name: Enable system services
+  ansible.builtin.systemd_service:
+    name: "{{ item }}"
     state: "started"
     enabled: true
+  loop:
+    - "fstrim.timer"
+    - "bluetooth.service"
+    - "sddm.service"
+  become: true
+  tags: services
+
+- name: Enable user services
+  ansible.builtin.systemd_service:
+    name: "{{ item }}"
+    state: "restarted"
+    enabled: true
+    scope: user
+  loop:
+    - "ssh-agent.service"
+  tags: services
+
+- name: Start system services
+  ansible.builtin.systemd_service:
+    name: "{{ item }}"
+    state: "started"
+    enabled: true
+  loop:
+    - "fstrim.timer"
+    - "bluetooth.service"
   become: true
   tags: services
 
@@ -176,21 +201,6 @@
 
 - name: Enable NTP
   ansible.builtin.command: timedatectl set-ntp true
-  become: true
-  tags: services
-
-- name: Enable ssh-agent
-  ansible.builtin.systemd_service:
-    name: ssh-agent
-    state: "restarted"
-    enabled: true
-    scope: user
-  tags: services
-
-- name: Enable sddm
-  ansible.builtin.systemd_service:
-    name: sddm
-    enabled: true
   become: true
   tags: services
 
