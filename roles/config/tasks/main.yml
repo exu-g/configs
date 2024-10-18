@@ -133,6 +133,7 @@
     - "fstrim.timer"
     - "bluetooth.service"
     - "sddm.service"
+    - "systemd-resolved.service"
   become: true
   tags: services
 
@@ -256,6 +257,15 @@
       - render # GPU passing
       - wireguard # wireguard
     append: true
+  become: true
+  tags: config
+
+- name: Symlink systemd-resolved config file for /etc/resolv.conf
+  ansible.builtin.file:
+    src: "/run/systemd/resolve/stub-resolv.conf"
+    dest: "/etc/resolv.conf"
+    state: link
+    force: true
   become: true
   tags: config
 
