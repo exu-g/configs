@@ -140,6 +140,7 @@
     - smartmontools # disks
     - stress # benchmark
     - stylelint # code
+    - systemd-resolvconf # resolvectl
     - tesseract-data-deu
     - tesseract-data-eng
     - texlive-core
