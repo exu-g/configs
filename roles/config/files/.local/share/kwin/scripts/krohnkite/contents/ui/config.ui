@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>440</width>
-    <height>755</height>
+    <height>1109</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -258,6 +258,19 @@
                <string/>
               </property>
               <layout class="QGridLayout" name="gridLayout_3">
+               <item row="0" column="1">
+                <spacer name="horizontalSpacer">
+                 <property name="orientation">
+                  <enum>Qt::Orientation::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
                <item row="0" column="0">
                 <layout class="QHBoxLayout" name="horizontalLayout_4">
                  <item>
@@ -299,18 +312,15 @@
                  </item>
                 </layout>
                </item>
-               <item row="0" column="1">
-                <spacer name="horizontalSpacer">
-                 <property name="orientation">
-                  <enum>Qt::Orientation::Horizontal</enum>
+               <item row="1" column="0">
+                <widget class="QCheckBox" name="kcfg_columnsBalanced">
+                 <property name="toolTip">
+                  <string>Creating a new window in the shortest column</string>
                  </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
+                 <property name="text">
+                  <string>Balanced</string>
                  </property>
-                </spacer>
+                </widget>
                </item>
               </layout>
              </widget>
