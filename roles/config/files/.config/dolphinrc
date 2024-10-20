@@ -10,6 +10,7 @@ PreviewSize=22
 [General]
 BrowseThroughArchives=true
 LockPanels=false
+RememberOpenedTabs=false
 Version=202
 ViewPropsTimestamp=2024,8,22,12,38,26.974
 
