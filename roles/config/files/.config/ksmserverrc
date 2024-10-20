@@ -1,3 +1,6 @@
+[General]
+loginMode=emptySession
+
 [LegacySession: saved at previous logout]
 count=0
 
