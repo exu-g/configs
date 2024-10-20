@@ -16,7 +16,7 @@ plugin=org.kde.plasma.folder
 wallpaperplugin=org.kde.image
 
 [Containments][1][Wallpaper][org.kde.image][General]
-Image=/home/exu/Bilder/Art/artstation/dk-lan/artstation_14224733_55806391_月半与鬼哭.jpg
+Image=file:///home/exu/Bilder/Art/artstation/dk-lan/artstation_14224733_55806391_月半与鬼哭.jpg
 SlidePaths=/usr/share/wallpapers/
 
 [Containments][2]
@@ -31,7 +31,7 @@ plugin=org.kde.plasma.folder
 wallpaperplugin=org.kde.image
 
 [Containments][2][Wallpaper][org.kde.image][General]
-Image=/home/exu/Bilder/Art/artstation/dk-lan/artstation_14224733_55806391_月半与鬼哭.jpg
+Image=file:///home/exu/Bilder/Art/artstation/dk-lan/artstation_14224733_55806391_月半与鬼哭.jpg
 SlidePaths=/usr/share/wallpapers/
 
 [Containments][29]
@@ -114,7 +114,7 @@ immutability=1
 plugin=org.kde.plasma.digitalclock
 
 [Containments][3][Applets][22][Configuration]
-PreloadWeight=55
+PreloadWeight=60
 popupHeight=450
 popupWidth=560
 
@@ -414,7 +414,11 @@ immutability=1
 plugin=org.kde.plasma.brightness
 
 [Containments][56][Applets][72][Configuration]
-PreloadWeight=0
+PreloadWeight=30
+
+[Containments][56][Applets][72][Configuration][ConfigDialog]
+DialogHeight=540
+DialogWidth=720
 
 [Containments][56][Applets][73]
 immutability=1
@@ -539,7 +543,7 @@ immutability=1
 plugin=org.kde.plasma.battery
 
 [Containments][9][Applets][27][Configuration]
-PreloadWeight=7
+PreloadWeight=2
 
 [Containments][9][Applets][28]
 immutability=1
