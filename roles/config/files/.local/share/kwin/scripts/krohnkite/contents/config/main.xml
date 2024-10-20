@@ -64,9 +64,15 @@
 	    <label>Enable/disable Columns layout</label>
         <default>true</default>
     </entry>
+
     <entry name="columnsLayoutInitialRotationAngle" type="String">
 	    <label>Columns layout initial rotation angle</label>
         <default>0</default>
+    </entry>
+
+    <entry name="columnsBalanced" type="Bool">
+	    <label>Enable/disable creating a new window in the shortest column</label>
+        <default>false</default>
     </entry>
 
     <entry name="enableStackedLayout" type="Bool">
