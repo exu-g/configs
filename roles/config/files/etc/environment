@@ -10,3 +10,5 @@ SDL_VIDEODRIVER=wayland
 MOZ_ENABLE_WAYLAND=1
 # keyboard layout for gamescope
 XKB_DEFAULT_LAYOUT=ch
+# disable DDC/CI brightness control for external monitors
+POWERDEVIL_NO_DDCUTIL=1
