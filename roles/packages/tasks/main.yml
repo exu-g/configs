@@ -121,6 +121,7 @@
     - pkgstats
     - plasma-meta
     - podman # containers
+    - podman-compose # containers
     - power-profiles-daemon # power management
     - prettier # code
     - pyright # code
