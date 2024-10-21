@@ -7,4 +7,4 @@ additional_pacman_packages:
 
 ssh_key_git: "{{ ansible_user_dir }}/.ssh/id_ed25519"
 
-background_image: "{{ ansible_user_dir }}/Bilder/Art Print - Inked Pink Mizuchi Dragon Painting.jpg"
+background_image: "{{ ansible_user_dir }}/Bilder/artstation_13054577_50587674_The Poppy War.jpg"
