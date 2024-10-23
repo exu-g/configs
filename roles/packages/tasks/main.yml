@@ -158,6 +158,7 @@
     - vim # editor
     - vscode-css-languageserver
     - wget # network
+    - whois # mkpasswd
     - wireguard-tools # vpn
     - wireplumber # audio
     - xdg-desktop-portal-gtk # flatpak theming
