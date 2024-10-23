@@ -177,6 +177,7 @@
 # - refind-theme-nord # bootmenu # AUR
 # - btrfsmaintenance # AUR
 # - virter # AUR
+# - konsave # AUR
 
 - name: x86_64 | Install other packages unavailable/unnecessary on ALARM
   community.general.pacman:
