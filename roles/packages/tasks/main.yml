@@ -140,6 +140,7 @@
     - smartmontools # disks
     - stress # benchmark
     - stylelint # code
+    - swtpm # libvirt tpm support
     - systemd-resolvconf # resolvectl
     - tesseract-data-deu
     - tesseract-data-eng
