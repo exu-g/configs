@@ -9,6 +9,7 @@ PreviewSize=22
 
 [General]
 BrowseThroughArchives=true
+ConfirmClosingMultipleTabs=false
 LockPanels=false
 RememberOpenedTabs=false
 Version=202
