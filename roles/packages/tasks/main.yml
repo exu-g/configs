@@ -48,6 +48,7 @@
     - aardvark-dns # containers
     - ansible # iac
     - base-devel # devel stuff
+    - bash-language-server # bash lsp
     - bind # dnsutils (nslookup, dig)
     - bottom # htop alternative
     - btrfs-progs # btrfs
