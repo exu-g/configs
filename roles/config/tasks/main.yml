@@ -224,6 +224,15 @@
   become: true
   tags: services
 
+- name: Enable LACT daemon
+  ansible.builtin.systemd_service:
+    name: "lactd"
+    state: "started"
+    enabled: true
+  when: ('lact' in ansible_facts.packages)
+  become: true
+  tags: services
+
 - name: Create groups
   ansible.builtin.group:
     name: "{{ item }}"
