@@ -396,7 +396,7 @@ immutability=1
 plugin=org.kde.plasma.bluetooth
 
 [Containments][56][Applets][69][Configuration]
-PreloadWeight=10
+PreloadWeight=2
 
 [Containments][56][Applets][70]
 immutability=1
@@ -414,7 +414,7 @@ immutability=1
 plugin=org.kde.plasma.brightness
 
 [Containments][56][Applets][72][Configuration]
-PreloadWeight=15
+PreloadWeight=0
 
 [Containments][56][Applets][72][Configuration][ConfigDialog]
 DialogHeight=540
@@ -490,7 +490,7 @@ immutability=1
 plugin=org.kde.kscreen
 
 [Containments][9][Applets][17][Configuration]
-PreloadWeight=55
+PreloadWeight=60
 
 [Containments][9][Applets][18]
 immutability=1
@@ -519,7 +519,7 @@ immutability=1
 plugin=org.kde.plasma.bluetooth
 
 [Containments][9][Applets][24][Configuration]
-PreloadWeight=27
+PreloadWeight=19
 
 [Containments][9][Applets][25]
 immutability=1
