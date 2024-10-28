@@ -24,6 +24,7 @@ BorderActivate=9
 [Plugins]
 krohnkiteEnabled=true
 poloniumEnabled=false
+synchronizeskipswitcherEnabled=true
 
 [Script-krohnkite]
 enableBTreeLayout=true
@@ -32,7 +33,7 @@ enableSpiralLayout=false
 enableSpreadLayout=false
 enableThreeColumnLayout=false
 enableTileLayout=false
-ignoreClass=krunner,yakuake,spectacle,kded5,xwaylandvideobridge,plasmashell,ksplashqml,org.kde.plasmashell,org.kde.polkit-kde-authentication-agent-1,org.kde.kruler,kcalc
+ignoreClass=krunner,yakuake,spectacle,kded5,xwaylandvideobridge,plasmashell,ksplashqml,org.kde.plasmashell,org.kde.polkit-kde-authentication-agent-1,org.kde.kruler,kcalc,gamescope
 noTileBorder=true
 screenDefaultLayout=:3
 
