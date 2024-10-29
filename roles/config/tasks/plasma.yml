@@ -17,7 +17,7 @@
                          'General',
                      ]
                      d.writeConfig('Image', '{{ background_image }}')
-                     d.writeConfig('FillMode', '1')
+                     d.writeConfig('FillMode', '0')
                      d.reloadConfig()
                  })
              "
@@ -27,5 +27,5 @@
   ansible.builtin.shell: |
     kwriteconfig6 --file ~/.config/kscreenlockerrc --group Greeter --group Wallpaper --group org.kde.image --group General --key Image '{{ background_image }}'
     kwriteconfig6 --file ~/.config/kscreenlockerrc --group Greeter --group Wallpaper --group org.kde.image --group General --key PreviewImage '{{ background_image }}'
-    kwriteconfig6 --file ~/.config/kscreenlockerrc --group Greeter --group Wallpaper --group org.kde.image --group General --key FillMode '1'
+    kwriteconfig6 --file ~/.config/kscreenlockerrc --group Greeter --group Wallpaper --group org.kde.image --group General --key FillMode '0'
   tags: config
