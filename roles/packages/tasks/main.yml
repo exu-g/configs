@@ -32,8 +32,8 @@
 
 - name: Install other packages
   community.general.pacman:
-    state: present
     name: "{{ item }}"
+    state: present
   loop:
     #- gnome-keyring
     #- hdparm
@@ -139,6 +139,7 @@
     - ruby-sass # code
     - shfmt # code
     - smartmontools # disks
+    - speech-dispatcher # TTS
     - stress # benchmark
     - stylelint # code
     - swtpm # libvirt tpm support
@@ -212,8 +213,8 @@
 
 - name: x86_64 | Install multilib packages
   community.general.pacman:
-    state: present
     name: "{{ item }}"
+    state: present
   loop:
     - lib32-mesa # video driver
     - lib32-vulkan-intel # video driver
@@ -221,6 +222,15 @@
     - steam # games
     - wine # windows
   when: ansible_architecture == "x86_64"
+  tags: packages
+  become: true
+
+- name: Install flatpak packages
+  community.general.flatpak:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - https://github.com/Elleo/pied/releases/latest/download/com.mikeasoft.pied.flatpak
   tags: packages
   become: true
 
