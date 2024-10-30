@@ -315,7 +315,7 @@
   when: doom_emacs.stat.exists
   tags: config
 
-- name: Include Tasks from plasma.yml
+- name: Import Tasks from plasma.yml
   ansible.builtin.import_tasks:
     file: plasma.yml
   tags: config
