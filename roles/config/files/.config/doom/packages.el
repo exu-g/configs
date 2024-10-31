@@ -63,3 +63,6 @@
 
 ;; catppuccin
 (package! catppuccin-theme)
+
+;; ansible completion
+(package! company-ansible)
