@@ -152,3 +152,7 @@
 (add-to-list 'auto-mode-alist '("\\.link\\'" . conf-unix-mode))
 (add-to-list 'auto-mode-alist '("\\.pod\\'" . conf-unix-mode))
 (add-to-list 'auto-mode-alist '("\\.container\\'" . conf-unix-mode))
+
+(setq-local completion-at-point-functions
+            (mapcar #'cape-company-to-capf
+                    (list #'company-ansible)))
