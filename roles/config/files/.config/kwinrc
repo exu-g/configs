@@ -21,6 +21,10 @@ EdgeBarrier=50
 [Effect-overview]
 BorderActivate=9
 
+[NightColor]
+LatitudeAuto=47.64
+LongitudeAuto=9.13
+
 [Plugins]
 krohnkiteEnabled=true
 poloniumEnabled=false
