@@ -153,6 +153,7 @@
     - transmission-remote-gtk # torrent
     - ttf-fira-code # fonts
     - ttf-fira-sans # fonts
+    - ttf-roboto-mono # fonts
     - udftools # udf
     - unrar # compression
     - unzip # compression
