@@ -117,6 +117,8 @@
     - otf-font-awesome # fonts
     - p7zip # compression
     - pacman-contrib # scripts
+    - phonon-qt5-vlc # multimedia
+    - phonon-qt6-vlc # multimedia
     - php # code
     - pkgstats
     - plasma-meta
