@@ -1,0 +1,13 @@
+---
+- name: Doom Emacs | Check on async job
+  async_status:
+    jid: "{{ async_doom_emacs.ansible_job_id }}"
+  register: job_result
+  until: job_result.finished
+  retries: 60
+  delay: 10
+
+- name: Doom Emacs | Cleanup async job
+  async_status:
+    jid: "{{ async_doom_emacs.ansible_job_id }}"
+  mode: cleanup
