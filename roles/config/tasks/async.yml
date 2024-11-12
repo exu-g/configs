@@ -1,0 +1,15 @@
+---
+- name: Doom Emacs | Check if installed
+  ansible.builtin.stat:
+    path: "~/.config/emacs/bin/doom"
+  register: doom_emacs
+  tags: config
+
+- name: Doom Emacs | Update if present - aync
+  ansible.builtin.shell:
+    cmd: "~/.config/emacs/bin/doom sync"
+  when: doom_emacs.stat.exists
+  async: 600
+  poll: 0
+  register: async_doom_emacs
+  tags: config

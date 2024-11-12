@@ -112,6 +112,12 @@
     mode: "0755"
   tags: config
 
+# Start async tasks early
+- name: Import Tasks from async.yml
+  ansible.builtin.import_tasks:
+    file: async.yml
+  tags: config
+
 - name: Reload system systemd services
   ansible.builtin.systemd_service:
     daemon_reload: true
@@ -303,19 +309,13 @@
     cmd: "update-desktop-database ~/.local/share/applications/"
   tags: config
 
-- name: Doom Emacs | Check if installed
-  ansible.builtin.stat:
-    path: "~/.config/emacs/bin/doom"
-  register: doom_emacs
-  tags: config
-
-- name: Doom Emacs | Update if present
-  ansible.builtin.shell:
-    cmd: "~/.config/emacs/bin/doom sync"
-  when: doom_emacs.stat.exists
-  tags: config
-
 - name: Import Tasks from plasma.yml
   ansible.builtin.import_tasks:
     file: plasma.yml
+  tags: config
+
+# Async task callbacks
+- name: Import Tasks from async_check.yml
+  ansible.builtin.import_tasks:
+    file: async_check.yml
   tags: config
