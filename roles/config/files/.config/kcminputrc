@@ -1,5 +1,8 @@
 [$Version]
 update_info=delete_cursor_old_default_size.upd:DeleteCursorOldDefaultSize
 
+[Libinput][0][0][OpenTabletDriver Virtual Artist Tablet]
+CalibrationMatrix=1.003057837486267,-0.0006378762191161513,-1.7458257062230587e-14,0,-0.013275130651891232,0.9977265000343323,-5.834838973203978e-15,0,0,0,1,0,0,0,0,1
+
 [Mouse]
 cursorTheme=Breeze_Light

@@ -20,7 +20,7 @@ Word Wrap Marker=false
 
 [MainWindow]
 2 screens: Height=1120
-2 screens: Width=1024
+2 screens: Width=2048
 
 [filetree]
 editShade=112,80,65
