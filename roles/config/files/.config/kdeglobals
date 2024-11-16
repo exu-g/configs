@@ -122,7 +122,7 @@ ForegroundPositive=166, 218, 149
 ForegroundVisited=198, 160, 246
 
 [DirSelect Dialog]
-DirSelectDialog Size=843,484
+DirSelectDialog Size=2048,1120
 History Items[$e]=file:$HOME/Downloads/newBooks,file:$HOME/Downloads/newBooks,file:$HOME/Downloads/newBooks,file:$HOME/Downloads/newBooks,file:$HOME/Downloads/newBooks,file:$HOME/Downloads/newBooks,file:$HOME/Downloads/newBooks,file:$HOME/Downloads/newBooks,file:$HOME/Downloads/newBooks,file:$HOME/Downloads/newBooks,file:$HOME/Downloads/newBooks,file:$HOME/Downloads/newBooks,file:$HOME/Downloads/newBooks,file:$HOME/Downloads/newBooks,file:$HOME/Downloads/newBooks,file:$HOME/Downloads/newBooks,file:$HOME/Downloads/newBooks,file:$HOME/Downloads/newBooks,file:$HOME/Downloads/newBooks,file:$HOME/Downloads/newBooks,file:$HOME/Downloads/newBooks,file:$HOME/Nextcloud/Reading/books/Brandon Sanderson - The Stormlight Archive
 
 [General]

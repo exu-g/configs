@@ -3,6 +3,7 @@ _k_friendly_name=Aktivitätenverwaltung
 switch-to-activity-64664544-a062-48cf-a713-e4045da575e9=none,none,Zu Aktivität „Standard“ wechseln
 
 [KDE Keyboard Layout Switcher]
+Switch keyboard layout to Deutsch (Schweiz)=none,none,Tastaturbelegung zu Deutsch (Schweiz) umschalten
 Switch to Last-Used Keyboard Layout=none,Meta+Alt+L,Auf zuletzt verwendete Tastaturbelegung umschalten
 Switch to Next Keyboard Layout=none,Meta+Alt+K,Auf nächste Tastaturbelegung umschalten
 _k_friendly_name=Umschaltung der Tastaturbelegung
@@ -290,7 +291,7 @@ powerProfile=Battery,Battery\tMeta+B,Energieprofil wechseln
 
 [plasmashell]
 _k_friendly_name=plasmashell
-activate application launcher=Meta\tAlt+F1,Meta\tAlt+F1,Anwendungsstarter aktivieren
+activate application launcher=none,Meta\tAlt+F1,Anwendungsstarter aktivieren
 activate task manager entry 1=none,Meta+1,Fensterleisteneintrag 1 aktivieren
 activate task manager entry 10=none,Meta+0,Fensterleisteneintrag 10 aktivieren
 activate task manager entry 2=none,Meta+2,Fensterleisteneintrag 2 aktivieren
