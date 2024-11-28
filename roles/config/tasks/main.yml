@@ -69,6 +69,11 @@
   become: true
   tags: config
 
+- name: Check if KDE files exist
+  ansible.builtin.stat:
+    path: "{{ ansible_env['HOME'] }}/.config/kwinoutputconfig.json"
+  register: kde_files
+
 - name: Copy config for SDDM (root)
   ansible.builtin.copy:
     src: "{{ ansible_env['HOME'] }}/{{ item }}"
@@ -79,6 +84,7 @@
   loop:
     - ".config/kwinoutputconfig.json"
     - ".config/kcminputrc"
+  when: kde_files.stat.exists
   become: true
   tags: config
 
