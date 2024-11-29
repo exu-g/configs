@@ -73,6 +73,7 @@
   ansible.builtin.stat:
     path: "{{ ansible_env['HOME'] }}/.config/kwinoutputconfig.json"
   register: kde_files
+  tags: config
 
 - name: Copy config for SDDM (root)
   ansible.builtin.copy:
