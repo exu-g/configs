@@ -1,6 +1,8 @@
 [user]
     name = exu
     email = mrc@frm01.net
+[core]
+    sshCommand = "ssh -i $HOME/.ssh/id_ed25519_git"
 [init]
     defaultBranch = main
 # Some popular options to test:
@@ -26,5 +28,5 @@
     # checkout latest tag
     latest = !sh -c 'git describe --tags $(git rev-list --tags --max-count=1) | xargs git checkout' -
 # conditonal config
-[includeIf "gitdir:**/occ/**"]
+[includeIf "gitdir:**gitprojects/occ/**"]
     path = ~/.gitconfig-occ
