@@ -30,6 +30,7 @@
   loop:
     - "~/.emacs.d"
     - "~/scripts"
+    - "~/.gitconfig"
   tags: config
 
 - name: Copy new files and directories
@@ -42,19 +43,11 @@
     - ".config"
     - ".face"
     - ".fonts"
-    - ".gitconfig"
     - ".gtkrc-2.0"
     - ".local"
+    - ".ssh"
     - ".themes"
     - "scripts"
-  tags: config
-
-- name: Copy new templated files
-  ansible.builtin.template:
-    src: "{{ item }}"
-    dest: "~/"
-  loop:
-    - ".ssh/config.j2"
   tags: config
 
 - name: Copy new files and directories (root)
