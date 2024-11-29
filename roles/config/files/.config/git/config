@@ -29,4 +29,4 @@
     latest = !sh -c 'git describe --tags $(git rev-list --tags --max-count=1) | xargs git checkout' -
 # conditonal config
 [includeIf "gitdir:**gitprojects/occ/**"]
-    path = ~/.gitconfig-occ
+    path = ~/.config/git/occ
