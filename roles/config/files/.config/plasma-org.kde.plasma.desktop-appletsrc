@@ -89,6 +89,11 @@ plugin=org.kde.plasma.marginsseparator
 immutability=1
 plugin=org.kde.plasma.digitalclock
 
+[Containments][29][Applets][48][Configuration]
+PreloadWeight=55
+popupHeight=450
+popupWidth=560
+
 [Containments][29][Applets][55]
 immutability=1
 plugin=org.kde.plasma.systemtray
@@ -122,6 +127,9 @@ plugin=org.kde.plasma.systemmonitor.diskactivity
 
 [Containments][29][Applets][79][Configuration]
 CurrentPreset=org.kde.plasma.systemmonitor
+PreloadWeight=55
+popupHeight=209
+popupWidth=216
 
 [Containments][29][Applets][79][Configuration][Appearance]
 chartFace=org.kde.ksysguard.linechart
@@ -539,7 +547,7 @@ immutability=1
 plugin=org.kde.plasma.devicenotifier
 
 [Containments][56][Applets][58][Configuration]
-PreloadWeight=60
+PreloadWeight=65
 
 [Containments][56][Applets][59]
 immutability=1
@@ -550,7 +558,7 @@ immutability=1
 plugin=org.kde.plasma.notifications
 
 [Containments][56][Applets][60][Configuration]
-PreloadWeight=70
+PreloadWeight=75
 
 [Containments][56][Applets][61]
 immutability=1
@@ -607,14 +615,14 @@ immutability=1
 plugin=org.kde.plasma.battery
 
 [Containments][56][Applets][71][Configuration]
-PreloadWeight=7
+PreloadWeight=0
 
 [Containments][56][Applets][72]
 immutability=1
 plugin=org.kde.plasma.brightness
 
 [Containments][56][Applets][72][Configuration]
-PreloadWeight=0
+PreloadWeight=7
 
 [Containments][56][Applets][72][Configuration][ConfigDialog]
 DialogHeight=540
@@ -657,7 +665,7 @@ immutability=1
 plugin=org.kde.plasma.devicenotifier
 
 [Containments][9][Applets][11][Configuration]
-PreloadWeight=65
+PreloadWeight=70
 
 [Containments][9][Applets][12]
 immutability=1
@@ -690,7 +698,7 @@ immutability=1
 plugin=org.kde.kscreen
 
 [Containments][9][Applets][17][Configuration]
-PreloadWeight=60
+PreloadWeight=65
 
 [Containments][9][Applets][18]
 immutability=1
@@ -736,14 +744,14 @@ immutability=1
 plugin=org.kde.plasma.brightness
 
 [Containments][9][Applets][26][Configuration]
-PreloadWeight=2
+PreloadWeight=20
 
 [Containments][9][Applets][27]
 immutability=1
 plugin=org.kde.plasma.battery
 
 [Containments][9][Applets][27][Configuration]
-PreloadWeight=12
+PreloadWeight=0
 
 [Containments][9][Applets][28]
 immutability=1

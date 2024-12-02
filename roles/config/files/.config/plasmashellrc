@@ -1,6 +1,7 @@
 [PlasmaViews][Panel 29]
 floating=0
 panelLengthMode=0
+panelVisibility=0
 
 [PlasmaViews][Panel 29][Defaults]
 maxLength=2048
@@ -14,6 +15,8 @@ minLength=2032
 [PlasmaViews][Panel 3]
 floating=0
 panelLengthMode=0
+panelOpacity=0
+panelVisibility=0
 
 [PlasmaViews][Panel 3][Defaults]
 thickness=32

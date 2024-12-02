@@ -33,13 +33,13 @@ _k_friendly_name=Touchpad
 
 [kmix]
 _k_friendly_name=KMix
-decrease_microphone_volume=Microphone Volume Down,Microphone Volume Down,Decrease Microphone Volume
+decrease_microphone_volume=Microphone Volume Down,Microphone Volume Down,Mikrofonlautstärke verringern
 decrease_volume=Volume Down,Volume Down,Lautstärke verringern
-decrease_volume_small=Shift+Volume Down,Shift+Volume Down,Decrease Volume by 1%
-increase_microphone_volume=Microphone Volume Up,Microphone Volume Up,Increase Microphone Volume
+decrease_volume_small=Shift+Volume Down,Shift+Volume Down,Lautstärke um 1 % verringern
+increase_microphone_volume=Microphone Volume Up,Microphone Volume Up,Mikrofonlautstärke erhöhen
 increase_volume=Volume Up,Volume Up,Lautstärke erhöhen
-increase_volume_small=Shift+Volume Up,Shift+Volume Up,Increase Volume by 1%
-mic_mute=Microphone Mute\tMeta+Volume Mute,Microphone Mute\tMeta+Volume Mute,Mute Microphone
+increase_volume_small=Shift+Volume Up,Shift+Volume Up,Lautstärke um 1 % erhöhen
+mic_mute=Microphone Mute\tMeta+Volume Mute,Microphone Mute\tMeta+Volume Mute,Mikrofon stummschalten
 mute=Volume Mute,Volume Mute,Stumm
 
 [ksmserver]
