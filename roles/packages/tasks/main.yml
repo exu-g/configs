@@ -145,6 +145,7 @@
     - stress # benchmark
     - stylelint # code
     - swtpm # libvirt tpm support
+    - system-config-printer # printer configuration
     - systemd-resolvconf # resolvectl
     - tesseract-data-deu
     - tesseract-data-eng
