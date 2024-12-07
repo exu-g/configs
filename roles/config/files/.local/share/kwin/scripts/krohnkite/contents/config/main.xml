@@ -75,6 +75,11 @@
         <default>false</default>
     </entry>
 
+    <entry name="columnsLayerConf" type="String">
+	    <label>Columns layout default configuration.</label>
+        <default></default>
+    </entry>
+
     <entry name="enableStackedLayout" type="Bool">
 	    <label>Enable/disable Stacked layout</label>
         <default>false</default>
@@ -121,6 +126,16 @@
 
     <entry name="screenDefaultLayout" type="String">
 	    <label>Assigning number of layout to screen(output) by default</label>
+        <default></default>
+    </entry>
+
+    <entry name="tileNothing" type="Bool">
+	    <label>Don't tile any windows by default</label>
+        <default>false</default>
+    </entry>
+
+    <entry name="tilingClass" type="String">
+	    <label>Tile windows with certain classes(comma-separated list)</label>
         <default></default>
     </entry>
 
