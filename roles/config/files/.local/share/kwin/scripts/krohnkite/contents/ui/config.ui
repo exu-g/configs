@@ -257,21 +257,8 @@
               <property name="title">
                <string/>
               </property>
-              <layout class="QGridLayout" name="gridLayout_3">
-               <item row="0" column="1">
-                <spacer name="horizontalSpacer">
-                 <property name="orientation">
-                  <enum>Qt::Orientation::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item row="0" column="0">
+              <layout class="QVBoxLayout" name="verticalLayout_11">
+               <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_4">
                  <item>
                   <widget class="QLabel" name="tileLabel12">
@@ -310,9 +297,22 @@
                    </item>
                   </widget>
                  </item>
+                 <item>
+                  <spacer name="horizontalSpacer">
+                   <property name="orientation">
+                    <enum>Qt::Orientation::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
                 </layout>
                </item>
-               <item row="1" column="0">
+               <item>
                 <widget class="QCheckBox" name="kcfg_columnsBalanced">
                  <property name="toolTip">
                   <string>Creating a new window in the shortest column</string>
@@ -321,6 +321,24 @@
                   <string>Balanced</string>
                  </property>
                 </widget>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="hLayout_columnsConf">
+                 <item>
+                  <widget class="QLabel" name="lbl_columsLayerConf">
+                   <property name="text">
+                    <string>Config</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="kcfg_columnsLayerConf">
+                   <property name="toolTip">
+                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Comma-separated list OutputName:VirtualDesktopName:ActivityName:ColumnWeight:ColumnWeight:... OutputName value you will see if run KSystemLog and type krohnkite in filter string. The data will right under Krohenkite start string.If all weights are equal they will not be taken into account &lt;/p&gt;&lt;p&gt;  Example: Any monitors 3 columns without weights:&lt;/p&gt;&lt;p&gt; :::1:1:1&lt;/p&gt;&lt;p&gt;Example with desktop name and activity id 3 columns the third one is twice as big as the first two:&lt;/p&gt;&lt;p&gt; HDMI-A-1:Desktop 1:99e10d31-e8f3-44aa-bbed-2a543f13fa54:1:1:2&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
               </layout>
              </widget>
@@ -656,7 +674,7 @@
              </font>
             </property>
             <property name="text">
-             <string>DWM style</string>
+             <string>DWM st&amp;yle</string>
             </property>
             <attribute name="buttonGroup">
              <string notr="true">directionalKeyButtonGroup</string>
@@ -803,7 +821,7 @@
           <string>Position of the New Window</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_9">
-          <item alignment="Qt::AlignmentFlag::Qt::AlignmentFlag::AlignVCenter">
+          <item alignment="Qt::AlignmentFlag::AlignVCenter">
            <widget class="QComboBox" name="kcfg_newWindowPosition">
             <property name="minimumSize">
              <size>
@@ -994,6 +1012,23 @@
            <widget class="QLineEdit" name="kcfg_ignoreVDesktop">
             <property name="toolTip">
              <string>Comma-separated list of Virtual Desktops names. Windows corresponding to these will not be tiled.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QCheckBox" name="kcfg_tileNothing">
+            <property name="text">
+             <string>Always, except by class</string>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLineEdit" name="kcfg_tilingClass">
+            <property name="toolTip">
+             <string>Comma-separated list of window classes. Matching windows will become tiled automatically.</string>
             </property>
            </widget>
           </item>

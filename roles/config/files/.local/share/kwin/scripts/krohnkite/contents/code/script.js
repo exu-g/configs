@@ -70,6 +70,7 @@ class KWinConfig {
         this.tileLayoutInitialAngle = KWIN.readConfig("tileLayoutInitialRotationAngle", "0");
         this.columnsLayoutInitialAngle = KWIN.readConfig("columnsLayoutInitialRotationAngle", "0");
         this.columnsBalanced = KWIN.readConfig("columnsBalanced", false);
+        this.columnsLayerConf = commaSeparate(KWIN.readConfig("columnsLayerConf", ""));
         this.monocleMaximize = KWIN.readConfig("monocleMaximize", true);
         this.monocleMinimizeRest = KWIN.readConfig("monocleMinimizeRest", false);
         this.stairReverse = KWIN.readConfig("stairReverse", false);
@@ -105,6 +106,8 @@ class KWinConfig {
         this.ignoreVDesktop = commaSeparate(KWIN.readConfig("ignoreVDesktop", ""));
         this.ignoreTitle = commaSeparate(KWIN.readConfig("ignoreTitle", ""));
         this.screenDefaultLayout = commaSeparate(KWIN.readConfig("screenDefaultLayout", ""));
+        this.tilingClass = commaSeparate(KWIN.readConfig("tilingClass", ""));
+        this.tileNothing = KWIN.readConfig("tileNothing", false);
         if (this.preventMinimize && this.monocleMinimizeRest) {
             debug(() => "preventMinimize is disabled because of monocleMinimizeRest.");
             this.preventMinimize = false;
@@ -566,7 +569,8 @@ class KWinWindow {
             KWINCONFIG.ignoreClass.indexOf(resourceClass) >= 0 ||
             KWINCONFIG.ignoreClass.indexOf(resourceName) >= 0 ||
             matchWords(this.window.caption, KWINCONFIG.ignoreTitle) >= 0 ||
-            KWINCONFIG.ignoreRole.indexOf(windowRole) >= 0);
+            KWINCONFIG.ignoreRole.indexOf(windowRole) >= 0 ||
+            (KWINCONFIG.tileNothing && KWINCONFIG.tilingClass.indexOf(resourceClass) < 0));
     }
     get shouldFloat() {
         const resourceClass = String(this.window.resourceClass);
@@ -1425,6 +1429,9 @@ class EngineContext {
     set currentWindow(window) {
         this.drvctx.currentWindow = window;
     }
+    get currentSurfaceId() {
+        return this.drvctx.currentSurface.id;
+    }
     constructor(drvctx, engine) {
         this.drvctx = drvctx;
         this.engine = engine;
@@ -1455,30 +1462,49 @@ class LayoutStoreEntry {
     get currentLayout() {
         return this.loadLayout(this.currentID);
     }
-    constructor(output_name, desktop_name) {
+    constructor(outputName, desktopName, activity) {
         let layouts = CONFIG.layoutOrder.map((layout) => layout.toLowerCase());
         let layouts_str = layouts.map((layout, i) => i + "." + layout + " ");
-        print(`Krohnkite: Screen(output):${output_name}, Desktop(name):${desktop_name}, layouts: ${layouts_str}`);
+        print(`Krohnkite: Screen(output):${outputName}, Desktop(name):${desktopName}, Activity: ${activity}, layouts: ${layouts_str}`);
         this.currentIndex = 0;
         this.currentID = CONFIG.layoutOrder[0];
         CONFIG.screenDefaultLayout.some((entry) => {
             let cfg = entry.split(":");
-            let cfg_output = cfg[0];
-            let cfg_desktop = cfg.length == 2 ? undefined : cfg[1];
-            let cfg_screen_id_str = cfg.length == 2 ? cfg[1] : cfg[2];
-            let cfg_screen_id = parseInt(cfg_screen_id_str);
-            if (isNaN(cfg_screen_id)) {
-                cfg_screen_id = layouts.indexOf(cfg_screen_id_str.toLowerCase());
-                cfg_screen_id =
-                    cfg_screen_id >= 0
-                        ? cfg_screen_id
-                        : layouts.indexOf(cfg_screen_id_str.toLowerCase() + "layout");
+            const cfgLength = cfg.length;
+            if (cfgLength < 2 && cfgLength > 4)
+                return false;
+            let cfgOutput = cfg[0];
+            let cfgActivity = "";
+            let cfgVDesktop = "";
+            let cfgLayout = undefined;
+            if (cfgLength === 2) {
+                cfgLayout = cfg[1];
             }
-            if ((output_name === cfg_output || cfg_output === "") &&
-                (desktop_name === cfg_desktop || cfg_desktop === undefined) &&
-                cfg_screen_id >= 0 &&
-                cfg_screen_id < CONFIG.layoutOrder.length) {
-                this.currentIndex = cfg_screen_id;
+            else if (cfgLength === 3) {
+                cfgVDesktop = cfg[1];
+                cfgLayout = cfg[2];
+            }
+            else if (cfgLength === 4) {
+                cfgActivity = cfg[1];
+                cfgVDesktop = cfg[2];
+                cfgLayout = cfg[3];
+            }
+            if (cfgLayout === undefined)
+                return false;
+            let cfgLayoutId = parseInt(cfgLayout);
+            if (isNaN(cfgLayoutId)) {
+                cfgLayoutId = layouts.indexOf(cfgLayout.toLowerCase());
+                cfgLayoutId =
+                    cfgLayoutId >= 0
+                        ? cfgLayoutId
+                        : layouts.indexOf(cfgLayout.toLowerCase() + "layout");
+            }
+            if ((outputName === cfgOutput || cfgOutput === "") &&
+                (desktopName === cfgVDesktop || cfgVDesktop === "") &&
+                (activity === cfgActivity || cfgActivity === "") &&
+                cfgLayoutId >= 0 &&
+                cfgLayoutId < CONFIG.layoutOrder.length) {
+                this.currentIndex = cfgLayoutId;
                 this.currentID = CONFIG.layoutOrder[this.currentIndex];
                 return true;
             }
@@ -1543,17 +1569,14 @@ class LayoutStore {
     }
     getEntry(key) {
         if (!this.store[key]) {
-            let i1 = key.indexOf("@");
-            let i2 = key.indexOf("#");
-            let key_without_activity = key.slice(0, i1 + 1) + key.slice(i2);
-            if (i1 > 0 && i2 > 0 && i2 - i1 > 1 && this.store[key_without_activity]) {
+            let [output_name, activity, desktop_name] = surfaceIdParse(key);
+            let key_without_activity = output_name + "@#" + desktop_name;
+            if (this.store[key_without_activity]) {
                 this.store[key] = this.store[key_without_activity];
                 delete this.store[key_without_activity];
             }
             else {
-                let output_name = key.slice(0, key.indexOf("@"));
-                let desktop_name = i2 !== -1 ? key.slice(i2 + 1) : undefined;
-                this.store[key] = new LayoutStoreEntry(output_name, desktop_name);
+                this.store[key] = new LayoutStoreEntry(output_name, desktop_name, activity);
             }
         }
         return this.store[key];
@@ -2036,6 +2059,7 @@ class ColumnsLayout {
         this.parts = [new ColumnLayout()];
         this._columns = [];
         this.direction = new windRose(CONFIG.columnsLayoutInitialAngle);
+        this.columnsConfiguration = null;
     }
     adjust(area, tiles, basis, delta) {
         let columnId = this.getColumnId(basis);
@@ -2071,6 +2095,8 @@ class ColumnsLayout {
         }
     }
     apply(ctx, tileables, area) {
+        if (this.columnsConfiguration === null)
+            this.columnsConfiguration = this.getDefaultConfig(ctx);
         this.arrangeTileables(ctx, tileables);
         if (this.columns.length === 0)
             return;
@@ -2202,6 +2228,30 @@ class ColumnsLayout {
             }
             tileableIds.add(tileable.id);
         });
+        if (this.columnsConfiguration !== null &&
+            tileableIds.size > 0 &&
+            newWindows.length > 0 &&
+            this.columnsConfiguration.length > this.columns.length) {
+            let new_columns_length = this.columnsConfiguration.length - this.columns.length >
+                newWindows.length
+                ? newWindows.length
+                : this.columnsConfiguration.length - this.columns.length;
+            for (let i = 0; i < new_columns_length; i++) {
+                let winId = newWindows.shift();
+                if (winId === undefined)
+                    continue;
+                let column = this.insertColumn(false);
+                column.windowIds.add(winId);
+            }
+            this.applyColumnsPosition();
+            if (this.columnsConfiguration[0] !== 0) {
+                let sumWeights = this.columnsConfiguration.reduce((a, b) => a + b, 0);
+                for (let i = 0; i < this.columns.length; i++) {
+                    this.columns[i].weight =
+                        (this.columnsConfiguration[i] / sumWeights) * this.columns.length;
+                }
+            }
+        }
         if (CONFIG.columnsBalanced) {
             for (var [_, id] of newWindows.entries()) {
                 let minSizeColumn = this.parts.reduce((prev, curr) => {
@@ -2441,6 +2491,43 @@ class ColumnsLayout {
         let column = new ColumnLayout();
         this.parts.splice(onTop ? 0 : this.parts.length, 0, column);
         return column;
+    }
+    getDefaultConfig(ctx) {
+        let returnValue = [];
+        let [outputName, activityId, vDesktopName] = surfaceIdParse(ctx.currentSurfaceId);
+        for (let conf of CONFIG.columnsLayerConf) {
+            if (!conf || typeof conf !== "string")
+                continue;
+            let conf_arr = conf.split(":").map((part) => part.trim());
+            if (conf_arr.length < 5) {
+                warning(`Columns conf: ${conf} has less then 5 elements`);
+                continue;
+            }
+            if ((outputName === conf_arr[0] || conf_arr[0] === "") &&
+                (activityId === conf_arr[1] || conf_arr[1] === "") &&
+                (vDesktopName === conf_arr[2] || conf_arr[2] === "")) {
+                for (let i = 3; i < conf_arr.length; i++) {
+                    let columnWeight = parseFloat(conf_arr[i]);
+                    if (isNaN(columnWeight)) {
+                        warning(`Columns conf:${conf_arr}: ${conf_arr[i]} is not a number.`);
+                        returnValue = [];
+                        break;
+                    }
+                    if (columnWeight === 0) {
+                        warning(`Columns conf:${conf_arr}: weight cannot be zero`);
+                        returnValue = [];
+                        break;
+                    }
+                    returnValue.push(columnWeight);
+                }
+                if (returnValue.length > 1 &&
+                    returnValue.every((el) => el === returnValue[0])) {
+                    returnValue.fill(0);
+                }
+                return returnValue;
+            }
+        }
+        return returnValue;
     }
 }
 ColumnsLayout.id = "Columns";
@@ -3260,6 +3347,9 @@ function debugObj(f) {
         console.log("[" + timestamp + "]", name + ": " + buf.join(" "));
     }
 }
+function warning(s) {
+    print(`Krohnkite warn: ${s}`);
+}
 function clip(value, min, max) {
     if (value < min)
         return min;
@@ -3307,6 +3397,14 @@ function overlap(min1, max1, min2, max2) {
     const max = Math.max;
     const dx = max(0, min(max1, max2) - max(min1, min2));
     return dx > 0;
+}
+function surfaceIdParse(id) {
+    let i1 = id.indexOf("@");
+    let i2 = id.indexOf("#");
+    let outputName = i1 !== -1 ? id.slice(0, i1) : id;
+    let activity = i1 !== -1 && i2 !== -1 ? id.slice(i1 + 1, i2) : "";
+    let desktopName = i2 !== -1 ? id.slice(i2 + 1) : "";
+    return [outputName, activity, desktopName];
 }
 function toQRect(rect) {
     return Qt.rect(rect.x, rect.y, rect.width, rect.height);
