@@ -10,3 +10,5 @@ SDL_VIDEODRIVER='wayland,x11'
 MOZ_ENABLE_WAYLAND=1
 # keyboard layout for gamescope
 XKB_DEFAULT_LAYOUT=ch
+# wayland for electron
+ELECTRON_OZONE_PLATFORM_HINT=auto
