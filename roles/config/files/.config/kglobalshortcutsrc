@@ -338,7 +338,7 @@ _launch=Ctrl+Alt+N
 _launch=Ctrl+Alt+T
 
 [services][org.kde.konsole.desktop]
-_launch=Ctrl+Alt+Return
+_launch=none
 
 [services][org.kde.krunner.desktop]
 RunClipboard=none
@@ -356,3 +356,7 @@ _launch=Print
 
 [services][org.mozilla.Thunderbird.desktop]
 _launch=Ctrl+Alt+B
+
+[yakuake]
+_k_friendly_name=Yakuake
+toggle-window-state=Ctrl+Alt+Return,F12,Yakuake einfahren/ausfahren
