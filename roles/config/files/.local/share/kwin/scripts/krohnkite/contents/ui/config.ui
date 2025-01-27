@@ -1079,6 +1079,80 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
+        <widget class="QGroupBox" name="GB_windowLayer">
+         <property name="title">
+          <string>Window Layer</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_9">
+          <item row="0" column="0" alignment="Qt::AlignmentFlag::AlignLeft">
+           <widget class="QLabel" name="label_13">
+            <property name="text">
+             <string>Tiled</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QComboBox" name="kcfg_tiledWindowsLayer">
+            <item>
+             <property name="text">
+              <string>Bottom</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Normal</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Above</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Orientation::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_14">
+            <property name="text">
+             <string>Float  </string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QComboBox" name="kcfg_floatedWindowsLayer">
+            <item>
+             <property name="text">
+              <string>Bottom</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Normal</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Above</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
         <widget class="QCheckBox" name="kcfg_maximizeSoleTile">
          <property name="toolTip">
           <string>&lt;p&gt;If there's only one window to be tiled, the window will be maximized with its borders removed to maximize usable screen space.&lt;/p&gt;&lt;p&gt;When using this option it's advisable to enable the &amp;quot;Allow resizing maximized windows from window edges&amp;quot; in &amp;quot;Breeze Window Decoration&amp;quot; settings, as this will often leave windows maximized, preventing borders from returning when windows are no longer sole otherwise.&lt;/p&gt;</string>
@@ -1095,13 +1169,6 @@
          </property>
          <property name="text">
           <string>Remove borders of tiled windows</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="kcfg_keepFloatAbove">
-         <property name="text">
-          <string>Keep floating windows above tiled windows</string>
          </property>
         </widget>
        </item>

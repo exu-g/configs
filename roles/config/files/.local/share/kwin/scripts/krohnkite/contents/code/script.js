@@ -71,12 +71,13 @@ class KWinConfig {
         this.columnsLayoutInitialAngle = KWIN.readConfig("columnsLayoutInitialRotationAngle", "0");
         this.columnsBalanced = KWIN.readConfig("columnsBalanced", false);
         this.columnsLayerConf = commaSeparate(KWIN.readConfig("columnsLayerConf", ""));
+        this.tiledWindowsLayer = getWindowLayer(KWIN.readConfig("tiledWindowsLayer", 0));
+        this.floatedWindowsLayer = getWindowLayer(KWIN.readConfig("floatedWindowsLayer", 1));
         this.monocleMaximize = KWIN.readConfig("monocleMaximize", true);
         this.monocleMinimizeRest = KWIN.readConfig("monocleMinimizeRest", false);
         this.stairReverse = KWIN.readConfig("stairReverse", false);
         this.adjustLayout = KWIN.readConfig("adjustLayout", true);
         this.adjustLayoutLive = KWIN.readConfig("adjustLayoutLive", true);
-        this.keepFloatAbove = KWIN.readConfig("keepFloatAbove", true);
         this.keepTilingOnDrag = KWIN.readConfig("keepTilingOnDrag", true);
         this.noTileBorder = KWIN.readConfig("noTileBorder", false);
         this.limitTileWidthRatio = 0;
@@ -389,6 +390,7 @@ class KWinDriver {
             }
         });
         this.connect(client.fullScreenChanged, () => this.control.onWindowChanged(this, window, "fullscreen=" + client.fullScreen));
+        this.connect(client.desktopsChanged, () => this.control.onDesktopsChanged(this, window));
         this.connect(client.interactiveMoveResizeStepped, (geometry) => {
             if (client.resize)
                 return;
@@ -561,31 +563,20 @@ class KWinWindow {
     get shouldIgnore() {
         if (this.window.deleted)
             return true;
-        const resourceClass = String(this.window.resourceClass);
-        const resourceName = String(this.window.resourceName);
-        const windowRole = String(this.window.windowRole);
         return (this.window.specialWindow ||
-            resourceClass === "plasmashell" ||
-            KWINCONFIG.ignoreClass.indexOf(resourceClass) >= 0 ||
-            KWINCONFIG.ignoreClass.indexOf(resourceName) >= 0 ||
-            matchWords(this.window.caption, KWINCONFIG.ignoreTitle) >= 0 ||
-            KWINCONFIG.ignoreRole.indexOf(windowRole) >= 0 ||
-            (KWINCONFIG.tileNothing && KWINCONFIG.tilingClass.indexOf(resourceClass) < 0));
+            this.window.resourceClass === "plasmashell" ||
+            this.isIgnoredByConfig);
     }
     get shouldFloat() {
-        const resourceClass = String(this.window.resourceClass);
-        const resourceName = String(this.window.resourceName);
         const moreOneDesktop = this.window.desktops.length !== 1;
-        return (moreOneDesktop ||
+        return (this.isFloatByConfig ||
+            moreOneDesktop ||
             this.window.onAllDesktops ||
             this.window.modal ||
             this.window.transient ||
             !this.window.resizeable ||
             (KWINCONFIG.floatUtility &&
-                (this.window.dialog || this.window.splash || this.window.utility)) ||
-            KWINCONFIG.floatingClass.indexOf(resourceClass) >= 0 ||
-            KWINCONFIG.floatingClass.indexOf(resourceName) >= 0 ||
-            matchWords(this.window.caption, KWINCONFIG.floatingTitle) >= 0);
+                (this.window.dialog || this.window.splash || this.window.utility)));
     }
     get minimized() {
         return this.window.minimized;
@@ -615,9 +606,23 @@ class KWinWindow {
         this.maximized = false;
         this.noBorderManaged = false;
         this.noBorderOriginal = window.noBorder;
+        this.isIgnoredByConfig =
+            this.isContain(KWINCONFIG.ignoreClass, window.resourceClass) ||
+                this.isContain(KWINCONFIG.ignoreClass, window.resourceName) ||
+                matchWords(this.window.caption, KWINCONFIG.ignoreTitle) >= 0 ||
+                this.isContain(KWINCONFIG.ignoreRole, window.windowRole) ||
+                (KWINCONFIG.tileNothing &&
+                    this.isContain(KWINCONFIG.tilingClass, window.resourceClass));
+        this.isFloatByConfig =
+            this.isContain(KWINCONFIG.floatingClass, window.resourceClass) ||
+                this.isContain(KWINCONFIG.floatingClass, window.resourceName) ||
+                matchWords(this.window.caption, KWINCONFIG.floatingTitle) >= 0;
     }
-    commit(geometry, noBorder, keepAbove) {
-        debugObj(() => ["KWinWindow#commit", { geometry, noBorder, keepAbove }]);
+    commit(geometry, noBorder, windowLayer) {
+        debugObj(() => [
+            "KWinWindow#commit",
+            { geometry, noBorder, keepAbove: windowLayer },
+        ]);
         if (this.window.move || this.window.resize)
             return;
         if (noBorder !== undefined) {
@@ -631,8 +636,16 @@ class KWinWindow {
                 this.window.noBorder = this.noBorderOriginal;
             this.noBorderManaged = noBorder;
         }
-        if (keepAbove !== undefined)
-            this.window.keepAbove = keepAbove;
+        if (windowLayer !== undefined) {
+            if (windowLayer === 2)
+                this.window.keepAbove = true;
+            else if (windowLayer === 0)
+                this.window.keepBelow = true;
+            else if (windowLayer === 1) {
+                this.window.keepAbove = false;
+                this.window.keepBelow = false;
+            }
+        }
         if (geometry !== undefined) {
             geometry = this.adjustGeometry(geometry);
             if (KWINCONFIG.preventProtrusion) {
@@ -665,6 +678,19 @@ class KWinWindow {
             (this.window.activities.length === 0 ||
                 this.window.activities.indexOf(ksrf.activity) !== -1) &&
             this.window.output === ksrf.output);
+    }
+    isContain(filterList, s) {
+        for (let filterWord of filterList) {
+            if (filterWord[0] === "[" && filterWord[filterWord.length - 1] === "]") {
+                if (s
+                    .toLowerCase()
+                    .includes(filterWord.toLowerCase().slice(1, filterWord.length - 1)))
+                    return true;
+            }
+            else if (s.toLowerCase() === filterWord.toLowerCase())
+                return true;
+        }
+        return false;
     }
     adjustGeometry(geometry) {
         let width = geometry.width;
@@ -806,17 +832,22 @@ class TestWindow {
         this.fullScreen = false;
         this.geometry = geometry || new Rect(0, 0, 100, 100);
         this.keepAbove = false;
+        this.keepBelow = false;
         this.maximized = false;
         this.minimized = false;
         this.noBorder = false;
     }
-    commit(geometry, noBorder, keepAbove) {
+    commit(geometry, noBorder, windowLayer) {
         if (geometry)
             this.geometry = geometry;
         if (noBorder !== undefined)
             this.noBorder = noBorder;
-        if (keepAbove !== undefined)
-            this.keepAbove = keepAbove;
+        if (windowLayer !== undefined) {
+            if (windowLayer === 2)
+                this.keepAbove = true;
+            else if (windowLayer === 0)
+                this.keepBelow = true;
+        }
     }
     focus() {
     }
@@ -962,6 +993,9 @@ class TilingController {
     }
     onWindowFocused(ctx, window) {
         window.timestamp = new Date().getTime();
+    }
+    onDesktopsChanged(ctx, window) {
+        window.state = WindowState.Undecided;
     }
     onShortcut(ctx, input, data) {
         if (CONFIG.directionalKeyMode === "dwm") {
@@ -1201,10 +1235,11 @@ class TilingEngine {
             },
         ]);
         visibles.forEach((window) => {
-            if (window.state === WindowState.Undecided)
+            if (window.state === WindowState.Undecided) {
                 window.state = window.shouldFloat
                     ? WindowState.Floating
                     : WindowState.Tiled;
+            }
         });
         const tileables = this.windows.getVisibleTileables(srf);
         if (CONFIG.maximizeSoleTile && tileables.length === 1) {
@@ -1691,27 +1726,27 @@ class WindowClass {
             case WindowState.Dragging:
                 break;
             case WindowState.NativeMaximized:
-                this.window.commit(undefined, undefined, false);
+                this.window.commit(undefined, undefined, undefined);
                 break;
             case WindowState.NativeFullscreen:
-                this.window.commit(undefined, undefined, undefined);
+                this.window.commit(undefined, undefined, 1);
                 break;
             case WindowState.Floating:
                 if (!this.shouldCommitFloat)
                     break;
-                this.window.commit(this.floatGeometry, false, CONFIG.keepFloatAbove);
+                this.window.commit(this.floatGeometry, false, CONFIG.floatedWindowsLayer);
                 this.shouldCommitFloat = false;
                 break;
             case WindowState.Maximized:
-                this.window.commit(this.geometry, true, false);
+                this.window.commit(this.geometry, true, 1);
                 break;
             case WindowState.Tiled:
-                this.window.commit(this.geometry, CONFIG.noTileBorder, false);
+                this.window.commit(this.geometry, CONFIG.noTileBorder, CONFIG.tiledWindowsLayer);
                 break;
             case WindowState.TiledAfloat:
                 if (!this.shouldCommitFloat)
                     break;
-                this.window.commit(this.floatGeometry, false, CONFIG.keepFloatAbove);
+                this.window.commit(this.floatGeometry, false, CONFIG.floatedWindowsLayer);
                 this.shouldCommitFloat = false;
                 break;
         }
@@ -1806,6 +1841,16 @@ class WindowStore {
     getVisibleTileables(srf) {
         return this.list.filter((win) => win.tileable && win.visible(srf));
     }
+}
+function getWindowLayer(index) {
+    if (index === 0)
+        return 0;
+    else if (index === 1)
+        return 1;
+    else if (index === 2)
+        return 2;
+    else
+        return 1;
 }
 class BTreeLayout {
     get description() {
