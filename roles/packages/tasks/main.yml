@@ -63,6 +63,7 @@
     - emacs-wayland
     - exfatprogs # exfat
     - f2fs-tools # f2fs
+    - fcitx5-im # virtual keyboard
     - fd
     - ffmpeg # multimedia
     - firefox # browser
