@@ -127,6 +127,8 @@ History Items[$e]=file:$HOME/Downloads/Tidal-ng,file:$HOME/Downloads/newMusic,fi
 
 [General]
 ColorSchemeHash=71557b36dcebc5d6df8bcf613f6ec605cd462c1d
+TerminalApplication=yakuake
+TerminalService=org.kde.yakuake.desktop
 XftAntialias=true
 XftHintStyle=hintslight
 XftSubPixel=rgb
