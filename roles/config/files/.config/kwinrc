@@ -64,7 +64,7 @@ tiles={"layoutDirection":"horizontal","tiles":[]}
 tiles={"layoutDirection":"horizontal","tiles":[]}
 
 [Wayland]
-InputMethod[$e]=/usr/share/applications/com.github.maliit.keyboard.desktop
+InputMethod[$e]=/usr/share/applications/fcitx5-wayland-launcher.desktop
 
 [Windows]
 ActiveMouseScreen=false

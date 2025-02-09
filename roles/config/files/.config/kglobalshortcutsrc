@@ -4,6 +4,7 @@ switch-to-activity-64664544-a062-48cf-a713-e4045da575e9=none,none,Zu Aktivität 
 
 [KDE Keyboard Layout Switcher]
 Switch keyboard layout to Deutsch (Schweiz)=none,none,Tastaturbelegung zu Deutsch (Schweiz) umschalten
+Switch keyboard layout to English (USA)=none,none,Tastaturbelegung zu English (USA) umschalten
 Switch to Last-Used Keyboard Layout=none,Meta+Alt+L,Auf zuletzt verwendete Tastaturbelegung umschalten
 Switch to Next Keyboard Layout=none,Meta+Alt+K,Auf nächste Tastaturbelegung umschalten
 _k_friendly_name=Umschaltung der Tastaturbelegung
