@@ -15,8 +15,13 @@ location=0
 plugin=org.kde.plasma.folder
 wallpaperplugin=org.kde.image
 
+[Containments][1][ConfigDialog]
+DialogHeight=540
+DialogWidth=720
+
 [Containments][1][Wallpaper][org.kde.image][General]
 Image=/home/exu/Bilder/Art/artstation/dk-lan/artstation_14224733_55806391_月半与鬼哭.jpg
+PreviewImage=/home/exu/Bilder/Art/artstation/dk-lan/artstation_14224733_55806391_月半与鬼哭.jpg
 SlidePaths=/usr/share/wallpapers/
 
 [Containments][2]
@@ -29,6 +34,10 @@ lastScreen=1
 location=0
 plugin=org.kde.plasma.folder
 wallpaperplugin=org.kde.image
+
+[Containments][2][ConfigDialog]
+DialogHeight=540
+DialogWidth=720
 
 [Containments][2][Wallpaper][org.kde.image][General]
 Image=/home/exu/Bilder/Art/artstation/dk-lan/artstation_14224733_55806391_月半与鬼哭.jpg
@@ -215,7 +224,7 @@ immutability=1
 plugin=org.kde.plasma.digitalclock
 
 [Containments][3][Applets][22][Configuration]
-PreloadWeight=60
+PreloadWeight=70
 popupHeight=450
 popupWidth=560
 
@@ -466,6 +475,9 @@ PreloadWeight=0
 immutability=1
 plugin=org.kde.plasma.networkmanagement
 
+[Containments][56][Applets][70][Configuration]
+PreloadWeight=94
+
 [Containments][56][Applets][71]
 immutability=1
 plugin=org.kde.plasma.battery
@@ -539,7 +551,7 @@ immutability=1
 plugin=org.kde.kdeconnect
 
 [Containments][9][Applets][14][Configuration]
-PreloadWeight=65
+PreloadWeight=90
 
 [Containments][9][Applets][15]
 immutability=1
@@ -554,7 +566,7 @@ immutability=1
 plugin=org.kde.kscreen
 
 [Containments][9][Applets][17][Configuration]
-PreloadWeight=65
+PreloadWeight=70
 
 [Containments][9][Applets][18]
 immutability=1
@@ -603,7 +615,7 @@ immutability=1
 plugin=org.kde.plasma.brightness
 
 [Containments][9][Applets][26][Configuration]
-PreloadWeight=7
+PreloadWeight=5
 
 [Containments][9][Applets][26][Configuration][ConfigDialog]
 DialogHeight=540
@@ -624,7 +636,7 @@ immutability=1
 plugin=org.kde.plasma.mediacontroller
 
 [Containments][9][Applets][28][Configuration]
-PreloadWeight=0
+PreloadWeight=67
 
 [Containments][9][ConfigDialog]
 DialogHeight=540
