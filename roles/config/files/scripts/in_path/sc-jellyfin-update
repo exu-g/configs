@@ -14,10 +14,10 @@ if ! ssh-add -T "${sshkeypath}.pub" &>/dev/null; then
 fi
 
 # NAS: video files
-rsync -uvr --progress --delete "/mnt/storage/MediaLibrary/"{Movies,Patreon,Shows} "/mnt/CH-OF-NAS01/"
+rsync -uvr --progress --delete "/mnt/storage/MediaLibrary/"{Movies,Patreon,Shows} "/mnt/CHOFNAS02/"
 
 # NAS: music
-rsync -uvrL --progress --delete "/home/exu/Musik" "/mnt/CH-OF-NAS01/"
+rsync -uvrL --progress --delete "/home/exu/Musik" "/mnt/CHOFNAS02/"
 
 # Server: music
 rsync -uvrL --progress --delete -e "ssh -i $sshkeypath -p $port" "/home/exu/Musik/" "${user}@${server}:/mnt/media/Musik/"
