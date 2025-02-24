@@ -188,6 +188,10 @@ Walk Through Windows of Current Application Alternative (Reverse)=none,,Alternat
 Window Above Other Windows=none,,Fenster im Vordergrund halten
 Window Below Other Windows=none,,Fenster im Hintergrund halten
 Window Close=Meta+Q,Alt+F4,Fenster schließen
+Window Custom Quick Tile Bottom=none,,Custom Quick Tile Window to the Bottom
+Window Custom Quick Tile Left=none,,Custom Quick Tile Window to the Left
+Window Custom Quick Tile Right=none,,Custom Quick Tile Window to the Right
+Window Custom Quick Tile Top=none,,Custom Quick Tile Window to the Top
 Window Fullscreen=Meta+Shift+F,,Fenster auf Vollbildgröße
 Window Grow Horizontal=none,,Fenster waagerecht maximieren
 Window Grow Vertical=none,,Fenster senkrecht maximieren
@@ -259,6 +263,7 @@ Window to Screen 5=none,,Fenster auf Bildschirm 5 verschieben
 Window to Screen 6=none,,Fenster auf Bildschirm 6 verschieben
 Window to Screen 7=none,,Fenster auf Bildschirm 7 verschieben
 _k_friendly_name=KWin
+disableInputCapture=Meta+Shift+Esc,Meta+Shift+Esc,Disable Active Input Capture
 view_actual_size=none,Meta+0,Auf Originalgröße zoomen
 view_zoom_in=none,Meta++\tMeta+=,Vergrößern
 view_zoom_out=none,Meta+-,Verkleinern
@@ -294,7 +299,7 @@ powerProfile=Battery,Battery\tMeta+B,Energieprofil wechseln
 _k_friendly_name=plasmashell
 activate application launcher=none,Meta\tAlt+F1,Anwendungsstarter aktivieren
 activate task manager entry 1=none,Meta+1,Fensterleisteneintrag 1 aktivieren
-activate task manager entry 10=none,Meta+0,Fensterleisteneintrag 10 aktivieren
+activate task manager entry 10=none,,Fensterleisteneintrag 10 aktivieren
 activate task manager entry 2=none,Meta+2,Fensterleisteneintrag 2 aktivieren
 activate task manager entry 3=none,Meta+3,Fensterleisteneintrag 3 aktivieren
 activate task manager entry 4=none,Meta+4,Fensterleisteneintrag 4 aktivieren
@@ -311,7 +316,7 @@ cyclePrevAction=none,,Vorheriges Element im Verlauf
 manage activities=none,Meta+Q,Aktivitätenwechsler anzeigen
 next activity=none,none,Zwischen Aktivitäten wechseln
 previous activity=none,none,Zwischen Aktivitäten wechseln (Gegenrichtung)
-repeat_action=none,Meta+Ctrl+R,Aktionen der aktuellen Zwischenablage manuell aufrufen
+repeat_action=none,,Aktionen der aktuellen Zwischenablage manuell aufrufen
 show dashboard=none,Ctrl+F12,Arbeitsfläche anzeigen
 show-barcode=none,,Strichcode anzeigen …
 show-on-mouse-pos=Meta+V,Meta+V,Elemente der Zwischenablage an Mausposition anzeigen
@@ -320,7 +325,7 @@ switch to next activity=none,,Zur nächsten Aktivität wechseln
 switch to previous activity=none,,Zur vorherigen Aktivität wechseln
 toggle do not disturb=none,,Nicht stören umschalten
 
-[services][com.github.iwalton3.jellyfin-media-player.desktop]
+[services][cafe.avery.Delfin.desktop]
 _launch=Ctrl+Alt+J
 
 [services][discord-wayland.desktop]

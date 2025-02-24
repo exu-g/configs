@@ -27,3 +27,6 @@ ToolBarsMovable=Disabled
 
 [PreviewSettings]
 Plugins=appimagethumbnail,audiothumbnail,windowsexethumbnail,imagethumbnail,blenderthumbnail,comicbookthumbnail,cursorthumbnail,djvuthumbnail,ebookthumbnail,exrthumbnail,itinerarythumbnail,pothumbnail,jpegthumbnail,kraorathumbnail,windowsimagethumbnail,mltpreview,mobithumbnail,opendocumentthumbnail,directorythumbnail,palathumbcreator,gsthumbnail,quithumbnail,rawthumbnail,fontthumbnail,svgthumbnail,ffmpegthumbs,webarchivethumbnail
+
+[Search]
+Location=Everywhere
