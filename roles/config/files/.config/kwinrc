@@ -2,7 +2,7 @@
 update_info=kwin.upd:replace-scalein-with-scale,kwin.upd:port-minimizeanimation-effect-to-js,kwin.upd:port-scale-effect-to-js,kwin.upd:port-dimscreen-effect-to-js,kwin.upd:auto-bordersize,kwin.upd:animation-speed,kwin.upd:desktop-grid-click-behavior,kwin.upd:no-swap-encourage,kwin.upd:make-translucency-effect-disabled-by-default,kwin.upd:remove-flip-switch-effect,kwin.upd:remove-cover-switch-effect,kwin.upd:remove-cubeslide-effect,kwin.upd:remove-xrender-backend,kwin.upd:enable-scale-effect-by-default,kwin.upd:overview-group-plugin-id,kwin.upd:animation-speed-cleanup,kwin.upd:replace-cascaded-zerocornered
 
 [Activities][LastVirtualDesktop]
-64664544-a062-48cf-a713-e4045da575e9=7ee59aa2-5b40-453c-a852-224cbf0d3a0a
+2efc56f1-09fa-4490-9706-4dcde3912089=7ee59aa2-5b40-453c-a852-224cbf0d3a0a
 
 [Desktops]
 Id_1=7ee59aa2-5b40-453c-a852-224cbf0d3a0a
@@ -51,20 +51,53 @@ MaximizeSingle=true
 [Tiling]
 padding=4
 
+[Tiling][1c434f33-1172-5e74-9a0a-fce005bd573e]
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
+
+[Tiling][2c4348c4-d111-55dc-b2c8-e392a5346248]
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
+
 [Tiling][6b9d9aad-b0cd-59e4-afd6-71d9162da40c]
 tiles={"layoutDirection":"horizontal","tiles":[]}
+
+[Tiling][77e79f6e-ceeb-5a40-835c-9d946328830f]
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
 
 [Tiling][8184412f-6ae7-547d-8ddd-9980d54149ae]
 tiles={"layoutDirection":"horizontal","tiles":[]}
 
+[Tiling][8728f097-40bc-5b20-b2a6-ecd6ed84e6a6]
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
+
+[Tiling][9145b1ad-de9e-5ef5-b12e-8605b510510c]
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
+
 [Tiling][92e842d7-5928-5c43-884a-4912e7cc82ed]
 tiles={"layoutDirection":"horizontal","tiles":[]}
+
+[Tiling][9f2dd446-11f2-5fd6-a440-b82ef4323d9b]
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
+
+[Tiling][a3649ec7-3d80-56ee-88e7-6971526587b7]
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
 
 [Tiling][ab7a9e6e-140d-5ff2-96fe-330f2da73d32]
 tiles={"layoutDirection":"horizontal","tiles":[]}
 
+[Tiling][aef9aa04-c35d-547f-a257-1c7134841c68]
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
+
 [Tiling][b65f2134-780c-59b0-baae-322e8d76e8dd]
 tiles={"layoutDirection":"horizontal","tiles":[]}
+
+[Tiling][bc2d6c39-643c-5d24-a56a-09de21cde566]
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
+
+[Tiling][cc6062f3-3765-52a6-bb4b-6685e57896c9]
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
+
+[Tiling][f5c0894a-16f4-5e7b-af9e-06087aa1e935]
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
 
 [Wayland]
 InputMethod[$e]=/usr/share/applications/fcitx5-wayland-launcher.desktop
@@ -79,7 +112,7 @@ RollOverDesktops=true
 SeparateScreenFocus=true
 
 [Xwayland]
-Scale=1.25
+Scale=2.5
 
 [org.kde.kdecoration2]
 library=org.kde.kwin.aurorae
