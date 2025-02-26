@@ -18,46 +18,25 @@ immutability=1
 plugin=org.kde.plasma.systemtray
 
 [Containments][106][Applets][107][Configuration]
+PreloadWeight=60
 SystrayContainmentId=108
 
-[Containments][106][Applets][125]
+[Containments][106][Applets][144]
 immutability=1
-plugin=org.kde.plasma.digitalclock
+plugin=org.kde.plasma.icontasks
 
-[Containments][106][Applets][125][Configuration]
-PreloadWeight=100
-popupHeight=450
-popupWidth=560
+[Containments][106][Applets][144][Configuration][ConfigDialog]
+DialogHeight=540
+DialogWidth=720
 
-[Containments][106][Applets][125][Configuration][Appearance]
-fontWeight=400
-
-[Containments][106][Applets][126]
-immutability=1
-plugin=org.kde.plasma.panelspacer
-
-[Containments][106][Applets][126][Configuration][General]
-expanding=false
-length=100
-
-[Containments][106][Applets][127]
-immutability=1
-plugin=org.kde.plasma.panelspacer
-
-[Containments][106][Applets][127][Configuration][General]
-expanding=false
-length=10
-
-[Containments][106][Applets][128]
-immutability=1
-plugin=org.kde.plasma.panelspacer
-
-[Containments][106][Applets][128][Configuration][General]
-expanding=false
-length=10
+[Containments][106][Applets][144][Configuration][General]
+groupingStrategy=0
+launchers=
+showOnlyCurrentScreen=true
+sortingStrategy=2
 
 [Containments][106][General]
-AppletOrder=127;107;126;125;128
+AppletOrder=144;107
 
 [Containments][108]
 activityId=
@@ -75,7 +54,7 @@ immutability=1
 plugin=org.kde.kdeconnect
 
 [Containments][108][Applets][109][Configuration]
-PreloadWeight=90
+PreloadWeight=100
 
 [Containments][108][Applets][110]
 immutability=1
@@ -144,7 +123,7 @@ immutability=1
 plugin=org.kde.plasma.bluetooth
 
 [Containments][108][Applets][121][Configuration]
-PreloadWeight=0
+PreloadWeight=5
 
 [Containments][108][Applets][122]
 immutability=1
@@ -161,7 +140,7 @@ immutability=1
 plugin=org.kde.plasma.brightness
 
 [Containments][108][Applets][123][Configuration]
-PreloadWeight=10
+PreloadWeight=7
 
 [Containments][108][Applets][123][Configuration][ConfigDialog]
 DialogHeight=540
@@ -216,29 +195,90 @@ displayedText=Number
 showOnlyCurrentScreen=true
 wrapPage=true
 
-[Containments][129][Applets][131]
-immutability=1
-plugin=org.kde.plasma.panelspacer
-
-[Containments][129][Applets][131][Configuration][General]
-expanding=false
-length=10
-
-[Containments][129][Applets][132]
-immutability=1
-plugin=org.kde.plasma.panelspacer
-
-[Containments][129][Applets][132][Configuration][General]
-expanding=false
-length=10
-
-[Containments][129][Applets][94]
-immutability=1
-plugin=org.kde.plasma.pager
-transient=true
-
 [Containments][129][General]
-AppletOrder=132;130;131
+AppletOrder=130
+
+[Containments][133]
+ItemGeometries-2048x1152=
+ItemGeometriesHorizontal=
+activityId=64664544-a062-48cf-a713-e4045da575e9
+formfactor=0
+immutability=1
+lastScreen=0
+location=0
+plugin=org.kde.plasma.folder
+wallpaperplugin=org.kde.image
+
+[Containments][133][ConfigDialog]
+DialogHeight=540
+DialogWidth=720
+
+[Containments][133][General]
+positions={"2048x1152":[]}
+
+[Containments][133][Wallpaper][org.kde.image][General]
+Image=/home/exu/Bilder/Art/artstation/dk-lan/artstation_14224733_55806391_月半与鬼哭.jpg
+
+[Containments][135]
+ItemGeometries-2048x1152=
+ItemGeometries-2226x1252=
+ItemGeometriesHorizontal=
+activityId=64664544-a062-48cf-a713-e4045da575e9
+formfactor=0
+immutability=1
+lastScreen=1
+location=0
+plugin=org.kde.plasma.folder
+wallpaperplugin=org.kde.image
+
+[Containments][135][ConfigDialog]
+DialogHeight=540
+DialogWidth=720
+
+[Containments][135][General]
+positions={"2048x1152":[]}
+
+[Containments][135][Wallpaper][org.kde.image][General]
+Image=/home/exu/Bilder/Art/artstation/dk-lan/artstation_14224733_55806391_月半与鬼哭.jpg
+PreviewImage=/home/exu/Bilder/Art/artstation/dk-lan/artstation_14224733_55806391_月半与鬼哭.jpg
+SlidePaths=/usr/share/wallpapers/
+
+[Containments][136]
+activityId=
+formfactor=3
+immutability=1
+lastScreen=1
+location=6
+plugin=org.kde.panel
+wallpaperplugin=org.kde.image
+
+[Containments][136][Applets][142]
+immutability=1
+plugin=org.kde.plasma.digitalclock
+
+[Containments][136][Applets][142][Configuration]
+PreloadWeight=55
+popupHeight=450
+popupWidth=560
+
+[Containments][136][General]
+AppletOrder=142
+
+[Containments][138]
+activityId=
+formfactor=3
+immutability=1
+lastScreen=0
+location=6
+plugin=org.kde.panel
+wallpaperplugin=org.kde.image
+
+[Containments][138][Applets][140]
+immutability=1
+plugin=org.kde.plasma.digitalclock
+
+[Containments][138][General]
+AppletOrder=140
 
 [Containments][3]
 activityId=
@@ -249,41 +289,19 @@ location=4
 plugin=org.kde.panel
 wallpaperplugin=org.kde.image
 
-[Containments][3][Applets][100]
+[Containments][3][Applets][143]
 immutability=1
-plugin=org.kde.plasma.panelspacer
+plugin=org.kde.plasma.icontasks
 
-[Containments][3][Applets][100][Configuration][General]
-expanding=false
-length=100
+[Containments][3][Applets][143][Configuration][ConfigDialog]
+DialogHeight=540
+DialogWidth=720
 
-[Containments][3][Applets][102]
-immutability=1
-plugin=org.kde.plasma.panelspacer
-
-[Containments][3][Applets][102][Configuration][General]
-expanding=false
-length=10
-
-[Containments][3][Applets][103]
-immutability=1
-plugin=org.kde.plasma.panelspacer
-
-[Containments][3][Applets][103][Configuration][General]
-expanding=false
-length=10
-
-[Containments][3][Applets][22]
-immutability=1
-plugin=org.kde.plasma.digitalclock
-
-[Containments][3][Applets][22][Configuration]
-PreloadWeight=100
-popupHeight=450
-popupWidth=560
-
-[Containments][3][Applets][22][Configuration][Appearance]
-fontWeight=400
+[Containments][3][Applets][143][Configuration][General]
+groupingStrategy=0
+launchers=
+showOnlyCurrentScreen=true
+sortingStrategy=2
 
 [Containments][3][Applets][8]
 immutability=1
@@ -294,26 +312,7 @@ PreloadWeight=100
 SystrayContainmentId=9
 
 [Containments][3][General]
-AppletOrder=102;8;100;22;103
-
-[Containments][84]
-ItemGeometries-1536x864=
-ItemGeometries-2048x1152=
-ItemGeometries-2991x1252=
-ItemGeometriesHorizontal=
-activityId=2efc56f1-09fa-4490-9706-4dcde3912089
-formfactor=0
-immutability=1
-lastScreen=0
-location=0
-plugin=org.kde.plasma.folder
-wallpaperplugin=org.kde.image
-
-[Containments][84][General]
-positions={"1536x864":[],"2048x1152":[]}
-
-[Containments][84][Wallpaper][org.kde.image][General]
-Image=/home/mfi/Bilder/Art/artstation/dk-lan/artstation_14224733_55806391_月半与鬼哭.jpg
+AppletOrder=143;8
 
 [Containments][9]
 activityId=
@@ -353,7 +352,7 @@ immutability=1
 plugin=org.kde.kdeconnect
 
 [Containments][9][Applets][14][Configuration]
-PreloadWeight=90
+PreloadWeight=100
 
 [Containments][9][Applets][15]
 immutability=1
@@ -368,7 +367,7 @@ immutability=1
 plugin=org.kde.kscreen
 
 [Containments][9][Applets][17][Configuration]
-PreloadWeight=70
+PreloadWeight=75
 
 [Containments][9][Applets][18]
 immutability=1
@@ -400,7 +399,7 @@ immutability=1
 plugin=org.kde.plasma.bluetooth
 
 [Containments][9][Applets][24][Configuration]
-PreloadWeight=0
+PreloadWeight=30
 
 [Containments][9][Applets][25]
 immutability=1
@@ -417,7 +416,7 @@ immutability=1
 plugin=org.kde.plasma.brightness
 
 [Containments][9][Applets][26][Configuration]
-PreloadWeight=10
+PreloadWeight=47
 
 [Containments][9][Applets][26][Configuration][ConfigDialog]
 DialogHeight=540
@@ -450,35 +449,6 @@ hiddenItems=firewall-applet,KMix,Discover-Benachrichtigungen_org.kde.DiscoverNot
 knownItems=org.kde.plasma.battery,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.plasma.manage-inputmethod,org.kde.plasma.mediacontroller,org.kde.plasma.notifications,org.kde.kdeconnect,org.kde.plasma.brightness,org.kde.plasma.cameraindicator,org.kde.plasma.bluetooth,org.kde.plasma.keyboardindicator,org.kde.kscreen,org.kde.plasma.keyboardlayout,org.kde.plasma.networkmanagement,org.kde.plasma.volume,org.kde.plasma.vault,org.kde.plasma.printmanager
 shownItems=org.kde.plasma.networkmanagement,Nextcloud,org.kde.plasma.battery,org.kde.plasma.volume
 
-[Containments][91]
-ItemGeometries-1536x864=
-ItemGeometries-1969x1108=
-ItemGeometries-2048x1152=
-ItemGeometries-2991x1252=
-ItemGeometriesHorizontal=
-activityId=2efc56f1-09fa-4490-9706-4dcde3912089
-formfactor=0
-immutability=1
-lastScreen=1
-location=0
-plugin=org.kde.plasma.folder
-wallpaperplugin=org.kde.image
-
-[Containments][91][General]
-positions={"1969x1108":[],"2048x1152":[],"2991x1252":[]}
-
-[Containments][92]
-activityId=2efc56f1-09fa-4490-9706-4dcde3912089
-formfactor=0
-immutability=1
-lastScreen=2
-location=0
-plugin=org.kde.plasma.folder
-wallpaperplugin=org.kde.image
-
-[Containments][92][General]
-positions={"2048x1152":[]}
-
 [Containments][93]
 activityId=
 formfactor=2
@@ -487,27 +457,6 @@ lastScreen=0
 location=3
 plugin=org.kde.panel
 wallpaperplugin=org.kde.image
-
-[Containments][93][Applets][104]
-immutability=1
-plugin=org.kde.plasma.panelspacer
-
-[Containments][93][Applets][104][Configuration][General]
-expanding=false
-length=10
-
-[Containments][93][Applets][105]
-immutability=1
-plugin=org.kde.plasma.panelspacer
-
-[Containments][93][Applets][105][Configuration][General]
-expanding=false
-length=10
-
-[Containments][93][Applets][94]
-immutability=1
-plugin=org.kde.plasma.pager
-transient=true
 
 [Containments][93][Applets][99]
 immutability=1
@@ -523,7 +472,10 @@ showOnlyCurrentScreen=true
 wrapPage=true
 
 [Containments][93][General]
-AppletOrder=105;99;104
+AppletOrder=99
+
+[Containments][93][Shortcuts]
+global=
 
 [ScreenMapping]
 itemsOnDisabledScreens=

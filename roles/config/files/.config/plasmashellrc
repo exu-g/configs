@@ -19,6 +19,25 @@ panelVisibility=1
 [PlasmaViews][Panel 129][Defaults]
 thickness=32
 
+[PlasmaViews][Panel 136]
+alignment=2
+floating=1
+panelLengthMode=1
+panelVisibility=3
+
+[PlasmaViews][Panel 136][Defaults]
+thickness=44
+
+[PlasmaViews][Panel 138]
+alignment=2
+floating=1
+panelLengthMode=1
+panelOpacity=0
+panelVisibility=3
+
+[PlasmaViews][Panel 138][Defaults]
+thickness=44
+
 [PlasmaViews][Panel 29]
 floating=1
 panelLengthMode=0
