@@ -28,6 +28,7 @@ BorderActivate=9
 [NightColor]
 LatitudeAuto=47.64
 LongitudeAuto=9.13
+Mode=Constant
 
 [Plugins]
 krohnkiteEnabled=true

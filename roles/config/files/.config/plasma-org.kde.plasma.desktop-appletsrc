@@ -277,6 +277,15 @@ wallpaperplugin=org.kde.image
 immutability=1
 plugin=org.kde.plasma.digitalclock
 
+[Containments][138][Applets][140][Configuration]
+PreloadWeight=55
+popupHeight=450
+popupWidth=560
+
+[Containments][138][Applets][140][Configuration][ConfigDialog]
+DialogHeight=540
+DialogWidth=720
+
 [Containments][138][General]
 AppletOrder=140
 
@@ -367,7 +376,7 @@ immutability=1
 plugin=org.kde.kscreen
 
 [Containments][9][Applets][17][Configuration]
-PreloadWeight=75
+PreloadWeight=80
 
 [Containments][9][Applets][18]
 immutability=1
@@ -381,6 +390,7 @@ plugin=org.kde.plasma.volume
 PreloadWeight=100
 
 [Containments][9][Applets][19][Configuration][General]
+currentTab=streams
 migrated=true
 
 [Containments][9][Applets][20]
@@ -399,7 +409,7 @@ immutability=1
 plugin=org.kde.plasma.bluetooth
 
 [Containments][9][Applets][24][Configuration]
-PreloadWeight=30
+PreloadWeight=35
 
 [Containments][9][Applets][25]
 immutability=1
@@ -416,7 +426,7 @@ immutability=1
 plugin=org.kde.plasma.brightness
 
 [Containments][9][Applets][26][Configuration]
-PreloadWeight=47
+PreloadWeight=67
 
 [Containments][9][Applets][26][Configuration][ConfigDialog]
 DialogHeight=540
@@ -427,7 +437,7 @@ immutability=1
 plugin=org.kde.plasma.battery
 
 [Containments][9][Applets][27][Configuration]
-PreloadWeight=0
+PreloadWeight=20
 
 [Containments][9][Applets][27][Configuration][General]
 showPercentage=true
