@@ -3,6 +3,7 @@ update_info=kwin.upd:replace-scalein-with-scale,kwin.upd:port-minimizeanimation-
 
 [Activities][LastVirtualDesktop]
 2efc56f1-09fa-4490-9706-4dcde3912089=7ee59aa2-5b40-453c-a852-224cbf0d3a0a
+64664544-a062-48cf-a713-e4045da575e9=7ee59aa2-5b40-453c-a852-224cbf0d3a0a
 
 [Desktops]
 Id_1=7ee59aa2-5b40-453c-a852-224cbf0d3a0a
@@ -38,6 +39,7 @@ enableBTreeLayout=true
 enableColumnsLayout=false
 enableSpiralLayout=false
 enableSpreadLayout=false
+enableStairLayout=false
 enableThreeColumnLayout=false
 enableTileLayout=false
 ignoreClass=krunner,yakuake,spectacle,kded5,xwaylandvideobridge,plasmashell,ksplashqml,org.kde.plasmashell,org.kde.polkit-kde-authentication-agent-1,org.kde.kruler,kcalc,gamescope
@@ -50,6 +52,9 @@ MaximizeSingle=true
 
 [Tiling]
 padding=4
+
+[Tiling][0d06c29b-2af0-5f4a-9136-6459b703b945]
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
 
 [Tiling][1c434f33-1172-5e74-9a0a-fce005bd573e]
 tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
@@ -104,7 +109,7 @@ InputMethod[$e]=/usr/share/applications/fcitx5-wayland-launcher.desktop
 
 [Windows]
 ActiveMouseScreen=false
-DelayFocusInterval=0
+DelayFocusInterval=100
 FocusPolicy=FocusFollowsMouse
 FocusStealingPreventionLevel=0
 NextFocusPrefersMouse=true
@@ -112,7 +117,7 @@ RollOverDesktops=true
 SeparateScreenFocus=true
 
 [Xwayland]
-Scale=2.5
+Scale=1.25
 
 [org.kde.kdecoration2]
 library=org.kde.kwin.aurorae
