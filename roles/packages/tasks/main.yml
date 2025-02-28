@@ -183,7 +183,6 @@
     name: "{{ item }}"
   loop:
     - amd-ucode # microcode
-    - discord
     - edk2-ovmf # virtualization
     - intel-media-driver # VAAPI
     - intel-ucode # microcode
@@ -194,7 +193,6 @@
     - linux # kernel
     - linux-firmware # kernel
     - linux-headers # kernel
-    - obs-studio # recording
     - pandoc
     - qemu-full # virtualization
     - reflector # mirrors
@@ -234,6 +232,8 @@
     state: present
   loop:
     - ./com.mikeasoft.pied.flatpak # local package
+    - com.discordapp.Discord # chat
+    - com.obsproject.Studio # recording
     - io.github.TransmissionRemoteGtk # torrents
     - io.kopia.KopiaUI # backup
     - org.freedesktop.Piper # mouse
