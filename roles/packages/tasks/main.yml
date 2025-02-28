@@ -35,8 +35,6 @@
     name: "{{ item }}"
     state: present
   loop:
-    #- gnome-keyring
-    #- hdparm
     #- libaacs
     #- libbluray
     #- libcdio
@@ -44,7 +42,6 @@
     #- libdvdnav
     #- libdvdread
     #- libsecret
-    #- seahorse
     - aardvark-dns # containers
     - ansible # iac
     - base-devel # devel stuff
@@ -53,14 +50,14 @@
     - bottom # htop alternative
     - btrfs-progs # btrfs
     - buildah # containers
-    - clang
-    - cmake
-    - composer
+    - clang # C/C++
+    - cmake # code builder
+    - composer # PHP package manager
     - dnsmasq # virtualization
     - dosfstools # fat
     - e2fsprogs # ext4
     - easyeffects # audio effects
-    - emacs-wayland
+    - emacs-wayland # text editor & IDE
     - exfatprogs # exfat
     - f2fs-tools # f2fs
     - fcitx5-im # virtual keyboard
@@ -91,8 +88,6 @@
     - kid3 # music metadata
     - krita
     - languagetool
-    - libreoffice-fresh # office
-    - libreoffice-fresh-de # office
     - lldb
     - lldb-mi
     - lutris # games
@@ -122,7 +117,7 @@
     - phonon-qt6-vlc # multimedia
     - php # code
     - pkgstats
-    - plasma-meta
+    - plasma-meta # KDE plasma package
     - podman # containers
     - podman-compose # containers
     - power-profiles-daemon # power management
@@ -136,7 +131,6 @@
     - python-pyflakes # code
     - python-pytest # code
     - rebuild-detector # packages
-    - restic # backup
     - ripgrep # doom emacs
     - rsync # file sync
     - ruby-sass # code
@@ -151,10 +145,7 @@
     - tesseract-data-deu
     - tesseract-data-eng
     - texlive-core
-    - thunderbird # email
-    - tidy
     - traceroute # network
-    - transmission-remote-gtk # torrent
     - ttf-fira-code # fonts
     - ttf-fira-sans # fonts
     - ttf-roboto-mono # fonts
@@ -205,7 +196,6 @@
     - linux-headers # kernel
     - obs-studio # recording
     - pandoc
-    - piper # mouse
     - qemu-full # virtualization
     - reflector # mirrors
     - shellcheck # code
@@ -243,7 +233,12 @@
     name: "{{ item }}"
     state: present
   loop:
-    - ./com.mikeasoft.pied.flatpak
+    - ./com.mikeasoft.pied.flatpak # local package
+    - io.github.TransmissionRemoteGtk # torrents
+    - io.kopia.KopiaUI # backup
+    - org.freedesktop.Piper # mouse
+    - org.libreoffice.LibreOffice # office suite
+    - org.mozilla.Thunderbird # email
   tags: packages
   become: true
 
