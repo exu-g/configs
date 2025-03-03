@@ -110,12 +110,17 @@
 ;; (setq-hook! 'php-mode-hook +format-with :none)
 
 ;; auto-virtualenv package configuration
+;; (use-package! auto-virtualenv
+;;   :init
+;;   :config
+;;   (add-hook! 'python-mode-hook 'auto-virtualenv-set-virtualenv)
+;;   (add-hook! 'projectile-after-switch-project-hook 'auto-virtualenv-set-virtualenv)  ;; If using projectile
+;;   )
+
 (use-package! auto-virtualenv
-  :init
   :config
-  (add-hook! 'python-mode-hook 'auto-virtualenv-set-virtualenv)
-  (add-hook! 'projectile-after-switch-project-hook 'auto-virtualenv-set-virtualenv)  ;; If using projectile
-  )
+  (setq auto-virtualenv-verbose t)
+  (auto-virtualenv-setup))
 
 ;; python debugging
 ;; (after! dap-mode
@@ -170,9 +175,9 @@
 (add-hook 'corfu-mode-hook
           (lambda ()
             ;; Settings only for Corfu
-            (setq-local completion-styles '(basic)
-                        completion-category-overrides nil
-                        completion-category-defaults nil)
+            ;; (setq-local completion-styles '(basic orderless)
+            ;;             completion-category-overrides nil
+            ;;             completion-category-defaults nil)
             ;; Cape (used by corfu) configuration
             (setq-local completion-at-point-functions
                         (mapcar #'cape-company-to-capf
