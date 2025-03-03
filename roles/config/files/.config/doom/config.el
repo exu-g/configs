@@ -5,24 +5,29 @@
 
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
-;; clients, file templates and snippets.
+;; clients, file templates and snippets. It is optional.
 (setq user-full-name "exu"
       user-mail-address "mrc@frm01.net")
 
-;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
-;; are the three important ones:
+;; Doom exposes five (optional) variables for controlling fonts in Doom:
 ;;
-;; + `doom-font'
-;; + `doom-variable-pitch-font'
-;; + `doom-big-font' -- used for `doom-big-font-mode'; use this for
+;; - `doom-font' -- the primary font to use
+;; - `doom-variable-pitch-font' -- a non-monospace font (where applicable)
+;; - `doom-big-font' -- used for `doom-big-font-mode'; use this for
 ;;   presentations or streaming.
+;; - `doom-symbol-font' -- for symbols
+;; - `doom-serif-font' -- for the `fixed-pitch-serif' face
 ;;
-;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
-;; font string. You generally only need these two:
-;; (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
-;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
+;; See 'C-h v doom-font' for documentation and more examples of what they
+;; accept. For example:
+;;
 (setq doom-font (font-spec :family "monospace" :size 11.0 :weight 'regular)
       doom-variable-pitch-font (font-spec :family "sans" :size 12.0))
+;;
+;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
+;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
+;; refresh your font settings. If Emacs still can't find your font, it likely
+;; wasn't installed correctly. Font issues are rarely Doom issues!
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -30,16 +35,29 @@
 (setq catppuccin-flavor 'macchiato)
 (setq doom-theme 'catppuccin)
 
-;; If you use `org' and don't want your org files in the default location below,
-;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
-
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-;;(setq display-line-numbers-type 'relative)
+(setq display-line-numbers-type t)
+
+;; If you use `org' and don't want your org files in the default location below,
+;; change `org-directory'. It must be set before org loads!
+;;(setq org-directory "~/org/")
 
 
-;; Here are some additional functions/macros that could help you configure Doom:
+;; Whenever you reconfigure a package, make sure to wrap your config in an
+;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
+;;
+;;   (after! PACKAGE
+;;     (setq x y))
+;;
+;; The exceptions to this rule:
+;;
+;;   - Setting file/directory variables (like `org-directory')
+;;   - Setting variables which explicitly tell you to set them before their
+;;     package is loaded (see 'C-h v VARIABLE' to look up their documentation).
+;;   - Setting doom variables (which start with 'doom-' or '+').
+;;
+;; Here are some additional functions/macros that will help you configure Doom.
 ;;
 ;; - `load!' for loading external *.el files relative to this one
 ;; - `use-package!' for configuring packages
@@ -52,19 +70,14 @@
 ;; To get information about any of these functions/macros, move the cursor over
 ;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
 ;; This will open documentation for it, including demos of how they are used.
+;; Alternatively, use `C-h o' to look up a symbol (functions, variables, faces,
+;; etc).
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-;; Enables the minimap by default. Use SPC-t-m to toggle
-;;(minimap-mode 1)
-
 (setq
  projectile-project-search-path '("~/GitProjects/"))
-
-;; autoload magit
-;;(require 'magit-gitflow)
-;;(add-hook 'magit-mode-hook 'turn-on-magit-gitflow)
 
 (after! hl-todo
   (setq hl-todo-keyword-faces
@@ -76,9 +89,6 @@
           ("REVIEW"         . "#3DADC6")
           ("OHGODTHEHORROR"   . "#FC7702"))))
 
-;; Less delay for company to show up
-(setq company-idle-delay 0)
-
 ;; Set tab width to 4 spaces
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
@@ -87,17 +97,17 @@
 ;; enable case insensitive matching for 'auto-mode-alist'
 ;; see https://www.gnu.org/software/emacs/manual/html_node/emacs/Choosing-Modes.html
 ;; disabled by doom-start.el
-(setq auto-mode-case-fold t)
+;;  (setq auto-mode-case-fold t)
 
 ;; work around emacs hanging when opening any python requirements.txt file
 ;; see issue https://github.com/doomemacs/doomemacs/issues/5998
-(advice-add #'pip-requirements-fetch-packages :override #'ignore)
+;;  (advice-add #'pip-requirements-fetch-packages :override #'ignore)
 
 ;; Enable nimlangserver for nim files
-;;(add-hook 'nim-mode-hook #'lsp)
+;;  (add-hook 'nim-mode-hook #'lsp)
 
 ;; Disable formatter for php
-(setq-hook! 'php-mode-hook +format-with :none)
+;; (setq-hook! 'php-mode-hook +format-with :none)
 
 ;; auto-virtualenv package configuration
 (use-package! auto-virtualenv
@@ -108,8 +118,8 @@
   )
 
 ;; python debugging
-(after! dap-mode
-  (setq dap-python-debugger 'debugpy))
+;; (after! dap-mode
+;;   (setq dap-python-debugger 'debugpy))
 
 ;; justfile recipe execution
 (use-package! justl
@@ -153,6 +163,18 @@
 (add-to-list 'auto-mode-alist '("\\.pod\\'" . conf-unix-mode))
 (add-to-list 'auto-mode-alist '("\\.container\\'" . conf-unix-mode))
 
-(setq-local completion-at-point-functions
-            (mapcar #'cape-company-to-capf
-                    (list #'company-ansible)))
+;; Corfu configuration
+(setq corfu-auto        t
+      corfu-auto-delay  0.1
+      corfu-auto-prefix 2)
+(add-hook 'corfu-mode-hook
+          (lambda ()
+            ;; Settings only for Corfu
+            (setq-local completion-styles '(basic)
+                        completion-category-overrides nil
+                        completion-category-defaults nil)
+            ;; Cape (used by corfu) configuration
+            (setq-local completion-at-point-functions
+                        (mapcar #'cape-company-to-capf
+                                (list #'company-ansible)))
+            ))
