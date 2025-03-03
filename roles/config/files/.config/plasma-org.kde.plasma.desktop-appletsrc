@@ -18,7 +18,7 @@ immutability=1
 plugin=org.kde.plasma.systemtray
 
 [Containments][106][Applets][107][Configuration]
-PreloadWeight=60
+PreloadWeight=65
 SystrayContainmentId=108
 
 [Containments][106][Applets][144]
@@ -105,6 +105,7 @@ plugin=org.kde.plasma.volume
 PreloadWeight=100
 
 [Containments][108][Applets][118][Configuration][General]
+currentTab=streams
 migrated=true
 
 [Containments][108][Applets][119]
@@ -123,7 +124,7 @@ immutability=1
 plugin=org.kde.plasma.bluetooth
 
 [Containments][108][Applets][121][Configuration]
-PreloadWeight=5
+PreloadWeight=0
 
 [Containments][108][Applets][122]
 immutability=1
@@ -140,7 +141,7 @@ immutability=1
 plugin=org.kde.plasma.brightness
 
 [Containments][108][Applets][123][Configuration]
-PreloadWeight=7
+PreloadWeight=0
 
 [Containments][108][Applets][123][Configuration][ConfigDialog]
 DialogHeight=540
@@ -257,7 +258,7 @@ immutability=1
 plugin=org.kde.plasma.digitalclock
 
 [Containments][136][Applets][142][Configuration]
-PreloadWeight=55
+PreloadWeight=60
 popupHeight=450
 popupWidth=560
 
@@ -390,7 +391,6 @@ plugin=org.kde.plasma.volume
 PreloadWeight=100
 
 [Containments][9][Applets][19][Configuration][General]
-currentTab=streams
 migrated=true
 
 [Containments][9][Applets][20]
@@ -409,7 +409,7 @@ immutability=1
 plugin=org.kde.plasma.bluetooth
 
 [Containments][9][Applets][24][Configuration]
-PreloadWeight=35
+PreloadWeight=27
 
 [Containments][9][Applets][25]
 immutability=1
@@ -426,7 +426,7 @@ immutability=1
 plugin=org.kde.plasma.brightness
 
 [Containments][9][Applets][26][Configuration]
-PreloadWeight=67
+PreloadWeight=0
 
 [Containments][9][Applets][26][Configuration][ConfigDialog]
 DialogHeight=540
@@ -437,7 +437,7 @@ immutability=1
 plugin=org.kde.plasma.battery
 
 [Containments][9][Applets][27][Configuration]
-PreloadWeight=20
+PreloadWeight=0
 
 [Containments][9][Applets][27][Configuration][General]
 showPercentage=true
