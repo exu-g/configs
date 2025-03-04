@@ -149,6 +149,14 @@
        :desc "Sort lines"
        "s" 'sort-lines))
 
+;; Quit Emacs with SPC-q-f
+;; Original keybinding quits the current frame
+;; I'm used to this keybinding exiting emacs and get confused when that is not the case
+(map! :leader
+      (:prefix ("q")
+       :desc "Quit Emacs"
+       "f" 'evil-quit-all))
+
 ;; set yaml indentation
 (setq-hook! 'yaml-mode-hook yaml-indent 2)
 (setq-hook! 'yaml-mode-hook yaml-indent-offset 2)
