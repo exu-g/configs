@@ -77,7 +77,7 @@
 ;; they are implemented.
 
 (setq
- projectile-project-search-path '("~/GitProjects/"))
+ projectile-project-search-path '("~/gitprojects/"))
 
 (after! hl-todo
   (setq hl-todo-keyword-faces
