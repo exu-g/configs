@@ -191,3 +191,7 @@
                         (mapcar #'cape-company-to-capf
                                 (list #'company-ansible)))
             ))
+
+;; Eglot LSP
+(set-eglot-client! 'powershell-mode '("pwsh" "-NoLogo" "-NoProfile" "-Command" "/opt/powershell-editor-services/PowerShellEditorServices/Start-EditorServices.ps1"
+                                      "-HostName" "Emacs" "-HostProfileId" "Emacs" "-HostVersion" "1.0.0" "-Stdio"))
