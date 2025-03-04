@@ -140,9 +140,6 @@ alias cleanup='sudo pacman -Rns (pacman -Qtdq)'
 # Clean cached packages
 alias cleancache='paru -Sc'
 
-# activate venv called "venv"
-alias activate='source venv/bin/activate.fish'
-
 # lsblk to list more info
 alias lsblkf="lsblk -o NAME,LABEL,RM,SIZE,RO,TYPE,FSTYPE,MOUNTPOINTS,MODEL,UUID"
 
