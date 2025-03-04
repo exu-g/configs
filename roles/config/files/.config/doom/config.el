@@ -196,3 +196,4 @@
 ;; Documentation: https://discourse.doomemacs.org/t/set-up-lsp-mode-or-eglot-for-insert-language-here/62#how-to-use-a-custom-server-12
 (set-eglot-client! 'powershell-mode '("pwsh" "-NoLogo" "-NoProfile" "-Command" "/opt/powershell-editor-services/PowerShellEditorServices/Start-EditorServices.ps1"
                                       "-HostName" "Emacs" "-HostProfileId" "Emacs" "-HostVersion" "1.0.0" "-Stdio"))
+(set-eglot-client! 'fish-mode '("fish-lsp" "start"))

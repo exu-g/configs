@@ -176,8 +176,9 @@
 # - btrfsmaintenance # AUR
 # - virter # AUR
 # - konsave # AUR
-# - powershell-bin # AUR, emacs LSP (dep)
-# - powershell-editor-services # AUR, emacs LSP
+# - powershell-bin # AUR, emacs powershell LSP (dep)
+# - powershell-editor-services # AUR, emacs powershell LSP
+# - fish-lsp # AUR, emacs fish LSP
 
 - name: x86_64 | Install other packages unavailable/unnecessary on ALARM
   community.general.pacman:
