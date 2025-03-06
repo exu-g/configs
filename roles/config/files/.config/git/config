@@ -7,18 +7,32 @@
     defaultBranch = main
 # Some popular options to test:
 # https://jvns.ca/blog/2024/02/16/popular-git-config-options/#merge-conflictstyle-zdiff3
-#[merge]
-#    conflictstyle = zdiff3
+# https://blog.gitbutler.com/how-git-core-devs-configure-git/
+[merge]
+   conflictstyle = zdiff3 # 3way merge conflict. current change, original, incoming change
 [diff]
-    algorithm = histogram
-#[branch]
-#    sort = -committerdate
-#[tag]
-#    sort = taggerdate
-# [gitlab]
-#     user = exu
-# [github]
-#     user = exu
+    algorithm = histogram # better handling of code movement
+    colorMoved = plain # different color for moved code
+    mnemonicPrefix = true  #  diff prefix i (index), w (working dir) or c (commit) instead of a and b
+    renames = true # better renames detection
+[branch]
+   sort = -committerdate # sort by date of last commit
+[tag]
+   sort = taggerdate # sort by creation date
+   # sort = version:refname # sorting by version numbers
+[push]
+    autoSetupRemote = true # automatically set upstream branch
+    followTags = true # always push local tags
+[pull]
+    rebase = true # auto rebase local commits
+[fetch]
+    prune = true # remove local leftovers on fetch
+    pruneTags = true # remove local tags on fetch
+    all = true # fetch all
+[commit]
+    verbose = true # show detailed changes
+[help]
+    autocorrect = prompt # if I ever need to use the CLI
 [alias]
     # use like this: git mr [REPO] [MERGE REQUEST]
     # see https://stackoverflow.com/a/50834005 (GitLab)
