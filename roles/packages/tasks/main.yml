@@ -155,7 +155,8 @@
     - util-linux # various utils
     - vdpauinfo # VDPAU
     - vim # editor
-    - vscode-css-languageserver
+    - vscode-css-languageserver # emacs css LSP
+    - vscode-json-languageserver # emacs json LSP
     - wget # network
     - whois # mkpasswd
     - wireguard-tools # vpn
