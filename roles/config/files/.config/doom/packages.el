@@ -65,3 +65,11 @@
 
 ;; ansible completion
 (package! company-ansible)
+
+;; gleam treesitter
+(package! gleam-ts-mode
+  :recipe (:host github
+           :repo "gleam-lang/gleam-mode"
+           :branch "main"
+
+           :files ("gleam-ts-*.el")))
