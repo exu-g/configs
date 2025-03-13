@@ -97,34 +97,16 @@
 ;; enable case insensitive matching for 'auto-mode-alist'
 ;; see https://www.gnu.org/software/emacs/manual/html_node/emacs/Choosing-Modes.html
 ;; disabled by doom-start.el
-;;  (setq auto-mode-case-fold t)
+(setq auto-mode-case-fold t)
 
 ;; work around emacs hanging when opening any python requirements.txt file
 ;; see issue https://github.com/doomemacs/doomemacs/issues/5998
 ;;  (advice-add #'pip-requirements-fetch-packages :override #'ignore)
 
-;; Enable nimlangserver for nim files
-;;  (add-hook 'nim-mode-hook #'lsp)
-
-;; Disable formatter for php
-;; (setq-hook! 'php-mode-hook +format-with :none)
-
-;; auto-virtualenv package configuration
-;; (use-package! auto-virtualenv
-;;   :init
-;;   :config
-;;   (add-hook! 'python-mode-hook 'auto-virtualenv-set-virtualenv)
-;;   (add-hook! 'projectile-after-switch-project-hook 'auto-virtualenv-set-virtualenv)  ;; If using projectile
-;;   )
-
 (use-package! auto-virtualenv
   :config
   (setq auto-virtualenv-verbose t)
   (auto-virtualenv-setup))
-
-;; python debugging
-;; (after! dap-mode
-;;   (setq dap-python-debugger 'debugpy))
 
 ;; justfile recipe execution
 (use-package! justl
@@ -213,8 +195,13 @@
 ;; gleam
 (set-eglot-client! 'gleam-ts-mode '("gleam" "lsp"))
 
-;; Use default included python formatter
-(setq-hook! 'python-mode-hook +format-with nil)
+;; python hook use ruff as formatter (disable lsp format)
+(setq-hook! 'python-mode-hook +format-with 'ruff)
 
-;; Use default included yaml formatter
-(setq-hook! 'yaml-mode-hook +format-with nil)
+;; yaml hook use prettier-yaml as formatter (disable lsp format)
+(setq-hook! 'yaml-mode-hook +format-with 'prettier-yaml)
+
+;; terraform/tofu files formatter
+(after! terraform-mode
+  (set-formatter! 'tofu'("terraform" "fmt" "-") :modes '(terraform-mode)))
+(setq-hook! 'terraform-mode-hook +format-with 'tofu)
