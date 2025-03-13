@@ -212,3 +212,9 @@
 (set-eglot-client! 'fish-mode '("fish-lsp" "start"))
 ;; gleam
 (set-eglot-client! 'gleam-ts-mode '("gleam" "lsp"))
+
+;; Use default included python formatter
+(setq-hook! 'python-mode-hook +format-with nil)
+
+;; Use default included yaml formatter
+(setq-hook! 'yaml-mode-hook +format-with nil)
