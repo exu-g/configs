@@ -121,9 +121,8 @@
     - podman # containers
     - podman-compose # containers
     - power-profiles-daemon # power management
-    - prettier # code
-    - pyright # code
-    - python-black # code
+    - prettier # emacs formatter (yaml, others?)
+    - pyright # emacs python LSP
     - python-debugpy # code
     - python-isort # code
     - python-pip # code
@@ -134,6 +133,7 @@
     - ripgrep # doom emacs
     - rsync # file sync
     - ruby-sass # code
+    - ruff # emacs python formatter
     - shfmt # code
     - smartmontools # disks
     - speech-dispatcher # TTS
