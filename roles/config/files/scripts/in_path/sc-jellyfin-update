@@ -2,7 +2,7 @@
 set -euo pipefail
 
 user=exu
-server="he1app3.xpn.ch"
+server="de-fsn-jel01.xpn.ch"
 port=22
 sshkeypath="$HOME/.ssh/id_ed25519"
 # NOTE don't transfer to the storage box directly, leads to mangled file names
