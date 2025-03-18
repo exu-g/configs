@@ -201,6 +201,12 @@
 ;; yaml hook use prettier-yaml as formatter (disable lsp format)
 (setq-hook! 'yaml-mode-hook +format-with 'prettier-yaml)
 
+;; json hook use prettier-json as formatter (disable lsp format)
+(setq-hook! 'json-mode-hook +format-with 'prettier-json)
+
+;; markdown hook use prettier-markdown as formatter
+(setq-hook! 'markdown-mode-hook +format-with 'prettier-markdown)
+
 ;; terraform/tofu files formatter
 (after! terraform-mode
   (set-formatter! 'tofu'("terraform" "fmt" "-") :modes '(terraform-mode)))
