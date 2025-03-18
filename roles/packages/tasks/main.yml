@@ -93,6 +93,7 @@
     - lutris # games
     - maliit-keyboard # virtual keyboard
     - man-db # docs
+    - markdownlint # emacs linter markdown
     - mesa # video driver
     - mesa-vdpau # VDPAU
     - mosh # remote shell
