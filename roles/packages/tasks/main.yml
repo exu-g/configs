@@ -82,6 +82,7 @@
     - hyphen-de # spelling
     - hyphen-en # spelling
     - inxi # host information
+    - iwd # alternative wifi backend
     - jre-openjdk # java
     - just # command runner
     - kde-applications-meta # kde
