@@ -29,7 +29,7 @@ _k_friendly_name=Zugangshilfen
 [kcm_touchpad]
 Disable Touchpad=Touchpad Off,Touchpad Off,
 Enable Touchpad=Touchpad On,Touchpad On,
-Toggle Touchpad=Touchpad Toggle\tMeta+Ctrl+Zenkaku Hankaku,Touchpad Toggle\tMeta+Ctrl+Zenkaku Hankaku,
+Toggle Touchpad=Touchpad Toggle\tMeta+Ctrl+Zenkaku Hankaku,Touchpad Toggle\tTouchpad Toggle\tMeta+Ctrl+Touchpad Toggle\tMeta+Ctrl+Zenkaku Hankaku,
 _k_friendly_name=Touchpad
 
 [kmix]
@@ -56,15 +56,15 @@ _k_friendly_name=Sitzungsverwaltung
 
 [kwin]
 Activate Window Demanding Attention=none,Meta+Ctrl+A,Fenster aktivieren\\, das Aufmerksamkeit erfordert
-Cycle Overview=none,none,Cycle through Overview and Grid View
-Cycle Overview Opposite=none,none,Cycle through Grid View and Overview
+Cycle Overview=none,none,Durch Überblick und Rasteransicht wechseln
+Cycle Overview Opposite=none,none,Durch Rasteransicht und Überblick wechseln
 Decrease Opacity=none,,Die Deckkraft des aktiven Fensters um 5 % verringern
 Edit Tiles=none,Meta+T,Tiling-Editor ein-/ausschalten
 Expose=none,Ctrl+F9,Fenster der aktuellen Arbeitsfläche anzeigen
 ExposeAll=none,Ctrl+F10\tLaunch (C),Fenster aller Arbeitsflächen anzeigen
 ExposeClass=none,Ctrl+F7,Fenster der Fensterklasse anzeigen
 ExposeClassCurrentDesktop=none,none,Fenster der Fensterklasse auf der aktuellen Arbeitsfläche anzeigen
-Grid View=none,Meta+G,Toggle Grid View
+Grid View=none,Meta+G,Übersicht umschalten
 Increase Opacity=none,,Die Deckkraft des aktiven Fensters um 5 % erhöhen
 Kill Window=none,Meta+Ctrl+Esc,Fenster beseitigen
 KrohnkiteBTreeLayout=Meta+B,none,Krohnkite: BTree Layout
@@ -108,7 +108,7 @@ MoveZoomDown=none,none,Vergrößerten Bereich nach unten verschieben
 MoveZoomLeft=none,none,Vergrößerten Bereich nach links verschieben
 MoveZoomRight=none,none,Vergrößerten Bereich nach rechts verschieben
 MoveZoomUp=none,none,Vergrößerten Bereich nach oben verschieben
-Overview=Meta+A,Meta+W,Toggle Overview
+Overview=Meta+A,Meta+W,Übersicht umschalten
 PoloniumCycleEngine=none,none,Polonium: Cycle Engine
 PoloniumFocusAbove=none,none,Polonium: Focus Above
 PoloniumFocusBelow=none,none,Polonium: Focus Below
@@ -328,7 +328,7 @@ switch to next activity=none,,Zur nächsten Aktivität wechseln
 switch to previous activity=none,,Zur vorherigen Aktivität wechseln
 toggle do not disturb=none,,Nicht stören umschalten
 
-[services][cafe.avery.Delfin.desktop]
+[services][com.github.iwalton3.jellyfin-media-player.desktop]
 _launch=Ctrl+Alt+J
 
 [services][discord-wayland.desktop]
@@ -360,11 +360,28 @@ _launch=none
 _launch=none
 
 [services][org.kde.spectacle.desktop]
-RecordRegion=Meta+R
-_launch=Print
+ActiveWindowScreenShot=none
+FullScreenScreenShot=none
+RecordRegion=none
+RecordScreen=none
+RecordWindow=none
+RectangularRegionScreenShot=Meta+Shift+S\tPrint
+WindowUnderCursorScreenShot=none
+_launch=none
 
 [services][org.mozilla.Thunderbird.desktop]
 _launch=Ctrl+Alt+B
+
+[wacomtablet]
+Map to fullscreen=Meta+Ctrl+F,Meta+Ctrl+F,Bildschirmfüllend abbilden
+Map to screen 1=Meta+Ctrl+1,Meta+Ctrl+1,Auf Bildschirm 1 abbilden
+Map to screen 2=Meta+Ctrl+2,Meta+Ctrl+2,Auf Bildschirm 2 abbilden
+Next Profile=Meta+Ctrl+N,Meta+Ctrl+N,Nächstes Profil
+Previous Profile=Meta+Ctrl+P,Meta+Ctrl+P,Vorheriges Profil
+Toggle screen map selection=Meta+Ctrl+M,Meta+Ctrl+M,Zwischen allen Bildschirmen umschalten
+Toggle stylus mode=Meta+Ctrl+S,Meta+Ctrl+S,Funktionsweise des Stift-Werkzeugs zwischen relativ/absolut umschalten
+Toggle touch tool=Meta+Ctrl+T,Meta+Ctrl+T,Touch-Werkzeug aktivieren/deaktivieren
+_k_friendly_name=Wacom-Tablett
 
 [yakuake]
 _k_friendly_name=Yakuake
