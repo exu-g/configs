@@ -3,7 +3,7 @@ update_info=kwin.upd:replace-scalein-with-scale,kwin.upd:port-minimizeanimation-
 
 [Activities][LastVirtualDesktop]
 2efc56f1-09fa-4490-9706-4dcde3912089=7ee59aa2-5b40-453c-a852-224cbf0d3a0a
-64664544-a062-48cf-a713-e4045da575e9=7ee59aa2-5b40-453c-a852-224cbf0d3a0a
+64664544-a062-48cf-a713-e4045da575e9=d59f1b11-9956-496a-93c8-17500f27fd99
 
 [Desktops]
 Id_1=7ee59aa2-5b40-453c-a852-224cbf0d3a0a
@@ -125,7 +125,3 @@ SeparateScreenFocus=true
 
 [Xwayland]
 Scale=1.25
-
-[org.kde.kdecoration2]
-library=org.kde.kwin.aurorae
-theme=__aurorae__svg__CatppuccinMacchiato-Modern

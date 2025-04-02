@@ -4,37 +4,23 @@
 <title>Qt SVG Document</title>
 <desc>Generated with Qt</desc>
 <defs>
+<linearGradient gradientUnits="userSpaceOnUse" x1="5.68572" y1="515.151" x2="865.455" y2="540.103" id="gradient1">
+    <stop offset="0" stop-color="#ff416c" stop-opacity="1" />
+    <stop offset="1" stop-color="#ff4b2b" stop-opacity="1" />
+</linearGradient>
 </defs>
 <g fill="none" stroke="black" stroke-width="1" fill-rule="evenodd" stroke-linecap="square" stroke-linejoin="bevel" >
 
-<g fill="#1e2030" fill-opacity="1" stroke="none" transform="matrix(1.11111,0,0,1.66667,-5.6514e-06,-73.6111)"
-font-family="Noto Sans" font-size="12" font-weight="400" font-style="normal" 
-opacity="0.00757614" >
-<rect x="5.08626e-06" y="44.1667" width="45" height="30"/>
-</g>
-
-<g fill="#1e2030" fill-opacity="1" stroke="none" transform="matrix(0.960471,0,0,0.993859,-13.1566,83.4579)"
+<g fill="url(#gradient1)" stroke="none" transform="matrix(0.0548326,0,0,-0.0548323,-2.81266,49.7339)"
 font-family="Noto Sans" font-size="12" font-weight="400" font-style="normal" 
 >
-<path vector-effect="none" fill-rule="nonzero" d="M13.6981,-83.9735 L13.6981,-33.6646 L65.7558,-33.6646 L65.7558,-72.0877 C65.7558,-78.6731 60.4554,-83.9735 53.8701,-83.9735 L13.6981,-83.9735"/>
+<path vector-effect="none" fill-rule="evenodd" d="M507.233,11.2628 C750.133,11.2628 947.046,208.177 947.046,451.082 C947.046,693.988 750.133,890.902 507.233,890.902 C264.325,890.902 67.4117,693.988 67.4117,451.082 C67.4117,208.177 264.325,11.2628 507.233,11.2628 "/>
 </g>
 
-<g fill="#ed8796" fill-opacity="1" stroke="none" transform="matrix(0.974637,0,0,1.00852,-88.0128,31.8189)"
+<g fill="none" stroke="#e70340" stroke-opacity="1" stroke-width="32.2324" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" transform="matrix(0.0548326,0,0,-0.0548323,-2.81266,49.7339)"
 font-family="Noto Sans" font-size="12" font-weight="400" font-style="normal" 
 >
-<circle cx="115.954" cy="-6.76131" r="14.7475"/>
-</g>
-
-<g fill="none" stroke="#b11b31" stroke-opacity="1" stroke-width="0.264583" stroke-linecap="round" stroke-linejoin="round" transform="matrix(9.58817,0,0,9.92147,-1204.16,-790.719)"
-font-family="Noto Sans" font-size="12" font-weight="400" font-style="normal" 
->
-<path vector-effect="none" fill-rule="nonzero" d="M127.554,82.8588 L128.836,81.5763"/>
-</g>
-
-<g fill="none" stroke="#b11b31" stroke-opacity="1" stroke-width="0.264583" stroke-linecap="round" stroke-linejoin="round" transform="matrix(9.58817,0,0,9.92147,-1204.16,-790.719)"
-font-family="Noto Sans" font-size="12" font-weight="400" font-style="normal" 
->
-<path vector-effect="none" fill-rule="nonzero" d="M127.554,81.5763 L128.836,82.8588"/>
+<path vector-effect="none" fill-rule="evenodd" d="M507.233,11.2628 C750.133,11.2628 947.046,208.177 947.046,451.082 C947.046,693.988 750.133,890.902 507.233,890.902 C264.325,890.902 67.4117,693.988 67.4117,451.082 C67.4117,208.177 264.325,11.2628 507.233,11.2628 "/>
 </g>
 
 <g fill="none" stroke="#000000" stroke-opacity="1" stroke-width="1" stroke-linecap="square" stroke-linejoin="bevel" transform="matrix(1,0,0,1,0,0)"

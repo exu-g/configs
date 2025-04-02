@@ -1,4 +1,4 @@
 [org.kde.kdecoration2]
 NoPlugin=false
-library=org.kde.breeze
-theme=Breeze
+library=org.kde.kwin.aurorae
+theme=__aurorae__svg__Sweet-Dark
