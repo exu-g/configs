@@ -6,6 +6,96 @@
     <kcfgfile name=""/>
     <group name="">
 
+      <entry name="dockOrderLeft" type="Int">
+	    <label>The order of the docked window in the dock</label>
+        <default>1</default>
+    </entry>
+
+    <entry name="dockOrderTop" type="Int">
+	    <label>The order of the docked window in the dock</label>
+        <default>2</default>
+    </entry>
+
+    <entry name="dockOrderRight" type="Int">
+	    <label>The order of the docked window in the dock</label>
+        <default>3</default>
+    </entry>
+
+    <entry name="dockOrderBottom" type="Int">
+	    <label>The order of the docked window in the dock</label>
+        <default>4</default>
+    </entry>
+
+    <entry name="dockHHeight" type="Int">
+	    <label>The default height of a horizontal docked window in percent</label>
+        <default>15</default>
+    </entry>
+
+    <entry name="dockHWide" type="Int">
+	    <label>The default width of a horizontal docked window in percent</label>
+        <default>100</default>
+    </entry>
+
+    <entry name="dockHGap" type="Int">
+	    <label>The default Gap of a horizontal docked window in pixels</label>
+        <default>0</default>
+    </entry>
+
+    <entry name="dockHEdgeGap" type="Int">
+	    <label>The default Vertical Gap of a horizontal docked window in pixels</label>
+        <default>0</default>
+    </entry>
+
+    <entry name="dockHAlignment" type="Int">
+	    <label>The default Alignment of a horizontal docked window which can be Center , Left, Right</label>
+        <default>0</default>
+    </entry>
+
+    <entry name="dockHEdgeAlignment" type="Int">
+	    <label>The default vertical Alignment of a horizontal docked window which can be Edge Screen, Middle, Center Screen</label>
+        <default>0</default>
+    </entry>
+
+    <entry name="dockVHeight" type="Int">
+	    <label>The default height of a vertical docked window in percent</label>
+        <default>100</default>
+    </entry>
+
+    <entry name="dockVWide" type="Int">
+	    <label>The default width of a vertical docked window in percent</label>
+        <default>15</default>
+    </entry>
+
+    <entry name="dockVEdgeGap" type="Int">
+	    <label>The default horizontal Gap of a vertical docked window in pixels</label>
+        <default>0</default>
+    </entry>
+
+    <entry name="dockVGap" type="Int">
+	    <label>The default Gap of a vertical docked window in pixels</label>
+        <default>0</default>
+    </entry>
+
+    <entry name="dockVEdgeAlignment" type="Int">
+	    <label>The default horizontal Alignment of a vertical docked window which can be Edge Screen, Middle or Center Screen</label>
+        <default>0</default>
+    </entry>
+
+    <entry name="dockVAlignment" type="Int">
+	    <label>The default vertical Alignment of a vertical docked window which can be Center, Top, Bottom</label>
+        <default>0</default>
+    </entry>
+
+    <entry name="dockSurfacesConfig" type="String">
+	    <label>Dock settings change the default parameters for the surface</label>
+        <default></default>
+    </entry>
+
+    <entry name="dockWindowClassConfig" type="String">
+	    <label>Dock default settings for WindowClass which with high priority.</label>
+        <default></default>
+    </entry>
+
     <entry name="debug" type="Bool">
 	    <label>Print debug messages</label>
         <default>false</default>
@@ -60,6 +150,11 @@
         <default>false</default>
     </entry>
 
+    <entry name="quarterLayoutReset" type="Bool">
+	    <label>Reset Quarter layout after closing a window</label>
+        <default>false</default>
+    </entry>
+
     <entry name="enableColumnsLayout" type="Bool">
 	    <label>Enable/disable Columns layout</label>
         <default>true</default>
@@ -102,7 +197,7 @@
 
     <entry name="ignoreClass" type="String">
 	    <label>Ignore windows with certain classes(comma-separated list)</label>
-        <default>krunner,yakuake,spectacle,kded5,xwaylandvideobridge,plasmashell,ksplashqml,org.kde.plasmashell,org.kde.polkit-kde-authentication-agent-1,org.kde.kruler,kruler</default>
+        <default>krunner,yakuake,spectacle,kded5,xwaylandvideobridge,plasmashell,ksplashqml,org.kde.plasmashell,org.kde.polkit-kde-authentication-agent-1,org.kde.kruler,kruler,kwin_wayland,ksmserver-logout-greeter</default>
     </entry>
 
     <entry name="ignoreRole" type="String">
@@ -114,6 +209,7 @@
 	    <label>Do not apply tiling on some screens(comma-separated list of screen names)</label>
         <default></default>
     </entry>
+
     <entry name="ignoreVDesktop" type="String">
 	    <label>Do not apply tiling on some virtual desktops(comma-separated list of virtual desktops names)</label>
         <default></default>
@@ -174,8 +270,23 @@
         <default>1</default>
     </entry>
 
-    <entry name="maximizeSoleTile" type="Bool">
-	    <label>If there is only one tile on the screen, remove screen gap and its borde, making it appear almost fullscreen.</label>
+    <entry name="soleWindowWidth" type="Int">
+	    <label>The sole window width in percent.</label>
+        <default>100</default>
+    </entry>
+
+    <entry name="soleWindowHeight" type="Int">
+	    <label>The sole window height in percent.</label>
+        <default>100</default>
+    </entry>
+
+    <entry name="soleWindowNoBorders" type="Bool">
+      <label>Do not draw borders around sole window</label>
+        <default>false</default>
+    </entry>
+
+    <entry name="soleWindowNoGaps" type="Bool">
+      <label>Do not draw gaps around sole window</label>
         <default>false</default>
     </entry>
 
@@ -217,6 +328,11 @@
     <entry name="preventProtrusion" type="Bool">
         <label>Prevent windows from protruding out of screen</label>
         <default>true</default>
+    </entry>
+
+    <entry name="notificationDuration" type="Int">
+	    <label>Duration of pop-up notifications</label>
+        <default>1000</default>
     </entry>
 
     <entry name="screenGapLeft" type="Int">
