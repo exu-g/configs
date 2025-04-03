@@ -3,7 +3,7 @@ update_info=kwin.upd:replace-scalein-with-scale,kwin.upd:port-minimizeanimation-
 
 [Activities][LastVirtualDesktop]
 2efc56f1-09fa-4490-9706-4dcde3912089=7ee59aa2-5b40-453c-a852-224cbf0d3a0a
-64664544-a062-48cf-a713-e4045da575e9=4187c550-f678-4921-a4cc-033af5fba3aa
+64664544-a062-48cf-a713-e4045da575e9=7ee59aa2-5b40-453c-a852-224cbf0d3a0a
 
 [Desktops]
 Id_1=7ee59aa2-5b40-453c-a852-224cbf0d3a0a

@@ -42,9 +42,9 @@ Item {
         id: popupDialog
         source: "popup.qml"
 
-        function show(text) {
+        function show(text, duration) {
             var area = Workspace.clientArea(KWin.FullScreenArea, Workspace.activeScreen, Workspace.currentDesktop);
-            this.item.show(text, area, 1000);
+            this.item.show(text, area, duration);
         }
     }
 

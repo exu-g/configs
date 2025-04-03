@@ -3,6 +3,16 @@ import org.kde.kwin;
 
 Item {
     id: dbus;
+    function getToggleDock() {
+        return toggleDock;
+    }
+    ShortcutHandler {
+        id: toggleDock;
+
+        name: "KrohnkitetoggleDock";
+        text: "Krohnkite: Toggle Dock";
+        sequence: "";
+    }
 
     function getFocusNext() {
         return focusNext;
