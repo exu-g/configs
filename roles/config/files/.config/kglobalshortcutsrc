@@ -101,6 +101,7 @@ KrohnkiteTileLayout=none,none,Krohnkite: Tile Layout
 KrohnkiteToggleFloat=Meta+F,none,Krohnkite: Toggle Float
 KrohnkiteTreeColumnLayout=none,none,Krohnkite: Tree Column Layout
 KrohnkitegrowWidth=none,none,Krohnkite: Grow Width
+KrohnkitetoggleDock=none,none,Krohnkite: Toggle Dock
 Move Tablet to Next Output=none,none,Move the tablet to the next output
 MoveMouseToCenter=none,Meta+F6,Mauszeiger zentrieren
 MoveMouseToFocus=none,Meta+F5,Mauszeiger in den Fokus verschieben
