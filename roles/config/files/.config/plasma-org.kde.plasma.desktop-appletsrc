@@ -60,7 +60,7 @@ immutability=1
 plugin=org.kde.kdeconnect
 
 [Containments][108][Applets][109][Configuration]
-PreloadWeight=92
+PreloadWeight=100
 
 [Containments][108][Applets][110]
 immutability=1
@@ -95,7 +95,7 @@ immutability=1
 plugin=org.kde.plasma.notifications
 
 [Containments][108][Applets][114][Configuration]
-PreloadWeight=97
+PreloadWeight=100
 
 [Containments][108][Applets][115]
 immutability=1
@@ -296,7 +296,7 @@ immutability=1
 plugin=org.kde.plasma.digitalclock
 
 [Containments][136][Applets][142][Configuration]
-PreloadWeight=57
+PreloadWeight=67
 popupHeight=450
 popupWidth=560
 
@@ -320,7 +320,7 @@ immutability=1
 plugin=org.kde.plasma.digitalclock
 
 [Containments][138][Applets][140][Configuration]
-PreloadWeight=52
+PreloadWeight=57
 popupHeight=461
 popupWidth=571
 
@@ -484,7 +484,7 @@ immutability=1
 plugin=org.kde.plasma.networkmanagement
 
 [Containments][9][Applets][25][Configuration]
-PreloadWeight=97
+PreloadWeight=100
 
 [Containments][9][Applets][25][Configuration][General]
 currentDetailsTab=details
