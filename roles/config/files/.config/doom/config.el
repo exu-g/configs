@@ -162,17 +162,27 @@
 (setq corfu-auto        t
       corfu-auto-delay  0.1
       corfu-auto-prefix 2)
-(add-hook 'corfu-mode-hook
-          (lambda ()
-            ;; Settings only for Corfu
-            ;; (setq-local completion-styles '(basic orderless)
-            ;;             completion-category-overrides nil
-            ;;             completion-category-defaults nil)
-            ;; Cape (used by corfu) configuration
-            (setq-local completion-at-point-functions
-                        (mapcar #'cape-company-to-capf
-                                (list #'company-ansible)))
-            ))
+(add-hook! 'corfu-mode-hook
+           ;; Settings only for Corfu
+           ;; (setq-local completion-styles '(basic orderless)
+           ;;             completion-category-overrides nil
+           ;;             completion-category-defaults nil)
+           ;; Cape (used by corfu) configuration
+           (setq-local completion-at-point-functions
+                       (mapcar #'cape-company-to-capf
+                               (list #'company-ansible)))
+           )
+;; (add-hook 'corfu-mode-hook
+;;           (lambda ()
+;;             ;; Settings only for Corfu
+;;             ;; (setq-local completion-styles '(basic orderless)
+;;             ;;             completion-category-overrides nil
+;;             ;;             completion-category-defaults nil)
+;;             ;; Cape (used by corfu) configuration
+;;             (setq-local completion-at-point-functions
+;;                         (mapcar #'cape-company-to-capf
+;;                                 (list #'company-ansible)))
+;;             ))
 
 ;; gleam-mode
 (use-package! gleam-ts-mode
@@ -211,3 +221,6 @@
 (after! terraform-mode
   (set-formatter! 'tofu'("terraform" "fmt" "-") :modes '(terraform-mode)))
 (setq-hook! 'terraform-mode-hook +format-with 'tofu)
+
+;; set mode for awx files
+(add-to-list 'auto-mode-alist '("\\.awx\\'" . yaml-mode))
