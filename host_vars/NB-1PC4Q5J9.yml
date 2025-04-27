@@ -3,8 +3,8 @@ additional_pacman_packages:
   - mattermost-desktop
   - wireguard-tools
 #additional_aur_packages:
-#  - virter
+#  - netclient-bin
 
-ssh_key_git: "{{ ansible_user_dir }}/.ssh/id_ed25519"
+ssh_key_git: "{{ ansible_user_dir }}/.ssh/id_ed25519_git"
 
 background_image: "{{ ansible_user_dir }}/Bilder/artstation_13054577_50587674_The Poppy War.jpg"
