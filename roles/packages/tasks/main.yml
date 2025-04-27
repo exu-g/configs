@@ -102,6 +102,7 @@
     - mythes-de # thesaurus
     - mythes-en # thesaurus
     - nerd-fonts # fonts
+    - networkmanager # network connections
     - nextcloud-client # cloud
     - nodejs
     - noto-fonts # fonts
