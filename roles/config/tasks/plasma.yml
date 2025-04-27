@@ -10,6 +10,11 @@
     version: nova
     dest: "~/.themes/Sweet-Dark/"
 
+- name: Plasma | Get icons
+  ansible.builtin.git:
+    repo: https://github.com/PapirusDevelopmentTeam/papirus-icon-theme
+    dest: "~/.local/share/icons/"
+
 # - name: Plasma | Remove previously set wallpapers
 #   ansible.builtin.shell: |
 #     kwriteconfig6 --file ~/.config/plasma-org.kde.plasma.desktop-appletsrc --group Containments --group 1 --group Wallpaper --group org.kde.image --group General --key Image --delete
