@@ -1,4 +1,15 @@
 ---
+- name: Plasma | Get desktop theme
+  ansible.builtin.git:
+    repo: https://github.com/EliverLara/Sweet-kde
+    dest: "~/.local/share/plasma/desktoptheme/Sweet/"
+
+- name: Plasma | Get theme
+  ansible.builtin.git:
+    repo: https://github.com/EliverLara/Sweet
+    version: nova
+    dest: "~/.themes/Sweet-Dark/"
+
 # - name: Plasma | Remove previously set wallpapers
 #   ansible.builtin.shell: |
 #     kwriteconfig6 --file ~/.config/plasma-org.kde.plasma.desktop-appletsrc --group Containments --group 1 --group Wallpaper --group org.kde.image --group General --key Image --delete
