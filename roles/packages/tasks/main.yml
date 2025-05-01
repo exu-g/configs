@@ -225,20 +225,20 @@
   tags: packages
   become: true
 
-- name: Download remote flatpak packages
-  ansible.builtin.get_url:
-    url: "{{ item }}"
-    dest: ./
-  loop:
-    - https://github.com/Elleo/pied/releases/latest/download/com.mikeasoft.pied.flatpak
-  tags: packages
+# - name: Download remote flatpak packages
+#   ansible.builtin.get_url:
+#     url: "{{ item }}"
+#     dest: ./
+#   loop:
+#     - https://github.com/Elleo/pied/releases/latest/download/com.mikeasoft.pied.flatpak
+#   tags: packages
 
 - name: Install flatpak packages
   community.general.flatpak:
     name: "{{ item }}"
     state: present
   loop:
-    - ./com.mikeasoft.pied.flatpak # local package
+    # - ./com.mikeasoft.pied.flatpak # local package
     - com.discordapp.Discord # chat
     - com.obsproject.Studio # recording
     - io.github.TransmissionRemoteGtk # torrents
