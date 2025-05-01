@@ -42,11 +42,9 @@
   loop:
     - ".config"
     - ".face"
-    - ".fonts"
     - ".gtkrc-2.0"
     - ".local"
     - ".ssh"
-    - ".themes"
     - "scripts"
   tags: config
 
