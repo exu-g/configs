@@ -64,6 +64,9 @@
 # - name: Plasma | Restart Kwin
 #   ansible.builtin.command: "kwin_wayland --replace"
 #   tags: config
+# TODO: alternative commands
+# kquitapp6 plasmashell
+# kstart plasmashell
 
 - name: Plasma | Set cursor theme
   ansible.builtin.shell: "plasma-apply-cursortheme Breeze_Light"
