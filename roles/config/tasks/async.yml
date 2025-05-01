@@ -7,7 +7,7 @@
 
 - name: Doom Emacs | Update if present - aync
   ansible.builtin.shell:
-    cmd: "~/.config/emacs/bin/doom sync --gc -j $(nproc)"
+    cmd: "~/.config/emacs/bin/doom sync --gc -j $(nproc) --force"
   when: doom_emacs.stat.exists
   async: 600
   poll: 0
