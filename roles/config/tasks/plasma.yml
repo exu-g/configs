@@ -1,19 +1,32 @@
 ---
+- name: Plasma | Create file structure for themes
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: "directory"
+  loop:
+    - "~/.local/share/icons/"
+    - "~/.local/share/plasma/desktoptheme/Sweet/"
+    - "~/.themes/Sweet-Dark/"
+  tags: config
+
 - name: Plasma | Get desktop theme
   ansible.builtin.git:
     repo: https://github.com/EliverLara/Sweet-kde
     dest: "~/.local/share/plasma/desktoptheme/Sweet/"
+  tags: config
 
 - name: Plasma | Get theme
   ansible.builtin.git:
     repo: https://github.com/EliverLara/Sweet
     version: nova
     dest: "~/.themes/Sweet-Dark/"
+  tags: config
 
 - name: Plasma | Get icons
   ansible.builtin.git:
     repo: https://github.com/PapirusDevelopmentTeam/papirus-icon-theme
     dest: "~/.local/share/icons/"
+  tags: config
 
 # - name: Plasma | Remove previously set wallpapers
 #   ansible.builtin.shell: |
@@ -37,6 +50,22 @@
 #                  })
 #              "
 #   tags: config
+
+- name: Plasma | Restart Kwin
+  ansible.builtin.command: "kwin_wayland --replace"
+  tags: config
+
+- name: Plasma | Set cursor theme
+  ansible.builtin.shell: "plasma-apply-cursortheme Breeze_Light"
+  tags: config
+
+- name: Plasma | Set colorscheme
+  ansible.builtin.shell: "plasma-apply-colorscheme Sweet"
+  tags: config
+
+- name: Plasma | Set desktop theme
+  ansible.builtin.shell: "plasma-apply-desktoptheme Sweet"
+  tags: config
 
 - name: Plasma | Set desktop wallpaper
   ansible.builtin.shell: "plasma-apply-wallpaperimage {{ background_image }}"
