@@ -4,6 +4,16 @@
     path: "{{ item }}"
     state: "directory"
   loop:
+    - "~/.local/share/"
+    - "~/.local/share/plasma/desktoptheme/"
+    - "~/.themes/"
+  tags: config
+
+- name: Plasma | Remove old folders
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: "absent"
+  loop:
     - "~/.local/share/icons/"
     - "~/.local/share/plasma/desktoptheme/Sweet/"
     - "~/.themes/Sweet-Dark/"
