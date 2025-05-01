@@ -9,7 +9,7 @@
     - "~/.themes/"
   tags: config
 
-- name: Plasma | Remove old folders
+- name: Plasma | Remove specific theme folders
   ansible.builtin.file:
     path: "{{ item }}"
     state: "absent"
@@ -61,9 +61,9 @@
 #              "
 #   tags: config
 
-- name: Plasma | Restart Kwin
-  ansible.builtin.command: "kwin_wayland --replace"
-  tags: config
+# - name: Plasma | Restart Kwin
+#   ansible.builtin.command: "kwin_wayland --replace"
+#   tags: config
 
 - name: Plasma | Set cursor theme
   ansible.builtin.shell: "plasma-apply-cursortheme Breeze_Light"
@@ -78,7 +78,7 @@
   tags: config
 
 - name: Plasma | Set desktop wallpaper
-  ansible.builtin.shell: "plasma-apply-wallpaperimage {{ background_image }}"
+  ansible.builtin.shell: 'plasma-apply-wallpaperimage "{{ background_image }}"'
   tags: config
 
 - name: Plasma | Set Lockscreen wallpaper
