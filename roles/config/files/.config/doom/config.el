@@ -105,7 +105,8 @@
 
 (use-package! auto-virtualenv
   :config
-  (setq auto-virtualenv-verbose t)
+  ;;(setq auto-virtualenv-verbose t)
+  (setq auto-virtualenv-reload-lsp t)
   (auto-virtualenv-setup))
 
 ;; justfile recipe execution
