@@ -128,6 +128,7 @@
     - pyright # emacs python LSP
     - python-debugpy # code
     - python-isort # code
+    - python-nose # emacs python testing (nosetests)
     - python-pip # code
     - python-pipenv # code
     - python-pyflakes # code
