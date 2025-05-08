@@ -79,6 +79,14 @@
 (setq
  projectile-project-search-path '("~/gitprojects/"))
 
+;; Set POSIX shell for emacs internals. Use fish in vterm
+(setq shell-file-name (executable-find
+                       "bash"))
+(setq-default vterm-shell
+              "/usr/bin/fish")
+(setq-default explicit-shell-file-name
+              "/usr/bin/fish")
+
 (after! hl-todo
   (setq hl-todo-keyword-faces
         '(("TODO"   . "#EACD4B")
