@@ -243,7 +243,6 @@
     - com.discordapp.Discord # chat
     - com.obsproject.Studio # recording
     - io.github.TransmissionRemoteGtk # torrents
-    - io.kopia.KopiaUI # backup
     - org.freedesktop.Piper # mouse
     - org.libreoffice.LibreOffice # office suite
     - org.mozilla.Thunderbird # email
