@@ -97,6 +97,12 @@
     state: "link"
   tags: config
 
+- name: Create flatpak overrides
+  ansible.builtin.command: "flatpak override --user {{ item }}"
+  loop:
+    - "--filesystem=~/.themes:ro"
+    - "--socket=wayland"
+
 - name: Bash cat | Download
   ansible.builtin.git:
     repo: https://github.com/exu-g/bash-cat-with-cat.git
