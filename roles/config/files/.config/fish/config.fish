@@ -1,7 +1,7 @@
 fish_default_key_bindings
 
 # change greeting
-set fish_greeting "Good Morning! Nice day for fishing ain't it! Hu ha!"
+set fish_greeting "Morning! Nice day for fishing ain't it! Hu ha!"
 
 # Info:
 # https://fishshell.com/docs/current/index.html#variables-for-changing-highlighting-colors
