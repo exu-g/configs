@@ -140,8 +140,9 @@
     state: "started"
     enabled: true
   loop:
-    - "fstrim.timer"
+    - "avahi-daemon.service"
     - "bluetooth.service"
+    - "fstrim.timer"
     - "sddm.service"
     - "systemd-resolved.service"
   become: true
