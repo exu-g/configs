@@ -44,6 +44,7 @@
     #- libsecret
     - aardvark-dns # containers
     - ansible # iac
+    - avahi # mDNS & local autodiscover
     - base-devel # devel stuff
     - bash-language-server # bash lsp
     - bind # dnsutils (nslookup, dig)
