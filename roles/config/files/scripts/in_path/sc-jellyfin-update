@@ -2,7 +2,7 @@
 set -euo pipefail
 
 user=exu
-server="de-fsn-jel01.xpn.ch"
+server="jel01.xpn.ch"
 port=22
 sshkeypath="$HOME/.ssh/id_ed25519"
 # NOTE don't transfer to the storage box directly, leads to mangled file names
@@ -14,10 +14,10 @@ if ! ssh-add -T "${sshkeypath}.pub" &>/dev/null; then
 fi
 
 # NAS: video files
-rsync -uvr --progress --delete "/mnt/storage/MediaLibrary/"{Movies,Patreon,Shows} "/mnt/CHOFNAS02/"
+rsync -uvr --progress --delete "/mnt/storage/MediaLibrary/"{Movies,Patreon,Shows} "/mnt/nas02/"
 
 # NAS: music
-rsync -uvrL --progress --delete "/home/exu/Musik" "/mnt/CHOFNAS02/"
+rsync -uvrL --progress --delete "/home/exu/Musik" "/mnt/nas02/"
 
 # Server: music
 rsync -uvrL --progress --delete -e "ssh -i $sshkeypath -p $port" "/home/exu/Musik/" "${user}@${server}:/mnt/media/Musik/"
