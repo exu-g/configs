@@ -1,18 +1,18 @@
-Main repository location is [https://gitea.exu.li/exu/configs](https://gitea.exu.li/exu/configs)
+Main repository location is [https://git.exu.li/exu/configs](https://git.exu.li/exu/configs)
 
 # Configs
 
-All my config files, scripts and other in one place.  
+All my config files, scripts and other in one place.
 
 ## ArchLinux
 
-First time installation:  
+First time installation:
 
 ```sh
 pacman -Syu
 pacman -S git ansible just
 cd $(mktemp -d)
-git clone https://gitea.exu.li/exu/configs.git
+git clone https://git.exu.li/exu/configs.git
 cd configs
 just setup
 ```
@@ -25,7 +25,7 @@ just config
 
 ### Package installation
 
-``` sh
+```sh
 just packages
 ```
 
