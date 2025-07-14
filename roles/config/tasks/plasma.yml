@@ -55,6 +55,11 @@
       dest: "~/.local/share/color-schemes/Sweet.colors"
   tags: config
 
+- name: Plasma | Install SDDM theme
+  ansible.builtin.shell: "sddmthemeinstaller --install ./sddm-master.zip"
+  become: true
+  tags: config
+
 # - name: Plasma | Remove previously set wallpapers
 #   ansible.builtin.shell: |
 #     kwriteconfig6 --file ~/.config/plasma-org.kde.plasma.desktop-appletsrc --group Containments --group 1 --group Wallpaper --group org.kde.image --group General --key Image --delete
@@ -98,7 +103,13 @@
   tags: config
 
 - name: Plasma | Set SDDM theme
-  ansible.builtin.shell: "sddmthemeinstaller --install ./sddm-master.zip"
+  community.general.ini_file:
+    path: /etc/sddm.conf.d/kde_settings.conf
+    section: Theme
+    option: Current
+    value: "Sweet-sddm-v2"
+    mode: "0600"
+    backup: true
   become: true
   tags: config
 
