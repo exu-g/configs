@@ -9,15 +9,15 @@
     - "~/.themes/"
   tags: config
 
-# - name: Plasma | Remove specific theme folders
-#   ansible.builtin.file:
-#     path: "{{ item }}"
-#     state: "absent"
-#   loop:
-#     - "~/.local/share/icons/"
-#     - "~/.local/share/plasma/desktoptheme/Sweet/"
-#     - "~/.themes/Sweet-Dark/"
-#   tags: config
+- name: Plasma | Remove specific theme folders
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: "absent"
+  loop:
+    - "~/.local/share/icons/"
+    - "~/.local/share/plasma/desktoptheme/Sweet/"
+    - "~/.themes/Sweet-Dark/"
+  tags: config
 
 - name: Plasma | Get desktop theme
   ansible.builtin.git:
