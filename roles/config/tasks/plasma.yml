@@ -38,6 +38,15 @@
     dest: "~/.local/share/icons/"
   tags: config
 
+- name: Plasma | Copy files
+  ansible.builtin.copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    remote_src: true
+  loop:
+    - src: "~/.themes/Sweet-Dark/kde/colorschemes/Sweet.colors"
+      dest: "~/.local/share/color-schemes/Sweet.colors"
+
 # - name: Plasma | Remove previously set wallpapers
 #   ansible.builtin.shell: |
 #     kwriteconfig6 --file ~/.config/plasma-org.kde.plasma.desktop-appletsrc --group Containments --group 1 --group Wallpaper --group org.kde.image --group General --key Image --delete
