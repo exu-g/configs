@@ -108,8 +108,8 @@
     section: Theme
     option: Current
     value: "Sweet-sddm-v2"
+    no_extra_spaces: true
     mode: "0644"
-    backup: true
   become: true
   tags: config
 
