@@ -107,7 +107,7 @@
     path: /etc/sddm.conf.d/kde_settings.conf
     section: Theme
     option: Current
-    value: "Sweet-sddm-v2"
+    value: "Sweet-sddm-v2-master"
     no_extra_spaces: true
     mode: "0644"
   become: true
