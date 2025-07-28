@@ -5,7 +5,7 @@ function kdesave
     konsave --export-profile konsave-export-main
     unzip konsave-export-main.knsv -d konsave-export-main
     cp -r ./konsave-export-main/save/configs/* ~/gitprojects/configs/roles/config/files/.config/
-    cp -r ./konsave-export-main/export/home_folder/.* ~/gitprojects/configs/roles/config/files/
+    #cp -r ./konsave-export-main/export/home_folder/.* ~/gitprojects/configs/roles/config/files/
     cp -r ./konsave-export-main/export/share_folder/* ~/gitprojects/configs/roles/config/files/.local/share/
     rm -rf ./konsave-export-main ./konsave-export-main.knsv
     # kdeconnect somehow gets copied every time

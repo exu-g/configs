@@ -1,15 +1,4 @@
 "use strict";
-var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, state, kind, f) {
-    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
-    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
-    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
-};
-var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, state, value, kind, f) {
-    if (kind === "m") throw new TypeError("Private method is not writable");
-    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
-    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
-    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
-};
 const Shortcut = {
     FocusNext: 1,
     FocusPrev: 2,
@@ -45,7 +34,86 @@ const Shortcut = {
     RotatePart: 31,
     ToggleDock: 32,
 };
+const ShortcutsKeys = Object.keys(Shortcut);
+const LogModules = {
+    newWindowAdded: 1,
+    newWindowFiltered: 2,
+    newWindowUnmanaged: 3,
+    screensChanged: 4,
+    virtualScreenGeometryChanged: 5,
+    currentActivityChanged: 6,
+    currentDesktopChanged: 7,
+    windowAdded: 8,
+    windowActivated: 9,
+    windowRemoved: 10,
+    activitiesChanged: 11,
+    bufferGeometryChanged: 12,
+    desktopsChanged: 13,
+    fullScreenChanged: 14,
+    interactiveMoveResizeStepped: 15,
+    maximizedAboutToChange: 16,
+    minimizedChanged: 17,
+    moveResizedChanged: 18,
+    outputChanged: 19,
+    shortcut: 20,
+    arrangeScreen: 21,
+    printConfig: 22,
+    setTimeout: 23,
+    window: 24,
+};
+const LogModulesKeys = Object.keys(LogModules);
+const LogPartitions = {
+    newWindow: {
+        number: 100,
+        name: "newWindow",
+        modules: [
+            LogModules.newWindowAdded,
+            LogModules.newWindowFiltered,
+            LogModules.newWindowUnmanaged,
+        ],
+    },
+    workspaceSignals: {
+        number: 200,
+        name: "workspaceSignal",
+        modules: [
+            LogModules.screensChanged,
+            LogModules.virtualScreenGeometryChanged,
+            LogModules.currentActivityChanged,
+            LogModules.currentDesktopChanged,
+            LogModules.windowAdded,
+            LogModules.windowActivated,
+            LogModules.windowRemoved,
+        ],
+    },
+    windowSignals: {
+        number: 300,
+        name: "windowSignal",
+        modules: [
+            LogModules.activitiesChanged,
+            LogModules.bufferGeometryChanged,
+            LogModules.desktopsChanged,
+            LogModules.fullScreenChanged,
+            LogModules.interactiveMoveResizeStepped,
+            LogModules.maximizedAboutToChange,
+            LogModules.minimizedChanged,
+            LogModules.moveResizedChanged,
+            LogModules.outputChanged,
+        ],
+    },
+    other: {
+        number: 1000,
+        name: "other",
+        modules: [
+            LogModules.shortcut,
+            LogModules.arrangeScreen,
+            LogModules.printConfig,
+            LogModules.setTimeout,
+            LogModules.window,
+        ],
+    },
+};
 let CONFIG;
+let LOG;
 class Dock {
     constructor(cfg, priority = 0) {
         this.renderedOutputId = "";
@@ -53,12 +121,14 @@ class Dock {
         this.priority = priority;
         this.position = null;
         this.cfg = Object.assign({}, cfg);
+        this.autoDock = false;
     }
     clone() {
         let dock = new Dock(this.cfg, this.priority);
         dock.renderedOutputId = this.renderedOutputId;
         dock.renderedTime = this.renderedTime;
         dock.position = this.position;
+        dock.autoDock = this.autoDock;
         return dock;
     }
 }
@@ -99,7 +169,6 @@ const EdgeAlignment = {
     middle: 2,
     inside: 3,
 };
-var _a, _DefaultDockCfg_instance;
 class DefaultDockCfg {
     constructor() {
         let hHeight = validateNumber(CONFIG.dockHHeight, 1, 50);
@@ -248,17 +317,15 @@ class DefaultDockCfg {
         }
     }
     static get instance() {
-        if (!__classPrivateFieldGet(_a, _a, "f", _DefaultDockCfg_instance)) {
-            __classPrivateFieldSet(_a, _a, new _a(), "f", _DefaultDockCfg_instance);
+        if (!DefaultDockCfg._dockInstance) {
+            DefaultDockCfg._dockInstance = new DefaultDockCfg();
         }
-        return __classPrivateFieldGet(_a, _a, "f", _DefaultDockCfg_instance);
+        return DefaultDockCfg._dockInstance;
     }
     cloneAndUpdate(cfg) {
-        return Object.assign({}, _a.instance, cfg);
+        return Object.assign({}, DefaultDockCfg.instance, cfg);
     }
 }
-_a = DefaultDockCfg;
-_DefaultDockCfg_instance = { value: void 0 };
 class DockEntry {
     constructor(cfg, id) {
         this.surfaceCfg = cfg;
@@ -482,14 +549,26 @@ class DockEntry {
         }
     }
     arrangeSlots(dockedWindows) {
+        let contenders = this.arrangeContenders(dockedWindows, true);
+        if (contenders.length !== 0 && this.isHasEmptySlot()) {
+            contenders.forEach((w) => (w.dock.position = null));
+            contenders = this.arrangeContenders(contenders, false);
+        }
+        contenders.forEach((w) => {
+            w.state = WindowState.Tiled;
+        });
+    }
+    arrangeContenders(windows, init) {
         let contenders = [];
         for (const slot of this.slots) {
-            if (dockedWindows.length === 0 && contenders.length === 0) {
+            if (!init && slot.window !== null)
+                continue;
+            if (windows.length === 0 && contenders.length === 0) {
                 slot.window = null;
                 continue;
             }
             let tempDockedWindows = [];
-            contenders.push(...dockedWindows.filter((w) => {
+            contenders.push(...windows.filter((w) => {
                 if (w.dock === null) {
                     w.dock = new Dock(this.surfaceCfg.cfg);
                     return true;
@@ -501,7 +580,7 @@ class DockEntry {
                     return true;
                 tempDockedWindows.push(w);
             }));
-            dockedWindows = tempDockedWindows;
+            windows = tempDockedWindows;
             if (contenders.length !== 0) {
                 this.contendersSort(contenders, slot.position, this.id);
                 slot.window = contenders.pop();
@@ -511,15 +590,14 @@ class DockEntry {
                 slot.window = null;
             }
         }
-        contenders.forEach((w) => {
-            w.state = WindowState.Tiled;
-        });
+        return contenders;
     }
     assignSizes(workingArea) {
         const MAX_SIZE = 50;
-        const MIN_SIZE = 5;
-        const MAX_V_GAPS = workingArea.width * 0.05;
-        const MAX_H_GAPS = workingArea.height * 0.05;
+        const MAX_GAPS = {
+            width: workingArea.width * 0.05,
+            height: workingArea.height * 0.05,
+        };
         let oppositeSlot = null;
         let donePositions = [];
         let dockCfg;
@@ -528,6 +606,10 @@ class DockEntry {
             if (slot.window === null)
                 continue;
             dockCfg = slot.window.dock.cfg;
+            const minSize = {
+                width: Math.max((slot.window.minSize.width * 100) / workingArea.width, 5),
+                height: Math.max((slot.window.minSize.height * 100) / workingArea.height, 5),
+            };
             if (donePositions.indexOf(slot.position) >= 0)
                 continue;
             switch (slot.position) {
@@ -550,16 +632,26 @@ class DockEntry {
             switch (slot.position) {
                 case DockPosition.left:
                 case DockPosition.right:
-                    if (dockCfg.vWide < MIN_SIZE)
-                        dockCfg.vWide = MIN_SIZE;
-                    if (dockCfg.vGap > MAX_V_GAPS)
-                        dockCfg.vGap = MAX_V_GAPS;
+                    if (dockCfg.vGap > MAX_GAPS.width)
+                        dockCfg.vGap = MAX_GAPS.width;
+                    if (dockCfg.vWide <
+                        minSize.width + (200 * dockCfg.vGap) / workingArea.width)
+                        dockCfg.vWide =
+                            minSize.width + (200 * dockCfg.vGap) / workingArea.width;
                     if (oppositeSlot !== null) {
                         oppositeDockCfg = oppositeSlot.window.dock.cfg;
-                        if (oppositeDockCfg.vWide < MIN_SIZE)
-                            oppositeDockCfg.vWide = MIN_SIZE;
-                        if (oppositeDockCfg.vGap > MAX_V_GAPS)
-                            oppositeDockCfg.vGap = MAX_V_GAPS;
+                        let opMinSize = {
+                            width: Math.max((oppositeSlot.window.minSize.width * 100) / workingArea.width, 5),
+                            height: Math.max((oppositeSlot.window.minSize.height * 100) /
+                                workingArea.height, 5),
+                        };
+                        if (oppositeDockCfg.vGap > MAX_GAPS.width)
+                            oppositeDockCfg.vGap = MAX_GAPS.width;
+                        if (oppositeDockCfg.vWide <
+                            opMinSize.width + (200 * oppositeDockCfg.vGap) / workingArea.width)
+                            oppositeDockCfg.vWide =
+                                opMinSize.width +
+                                    (200 * oppositeDockCfg.vGap) / workingArea.width;
                         if (dockCfg.vWide + oppositeDockCfg.vWide > MAX_SIZE) {
                             if (dockCfg.vWide > MAX_SIZE / 2 &&
                                 oppositeDockCfg.vWide > MAX_SIZE / 2) {
@@ -575,8 +667,8 @@ class DockEntry {
                         }
                         if (oppositeDockCfg.vHeight > 100)
                             oppositeDockCfg.vHeight = 100;
-                        if (oppositeDockCfg.vHeight < MIN_SIZE)
-                            oppositeDockCfg.vHeight = MIN_SIZE;
+                        if (oppositeDockCfg.vHeight < minSize.height)
+                            oppositeDockCfg.vHeight = minSize.height;
                         donePositions.push(oppositeSlot.position);
                     }
                     else {
@@ -586,21 +678,32 @@ class DockEntry {
                     }
                     if (dockCfg.vHeight > 100)
                         dockCfg.vHeight = 100;
-                    if (dockCfg.vHeight < MIN_SIZE)
-                        dockCfg.vHeight = MIN_SIZE;
+                    if (dockCfg.vHeight < minSize.height)
+                        dockCfg.vHeight = minSize.height;
                     break;
                 case DockPosition.top:
                 case DockPosition.bottom:
-                    if (dockCfg.hWide < MIN_SIZE)
-                        dockCfg.hWide = MIN_SIZE;
-                    if (dockCfg.hGap > MAX_H_GAPS)
-                        dockCfg.hGap = MAX_H_GAPS;
+                    if (dockCfg.hGap > MAX_GAPS.height)
+                        dockCfg.hGap = MAX_GAPS.height;
+                    if (dockCfg.hHeight <
+                        minSize.height + (200 * dockCfg.hGap) / workingArea.height)
+                        dockCfg.hHeight =
+                            minSize.height + (200 * dockCfg.hGap) / workingArea.height;
                     if (oppositeSlot !== null) {
                         oppositeDockCfg = oppositeSlot.window.dock.cfg;
-                        if (oppositeDockCfg.hHeight < MIN_SIZE)
-                            oppositeDockCfg.hHeight = MIN_SIZE;
-                        if (oppositeDockCfg.hGap > MAX_H_GAPS)
-                            oppositeDockCfg.hGap = MAX_H_GAPS;
+                        let opMinSize = {
+                            width: Math.max((oppositeSlot.window.minSize.width * 100) / workingArea.width, 5),
+                            height: Math.max((oppositeSlot.window.minSize.height * 100) /
+                                workingArea.height, 5),
+                        };
+                        if (oppositeDockCfg.hGap > MAX_GAPS.height)
+                            oppositeDockCfg.hGap = MAX_GAPS.height;
+                        if (oppositeDockCfg.hHeight <
+                            opMinSize.height +
+                                (200 * oppositeDockCfg.hGap) / workingArea.height)
+                            oppositeDockCfg.hHeight =
+                                opMinSize.height +
+                                    (200 * oppositeDockCfg.hGap) / workingArea.height;
                         if (dockCfg.hHeight + oppositeDockCfg.hHeight > MAX_SIZE) {
                             if (dockCfg.hHeight > MAX_SIZE / 2 &&
                                 oppositeDockCfg.hHeight > MAX_SIZE / 2) {
@@ -616,8 +719,8 @@ class DockEntry {
                         }
                         if (oppositeDockCfg.hWide > 100)
                             oppositeDockCfg.hWide = 100;
-                        if (oppositeDockCfg.hWide < 5)
-                            oppositeDockCfg.hWide = 5;
+                        if (oppositeDockCfg.hWide < opMinSize.width)
+                            oppositeDockCfg.hWide = opMinSize.width;
                         donePositions.push(oppositeSlot.position);
                     }
                     else {
@@ -627,8 +730,8 @@ class DockEntry {
                     }
                     if (dockCfg.hWide > 100)
                         dockCfg.hWide = 100;
-                    if (dockCfg.hWide < MIN_SIZE)
-                        dockCfg.hWide = MIN_SIZE;
+                    if (dockCfg.hWide < minSize.width)
+                        dockCfg.hWide = minSize.width;
                     break;
             }
         }
@@ -681,6 +784,9 @@ class DockEntry {
         slots.sort((a, b) => a.order - b.order);
         return slots;
     }
+    isHasEmptySlot() {
+        return !this.slots.every((slot) => slot.window !== null);
+    }
 }
 function parseDockUserSurfacesCfg() {
     let surfacesCfg = [];
@@ -719,11 +825,16 @@ function parseDockUserWindowClassesCfg() {
         let splittedUserCfg = windowCfgString[2]
             .split(",")
             .map((part) => part.trim().toLowerCase());
-        let partialDockCfg = parseSplittedUserCfg(splittedUserCfg);
-        if (partialDockCfg instanceof Err) {
-            warning(`Invalid User window class config: ${cfg}. ${partialDockCfg}`);
-            return;
+        let partialDockCfg;
+        if (splittedUserCfg[0] !== "") {
+            partialDockCfg = parseSplittedUserCfg(splittedUserCfg);
+            if (partialDockCfg instanceof Err) {
+                warning(`Invalid User window class config: ${cfg}. ${partialDockCfg}`);
+                return;
+            }
         }
+        else
+            partialDockCfg = {};
         let splittedSpecialFlags = windowCfgString[1]
             .split(",")
             .map((part) => part.trim().toLowerCase());
@@ -740,6 +851,10 @@ function parseSpecialFlags(splittedSpecialFlags, partialDockCfg) {
     let dock = new Dock(DefaultDockCfg.instance.cloneAndUpdate(partialDockCfg));
     splittedSpecialFlags.forEach((flag) => {
         switch (flag) {
+            case "auto":
+            case "a":
+                dock.autoDock = true;
+                break;
             case "pin":
             case "p":
                 dock.priority = 5;
@@ -960,6 +1075,12 @@ class DockStore {
                 return false;
         }
     }
+    isNewWindowHaveDocked(window) {
+        if (window.windowClassName in this.windowClassesCfg &&
+            this.windowClassesCfg[window.windowClassName].autoDock === true)
+            return true;
+        return false;
+    }
     getSurfaceCfg(srf) {
         let dockCfg = null;
         for (let surfaceCfg of this.surfacesCfg) {
@@ -976,41 +1097,79 @@ class DockStore {
 }
 class KWinConfig {
     constructor() {
-        function commaSeparate(str) {
+        function separate(str, separator) {
             if (!str || typeof str !== "string")
                 return [];
             return str
-                .split(",")
+                .split(separator)
                 .map((part) => part.trim())
                 .filter((part) => part != "");
         }
-        function newLineSeparate(str) {
-            if (!str || typeof str !== "string")
-                return [];
-            return str
-                .split("\n")
-                .map((part) => part.trim())
-                .filter((part) => part != "");
+        if (KWIN.readConfig("logging", false)) {
+            let logParts = [];
+            let newWindowSubmodules = [];
+            if (KWIN.readConfig("logNewWindows", false))
+                newWindowSubmodules.push("1");
+            if (KWIN.readConfig("logFilteredWindows", false))
+                newWindowSubmodules.push("2");
+            if (KWIN.readConfig("logUnmanagedWindows", false))
+                newWindowSubmodules.push("3");
+            if (newWindowSubmodules.length > 0)
+                logParts.push([LogPartitions.newWindow, newWindowSubmodules]);
+            if (KWIN.readConfig("logWorkspaceSignals", false)) {
+                let workspaceSignalsSubmodules = separate(KWIN.readConfig("logWorkspaceSignalsSubmodules", ""), ",");
+                logParts.push([
+                    LogPartitions.workspaceSignals,
+                    workspaceSignalsSubmodules,
+                ]);
+            }
+            if (KWIN.readConfig("logWindowSignals", false)) {
+                let windowSignalsSubmodules = separate(KWIN.readConfig("logWindowSignalsSubmodules", ""), ",");
+                logParts.push([LogPartitions.windowSignals, windowSignalsSubmodules]);
+            }
+            if (KWIN.readConfig("logOther", false)) {
+                let otherSubmodules = separate(KWIN.readConfig("logOtherSubmodules", ""), ",");
+                logParts.push([LogPartitions.other, otherSubmodules]);
+            }
+            const logFilters = KWIN.readConfig("logFilter", false)
+                ? separate(KWIN.readConfig("logFilterStr", ""), ",")
+                : [];
+            LOG = new Logging(logParts, logFilters);
         }
-        DEBUG.enabled = DEBUG.enabled || KWIN.readConfig("debug", false);
-        this.layoutOrder = [];
+        else
+            LOG = undefined;
+        let sortedLayouts = [];
         this.layoutFactories = {};
         [
-            ["enableTileLayout", true, TileLayout],
-            ["enableMonocleLayout", true, MonocleLayout],
-            ["enableColumnsLayout", true, ColumnsLayout],
-            ["enableThreeColumnLayout", true, ThreeColumnLayout],
-            ["enableSpreadLayout", true, SpreadLayout],
-            ["enableStairLayout", true, StairLayout],
-            ["enableSpiralLayout", true, SpiralLayout],
-            ["enableQuarterLayout", false, QuarterLayout],
-            ["enableStackedLayout", false, StackedLayout],
-            ["enableFloatingLayout", false, FloatingLayout],
-            ["enableBTreeLayout", false, BTreeLayout],
-            ["enableCascadeLayout", false, CascadeLayout],
+            ["tileLayoutOrder", 1, TileLayout],
+            ["monocleLayoutOrder", 2, MonocleLayout],
+            ["threeColumnLayoutOrder", 3, ThreeColumnLayout],
+            ["spiralLayoutOrder", 4, SpiralLayout],
+            ["quarterLayoutOrder", 5, QuarterLayout],
+            ["stackedLayoutOrder", 6, StackedLayout],
+            ["columnsLayoutOrder", 7, ColumnsLayout],
+            ["spreadLayoutOrder", 8, SpreadLayout],
+            ["floatingLayoutOrder", 9, FloatingLayout],
+            ["stairLayoutOrder", 10, StairLayout],
+            ["binaryTreeLayoutOrder", 11, BTreeLayout],
+            ["cascadeLayoutOrder", 12, CascadeLayout],
         ].forEach(([configKey, defaultValue, layoutClass]) => {
-            if (KWIN.readConfig(configKey, defaultValue))
-                this.layoutOrder.push(layoutClass.id);
+            let order = validateNumber(KWIN.readConfig(configKey, defaultValue), 0, 12);
+            if (order instanceof Err) {
+                order = defaultValue;
+                warning(`kwinconfig: layout order for ${layoutClass.id} is invalid, using default value ${order}`);
+            }
+            if (order === 0)
+                return;
+            sortedLayouts.push({ order: order, layoutClass: layoutClass });
+        });
+        sortedLayouts.sort((a, b) => a.order - b.order);
+        if (sortedLayouts.length === 0) {
+            sortedLayouts.push({ order: 1, layoutClass: TileLayout });
+        }
+        this.layoutOrder = [];
+        sortedLayouts.forEach(({ layoutClass }) => {
+            this.layoutOrder.push(layoutClass.id);
             this.layoutFactories[layoutClass.id] = () => new layoutClass();
         });
         this.dockOrder = [
@@ -1031,8 +1190,8 @@ class KWinConfig {
         this.dockVGap = KWIN.readConfig("dockVGap", 0);
         this.dockVAlignment = KWIN.readConfig("dockVAlignment", 0);
         this.dockVEdgeAlignment = KWIN.readConfig("dockVEdgeAlignment", 0);
-        this.dockSurfacesConfig = newLineSeparate(KWIN.readConfig("dockSurfacesConfig", ""));
-        this.dockWindowClassConfig = newLineSeparate(KWIN.readConfig("dockWindowClassConfig", ""));
+        this.dockSurfacesConfig = separate(KWIN.readConfig("dockSurfacesConfig", ""), "\n");
+        this.dockWindowClassConfig = separate(KWIN.readConfig("dockWindowClassConfig", ""), "\n");
         this.soleWindowWidth = KWIN.readConfig("soleWindowWidth", 100);
         this.soleWindowHeight = KWIN.readConfig("soleWindowHeight", 100);
         this.soleWindowNoBorders = KWIN.readConfig("soleWindowNoBorders", false);
@@ -1040,7 +1199,7 @@ class KWinConfig {
         this.tileLayoutInitialAngle = KWIN.readConfig("tileLayoutInitialRotationAngle", "0");
         this.columnsLayoutInitialAngle = KWIN.readConfig("columnsLayoutInitialRotationAngle", "0");
         this.columnsBalanced = KWIN.readConfig("columnsBalanced", false);
-        this.columnsLayerConf = commaSeparate(KWIN.readConfig("columnsLayerConf", ""));
+        this.columnsLayerConf = separate(KWIN.readConfig("columnsLayerConf", ""), ",");
         this.tiledWindowsLayer = getWindowLayer(KWIN.readConfig("tiledWindowsLayer", 0));
         this.floatedWindowsLayer = getWindowLayer(KWIN.readConfig("floatedWindowsLayer", 1));
         this.quarterLayoutReset = KWIN.readConfig("quarterLayoutReset", false);
@@ -1058,7 +1217,8 @@ class KWinConfig {
         this.screenGapLeft = KWIN.readConfig("screenGapLeft", 0);
         this.screenGapRight = KWIN.readConfig("screenGapRight", 0);
         this.screenGapTop = KWIN.readConfig("screenGapTop", 0);
-        this.tileLayoutGap = KWIN.readConfig("tileLayoutGap", 0);
+        this.screenGapBetween = KWIN.readConfig("screenGapBetween", 0);
+        this.gapsOverrideConfig = separate(KWIN.readConfig("gapsOverrideConfig", ""), "\n");
         const directionalKeyDwm = KWIN.readConfig("directionalKeyDwm", false);
         const directionalKeyFocus = KWIN.readConfig("directionalKeyFocus", true);
         this.directionalKeyMode = directionalKeyDwm ? "dwm" : "focus";
@@ -1069,20 +1229,19 @@ class KWinConfig {
         this.preventMinimize = KWIN.readConfig("preventMinimize", false);
         this.preventProtrusion = KWIN.readConfig("preventProtrusion", true);
         this.notificationDuration = KWIN.readConfig("notificationDuration", 1000);
-        this.pollMouseXdotool = KWIN.readConfig("pollMouseXdotool", false);
-        this.floatingClass = commaSeparate(KWIN.readConfig("floatingClass", ""));
-        this.floatingTitle = commaSeparate(KWIN.readConfig("floatingTitle", ""));
-        this.ignoreActivity = commaSeparate(KWIN.readConfig("ignoreActivity", ""));
-        this.ignoreClass = commaSeparate(KWIN.readConfig("ignoreClass", "krunner,yakuake,spectacle,kded5,xwaylandvideobridge,plasmashell,ksplashqml,org.kde.plasmashell,org.kde.polkit-kde-authentication-agent-1,org.kde.kruler,kruler,kwin_wayland,ksmserver-logout-greeter"));
-        this.ignoreRole = commaSeparate(KWIN.readConfig("ignoreRole", "quake"));
-        this.ignoreScreen = commaSeparate(KWIN.readConfig("ignoreScreen", ""));
-        this.ignoreVDesktop = commaSeparate(KWIN.readConfig("ignoreVDesktop", ""));
-        this.ignoreTitle = commaSeparate(KWIN.readConfig("ignoreTitle", ""));
-        this.screenDefaultLayout = commaSeparate(KWIN.readConfig("screenDefaultLayout", ""));
-        this.tilingClass = commaSeparate(KWIN.readConfig("tilingClass", ""));
+        this.floatSkipPager = KWIN.readConfig("floatSkipPagerWindows", false);
+        this.floatingClass = separate(KWIN.readConfig("floatingClass", ""), ",");
+        this.floatingTitle = separate(KWIN.readConfig("floatingTitle", ""), ",");
+        this.ignoreActivity = separate(KWIN.readConfig("ignoreActivity", ""), ",");
+        this.ignoreClass = separate(KWIN.readConfig("ignoreClass", "krunner,yakuake,spectacle,kded5,xwaylandvideobridge,plasmashell,ksplashqml,org.kde.plasmashell,org.kde.polkit-kde-authentication-agent-1,org.kde.kruler,kruler,kwin_wayland,ksmserver-logout-greeter"), ",");
+        this.ignoreRole = separate(KWIN.readConfig("ignoreRole", "quake"), ",");
+        this.ignoreScreen = separate(KWIN.readConfig("ignoreScreen", ""), ",");
+        this.ignoreVDesktop = separate(KWIN.readConfig("ignoreVDesktop", ""), ",");
+        this.ignoreTitle = separate(KWIN.readConfig("ignoreTitle", ""), ",");
+        this.screenDefaultLayout = separate(KWIN.readConfig("screenDefaultLayout", ""), ",");
+        this.tilingClass = separate(KWIN.readConfig("tilingClass", ""), ",");
         this.tileNothing = KWIN.readConfig("tileNothing", false);
         if (this.preventMinimize && this.monocleMinimizeRest) {
-            debug(() => "preventMinimize is disabled because of monocleMinimizeRest.");
             this.preventMinimize = false;
         }
     }
@@ -1126,7 +1285,8 @@ class KWinDriver {
         return screens;
     }
     get cursorPosition() {
-        return this.mousePoller.mousePosition;
+        const workspacePos = this.workspace.cursorPos;
+        return workspacePos !== null ? [workspacePos.x, workspacePos.y] : null;
     }
     constructor(api) {
         KWIN = api.kwin;
@@ -1136,11 +1296,10 @@ class KWinDriver {
         this.control = new TilingController(this.engine);
         this.windowMap = new WrapperMap((client) => KWinWindow.generateID(client), (client) => new WindowClass(new KWinWindow(client, this.workspace)));
         this.entered = false;
-        this.mousePoller = new KWinMousePoller();
     }
     main() {
         CONFIG = KWINCONFIG = new KWinConfig();
-        debug(() => "Config: " + KWINCONFIG);
+        LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.printConfig, undefined, `Config: ${CONFIG}`);
         this.bindEvents();
         this.bindShortcut();
         const clients = this.workspace.stackingOrder;
@@ -1155,23 +1314,28 @@ class KWinDriver {
             client.normalWindow &&
             !client.hidden &&
             client.width * client.height > 10) {
-            if (KWIN.readConfig("debugActiveWin", false))
-                print(debugWin(client));
             const window = this.windowMap.add(client);
             this.control.onWindowAdded(this, window);
             if (window.state !== WindowState.Unmanaged) {
                 this.bindWindowEvents(window, client);
+                if (client.maximizeMode > 0)
+                    client.setMaximize(false, false);
+                LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.newWindowAdded, "", debugWin(client), {
+                    winClass: [`${client.resourceClass}`],
+                });
                 return window;
             }
             else {
                 this.windowMap.remove(client);
-                if (KWIN.readConfig("debugActiveWin", false))
-                    print("Unmanaged: " + debugWin(client));
+                LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.newWindowUnmanaged, "", debugWin(client), {
+                    winClass: [`${client.resourceClass}`],
+                });
             }
         }
         else {
-            if (KWIN.readConfig("debugActiveWin", false))
-                print("Filtered: " + debugWin(client));
+            LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.newWindowFiltered, "", debugWin(client), {
+                winClass: [`${client.resourceClass}`],
+            });
         }
         return null;
     }
@@ -1185,6 +1349,7 @@ class KWinDriver {
     bindShortcut() {
         const callbackShortcut = (shortcut) => {
             return () => {
+                LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.shortcut, `Shortcut pressed:`, `${ShortcutsKeys[shortcut]}`);
                 this.enter(() => this.control.onShortcut(this, shortcut));
             };
         };
@@ -1262,6 +1427,7 @@ class KWinDriver {
             .activated.connect(callbackShortcut(Shortcut.SetMaster));
         const callbackShortcutLayout = (layoutClass) => {
             return () => {
+                LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.shortcut, "shortcut layout", `${layoutClass.id}`);
                 this.enter(() => this.control.onShortcut(this, Shortcut.SetLayout, layoutClass.id));
             };
         };
@@ -1317,31 +1483,49 @@ class KWinDriver {
             callback();
         }
         catch (e) {
-            debug(() => "Error raised from line " + e.lineNumber);
-            debug(() => e);
+            warning(`ProtectFunc: Error raised line: ${e.lineNumber}. Error: ${e}`);
         }
         finally {
             this.entered = false;
         }
     }
     bindEvents() {
-        this.connect(this.workspace.screensChanged, () => this.control.onSurfaceUpdate(this, "screens (Outputs) changed"));
-        this.connect(this.workspace.virtualScreenGeometryChanged, () => {
-            this.control.onSurfaceUpdate(this, "virtualScreenGeometryChanged");
+        this.connect(this.workspace.screensChanged, () => {
+            LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.screensChanged, "eventFired");
+            this.control.onSurfaceUpdate(this);
         });
-        this.connect(this.workspace.currentActivityChanged, (activityId) => this.control.onCurrentActivityChanged(this, activityId));
-        this.connect(this.workspace.currentDesktopChanged, (virtualDesktop) => this.control.onSurfaceUpdate(this, "currentDesktopChanged"));
+        this.connect(this.workspace.virtualScreenGeometryChanged, () => {
+            LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.virtualScreenGeometryChanged, "eventFired");
+            this.control.onSurfaceUpdate(this);
+        });
+        this.connect(this.workspace.currentActivityChanged, (activityId) => {
+            LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.currentActivityChanged, "eventFired", `Activity ID:${activityId}`);
+            this.control.onCurrentActivityChanged(this);
+        });
+        this.connect(this.workspace.currentDesktopChanged, (virtualDesktop) => {
+            LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.currentDesktopChanged, "eventFired", `Virtual Desktop. name:${virtualDesktop.name}, id:${virtualDesktop.id}`);
+            this.control.onSurfaceUpdate(this);
+        });
         this.connect(this.workspace.windowAdded, (client) => {
+            if (!client)
+                return;
+            LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.windowAdded, "eventFired", `window: caption:${client.caption} internalID:${client.internalId}`, { winClass: [`${client.resourceClass}`] });
             const window = this.addWindow(client);
             if (client.active && window !== null)
                 this.control.onWindowFocused(this, window);
         });
         this.connect(this.workspace.windowActivated, (client) => {
+            if (!client)
+                return;
+            LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.windowActivated, "eventFired", `window: caption:${client.caption} internalID:${client.internalId}`, { winClass: [`${client.resourceClass}`] });
             const window = this.windowMap.get(client);
             if (client.active && window !== null)
                 this.control.onWindowFocused(this, window);
         });
         this.connect(this.workspace.windowRemoved, (client) => {
+            if (!client)
+                return;
+            LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.windowRemoved, "eventFired", `window: caption:${client.caption} internalID:${client.internalId}`, { winClass: [`${client.resourceClass}`] });
             const window = this.windowMap.get(client);
             if (window) {
                 this.control.onWindowRemoved(this, window);
@@ -1352,12 +1536,43 @@ class KWinDriver {
     bindWindowEvents(window, client) {
         let moving = false;
         let resizing = false;
+        this.connect(client.activitiesChanged, () => {
+            LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.activitiesChanged, "eventFired", `window: caption:${client.caption} internalID:${client.internalId}, activities: ${client.activities.join(",")}`, { winClass: [`${client.resourceClass}`] });
+            this.control.onWindowChanged(this, window, "activity=" + client.activities.join(","));
+        });
+        this.connect(client.bufferGeometryChanged, () => {
+            LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.bufferGeometryChanged, "eventFired", `Window: caption:${client.caption} internalId:${client.internalId}, moving:${moving}, resizing:${resizing}, geometry:${window.geometry}`, { winClass: [`${client.resourceClass}`] });
+            if (moving)
+                this.control.onWindowMove(window);
+            else if (resizing)
+                this.control.onWindowResize(this, window);
+            else {
+                if (!window.actualGeometry.equals(window.geometry))
+                    this.control.onWindowGeometryChanged(this, window);
+            }
+        });
+        this.connect(client.desktopsChanged, () => {
+            LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.desktopsChanged, "eventFired", `window: caption:${client.caption} internalID:${client.internalId}, desktops: ${client.desktops}`, { winClass: [`${client.resourceClass}`] });
+            this.control.onWindowChanged(this, window, "Window's desktop changed.");
+        });
+        this.connect(client.fullScreenChanged, () => {
+            LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.fullScreenChanged, "eventFired", `window: caption:${client.caption} internalID:${client.internalId}, fullscreen: ${client.fullScreen}`, { winClass: [`${client.resourceClass}`] });
+            this.control.onWindowChanged(this, window, "fullscreen=" + client.fullScreen);
+        });
+        this.connect(client.interactiveMoveResizeStepped, (geometry) => {
+            LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.interactiveMoveResizeStepped, "eventFired", `window: caption:${client.caption} internalID:${client.internalId},interactiveMoveResizeStepped:${geometry}`, { winClass: [`${client.resourceClass}`] });
+            if (client.resize)
+                return;
+            this.control.onWindowDragging(this, window, geometry);
+        });
         this.connect(client.maximizedAboutToChange, (mode) => {
-            const maximized = mode === 3;
-            window.window.maximized = maximized;
-            this.control.onWindowMaximizeChanged(this, window, maximized);
+            LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.maximizedAboutToChange, "eventFired", `window: caption:${client.caption} internalID:${client.internalId},maximizedAboutToChange:${mode}`, { winClass: [`${client.resourceClass}`] });
+            window.window.maximized =
+                mode > 0 ? true : false;
+            this.control.onWindowMaximizeChanged(this, window);
         });
         this.connect(client.minimizedChanged, () => {
+            LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.minimizedChanged, "eventFired", `window: caption:${client.caption} internalID:${client.internalId},minimized:${client.minimized}`, { winClass: [`${client.resourceClass}`] });
             if (KWINCONFIG.preventMinimize) {
                 client.minimized = false;
                 this.workspace.activeWindow = client;
@@ -1367,27 +1582,15 @@ class KWinDriver {
                 this.control.onWindowChanged(this, window, comment);
             }
         });
-        this.connect(client.fullScreenChanged, () => this.control.onWindowChanged(this, window, "fullscreen=" + client.fullScreen));
-        this.connect(client.desktopsChanged, () => this.control.onDesktopsChanged(this, window));
-        this.connect(client.interactiveMoveResizeStepped, (geometry) => {
-            if (client.resize)
-                return;
-            this.control.onWindowDragging(this, window, geometry);
-        });
         this.connect(client.moveResizedChanged, () => {
-            debugObj(() => [
-                "moveResizedChanged",
-                { window, move: client.move, resize: client.resize },
-            ]);
+            LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.moveResizedChanged, "eventFired", `Window: caption:${client.caption} internalId:${client.internalId}, moving:${moving}, resizing:${resizing}`, { winClass: [`${client.resourceClass}`] });
             if (moving !== client.move) {
                 moving = client.move;
                 if (moving) {
-                    this.mousePoller.start();
                     this.control.onWindowMoveStart(window);
                 }
                 else {
                     this.control.onWindowMoveOver(this, window);
-                    this.mousePoller.stop();
                 }
             }
             if (resizing !== client.resize) {
@@ -1398,72 +1601,18 @@ class KWinDriver {
                     this.control.onWindowResizeOver(this, window);
             }
         });
-        this.connect(client.bufferGeometryChanged, () => {
-            if (moving)
-                this.control.onWindowMove(window);
-            else if (resizing)
-                this.control.onWindowResize(this, window);
-            else {
-                if (!window.actualGeometry.equals(window.geometry))
-                    this.control.onWindowGeometryChanged(this, window);
-            }
+        this.connect(client.outputChanged, () => {
+            LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.outputChanged, "eventFired", `window: caption:${client.caption} internalID:${client.internalId} output: ${client.output.name}`, { winClass: [`${client.resourceClass}`] });
+            this.control.onWindowChanged(this, window, "screen=" + client.output.name);
         });
-        this.connect(client.outputChanged, () => this.control.onWindowChanged(this, window, "screen=" + client.output.name));
-        this.connect(client.activitiesChanged, () => this.control.onWindowChanged(this, window, "activity=" + client.activities.join(",")));
-        this.connect(client.desktopsChanged, () => this.control.onWindowChanged(this, window, "Window's desktop changed."));
+        if (CONFIG.floatSkipPager) {
+            this.connect(client.skipPagerChanged, () => {
+                this.control.onWindowSkipPagerChanged(this, window, client.skipPager);
+            });
+        }
     }
 }
 KWinDriver.backendName = "kwin";
-class KWinMousePoller {
-    get started() {
-        return this.startCount > 0;
-    }
-    get mousePosition() {
-        return this.parseResult();
-    }
-    constructor() {
-        this.startCount = 0;
-        this.cmdResult = null;
-        mousePoller.interval = 0;
-        mousePoller.onNewData.connect((sourceName, data) => {
-            this.cmdResult = data["exit code"] === 0 ? data["stdout"] : null;
-            mousePoller.disconnectSource(KWinMousePoller.COMMAND);
-            KWinSetTimeout(() => {
-                if (this.started)
-                    mousePoller.connectSource(KWinMousePoller.COMMAND);
-            }, KWinMousePoller.INTERVAL);
-        });
-    }
-    start() {
-        this.startCount += 1;
-        if (KWINCONFIG.pollMouseXdotool)
-            mousePoller.connectSource(KWinMousePoller.COMMAND);
-    }
-    stop() {
-        this.startCount = Math.max(this.startCount - 1, 0);
-    }
-    parseResult() {
-        if (!this.cmdResult)
-            return null;
-        let x = null;
-        let y = null;
-        this.cmdResult
-            .split(" ")
-            .slice(0, 2)
-            .forEach((part) => {
-            const [key, value, _] = part.split(":");
-            if (key === "x")
-                x = parseInt(value, 10);
-            if (key === "y")
-                y = parseInt(value, 10);
-        });
-        if (x === null || y === null)
-            return null;
-        return [x, y];
-    }
-}
-KWinMousePoller.COMMAND = "xdotool getmouselocation";
-KWinMousePoller.INTERVAL = 50;
 class KWinTimerPool {
     constructor() {
         this.timers = [];
@@ -1472,7 +1621,7 @@ class KWinTimerPool {
     setTimeout(func, timeout) {
         if (this.timers.length === 0) {
             this.numTimers++;
-            debugObj(() => ["setTimeout/newTimer", { numTimers: this.numTimers }]);
+            LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.setTimeout, "setTimeout/newTimer", `numTimers: ${this.numTimers}`);
         }
         const timer = this.timers.pop() ||
             Qt.createQmlObject("import QtQuick 2.0; Timer {}", scriptRoot);
@@ -1564,6 +1713,7 @@ class KWinWindow {
     }
     get shouldFloat() {
         return (this.isFloatByConfig ||
+            (CONFIG.floatSkipPager && this.window.skipPager) ||
             this.window.modal ||
             this.window.transient ||
             !this.window.resizeable ||
@@ -1603,6 +1753,18 @@ class KWinWindow {
         if (this.window.activities[0] !== ksrf.activity)
             this.window.activities = [ksrf.activity];
     }
+    get minSize() {
+        return {
+            width: this.window.minSize.width,
+            height: this.window.minSize.height,
+        };
+    }
+    get maxSize() {
+        return {
+            width: this.window.maxSize.width,
+            height: this.window.maxSize.height,
+        };
+    }
     constructor(window, workspace) {
         this.workspace = workspace;
         this.window = window;
@@ -1611,22 +1773,19 @@ class KWinWindow {
         this.noBorderManaged = false;
         this.noBorderOriginal = window.noBorder;
         this.isIgnoredByConfig =
-            this.isContain(KWINCONFIG.ignoreClass, window.resourceClass) ||
-                this.isContain(KWINCONFIG.ignoreClass, window.resourceName) ||
+            KWinWindow.isContain(KWINCONFIG.ignoreClass, window.resourceClass) ||
+                KWinWindow.isContain(KWINCONFIG.ignoreClass, window.resourceName) ||
                 matchWords(this.window.caption, KWINCONFIG.ignoreTitle) >= 0 ||
-                this.isContain(KWINCONFIG.ignoreRole, window.windowRole) ||
+                KWinWindow.isContain(KWINCONFIG.ignoreRole, window.windowRole) ||
                 (KWINCONFIG.tileNothing &&
-                    this.isContain(KWINCONFIG.tilingClass, window.resourceClass));
+                    KWinWindow.isContain(KWINCONFIG.tilingClass, window.resourceClass));
         this.isFloatByConfig =
-            this.isContain(KWINCONFIG.floatingClass, window.resourceClass) ||
-                this.isContain(KWINCONFIG.floatingClass, window.resourceName) ||
+            KWinWindow.isContain(KWINCONFIG.floatingClass, window.resourceClass) ||
+                KWinWindow.isContain(KWINCONFIG.floatingClass, window.resourceName) ||
                 matchWords(this.window.caption, KWINCONFIG.floatingTitle) >= 0;
     }
     commit(geometry, noBorder, windowLayer) {
-        debugObj(() => [
-            "KWinWindow#commit",
-            { geometry, noBorder, keepAbove: windowLayer },
-        ]);
+        LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.window, "KwinWindow#commit", `geometry:${geometry}, noBorder:${noBorder}, windowLayer:${windowLayer}`);
         if (this.window.move || this.window.resize)
             return;
         if (noBorder !== undefined) {
@@ -1683,7 +1842,7 @@ class KWinWindow {
                 this.window.activities.indexOf(ksrf.activity) !== -1) &&
             this.window.output === ksrf.output);
     }
-    isContain(filterList, s) {
+    static isContain(filterList, s) {
         for (let filterWord of filterList) {
             if (filterWord[0] === "[" && filterWord[filterWord.length - 1] === "]") {
                 if (s
@@ -1716,6 +1875,7 @@ function debugWin(win) {
         { name: "output.name", opt: win.output.name },
         { name: "resourceName", opt: win.resourceName },
         { name: "resourceClass", opt: win.resourceClass },
+        { name: "skipPager", opt: win.skipPager },
         { name: "desktopWindow", opt: win.desktopWindow },
         { name: "windowRole", opt: win.windowRole },
         { name: "windowType", opt: win.windowType },
@@ -1755,6 +1915,7 @@ function debugWin(win) {
         { name: "transient", opt: win.transient },
         { name: "transientFor", opt: win.transientFor },
         { name: "maximizable", opt: win.maximizable },
+        { name: "maximizeMode", opt: win.maximizeMode },
         { name: "moveable", opt: win.moveable },
         { name: "moveableAcrossScreens", opt: win.moveableAcrossScreens },
         { name: "hidden", opt: win.hidden },
@@ -1762,7 +1923,7 @@ function debugWin(win) {
         { name: "keepBelow", opt: win.keepBelow },
         { name: "opacity", opt: win.opacity },
     ];
-    var s = "krohnkite:";
+    var s = "kwin window props:";
     w_props.forEach((el) => {
         if (typeof el.opt !== "undefined" &&
             (el.opt || el.opt === 0 || el.opt === "0")) {
@@ -1781,20 +1942,16 @@ class TilingController {
         this.isDragging = false;
         this.dragCompleteTime = null;
     }
-    onSurfaceUpdate(ctx, comment) {
-        debugObj(() => ["onSurfaceUpdate", { comment }]);
+    onSurfaceUpdate(ctx) {
         this.engine.arrange(ctx);
     }
-    onCurrentActivityChanged(ctx, activityId) {
-        debugObj(() => ["onCurrentActivityChanged", { activityId: activityId }]);
+    onCurrentActivityChanged(ctx) {
         this.engine.arrange(ctx);
     }
     onCurrentSurfaceChanged(ctx) {
-        debugObj(() => ["onCurrentSurfaceChanged", { srf: ctx.currentSurface }]);
         this.engine.arrange(ctx);
     }
     onWindowAdded(ctx, window) {
-        debugObj(() => ["onWindowAdded", { window }]);
         this.engine.manage(window);
         if (window.tileable) {
             const srf = ctx.currentSurface;
@@ -1810,8 +1967,14 @@ class TilingController {
         }
         this.engine.arrange(ctx);
     }
+    onWindowSkipPagerChanged(ctx, window, skipPager) {
+        if (skipPager)
+            window.state = WindowState.Floating;
+        else
+            window.state = WindowState.Undecided;
+        this.engine.arrange(ctx);
+    }
     onWindowRemoved(ctx, window) {
-        debugObj(() => ["onWindowRemoved", { window }]);
         this.engine.unmanage(window);
         this.engine.arrange(ctx);
     }
@@ -1841,9 +2004,8 @@ class TilingController {
         this.isDragging = false;
     }
     onWindowMoveOver(ctx, window) {
-        debugObj(() => ["onWindowMoveOver", { window }]);
         if (window.state === WindowState.Dragging) {
-            window.removeDraggingState(WindowState.Tiled);
+            window.setState(WindowState.Tiled);
             this.engine.arrange(ctx);
             return;
         }
@@ -1872,7 +2034,6 @@ class TilingController {
     onWindowResizeStart(window) {
     }
     onWindowResize(ctx, window) {
-        debugObj(() => ["onWindowResize", { window }]);
         if (CONFIG.adjustLayout &&
             CONFIG.adjustLayoutLive &&
             window.state === WindowState.Tiled) {
@@ -1885,7 +2046,6 @@ class TilingController {
         }
     }
     onWindowResizeOver(ctx, window) {
-        debugObj(() => ["onWindowResizeOver", { window }]);
         if (CONFIG.adjustLayout && window.tiled) {
             this.engine.adjustLayout(window);
             this.engine.arrange(ctx);
@@ -1897,18 +2057,27 @@ class TilingController {
         else if (!CONFIG.adjustLayout)
             this.engine.enforceSize(ctx, window);
     }
-    onWindowMaximizeChanged(ctx, window, maximized) {
+    onWindowMaximizeChanged(ctx, window) {
         this.engine.arrange(ctx);
     }
     onWindowGeometryChanged(ctx, window) {
-        debugObj(() => ["onWindowGeometryChanged", { window }]);
         this.engine.enforceSize(ctx, window);
     }
     onWindowChanged(ctx, window, comment) {
         if (window) {
-            debugObj(() => ["onWindowChanged", { window, comment }]);
             if (comment === "unminimized")
                 ctx.currentWindow = window;
+            const workingArea = window.surface.workingArea;
+            if (window.floatGeometry.width > workingArea.width) {
+                window.floatGeometry.width = workingArea.width;
+            }
+            if (window.floatGeometry.height > workingArea.height) {
+                window.floatGeometry.height = workingArea.height;
+            }
+            window.floatGeometry.x =
+                workingArea.x + (workingArea.width - window.floatGeometry.width) / 2;
+            window.floatGeometry.y =
+                workingArea.y + (workingArea.height - window.floatGeometry.height) / 2;
             this.engine.arrange(ctx);
         }
     }
@@ -1965,10 +2134,10 @@ class TilingController {
         }
         switch (input) {
             case Shortcut.FocusNext:
-                this.engine.focusOrder(ctx, -1);
+                this.engine.focusOrder(ctx, +1);
                 break;
             case Shortcut.FocusPrev:
-                this.engine.focusOrder(ctx, +1);
+                this.engine.focusOrder(ctx, -1);
                 break;
             case Shortcut.FocusUp:
                 this.engine.focusDir(ctx, "up");
@@ -1985,20 +2154,68 @@ class TilingController {
                 this.engine.focusDir(ctx, "right");
                 break;
             case Shortcut.GrowWidth:
-                if (window)
-                    this.engine.resizeWindow(window, "east", 1);
+                if (window) {
+                    if (window.state === WindowState.Docked && window.dock) {
+                        if (window.dock.position === DockPosition.left ||
+                            window.dock.position === DockPosition.right) {
+                            window.dock.cfg.vWide += 1;
+                        }
+                        else if (window.dock.position === DockPosition.top ||
+                            window.dock.position === DockPosition.bottom) {
+                            window.dock.cfg.hWide += 1;
+                        }
+                    }
+                    else
+                        this.engine.resizeWindow(window, "east", 1);
+                }
                 break;
             case Shortcut.ShrinkWidth:
-                if (window)
-                    this.engine.resizeWindow(window, "east", -1);
+                if (window) {
+                    if (window.state === WindowState.Docked && window.dock) {
+                        if (window.dock.position === DockPosition.left ||
+                            window.dock.position === DockPosition.right) {
+                            window.dock.cfg.vWide -= 1;
+                        }
+                        else if (window.dock.position === DockPosition.top ||
+                            window.dock.position === DockPosition.bottom) {
+                            window.dock.cfg.hWide -= 1;
+                        }
+                    }
+                    else
+                        this.engine.resizeWindow(window, "east", -1);
+                }
                 break;
             case Shortcut.GrowHeight:
-                if (window)
-                    this.engine.resizeWindow(window, "south", 1);
+                if (window) {
+                    if (window.state === WindowState.Docked && window.dock) {
+                        if (window.dock.position === DockPosition.left ||
+                            window.dock.position === DockPosition.right) {
+                            window.dock.cfg.vHeight += 1;
+                        }
+                        else if (window.dock.position === DockPosition.top ||
+                            window.dock.position === DockPosition.bottom) {
+                            window.dock.cfg.hHeight += 1;
+                        }
+                    }
+                    else
+                        this.engine.resizeWindow(window, "south", 1);
+                }
                 break;
             case Shortcut.ShrinkHeight:
-                if (window)
-                    this.engine.resizeWindow(window, "south", -1);
+                if (window) {
+                    if (window.state === WindowState.Docked && window.dock) {
+                        if (window.dock.position === DockPosition.left ||
+                            window.dock.position === DockPosition.right) {
+                            window.dock.cfg.vHeight -= 1;
+                        }
+                        else if (window.dock.position === DockPosition.top ||
+                            window.dock.position === DockPosition.bottom) {
+                            window.dock.cfg.hHeight -= 1;
+                        }
+                    }
+                    else
+                        this.engine.resizeWindow(window, "south", -1);
+                }
                 break;
             case Shortcut.ShiftUp:
                 if (window)
@@ -2054,6 +2271,8 @@ class TilingEngine {
         this.layouts = new LayoutStore();
         this.windows = new WindowStore();
         this.docks = new DockStore();
+        this._defaultGaps = null;
+        this._gapsSurfacesCfg = [];
     }
     adjustLayout(basis) {
         let delta = basis.geometryDelta;
@@ -2062,9 +2281,10 @@ class TilingEngine {
         const srf = basis.surface;
         const layout = this.layouts.getCurrentLayout(srf);
         if (layout.adjust) {
-            const area = srf.workingArea.gap(CONFIG.screenGapLeft, CONFIG.screenGapRight, CONFIG.screenGapTop, CONFIG.screenGapBottom);
+            const gaps = this.getGaps(srf);
+            const area = srf.workingArea.gap(gaps.left, gaps.right, gaps.top, gaps.bottom);
             const tiles = this.windows.getVisibleTiles(srf);
-            layout.adjust(area, tiles, basis, delta);
+            layout.adjust(area, tiles, basis, delta, gaps.between);
         }
     }
     adjustDock(basis) {
@@ -2115,6 +2335,7 @@ class TilingEngine {
     }
     resizeTile(basis, dir, step) {
         const srf = basis.surface;
+        const gaps = this.getGaps(srf);
         if (dir === "east") {
             const maxX = basis.geometry.maxX;
             const easternNeighbor = this.windows
@@ -2155,8 +2376,8 @@ class TilingEngine {
         }
         const layout = this.layouts.getCurrentLayout(srf);
         if (layout.adjust) {
-            const area = srf.workingArea.gap(CONFIG.screenGapLeft, CONFIG.screenGapRight, CONFIG.screenGapTop, CONFIG.screenGapBottom);
-            layout.adjust(area, this.windows.getVisibleTileables(srf), basis, delta);
+            const area = srf.workingArea.gap(gaps.left, gaps.right, gaps.top, gaps.bottom);
+            layout.adjust(area, this.windows.getVisibleTileables(srf), basis, delta, gaps.between);
         }
     }
     resizeWindow(window, dir, step) {
@@ -2167,7 +2388,6 @@ class TilingEngine {
             this.resizeTile(window, dir, step);
     }
     arrange(ctx) {
-        debug(() => "arrange");
         ctx.screens.forEach((srf) => {
             this.arrangeScreen(ctx, srf);
         });
@@ -2175,14 +2395,8 @@ class TilingEngine {
     arrangeScreen(ctx, srf) {
         const layout = this.layouts.getCurrentLayout(srf);
         const visibles = this.windows.getVisibleWindows(srf);
-        debugObj(() => [
-            "arrangeScreen",
-            {
-                layout,
-                srf,
-                visibles: visibles.length,
-            },
-        ]);
+        LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.arrangeScreen, "Begin", `layout: ${layout}, surface: ${srf}, visibles number: ${visibles.length}`);
+        const gaps = this.getGaps(srf);
         const workingArea = this.docks.render(srf, visibles, srf.workingArea.clone());
         visibles.forEach((window) => {
             if (window.state === WindowState.Undecided) {
@@ -2208,9 +2422,9 @@ class TilingEngine {
             tilingArea = workingArea.gap(v_gap, v_gap, h_gap, h_gap);
         }
         else
-            tilingArea = workingArea.gap(CONFIG.screenGapLeft, CONFIG.screenGapRight, CONFIG.screenGapTop, CONFIG.screenGapBottom);
+            tilingArea = workingArea.gap(gaps.left, gaps.right, gaps.top, gaps.bottom);
         if (tileables.length > 0)
-            layout.apply(new EngineContext(ctx, this), tileables, tilingArea);
+            layout.apply(new EngineContext(ctx, this), tileables, tilingArea, gaps.between);
         if (CONFIG.limitTileWidthRatio > 0 && !(layout instanceof MonocleLayout)) {
             const maxWidth = Math.floor(workingArea.height * CONFIG.limitTileWidthRatio);
             tileables
@@ -2220,15 +2434,18 @@ class TilingEngine {
                 tile.geometry = new Rect(g.x + Math.floor((g.width - maxWidth) / 2), g.y, maxWidth, g.height);
             });
         }
-        if (CONFIG.soleWindowNoBorders &&
-            visibles.length === 1 &&
-            visibles[0].state !== WindowState.Docked) {
-            visibles[0].commit(CONFIG.soleWindowNoBorders);
+        if (CONFIG.soleWindowNoBorders && tileables.length === 1) {
+            visibles.forEach((window) => {
+                if (window.state === WindowState.Tiled)
+                    window.commit(CONFIG.soleWindowNoBorders);
+                else
+                    window.commit();
+            });
         }
         else {
             visibles.forEach((window) => window.commit());
         }
-        debugObj(() => ["arrangeScreen/finished", { srf }]);
+        LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.arrangeScreen, "Finished", `${srf}`);
     }
     enforceSize(ctx, window) {
         if (window.tiled && !window.actualGeometry.equals(window.geometry))
@@ -2239,7 +2456,11 @@ class TilingEngine {
     }
     manage(window) {
         if (!window.shouldIgnore) {
-            window.state = WindowState.Undecided;
+            if (this.docks.isNewWindowHaveDocked(window)) {
+                window.state = WindowState.Docked;
+            }
+            else
+                window.state = WindowState.Undecided;
             if (CONFIG.newWindowPosition === 1)
                 this.windows.unshift(window);
             else if (CONFIG.newWindowPosition === 2) {
@@ -2435,6 +2656,16 @@ class TilingEngine {
             : (tile) => tile.geometry.x === min);
         return closest.sort((a, b) => b.timestamp - a.timestamp)[0];
     }
+    getGaps(srf) {
+        if (this._defaultGaps === null) {
+            this._defaultGaps = DefaultGapsCfg.instance;
+            this._gapsSurfacesCfg = gapsSurfaceCfg.parseGapsUserSurfacesCfg();
+        }
+        const surfaceCfg = this._gapsSurfacesCfg.find((surfaceCfg) => surfaceCfg.isFit(srf));
+        if (surfaceCfg === undefined)
+            return this._defaultGaps;
+        return surfaceCfg.cfg;
+    }
 }
 class EngineContext {
     get backend() {
@@ -2445,6 +2676,9 @@ class EngineContext {
     }
     set currentWindow(window) {
         this.drvctx.currentWindow = window;
+    }
+    get cursorPos() {
+        return this.drvctx.cursorPosition;
     }
     get surfaceParams() {
         let srf = this.drvctx.currentSurface;
@@ -2474,6 +2708,160 @@ class EngineContext {
     }
     showNotification(text) {
         this.drvctx.showNotification(text);
+    }
+}
+class DefaultGapsCfg {
+    constructor() {
+        let left = validateNumber(CONFIG.screenGapLeft);
+        if (left instanceof Err) {
+            warning(`DefaultGapsCfg: left: ${left}`);
+            this.left = 0;
+        }
+        else
+            this.left = left;
+        let right = validateNumber(CONFIG.screenGapRight);
+        if (right instanceof Err) {
+            warning(`DefaultGapsCfg: right: ${right}`);
+            this.right = 0;
+        }
+        else
+            this.right = right;
+        let top = validateNumber(CONFIG.screenGapTop);
+        if (top instanceof Err) {
+            warning(`DefaultGapsCfg: top: ${top}`);
+            this.top = 0;
+        }
+        else
+            this.top = top;
+        let bottom = validateNumber(CONFIG.screenGapBottom);
+        if (bottom instanceof Err) {
+            warning(`DefaultGapsCfg: bottom: ${bottom}`);
+            this.bottom = 0;
+        }
+        else
+            this.bottom = bottom;
+        let between = validateNumber(CONFIG.screenGapBetween);
+        if (between instanceof Err) {
+            warning(`DefaultGapsCfg: between: ${between}`);
+            this.between = 0;
+        }
+        else
+            this.between = between;
+    }
+    static get instance() {
+        if (!DefaultGapsCfg._gapsInstance) {
+            DefaultGapsCfg._gapsInstance = new DefaultGapsCfg();
+        }
+        return DefaultGapsCfg._gapsInstance;
+    }
+    cloneAndUpdate(cfg) {
+        return Object.assign({}, DefaultGapsCfg.instance, cfg);
+    }
+}
+class gapsSurfaceCfg {
+    constructor(outputName, activityId, vDesktopName, cfg) {
+        this.outputName = outputName;
+        this.activityId = activityId;
+        this.vDesktopName = vDesktopName;
+        this.cfg = cfg;
+    }
+    isFit(srf) {
+        return ((this.outputName === "" || this.outputName === srf.output.name) &&
+            (this.vDesktopName === "" || this.vDesktopName === srf.desktop.name) &&
+            (this.activityId === "" || this.activityId === srf.activity));
+    }
+    toString() {
+        return `gapsSurfaceCfg: Output Name: ${this.outputName}, Activity ID: ${this.activityId}, Virtual Desktop Name: ${this.vDesktopName} cfg: ${this.cfg}`;
+    }
+    static parseGapsUserSurfacesCfg() {
+        let surfacesCfg = [];
+        if (CONFIG.gapsOverrideConfig.length === 0)
+            return surfacesCfg;
+        CONFIG.gapsOverrideConfig.forEach((cfg) => {
+            let surfaceCfgString = cfg.split(":").map((part) => part.trim());
+            if ([2, 4].indexOf(surfaceCfgString.length) < 0) {
+                warning(`Invalid Gaps surface config: ${cfg}, config must have one or three colons`);
+                return;
+            }
+            let outputName = surfaceCfgString[0];
+            let activityId;
+            let vDesktopName;
+            let userCfg;
+            if (surfaceCfgString.length === 4) {
+                activityId = surfaceCfgString[1];
+                vDesktopName = surfaceCfgString[2];
+                userCfg = surfaceCfgString[3];
+            }
+            else {
+                activityId = "";
+                vDesktopName = "";
+                userCfg = surfaceCfgString[1];
+            }
+            let splittedUserCfg = userCfg
+                .split(",")
+                .map((part) => part.trim().toLowerCase());
+            let partialGapsCfg = gapsSurfaceCfg.parseSplittedGapsCfg(splittedUserCfg);
+            if (partialGapsCfg instanceof Err) {
+                warning(`Invalid Gaps User surface config: ${cfg}. ${partialGapsCfg}`);
+                return;
+            }
+            if (Object.keys(partialGapsCfg).length > 0) {
+                surfacesCfg.push(new gapsSurfaceCfg(outputName, activityId, vDesktopName, DefaultGapsCfg.instance.cloneAndUpdate(partialGapsCfg)));
+            }
+        });
+        return surfacesCfg;
+    }
+    static parseSplittedGapsCfg(splittedUserCfg) {
+        let errors = [];
+        let value;
+        let gapsCfg = {};
+        splittedUserCfg.forEach((part) => {
+            let splittedPart = part
+                .split("=")
+                .map((part) => part.trim().toLowerCase());
+            if (splittedPart.length !== 2) {
+                errors.push(`"${part}" can have only one equal sign`);
+                return;
+            }
+            if (splittedPart[0].length === 0 || splittedPart[1].length === 0) {
+                errors.push(`"${part}" can not have empty name or value`);
+                return;
+            }
+            value = validateNumber(splittedPart[1]);
+            if (value instanceof Err) {
+                errors.push(`GapsCfg: ${part}, ${splittedPart[1]} ${value}`);
+                return;
+            }
+            switch (splittedPart[0]) {
+                case "left":
+                case "l":
+                    gapsCfg["left"] = value;
+                    break;
+                case "right":
+                case "r":
+                    gapsCfg["right"] = value;
+                    break;
+                case "top":
+                case "t":
+                    gapsCfg["top"] = value;
+                    break;
+                case "bottom":
+                case "b":
+                    gapsCfg["bottom"] = value;
+                    break;
+                case "between":
+                case "e":
+                    gapsCfg["between"] = value;
+                    break;
+                default:
+                    errors.push(` "${part}" unknown parameter name. It can be l,r,t,b,e or left,right,top,bottom,between`);
+                    return;
+            }
+        });
+        if (errors.length > 0) {
+            return new Err(errors.join("\n"));
+        }
+        return gapsCfg;
     }
 }
 class LayoutStoreEntry {
@@ -2670,7 +3058,7 @@ class WindowClass {
     setDraggingState() {
         this.internalState = WindowState.Dragging;
     }
-    removeDraggingState(value) {
+    setState(value) {
         this.internalState = value;
     }
     get surface() {
@@ -2704,12 +3092,19 @@ class WindowClass {
         this.internalState = WindowState.Unmanaged;
         this.shouldCommitFloat = this.shouldFloat;
         this.weightMap = {};
-        this.isDocked = false;
         this.dock = null;
+        this._minSize = window.minSize;
+        this._maxSize = window.maxSize;
+    }
+    get minSize() {
+        return this._minSize;
+    }
+    get maxSize() {
+        return this._maxSize;
     }
     commit(noBorders) {
         const state = this.state;
-        debugObj(() => ["Window#commit", { state: WindowState[state] }]);
+        LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.window, "commit", `state: ${WindowState[state]}`);
         switch (state) {
             case WindowState.Dragging:
                 break;
@@ -2854,12 +3249,11 @@ class BTreeLayout {
         this.classID = BTreeLayout.id;
         this.parts = new HalfSplitLayoutPart(new FillLayoutPart(), new FillLayoutPart());
         this.parts.angle = 0;
-        this.parts.gap = CONFIG.tileLayoutGap;
     }
-    apply(ctx, tileables, area) {
+    apply(ctx, tileables, area, gap) {
         tileables.forEach((tileable) => (tileable.state = WindowState.Tiled));
         this.create_parts(tileables.length);
-        let rectangles = this.parts.apply(area, tileables);
+        let rectangles = this.parts.apply(area, tileables, gap);
         rectangles.forEach((geometry, i) => {
             tileables[i].geometry = geometry;
         });
@@ -2867,7 +3261,6 @@ class BTreeLayout {
     create_parts(tiles_len) {
         let head = this.get_head();
         head.angle = 0;
-        head.gap = CONFIG.tileLayoutGap;
         if (tiles_len > 2) {
             let level = Math.ceil(Math.log(tiles_len) * 1.442695);
             let level_capacity = Math.pow(2, (level - 1));
@@ -2887,7 +3280,6 @@ class BTreeLayout {
             if (head.primarySize > 1) {
                 let primary = this.get_head();
                 primary.primarySize = Math.floor(head.primarySize / 2);
-                primary.gap = CONFIG.tileLayoutGap;
                 primary.angle = current_level % 2 ? 0 : 90;
                 head.primary = primary;
                 this.build_binary_tree(primary, max_level, current_level + 1, head.primarySize);
@@ -2895,7 +3287,6 @@ class BTreeLayout {
             if (tiles_len - head.primarySize > 1) {
                 let secondary = this.get_head();
                 secondary.primarySize = Math.floor((tiles_len - head.primarySize) / 2);
-                secondary.gap = CONFIG.tileLayoutGap;
                 secondary.angle = current_level % 2 ? 0 : 90;
                 head.secondary = secondary;
                 this.build_binary_tree(secondary, max_level, current_level + 1, tiles_len - head.primarySize);
@@ -2953,7 +3344,7 @@ class CascadeLayout {
         this.dir = dir;
         this.classID = CascadeLayout.id;
     }
-    apply(ctx, tileables, area) {
+    apply(ctx, tileables, area, gap) {
         const [vertStep, horzStep] = CascadeLayout.decomposeDirection(this.dir);
         const stepSize = 25;
         const windowWidth = horzStep !== 0
@@ -3006,7 +3397,6 @@ class ColumnLayout {
         this.position = "single";
         this.weight = 1.0;
         this.parts = new RotateLayoutPart(new StackLayoutPart());
-        this.parts.inner.gap = CONFIG.tileLayoutGap;
         this.windowIds = new Set();
         this.renderedWindowsIds = [];
         this.renderedWindowsRects = [];
@@ -3025,7 +3415,7 @@ class ColumnLayout {
     isEmpty() {
         return this.windowIds.size === this.numberFloatedOrMinimized;
     }
-    apply(ctx, tileables, area) {
+    apply(ctx, tileables, area, gap) {
         this.renderedWindowsIds = [];
         let columnTileables = tileables.filter((w) => {
             if (this.windowIds.has(w.id)) {
@@ -3034,7 +3424,7 @@ class ColumnLayout {
             }
         });
         this.renderedWindowsRects = [];
-        this.parts.apply(area, columnTileables).forEach((geometry, i) => {
+        this.parts.apply(area, columnTileables, gap).forEach((geometry, i) => {
             columnTileables[i].geometry = geometry;
             this.renderedWindowsRects.push(geometry);
         });
@@ -3065,9 +3455,9 @@ class ColumnLayout {
         }
         return null;
     }
-    adjust(area, tiles, basis, delta) {
+    adjust(area, tiles, basis, delta, gap) {
         let columnTiles = tiles.filter((t) => this.windowIds.has(t.id));
-        this.parts.adjust(area, columnTiles, basis, delta);
+        this.parts.adjust(area, columnTiles, basis, delta, gap);
     }
     actualizeWindowIds(ctx, ids) {
         let window;
@@ -3100,7 +3490,7 @@ class ColumnsLayout {
         this.direction = new windRose(CONFIG.columnsLayoutInitialAngle);
         this.columnsConfiguration = null;
     }
-    adjust(area, tiles, basis, delta) {
+    adjust(area, tiles, basis, delta, gap) {
         let columnId = this.getColumnId(basis);
         if (columnId === null)
             return;
@@ -3120,7 +3510,7 @@ class ColumnsLayout {
             else {
                 oldWeights = this.columns.map((column) => column.weight);
             }
-            const weights = LayoutUtils.adjustAreaWeights(area, oldWeights, CONFIG.tileLayoutGap, isReverse ? columnsLength - 1 - columnId : columnId, delta, this.direction.east || this.direction.west);
+            const weights = LayoutUtils.adjustAreaWeights(area, oldWeights, gap, isReverse ? columnsLength - 1 - columnId : columnId, delta, this.direction.east || this.direction.west);
             weights.forEach((weight, i) => {
                 this.columns[isReverse ? columnsLength - 1 - i : i].weight =
                     weight * columnsLength;
@@ -3130,10 +3520,10 @@ class ColumnsLayout {
             (this.direction.east || this.direction.west)) ||
             ((delta.east !== 0 || delta.west !== 0) &&
                 (this.direction.north || this.direction.south))) {
-            this.columns[columnId].adjust(area, tiles, basis, delta);
+            this.columns[columnId].adjust(area, tiles, basis, delta, gap);
         }
     }
-    apply(ctx, tileables, area) {
+    apply(ctx, tileables, area, gap) {
         if (this.columnsConfiguration === null)
             this.columnsConfiguration = this.getDefaultConfig(ctx);
         this.arrangeTileables(ctx, tileables);
@@ -3149,34 +3539,34 @@ class ColumnsLayout {
         else {
             weights = this.columns.map((tile) => tile.weight);
         }
-        const rects = LayoutUtils.splitAreaWeighted(area, weights, CONFIG.tileLayoutGap, this.direction.east || this.direction.west);
+        const rects = LayoutUtils.splitAreaWeighted(area, weights, gap, this.direction.east || this.direction.west);
         if (this.direction.east || this.direction.south) {
             let i = 0;
             for (var idx = this.columns.length - 1; idx >= 0; idx--) {
                 this.columns[idx].isHorizontal = this.direction.south;
-                this.columns[idx].apply(ctx, tileables, rects[i]);
+                this.columns[idx].apply(ctx, tileables, rects[i], gap);
                 i++;
             }
         }
         else {
             for (var idx = 0; idx < this.columns.length; idx++) {
                 this.columns[idx].isHorizontal = this.direction.north;
-                this.columns[idx].apply(ctx, tileables, rects[idx]);
+                this.columns[idx].apply(ctx, tileables, rects[idx], gap);
             }
         }
     }
     drag(ctx, draggingRect, window, workingArea) {
-        const activationPoint = draggingRect.activationPoint;
-        const middlePoint = draggingRect.center;
+        const cursorOrActivationPoint = ctx.cursorPos || draggingRect.activationPoint;
+        const cursorOrMiddlePoint = ctx.cursorPos || draggingRect.center;
         if (this.columns.length === 0 ||
             (this.columns.length === 1 && this.columns[0].windowIds.size === 1))
             return false;
         let columnId = this.getColumnId(window);
         let windowId = window.id;
-        if (((this.direction.north && workingArea.isTopZone(activationPoint)) ||
-            (this.direction.south && workingArea.isBottomZone(middlePoint)) ||
-            (this.direction.west && workingArea.isLeftZone(activationPoint)) ||
-            (this.direction.east && workingArea.isRightZone(activationPoint))) &&
+        if (((this.direction.north && workingArea.isTopZone(cursorOrActivationPoint)) ||
+            (this.direction.south && workingArea.isBottomZone(cursorOrMiddlePoint)) ||
+            (this.direction.west && workingArea.isLeftZone(cursorOrActivationPoint)) ||
+            (this.direction.east && workingArea.isRightZone(cursorOrActivationPoint))) &&
             !(this.columns[0].windowIds.size === 1 &&
                 this.columns[0].windowIds.has(windowId))) {
             if (columnId !== null)
@@ -3185,10 +3575,10 @@ class ColumnsLayout {
             column.windowIds.add(windowId);
             return true;
         }
-        if (((this.direction.north && workingArea.isBottomZone(middlePoint)) ||
-            (this.direction.south && workingArea.isTopZone(activationPoint)) ||
-            (this.direction.west && workingArea.isRightZone(activationPoint)) ||
-            (this.direction.east && workingArea.isLeftZone(activationPoint))) &&
+        if (((this.direction.north && workingArea.isBottomZone(cursorOrMiddlePoint)) ||
+            (this.direction.south && workingArea.isTopZone(cursorOrActivationPoint)) ||
+            (this.direction.west && workingArea.isRightZone(cursorOrActivationPoint)) ||
+            (this.direction.east && workingArea.isLeftZone(cursorOrActivationPoint))) &&
             !(this.columns[this.columns.length - 1].windowIds.size === 1 &&
                 this.columns[this.columns.length - 1].windowIds.has(windowId))) {
             if (columnId !== null)
@@ -3202,13 +3592,13 @@ class ColumnsLayout {
             for (let i = 0; i < column.renderedWindowsRects.length; i++) {
                 const renderedRect = column.renderedWindowsRects[i];
                 if ((this.direction.west &&
-                    renderedRect.includesPoint(activationPoint, 0)) ||
+                    renderedRect.includesPoint(cursorOrActivationPoint, 0)) ||
                     (this.direction.north &&
-                        renderedRect.includesPoint(activationPoint, 2)) ||
+                        renderedRect.includesPoint(cursorOrActivationPoint, 2)) ||
                     (this.direction.east &&
-                        renderedRect.includesPoint(activationPoint, 0)) ||
+                        renderedRect.includesPoint(cursorOrActivationPoint, 0)) ||
                     (this.direction.south &&
-                        renderedRect.includesPoint(activationPoint, 2))) {
+                        renderedRect.includesPoint(cursorOrActivationPoint, 2))) {
                     if (column.renderedWindowsIds[i] === windowId)
                         return false;
                     if (i > 0 && column.renderedWindowsIds[i - 1] === windowId)
@@ -3221,13 +3611,13 @@ class ColumnsLayout {
                     return true;
                 }
                 if ((this.direction.west &&
-                    renderedRect.includesPoint(activationPoint, 1)) ||
+                    renderedRect.includesPoint(cursorOrActivationPoint, 1)) ||
                     (this.direction.north &&
-                        renderedRect.includesPoint(activationPoint, 3)) ||
+                        renderedRect.includesPoint(cursorOrActivationPoint, 3)) ||
                     (this.direction.east &&
-                        renderedRect.includesPoint(activationPoint, 1)) ||
+                        renderedRect.includesPoint(cursorOrActivationPoint, 1)) ||
                     (this.direction.south &&
-                        renderedRect.includesPoint(activationPoint, 3))) {
+                        renderedRect.includesPoint(cursorOrActivationPoint, 3))) {
                     if (column.renderedWindowsIds[i] === windowId)
                         return false;
                     if (i < column.renderedWindowsIds.length - 1 &&
@@ -3575,7 +3965,7 @@ class FloatingLayout {
         this.classID = FloatingLayout.id;
         this.description = "Floating";
     }
-    apply(ctx, tileables, area) {
+    apply(ctx, tileables, area, gap) {
         tileables.forEach((tileable) => (tileable.state = WindowState.TiledAfloat));
     }
     clone() {
@@ -3588,10 +3978,10 @@ class FloatingLayout {
 FloatingLayout.id = "FloatingLayout ";
 FloatingLayout.instance = new FloatingLayout();
 class FillLayoutPart {
-    adjust(area, tiles, basis, delta) {
+    adjust(area, tiles, basis, delta, gap) {
         return delta;
     }
-    apply(area, tiles) {
+    apply(area, tiles, gap) {
         return tiles.map((tile) => {
             return area;
         });
@@ -3611,29 +4001,28 @@ class HalfSplitLayoutPart {
         this.primary = primary;
         this.secondary = secondary;
         this.angle = 0;
-        this.gap = 0;
         this.primarySize = 1;
         this.ratio = 0.5;
     }
-    adjust(area, tiles, basis, delta) {
+    adjust(area, tiles, basis, delta, gap) {
         const basisIndex = tiles.indexOf(basis);
         if (basisIndex < 0)
             return delta;
         if (tiles.length <= this.primarySize) {
-            return this.primary.adjust(area, tiles, basis, delta);
+            return this.primary.adjust(area, tiles, basis, delta, gap);
         }
         else if (this.primarySize === 0) {
-            return this.secondary.adjust(area, tiles, basis, delta);
+            return this.secondary.adjust(area, tiles, basis, delta, gap);
         }
         else {
             const targetIndex = basisIndex < this.primarySize ? 0 : 1;
             if (targetIndex === 0) {
-                delta = this.primary.adjust(area, tiles.slice(0, this.primarySize), basis, delta);
+                delta = this.primary.adjust(area, tiles.slice(0, this.primarySize), basis, delta, gap);
             }
             else {
-                delta = this.secondary.adjust(area, tiles.slice(this.primarySize), basis, delta);
+                delta = this.secondary.adjust(area, tiles.slice(this.primarySize), basis, delta, gap);
             }
-            this.ratio = LayoutUtils.adjustAreaHalfWeights(area, this.reversed ? 1 - this.ratio : this.ratio, this.gap, this.reversed ? 1 - targetIndex : targetIndex, delta, this.horizontal);
+            this.ratio = LayoutUtils.adjustAreaHalfWeights(area, this.reversed ? 1 - this.ratio : this.ratio, gap, this.reversed ? 1 - targetIndex : targetIndex, delta, this.horizontal);
             if (this.reversed)
                 this.ratio = 1 - this.ratio;
             switch (this.angle * 10 + targetIndex + 1) {
@@ -3656,38 +4045,35 @@ class HalfSplitLayoutPart {
     toString() {
         return `<HalfSplitLayout: angle:${this.angle},ratio:${this.ratio},pr_size:${this.primarySize}.<<<Primary:${this.primary}---Secondary:${this.secondary}>>>`;
     }
-    apply(area, tiles) {
+    apply(area, tiles, gap) {
         if (tiles.length <= this.primarySize) {
-            return this.primary.apply(area, tiles);
+            return this.primary.apply(area, tiles, gap);
         }
         else if (this.primarySize === 0) {
-            return this.secondary.apply(area, tiles);
+            return this.secondary.apply(area, tiles, gap);
         }
         else {
             const reversed = this.reversed;
             const ratio = reversed ? 1 - this.ratio : this.ratio;
-            const [area1, area2] = LayoutUtils.splitAreaHalfWeighted(area, ratio, this.gap, this.horizontal);
-            const result1 = this.primary.apply(reversed ? area2 : area1, tiles.slice(0, this.primarySize));
-            const result2 = this.secondary.apply(reversed ? area1 : area2, tiles.slice(this.primarySize));
+            const [area1, area2] = LayoutUtils.splitAreaHalfWeighted(area, ratio, gap, this.horizontal);
+            const result1 = this.primary.apply(reversed ? area2 : area1, tiles.slice(0, this.primarySize), gap);
+            const result2 = this.secondary.apply(reversed ? area1 : area2, tiles.slice(this.primarySize), gap);
             return result1.concat(result2);
         }
     }
 }
 class StackLayoutPart {
-    constructor() {
-        this.gap = 0;
-    }
-    adjust(area, tiles, basis, delta) {
-        const weights = LayoutUtils.adjustAreaWeights(area, tiles.map((tile) => tile.weight), CONFIG.tileLayoutGap, tiles.indexOf(basis), delta, false);
+    adjust(area, tiles, basis, delta, gap) {
+        const weights = LayoutUtils.adjustAreaWeights(area, tiles.map((tile) => tile.weight), gap, tiles.indexOf(basis), delta, false);
         weights.forEach((weight, i) => {
             tiles[i].weight = weight * tiles.length;
         });
         const idx = tiles.indexOf(basis);
         return new RectDelta(delta.east, delta.west, idx === tiles.length - 1 ? delta.south : 0, idx === 0 ? delta.north : 0);
     }
-    apply(area, tiles) {
+    apply(area, tiles, gap) {
         const weights = tiles.map((tile) => tile.weight);
-        return LayoutUtils.splitAreaWeighted(area, weights, this.gap);
+        return LayoutUtils.splitAreaWeighted(area, weights, gap);
     }
 }
 class RotateLayoutPart {
@@ -3695,7 +4081,7 @@ class RotateLayoutPart {
         this.inner = inner;
         this.angle = angle;
     }
-    adjust(area, tiles, basis, delta) {
+    adjust(area, tiles, basis, delta, gap) {
         switch (this.angle) {
             case 0:
                 break;
@@ -3711,7 +4097,7 @@ class RotateLayoutPart {
                 delta = new RectDelta(delta.north, delta.south, delta.east, delta.west);
                 break;
         }
-        delta = this.inner.adjust(area, tiles, basis, delta);
+        delta = this.inner.adjust(area, tiles, basis, delta, gap);
         switch (this.angle) {
             case 0:
                 delta = delta;
@@ -3728,7 +4114,7 @@ class RotateLayoutPart {
         }
         return delta;
     }
-    apply(area, tiles) {
+    apply(area, tiles, gap) {
         switch (this.angle) {
             case 0:
                 break;
@@ -3741,7 +4127,7 @@ class RotateLayoutPart {
                 area = new Rect(area.y, area.x, area.height, area.width);
                 break;
         }
-        const innerResult = this.inner.apply(area, tiles);
+        const innerResult = this.inner.apply(area, tiles, gap);
         switch (this.angle) {
             case 0:
                 return innerResult;
@@ -3777,12 +4163,21 @@ class LayoutUtils {
         const actualLength = length - (n - 1) * gap;
         const weightSum = weights.reduce((sum, weight) => sum + weight, 0);
         let weightAcc = 0;
-        return weights.map((weight, i) => {
+        const parts = weights.map((weight, i) => {
             const partBegin = (actualLength * weightAcc) / weightSum + i * gap;
             const partLength = (actualLength * weight) / weightSum;
             weightAcc += weight;
             return [begin + Math.floor(partBegin), Math.floor(partLength)];
         });
+        let finalLength = parts.reduce((sum, [, length]) => sum + length, 0);
+        finalLength += (n - 1) * gap;
+        let remainder = length - finalLength;
+        if (remainder > 0 && remainder < n) {
+            for (let i = 0; i < remainder; i++) {
+                parts[n - i - 1][1] += 1;
+            }
+        }
+        return parts;
     }
     static splitAreaWeighted(area, weights, gap, horizontal) {
         gap = gap !== undefined ? gap : 0;
@@ -3851,7 +4246,7 @@ class MonocleLayout {
         this.description = "Monocle";
         this.classID = MonocleLayout.id;
     }
-    apply(ctx, tileables, area) {
+    apply(ctx, tileables, area, gap) {
         tileables.forEach((tile) => {
             tile.state = CONFIG.monocleMaximize
                 ? WindowState.Maximized
@@ -3915,7 +4310,7 @@ class QuarterLayout {
         this.rhsplit = 0.5;
         this.vsplit = 0.5;
     }
-    adjust(area, tiles, basis, delta) {
+    adjust(area, tiles, basis, delta, gap) {
         if (tiles.length <= 1 || tiles.length > 4)
             return;
         const idx = tiles.indexOf(basis);
@@ -3949,7 +4344,7 @@ class QuarterLayout {
         other.prevTileCount = this.prevTileCount;
         return other;
     }
-    apply(ctx, tileables, area) {
+    apply(ctx, tileables, area, gap) {
         if (CONFIG.quarterLayoutReset) {
             if (tileables.length < this.prevTileCount) {
                 this.resetSplits();
@@ -3966,8 +4361,8 @@ class QuarterLayout {
             tileables[0].geometry = area;
             return;
         }
-        const gap1 = CONFIG.tileLayoutGap / 2;
-        const gap2 = CONFIG.tileLayoutGap - gap1;
+        const gap1 = gap / 2;
+        const gap2 = gap - gap1;
         const leftWidth = area.width * this.vsplit;
         const rightWidth = area.width - leftWidth;
         const rightX = area.x + leftWidth;
@@ -4008,15 +4403,14 @@ class SpiralLayout {
         this.depth = 1;
         this.parts = new HalfSplitLayoutPart(new FillLayoutPart(), new FillLayoutPart());
         this.parts.angle = 0;
-        this.parts.gap = CONFIG.tileLayoutGap;
     }
-    adjust(area, tiles, basis, delta) {
-        this.parts.adjust(area, tiles, basis, delta);
+    adjust(area, tiles, basis, delta, gap) {
+        this.parts.adjust(area, tiles, basis, delta, gap);
     }
-    apply(ctx, tileables, area) {
+    apply(ctx, tileables, area, gap) {
         tileables.forEach((tileable) => (tileable.state = WindowState.Tiled));
         this.bore(tileables.length);
-        this.parts.apply(area, tileables).forEach((geometry, i) => {
+        this.parts.apply(area, tileables, gap).forEach((geometry, i) => {
             tileables[i].geometry = geometry;
         });
     }
@@ -4035,7 +4429,6 @@ class SpiralLayout {
         let npart;
         while (i < depth - 1) {
             npart = new HalfSplitLayoutPart(new FillLayoutPart(), lastFillPart);
-            npart.gap = CONFIG.tileLayoutGap;
             npart.angle = (((i + 1) % 4) * 90);
             hpart.secondary = npart;
             hpart = npart;
@@ -4051,7 +4444,7 @@ class SpreadLayout {
         this.description = "Spread";
         this.space = 0.07;
     }
-    apply(ctx, tileables, area) {
+    apply(ctx, tileables, area, gap) {
         tileables.forEach((tileable) => (tileable.state = WindowState.Tiled));
         const tiles = tileables;
         let numTiles = tiles.length;
@@ -4095,20 +4488,16 @@ class StackedLayout {
     constructor() {
         this.classID = StackedLayout.id;
         this.parts = new RotateLayoutPart(new HalfSplitLayoutPart(new StackLayoutPart(), new StackLayoutPart()));
-        const masterPart = this.parts.inner;
-        masterPart.gap =
-            masterPart.secondary.gap =
-                CONFIG.tileLayoutGap;
     }
-    adjust(area, tiles, basis, delta) {
-        this.parts.adjust(area, tiles, basis, delta);
+    adjust(area, tiles, basis, delta, gap) {
+        this.parts.adjust(area, tiles, basis, delta, gap);
     }
-    apply(ctx, tileables, area) {
+    apply(ctx, tileables, area, gap) {
         tileables.forEach((tileable) => (tileable.state = WindowState.Tiled));
         if (tileables.length > 1) {
             this.parts.inner.angle = 90;
         }
-        this.parts.apply(area, tileables).forEach((geometry, i) => {
+        this.parts.apply(area, tileables, gap).forEach((geometry, i) => {
             tileables[i].geometry = geometry;
         });
     }
@@ -4127,7 +4516,7 @@ class StackedLayout {
         return true;
     }
     toString() {
-        return ("StackedLayout()");
+        return "StackedLayout()";
     }
 }
 StackedLayout.id = "StackedLayout";
@@ -4137,7 +4526,7 @@ class StairLayout {
         this.description = "Stair";
         this.space = 24;
     }
-    apply(ctx, tileables, area) {
+    apply(ctx, tileables, area, gap) {
         tileables.forEach((tileable) => (tileable.state = WindowState.Tiled));
         const tiles = tileables;
         const len = tiles.length;
@@ -4181,20 +4570,20 @@ class ThreeColumnLayout {
         this.masterRatio = 0.6;
         this.masterSize = 1;
     }
-    adjust(area, tiles, basis, delta) {
+    adjust(area, tiles, basis, delta, gap) {
         const basisIndex = tiles.indexOf(basis);
         if (basisIndex < 0)
             return;
         if (tiles.length === 0)
             return;
         else if (tiles.length <= this.masterSize) {
-            LayoutUtils.adjustAreaWeights(area, tiles.map((tile) => tile.weight), CONFIG.tileLayoutGap, tiles.indexOf(basis), delta).forEach((newWeight, i) => (tiles[i].weight = newWeight * tiles.length));
+            LayoutUtils.adjustAreaWeights(area, tiles.map((tile) => tile.weight), gap, tiles.indexOf(basis), delta).forEach((newWeight, i) => (tiles[i].weight = newWeight * tiles.length));
         }
         else if (tiles.length === this.masterSize + 1) {
-            this.masterRatio = LayoutUtils.adjustAreaHalfWeights(area, this.masterRatio, CONFIG.tileLayoutGap, basisIndex < this.masterSize ? 0 : 1, delta, true);
+            this.masterRatio = LayoutUtils.adjustAreaHalfWeights(area, this.masterRatio, gap, basisIndex < this.masterSize ? 0 : 1, delta, true);
             if (basisIndex < this.masterSize) {
                 const masterTiles = tiles.slice(0, -1);
-                LayoutUtils.adjustAreaWeights(area, masterTiles.map((tile) => tile.weight), CONFIG.tileLayoutGap, basisIndex, delta).forEach((newWeight, i) => (masterTiles[i].weight = newWeight * masterTiles.length));
+                LayoutUtils.adjustAreaWeights(area, masterTiles.map((tile) => tile.weight), gap, basisIndex, delta).forEach((newWeight, i) => (masterTiles[i].weight = newWeight * masterTiles.length));
             }
         }
         else if (tiles.length > this.masterSize + 1) {
@@ -4206,7 +4595,7 @@ class ThreeColumnLayout {
             else
                 basisGroup = 0;
             const stackRatio = 1 - this.masterRatio;
-            const newRatios = LayoutUtils.adjustAreaWeights(area, [stackRatio, this.masterRatio, stackRatio], CONFIG.tileLayoutGap, basisGroup, delta, true);
+            const newRatios = LayoutUtils.adjustAreaWeights(area, [stackRatio, this.masterRatio, stackRatio], gap, basisGroup, delta, true);
             const newMasterRatio = newRatios[1];
             const newStackRatio = basisGroup === 0 ? newRatios[0] : newRatios[2];
             this.masterRatio = newMasterRatio / (newMasterRatio + newStackRatio);
@@ -4216,31 +4605,31 @@ class ThreeColumnLayout {
                 rstackNumTile,
             ]);
             const groupTiles = [lstackTiles, masterTiles, rstackTiles][basisGroup];
-            LayoutUtils.adjustAreaWeights(area, groupTiles.map((tile) => tile.weight), CONFIG.tileLayoutGap, groupTiles.indexOf(basis), delta).forEach((newWeight, i) => (groupTiles[i].weight = newWeight * groupTiles.length));
+            LayoutUtils.adjustAreaWeights(area, groupTiles.map((tile) => tile.weight), gap, groupTiles.indexOf(basis), delta).forEach((newWeight, i) => (groupTiles[i].weight = newWeight * groupTiles.length));
         }
     }
-    apply(ctx, tileables, area) {
+    apply(ctx, tileables, area, gap) {
         tileables.forEach((tileable) => (tileable.state = WindowState.Tiled));
         const tiles = tileables;
         if (tiles.length <= this.masterSize) {
-            LayoutUtils.splitAreaWeighted(area, tiles.map((tile) => tile.weight), CONFIG.tileLayoutGap).forEach((tileArea, i) => (tiles[i].geometry = tileArea));
+            LayoutUtils.splitAreaWeighted(area, tiles.map((tile) => tile.weight), gap).forEach((tileArea, i) => (tiles[i].geometry = tileArea));
         }
         else if (tiles.length === this.masterSize + 1) {
-            const [masterArea, stackArea] = LayoutUtils.splitAreaHalfWeighted(area, this.masterRatio, CONFIG.tileLayoutGap, true);
+            const [masterArea, stackArea] = LayoutUtils.splitAreaHalfWeighted(area, this.masterRatio, gap, true);
             const masterTiles = tiles.slice(0, this.masterSize);
-            LayoutUtils.splitAreaWeighted(masterArea, masterTiles.map((tile) => tile.weight), CONFIG.tileLayoutGap).forEach((tileArea, i) => (masterTiles[i].geometry = tileArea));
+            LayoutUtils.splitAreaWeighted(masterArea, masterTiles.map((tile) => tile.weight), gap).forEach((tileArea, i) => (masterTiles[i].geometry = tileArea));
             tiles[tiles.length - 1].geometry = stackArea;
         }
         else if (tiles.length > this.masterSize + 1) {
             const stackRatio = 1 - this.masterRatio;
-            const groupAreas = LayoutUtils.splitAreaWeighted(area, [stackRatio, this.masterRatio, stackRatio], CONFIG.tileLayoutGap, true);
+            const groupAreas = LayoutUtils.splitAreaWeighted(area, [stackRatio, this.masterRatio, stackRatio], gap, true);
             const rstackSize = Math.floor((tiles.length - this.masterSize) / 2);
             const [masterTiles, rstackTiles, lstackTiles] = partitionArrayBySizes(tiles, [
                 this.masterSize,
                 rstackSize,
             ]);
             [lstackTiles, masterTiles, rstackTiles].forEach((groupTiles, group) => {
-                LayoutUtils.splitAreaWeighted(groupAreas[group], groupTiles.map((tile) => tile.weight), CONFIG.tileLayoutGap).forEach((tileArea, i) => (groupTiles[i].geometry = tileArea));
+                LayoutUtils.splitAreaWeighted(groupAreas[group], groupTiles.map((tile) => tile.weight), gap).forEach((tileArea, i) => (groupTiles[i].geometry = tileArea));
             });
         }
     }
@@ -4312,18 +4701,13 @@ class TileLayout {
                 break;
             }
         }
-        const masterPart = this.parts.inner;
-        masterPart.gap =
-            masterPart.primary.inner.gap =
-                masterPart.secondary.gap =
-                    CONFIG.tileLayoutGap;
     }
-    adjust(area, tiles, basis, delta) {
-        this.parts.adjust(area, tiles, basis, delta);
+    adjust(area, tiles, basis, delta, gap) {
+        this.parts.adjust(area, tiles, basis, delta, gap);
     }
-    apply(ctx, tileables, area) {
+    apply(ctx, tileables, area, gap) {
         tileables.forEach((tileable) => (tileable.state = WindowState.Tiled));
-        this.parts.apply(area, tileables).forEach((geometry, i) => {
+        this.parts.apply(area, tileables, gap).forEach((geometry, i) => {
             tileables[i].geometry = geometry;
         });
     }
@@ -4373,26 +4757,6 @@ class TileLayout {
 TileLayout.MIN_MASTER_RATIO = 0.2;
 TileLayout.MAX_MASTER_RATIO = 0.8;
 TileLayout.id = "TileLayout";
-const DEBUG = {
-    enabled: false,
-    started: new Date().getTime(),
-};
-function debug(f) {
-    if (DEBUG.enabled) {
-        const timestamp = (new Date().getTime() - DEBUG.started) / 1000;
-        console.log("[" + timestamp + "]", f());
-    }
-}
-function debugObj(f) {
-    if (DEBUG.enabled) {
-        const timestamp = (new Date().getTime() - DEBUG.started) / 1000;
-        const [name, obj] = f();
-        const buf = [];
-        for (const i in obj)
-            buf.push(i + "=" + obj[i]);
-        console.log("[" + timestamp + "]", name + ": " + buf.join(" "));
-    }
-}
 class Err {
     constructor(s) {
         this.error = s;
@@ -4402,7 +4766,7 @@ class Err {
     }
 }
 function warning(s) {
-    print(`Krohnkite warn: ${s}`);
+    print(`Krohnkite.WARNING: ${s}`);
 }
 function clip(value, min, max) {
     if (value < min)
@@ -4465,6 +4829,155 @@ function toQRect(rect) {
 }
 function toRect(qrect) {
     return new Rect(qrect.x, qrect.y, qrect.width, qrect.height);
+}
+class Logging {
+    constructor(modules, filters) {
+        this._isIncludeMode = true;
+        this._logModules = Logging.parseModules(modules);
+        this._filters = this.parseFilters(filters);
+        this._started = new Date().getTime();
+    }
+    send(module, action, message, filter) {
+        if (module !== undefined && !this._logModules.has(module))
+            return;
+        if (filter !== undefined) {
+            if (this.isFiltered(filter))
+                return;
+        }
+        this._print(module, action, message);
+    }
+    isFiltered(filter) {
+        if (this._filters === null)
+            return false;
+        let key;
+        for (key in filter) {
+            if (this._filters[key] == null || filter[key] == null)
+                continue;
+            const isContain = KWinWindow.isContain(this._filters[key], filter[key][0]);
+            if (this._isIncludeMode) {
+                return isContain ? false : true;
+            }
+            else {
+                return isContain ? true : false;
+            }
+        }
+        return false;
+    }
+    static parseModules(modules) {
+        let logModules = new Set();
+        for (const module of modules) {
+            const userModules = Logging._logParseUserModules(module[0], module[1]);
+            if (userModules !== null) {
+                userModules.forEach((el) => { });
+                logModules = new Set([...logModules, ...userModules]);
+            }
+        }
+        return logModules;
+    }
+    parseFilters(filters) {
+        if (filters.length === 0 || (filters.length === 1 && filters[0] === ""))
+            return null;
+        let logFilters;
+        if (filters[0] !== "" && filters[0][0] === "!") {
+            this._isIncludeMode = false;
+            filters[0] = filters[0].slice(1);
+        }
+        logFilters = { winClass: null };
+        for (const filter of filters) {
+            const filterParts = filter.split("=");
+            if (filterParts.length !== 2) {
+                warning(`Invalid Log filter: ${filter}.Every filter have contain "=" equal sign`);
+                continue;
+            }
+            if (filterParts[0].toLowerCase() === "winclass") {
+                logFilters.winClass = filterParts[1].split(":");
+                continue;
+            }
+            warning(`Unknown Log filter name:${filterParts[0]} in filter ${filter}.`);
+            continue;
+        }
+        return logFilters;
+    }
+    static _getLogModulesStr(module) {
+        return LogModulesKeys[module - 1];
+    }
+    _print(module, action, message) {
+        const timestamp = (new Date().getTime() - this._started) / 1000;
+        print(`Krohnkite.log [${timestamp}], ${module !== undefined ? `[${Logging._getLogModulesStr(module)}]` : ""} ${action !== undefined ? action : ""} ${message !== undefined ? message : ""}`);
+    }
+    static _logParseUserModules(logPartition, userStr) {
+        let submodules;
+        let includeMode = true;
+        if (userStr.length === 0) {
+            return new Set(logPartition.modules);
+        }
+        if (userStr[0] !== "" && userStr[0][0] === "!") {
+            includeMode = false;
+            userStr[0] = userStr[0].substring(1);
+            submodules = new Set(logPartition.modules);
+        }
+        else {
+            submodules = new Set();
+        }
+        for (let moduleStr of userStr) {
+            if (moduleStr.includes("-")) {
+                const range = moduleStr.split("-");
+                if (range.length !== 2) {
+                    warning(`Invalid module range:${range} in ${moduleStr}, ignoring module ${logPartition.name} `);
+                    return null;
+                }
+                const start = validateNumber(range[0]);
+                let end;
+                if (range[1] === "") {
+                    end = logPartition.modules.length;
+                }
+                else {
+                    end = validateNumber(range[1]);
+                }
+                if (start instanceof Err || end instanceof Err) {
+                    let err = start instanceof Err ? start : end;
+                    warning(`Invalid module number: ${err} in ${moduleStr}, ignoring module ${logPartition.name}`);
+                    return null;
+                }
+                if (start > end || start < 1) {
+                    warning(`Invalid module range:${range}. The start must be less than end and both must be greater than zero. Module string: ${moduleStr}, ignoring module ${logPartition.name} `);
+                    return null;
+                }
+                if (end > logPartition.modules.length) {
+                    warning(`Invalid module range:${range}. The end must be less than or equal to the number of submodules:${logPartition.modules.length} in the module. Module string: ${moduleStr}, ignoring module ${logPartition.name} `);
+                    return null;
+                }
+                if (includeMode) {
+                    for (let i = start - 1; i < end; i++) {
+                        submodules.add(logPartition.modules[i]);
+                    }
+                }
+                else {
+                    for (let i = start - 1; i < end; i++) {
+                        submodules.delete(logPartition.modules[i]);
+                    }
+                }
+            }
+            else {
+                let moduleNumber = validateNumber(moduleStr);
+                if (moduleNumber instanceof Err) {
+                    warning(`Invalid module number:${moduleNumber}. The module number must be a number. Module string: ${moduleStr}, ignoring module ${logPartition.name} `);
+                    return null;
+                }
+                if (moduleNumber < 1 || moduleNumber > logPartition.modules.length) {
+                    warning(`Invalid module number:${moduleNumber}. The module number must be >=1 and <= number of submodules:${logPartition.modules.length}. Module string: ${moduleStr}, ignoring module ${logPartition.name} `);
+                    return null;
+                }
+                if (includeMode) {
+                    submodules.add(logPartition.modules[moduleNumber - 1]);
+                }
+                else {
+                    submodules.delete(logPartition.modules[moduleNumber - 1]);
+                }
+            }
+        }
+        return submodules;
+    }
 }
 class Rect {
     constructor(x, y, width, height) {

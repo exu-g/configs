@@ -1,2 +1,14 @@
 [$Version]
 update_info=kwinrules.upd:replace-placement-string-to-enum,kwinrules.upd:use-virtual-desktop-ids
+
+[General]
+count=1
+rules=f136a16c-ca99-4e16-8c49-bfb1e5805b77
+
+[f136a16c-ca99-4e16-8c49-bfb1e5805b77]
+Description=Programm-Einstellungen für com.github.iwalton3.jellyfin-media-player
+adaptivesync=false
+adaptivesyncrule=2
+wmclass=\scom.github.iwalton3.jellyfin-media-player
+wmclasscomplete=true
+wmclassmatch=1
