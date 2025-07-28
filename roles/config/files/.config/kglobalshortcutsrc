@@ -26,12 +26,6 @@ volumeUp=Ctrl+Alt+Shift+Up,Ctrl+Alt+Shift+Up,Lauter
 Toggle Screen Reader On and Off=none,Meta+Alt+S,Screenreader ein-/ausschalten
 _k_friendly_name=Zugangshilfen
 
-[kcm_touchpad]
-Disable Touchpad=Touchpad Off,Touchpad Off,
-Enable Touchpad=Touchpad On,Touchpad On,
-Toggle Touchpad=Touchpad Toggle\tMeta+Ctrl+Zenkaku Hankaku,Touchpad Toggle\tTouchpad Toggle\tMeta+Ctrl+Touchpad Toggle\tMeta+Ctrl+Zenkaku Hankaku,
-_k_friendly_name=Touchpad
-
 [kmix]
 _k_friendly_name=KMix
 decrease_microphone_volume=Microphone Volume Down,Microphone Volume Down,Mikrofonlautstärke verringern
@@ -99,7 +93,7 @@ KrohnkiteStackedLayout=none,none,Krohnkite: Stacked Layout
 KrohnkiteStairLayout=Meta+S,none,Krohnkite: Stair Layout
 KrohnkiteTileLayout=none,none,Krohnkite: Tile Layout
 KrohnkiteToggleFloat=Meta+F,none,Krohnkite: Toggle Float
-KrohnkiteTreeColumnLayout=none,none,Krohnkite: Tree Column Layout
+KrohnkiteTreeColumnLayout=none,none,Krohnkite: Three Column Layout
 KrohnkitegrowWidth=none,none,Krohnkite: Grow Width
 KrohnkitetoggleDock=none,none,Krohnkite: Toggle Dock
 Move Tablet to Next Output=none,none,Move the tablet to the next output
@@ -178,14 +172,14 @@ Switch to Screen to the Left=none,,Zum Bildschirm links wechseln
 Switch to Screen to the Right=none,,Zum Bildschirm rechts wechseln
 Toggle Night Color=none,none,Nachtlicht aussetzen/fortsetzen
 Toggle Window Raise/Lower=none,,Fenster nach vorne/hinten
-Walk Through Windows=Alt+Tab,Alt+Tab,Zwischen Fenstern wechseln
-Walk Through Windows (Reverse)=Alt+Shift+Tab,Alt+Shift+Tab,Zwischen Fenstern wechseln (Gegenrichtung)
-Walk Through Windows Alternative=none,,Alternatives Wechseln zwischen Fenstern
-Walk Through Windows Alternative (Reverse)=none,,Alternatives Wechseln zwischen Fenstern (Gegenrichtung)
-Walk Through Windows of Current Application=none,Alt+`,Zwischen Fenstern der aktuellen Anwendung wechseln
-Walk Through Windows of Current Application (Reverse)=none,Alt+~,Zwischen Fenstern der aktuellen Anwendung wechseln (Gegenrichtung)
-Walk Through Windows of Current Application Alternative=none,,Alternatives Wechseln zwischen Fenstern der aktuellen Anwendung
-Walk Through Windows of Current Application Alternative (Reverse)=none,,Alternatives Wechseln zwischen Fenstern der aktuellen Anwendung (Gegenrichtung)
+Walk Through Windows=Alt+Tab,Meta+Tab\tAlt+Tab,Zwischen Fenstern wechseln
+Walk Through Windows (Reverse)=Alt+Shift+Tab,Meta+Shift+Tab\tAlt+Shift+Tab,Zwischen Fenstern wechseln (Gegenrichtung)
+Walk Through Windows Alternative=none,none,Alternatives Wechseln zwischen Fenstern
+Walk Through Windows Alternative (Reverse)=none,none,Alternatives Wechseln zwischen Fenstern (Gegenrichtung)
+Walk Through Windows of Current Application=none,Meta+`\tAlt+`,Zwischen Fenstern der aktuellen Anwendung wechseln
+Walk Through Windows of Current Application (Reverse)=none,Meta+~\tAlt+~,Zwischen Fenstern der aktuellen Anwendung wechseln (Gegenrichtung)
+Walk Through Windows of Current Application Alternative=none,none,Alternatives Wechseln zwischen Fenstern der aktuellen Anwendung
+Walk Through Windows of Current Application Alternative (Reverse)=none,none,Alternatives Wechseln zwischen Fenstern der aktuellen Anwendung (Gegenrichtung)
 Window Above Other Windows=none,,Fenster im Vordergrund halten
 Window Below Other Windows=none,,Fenster im Hintergrund halten
 Window Close=Meta+Q,Alt+F4,Fenster schließen
@@ -317,6 +311,7 @@ clipboard_action=Meta+Ctrl+X,Meta+Ctrl+X,Automatisches Aufklappmenü für Aktion
 cycle-panels=none,Meta+Alt+P,Tastaturfokus zwischen Kontrollleisten umschalten
 cycleNextAction=none,,Nächstes Element im Verlauf
 cyclePrevAction=none,,Vorheriges Element im Verlauf
+edit_clipboard=none,,Inhalt bearbeiten …
 manage activities=none,Meta+Q,Aktivitätenwechsler anzeigen
 next activity=none,none,Zwischen Aktivitäten wechseln
 previous activity=none,none,Zwischen Aktivitäten wechseln (Gegenrichtung)
@@ -369,6 +364,9 @@ RecordWindow=none
 RectangularRegionScreenShot=Meta+Shift+S\tPrint
 WindowUnderCursorScreenShot=none
 _launch=none
+
+[services][org.kde.touchpadshortcuts.desktop]
+ToggleTouchpad=Touchpad Toggle\tMeta+Ctrl+Zenkaku Hankaku
 
 [services][org.mozilla.Thunderbird.desktop]
 _launch=Ctrl+Alt+B

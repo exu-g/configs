@@ -96,98 +96,92 @@
         <default></default>
     </entry>
 
-    <entry name="debug" type="Bool">
-	    <label>Print debug messages</label>
-        <default>false</default>
+    <entry name="tileLayoutOrder" type="Int">
+	    <label> Tile layout order</label>
+        <default>1</default>
     </entry>
 
-    <entry name="debugActiveWin" type="Bool">
-	    <label>Print only new Window</label>
-        <default>false</default>
-    </entry>
-
-    <entry name="enableTileLayout" type="Bool">
-	    <label>Enable/disable Tile layout</label>
-        <default>true</default>
-    </entry>
     <entry name="tileLayoutInitialRotationAngle" type="String">
 	    <label>Tile layout initial rotation angle</label>
         <default>0</default>
     </entry>
-
-    <entry name="enableMonocleLayout" type="Bool">
-	    <label>Enable/disable Monocle layout</label>
-        <default>true</default>
+    <entry name="monocleLayoutOrder" type="Int">
+	    <label> Monocle layout order</label>
+        <default>2</default>
     </entry>
 
-    <entry name="enableThreeColumnLayout" type="Bool">
-	    <label>Enable/disable Three Column layout</label>
-        <default>true</default>
+    <entry name="threeColumnLayoutOrder" type="Int">
+	    <label> Three Column layout order</label>
+        <default>3</default>
     </entry>
 
-    <entry name="enableSpiralLayout" type="Bool">
-        <label>Enable/disable Spiral layout</label>
-        <default>true</default>
+    <entry name="spiralLayoutOrder" type="Int">
+	    <label> Spiral layout order</label>
+        <default>4</default>
     </entry>
 
-    <entry name="enableSpreadLayout" type="Bool">
-	    <label>Enable/disable Spread layout</label>
-        <default>true</default>
+    <entry name="quarterLayoutOrder" type="Int">
+	    <label> Quarter layout order</label>
+        <default>5</default>
     </entry>
-
-    <entry name="enableStairLayout" type="Bool">
-	    <label>Enable/disable Stair layout</label>
-        <default>true</default>
-    </entry>
-
-    <entry name="stairReverse" type="Bool">
-	    <label>Reverse the stair layout's orientation</label>
-        <default>false</default>
-    </entry>
-
-    <entry name="enableQuarterLayout" type="Bool">
-	    <label>Enable/disable Quarter layout</label>
-        <default>false</default>
-    </entry>
-
     <entry name="quarterLayoutReset" type="Bool">
 	    <label>Reset Quarter layout after closing a window</label>
         <default>false</default>
     </entry>
 
+    <entry name="stackedLayoutOrder" type="Int">
+	    <label> Stacked layout order</label>
+        <default>6</default>
+    </entry>
+
+    <entry name="columnsLayoutOrder" type="Int">
+	    <label> Columns layout order</label>
+        <default>7</default>
+    </entry>
     <entry name="enableColumnsLayout" type="Bool">
 	    <label>Enable/disable Columns layout</label>
         <default>true</default>
     </entry>
-
     <entry name="columnsLayoutInitialRotationAngle" type="String">
 	    <label>Columns layout initial rotation angle</label>
         <default>0</default>
     </entry>
-
     <entry name="columnsBalanced" type="Bool">
 	    <label>Enable/disable creating a new window in the shortest column</label>
         <default>false</default>
     </entry>
-
     <entry name="columnsLayerConf" type="String">
 	    <label>Columns layout default configuration.</label>
         <default></default>
     </entry>
 
-    <entry name="enableStackedLayout" type="Bool">
-	    <label>Enable/disable Stacked layout</label>
+    <entry name="spreadLayoutOrder" type="Int">
+	    <label> Spread layout order</label>
+        <default>8</default>
+    </entry>
+
+    <entry name="floatingLayoutOrder" type="Int">
+	    <label> Floating layout order</label>
+        <default>9</default>
+    </entry>
+
+    <entry name="stairLayoutOrder" type="Int">
+	    <label> Stair layout order</label>
+        <default>10</default>
+    </entry>
+    <entry name="stairReverse" type="Bool">
+	    <label>Reverse the stair layout's orientation</label>
         <default>false</default>
     </entry>
 
-    <entry name="enableFloatingLayout" type="Bool">
-	    <label>Enable/disable Floating layout</label>
-        <default>false</default>
+    <entry name="binaryTreeLayoutOrder" type="Int">
+	    <label> BTree layout order</label>
+        <default>11</default>
     </entry>
 
-    <entry name="enableBTreeLayout" type="Bool">
-	    <label>Enable/disable BTree layout</label>
-        <default>false</default>
+    <entry name="cascadeLayoutOrder" type="Int">
+	    <label> Cascade layout order</label>
+        <default>12</default>
     </entry>
 
     <entry name="ignoreActivity" type="String">
@@ -355,13 +349,18 @@
         <default>0</default>
     </entry>
 
-    <entry name="tileLayoutGap" type="Int">
+    <entry name="screenGapBetween" type="Int">
         <label>Gap between tiles in Tile layout</label>
         <default>0</default>
     </entry>
 
-    <entry name="pollMouseXdotool" type="Bool">
-	    <label>Poll actual mouse position using xdotool (for tile swapping, for example)</label>
+    <entry name="gapsOverrideConfig" type="String">
+	    <label>Override default screen gaps</label>
+        <default></default>
+    </entry>
+
+    <entry name="floatSkipPagerWindows" type="Bool">
+	    <label>Make the window float if its property: skipPager=true (HACK)</label>
         <default>false</default>
     </entry>
 
@@ -388,6 +387,62 @@
     <entry name="newWindowPosition" type="Int">
         <label>The position every new window in the screen window array</label>
         <default>0</default>
+    </entry>
+
+    <entry name="logging" type="Bool">
+	    <label>Enable logging</label>
+        <default>false</default>
+    </entry>
+
+    <entry name="logNewWindows" type="Bool">
+	    <label>Log new windows</label>
+        <default>false</default>
+    </entry>
+
+    <entry name="logFilteredWindows" type="Bool">
+	    <label>Log filtered windows</label>
+        <default>false</default>
+    </entry>
+
+    <entry name="logUnmanagedWindows" type="Bool">
+	    <label>Log unmanaged windows</label>
+        <default>false</default>
+    </entry>
+
+    <entry name="logWorkspaceSignals" type="Bool">
+	    <label>Log signals from workspace</label>
+        <default>false</default>
+    </entry>
+    <entry name="logWorkspaceSignalsSubmodules" type="String">
+	    <label>Specify a comma separated list of numbers workspace signals submodules</label>
+        <default></default>
+    </entry>
+
+    <entry name="logWindowSignals" type="Bool">
+	    <label>Log signals from windows</label>
+        <default>false</default>
+    </entry>
+    <entry name="logWindowSignalsSubmodules" type="String">
+	    <label>Specify a comma separated list of numbers window signals submodules</label>
+        <default></default>
+    </entry>
+
+    <entry name="logOther" type="Bool">
+	    <label>Log all other modules</label>
+        <default>false</default>
+    </entry>
+    <entry name="logOtherSubmodules" type="String">
+	    <label>Specify a comma separated list of numbers all other submodules</label>
+        <default></default>
+    </entry>
+
+    <entry name="logFilter" type="Bool">
+	    <label>Enable log filters</label>
+        <default>false</default>
+    </entry>
+    <entry name="logFilterStr" type="String">
+      <label>Specify a comma separated list of filters</label>
+        <default></default>
     </entry>
   </group>
 </kcfg>
