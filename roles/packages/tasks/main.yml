@@ -126,7 +126,6 @@
     - podman-compose # containers
     - power-profiles-daemon # power management
     - prettier # emacs formatter (yaml, others?)
-    - pyright # emacs python LSP
     - python-debugpy # code
     - python-isort # code
     - python-nose # emacs python testing (nosetests)
@@ -176,15 +175,14 @@
   tags: packages
   become: true
 
+# - basedpyright # emacs python LSP, improved fork of pyright
+# - btrfsmaintenance # AUR
 # - dockerfile-language-server # code # AUR
 # - dockfmt # AUR
-# - refind-theme-nord # bootmenu # AUR
-# - btrfsmaintenance # AUR
-# - virter # AUR
+# - fish-lsp # AUR, emacs fish LSP
 # - konsave # AUR
 # - powershell-bin # AUR, emacs powershell LSP (dep)
 # - powershell-editor-services # AUR, emacs powershell LSP
-# - fish-lsp # AUR, emacs fish LSP
 
 - name: x86_64 | Install other packages unavailable/unnecessary on ALARM
   community.general.pacman:
