@@ -44,6 +44,8 @@
     #- libsecret
     - aardvark-dns # containers
     - ansible # iac
+    - ansible-language-server # emacs ansible LSP
+    - ansible-lint # emacs ansible LSP requirement
     - avahi # mDNS & local autodiscover
     - base-devel # devel stuff
     - bash-language-server # bash lsp
