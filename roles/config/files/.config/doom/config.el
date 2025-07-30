@@ -213,6 +213,8 @@
 (set-eglot-client! 'fish-mode '("fish-lsp" "start"))
 ;; gleam
 (set-eglot-client! 'gleam-ts-mode '("gleam" "lsp"))
+;; ansible
+(set-eglot-client! 'yaml-mode '("ansible-language-server" "--stdio"))
 
 ;; python hook use ruff as formatter (disable lsp format)
 (setq-hook! 'python-mode-hook +format-with 'ruff)
