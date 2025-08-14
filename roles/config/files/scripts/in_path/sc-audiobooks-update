@@ -14,7 +14,7 @@ if ! ssh-add -T "${sshkeypath}.pub" &>/dev/null; then
 fi
 
 # NAS: audiobooks
-rsync -uvr --progress --delete "/mnt/storage/MediaLibrary/Audiobooks" "/mnt/CHOFNAS02/"
+rsync -uvr --progress --delete "/mnt/storage/MediaLibrary/Audiobooks" "/mnt/nas02/"
 
 # Server: audiobooks
 rsync -uvr --progress --delete -e "ssh -i $sshkeypath -p $port" "/mnt/storage/MediaLibrary/Audiobooks" "${user}@${server}:/mnt/media/"
