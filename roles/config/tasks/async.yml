@@ -1,15 +1,23 @@
 ---
-- name: Doom Emacs | Check if installed
+- name: Async (prepare) | Check if Doom Emacs installed
   ansible.builtin.stat:
     path: "~/.config/emacs/bin/doom"
   register: doom_emacs
   tags: config
 
-- name: Doom Emacs | Update if present - aync
+- name: Async | Update Doom Emacs
   ansible.builtin.shell:
     cmd: "~/.config/emacs/bin/doom sync --gc -j $(nproc) --force"
   when: doom_emacs.stat.exists
   async: 600
   poll: 0
   register: async_doom_emacs
+  tags: config
+
+- name: Async | Fish update completions
+  ansible.builtin.shell:
+    cmd: "fish_update_completions"
+  async: 600
+  poll: 0
+  register: async_fish_completions
   tags: config
