@@ -221,6 +221,7 @@
 
 ;; yaml hook use prettier-yaml as formatter (disable lsp format)
 (setq-hook! 'yaml-mode-hook +format-with 'prettier-yaml)
+(setq-hook! 'yaml-ts-mode-hook +format-with 'prettier-yaml)
 
 ;; json hook use prettier-json as formatter (disable lsp format)
 (setq-hook! 'json-mode-hook +format-with 'prettier-json)
