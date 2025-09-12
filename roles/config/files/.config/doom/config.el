@@ -151,6 +151,8 @@
 ;; set yaml indentation
 (setq-hook! 'yaml-mode-hook yaml-indent 2)
 (setq-hook! 'yaml-mode-hook yaml-indent-offset 2)
+(setq-hook! 'yaml-ts-mode-hook yaml-indent 2)
+(setq-hook! 'yaml-ts-mode-hook yaml-indent-offset 2)
 
 ;; set mode for systemd files
 (add-to-list 'auto-mode-alist '("\\.service\\'" . conf-unix-mode))
