@@ -3,8 +3,8 @@
   async_status:
     jid: "{{ item.ansible_job_id }}"
   loop:
-    - async_doom_emacs
-    - async_fish_completions
+    - "{{ async_doom_emacs }}"
+    - "{{ async_fish_completions }}"
   register: job_result
   until: job_result.finished
   retries: 60
@@ -15,8 +15,8 @@
     jid: "{{ item.ansible_job_id }}"
     mode: cleanup
   loop:
-    - async_doom_emacs
-    - async_fish_completions
+    - "{{ async_doom_emacs }}"
+    - "{{ async_fish_completions }}"
 # - name: Async (check) | Check on Doom Emacs async job
 #   async_status:
 #     jid: "{{ async_doom_emacs.ansible_job_id }}"
