@@ -17,6 +17,7 @@
 - name: Async | Fish update completions
   ansible.builtin.shell:
     cmd: "fish_update_completions"
+    executable: "/usr/bin/fish"
   async: 600
   poll: 0
   register: async_fish_completions
