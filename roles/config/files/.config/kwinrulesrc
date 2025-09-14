@@ -6,7 +6,7 @@ count=1
 rules=f136a16c-ca99-4e16-8c49-bfb1e5805b77
 
 [f136a16c-ca99-4e16-8c49-bfb1e5805b77]
-Description=Programm-Einstellungen für com.github.iwalton3.jellyfin-media-player
+Description=Einstellungen für com.github.iwalton3.jellyfin-media-player
 adaptivesync=false
 adaptivesyncrule=2
 wmclass=\scom.github.iwalton3.jellyfin-media-player
