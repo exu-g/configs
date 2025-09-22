@@ -1,0 +1,16 @@
+{
+    "output": {
+        "blocklist": [],
+        "convolver#0": {
+            "autogain": true,
+            "bypass": false,
+            "input-gain": 0.0,
+            "ir-width": 100,
+            "kernel-name": "Samsung Galaxy Buds2 Pro (Diffuse Field 5128 (-1 dB⁄oct)) 48kHz",
+            "output-gain": -5.0
+        },
+        "plugins_order": [
+            "convolver#0"
+        ]
+    }
+}

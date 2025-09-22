@@ -1,0 +1,16 @@
+{
+    "output": {
+        "blocklist": [],
+        "convolver#0": {
+            "autogain": true,
+            "bypass": false,
+            "input-gain": 0.0,
+            "ir-width": 100,
+            "kernel-name": "Samson SR850 (Diffuse Field 5128 (-1 dB⁄oct)) 48kHz",
+            "output-gain": -3.0
+        },
+        "plugins_order": [
+            "convolver#0"
+        ]
+    }
+}
