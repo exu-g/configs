@@ -50,7 +50,10 @@ immutability=1
 plugin=org.kde.plasma.devicenotifier
 
 [Containments][106][Applets][107][Applets][112][Configuration]
-PreloadWeight=92
+PreloadWeight=100
+
+[Containments][106][Applets][107][Applets][112][Configuration][General]
+popupOnNewDevice=false
 
 [Containments][106][Applets][107][Applets][113]
 immutability=1
@@ -64,7 +67,7 @@ immutability=1
 plugin=org.kde.plasma.notifications
 
 [Containments][106][Applets][107][Applets][114][Configuration]
-PreloadWeight=92
+PreloadWeight=97
 
 [Containments][106][Applets][107][Applets][115]
 immutability=1
@@ -171,14 +174,14 @@ plugin=org.kde.plasma.mediacontroller
 PreloadWeight=0
 
 [Containments][106][Applets][107][ConfigDialog]
-DialogHeight=540
-DialogWidth=720
+DialogHeight=1120
+DialogWidth=2040
 
 [Containments][106][Applets][107][Configuration]
 PreloadWeight=34
 
 [Containments][106][Applets][107][General]
-extraItems=org.kde.plasma.battery,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.plasma.manage-inputmethod,org.kde.plasma.mediacontroller,org.kde.plasma.notifications,org.kde.kdeconnect,org.kde.plasma.brightness,org.kde.plasma.cameraindicator,org.kde.plasma.bluetooth,org.kde.plasma.keyboardindicator,org.kde.kscreen,org.kde.plasma.keyboardlayout,org.kde.plasma.networkmanagement,org.kde.plasma.volume,org.kde.plasma.vault,org.kde.plasma.printmanager,org.kde.plasma.weather,org.kde.plasma.kclock_1x2,org.kde.merkuro.contact.applet
+extraItems=org.kde.plasma.battery,org.kde.plasma.clipboard,org.kde.plasma.manage-inputmethod,org.kde.plasma.mediacontroller,org.kde.plasma.notifications,org.kde.kdeconnect,org.kde.plasma.brightness,org.kde.plasma.cameraindicator,org.kde.plasma.bluetooth,org.kde.plasma.keyboardindicator,org.kde.kscreen,org.kde.plasma.keyboardlayout,org.kde.plasma.networkmanagement,org.kde.plasma.volume,org.kde.plasma.vault,org.kde.plasma.printmanager,org.kde.plasma.weather,org.kde.plasma.kclock_1x2,org.kde.merkuro.contact.applet,org.kde.plasma.devicenotifier
 hiddenItems=firewall-applet,KMix,Discover-Benachrichtigungen_org.kde.DiscoverNotifier,hp-systray,Proton Mail Bridge,org.kde.plasma.brightness
 knownItems=org.kde.plasma.battery,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.plasma.manage-inputmethod,org.kde.plasma.mediacontroller,org.kde.plasma.notifications,org.kde.kdeconnect,org.kde.plasma.brightness,org.kde.plasma.cameraindicator,org.kde.plasma.bluetooth,org.kde.plasma.keyboardindicator,org.kde.kscreen,org.kde.plasma.keyboardlayout,org.kde.plasma.networkmanagement,org.kde.plasma.volume,org.kde.plasma.vault,org.kde.plasma.printmanager,org.kde.plasma.weather,org.kde.plasma.kclock_1x2,org.kde.merkuro.contact.applet
 shownItems=org.kde.plasma.networkmanagement,Nextcloud,org.kde.plasma.battery,org.kde.plasma.volume
@@ -389,7 +392,10 @@ immutability=1
 plugin=org.kde.plasma.devicenotifier
 
 [Containments][3][Applets][8][Applets][11][Configuration]
-PreloadWeight=92
+PreloadWeight=100
+
+[Containments][3][Applets][8][Applets][11][Configuration][General]
+popupOnNewDevice=false
 
 [Containments][3][Applets][8][Applets][12]
 immutability=1
@@ -403,7 +409,7 @@ immutability=1
 plugin=org.kde.plasma.notifications
 
 [Containments][3][Applets][8][Applets][13][Configuration]
-PreloadWeight=92
+PreloadWeight=100
 
 [Containments][3][Applets][8][Applets][14]
 immutability=1
@@ -524,8 +530,8 @@ plugin=org.kde.plasma.mediacontroller
 PreloadWeight=0
 
 [Containments][3][Applets][8][ConfigDialog]
-DialogHeight=540
-DialogWidth=720
+DialogHeight=1120
+DialogWidth=2040
 
 [Containments][3][Applets][8][Configuration]
 PreloadWeight=34
