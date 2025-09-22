@@ -149,8 +149,6 @@
        "f" 'evil-quit-all))
 
 ;; set yaml indentation
-(setq-hook! 'yaml-mode-hook yaml-indent 2)
-(setq-hook! 'yaml-mode-hook yaml-indent-offset 2)
 (setq-hook! 'yaml-ts-mode-hook yaml-indent 2)
 (setq-hook! 'yaml-ts-mode-hook yaml-indent-offset 2)
 
@@ -216,13 +214,12 @@
 ;; gleam
 (set-eglot-client! 'gleam-ts-mode '("gleam" "lsp"))
 ;; ansible
-(set-eglot-client! 'yaml-mode '("ansible-language-server" "--stdio"))
+(set-eglot-client! 'yaml-ts-mode '("ansible-language-server" "--stdio"))
 
 ;; python hook use ruff as formatter (disable lsp format)
 (setq-hook! 'python-mode-hook +format-with 'ruff)
 
 ;; yaml hook use prettier-yaml as formatter (disable lsp format)
-(setq-hook! 'yaml-mode-hook +format-with 'prettier-yaml)
 (setq-hook! 'yaml-ts-mode-hook +format-with 'prettier-yaml)
 
 ;; json hook use prettier-json as formatter (disable lsp format)
@@ -237,4 +234,4 @@
 (setq-hook! 'terraform-mode-hook +format-with 'tofu)
 
 ;; set mode for awx files
-(add-to-list 'auto-mode-alist '("\\.awx\\'" . yaml-mode))
+(add-to-list 'auto-mode-alist '("\\.awx\\'" . yaml-ts-mode))
