@@ -235,3 +235,6 @@
 
 ;; set mode for awx files
 (add-to-list 'auto-mode-alist '("\\.awx\\'" . yaml-ts-mode))
+
+;; enable ansible-mode for yaml
+(add-hook! 'yaml-ts-mode-hook 'ansible-mode)
