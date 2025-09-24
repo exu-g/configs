@@ -225,7 +225,7 @@
                                               '(("ansible-language-server" "--stdio"))))))
 
 ;; python hook use ruff as formatter (disable lsp format)
-(setq-hook! 'python-mode-hook +format-with 'ruff)
+(setq-hook! 'python-ts-mode-hook +format-with 'ruff)
 
 ;; yaml hook use prettier-yaml as formatter (disable lsp format)
 (setq-hook! 'yaml-ts-mode-hook +format-with 'prettier-yaml)
