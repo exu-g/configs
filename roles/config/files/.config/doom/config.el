@@ -213,7 +213,11 @@
                `(powershell-mode . ,(eglot-alternatives
                                      '(("pwsh" "-NoLogo" "-NoProfile" "-Command" "/opt/powershell-editor-services/PowerShellEditorServices/Start-EditorServices.ps1" "-HostName" "Emacs" "-HostProfileId" "Emacs" "-HostVersion" "1.0.0" "-Stdio"))))))
 ;; fish
-(set-eglot-client! 'fish-mode '("fish-lsp" "start"))
+;; (set-eglot-client! 'fish-mode '("fish-lsp" "start"))
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+               `((yaml-ts-mode yaml-mode) . ,(eglot-alternatives
+                                              '(("fish-lsp" "start"))))))
 ;; gleam
 ;; (set-eglot-client! 'gleam-ts-mode '("gleam" "lsp"))
 (set-eglot-client! 'gleam-ts-mode '"gleam" "lsp")
