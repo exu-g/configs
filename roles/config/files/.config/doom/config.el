@@ -216,8 +216,8 @@
 ;; (set-eglot-client! 'fish-mode '("fish-lsp" "start"))
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs
-               `((yaml-ts-mode yaml-mode) . ,(eglot-alternatives
-                                              '(("fish-lsp" "start"))))))
+               `(fish-mode . ,(eglot-alternatives
+                               '(("fish-lsp" "start"))))))
 ;; gleam
 ;; (set-eglot-client! 'gleam-ts-mode '("gleam" "lsp"))
 (set-eglot-client! 'gleam-ts-mode '"gleam" "lsp")
