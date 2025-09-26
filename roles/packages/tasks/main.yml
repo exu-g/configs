@@ -142,6 +142,7 @@
     - ruff # emacs python formatter
     - shfmt # code
     - smartmontools # disks
+    - sof-firmware # modern laptop audio
     - speech-dispatcher # TTS
     - stress # benchmark
     - stylelint # code
