@@ -100,7 +100,8 @@
 - name: Create flatpak overrides
   ansible.builtin.command: "flatpak override --user {{ item }}"
   loop:
-    - "--filesystem=~/.themes:ro"
+    - "--filesystem=~/.themes:ro" # correct gtk/qt theme
+    - "--filesystem=xdg-config/kcminputrc:ro" # correct cursor theme https://github.com/flatpak/flatpak/issues/709#issuecomment-2133355601
     - "--socket=wayland"
 
 - name: Bash cat | Download
