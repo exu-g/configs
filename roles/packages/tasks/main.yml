@@ -94,6 +94,7 @@
     - languagetool
     - lldb
     - lldb-mi
+    - lsp-plugins-lv2 # easyeffects equalizer plugin
     - lutris # games
     - maliit-keyboard # virtual keyboard
     - man-db # docs
