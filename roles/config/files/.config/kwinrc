@@ -31,6 +31,8 @@ LongitudeAuto=9.13
 Mode=Constant
 
 [Plugins]
+blurEnabled=true
+contrastEnabled=true
 krohnkiteEnabled=true
 poloniumEnabled=false
 synchronizeskipswitcherEnabled=true
