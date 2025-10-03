@@ -213,11 +213,17 @@
                `(powershell-mode . ,(eglot-alternatives
                                      '(("pwsh" "-NoLogo" "-NoProfile" "-Command" "/opt/powershell-editor-services/PowerShellEditorServices/Start-EditorServices.ps1" "-HostName" "Emacs" "-HostProfileId" "Emacs" "-HostVersion" "1.0.0" "-Stdio"))))))
 ;; fish
-;; (set-eglot-client! 'fish-mode '("fish-lsp" "start"))
-(with-eval-after-load 'eglot
-  (add-to-list 'eglot-server-programs
-               `(fish-mode . ,(eglot-alternatives
-                               '(("fish-lsp" "start"))))))
+;; (set-eglot-client! 'fish-mode '("fish-lsp" "start")) ; Wrong type argument: processp, nil
+;; (with-eval-after-load 'eglot
+;;   (add-to-list 'eglot-server-programs `(fish-mode . ,(eglot-alternatives '(("fish-lsp" "start"))))))
+;; (after! fish-mode
+;;   (set-eglot-client! 'fish-mode '("fish-lsp" "start"))) ; doesn't work
+;; (after! eglot
+;;   (add-to-list 'eglot-server-programs `(fish-mode "fish-lsp" "start"))) ; works
+;; (after! eglot
+;;   (add-to-list 'eglot-server-programs `(fish-mode . ,(eglot-alternatives '("fish-lsp" "start"))))) ; results in same error as described
+(after! eglot
+  (add-to-list 'eglot-server-programs `(fish-mode . ,(eglot-alternatives '(("fish-lsp" "start")))))) ; works
 ;; gleam
 ;; (set-eglot-client! 'gleam-ts-mode '("gleam" "lsp"))
 (set-eglot-client! 'gleam-ts-mode '"gleam" "lsp")
