@@ -130,9 +130,7 @@ def ffmpeg_to_wav(inputfile: str, outputfile: str):
         loudnorm(inputfile=temp_input, outputfile=temp_output)
 
         # convert audio back to lossy format
-        outputcmd = {
-            outputfile: "-c:a libopus" " " "-b:a 192k" " " "-compression_level 10"
-        }
+        outputcmd = {outputfile: "-c:a libopus -b:a 192k -compression_level 10"}
 
         # cleanup check
         if bool(cleanup_required.value):
@@ -242,7 +240,7 @@ if __name__ == "__main__":
     cleanup_required = Value("i", 0)
 
     # handle KeyboardInterrupt
-    signal.signal(signal.SIGINT, sigint_handler)
+    _ = signal.signal(signal.SIGINT, sigint_handler)
 
     # start time of program
     starttime = time.time()
@@ -250,12 +248,12 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="")
 
     # Input directory
-    parser.add_argument(
+    _ = parser.add_argument(
         "-i", "--input-dir", required=True, type=str, help="Input source directory"
     )
 
     # number of cpus/threads to use, defaults to all available
-    parser.add_argument(
+    _ = parser.add_argument(
         "-c",
         "--cpu-count",
         required=False,
@@ -265,7 +263,7 @@ if __name__ == "__main__":
     )
 
     # in case you wanted to rerun the conversion for everything
-    parser.add_argument(
+    _ = parser.add_argument(
         "-r",
         "--reset",
         required=False,
