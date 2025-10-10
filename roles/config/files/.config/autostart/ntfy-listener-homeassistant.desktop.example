@@ -1,0 +1,6 @@
+[Desktop Entry]
+Exec=python ~/scripts/pieces/ntfy-listener.py -i "user-home-symbolic" -a "Home Assistant" -t "fill token here"
+Name=ntfy-listener Home Assistant
+StartupNotify=true
+Terminal=false
+Type=Application
