@@ -1,5 +1,25 @@
 {
-    "extractor": {
-        "base-directory": "."
+  "extractor": {
+    "base-directory": ".",
+
+    "mastodon": {
+      "#": "add 'tabletop.social' as recognized mastodon instance",
+      "#": "(run 'gallery-dl oauth:mastodon:tabletop.social to get an access token')",
+      "meow.social": {
+        "root": "https://meow.social"
+      },
+      "mastodon.art": {
+        "root": "https://mastodon.art"
+      },
+
+      "#": "set filename format strings for all 'mastodon' instances",
+      "directory": ["mastodon", "@{account[username]!l}@{instance}"],
+      "filename": "{media[id]}.{extension}"
+    },
+    "misskey": {
+      "#": "set filename format strings for all 'mastodon' instances",
+      "directory": ["misskey", "@{user[username]!l}@{instance}"],
+      "filename": "{filename}.{extension}"
     }
+  }
 }
