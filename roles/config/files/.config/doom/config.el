@@ -207,32 +207,16 @@
 ;; Eglot LSP
 ;; Documentation: https://discourse.doomemacs.org/t/set-up-lsp-mode-or-eglot-for-insert-language-here/62#how-to-use-a-custom-server-12
 ;; powershell
-;; (set-eglot-client! 'powershell-mode '("pwsh" "-NoLogo" "-NoProfile" "-Command" "/opt/powershell-editor-services/PowerShellEditorServices/Start-EditorServices.ps1" "-HostName" "Emacs" "-HostProfileId" "Emacs" "-HostVersion" "1.0.0" "-Stdio"))
-(with-eval-after-load 'eglot
-  (add-to-list 'eglot-server-programs
-               `(powershell-mode . ,(eglot-alternatives
-                                     '(("pwsh" "-NoLogo" "-NoProfile" "-Command" "/opt/powershell-editor-services/PowerShellEditorServices/Start-EditorServices.ps1" "-HostName" "Emacs" "-HostProfileId" "Emacs" "-HostVersion" "1.0.0" "-Stdio"))))))
+(set-eglot-client! 'powershell-mode '("pwsh" "-NoLogo" "-NoProfile" "-Command" "/opt/powershell-editor-services/PowerShellEditorServices/Start-EditorServices.ps1" "-HostName" "Emacs" "-HostProfileId" "Emacs" "-HostVersion" "1.0.0" "-Stdio"))
+
 ;; fish
-;; (set-eglot-client! 'fish-mode '("fish-lsp" "start")) ; Wrong type argument: processp, nil
-;; (with-eval-after-load 'eglot
-;;   (add-to-list 'eglot-server-programs `(fish-mode . ,(eglot-alternatives '(("fish-lsp" "start"))))))
-;; (after! fish-mode
-;;   (set-eglot-client! 'fish-mode '("fish-lsp" "start"))) ; doesn't work
-;; (after! eglot
-;;   (add-to-list 'eglot-server-programs `(fish-mode "fish-lsp" "start"))) ; works
-;; (after! eglot
-;;   (add-to-list 'eglot-server-programs `(fish-mode . ,(eglot-alternatives '("fish-lsp" "start"))))) ; results in same error as described
-(after! eglot
-  (add-to-list 'eglot-server-programs `(fish-mode . ,(eglot-alternatives '(("fish-lsp" "start")))))) ; works
+(set-eglot-client! 'fish-mode '("fish-lsp" "start"))
+
 ;; gleam
-;; (set-eglot-client! 'gleam-ts-mode '("gleam" "lsp"))
-(set-eglot-client! 'gleam-ts-mode '"gleam" "lsp")
+(set-eglot-client! 'gleam-ts-mode '("gleam" "lsp"))
+
 ;; ansible
-;; (set-eglot-client! '(yaml-ts-mode yaml-mode) '("ansible-language-server" "--stdio"))
-(with-eval-after-load 'eglot
-  (add-to-list 'eglot-server-programs
-               `((yaml-ts-mode yaml-mode) . ,(eglot-alternatives
-                                              '(("ansible-language-server" "--stdio"))))))
+(set-eglot-client! '(yaml-ts-mode yaml-mode) '("ansible-language-server" "--stdio"))
 
 ;; python hook use ruff as formatter (disable lsp format)
 (setq-hook! 'python-ts-mode-hook +format-with 'ruff)
