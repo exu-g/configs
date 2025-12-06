@@ -1,3 +1,4 @@
-ffmpy
-soundfile
-pyloudnorm
+ffmpy==0.5.0
+pyloudnorm==0.1.1
+soundfile==0.13.1
+
