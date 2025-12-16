@@ -1,0 +1,91 @@
+<!DOCTYPE kpartgui>
+<kpartgui name="kid3" version="19">
+ <MenuBar>
+  <Menu name="file" noMerge="1">
+   <text>&amp;File</text>
+   <Action name="file_open"/>
+   <Action name="file_open_recent"/>
+   <Action name="open_directory"/>
+   <Action name="reload"/>
+   <Separator/>
+   <Action name="file_save"/>
+   <Action name="file_revert"/>
+   <Separator/>
+   <Action name="import"/>
+   <Action name="import_amazon"/>
+   <Action name="import_discogs"/>
+   <Action name="import_gnudb"/>
+   <Action name="import_musicbrainzrelease"/>
+   <Action name="import_musicbrainzfingerprint"/>
+   <Action name="import_tags"/>
+   <Action name="batch_import"/>
+   <Action name="browse_cover_art"/>
+   <Separator/>
+   <Action name="export"/>
+   <Action name="create_playlist"/>
+   <Separator/>
+   <Action name="file_quit"/>
+  </Menu>
+  <Menu name="edit" noMerge="1">
+   <text>&amp;Edit</text>
+   <Action name="edit_select_all"/>
+   <Action name="edit_deselect"/>
+   <Action name="select_all_in_directory"/>
+   <Action name="invert_selection"/>
+   <Action name="previous_file"/>
+   <Action name="next_file"/>
+   <Separator/>
+   <Action name="edit_find"/>
+   <Action name="edit_replace"/>
+  </Menu>
+  <Menu name="tools" noMerge="1">
+   <text>&amp;Tools</text>
+   <Action name="apply_filename_format"/>
+   <Action name="apply_id3_format"/>
+   <Action name="apply_text_encoding"/>
+   <Separator/>
+   <Action name="rename_directory"/>
+   <Action name="number_tracks"/>
+   <Action name="filter"/>
+   <Separator/>
+   <Action name="convert_to_id3v24"/>
+   <Action name="convert_to_id3v23"/>
+   <Separator/>
+   <Action name="play"/>
+  </Menu>
+  <Menu name="settings" noMerge="1">
+   <text>&amp;Settings</text>
+   <Merge name="StandardToolBarMenuHandler"/>
+   <Action name="options_show_toolbar"/>
+   <Action name="options_show_statusbar"/>
+   <Action name="hide_picture"/>
+   <Action name="auto_hide_tags"/>
+   <Separator/>
+   <Action name="options_configure_keybinding"/>
+   <Action name="options_configure_toolbars"/>
+   <Action name="options_configure"/>
+  </Menu>
+  <Menu name="help" noMerge="1">
+   <text>&amp;Help</text>
+   <Action name="help_contents"/>
+   <Separator/>
+   <Action name="help_report_bug"/>
+   <Separator/>
+   <Action name="help_about_app"/>
+   <Action name="help_about_kde"/>
+  </Menu>
+ </MenuBar>
+ <ToolBar name="mainToolBar" noMerge="1">
+  <text>Main Toolbar</text>
+  <Action name="file_open"/>
+  <Action name="file_save"/>
+  <Action name="batch_import"/>
+  <Action name="user_extract_album_art"/>
+  <Action name="filename_from_v2"/>
+ </ToolBar>
+ <ActionProperties scheme="Default">
+  <Action icon="cm_search" name="batch_import"/>
+  <Action icon="cm_multirename" name="filename_from_v2"/>
+  <Action icon="zoom-select-fit-symbolic" name="user_extract_album_art"/>
+ </ActionProperties>
+</kpartgui>
