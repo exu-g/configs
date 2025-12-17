@@ -45,7 +45,6 @@
     - ".gtkrc-2.0"
     - ".local"
     - ".ssh"
-    - ".steam"
     - "scripts"
   tags: config
 
