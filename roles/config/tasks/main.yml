@@ -307,13 +307,7 @@
     recurse: true
   loop:
     - "~/scripts"
-    # - "~/.local/share/applications/*.desktop"
   tags: config
-
-# - name: Reload applications
-#   ansible.builtin.shell:
-#     cmd: "update-desktop-database ~/.local/share/applications/"
-#   tags: config
 
 - name: Import Tasks from plasma.yml
   ansible.builtin.import_tasks:
