@@ -206,6 +206,7 @@
     - linux-headers # kernel
     - pandoc
     - qemu-full # virtualization
+    - qemu-user-static-binfmt # architecture emulation
     - reflector # mirrors
     - shellcheck # code
     - virt-manager # virtualization
