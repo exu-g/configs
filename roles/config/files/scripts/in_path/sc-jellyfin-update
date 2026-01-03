@@ -14,19 +14,22 @@ if ! ssh-add -T "${sshkeypath}.pub" &>/dev/null; then
 fi
 
 # NAS: music raw
-rsync -uvr --progress --delete "/home/exu/Nextcloud/MusikRaw/" "/mnt/nas02/"
+rsync -uvr --progress --delete "/home/exu/Nextcloud/MusikRaw" "/mnt/nas02/MusikRaw"
 
 # NAS: video files
-rsync -uvr --progress --delete "/mnt/storage/MediaLibrary/"{Movies,Patreon,Shows} "/mnt/nas02/"
+rsync -uvr --progress --delete "/mnt/storage/MediaLibrary/Movies" "/mnt/nas02/Movies"
+rsync -uvr --progress --delete "/mnt/storage/MediaLibrary/Patreon" "/mnt/nas02/Patreon"
+rsync -uvr --progress --delete "/mnt/storage/MediaLibrary/Shows" "/mnt/nas02/Shows"
 
 # NAS: music
-rsync -uvrL --progress --delete "/home/exu/Musik" "/mnt/nas02/"
+rsync -uvrL --progress --delete "/home/exu/Musik" "/mnt/nas02/Musik"
 
 # Server: music
-rsync -uvrL --progress --delete -e "ssh -i $sshkeypath -p $port" "/home/exu/Musik/" "${user}@${server}:/mnt/media/Musik/"
+rsync -uvrL --progress --delete -e "ssh -i $sshkeypath -p $port" "/home/exu/Musik" "${user}@${server}:/mnt/media/Musik"
 
 # Server: video files
-rsync -uvr --progress --delete -e "ssh -i $sshkeypath -p $port" "/mnt/storage/MediaLibrary/"{Movies,Shows} "${user}@${server}:/mnt/media/"
+rsync -uvr --progress --delete -e "ssh -i $sshkeypath -p $port" "/mnt/storage/MediaLibrary/Movies" "${user}@${server}:/mnt/media/Movies"
+rsync -uvr --progress --delete -e "ssh -i $sshkeypath -p $port" "/mnt/storage/MediaLibrary/Shows" "${user}@${server}:/mnt/media/Shows"
 
 # wait for background jobs
 wait
