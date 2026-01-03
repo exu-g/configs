@@ -13,6 +13,9 @@ if ! ssh-add -T "${sshkeypath}.pub" &>/dev/null; then
     ssh-add -q "$sshkeypath"
 fi
 
+# NAS: music raw
+rsync -uvr --progress --delete "/home/exu/Nextcloud/MusikRaw/" "/mnt/nas02/"
+
 # NAS: video files
 rsync -uvr --progress --delete "/mnt/storage/MediaLibrary/"{Movies,Patreon,Shows} "/mnt/nas02/"
 
