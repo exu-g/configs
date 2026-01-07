@@ -1,3 +1,19 @@
+[Action_0]
+Automatic=true
+Description=Simulated keypress
+Number of commands=1
+Regexp=
+
+[Action_0/Command_0]
+Commandline[$e]=echo 'type %s' | dotool
+Description=dotool
+Enabled=true
+Icon=edit-paste
+Output=0
+
+[General]
+Number of Actions=1
+
 [PlasmaViews][Panel 106]
 alignment=132
 floating=1
