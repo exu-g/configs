@@ -55,7 +55,6 @@ save:
       # - konsolerc
       # - kritadisplayrc
       # - kritarc
-      # - krunnerrc
       # - ksmserverrc
       # - ksplashrc
       # - ktrashrc
@@ -73,6 +72,7 @@ save:
       - kcminputrc
       - kdeglobals
       - kglobalshortcutsrc
+      - krunnerrc
       - kscreenlockerrc
       - kservicemenurc
       - ktimezonedrc
@@ -82,6 +82,7 @@ save:
       - plasma-org.kde.plasma.desktop-appletsrc
       - plasmarc
       - plasmashellrc
+      - yakuakerc
 
   # Here are a few examples of how you can add more stuff to back up.
   # Uncomment these lines if you want.
