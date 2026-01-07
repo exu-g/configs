@@ -1,0 +1,19 @@
+[Animation]
+Frames=0
+
+[Appearance]
+BackgroundColorOpacity=90
+Translucency=true
+
+[Dialogs]
+FirstRun=false
+
+[Shortcuts]
+close-active-terminal=Ctrl+Shift+R;\s
+view-full-screen=Ctrl+Shift+F11; F11
+
+[Window]
+Height=90
+KeepOpen=false
+Position=65
+ShowSystrayIcon=false
