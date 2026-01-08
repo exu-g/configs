@@ -9,8 +9,16 @@ wmclass=mpv
 wmclassmatch=1
 
 [General]
-count=3
-rules=f136a16c-ca99-4e16-8c49-bfb1e5805b77,837d7c1e-3471-4bb6-b6ab-c7a5f61fa004,fa38ef27-338c-4298-8496-4b3ee750e1fd
+count=4
+rules=f136a16c-ca99-4e16-8c49-bfb1e5805b77,837d7c1e-3471-4bb6-b6ab-c7a5f61fa004,fa38ef27-338c-4298-8496-4b3ee750e1fd,a35d74fe-5a9a-4b68-aa48-97eaf7038a17
+
+[a35d74fe-5a9a-4b68-aa48-97eaf7038a17]
+Description=Einstellungen für org.jellyfin.JellyfinDesktop
+adaptivesync=false
+adaptivesyncrule=2
+wmclass=org.jellyfin.JellyfinDesktop
+wmclasscomplete=true
+wmclassmatch=1
 
 [f136a16c-ca99-4e16-8c49-bfb1e5805b77]
 Description=Einstellungen für com.github.iwalton3.jellyfin-media-player
