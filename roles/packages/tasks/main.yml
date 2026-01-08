@@ -246,13 +246,13 @@
   loop:
     # - ./com.mikeasoft.pied.flatpak # local package
     - com.discordapp.Discord # chat
-    - com.github.iwalton3.jellyfin-media-player # media
     - com.github.tchx84.Flatseal # flatpak permissions
     - com.obsproject.Studio # recording
     - io.github.TransmissionRemoteGtk # torrents
     - io.github.ungoogled_software.ungoogled_chromium # browser
     - org.chromium.Chromium # browser
     - org.freedesktop.Piper # mouse
+    - org.jellyfin.JellyfinDesktop # media
     - org.libreoffice.LibreOffice # office suite
     - org.mozilla.Thunderbird # email
   tags: packages
