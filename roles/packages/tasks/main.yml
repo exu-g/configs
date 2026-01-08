@@ -63,7 +63,7 @@
     - emacs-wayland # text editor & IDE
     - exfatprogs # exfat
     - f2fs-tools # f2fs
-    - fcitx5-im # virtual keyboard
+    #- fcitx5-im # virtual keyboard
     - fd
     - ffmpeg # multimedia
     - firefox # browser
@@ -125,6 +125,7 @@
     - php # code
     - pkgstats
     - plasma-meta # KDE plasma package
+    - plasma-keyboard # KDE virtual keyboard
     - podman # containers
     - podman-compose # containers
     - power-profiles-daemon # power management
