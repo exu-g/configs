@@ -1,6 +1,15 @@
 [$Version]
 update_info=kwinrules.upd:replace-placement-string-to-enum,kwinrules.upd:use-virtual-desktop-ids
 
+[298b841e-c9f0-4fd6-8c14-ba0f5a9fbaf8]
+Description=Einstellungen für cafe.avery.Delfin
+adaptivesync=false
+adaptivesyncrule=2
+fullscreen=true
+fullscreenrule=3
+wmclass=cafe.avery.Delfin
+wmclassmatch=1
+
 [837d7c1e-3471-4bb6-b6ab-c7a5f61fa004]
 Description=Einstellungen für mpv
 adaptivesync=false
@@ -10,21 +19,15 @@ wmclassmatch=1
 
 [General]
 count=4
-rules=f136a16c-ca99-4e16-8c49-bfb1e5805b77,837d7c1e-3471-4bb6-b6ab-c7a5f61fa004,fa38ef27-338c-4298-8496-4b3ee750e1fd,a35d74fe-5a9a-4b68-aa48-97eaf7038a17
+rules=837d7c1e-3471-4bb6-b6ab-c7a5f61fa004,fa38ef27-338c-4298-8496-4b3ee750e1fd,a35d74fe-5a9a-4b68-aa48-97eaf7038a17,298b841e-c9f0-4fd6-8c14-ba0f5a9fbaf8
 
 [a35d74fe-5a9a-4b68-aa48-97eaf7038a17]
 Description=Einstellungen für org.jellyfin.JellyfinDesktop
 adaptivesync=false
 adaptivesyncrule=2
+fullscreen=true
+fullscreenrule=3
 wmclass=org.jellyfin.JellyfinDesktop
-wmclasscomplete=true
-wmclassmatch=1
-
-[f136a16c-ca99-4e16-8c49-bfb1e5805b77]
-Description=Einstellungen für com.github.iwalton3.jellyfin-media-player
-adaptivesync=false
-adaptivesyncrule=2
-wmclass=\scom.github.iwalton3.jellyfin-media-player
 wmclasscomplete=true
 wmclassmatch=1
 
