@@ -124,12 +124,19 @@
   tags: config
   block:
     - name: Plasma | Set desktop wallpaper
-      ansible.builtin.shell: 'plasma-apply-wallpaperimage "{{ background_image }}"'
+      ansible.builtin.command: 'plasma-apply-wallpaperimage "{{ background_image }}"'
+      changed_when: true
 
     - name: Plasma | Set Lockscreen wallpaper
       ansible.builtin.shell: |
         kwriteconfig6 --file ~/.config/kscreenlockerrc --group Greeter --group Wallpaper --group org.kde.image --group General --key Image '{{ background_image }}'
         kwriteconfig6 --file ~/.config/kscreenlockerrc --group Greeter --group Wallpaper --group org.kde.image --group General --key PreviewImage '{{ background_image }}'
+      changed_when: true
 
 - name: Plasma | Restart plasmashell
   ansible.builtin.command: kill -9 plasmashell
+  changed_when: true
+
+- name: Plasma | Restart krunner
+  ansible.builtin.command: kill krunner
+  changed_when: true
