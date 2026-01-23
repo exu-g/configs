@@ -300,7 +300,7 @@ if __name__ == "__main__":
                 filepath = os.path.join(root, file)
                 # only file newer than the last run are added
                 if os.path.getmtime(filepath) >= float(timeprev):
-                    musicfiles.append(os.path.join(root, file))
+                    musicfiles.append(filepath)
 
     # process pool
     with Pool(cpu) as p:
