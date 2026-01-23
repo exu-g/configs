@@ -25,7 +25,7 @@ import time
 from random import randint
 
 # typing hints
-from typing import Any, Optional
+from typing import Any
 
 # temporary file/directory management
 import tempfile
@@ -41,6 +41,9 @@ import shutil
 
 # signal handling
 import signal
+
+# typing for numpy data
+from numpy import ndarray, float64
 
 """
 Normalize loudness of all music files in a given directory and its subdirectories.
@@ -69,11 +72,16 @@ def loudnorm(inputfile: str, outputfile: str):
         inputfile (str): Path to input file. Format must be supported by python-soundfile module
         outputfile (str): Path to output file
     """
+    # set variable types
+    data: ndarray
+    rate: int
+
+    # read data and sampling rate
     data, rate = soundfile.read(file=inputfile)
 
     # measure loudness
-    meter = pyloudnorm.Meter(rate=rate)
-    loudness = meter.integrated_loudness(data=data)
+    meter: pyloudnorm.Meter = pyloudnorm.Meter(rate=rate)
+    loudness: float64 = meter.integrated_loudness(data=data)
 
     # cleanup check
     if bool(cleanup_required.value):
@@ -176,7 +184,7 @@ def ffmpeg_copy_metadata(inputfile: str, outputfile: str):
         subprocess.run(ff.cmd, shell=True, capture_output=True)
 
 
-def main(inputfile: str) -> Optional[list[Any]]:
+def main(inputfile: str) -> list[Any] | None:
     """
     Main program loop
 
@@ -278,11 +286,11 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    srcfolder = args.input_dir
+    srcfolder: str = str(args.input_dir)
 
-    cpu = args.cpu_count
+    cpu: int = int(args.cpu_count)
 
-    reset = args.reset
+    reset: bool = bool(args.reset)
 
     # file where last run timestamp is stored
     timefile = os.path.join(srcfolder, "run.time")
