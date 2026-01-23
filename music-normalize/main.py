@@ -236,6 +236,11 @@ if __name__ == "__main__":
     """
     Handle arguments and other details for interactive usage
     """
+    # NOTE Default in Python 3.14 changed to "forkserver"
+    # This breaks the synchronized variable below and causes improper handling of multiple files if 1 CPU is used
+    # Probably need a full rewrite of the multiprocessing stuff with Python 3.14 in mind to clean up
+    multiprocessing.set_start_method("fork")
+
     # global cleanup variable
     cleanup_required = Value("i", 0)
 
