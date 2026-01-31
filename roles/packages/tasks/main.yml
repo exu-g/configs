@@ -183,7 +183,7 @@
 # - basedpyright # emacs python LSP, improved fork of pyright
 # - btrfsmaintenance # AUR
 # - dockerfile-language-server # code # AUR
-# - dockfmt # AUR
+# - dockerfmt # AUR
 # - dotool # AUR, wayland simulate keypress
 # - fish-lsp # AUR, emacs fish LSP
 # - konsave # AUR
