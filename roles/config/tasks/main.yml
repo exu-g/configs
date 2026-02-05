@@ -145,6 +145,7 @@
     - "bluetooth.service"
     - "fstrim.timer"
     - "sddm.service"
+    - "systemd-oomd.service"
     - "systemd-resolved.service"
   become: true
   tags: services
