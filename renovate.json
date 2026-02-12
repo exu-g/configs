@@ -3,5 +3,11 @@
   "extends": [
     "config:recommended"
   ],
-  "ignorePaths": ["**/roles/config/files/**"]
+  "ignorePaths": ["**/roles/config/files/**"],
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true
+    }
+  ]
 }
