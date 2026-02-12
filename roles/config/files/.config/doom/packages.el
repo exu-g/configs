@@ -72,3 +72,10 @@
            :repo "gleam-lang/gleam-mode"
            :branch "main"
            :files ("gleam-ts-*.el")))
+
+;; difftastic support
+(package! difftastic
+  :recipe (:host github
+           :repo "pkryger/difftastic.el"
+           :branch "main"
+           :files ("difftastic*.el")))
