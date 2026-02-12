@@ -9,12 +9,16 @@
 # https://jvns.ca/blog/2024/02/16/popular-git-config-options/#merge-conflictstyle-zdiff3
 # https://blog.gitbutler.com/how-git-core-devs-configure-git/
 [merge]
-   conflictstyle = zdiff3 # 3way merge conflict. current change, original, incoming change
+   conflictstyle = diff3 # 3way merge conflict. current change, original, incoming change
+[merge "mergiraf"]
+    name = mergiraf
+    driver = mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L
 [diff]
-    algorithm = histogram # better handling of code movement
-    colorMoved = plain # different color for moved code
-    mnemonicPrefix = true  #  diff prefix i (index), w (working dir) or c (commit) instead of a and b
-    renames = true # better renames detection
+    external = difft
+    # algorithm = histogram # better handling of code movement
+    # colorMoved = plain # different color for moved code
+    # mnemonicPrefix = true  #  diff prefix i (index), w (working dir) or c (commit) instead of a and b
+    # renames = true # better renames detection
 [branch]
    sort = -committerdate # sort by date of last commit
 [tag]
