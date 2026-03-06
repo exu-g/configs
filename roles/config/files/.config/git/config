@@ -1,6 +1,7 @@
 [user]
     name = exu
     email = mrc@frm01.net
+	signingkey = ~/.ssh/id_ed25519_git.pub # path to ssh signing key
 [core]
     sshCommand = "ssh -i $HOME/.ssh/id_ed25519_git"
 [init]
@@ -35,6 +36,7 @@
     all = true # fetch all
 [commit]
     verbose = true # show detailed changes
+	gpgsign = true # automatically sign with gpg
 [help]
     autocorrect = prompt # if I ever need to use the CLI
 [alias]
@@ -45,6 +47,10 @@
     pr = !sh -c 'git fetch -fu $1 refs/pull/$2/head:pr-$1-$2 && git checkout pr-$1-$2' -
     # checkout latest tag
     latest = !sh -c 'git describe --tags $(git rev-list --tags --max-count=1) | xargs git checkout' -
+[gpg]
+	format = ssh # use ssh key signing
+[gpg "ssh"]
+	allowedSignersFile = ~/.config/git/allowed-signers
 # conditonal config
 [includeIf "gitdir:**gitprojects/occ/**"]
     path = ~/.config/git/occ
