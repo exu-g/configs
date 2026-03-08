@@ -151,3 +151,6 @@ alias rebuild='paru -S --rebuild=yes (checkrebuild | awk \'{print $2}\')'
 
 # process cpu usage per core instead of overall
 alias btm="btm -n"
+
+# woodpecker cli use podman socket
+alias woodpecker="systemctl start --user podman.socket && DOCKER_HOST=unix:///run/user/(id -u)/podman/podman.sock woodpecker"
