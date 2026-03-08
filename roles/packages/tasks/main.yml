@@ -124,8 +124,9 @@
     - phonon-qt6-vlc # multimedia
     - php # code
     - pkgstats
-    - plasma-meta # KDE plasma package
     - plasma-keyboard # KDE virtual keyboard
+    - plasma-login-manager # KDE login manager
+    - plasma-meta # KDE plasma package
     - podman # containers
     - podman-compose # containers
     - power-profiles-daemon # power management
