@@ -26,7 +26,6 @@ adaptivesyncrule=2
 fullscreen=true
 fullscreenrule=2
 wmclass=org.jellyfin.JellyfinDesktop
-wmclasscomplete=true
 wmclassmatch=1
 
 [fa38ef27-338c-4298-8496-4b3ee750e1fd]

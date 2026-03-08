@@ -352,6 +352,9 @@ _launch=Ctrl+Alt+N
 [services][joplin.desktop]
 _launch=Ctrl+Alt+N
 
+[services][org.jellyfin.JellyfinDesktop.desktop]
+_launch=Ctrl+Alt+J
+
 [services][org.kde.dolphin.desktop]
 _launch=Ctrl+Alt+T
 
