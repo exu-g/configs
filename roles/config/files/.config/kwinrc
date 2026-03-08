@@ -233,6 +233,8 @@ VirtualKeyboardEnabled=true
 
 [Windows]
 ActiveMouseScreen=false
+AutoRaise=true
+AutoRaiseInterval=500
 DelayFocusInterval=100
 FocusPolicy=FocusFollowsMouse
 FocusStealingPreventionLevel=0
