@@ -153,4 +153,4 @@ alias rebuild='paru -S --rebuild=yes (checkrebuild | awk \'{print $2}\')'
 alias btm="btm -n"
 
 # woodpecker cli use podman socket
-alias woodpecker="systemctl start --user podman.socket && DOCKER_HOST=unix:///run/user/(id -u)/podman/podman.sock woodpecker"
+alias woodpecker="systemctl start --user podman.socket && DOCKER_HOST=unix:///run/user/(id -u)/podman/podman.sock /usr/bin/woodpecker"
