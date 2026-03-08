@@ -231,8 +231,36 @@ plugin=org.kde.plasma.digitalclock
 popupHeight=450
 popupWidth=560
 
+[Containments][136][Applets][147]
+activityId=
+formfactor=0
+immutability=1
+lastScreen=-1
+location=0
+plugin=org.kde.plasma.systemtray
+popupHeight=432
+popupWidth=432
+wallpaperplugin=org.kde.image
+
+[Containments][136][Applets][147][Applets][155]
+immutability=1
+plugin=org.kde.plasma.notifications
+
+[Containments][136][Applets][147][Applets][165]
+immutability=1
+plugin=org.kde.plasma.mediacontroller
+
+[Containments][136][Applets][147][ConfigDialog]
+DialogHeight=1128
+DialogWidth=2048
+
+[Containments][136][Applets][147][General]
+disabledStatusNotifiers=Easy Effects,Nextcloud,KMix
+extraItems=org.kde.plasma.mediacontroller,org.kde.plasma.notifications
+knownItems=org.kde.kdeconnect,org.kde.plasma.vault,org.kde.plasma.kclock_1x2,org.kde.merkuro.contact.applet,org.kde.plasma.bluetooth,org.kde.plasma.cameraindicator,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.plasma.manage-inputmethod,org.kde.plasma.mediacontroller,org.kde.plasma.notifications,org.kde.plasma.keyboardindicator,org.kde.plasma.weather,org.kde.kscreen,org.kde.plasma.battery,org.kde.plasma.brightness,org.kde.plasma.keyboardlayout,org.kde.plasma.networkmanagement,org.kde.plasma.volume,org.kde.plasma.printmanager
+
 [Containments][136][General]
-AppletOrder=142
+AppletOrder=142;147
 
 [Containments][138]
 activityId=
@@ -241,11 +269,13 @@ immutability=1
 lastScreen=0
 location=6
 plugin=org.kde.panel
+transient=true
 wallpaperplugin=org.kde.image
 
 [Containments][138][Applets][140]
 immutability=1
 plugin=org.kde.plasma.digitalclock
+transient=true
 
 [Containments][138][Applets][140][Configuration]
 popupHeight=461
@@ -257,6 +287,54 @@ DialogWidth=720
 
 [Containments][138][General]
 AppletOrder=140
+
+[Containments][167]
+activityId=
+formfactor=3
+immutability=1
+lastScreen=0
+location=6
+plugin=org.kde.panel
+wallpaperplugin=org.kde.image
+
+[Containments][167][Applets][168]
+immutability=1
+plugin=org.kde.plasma.digitalclock
+
+[Containments][167][Applets][168][Configuration]
+popupHeight=450
+popupWidth=560
+
+[Containments][167][Applets][169]
+activityId=
+formfactor=0
+immutability=1
+lastScreen=-1
+location=0
+plugin=org.kde.plasma.systemtray
+popupHeight=432
+popupWidth=432
+wallpaperplugin=org.kde.image
+
+[Containments][167][Applets][169][Applets][177]
+immutability=1
+plugin=org.kde.plasma.notifications
+
+[Containments][167][Applets][169][Applets][185]
+immutability=1
+plugin=org.kde.plasma.mediacontroller
+
+[Containments][167][Applets][169][ConfigDialog]
+DialogHeight=1128
+DialogWidth=2048
+
+[Containments][167][Applets][169][General]
+disabledStatusNotifiers=Easy Effects,Nextcloud,KMix
+extraItems=org.kde.plasma.mediacontroller,org.kde.plasma.notifications
+knownItems=org.kde.kdeconnect,org.kde.plasma.vault,org.kde.plasma.kclock_1x2,org.kde.merkuro.contact.applet,org.kde.plasma.bluetooth,org.kde.plasma.cameraindicator,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.plasma.manage-inputmethod,org.kde.plasma.mediacontroller,org.kde.plasma.notifications,org.kde.plasma.keyboardindicator,org.kde.plasma.weather,org.kde.kscreen,org.kde.plasma.battery,org.kde.plasma.brightness,org.kde.plasma.keyboardlayout,org.kde.plasma.networkmanagement,org.kde.plasma.volume,org.kde.plasma.printmanager
+
+[Containments][167][General]
+AppletOrder=168;169
 
 [Containments][3]
 activityId=
