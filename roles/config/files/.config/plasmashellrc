@@ -51,20 +51,6 @@ panelVisibility=3
 [PlasmaViews][Panel 138][Defaults]
 thickness=44
 
-[PlasmaViews][Panel 29]
-floating=1
-panelLengthMode=0
-panelVisibility=1
-
-[PlasmaViews][Panel 29][Defaults]
-maxLength=2048
-minLength=2032
-thickness=32
-
-[PlasmaViews][Panel 29][Horizontal2048]
-maxLength=2048
-minLength=2032
-
 [PlasmaViews][Panel 3]
 alignment=132
 floating=1

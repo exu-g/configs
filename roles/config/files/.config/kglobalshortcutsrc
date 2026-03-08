@@ -9,19 +9,6 @@ Switch to Last-Used Keyboard Layout=none,Meta+Alt+L,Auf zuletzt verwendete Tasta
 Switch to Next Keyboard Layout=none,Meta+Alt+K,Auf nächste Tastaturbelegung umschalten
 _k_friendly_name=Umschaltung der Tastaturbelegung
 
-[juk]
-_k_friendly_name=JuK
-back=Ctrl+Alt+Left,Ctrl+Alt+Left,Vorheriger
-forward=Ctrl+Alt+Right,Ctrl+Alt+Right,Nächster
-forwardAlbum=Ctrl+Alt+Up,Ctrl+Alt+Up,Nächstes Album abspielen
-mute=Ctrl+Alt+M,Ctrl+Alt+M,Stumm
-playPause=Ctrl+Alt+P,Ctrl+Alt+P,Wiedergabe / Pause
-seekBack=Ctrl+Alt+Shift+Left,Ctrl+Alt+Shift+Left,Rückwärts suchen
-seekForward=Ctrl+Alt+Shift+Right,Ctrl+Alt+Shift+Right,Vorwärts suchen
-stop=Ctrl+Alt+S,Ctrl+Alt+S,Stopp
-volumeDown=Ctrl+Alt+Shift+Down,Ctrl+Alt+Shift+Down,Leiser
-volumeUp=Ctrl+Alt+Shift+Up,Ctrl+Alt+Shift+Up,Lauter
-
 [kaccess]
 Toggle Screen Reader On and Off=none,Meta+Alt+S,Screenreader ein-/ausschalten
 _k_friendly_name=Zugangshilfen
@@ -30,10 +17,10 @@ _k_friendly_name=Zugangshilfen
 _k_friendly_name=KMix
 decrease_microphone_volume=Microphone Volume Down,Microphone Volume Down,Mikrofonlautstärke verringern
 decrease_volume=Volume Down,Volume Down,Lautstärke verringern
-decrease_volume_small=Shift+Volume Down,Shift+Volume Down,Lautstärke um 1 % verringern
+decrease_volume_small=none,Shift+Volume Down,Lautstärke um 1 % verringern
 increase_microphone_volume=Microphone Volume Up,Microphone Volume Up,Mikrofonlautstärke erhöhen
 increase_volume=Volume Up,Volume Up,Lautstärke erhöhen
-increase_volume_small=Shift+Volume Up,Shift+Volume Up,Lautstärke um 1 % erhöhen
+increase_volume_small=none,Shift+Volume Up,Lautstärke um 1 % erhöhen
 mic_mute=Microphone Mute\tMeta+Volume Mute,Microphone Mute\tMeta+Volume Mute,Mikrofon stummschalten
 mute=Volume Mute,Volume Mute,Stumm
 
@@ -54,9 +41,9 @@ Cycle Overview=none,none,Durch Überblick und Rasteransicht wechseln
 Cycle Overview Opposite=none,none,Durch Rasteransicht und Überblick wechseln
 Decrease Opacity=none,,Die Deckkraft des aktiven Fensters um 5 % verringern
 Edit Tiles=none,Meta+T,Tiling-Editor ein-/ausschalten
-Expose=none,Ctrl+F9,Fenster der aktuellen Arbeitsfläche anzeigen
-ExposeAll=none,Ctrl+F10\tLaunch (C),Fenster aller Arbeitsflächen anzeigen
-ExposeClass=none,Ctrl+F7,Fenster der Fensterklasse anzeigen
+Expose=none,Meta+F9\tCtrl+F9,Fenster der aktuellen Arbeitsfläche anzeigen
+ExposeAll=none,Meta+F10\tLaunch (C)\tCtrl+F10,Fenster aller Arbeitsflächen anzeigen
+ExposeClass=none,Meta+F7\tCtrl+F7,Fenster der Fensterklasse anzeigen
 ExposeClassCurrentDesktop=none,none,Fenster der Fensterklasse auf der aktuellen Arbeitsfläche anzeigen
 Grid View=none,Meta+G,Übersicht umschalten
 Increase Opacity=none,,Die Deckkraft des aktiven Fensters um 5 % erhöhen
@@ -96,6 +83,7 @@ KrohnkiteToggleFloat=Meta+F,none,Krohnkite: Toggle Float
 KrohnkiteTreeColumnLayout=none,none,Krohnkite: Three Column Layout
 KrohnkitegrowWidth=none,none,Krohnkite: Grow Width
 KrohnkitetoggleDock=none,none,Krohnkite: Toggle Dock
+Move Tablet to Next LogicalOutput=none,none,Tablet zur nächsten Ausgabe verschieben
 Move Tablet to Next Output=none,none,Tablet zur nächsten Ausgabe verschieben
 MoveMouseToCenter=none,Meta+F6,Mauszeiger zentrieren
 MoveMouseToFocus=none,Meta+F5,Mauszeiger in den Fokus verschieben
@@ -134,7 +122,7 @@ Switch Window Down=none,Meta+Alt+Down,Zum Fenster darunter wechseln
 Switch Window Left=none,Meta+Alt+Left,Zum Fenster links wechseln
 Switch Window Right=none,Meta+Alt+Right,Zum Fenster rechts wechseln
 Switch Window Up=none,Meta+Alt+Up,Zum Fenster darüber wechseln
-Switch to Desktop 1=Meta+1,Ctrl+F1,Auf Arbeitsfläche 1 umschalten
+Switch to Desktop 1=Meta+1,Meta+F1\tCtrl+F1,Auf Arbeitsfläche 1 umschalten
 Switch to Desktop 10=Meta+0,,Auf Arbeitsfläche 10 umschalten
 Switch to Desktop 11=none,,Auf Arbeitsfläche 11 umschalten
 Switch to Desktop 12=none,,Auf Arbeitsfläche 12 umschalten
@@ -145,10 +133,15 @@ Switch to Desktop 16=none,,Auf Arbeitsfläche 16 umschalten
 Switch to Desktop 17=none,,Auf Arbeitsfläche 17 umschalten
 Switch to Desktop 18=none,,Auf Arbeitsfläche 18 umschalten
 Switch to Desktop 19=none,,Auf Arbeitsfläche 19 umschalten
-Switch to Desktop 2=Meta+2,Ctrl+F2,Auf Arbeitsfläche 2 umschalten
+Switch to Desktop 2=Meta+2,Meta+F2\tCtrl+F2,Auf Arbeitsfläche 2 umschalten
 Switch to Desktop 20=none,,Auf Arbeitsfläche 20 umschalten
-Switch to Desktop 3=Meta+3,Ctrl+F3,Auf Arbeitsfläche 3 umschalten
-Switch to Desktop 4=Meta+4,Ctrl+F4,Auf Arbeitsfläche 4 umschalten
+Switch to Desktop 21=,,Auf Arbeitsfläche 21 umschalten
+Switch to Desktop 22=,,Auf Arbeitsfläche 22 umschalten
+Switch to Desktop 23=,,Auf Arbeitsfläche 23 umschalten
+Switch to Desktop 24=,,Auf Arbeitsfläche 24 umschalten
+Switch to Desktop 25=,,Auf Arbeitsfläche 25 umschalten
+Switch to Desktop 3=Meta+3,Meta+F3\tCtrl+F3,Auf Arbeitsfläche 3 umschalten
+Switch to Desktop 4=Meta+4,Meta+F4\tCtrl+F4,Auf Arbeitsfläche 4 umschalten
 Switch to Desktop 5=Meta+5,,Auf Arbeitsfläche 5 umschalten
 Switch to Desktop 6=Meta+6,,Auf Arbeitsfläche 6 umschalten
 Switch to Desktop 7=Meta+7,,Auf Arbeitsfläche 7 umschalten
@@ -238,6 +231,11 @@ Window to Desktop 18=none,,Fenster auf Arbeitsfläche 18
 Window to Desktop 19=none,,Fenster auf Arbeitsfläche 19
 Window to Desktop 2=Meta+",,Fenster auf Arbeitsfläche 2
 Window to Desktop 20=none,,Fenster auf Arbeitsfläche 20
+Window to Desktop 21=,,Fenster auf Arbeitsfläche 21
+Window to Desktop 22=,,Fenster auf Arbeitsfläche 22
+Window to Desktop 23=,,Fenster auf Arbeitsfläche 23
+Window to Desktop 24=,,Fenster auf Arbeitsfläche 24
+Window to Desktop 25=,,Fenster auf Arbeitsfläche 25
 Window to Desktop 3=Meta+*,,Fenster auf Arbeitsfläche 3
 Window to Desktop 4=Meta+Shift+Ç,,Fenster auf Arbeitsfläche 4
 Window to Desktop 5=Meta+%,,Fenster auf Arbeitsfläche 5
@@ -272,7 +270,18 @@ pausemedia=Media Pause,Media Pause,Medienwiedergabe pausieren
 playmedia=none,,Medienwiedergabe starten
 playpausemedia=Media Play,Media Play,Medienwiedergabe starten/pausieren
 previousmedia=Media Previous,Media Previous,Vorheriges Medium wiedergeben
+seekbackwardmedia=Media Rewind,Media Rewind,Medienwiedergabe 5 s zurück
+seekbackwardmedialong=,,Medienwiedergabe 30 s zurück
+seekforwardmedia=Media Fast Forward,Media Fast Forward,Medienwiedergabe 5 s vor
+seekforwardmedialong=,,Medienwiedergabe 30 s vor
 stopmedia=Media Stop,Media Stop,Medienwiedergabe anhalten
+
+[org.chromium.Chromium]
+252EF1B370DB364B0ED7E5B63AFD878D-MediaStop=none,none,Electron shortcut MediaStop
+70E94EDCD7E61F3502E97060137FDD4B-MediaPlayPause=none,none,Electron shortcut MediaPlayPause
+879FB405C20B6B693B0B692D44480EA7-MediaNextTrack=none,none,Electron shortcut MediaNextTrack
+8D26EAC62199C0326DF9976CB187308E-MediaPrevTrack=none,none,Electron shortcut MediaPrevTrack
+_k_friendly_name=Chromium
 
 [org_kde_powerdevil]
 Decrease Keyboard Brightness=Keyboard Brightness Down,Keyboard Brightness Down,Helligkeit der Tastatur-Hintergrundbeleuchtung verringern
@@ -282,7 +291,7 @@ Hibernate=Hibernate,Hibernate,Ruhezustand
 Increase Keyboard Brightness=Keyboard Brightness Up,Keyboard Brightness Up,Helligkeit der Tastatur-Hintergrundbeleuchtung erhöhen
 Increase Screen Brightness=Monitor Brightness Up,Monitor Brightness Up,Bildschirmhelligkeit erhöhen
 Increase Screen Brightness Small=Shift+Monitor Brightness Up,Shift+Monitor Brightness Up,Bildschirmhelligkeit um 1 % erhöhen
-PowerDown=Power Down,Power Down,Abschalten
+PowerDown=Power Down,Power Down,Ausschalten
 PowerOff=Power Off,Power Off,Ausschalten
 Sleep=Sleep,Sleep,Standby-Modus
 Toggle Keyboard Backlight=Keyboard Light On/Off,Keyboard Light On/Off,Hintergrundbeleuchtung der Tastatur umschalten
@@ -338,6 +347,9 @@ _launch=Ctrl+Alt+E
 _launch=Ctrl+Alt+F
 
 [services][joplin-wayland.desktop]
+_launch=Ctrl+Alt+N
+
+[services][joplin.desktop]
 _launch=Ctrl+Alt+N
 
 [services][org.kde.dolphin.desktop]
