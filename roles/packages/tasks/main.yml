@@ -171,6 +171,7 @@
     - whois # mkpasswd
     - wireguard-tools # vpn
     - wireplumber # audio
+    - woodpecker-cli # woodpecker local execution
     - xdg-desktop-portal-gtk # flatpak theming
     - xdg-user-dirs # standards
     - xdg-utils # standards
