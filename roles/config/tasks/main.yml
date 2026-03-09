@@ -66,19 +66,19 @@
   register: kde_files
   tags: config
 
-- name: Copy config for SDDM (root)
-  ansible.builtin.copy:
-    src: "{{ ansible_env['HOME'] }}/{{ item }}"
-    dest: "/var/lib/sddm/.config/"
-    owner: sddm
-    group: sddm
-    remote_src: true
-  loop:
-    - ".config/kwinoutputconfig.json"
-    - ".config/kcminputrc"
-  when: kde_files.stat.exists
-  become: true
-  tags: config
+# - name: Copy config for SDDM (root)
+#   ansible.builtin.copy:
+#     src: "{{ ansible_env['HOME'] }}/{{ item }}"
+#     dest: "/var/lib/sddm/.config/"
+#     owner: sddm
+#     group: sddm
+#     remote_src: true
+#   loop:
+#     - ".config/kwinoutputconfig.json"
+#     - ".config/kcminputrc"
+#   when: kde_files.stat.exists
+#   become: true
+#   tags: config
 
 - name: x86_64 | Copy files (root)
   ansible.builtin.copy:
@@ -144,7 +144,8 @@
     - "avahi-daemon.service"
     - "bluetooth.service"
     - "fstrim.timer"
-    - "sddm.service"
+    # - "sddm.service"
+    - "plasma-login.service"
     - "systemd-oomd.service"
     - "systemd-resolved.service"
   become: true

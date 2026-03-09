@@ -38,12 +38,12 @@
     dest: "~/.local/share/icons/"
   tags: config
 
-- name: Plasma | Get SDDM theme
-  ansible.builtin.get_url:
-    url: "https://github.com/EliverLara/Sweet-sddm-v2/archive/refs/heads/master.zip"
-    dest: "./sddm-master.zip"
-    mode: "0644"
-  tags: config
+# - name: Plasma | Get SDDM theme
+#   ansible.builtin.get_url:
+#     url: "https://github.com/EliverLara/Sweet-sddm-v2/archive/refs/heads/master.zip"
+#     dest: "./sddm-master.zip"
+#     mode: "0644"
+#   tags: config
 
 - name: Plasma | Copy files
   ansible.builtin.copy:
@@ -55,10 +55,10 @@
       dest: "~/.local/share/color-schemes/Sweet.colors"
   tags: config
 
-- name: Plasma | Install SDDM theme
-  ansible.builtin.shell: "sddmthemeinstaller --install ./sddm-master.zip"
-  become: true
-  tags: config
+# - name: Plasma | Install SDDM theme
+#   ansible.builtin.shell: "sddmthemeinstaller --install ./sddm-master.zip"
+#   become: true
+#   tags: config
 
 # - name: Plasma | Remove previously set wallpapers
 #   ansible.builtin.shell: |
@@ -102,16 +102,16 @@
   ansible.builtin.shell: "plasma-apply-desktoptheme Sweet"
   tags: config
 
-- name: Plasma | Set SDDM theme
-  community.general.ini_file:
-    path: /etc/sddm.conf.d/kde_settings.conf
-    section: Theme
-    option: Current
-    value: "Sweet-sddm-v2-master"
-    no_extra_spaces: true
-    mode: "0644"
-  become: true
-  tags: config
+# - name: Plasma | Set SDDM theme
+#   community.general.ini_file:
+#     path: /etc/sddm.conf.d/kde_settings.conf
+#     section: Theme
+#     option: Current
+#     value: "Sweet-sddm-v2-master"
+#     no_extra_spaces: true
+#     mode: "0644"
+#   become: true
+#   tags: config
 
 - name: Plasma | Check if wallpaper exists
   ansible.builtin.stat:
