@@ -11,6 +11,7 @@
   when: doom_emacs.stat.exists
   async: 600
   poll: 0
+  changed_when: true
   register: async_doom_emacs
   tags: config
 
@@ -20,5 +21,6 @@
     executable: "/usr/bin/fish"
   async: 600
   poll: 0
+  changed_when: true
   register: async_fish_completions
   tags: config
