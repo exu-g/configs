@@ -21,7 +21,7 @@ return {
     },
     opts = {
       -- Change the default way of opening neogit
-      kind = "floating",
+      -- kind = "floating",
       -- Floating window style 
       floating = {
         -- relative = "editor",
