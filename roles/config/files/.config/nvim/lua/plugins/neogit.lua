@@ -17,12 +17,12 @@ return {
     },
     cmd = "Neogit",
     keys = {
-        { "<leader>gg", "<cmd>Neogit<cr>", desc = "Show Neogit UI" },
+      { "<leader>gg", "<cmd>Neogit<cr>", desc = "Show Neogit UI" },
     },
     opts = {
       -- Change the default way of opening neogit
       -- kind = "floating",
-      -- Floating window style 
+      -- Floating window style
       floating = {
         -- relative = "editor",
         width = 0.98,
@@ -39,6 +39,8 @@ return {
           ["X"] = false,
           -- Pull
           ["p"] = false,
+          -- Revert
+          ["v"] = false,
           -- set new keys
           -- Push
           ["p"] = "PushPopup",
@@ -46,6 +48,8 @@ return {
           ["O"] = "ResetPopup",
           -- Pull
           ["F"] = "PullPopup",
+          -- Revert
+          ["_"] = "RevertPopup",
         },
       },
     },
