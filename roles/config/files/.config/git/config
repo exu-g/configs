@@ -30,13 +30,15 @@
     followTags = true # always push local tags
 [pull]
     rebase = true # auto rebase local commits
+[rebase]
+    updateRefs = true # automatically update references for patch series
 [fetch]
     prune = true # remove local leftovers on fetch
     pruneTags = true # remove local tags on fetch
     all = true # fetch all
 [commit]
     verbose = true # show detailed changes
-	gpgsign = true # automatically sign with gpg
+  	gpgsign = true # automatically sign with gpg
 [help]
     autocorrect = prompt # if I ever need to use the CLI
 [alias]
