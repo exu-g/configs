@@ -1,0 +1,21 @@
+---
+- name: Fish update completions
+  ansible.builtin.shell:
+    cmd: "fish_update_completions"
+    executable: "/usr/bin/fish"
+  changed_when: true
+  tags: config
+
+- name: Set fish for user
+  ansible.builtin.user:
+    name: "{{ ansible_user_id }}"
+    shell: "/usr/bin/fish"
+  become: true
+  tags: config
+
+- name: Set fish for root
+  ansible.builtin.user:
+    name: "root"
+    shell: "/usr/bin/fish"
+  become: true
+  tags: config
