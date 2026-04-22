@@ -1,0 +1,30 @@
+---
+- name: Create backup structure
+  ansible.builtin.file:
+    path: "~/old_dat"
+    state: "directory"
+  tags: config
+
+- name: Copy files to backup
+  ansible.builtin.copy:
+    src: "~/{{ item }}"
+    dest: "~/old_dat/"
+    remote_src: true
+  loop:
+    - ".config"
+    - ".local/share/applications"
+    - ".mozilla"
+    - ".ssh"
+    - "scripts"
+  ignore_errors: true
+  tags: config
+
+- name: Remove old/unnecessary files and directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: "absent"
+  loop:
+    - "~/.emacs.d"
+    - "~/scripts"
+    - "~/.gitconfig"
+  tags: config

@@ -3,34 +3,10 @@
   ansible.builtin.package_facts:
   tags: always
 
-- name: Create backup structure
-  ansible.builtin.file:
-    path: "~/old_dat"
-    state: "directory"
-  tags: config
-
-- name: Copy files to backup
-  ansible.builtin.copy:
-    src: "~/{{ item }}"
-    dest: "~/old_dat/"
-    remote_src: true
-  loop:
-    - ".config"
-    - ".local/share/applications"
-    - ".mozilla"
-    - ".ssh"
-    - "scripts"
-  ignore_errors: true
-  tags: config
-
-- name: Remove old/unnecessary files and directories
-  ansible.builtin.file:
-    path: "{{ item }}"
-    state: "absent"
-  loop:
-    - "~/.emacs.d"
-    - "~/scripts"
-    - "~/.gitconfig"
+# Preparation tasks: backup, removals
+- name: Import Tasks from preparation.yml
+  ansible.builtin.import_tasks:
+    file: preparation.yml
   tags: config
 
 - name: Copy new files and directories
@@ -99,142 +75,38 @@
 
 - name: Create flatpak overrides
   ansible.builtin.command: "flatpak override --user {{ item }}"
+  changed_when: true
   loop:
     - "--filesystem=~/.themes:ro" # correct gtk/qt theme
     - "--filesystem=xdg-config/kcminputrc:ro" # correct cursor theme https://github.com/flatpak/flatpak/issues/709#issuecomment-2133355601
     - "--socket=wayland"
 
-- name: Bash cat | Download
-  ansible.builtin.git:
-    repo: https://github.com/exu-g/bash-cat-with-cat.git
-    dest: "/tmp/bash-cat-with-cat"
-  tags: config
-
-- name: Bash cat | Copy to scripts
-  ansible.builtin.copy:
-    src: "/tmp/bash-cat-with-cat/cat.sh"
-    dest: "~/scripts/pieces/cat.sh"
-    mode: "0755"
-  tags: config
-
-# Start async tasks early
-- name: Import Tasks from async.yml
+# bash cat async
+- name: Import Tasks from async_bash_cat.yml
   ansible.builtin.import_tasks:
-    file: async.yml
+    file: async_bash_cat.yml
+  async: 600
+  poll: 0
+  register: async_bash_cat
   tags: config
 
-- name: Reload system systemd services
-  ansible.builtin.systemd_service:
-    daemon_reload: true
-  become: true
-  tags: services
-
-- name: Reload user systemd services
-  ansible.builtin.systemd_service:
-    daemon_reload: true
-    scope: user
-  tags: services
-
-- name: Enable system services
-  ansible.builtin.systemd_service:
-    name: "{{ item }}"
-    state: "started"
-    enabled: true
-  loop:
-    - "avahi-daemon.service"
-    - "bluetooth.service"
-    - "fstrim.timer"
-    # - "sddm.service"
-    - "plasmalogin.service"
-    - "systemd-oomd.service"
-    - "systemd-resolved.service"
-  become: true
-  tags: services
-
-- name: Enable user services
-  ansible.builtin.systemd_service:
-    name: "{{ item }}"
-    state: "restarted"
-    enabled: true
-    scope: user
-  loop:
-    - "ssh-agent.service"
-  tags: services
-
-- name: Start system services
-  ansible.builtin.systemd_service:
-    name: "{{ item }}"
-    state: "started"
-    enabled: true
-  loop:
-    - "fstrim.timer"
-    - "bluetooth.service"
-  become: true
-  tags: services
-
-- name: Enable btrfsmaintenance timers
-  ansible.builtin.systemd_service:
-    name: "{{ item }}"
-    enabled: true
-  loop:
-    - "btrfs-balance.timer"
-    - "btrfs-scrub.timer"
-  when: ('btrfsmaintenance' in ansible_facts.packages)
-  become: true
-  tags: services
-
-- name: Enable btrfsmaintenance services
-  ansible.builtin.systemd_service:
-    name: "{{ item }}"
-    state: "restarted"
-  loop:
-    - "btrfsmaintenance-refresh.service"
-  when: ('btrfsmaintenance' in ansible_facts.packages)
-  become: true
-  tags: services
-
-- name: Enable reflector
-  ansible.builtin.systemd_service:
-    name: "{{ item }}"
-    enabled: true
-  loop:
-    - "reflector.timer"
-  when: ('reflector' in ansible_facts.packages)
-  become: true
-  tags: services
-
-- name: Enable NTP
-  ansible.builtin.command: timedatectl set-ntp true
-  become: true
-  tags: services
-
-- name: Add group for libvirt
-  ansible.builtin.user:
-    name: "{{ ansible_user_id }}"
-    groups:
-      - libvirt
-    append: true
-  when: ('libvirt' in ansible_facts.packages)
-  become: true
+# fish async
+- name: Import Tasks from async_fish.yml
+  ansible.builtin.import_tasks:
+    file: async_fish.yml
+  async: 600
+  poll: 0
+  register: async_fish
   tags: config
 
-- name: Enable libvirt socket
-  ansible.builtin.systemd_service:
-    name: "libvirtd.socket"
-    state: "started"
-    enabled: true
-  when: ('libvirt' in ansible_facts.packages)
-  become: true
-  tags: services
-
-- name: Enable LACT daemon
-  ansible.builtin.systemd_service:
-    name: "lactd"
-    state: "started"
-    enabled: true
-  when: ('lact' in ansible_facts.packages)
-  become: true
-  tags: services
+# systemd async
+- name: Import Tasks from async_systemd.yml
+  ansible.builtin.import_tasks:
+    file: async_systemd.yml
+  async: 600
+  poll: 0
+  register: async_systemd
+  tags: config
 
 - name: Create groups
   ansible.builtin.group:
@@ -244,20 +116,6 @@
     - video # backlight
     - render # GPU passing
     - wireguard # wireguard
-  become: true
-  tags: config
-
-- name: Set fish for user
-  ansible.builtin.user:
-    name: "{{ ansible_user_id }}"
-    shell: "/usr/bin/fish"
-  become: true
-  tags: config
-
-- name: Set fish for root
-  ansible.builtin.user:
-    name: "root"
-    shell: "/usr/bin/fish"
   become: true
   tags: config
 
