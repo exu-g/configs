@@ -1,0 +1,14 @@
+---
+- name: Bash cat | Download
+  ansible.builtin.git:
+    repo: https://github.com/exu-g/bash-cat-with-cat.git
+    dest: "/tmp/bash-cat-with-cat"
+  changed_when: true
+  tags: config
+
+- name: Bash cat | Copy to scripts
+  ansible.builtin.copy:
+    src: "/tmp/bash-cat-with-cat/cat.sh"
+    dest: "~/scripts/pieces/cat.sh"
+    mode: "0755"
+  tags: config
