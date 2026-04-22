@@ -1,5 +1,6 @@
 [ActivityManager]
 _k_friendly_name=Aktivitätenverwaltung
+switch-to-activity-2efc56f1-09fa-4490-9706-4dcde3912089=none,none,Zu Aktivität „Standard“ wechseln
 switch-to-activity-64664544-a062-48cf-a713-e4045da575e9=none,none,Zu Aktivität „Standard“ wechseln
 
 [KDE Keyboard Layout Switcher]
@@ -13,16 +14,84 @@ _k_friendly_name=Umschaltung der Tastaturbelegung
 Toggle Screen Reader On and Off=none,Meta+Alt+S,Screenreader ein-/ausschalten
 _k_friendly_name=Zugangshilfen
 
+[kalarm]
+_k_friendly_name=KAlarm
+newAudio=none,none,Neue Audio-Erinnerung
+newCommand=none,none,Neue Befehls-Erinnerung
+newDisplay=none,none,Neue Anzeige-Erinnerung
+newEmail=none,none,Neue E-Mail-Erinnerung
+stopAudio=none,none,Wiedergabe anhalten
+
 [kmix]
 _k_friendly_name=KMix
+decrease-volume-Capture@sof-hda-dsp=,,Lautstärke von Capture auf sof-hda-dsp verringern
+decrease-volume-DAC1@sof-hda-dsp=,,Lautstärke von DAC1 auf sof-hda-dsp verringern
+decrease-volume-DAC2@sof-hda-dsp=,,Lautstärke von DAC2 auf sof-hda-dsp verringern
+decrease-volume-Dmic0@sof-hda-dsp=,,Lautstärke von Dmic0 auf sof-hda-dsp verringern
+decrease-volume-Dmic1 2nd@sof-hda-dsp=,,Lautstärke von Dmic1 2nd auf sof-hda-dsp verringern
+decrease-volume-Master@sof-hda-dsp=,,Lautstärke von Master auf sof-hda-dsp verringern
+decrease-volume-Mic Boost@sof-hda-dsp=,,Lautstärke von Mic Boost auf sof-hda-dsp verringern
+decrease-volume-Mic@Jabra EVOLVE LINK=,,Lautstärke von Mic auf Jabra EVOLVE LINK verringern
+decrease-volume-Mic@Microsoft® LifeCam Studio(TM)=,,Lautstärke von Mic auf Microsoft® LifeCam Studio(TM) verringern
+decrease-volume-PGA1.0 1 Master@sof-hda-dsp=,,Lautstärke von PGA1.0 1 Master auf sof-hda-dsp verringern
+decrease-volume-PGA2.0 2 Master@sof-hda-dsp=,,Lautstärke von PGA2.0 2 Master auf sof-hda-dsp verringern
+decrease-volume-PGA30.0 30@sof-hda-dsp=,,Lautstärke von PGA30.0 30 auf sof-hda-dsp verringern
+decrease-volume-PGA31.0 31@sof-hda-dsp=,,Lautstärke von PGA31.0 31 auf sof-hda-dsp verringern
+decrease-volume-PGA7.0 7 Master@sof-hda-dsp=,,Lautstärke von PGA7.0 7 Master auf sof-hda-dsp verringern
+decrease-volume-PGA8.0 8 Master@sof-hda-dsp=,,Lautstärke von PGA8.0 8 Master auf sof-hda-dsp verringern
+decrease-volume-PGA9.0 9 Master@sof-hda-dsp=,,Lautstärke von PGA9.0 9 Master auf sof-hda-dsp verringern
+decrease-volume-Sidetone@Jabra EVOLVE LINK=,,Lautstärke von Sidetone auf Jabra EVOLVE LINK verringern
+decrease-volume-Speaker@Jabra EVOLVE LINK=,,Lautstärke von Speaker auf Jabra EVOLVE LINK verringern
 decrease_microphone_volume=Microphone Volume Down,Microphone Volume Down,Mikrofonlautstärke verringern
 decrease_volume=Volume Down,Volume Down,Lautstärke verringern
 decrease_volume_small=none,Shift+Volume Down,Lautstärke um 1 % verringern
+increase-volume-Capture@sof-hda-dsp=,,Lautstärke von Capture auf sof-hda-dsperhöhen
+increase-volume-DAC1@sof-hda-dsp=,,Lautstärke von DAC1 auf sof-hda-dsperhöhen
+increase-volume-DAC2@sof-hda-dsp=,,Lautstärke von DAC2 auf sof-hda-dsperhöhen
+increase-volume-Dmic0@sof-hda-dsp=,,Lautstärke von Dmic0 auf sof-hda-dsperhöhen
+increase-volume-Dmic1 2nd@sof-hda-dsp=,,Lautstärke von Dmic1 2nd auf sof-hda-dsperhöhen
+increase-volume-Master@sof-hda-dsp=,,Lautstärke von Master auf sof-hda-dsperhöhen
+increase-volume-Mic Boost@sof-hda-dsp=,,Lautstärke von Mic Boost auf sof-hda-dsperhöhen
+increase-volume-Mic@Jabra EVOLVE LINK=,,Lautstärke von Mic auf Jabra EVOLVE LINKerhöhen
+increase-volume-Mic@Microsoft® LifeCam Studio(TM)=,,Lautstärke von Mic auf Microsoft® LifeCam Studio(TM)erhöhen
+increase-volume-PGA1.0 1 Master@sof-hda-dsp=,,Lautstärke von PGA1.0 1 Master auf sof-hda-dsperhöhen
+increase-volume-PGA2.0 2 Master@sof-hda-dsp=,,Lautstärke von PGA2.0 2 Master auf sof-hda-dsperhöhen
+increase-volume-PGA30.0 30@sof-hda-dsp=,,Lautstärke von PGA30.0 30 auf sof-hda-dsperhöhen
+increase-volume-PGA31.0 31@sof-hda-dsp=,,Lautstärke von PGA31.0 31 auf sof-hda-dsperhöhen
+increase-volume-PGA7.0 7 Master@sof-hda-dsp=,,Lautstärke von PGA7.0 7 Master auf sof-hda-dsperhöhen
+increase-volume-PGA8.0 8 Master@sof-hda-dsp=,,Lautstärke von PGA8.0 8 Master auf sof-hda-dsperhöhen
+increase-volume-PGA9.0 9 Master@sof-hda-dsp=,,Lautstärke von PGA9.0 9 Master auf sof-hda-dsperhöhen
+increase-volume-Sidetone@Jabra EVOLVE LINK=,,Lautstärke von Sidetone auf Jabra EVOLVE LINKerhöhen
+increase-volume-Speaker@Jabra EVOLVE LINK=,,Lautstärke von Speaker auf Jabra EVOLVE LINKerhöhen
 increase_microphone_volume=Microphone Volume Up,Microphone Volume Up,Mikrofonlautstärke erhöhen
 increase_volume=Volume Up,Volume Up,Lautstärke erhöhen
 increase_volume_small=none,Shift+Volume Up,Lautstärke um 1 % erhöhen
 mic_mute=Microphone Mute\tMeta+Volume Mute,Microphone Mute\tMeta+Volume Mute,Mikrofon stummschalten
 mute=Volume Mute,Volume Mute,Stumm
+toggle-mute-Bass Speaker@sof-hda-dsp=,,Bass Speaker auf sof-hda-dsp stummschalten
+toggle-mute-Capture@sof-hda-dsp=,,Capture auf sof-hda-dsp stummschalten
+toggle-mute-DAC1@sof-hda-dsp=,,DAC1 auf sof-hda-dsp stummschalten
+toggle-mute-DAC2@sof-hda-dsp=,,DAC2 auf sof-hda-dsp stummschalten
+toggle-mute-Dmic0@sof-hda-dsp=,,Dmic0 auf sof-hda-dsp stummschalten
+toggle-mute-Dmic1 2nd@sof-hda-dsp=,,Dmic1 2nd auf sof-hda-dsp stummschalten
+toggle-mute-Headphone@sof-hda-dsp=,,Headphone auf sof-hda-dsp stummschalten
+toggle-mute-IEC958 2@sof-hda-dsp=,,IEC958 2 auf sof-hda-dsp stummschalten
+toggle-mute-IEC958 3@sof-hda-dsp=,,IEC958 3 auf sof-hda-dsp stummschalten
+toggle-mute-IEC958@sof-hda-dsp=,,IEC958 auf sof-hda-dsp stummschalten
+toggle-mute-Master@sof-hda-dsp=,,Master auf sof-hda-dsp stummschalten
+toggle-mute-Mic Boost@sof-hda-dsp=,,Mic Boost auf sof-hda-dsp stummschalten
+toggle-mute-Mic@Jabra EVOLVE LINK=,,Mic auf Jabra EVOLVE LINK stummschalten
+toggle-mute-Mic@Microsoft® LifeCam Studio(TM)=,,Mic auf Microsoft® LifeCam Studio(TM) stummschalten
+toggle-mute-PGA1.0 1 Master@sof-hda-dsp=,,PGA1.0 1 Master auf sof-hda-dsp stummschalten
+toggle-mute-PGA2.0 2 Master@sof-hda-dsp=,,PGA2.0 2 Master auf sof-hda-dsp stummschalten
+toggle-mute-PGA30.0 30@sof-hda-dsp=,,PGA30.0 30 auf sof-hda-dsp stummschalten
+toggle-mute-PGA31.0 31@sof-hda-dsp=,,PGA31.0 31 auf sof-hda-dsp stummschalten
+toggle-mute-PGA7.0 7 Master@sof-hda-dsp=,,PGA7.0 7 Master auf sof-hda-dsp stummschalten
+toggle-mute-PGA8.0 8 Master@sof-hda-dsp=,,PGA8.0 8 Master auf sof-hda-dsp stummschalten
+toggle-mute-PGA9.0 9 Master@sof-hda-dsp=,,PGA9.0 9 Master auf sof-hda-dsp stummschalten
+toggle-mute-Sidetone@Jabra EVOLVE LINK=,,Sidetone auf Jabra EVOLVE LINK stummschalten
+toggle-mute-Speaker@Jabra EVOLVE LINK=,,Speaker auf Jabra EVOLVE LINK stummschalten
+toggle-mute-Speaker@sof-hda-dsp=,,Speaker auf sof-hda-dsp stummschalten
 
 [ksmserver]
 Halt Without Confirmation=none,,Ohne Rückfrage herunterfahren
@@ -316,7 +385,7 @@ activate task manager entry 9=none,Meta+9,Fensterleisteneintrag 9 aktivieren
 activate widget 140=none,none,Miniprogramm Digitale Uhr aktivieren
 activate widget 142=none,none,Miniprogramm Digitale Uhr aktivieren
 activate widget 93=none,none,Miniprogramm Kontrollleiste aktivieren
-clear-history=none,,Verlauf der Zwischenablage löschen
+clear-history=none,,Verlauf der Zwischenablage leeren
 clipboard_action=none,Meta+Ctrl+X,Automatisches Aufklappmenü für Aktionen
 cycle-panels=none,Meta+Alt+P,Tastaturfokus zwischen Kontrollleisten umschalten
 cycleNextAction=none,,Nächstes Element im Verlauf
@@ -340,9 +409,6 @@ _launch=Ctrl+Alt+J
 [services][discord-wayland.desktop]
 _launch=Ctrl+Alt+D
 
-[services][emacs.desktop]
-_launch=Ctrl+Alt+E
-
 [services][firefox.desktop]
 _launch=Ctrl+Alt+F
 
@@ -351,6 +417,9 @@ _launch=Ctrl+Alt+N
 
 [services][joplin.desktop]
 _launch=Ctrl+Alt+N
+
+[services][neovide.desktop]
+_launch=Ctrl+Alt+E
 
 [services][org.jellyfin.JellyfinDesktop.desktop]
 _launch=Ctrl+Alt+J
@@ -373,7 +442,9 @@ _launch=none
 
 [services][org.kde.spectacle.desktop]
 ActiveWindowScreenShot=none
+CurrentMonitorScreenShot=
 FullScreenScreenShot=none
+OpenWithoutScreenshot=
 RecordRegion=none
 RecordScreen=none
 RecordWindow=none
