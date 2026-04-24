@@ -1,17 +1,17 @@
 ---
-- name: Reload system systemd services
+- name: Systemd | Reload system systemd services
   ansible.builtin.systemd_service:
     daemon_reload: true
   become: true
   tags: services
 
-- name: Reload user systemd services
+- name: Systemd | Reload user systemd services
   ansible.builtin.systemd_service:
     daemon_reload: true
     scope: user
   tags: services
 
-- name: Enable system services
+- name: Systemd | Enable system services
   ansible.builtin.systemd_service:
     name: "{{ item }}"
     state: "started"
@@ -27,7 +27,7 @@
   become: true
   tags: services
 
-- name: Enable user services
+- name: Systemd | Enable user services
   ansible.builtin.systemd_service:
     name: "{{ item }}"
     state: "restarted"
@@ -37,7 +37,7 @@
     - "ssh-agent.service"
   tags: services
 
-- name: Start system services
+- name: Systemd | Start system services
   ansible.builtin.systemd_service:
     name: "{{ item }}"
     state: "started"
@@ -48,7 +48,7 @@
   become: true
   tags: services
 
-- name: Enable btrfsmaintenance timers
+- name: Systemd | Enable btrfsmaintenance timers
   ansible.builtin.systemd_service:
     name: "{{ item }}"
     enabled: true
@@ -59,7 +59,7 @@
   become: true
   tags: services
 
-- name: Enable btrfsmaintenance services
+- name: Systemd | Enable btrfsmaintenance services
   ansible.builtin.systemd_service:
     name: "{{ item }}"
     state: "restarted"
@@ -69,7 +69,7 @@
   become: true
   tags: services
 
-- name: Enable reflector
+- name: Systemd | Enable reflector
   ansible.builtin.systemd_service:
     name: "{{ item }}"
     enabled: true
@@ -79,14 +79,14 @@
   become: true
   tags: services
 
-- name: Enable NTP
+- name: Systemd | Enable NTP
   ansible.builtin.command: timedatectl set-ntp true
   become: true
   tags: services
 
-- name: Add group for libvirt
+- name: Systemd | Add group for libvirt
   ansible.builtin.user:
-    name: "{{ ansible_user_id }}"
+    name: "{{ ansible_facts['user_id'] }}"
     groups:
       - libvirt
     append: true
@@ -94,7 +94,7 @@
   become: true
   tags: config
 
-- name: Enable libvirt socket
+- name: Systemd | Enable libvirt socket
   ansible.builtin.systemd_service:
     name: "libvirtd.socket"
     state: "started"
@@ -103,7 +103,7 @@
   become: true
   tags: services
 
-- name: Enable LACT daemon
+- name: Systemd | Enable LACT daemon
   ansible.builtin.systemd_service:
     name: "lactd"
     state: "started"
