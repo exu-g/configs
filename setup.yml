@@ -1,5 +1,7 @@
 ---
 - hosts: localhost
+  connection: local
+  become_method: su
   pre_tasks:
     - name: Host | Check if host variables exist
       ansible.builtin.stat:

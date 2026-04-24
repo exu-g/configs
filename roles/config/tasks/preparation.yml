@@ -1,11 +1,11 @@
 ---
-- name: Create backup structure
+- name: Prep | Create backup structure
   ansible.builtin.file:
     path: "~/old_dat"
     state: "directory"
   tags: config
 
-- name: Copy files to backup
+- name: Prep | Copy files to backup
   ansible.builtin.copy:
     src: "~/{{ item }}"
     dest: "~/old_dat/"
@@ -19,7 +19,7 @@
   ignore_errors: true
   tags: config
 
-- name: Remove old/unnecessary files and directories
+- name: Prep | Remove old/unnecessary files and directories
   ansible.builtin.file:
     path: "{{ item }}"
     state: "absent"

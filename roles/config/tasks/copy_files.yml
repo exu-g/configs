@@ -1,0 +1,60 @@
+---
+- name: Copy new files and directories
+  ansible.posix.synchronize:
+    src: "{{ item }}"
+    dest: "~/"
+    owner: false
+    group: false
+  loop:
+    - ".config"
+    - ".face"
+    - ".gtkrc-2.0"
+    - ".local"
+    - ".ssh"
+    - "scripts"
+  tags: config
+
+- name: Copy new files and directories (root)
+  ansible.posix.synchronize:
+    src: "{{ item }}"
+    dest: "/"
+    owner: false
+    group: false
+  loop:
+    - "etc"
+    - "usr"
+  become: true
+  tags: config
+
+# - name: Check if KDE files exist
+#   ansible.builtin.stat:
+#     path: "{{ lookup('ansible.builtin.env', 'HOME') }}/.config/kwinoutputconfig.json"
+#   register: kde_files
+#   tags: config
+
+# - name: Copy config for SDDM (root)
+#   ansible.builtin.copy:
+#     src: "{{ ansible_env['HOME'] }}/{{ item }}"
+#     dest: "/var/lib/sddm/.config/"
+#     owner: sddm
+#     group: sddm
+#     remote_src: true
+#   loop:
+#     - ".config/kwinoutputconfig.json"
+#     - ".config/kcminputrc"
+#   when: kde_files.stat.exists
+#   become: true
+#   tags: config
+
+- name: x86_64 | Copy files (root)
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "/etc/pacman.conf"
+    owner: root
+    group: root
+    mode: "0644"
+  loop:
+    - "etc/pacman-x86_64.conf"
+  when: ansible_facts['architecture'] == "x86_64"
+  become: true
+  tags: config
