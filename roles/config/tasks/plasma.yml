@@ -92,6 +92,14 @@
     remote_src: true
   tags: config
 
+# mainly for Flatpak, which can't use the theme any other way
+- name: Plasma | Copy theme
+  ansible.builtin.copy:
+    src: "{{ tempdir.path }}/themes/Sweet-nova"
+    dest: "~/.themes/"
+    remote_src: true
+  tags: config
+
 - name: Plasma | Copy theme (root)
   ansible.builtin.copy:
     src: "{{ tempdir.path }}/themes/Sweet-nova"
@@ -124,16 +132,6 @@
     - "{{ tempdir.path }}/icons/papirus-icon-theme-master/Papirus-Light"
   become: true
   tags: config
-
-# - name: Plasma | Copy files
-#   ansible.builtin.copy:
-#     src: "{{ item.src }}"
-#     dest: "{{ item.dest }}"
-#     remote_src: true
-#   loop:
-#     - src: "~/.themes/Sweet-Dark/kde/colorschemes/Sweet.colors"
-#       dest: "~/.local/share/color-schemes/Sweet.colors"
-#   tags: config
 
 - name: Plasma | Copy files (root)
   ansible.builtin.copy:

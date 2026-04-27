@@ -22,12 +22,16 @@
     state: "link"
   tags: config
 
-- name: Create flatpak overrides
+- name: Create flatpak user overrides
   ansible.builtin.command: "flatpak override --user {{ item }}"
   changed_when: true
   loop:
-    - "--filesystem=~/.themes:ro" # correct gtk/qt theme
+    - "--filesystem=xdg-config/gtk-3.0:ro" # gtk theming from https://redlib.catsarch.com/r/kde/comments/ujqih9/plasma_consistent_flatpak_theming/
+    - "--filesystem=xdg-config/gtk-4.0:ro" # gtk theming from https://redlib.catsarch.com/r/kde/comments/ujqih9/plasma_consistent_flatpak_theming/
+    - "--filesystem=xdg-config/gtkrc-2.0:ro" # gtk theming from https://redlib.catsarch.com/r/kde/comments/ujqih9/plasma_consistent_flatpak_theming/
+    - "--filesystem=xdg-config/gtkrc:ro" # gtk theming from https://redlib.catsarch.com/r/kde/comments/ujqih9/plasma_consistent_flatpak_theming/
     - "--filesystem=xdg-config/kcminputrc:ro" # correct cursor theme https://github.com/flatpak/flatpak/issues/709#issuecomment-2133355601
+    - "--filesystem=~/.themes:ro" # correct gtk/qt theme
     - "--socket=wayland"
 
 # bash cat
