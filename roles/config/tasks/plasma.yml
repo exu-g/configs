@@ -1,121 +1,170 @@
 ---
-- name: Plasma | Create file structure for themes
+- name: Plasma | Create temporary download directory
+  ansible.builtin.tempfile:
+    state: directory
+    prefix: "ansible.config."
+  register: tempdir
+  tags: config
+
+- name: Plasma | Create temporary download structure
   ansible.builtin.file:
-    path: "{{ item }}"
+    path: "{{ tempdir.path }}/{{ item }}"
     state: "directory"
   loop:
-    - "~/.local/share/"
-    - "~/.local/share/plasma/desktoptheme/"
-    - "~/.themes/"
+    - "icons"
+    - "plasma/desktoptheme"
+    - "themes"
   tags: config
 
-- name: Plasma | Remove specific theme folders
-  ansible.builtin.file:
-    path: "{{ item }}"
-    state: "absent"
-  loop:
-    - "~/.local/share/icons/"
-    - "~/.local/share/plasma/desktoptheme/Sweet/"
-    - "~/.themes/Sweet-Dark/"
+- name: Plasma | Copy wallpaper to global location (root)
+  ansible.builtin.copy:
+    src: "{{ background_image }}"
+    dest: "/etc/wallpaper.jpg"
+    remote_src: true
+  become: true
   tags: config
 
-- name: Plasma | Get desktop theme
-  ansible.builtin.git:
-    repo: https://github.com/EliverLara/Sweet-kde
-    dest: "~/.local/share/plasma/desktoptheme/Sweet/"
-  tags: config
-
-- name: Plasma | Get theme
-  ansible.builtin.git:
-    repo: https://github.com/EliverLara/Sweet
-    version: nova
-    dest: "~/.themes/Sweet-Dark/"
-  tags: config
-
-- name: Plasma | Get icons
-  ansible.builtin.git:
-    repo: https://github.com/PapirusDevelopmentTeam/papirus-icon-theme
-    dest: "~/.local/share/icons/"
-  tags: config
-
-# - name: Plasma | Get SDDM theme
-#   ansible.builtin.get_url:
-#     url: "https://github.com/EliverLara/Sweet-sddm-v2/archive/refs/heads/master.zip"
-#     dest: "./sddm-master.zip"
-#     mode: "0644"
+## Prepare for theming
+# - name: Plasma | Create file structure for themes
+#   ansible.builtin.file:
+#     path: "{{ item }}"
+#     state: "directory"
+#   loop:
+#     - "~/.local/share/"
+#     - "~/.local/share/plasma/desktoptheme/"
+#     - "~/.themes/"
 #   tags: config
 
-- name: Plasma | Copy files
+# - name: Plasma | Remove specific theme folders
+#   ansible.builtin.file:
+#     path: "{{ item }}"
+#     state: "absent"
+#   loop:
+#     - "~/.local/share/icons/"
+#     - "~/.local/share/plasma/desktoptheme/Sweet/"
+#     - "~/.themes/Sweet-Dark/"
+#   tags: config
+#
+# - name: Plasma | Remove specific theme folders (root)
+#   ansible.builtin.file:
+#     path: "{{ item }}"
+#     state: "absent"
+#   loop:
+#     - "/usr/share/plasma/desktoptheme/Sweet/"
+#     - "/usr/share/themes/Sweet-Dark/"
+#     - "/usr/share/themes/Sweet-nova/"
+#   become: true
+#   tags: config
+
+## Get theme and icons
+# - name: Plasma | Get desktop theme
+#   ansible.builtin.git:
+#     repo: https://github.com/EliverLara/Sweet-kde
+#     dest: "~/.local/share/plasma/desktoptheme/Sweet/"
+#   tags: config
+
+- name: Plasma | Get desktop theme
+  ansible.builtin.unarchive:
+    src: https://github.com/EliverLara/Sweet-kde/archive/refs/heads/master.zip
+    dest: "{{ tempdir.path }}/plasma/desktoptheme/"
+    remote_src: true
+  tags: config
+
+- name: Plasma | Copy desktop theme (root)
+  ansible.builtin.copy:
+    src: "{{ tempdir.path }}/plasma/desktoptheme/Sweet-kde-master/"
+    dest: "/usr/share/plasma/desktoptheme/Sweet/"
+    remote_src: true
+  become: true
+  tags: config
+
+# - name: Plasma | Get theme
+#   ansible.builtin.git:
+#     repo: https://github.com/EliverLara/Sweet
+#     version: nova
+#     dest: "~/.themes/Sweet-Dark/"
+#   tags: config
+
+- name: Plasma | Get theme
+  ansible.builtin.unarchive:
+    src: https://github.com/EliverLara/Sweet/archive/refs/heads/nova.zip
+    dest: "{{ tempdir.path }}/themes/"
+    remote_src: true
+  tags: config
+
+- name: Plasma | Copy theme (root)
+  ansible.builtin.copy:
+    src: "{{ tempdir.path }}/themes/Sweet-nova"
+    dest: "/usr/share/themes/"
+    remote_src: true
+  become: true
+  tags: config
+
+# - name: Plasma | Get icons
+#   ansible.builtin.git:
+#     repo: https://github.com/PapirusDevelopmentTeam/papirus-icon-theme
+#     dest: "~/.local/share/icons/"
+#   tags: config
+
+- name: Plasma | Get icons
+  ansible.builtin.unarchive:
+    src: https://github.com/PapirusDevelopmentTeam/papirus-icon-theme/archive/refs/heads/master.zip
+    dest: "{{ tempdir.path }}/icons/"
+    remote_src: true
+  tags: config
+
+- name: Plasma | Copy icons (root)
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "/usr/share/icons/"
+    remote_src: true
+  loop:
+    - "{{ tempdir.path }}/icons/papirus-icon-theme-master/Papirus"
+    - "{{ tempdir.path }}/icons/papirus-icon-theme-master/Papirus-Dark"
+    - "{{ tempdir.path }}/icons/papirus-icon-theme-master/Papirus-Light"
+  become: true
+  tags: config
+
+# - name: Plasma | Copy files
+#   ansible.builtin.copy:
+#     src: "{{ item.src }}"
+#     dest: "{{ item.dest }}"
+#     remote_src: true
+#   loop:
+#     - src: "~/.themes/Sweet-Dark/kde/colorschemes/Sweet.colors"
+#       dest: "~/.local/share/color-schemes/Sweet.colors"
+#   tags: config
+
+- name: Plasma | Copy files (root)
   ansible.builtin.copy:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
     remote_src: true
   loop:
-    - src: "~/.themes/Sweet-Dark/kde/colorschemes/Sweet.colors"
-      dest: "~/.local/share/color-schemes/Sweet.colors"
+    - src: "/usr/share/themes/Sweet-nova/kde/colorschemes/Sweet.colors"
+      dest: "/usr/share/color-schemes/Sweet.colors"
+    - src: "/usr/share/themes/Sweet-nova/kde/look-and-feel/"
+      dest: "/usr/share/plasma/look-and-feel/Sweet/"
+  become: true
   tags: config
 
-# - name: Plasma | Install SDDM theme
-#   ansible.builtin.shell: "sddmthemeinstaller --install ./sddm-master.zip"
-#   become: true
-#   tags: config
-
-# - name: Plasma | Remove previously set wallpapers
-#   ansible.builtin.shell: |
-#     kwriteconfig6 --file ~/.config/plasma-org.kde.plasma.desktop-appletsrc --group Containments --group 1 --group Wallpaper --group org.kde.image --group General --key Image --delete
-#     kwriteconfig6 --file ~/.config/plasma-org.kde.plasma.desktop-appletsrc --group Containments --group 1 --group Wallpaper --group org.kde.image --group General --key FillMode --delete
-#     kwriteconfig6 --file ~/.config/plasma-org.kde.plasma.desktop-appletsrc --group Containments --group 2 --group Wallpaper --group org.kde.image --group General --key Image --delete
-#     kwriteconfig6 --file ~/.config/plasma-org.kde.plasma.desktop-appletsrc --group Containments --group 1 --group Wallpaper --group org.kde.image --group General --key FillMode --delete
-#   tags: config
-
-# - name: Plasma | Set desktop wallpaper
-#   ansible.builtin.shell: |
-#     qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript "
-#                  desktops().forEach((d) => {
-#                      d.currentConfigGroup = [
-#                          'Wallpaper',
-#                          'org.kde.image',
-#                          'General',
-#                      ]
-#                      d.writeConfig('Image', '{{ background_image }}')
-#                      d.reloadConfig()
-#                  })
-#              "
-#   tags: config
-
-# - name: Plasma | Restart Kwin
-#   ansible.builtin.command: "kwin_wayland --replace"
-#   tags: config
-# TODO: alternative commands
-# kquitapp6 plasmashell
-# kstart plasmashell
-
+## Set theme, colorscheme, cursor
 - name: Plasma | Set cursor theme
-  ansible.builtin.shell: "plasma-apply-cursortheme Breeze_Light"
+  ansible.builtin.command: "plasma-apply-cursortheme Breeze_Light"
   tags: config
 
 - name: Plasma | Set colorscheme
-  ansible.builtin.shell: "plasma-apply-colorscheme Sweet"
+  ansible.builtin.command: "plasma-apply-colorscheme Sweet"
   tags: config
 
 - name: Plasma | Set desktop theme
-  ansible.builtin.shell: "plasma-apply-desktoptheme Sweet"
+  ansible.builtin.command: "plasma-apply-desktoptheme Sweet"
   tags: config
 
-# - name: Plasma | Set SDDM theme
-#   community.general.ini_file:
-#     path: /etc/sddm.conf.d/kde_settings.conf
-#     section: Theme
-#     option: Current
-#     value: "Sweet-sddm-v2-master"
-#     no_extra_spaces: true
-#     mode: "0644"
-#   become: true
-#   tags: config
-
+## Plasma wallpaper
 - name: Plasma | Check if wallpaper exists
   ansible.builtin.stat:
-    path: "{{ background_image }}"
+    path: "/etc/wallpaper.jpg"
   register: wallpaper
   tags: config
 
@@ -123,20 +172,84 @@
   when: wallpaper.stat.exists
   tags: config
   block:
+    # - name: Plasma | Remove previously set wallpapers
+    #   ansible.builtin.shell: |
+    #     kwriteconfig6 --file ~/.config/plasma-org.kde.plasma.desktop-appletsrc --group Containments --group 1 --group Wallpaper --group org.kde.image --group General --key Image --delete
+    #     kwriteconfig6 --file ~/.config/plasma-org.kde.plasma.desktop-appletsrc --group Containments --group 1 --group Wallpaper --group org.kde.image --group General --key FillMode --delete
+    #     kwriteconfig6 --file ~/.config/plasma-org.kde.plasma.desktop-appletsrc --group Containments --group 2 --group Wallpaper --group org.kde.image --group General --key Image --delete
+    #     kwriteconfig6 --file ~/.config/plasma-org.kde.plasma.desktop-appletsrc --group Containments --group 1 --group Wallpaper --group org.kde.image --group General --key FillMode --delete
+    #   tags: config
+
     - name: Plasma | Set desktop wallpaper
-      ansible.builtin.command: 'plasma-apply-wallpaperimage "{{ background_image }}"'
+      ansible.builtin.command: 'plasma-apply-wallpaperimage "/etc/wallpaper.jpg"'
       changed_when: true
+
+    # - name: Plasma | Set desktop wallpaper
+    #   ansible.builtin.shell: |
+    #     qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript "
+    #                 desktops().forEach((d) => {
+    #                     d.currentConfigGroup = [
+    #                         'Wallpaper',
+    #                         'org.kde.image',
+    #                         'General',
+    #                     ]
+    #                     d.writeConfig('Image', '{{ background_image }}')
+    #                     d.reloadConfig()
+    #                 })
+    #             "
+    #   tags: config
 
     - name: Plasma | Set Lockscreen wallpaper
       ansible.builtin.shell: |
-        kwriteconfig6 --file ~/.config/kscreenlockerrc --group Greeter --group Wallpaper --group org.kde.image --group General --key Image '{{ background_image }}'
-        kwriteconfig6 --file ~/.config/kscreenlockerrc --group Greeter --group Wallpaper --group org.kde.image --group General --key PreviewImage '{{ background_image }}'
+        kwriteconfig6 --file ~/.config/kscreenlockerrc --group Greeter --group Wallpaper --group org.kde.image --group General --key Image '/etc/wallpaper.jpg'
+        kwriteconfig6 --file ~/.config/kscreenlockerrc --group Greeter --group Wallpaper --group org.kde.image --group General --key PreviewImage '/etc/wallpaper.jpg'
       changed_when: true
 
-- name: Plasma | Restart plasmashell
-  ansible.builtin.command: kill -9 plasmashell
-  changed_when: true
+# Plasma login
+- name: Check if KDE files exist
+  ansible.builtin.stat:
+    path: "{{ lookup('ansible.builtin.env', 'HOME') }}/.config/kwinoutputconfig.json"
+  register: kde_files
+  tags: config
+
+- name: Copy config for Plasma login (root)
+  ansible.builtin.copy:
+    src: "{{ lookup('ansible.builtin.env', 'HOME') }}/{{ item }}"
+    dest: "/var/lib/plasmalogin/.config/"
+    owner: plasmalogin
+    group: plasmalogin
+    remote_src: true
+  loop:
+    - ".config/kwinoutputconfig.json"
+    - ".config/kcminputrc"
+  when: kde_files.stat.exists
+  become: true
+  tags: config
+
+- name: Copy wallpaper for Plasma login (root)
+  ansible.builtin.copy:
+    src: "{{ background_image }}"
+    dest: "/var/lib/plasmalogin/wallpapers/wallpaper.jpg"
+    owner: plasmalogin
+    group: plasmalogin
+    remote_src: true
+  become: true
+  tags: config
+
+## Restart to apply changes
+# TODO: alternative commands
+# kill plasmashell
+# kquitapp6 plasmashell
+# kstart plasmashell
+#
+# NOTE restarting plasmashell removes the just set background images
+# - name: Plasma | Restart plasmashell
+#   ansible.builtin.command: kquitapp6 plasmashell
+#   changed_when: true
+#   tags: config
 
 - name: Plasma | Restart krunner
-  ansible.builtin.command: kill krunner
+  ansible.builtin.command: kquitapp6 krunner
   changed_when: true
+  ignore_errors: true
+  tags: config
