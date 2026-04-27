@@ -1,0 +1,113 @@
+---
+- name: Systemd | Reload system systemd services
+  ansible.builtin.systemd_service:
+    daemon_reload: true
+  become: true
+  tags: services
+
+- name: Systemd | Reload user systemd services
+  ansible.builtin.systemd_service:
+    daemon_reload: true
+    scope: user
+  tags: services
+
+- name: Systemd | Enable system services
+  ansible.builtin.systemd_service:
+    name: "{{ item }}"
+    state: "started"
+    enabled: true
+  loop:
+    - "avahi-daemon.service"
+    - "bluetooth.service"
+    - "fstrim.timer"
+    # - "sddm.service"
+    - "plasmalogin.service"
+    - "systemd-oomd.service"
+    - "systemd-resolved.service"
+  become: true
+  tags: services
+
+- name: Systemd | Enable user services
+  ansible.builtin.systemd_service:
+    name: "{{ item }}"
+    state: "restarted"
+    enabled: true
+    scope: user
+  loop:
+    - "ssh-agent.service"
+  tags: services
+
+- name: Systemd | Start system services
+  ansible.builtin.systemd_service:
+    name: "{{ item }}"
+    state: "started"
+    enabled: true
+  loop:
+    - "fstrim.timer"
+    - "bluetooth.service"
+  become: true
+  tags: services
+
+- name: Systemd | Enable btrfsmaintenance timers
+  ansible.builtin.systemd_service:
+    name: "{{ item }}"
+    enabled: true
+  loop:
+    - "btrfs-balance.timer"
+    - "btrfs-scrub.timer"
+  when: ('btrfsmaintenance' in ansible_facts.packages)
+  become: true
+  tags: services
+
+- name: Systemd | Enable btrfsmaintenance services
+  ansible.builtin.systemd_service:
+    name: "{{ item }}"
+    state: "restarted"
+  loop:
+    - "btrfsmaintenance-refresh.service"
+  when: ('btrfsmaintenance' in ansible_facts.packages)
+  become: true
+  tags: services
+
+- name: Systemd | Enable reflector
+  ansible.builtin.systemd_service:
+    name: "{{ item }}"
+    enabled: true
+  loop:
+    - "reflector.timer"
+  when: ('reflector' in ansible_facts.packages)
+  become: true
+  tags: services
+
+- name: Systemd | Enable NTP
+  ansible.builtin.command: timedatectl set-ntp true
+  become: true
+  tags: services
+
+- name: Systemd | Add group for libvirt
+  ansible.builtin.user:
+    name: "{{ ansible_facts['user_id'] }}"
+    groups:
+      - libvirt
+    append: true
+  when: ('libvirt' in ansible_facts.packages)
+  become: true
+  tags: config
+
+- name: Systemd | Enable libvirt socket
+  ansible.builtin.systemd_service:
+    name: "libvirtd.socket"
+    state: "started"
+    enabled: true
+  when: ('libvirt' in ansible_facts.packages)
+  become: true
+  tags: services
+
+- name: Systemd | Enable LACT daemon
+  ansible.builtin.systemd_service:
+    name: "lactd"
+    state: "started"
+    enabled: true
+  when: ('lact' in ansible_facts.packages)
+  become: true
+  tags: services

@@ -3,91 +3,16 @@
   ansible.builtin.package_facts:
   tags: always
 
-- name: Create backup structure
-  ansible.builtin.file:
-    path: "~/old_dat"
-    state: "directory"
+# Preparation tasks: backup, removals
+- name: Import Tasks from preparation.yml
+  ansible.builtin.import_tasks:
+    file: preparation.yml
   tags: config
 
-- name: Copy files to backup
-  ansible.builtin.copy:
-    src: "~/{{ item }}"
-    dest: "~/old_dat/"
-    remote_src: true
-  loop:
-    - ".config"
-    - ".local/share/applications"
-    - ".mozilla"
-    - ".ssh"
-    - "scripts"
-  ignore_errors: true
-  tags: config
-
-- name: Remove old/unnecessary files and directories
-  ansible.builtin.file:
-    path: "{{ item }}"
-    state: "absent"
-  loop:
-    - "~/.emacs.d"
-    - "~/scripts"
-    - "~/.gitconfig"
-  tags: config
-
-- name: Copy new files and directories
-  ansible.posix.synchronize:
-    src: "{{ item }}"
-    dest: "~/"
-    owner: false
-    group: false
-  loop:
-    - ".config"
-    - ".face"
-    - ".gtkrc-2.0"
-    - ".local"
-    - ".ssh"
-    - "scripts"
-  tags: config
-
-- name: Copy new files and directories (root)
-  ansible.posix.synchronize:
-    src: "{{ item }}"
-    dest: "/"
-    owner: false
-    group: false
-  loop:
-    - "etc"
-    - "usr"
-  become: true
-  tags: config
-
-- name: Check if KDE files exist
-  ansible.builtin.stat:
-    path: "{{ ansible_env['HOME'] }}/.config/kwinoutputconfig.json"
-  register: kde_files
-  tags: config
-
-# - name: Copy config for SDDM (root)
-#   ansible.builtin.copy:
-#     src: "{{ ansible_env['HOME'] }}/{{ item }}"
-#     dest: "/var/lib/sddm/.config/"
-#     owner: sddm
-#     group: sddm
-#     remote_src: true
-#   loop:
-#     - ".config/kwinoutputconfig.json"
-#     - ".config/kcminputrc"
-#   when: kde_files.stat.exists
-#   become: true
-#   tags: config
-
-- name: x86_64 | Copy files (root)
-  ansible.builtin.copy:
-    src: "{{ item }}"
-    dest: "/etc/pacman.conf"
-  loop:
-    - "etc/pacman-x86_64.conf"
-  when: ansible_architecture == "x86_64"
-  become: true
+# Copy new files
+- name: Import Tasks from copy_files.yml
+  ansible.builtin.import_tasks:
+    file: copy_files.yml
   tags: config
 
 - name: Symlink xdg environment variables
@@ -99,142 +24,29 @@
 
 - name: Create flatpak overrides
   ansible.builtin.command: "flatpak override --user {{ item }}"
+  changed_when: true
   loop:
     - "--filesystem=~/.themes:ro" # correct gtk/qt theme
     - "--filesystem=xdg-config/kcminputrc:ro" # correct cursor theme https://github.com/flatpak/flatpak/issues/709#issuecomment-2133355601
     - "--socket=wayland"
 
-- name: Bash cat | Download
-  ansible.builtin.git:
-    repo: https://github.com/exu-g/bash-cat-with-cat.git
-    dest: "/tmp/bash-cat-with-cat"
-  tags: config
-
-- name: Bash cat | Copy to scripts
-  ansible.builtin.copy:
-    src: "/tmp/bash-cat-with-cat/cat.sh"
-    dest: "~/scripts/pieces/cat.sh"
-    mode: "0755"
-  tags: config
-
-# Start async tasks early
-- name: Import Tasks from async.yml
+# bash cat
+- name: Import Tasks from bash_cat.yml
   ansible.builtin.import_tasks:
-    file: async.yml
+    file: bash_cat.yml
   tags: config
 
-- name: Reload system systemd services
-  ansible.builtin.systemd_service:
-    daemon_reload: true
-  become: true
-  tags: services
-
-- name: Reload user systemd services
-  ansible.builtin.systemd_service:
-    daemon_reload: true
-    scope: user
-  tags: services
-
-- name: Enable system services
-  ansible.builtin.systemd_service:
-    name: "{{ item }}"
-    state: "started"
-    enabled: true
-  loop:
-    - "avahi-daemon.service"
-    - "bluetooth.service"
-    - "fstrim.timer"
-    # - "sddm.service"
-    - "plasmalogin.service"
-    - "systemd-oomd.service"
-    - "systemd-resolved.service"
-  become: true
-  tags: services
-
-- name: Enable user services
-  ansible.builtin.systemd_service:
-    name: "{{ item }}"
-    state: "restarted"
-    enabled: true
-    scope: user
-  loop:
-    - "ssh-agent.service"
-  tags: services
-
-- name: Start system services
-  ansible.builtin.systemd_service:
-    name: "{{ item }}"
-    state: "started"
-    enabled: true
-  loop:
-    - "fstrim.timer"
-    - "bluetooth.service"
-  become: true
-  tags: services
-
-- name: Enable btrfsmaintenance timers
-  ansible.builtin.systemd_service:
-    name: "{{ item }}"
-    enabled: true
-  loop:
-    - "btrfs-balance.timer"
-    - "btrfs-scrub.timer"
-  when: ('btrfsmaintenance' in ansible_facts.packages)
-  become: true
-  tags: services
-
-- name: Enable btrfsmaintenance services
-  ansible.builtin.systemd_service:
-    name: "{{ item }}"
-    state: "restarted"
-  loop:
-    - "btrfsmaintenance-refresh.service"
-  when: ('btrfsmaintenance' in ansible_facts.packages)
-  become: true
-  tags: services
-
-- name: Enable reflector
-  ansible.builtin.systemd_service:
-    name: "{{ item }}"
-    enabled: true
-  loop:
-    - "reflector.timer"
-  when: ('reflector' in ansible_facts.packages)
-  become: true
-  tags: services
-
-- name: Enable NTP
-  ansible.builtin.command: timedatectl set-ntp true
-  become: true
-  tags: services
-
-- name: Add group for libvirt
-  ansible.builtin.user:
-    name: "{{ ansible_user_id }}"
-    groups:
-      - libvirt
-    append: true
-  when: ('libvirt' in ansible_facts.packages)
-  become: true
+# fish
+- name: Import Tasks from fish.yml
+  ansible.builtin.import_tasks:
+    file: fish.yml
   tags: config
 
-- name: Enable libvirt socket
-  ansible.builtin.systemd_service:
-    name: "libvirtd.socket"
-    state: "started"
-    enabled: true
-  when: ('libvirt' in ansible_facts.packages)
-  become: true
-  tags: services
-
-- name: Enable LACT daemon
-  ansible.builtin.systemd_service:
-    name: "lactd"
-    state: "started"
-    enabled: true
-  when: ('lact' in ansible_facts.packages)
-  become: true
-  tags: services
+# systemd
+- name: Import Tasks from systemd.yml
+  ansible.builtin.import_tasks:
+    file: systemd.yml
+  tags: config
 
 - name: Create groups
   ansible.builtin.group:
@@ -247,23 +59,9 @@
   become: true
   tags: config
 
-- name: Set fish for user
-  ansible.builtin.user:
-    name: "{{ ansible_user_id }}"
-    shell: "/usr/bin/fish"
-  become: true
-  tags: config
-
-- name: Set fish for root
-  ansible.builtin.user:
-    name: "root"
-    shell: "/usr/bin/fish"
-  become: true
-  tags: config
-
 - name: Add user to groups
   ansible.builtin.user:
-    name: "{{ ansible_user_id }}"
+    name: "{{ ansible_facts['user_id'] }}"
     groups:
       - video # backlight
       - render # GPU passing
@@ -303,10 +101,4 @@
 - name: Import Tasks from plasma.yml
   ansible.builtin.import_tasks:
     file: plasma.yml
-  tags: config
-
-# Async task callbacks
-- name: Import Tasks from async_check.yml
-  ansible.builtin.import_tasks:
-    file: async_check.yml
   tags: config
