@@ -257,12 +257,10 @@ knownItems=org.kde.kdeconnect,org.kde.plasma.vault,org.kde.plasma.kclock_1x2,org
 [Containments][167][General]
 AppletOrder=168;169
 
-[Containments][170]
-ItemGeometries-1920x1080=
-ItemGeometries-1969x1108=
+[Containments][187]
 ItemGeometries-2048x1152=
 ItemGeometriesHorizontal=
-activityId=2efc56f1-09fa-4490-9706-4dcde3912089
+activityId=64664544-a062-48cf-a713-e4045da575e9
 formfactor=0
 immutability=1
 lastScreen=0
@@ -270,18 +268,14 @@ location=0
 plugin=org.kde.plasma.folder
 wallpaperplugin=org.kde.image
 
-[Containments][170][Wallpaper][org.kde.image][General]
-Image=file:///home/mfi/Bilder/artstation_13054577_50587674_The Poppy War.jpg
-SlidePaths=/home/mfi/.local/share/wallpapers/,/usr/share/wallpapers/
+[Containments][187][Wallpaper][org.kde.image][General]
+Image=file:///etc/wallpaper.jpg
+SlidePaths=/home/exu/.local/share/wallpapers/,/usr/share/wallpapers/
 
-[Containments][171]
-ItemGeometries-1920x1080=
-ItemGeometries-1969x1108=
+[Containments][195]
 ItemGeometries-2048x1152=
-ItemGeometries-512x384=
-ItemGeometries-960x540=
 ItemGeometriesHorizontal=
-activityId=2efc56f1-09fa-4490-9706-4dcde3912089
+activityId=64664544-a062-48cf-a713-e4045da575e9
 formfactor=0
 immutability=1
 lastScreen=1
@@ -289,22 +283,9 @@ location=0
 plugin=org.kde.plasma.folder
 wallpaperplugin=org.kde.image
 
-[Containments][171][ConfigDialog]
-DialogHeight=630
-DialogWidth=810
-
-[Containments][171][Wallpaper][org.kde.image][General]
-Image=file:///home/mfi/Bilder/artstation_13054577_50587674_The Poppy War.jpg
-SlidePaths=/home/mfi/.local/share/wallpapers/,/usr/share/wallpapers/
-
-[Containments][186]
-activityId=2efc56f1-09fa-4490-9706-4dcde3912089
-formfactor=0
-immutability=1
-lastScreen=2
-location=0
-plugin=org.kde.plasma.folder
-wallpaperplugin=org.kde.image
+[Containments][195][Wallpaper][org.kde.image][General]
+Image=file:///etc/wallpaper.jpg
+SlidePaths=/home/exu/.local/share/wallpapers/,/usr/share/wallpapers/
 
 [Containments][3]
 activityId=
