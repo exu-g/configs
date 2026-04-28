@@ -1,10 +1,9 @@
 ---
-additional_pacman_packages:
-  - mattermost-desktop
-  - wireguard-tools
+# additional_pacman_packages:
+#   - wireguard-tools
 #additional_aur_packages:
 #  - netclient-bin
 
-ssh_key_git: "{{ ansible_user_dir }}/.ssh/id_ed25519_git"
+ssh_key_git: "{{ ansible_facts['user_dir'] }}/.ssh/id_ed25519_git"
 
-background_image: "{{ ansible_user_dir }}/Bilder/artstation_13054577_50587674_The Poppy War.jpg"
+background_image: "{{ ansible_facts['user_dir'] }}/Bilder/On_the_Way_to_SafespaceStation1_Sylvia.Ritter.jpg"
