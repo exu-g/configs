@@ -21,7 +21,7 @@
     - "bluetooth.service"
     - "fstrim.timer"
     # - "sddm.service"
-    - "plasmalogin.service"
+    # - "plasmalogin.service"
     - "systemd-oomd.service"
     - "systemd-resolved.service"
   become: true
