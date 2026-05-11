@@ -29,9 +29,7 @@ set fish_color_cwd yellow
 
 # environment variables
 # SSH Agent
-set SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/ssh-agent.socket"
-#set SSH_AUTH_SOCK /run/user/1000/ssh-agent.socket
-export SSH_AUTH_SOCK
+set -gx SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/ssh-agent.socket"
 
 # Defined in /home/marc/.config/fish/functions/fish_prompt.fish @ line 2
 # slightly modified from defaults
@@ -71,8 +69,6 @@ function fish_prompt
 end
 
 # text editor
-#set EDITOR "/usr/bin/emacs --no-window-system"
-#set VISUAL "/usr/bin/emacs --no-window-system"
 set EDITOR /usr/bin/vim
 set VISUAL /usr/bin/vim
 
