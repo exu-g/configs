@@ -27,10 +27,6 @@ set fish_color_separator --bold yellow
 set fish_color_host cyan
 set fish_color_cwd yellow
 
-# environment variables
-# SSH Agent
-set -gx SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/ssh-agent.socket"
-
 # Defined in /home/marc/.config/fish/functions/fish_prompt.fish @ line 2
 # slightly modified from defaults
 function fish_prompt
@@ -67,6 +63,40 @@ function fish_prompt
     echo -n -s (set_color $fish_color_user) "$USER" $normal (set_color $fish_color_separator) @ $normal (set_color $color_host) (prompt_hostname) $normal ' ' (set_color $color_cwd) (prompt_pwd) $normal (fish_vcs_prompt) $normal " "$prompt_status $suffix " "
     #echo -n -s (set_color --bold red) "$USER" $normal (set_color --bold yellow) @ $normal (set_color cyan) (prompt_hostname) $normal ' ' (set_color yellow) (prompt_pwd) $normal (fish_vcs_prompt) $normal " "$prompt_status $suffix " "
 end
+
+## environment variables
+# SSH Agent
+set -gx SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/ssh-agent.socket"
+
+# XDG variables
+set -gx XDG_CACHE_HOME "$HOME/.cache"
+set -gx XDG_CONFIG_HOME "$HOME/.config"
+set -gx XDG_DATA_HOME "$HOME/.local/share"
+set -gx XDG_STATE_HOME "$HOME/.local/state"
+
+# Clean home directory
+# android
+set -gx ANDROID_USER_HOME "$XDG_DATA_HOME/android"
+alias adb='HOME="$XDG_DATA_HOME"/android adb'
+set -gx ANDROID_AVD_HOME "$XDG_DATA_HOME/android/avd"
+# ansible
+set -gx ANSIBLE_HOME "$XDG_DATA_HOME/ansible"
+# bash (.bashrc not supported yet)
+set -gx HISTFILE "$XDG_STATE_HOME/bash/history"
+# cargo
+set -gx CARGO_HOME "$XDG_DATA_HOME/cargo"
+# go
+set -gx GOPATH "$XDG_DATA_HOME/go"
+# gtk-2
+set -gx GTK2_RC_FILES "$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
+# less
+set -gx LESSHISTFILE "$XDG_STATE_HOME/lesshst"
+# nimble
+set -gx NIMBLE_DIR "$XDG_DATA_HOME/nimble"
+# randfile
+set -gx RANDFILE "$XDG_STATE_HOME/rnd"
+# wine
+set -gx WINEPREFIX "$XDG_DATA_HOME/wine"
 
 # text editor
 set EDITOR /usr/bin/vim
