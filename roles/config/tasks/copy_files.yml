@@ -8,7 +8,6 @@
   loop:
     - ".config"
     - ".face"
-    - ".gtkrc-2.0"
     - ".local"
     - ".ssh"
     - "scripts"
