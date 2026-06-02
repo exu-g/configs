@@ -325,7 +325,7 @@ Window to Screen 5=none,,Fenster auf Bildschirm 5 verschieben
 Window to Screen 6=none,,Fenster auf Bildschirm 6 verschieben
 Window to Screen 7=none,,Fenster auf Bildschirm 7 verschieben
 _k_friendly_name=KWin
-disableInputCapture=Meta+Shift+Esc,Meta+Shift+Esc,Disable Active Input Capture
+disableInputCapture=Meta+Shift+Esc,Meta+Shift+Esc,Aktive Eingabeerfassung deaktivieren
 view_actual_size=none,Meta+0,Auf Originalgröße zoomen
 view_zoom_in=none,Meta++\tMeta+=,Vergrößern
 view_zoom_out=none,Meta+-,Verkleinern
