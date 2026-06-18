@@ -20,4 +20,13 @@ return {
       zen = { enabled = false },
     },
   },
+  {
+    "nvim-lspconfig",
+    opts = {
+      -- Disable redundant virtual_text at the end of lines (using virtual_lines instead)
+      diagnostics = {
+        virtual_text = false,
+      },
+    },
+  },
 }
