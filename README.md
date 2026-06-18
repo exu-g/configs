@@ -1,6 +1,6 @@
-Main repository location is [https://git.exu.li/exu/configs](https://git.exu.li/exu/configs)
-
 # Configs
+
+> Main repository location is [https://git.exu.li/exu/configs](https://git.exu.li/exu/configs)
 
 All my config files, scripts and other in one place.
 
