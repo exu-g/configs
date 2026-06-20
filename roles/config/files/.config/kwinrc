@@ -479,6 +479,7 @@ DelayFocusInterval=100
 FocusPolicy=FocusFollowsMouse
 FocusStealingPreventionLevel=0
 NextFocusPrefersMouse=true
+PerOutputVirtualDesktops=true
 RollOverDesktops=true
 SeparateScreenFocus=true
 
