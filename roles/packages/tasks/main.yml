@@ -145,7 +145,7 @@
     - ruff # emacs python formatter
     - shfmt # code
     - smartmontools # disks
-    - sof-firmware # modern laptop audio
+    - sof-firmware # modern laptop audio, see https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture#Firmware
     - speech-dispatcher # TTS
     - stress # benchmark
     - stylelint # code
