@@ -268,15 +268,3 @@
   when: host_file.stat.exists
   become: true
   tags: packages
-
-- name: Doom Emacs | Clone
-  ansible.builtin.git:
-    repo: https://github.com/doomemacs/doomemacs
-    dest: "~/.config/emacs"
-    depth: 1
-  tags: doomemacs
-
-- name: Doom Emacs | Install
-  ansible.builtin.shell:
-    cmd: "~/.config/emacs/bin/doom install --aot --force"
-  tags: doomemacs
