@@ -10,19 +10,28 @@
   ansible.builtin.file:
     path: "{{ tempdir.path }}/{{ item }}"
     state: "directory"
+    mode: "0755"
   loop:
     - "icons"
     - "plasma/desktoptheme"
     - "themes"
   tags: config
 
+- name: Plasma | Check if wallpaper exists for user
+  ansible.builtin.stat:
+    path: "{{ background_image }}"
+  register: wallpaper_user
+  tags: config
+
 - name: Plasma | Copy wallpaper to global location (root)
   ansible.builtin.copy:
     src: "{{ background_image }}"
     dest: "/etc/wallpaper.jpg"
+    mode: "0644"
     remote_src: true
   become: true
   tags: config
+  when: wallpaper_user.stat.exists
 
 ## Prepare for theming
 # - name: Plasma | Create file structure for themes
