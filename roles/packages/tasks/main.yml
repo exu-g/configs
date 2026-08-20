@@ -35,17 +35,16 @@
     name: "{{ item }}"
     state: present
   loop:
-    #- libaacs
-    #- libbluray
-    #- libcdio
-    #- libdvdcss
-    #- libdvdnav
-    #- libdvdread
-    #- libsecret
+    # - libaacs
+    # - libbluray
+    # - libcdio
+    # - libdvdcss
+    # - libdvdnav
+    # - libdvdread
+    # - libsecret
     - aardvark-dns # containers
     - ansible # iac
-    - ansible-language-server # emacs ansible LSP
-    - ansible-lint # emacs ansible LSP requirement
+    # - ansible-lint # emacs ansible LSP requirement
     - avahi # mDNS & local autodiscover
     - base-devel # devel stuff
     - bash-language-server # bash lsp
@@ -60,10 +59,10 @@
     - dosfstools # fat
     - e2fsprogs # ext4
     - easyeffects # audio effects
-    - emacs-wayland # text editor & IDE
+    # - emacs-wayland # text editor & IDE
     - exfatprogs # exfat
     - f2fs-tools # f2fs
-    #- fcitx5-im # virtual keyboard
+    # - fcitx5-im # virtual keyboard
     - fd
     - ffmpeg # multimedia
     - firefox # browser
@@ -98,7 +97,7 @@
     - lutris # games
     - maliit-keyboard # virtual keyboard
     - man-db # docs
-    - markdownlint # emacs linter markdown
+    # - markdownlint # emacs linter markdown
     - mesa # video driver
     - mesa-vdpau # VDPAU
     - mosh # remote shell
@@ -130,19 +129,19 @@
     - podman # containers
     - podman-compose # containers
     - power-profiles-daemon # power management
-    - prettier # emacs formatter (yaml, others?)
+    # - prettier # emacs formatter (yaml, others?)
     - python-debugpy # code
     - python-isort # code
-    - python-nose # emacs python testing (nosetests)
+    # - python-nose # emacs python testing (nosetests)
     - python-pip # code
     - python-pipenv # code
     - python-pyflakes # code
     - python-pytest # code
     - rebuild-detector # packages
-    - ripgrep # doom emacs
+    - ripgrep # much faster grep
     - rsync # file sync
     - ruby-sass # code
-    - ruff # emacs python formatter
+    # - ruff # emacs python formatter
     - shfmt # code
     - smartmontools # disks
     - sof-firmware # modern laptop audio, see https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture#Firmware
@@ -165,8 +164,8 @@
     - util-linux # various utils
     - vdpauinfo # VDPAU
     - vim # editor
-    - vscode-css-languageserver # emacs css LSP
-    - vscode-json-languageserver # emacs json LSP
+    # - vscode-css-languageserver # emacs css LSP
+    # - vscode-json-languageserver # emacs json LSP
     - wget # network
     - whois # mkpasswd
     - wireguard-tools # vpn
@@ -181,6 +180,7 @@
   tags: packages
   become: true
 
+# - ansible-language-server # emacs ansible LSP
 # - basedpyright # emacs python LSP, improved fork of pyright
 # - btrfsmaintenance # AUR
 # - dockerfile-language-server # code # AUR
