@@ -95,11 +95,11 @@
     - lldb-mi
     - lsp-plugins-lv2 # easyeffects equalizer plugin
     - lutris # games
-    - maliit-keyboard # virtual keyboard
+    # - maliit-keyboard # virtual keyboard FIXME:removed
     - man-db # docs
     # - markdownlint # emacs linter markdown
     - mesa # video driver
-    - mesa-vdpau # VDPAU
+    # - mesa-vdpau # VDPAU FIXME:removed
     - mosh # remote shell
     - mtools # fat
     - mythes-de # thesaurus
@@ -120,7 +120,7 @@
     - otf-font-awesome # fonts
     - p7zip # compression
     - pacman-contrib # scripts
-    - phonon-qt5-vlc # multimedia
+    # - phonon-qt5-vlc # multimedia FIXME:removed
     - phonon-qt6-vlc # multimedia
     - php # code
     - pkgstats
