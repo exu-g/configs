@@ -148,7 +148,6 @@
     - sof-firmware # modern laptop audio, see https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture#Firmware
     - speech-dispatcher # TTS
     - stress # benchmark
-    - stylelint # code
     - swtpm # libvirt tpm support
     - system-config-printer # printer configuration
     - systemd-resolvconf # resolvectl
@@ -181,6 +180,7 @@
   tags: packages
   become: true
 
+# AUR packages
 # - ansible-language-server # emacs ansible LSP
 # - basedpyright # emacs python LSP, improved fork of pyright
 # - btrfsmaintenance # AUR
@@ -191,6 +191,7 @@
 # - konsave # AUR
 # - powershell-bin # AUR, emacs powershell LSP (dep)
 # - powershell-editor-services # AUR, emacs powershell LSP
+# - stylelint # code
 
 - name: x86_64 | Install other packages unavailable/unnecessary on ALARM
   community.general.pacman:
