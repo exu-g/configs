@@ -104,6 +104,7 @@
     - mtools # fat
     - mythes-de # thesaurus
     - mythes-en # thesaurus
+    - neovide # editor
     - nerd-fonts # fonts
     - networkmanager # network connections
     - nextcloud-client # cloud
