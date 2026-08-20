@@ -6,7 +6,7 @@
     block: |
       [multilib]
       Include = /etc/pacman.d/mirrorlist
-  when: ansible_architecture == "x86_64"
+  when: ansible_facts['architecture'] == "x86_64"
   tags: first
   become: true
 
@@ -217,7 +217,7 @@
     - virt-manager # virtualization
     - vulkan-intel # video driver
     - vulkan-radeon # video driver
-  when: ansible_architecture == "x86_64"
+  when: ansible_facts['architecture'] == "x86_64"
   tags: packages
   become: true
 
@@ -231,7 +231,7 @@
     - lib32-vulkan-radeon # video driver
     - steam # games
     - wine # windows
-  when: ansible_architecture == "x86_64"
+  when: ansible_facts['architecture'] == "x86_64"
   tags: packages
   become: true
 
