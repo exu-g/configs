@@ -253,6 +253,7 @@
     owner: plasmalogin
     group: plasmalogin
     remote_src: true
+  when: wallpaper.stat.exists
   become: true
   tags: config
 

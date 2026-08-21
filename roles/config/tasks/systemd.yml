@@ -27,6 +27,18 @@
   become: true
   tags: services
 
+# FIXME:plasmalogin broken on this system
+- name: Systemd | Enable system services
+  ansible.builtin.systemd_service:
+    name: "{{ item }}"
+    state: "started"
+    enabled: true
+  loop:
+    - "plasmalogin.service"
+  become: true
+  when: ansible_facts['hostname'] is not "NB-1PC4Q5J9"
+  tags: services
+
 - name: Systemd | Enable user services
   ansible.builtin.systemd_service:
     name: "{{ item }}"
