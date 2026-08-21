@@ -10,6 +10,13 @@ Switch to Last-Used Keyboard Layout=none,Meta+Alt+L,Auf zuletzt verwendete Tasta
 Switch to Next Keyboard Layout=none,Meta+Alt+K,Auf nächste Tastaturbelegung umschalten
 _k_friendly_name=Umschaltung der Tastaturbelegung
 
+[feishin]
+252EF1B370DB364B0ED7E5B63AFD878D-MediaStop=none,none,feishin shortcut: MediaStop
+70E94EDCD7E61F3502E97060137FDD4B-MediaPlayPause=none,none,feishin shortcut: MediaPlayPause
+879FB405C20B6B693B0B692D44480EA7-MediaNextTrack=none,none,feishin shortcut: MediaNextTrack
+8D26EAC62199C0326DF9976CB187308E-MediaPrevTrack=none,none,feishin shortcut: MediaPrevTrack
+_k_friendly_name=Feishin
+
 [kaccess]
 Toggle Screen Reader On and Off=none,Meta+Alt+S,Screenreader ein-/ausschalten
 _k_friendly_name=Zugangshilfen
