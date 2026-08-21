@@ -36,7 +36,7 @@
   loop:
     - "plasmalogin.service"
   become: true
-  when: ansible_facts['hostname'] is not "NB-1PC4Q5J9"
+  when: ansible_facts['hostname'] != "NB-1PC4Q5J9"
   tags: services
 
 - name: Systemd | Enable user services
