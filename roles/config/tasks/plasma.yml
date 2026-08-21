@@ -161,9 +161,6 @@
   become: true
   tags: config
 
-- debug:
-    var: config_plasma_process
-
 ## Set theme, colorscheme, cursor
 - name: Plasma | Set cursor theme
   ansible.builtin.command: "plasma-apply-cursortheme Breeze_Light"
