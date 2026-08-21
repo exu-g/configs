@@ -1,4 +1,10 @@
 ---
+- name: Plasma | Check if plasma shell is running
+  community.general.pids:
+    name: plasmashell
+  register: config_plasma_process
+  tags: config
+
 - name: Plasma | Create temporary download directory
   ansible.builtin.tempfile:
     state: directory
@@ -155,17 +161,23 @@
   become: true
   tags: config
 
+- debug:
+    var: config_plasma_process
+
 ## Set theme, colorscheme, cursor
 - name: Plasma | Set cursor theme
   ansible.builtin.command: "plasma-apply-cursortheme Breeze_Light"
+  when: config_plasma_process['pids'] | length > 0
   tags: config
 
 - name: Plasma | Set colorscheme
   ansible.builtin.command: "plasma-apply-colorscheme Sweet"
+  when: config_plasma_process['pids'] | length > 0
   tags: config
 
 - name: Plasma | Set desktop theme
   ansible.builtin.command: "plasma-apply-desktoptheme Sweet"
+  when: config_plasma_process['pids'] | length > 0
   tags: config
 
 ## Plasma wallpaper
@@ -190,6 +202,7 @@
     - name: Plasma | Set desktop wallpaper
       ansible.builtin.command: 'plasma-apply-wallpaperimage "/etc/wallpaper.jpg"'
       changed_when: true
+      when: config_plasma_process['pids'] | length > 0
 
     # - name: Plasma | Set desktop wallpaper
     #   ansible.builtin.shell: |
