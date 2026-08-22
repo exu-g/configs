@@ -281,6 +281,7 @@
   ansible.builtin.copy:
     src: "{{ background_image }}"
     dest: "/var/lib/plasmalogin/wallpapers/wallpaper.jpg"
+    mode: "0644"
     owner: plasmalogin
     group: plasmalogin
     remote_src: true
