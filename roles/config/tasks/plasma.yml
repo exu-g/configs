@@ -232,6 +232,8 @@
     group: plasmalogin
   loop:
     - ".config"
+    - ".config/fontconfig"
+    - ".config/kdedefaults"
     - "wallpapers"
   become: true
   tags: config
@@ -246,12 +248,31 @@
   ansible.builtin.copy:
     src: "{{ lookup('ansible.builtin.env', 'HOME') }}/{{ item }}"
     dest: "/var/lib/plasmalogin/.config/"
+    mode: "0644"
     owner: plasmalogin
     group: plasmalogin
     remote_src: true
   loop:
-    - ".config/kwinoutputconfig.json"
+    - ".config/Trolltech.conf"
+    - ".config/fontconfig/fonts.conf"
+    - ".config/gtkrc"
+    - ".config/gtkrc-2.0"
     - ".config/kcminputrc"
+    - ".config/kdedefaults/kcminputrc"
+    - ".config/kdedefaults/kdeglobals"
+    - ".config/kdedefaults/ksplashrc"
+    - ".config/kdedefaults/kwinrc"
+    - ".config/kdedefaults/package"
+    - ".config/kdedefaults/plasmarc"
+    - ".config/kdeglobals"
+    - ".config/kglobalshortcutsrc"
+    - ".config/kwinoutputconfig.json"
+    - ".config/kwinrc"
+    - ".config/kwinrulesrc"
+    - ".config/kxkbrc"
+    - ".config/kxkbrc"
+    - ".config/plasma-localerc"
+    - ".config/plasmarc"
   when: kde_files.stat.exists
   become: true
   tags: config
