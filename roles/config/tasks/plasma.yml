@@ -223,6 +223,19 @@
       changed_when: true
 
 # Plasma login
+- name: Plasma | Create plasmalogin directory structure
+  ansible.builtin.file:
+    path: "/var/lib/plasmalogin/{{ item }}"
+    state: "directory"
+    mode: "0755"
+    owner: plasmalogin
+    group: plasmalogin
+  loop:
+    - ".config"
+    - "wallpapers"
+  become: true
+  tags: config
+
 - name: Check if KDE files exist
   ansible.builtin.stat:
     path: "{{ lookup('ansible.builtin.env', 'HOME') }}/.config/kwinoutputconfig.json"
