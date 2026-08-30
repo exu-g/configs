@@ -170,12 +170,14 @@
     - whois # mkpasswd
     - wireguard-tools # vpn
     - wireplumber # audio
+    - wl-clipboard # neovim <-> system clipboard sharing
     - woodpecker-cli # woodpecker local execution
     - xdg-desktop-portal-gtk # flatpak theming
     - xdg-user-dirs # standards
     - xdg-utils # standards
     - xfsprogs # xfs
     - yaml-language-server # code
+    - yggdrasil # decentral mesh vpn
     - yt-dlp
   tags: packages
   become: true
