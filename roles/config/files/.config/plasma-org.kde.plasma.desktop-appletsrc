@@ -8,7 +8,7 @@ RightButton;NoModifier=org.kde.contextmenu
 activityId=
 formfactor=2
 immutability=1
-lastScreen=1
+lastScreen=0
 location=4
 plugin=org.kde.panel
 wallpaperplugin=org.kde.image
@@ -148,7 +148,7 @@ AppletOrder=144;107
 activityId=
 formfactor=2
 immutability=1
-lastScreen=1
+lastScreen=0
 location=3
 plugin=org.kde.panel
 wallpaperplugin=org.kde.image
@@ -173,7 +173,7 @@ AppletOrder=130
 activityId=
 formfactor=3
 immutability=1
-lastScreen=1
+lastScreen=0
 location=6
 plugin=org.kde.panel
 wallpaperplugin=org.kde.image
@@ -257,10 +257,10 @@ knownItems=org.kde.kdeconnect,org.kde.plasma.vault,org.kde.plasma.kclock_1x2,org
 [Containments][167][General]
 AppletOrder=168;169
 
-[Containments][187]
-ItemGeometries-2048x1152=
+[Containments][196]
+ItemGeometries-1920x1200=
 ItemGeometriesHorizontal=
-activityId=64664544-a062-48cf-a713-e4045da575e9
+activityId=ba34d9c8-6b9b-4be5-ab60-495bdc022b29
 formfactor=0
 immutability=1
 lastScreen=0
@@ -268,24 +268,13 @@ location=0
 plugin=org.kde.plasma.folder
 wallpaperplugin=org.kde.image
 
-[Containments][187][Wallpaper][org.kde.image][General]
-Image=file:///etc/wallpaper.jpg
-SlidePaths=/home/exu/.local/share/wallpapers/,/usr/share/wallpapers/
+[Containments][196][ConfigDialog]
+DialogHeight=630
+DialogWidth=810
 
-[Containments][195]
-ItemGeometries-2048x1152=
-ItemGeometriesHorizontal=
-activityId=64664544-a062-48cf-a713-e4045da575e9
-formfactor=0
-immutability=1
-lastScreen=1
-location=0
-plugin=org.kde.plasma.folder
-wallpaperplugin=org.kde.image
-
-[Containments][195][Wallpaper][org.kde.image][General]
+[Containments][196][Wallpaper][org.kde.image][General]
 Image=file:///etc/wallpaper.jpg
-SlidePaths=/home/exu/.local/share/wallpapers/,/usr/share/wallpapers/
+SlidePaths=/usr/share/wallpapers/
 
 [Containments][3]
 activityId=
