@@ -65,7 +65,6 @@
     # - fcitx5-im # virtual keyboard
     - fd
     - ffmpeg # multimedia
-    - firefox # browser
     - firewalld # firewall
     - fish # shell
     - flatpak # packages
@@ -260,6 +259,7 @@
     - org.freedesktop.Piper # mouse
     - org.jellyfin.JellyfinDesktop # media
     - org.libreoffice.LibreOffice # office suite
+    - org.mozilla.firefox # browser
     - org.mozilla.thunderbird # email
   tags: packages
   become: true
