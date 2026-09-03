@@ -260,7 +260,7 @@
     - org.freedesktop.Piper # mouse
     - org.jellyfin.JellyfinDesktop # media
     - org.libreoffice.LibreOffice # office suite
-    - org.mozilla.Thunderbird # email
+    - org.mozilla.thunderbird # email
   tags: packages
   become: true
 
