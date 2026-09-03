@@ -2,6 +2,7 @@
 _k_friendly_name=Aktivitätenverwaltung
 switch-to-activity-2efc56f1-09fa-4490-9706-4dcde3912089=none,none,Zu Aktivität „Standard“ wechseln
 switch-to-activity-64664544-a062-48cf-a713-e4045da575e9=none,none,Zu Aktivität „Standard“ wechseln
+switch-to-activity-ba34d9c8-6b9b-4be5-ab60-495bdc022b29=none,none,Zu Aktivität „Standard“ wechseln
 
 [KDE Keyboard Layout Switcher]
 Switch keyboard layout to Deutsch (Schweiz)=none,none,Tastaturbelegung zu Deutsch (Schweiz) umschalten
@@ -20,14 +21,6 @@ _k_friendly_name=Feishin
 [kaccess]
 Toggle Screen Reader On and Off=none,Meta+Alt+S,Screenreader ein-/ausschalten
 _k_friendly_name=Zugangshilfen
-
-[kalarm]
-_k_friendly_name=KAlarm
-newAudio=none,none,Neue Audio-Erinnerung
-newCommand=none,none,Neue Befehls-Erinnerung
-newDisplay=none,none,Neue Anzeige-Erinnerung
-newEmail=none,none,Neue E-Mail-Erinnerung
-stopAudio=none,none,Wiedergabe anhalten
 
 [kmix]
 _k_friendly_name=KMix
@@ -354,13 +347,6 @@ seekforwardmedia=Media Fast Forward,Media Fast Forward,Medienwiedergabe 5 s vor
 seekforwardmedialong=none,none,Medienwiedergabe 30 s vor
 stopmedia=Media Stop,Media Stop,Medienwiedergabe anhalten
 
-[org.chromium.Chromium]
-252EF1B370DB364B0ED7E5B63AFD878D-MediaStop=none,none,Electron shortcut MediaStop
-70E94EDCD7E61F3502E97060137FDD4B-MediaPlayPause=none,none,Electron shortcut MediaPlayPause
-879FB405C20B6B693B0B692D44480EA7-MediaNextTrack=none,none,Electron shortcut MediaNextTrack
-8D26EAC62199C0326DF9976CB187308E-MediaPrevTrack=none,none,Electron shortcut MediaPrevTrack
-_k_friendly_name=Chromium
-
 [org_kde_powerdevil]
 Decrease Keyboard Brightness=Keyboard Brightness Down,Keyboard Brightness Down,Helligkeit der Tastatur-Hintergrundbeleuchtung verringern
 Decrease Screen Brightness=Monitor Brightness Down,Monitor Brightness Down,Bildschirmhelligkeit verringern
@@ -452,7 +438,9 @@ _launch=none
 
 [services][org.kde.spectacle.desktop]
 ActiveWindowScreenShot=none
+CurrentMonitorScreenShot=none
 FullScreenScreenShot=none
+OpenWithoutScreenshot=none
 RecordRegion=none
 RecordScreen=none
 RecordWindow=none
@@ -464,6 +452,12 @@ _launch=none
 ToggleTouchpad=Touchpad Toggle\tMeta+Ctrl+Zenkaku Hankaku
 
 [services][org.mozilla.Thunderbird.desktop]
+_launch=Ctrl+Alt+B
+
+[services][org.mozilla.firefox.desktop]
+_launch=Ctrl+Alt+F
+
+[services][org.mozilla.thunderbird.desktop]
 _launch=Ctrl+Alt+B
 
 [wacomtablet]
