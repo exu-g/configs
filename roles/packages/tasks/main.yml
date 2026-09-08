@@ -83,7 +83,7 @@
     - hyphen-de # spelling
     - hyphen-en # spelling
     - inxi # host information
-    - iwd # alternative wifi backend
+    # - iwd # alternative wifi backend
     - jre-openjdk # java
     - just # command runner
     - kde-applications-meta # kde
@@ -159,18 +159,19 @@
     - ttf-roboto-mono # fonts
     - udftools # udf
     - unrar # compression
+    # - vscode-css-languageserver # emacs css LSP
+    # - vscode-json-languageserver # emacs json LSP
     - unzip # compression
     - util-linux # various utils
     - vdpauinfo # VDPAU
     - vim # editor
-    # - vscode-css-languageserver # emacs css LSP
-    # - vscode-json-languageserver # emacs json LSP
     - wget # network
     - whois # mkpasswd
     - wireguard-tools # vpn
     - wireplumber # audio
     - wl-clipboard # neovim <-> system clipboard sharing
     - woodpecker-cli # woodpecker local execution
+    - wpa_supplicant # wifi management
     - xdg-desktop-portal-gtk # flatpak theming
     - xdg-user-dirs # standards
     - xdg-utils # standards
