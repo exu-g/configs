@@ -14,26 +14,6 @@ Output=0
 [General]
 Number of Actions=1
 
-[PlasmaViews][Panel 106]
-alignment=132
-floating=1
-panelLengthMode=1
-panelOpacity=0
-panelVisibility=1
-shell=org.kde.plasma.desktop
-
-[PlasmaViews][Panel 106][Defaults]
-thickness=32
-
-[PlasmaViews][Panel 129]
-floating=1
-panelLengthMode=1
-panelVisibility=1
-shell=org.kde.plasma.desktop
-
-[PlasmaViews][Panel 129][Defaults]
-thickness=32
-
 [PlasmaViews][Panel 136]
 alignment=132
 floating=1
@@ -44,15 +24,35 @@ shell=org.kde.plasma.desktop
 [PlasmaViews][Panel 136][Defaults]
 thickness=44
 
-[PlasmaViews][Panel 167]
+[PlasmaViews][Panel 198]
+floating=1
+panelLengthMode=1
+panelVisibility=1
+shell=org.kde.plasma.desktop
+
+[PlasmaViews][Panel 198][Defaults]
+thickness=32
+
+[PlasmaViews][Panel 200]
 alignment=132
 floating=1
 panelLengthMode=1
 panelVisibility=3
 shell=org.kde.plasma.desktop
 
-[PlasmaViews][Panel 167][Defaults]
+[PlasmaViews][Panel 200][Defaults]
 thickness=44
+
+[PlasmaViews][Panel 218]
+alignment=132
+floating=1
+panelLengthMode=1
+panelOpacity=0
+panelVisibility=1
+shell=org.kde.plasma.desktop
+
+[PlasmaViews][Panel 218][Defaults]
+thickness=32
 
 [PlasmaViews][Panel 3]
 alignment=132
