@@ -21,6 +21,8 @@
     state: "directory"
     mode: "0755"
   loop:
+    - "fonts"
+    - "fonts/maplemono-nf"
     - "icons"
     - "plasma/desktoptheme"
     - "themes"
@@ -116,6 +118,26 @@
     - "{{ tempdir.path }}/icons/papirus-icon-theme-master/Papirus"
     - "{{ tempdir.path }}/icons/papirus-icon-theme-master/Papirus-Dark"
     - "{{ tempdir.path }}/icons/papirus-icon-theme-master/Papirus-Light"
+  become: true
+  tags: config
+
+# Fonts
+- name: Plasma | Get fonts
+  ansible.builtin.unarchive:
+    src: https://github.com/subframe7536/maple-font/releases/latest/download/MapleMono-NF.zip
+    dest: "{{ tempdir.path }}/fonts/maplemono-nf"
+    remote_src: true
+  tags: config
+
+# Fonts
+- name: Plasma | Copy fonts (root)
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "/usr/local/share/fonts/"
+    remote_src: true
+    mode: "0755"
+  loop:
+    - "{{ tempdir.path }}/fonts/maplemono-nf"
   become: true
   tags: config
 
