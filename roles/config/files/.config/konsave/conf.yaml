@@ -110,6 +110,12 @@ export:
       # - wallpapers
       - kwin
       - kxmlgui5
+      - user-places.xbel
+
+  state_folder:
+    location: "$HOME/.local/state/"
+    entries:
+      - dolphinstaterc
 
   # home_folder:
   #   location: "$HOME/"
