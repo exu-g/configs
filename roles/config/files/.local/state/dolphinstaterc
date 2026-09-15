@@ -1,0 +1,25 @@
+[CreateDialog]
+LastMimeType=application/x-zstd-compressed-tar
+
+[FilterBar]
+caseSensitive=false
+filterMode=1
+
+[Open-with settings]
+CompletionMode=1
+History=neovide,org.libreoffice.LibreOffice.calc,org.kde.gwenview,io.github.TransmissionRemoteGtk,emacs,mpv,org.mozilla.Thunderbird,org.kde.koko,dolph,ark
+LastChoice=neovide
+
+[SettingsDialog]
+2 screens: Height=573
+2 screens: Width=1146
+
+[State]
+0x0 screen: Height=1152
+0x0 screen: Width=2048
+2 screens: Height=1152
+2 screens: Width=2048
+2048x1152 screen: Height=1152
+2048x1152 screen: Width=2048
+RestorePositionForNextInstance=false
+State=AAAA/wAAAAD9AAAAAwAAAAAAAAD/AAAEUPwCAAAAAvsAAAAWAGYAbwBsAGQAZQByAHMARABvAGMAawAAAAAyAAAArwAAAAAA////+wAAABQAcABsAGEAYwBlAHMARABvAGMAawEAAAAwAAAEUAAAAFMA////AAAAAQAAAAAAAAAA/AIAAAAB+wAAABAAaQBuAGYAbwBEAG8AYwBrAAAAAAD/////AAAAAAD///8AAAADAAAIAAAAALT8AQAAAAH7AAAAGAB0AGUAcgBtAGkAbgBhAGwARABvAGMAawAAAAAAAAAIAAAAAAAA////AAAHAAAABFAAAAAEAAAABAAAAAgAAAAI/AAAAAEAAAACAAAAAQAAABYAbQBhAGkAbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
