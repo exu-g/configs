@@ -32,3 +32,7 @@ just packages
 ## Other
 
 - [music-normalize](./music-normalize)
+
+## Resources
+
+- [Kitty cursor](https://store.kde.org/s/Opendesktop/p/2275753)
