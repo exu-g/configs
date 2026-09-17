@@ -959,15 +959,22 @@
    </metadata>
   </info>
  </separator>
- <bookmark href="kdeconnect://8b7236c9_58cb_4a94_8957_d6c1ee0bd061/">
-  <title>moto g play - 2024</title>
+ <separator>
   <info>
-   <metadata owner="http://freedesktop.org">
-    <bookmark:icon name="kdeconnect"/>
-   </metadata>
    <metadata owner="http://www.kde.org">
-    <ID>1789491903/0</ID>
+    <UDI>/org/freedesktop/UDisks2/block_devices/dm_2d0</UDI>
+    <isSystemItem>true</isSystemItem>
+    <uuid>eb187c8d-0b8e-4c26-8aca-45805ea3d087</uuid>
    </metadata>
   </info>
- </bookmark>
+ </separator>
+ <separator>
+  <info>
+   <metadata owner="http://www.kde.org">
+    <UDI>/org/freedesktop/UDisks2/block_devices/nvme0n1p2</UDI>
+    <isSystemItem>true</isSystemItem>
+    <uuid>9bd92fab-5888-4e4e-91ee-beb09d989808</uuid>
+   </metadata>
+  </info>
+ </separator>
 </xbel>
