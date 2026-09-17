@@ -122,6 +122,8 @@
     # - phonon-qt5-vlc # multimedia FIXME:removed
     - phonon-qt6-vlc # multimedia
     - php # code
+    - fzf # neovim lazyvim requirement
+    - tree-sitter-cli # neovim syntax highlighting
     - pkgstats
     - plasma-keyboard # KDE virtual keyboard
     - plasma-login-manager # KDE login manager
