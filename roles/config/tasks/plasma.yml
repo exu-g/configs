@@ -22,7 +22,7 @@
     mode: "0755"
   loop:
     - "fonts"
-    - "fonts/maplemono-nf"
+    - "fonts/maplemononl-nf"
     - "icons"
     - "plasma/desktoptheme"
     - "themes"
@@ -124,8 +124,8 @@
 # Fonts
 - name: Plasma | Get fonts
   ansible.builtin.unarchive:
-    src: https://github.com/subframe7536/maple-font/releases/latest/download/MapleMono-NF.zip
-    dest: "{{ tempdir.path }}/fonts/maplemono-nf"
+    src: https://github.com/subframe7536/maple-font/releases/latest/download/MapleMonoNL-NF.zip
+    dest: "{{ tempdir.path }}/fonts/maplemononl-nf"
     remote_src: true
   tags: config
 
@@ -137,7 +137,7 @@
     remote_src: true
     mode: "0755"
   loop:
-    - "{{ tempdir.path }}/fonts/maplemono-nf"
+    - "{{ tempdir.path }}/fonts/maplemononl-nf"
   become: true
   tags: config
 
