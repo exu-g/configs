@@ -18,6 +18,8 @@ return {
       scroll = { enabled = false },
       -- Disable zen
       zen = { enabled = false },
+      -- Disable lazygit (not sure if this works)
+      lazygit = { enabled = false },
     },
   },
   {
