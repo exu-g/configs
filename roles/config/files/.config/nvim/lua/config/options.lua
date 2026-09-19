@@ -3,7 +3,7 @@
 -- Add any additional options here
 
 -- Set GUI font, see https://neovim.io/doc/user/options/#'guifont'
-vim.opt.guifont = "Maple Mono NL NF:h12"
+vim.opt.guifont = "Maple Mono NL NF:h11"
 
 -- Enable virtual lines for lsp errors
 vim.diagnostic.config({ virtual_lines = true })
