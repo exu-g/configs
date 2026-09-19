@@ -1,5 +1,5 @@
 ---
-- name: x86_64 | Enable multilib repo
+- name: x86_64 | Enable multilib repo # noqa: name[casing]
   ansible.builtin.blockinfile:
     path: /etc/pacman.conf
     prepend_newline: true
@@ -178,7 +178,7 @@
 # - powershell-editor-services # AUR, emacs powershell LSP
 # - stylelint # code
 
-- name: x86_64 | Install other packages unavailable/unnecessary on ALARM
+- name: x86_64 | Install other packages unavailable/unnecessary on ALARM # noqa: name[casing]
   community.general.pacman:
     state: present
     name: "{{ item }}"
@@ -206,7 +206,7 @@
   tags: packages
   become: true
 
-- name: x86_64 | Install multilib packages
+- name: x86_64 | Install multilib packages # noqa: name[casing]
   community.general.pacman:
     name: "{{ item }}"
     state: present
