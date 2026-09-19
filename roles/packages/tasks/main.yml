@@ -35,16 +35,8 @@
     name: "{{ item }}"
     state: present
   loop:
-    # - libaacs
-    # - libbluray
-    # - libcdio
-    # - libdvdcss
-    # - libdvdnav
-    # - libdvdread
-    # - libsecret
     - aardvark-dns # containers
     - ansible # iac
-    # - ansible-lint # emacs ansible LSP requirement
     - avahi # mDNS & local autodiscover
     - base-devel # devel stuff
     - bash-language-server # bash lsp
@@ -55,14 +47,13 @@
     - clang # C/C++
     - cmake # code builder
     - composer # PHP package manager
+    - difftastic # better git diffs
     - dnsmasq # virtualization
     - dosfstools # fat
     - e2fsprogs # ext4
     - easyeffects # audio effects
-    # - emacs-wayland # text editor & IDE
     - exfatprogs # exfat
     - f2fs-tools # f2fs
-    # - fcitx5-im # virtual keyboard
     - fd
     - ffmpeg # multimedia
     - firewalld # firewall
@@ -72,6 +63,7 @@
     - fuse-overlayfs # containers
     - fwupd # firmware
     - fwupd-efi # firmware
+    - fzf # neovim lazyvim requirement
     - gdb
     - git # code
     - git-lfs # code
@@ -83,7 +75,6 @@
     - hyphen-de # spelling
     - hyphen-en # spelling
     - inxi # host information
-    # - iwd # alternative wifi backend
     - jre-openjdk # java
     - just # command runner
     - kde-applications-meta # kde
@@ -94,11 +85,8 @@
     - lldb-mi
     - lsp-plugins-lv2 # easyeffects equalizer plugin
     - lutris # games
-    # - maliit-keyboard # virtual keyboard FIXME:removed
     - man-db # docs
-    # - markdownlint # emacs linter markdown
     - mesa # video driver
-    # - mesa-vdpau # VDPAU FIXME:removed
     - mosh # remote shell
     - mtools # fat
     - mythes-de # thesaurus
@@ -119,11 +107,8 @@
     - otf-font-awesome # fonts
     - p7zip # compression
     - pacman-contrib # scripts
-    # - phonon-qt5-vlc # multimedia FIXME:removed
     - phonon-qt6-vlc # multimedia
     - php # code
-    - fzf # neovim lazyvim requirement
-    - tree-sitter-cli # neovim syntax highlighting
     - pkgstats
     - plasma-keyboard # KDE virtual keyboard
     - plasma-login-manager # KDE login manager
@@ -131,10 +116,8 @@
     - podman # containers
     - podman-compose # containers
     - power-profiles-daemon # power management
-    # - prettier # emacs formatter (yaml, others?)
     - python-debugpy # code
     - python-isort # code
-    # - python-nose # emacs python testing (nosetests)
     - python-pip # code
     - python-pipenv # code
     - python-pyflakes # code
@@ -143,7 +126,6 @@
     - ripgrep # much faster grep
     - rsync # file sync
     - ruby-sass # code
-    # - ruff # emacs python formatter
     - shfmt # code
     - smartmontools # disks
     - sof-firmware # modern laptop audio, see https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture#Firmware
@@ -156,13 +138,12 @@
     - tesseract-data-eng
     - texlive-core
     - traceroute # network
+    - tree-sitter-cli # neovim syntax highlighting
     - ttf-fira-code # fonts
     - ttf-fira-sans # fonts
     - ttf-roboto-mono # fonts
     - udftools # udf
     - unrar # compression
-    # - vscode-css-languageserver # emacs css LSP
-    # - vscode-json-languageserver # emacs json LSP
     - unzip # compression
     - util-linux # various utils
     - vdpauinfo # VDPAU
