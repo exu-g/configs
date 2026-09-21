@@ -86,6 +86,7 @@
     - lsp-plugins-lv2 # easyeffects equalizer plugin
     - lutris # games
     - man-db # docs
+    - markdownlint-cli2 # neovim markdown linting
     - mesa # video driver
     - mosh # remote shell
     - mtools # fat
