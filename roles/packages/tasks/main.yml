@@ -100,6 +100,7 @@
     - noto-fonts # fonts
     - noto-fonts-cjk # fonts
     - noto-fonts-emoji # fonts
+    - npm # editor neovim installing LSPs/formatters
     - ntfs-3g # ntfs
     - nvme-cli # nvme ssd
     - okular # pdf
