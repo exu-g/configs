@@ -67,6 +67,7 @@
     - gdb
     - git # code
     - git-lfs # code
+    - go # neovim installing formatters
     - hunspell # spelling
     - hunspell-de # spelling
     - hunspell-en_gb # spelling
