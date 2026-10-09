@@ -5,10 +5,10 @@ return {
       -- a list of all tools you want to ensure are installed upon start
       ensure_installed = {
         "ansible-lint",
-        "ast-grep ast_grep",
+        "ast-grep",
         "basedpyright",
         "bash-debug-adapter",
-        "bash-language-server bashls",
+        "bash-language-server",
         "clangd",
         "debugpy",
         "djlint",
