@@ -33,17 +33,17 @@ shell=org.kde.plasma.desktop
 [PlasmaViews][Panel 198][Defaults]
 thickness=32
 
-[PlasmaViews][Panel 200]
+[PlasmaViews][Panel 247]
 alignment=132
 floating=1
 panelLengthMode=1
 panelVisibility=3
 shell=org.kde.plasma.desktop
 
-[PlasmaViews][Panel 200][Defaults]
+[PlasmaViews][Panel 247][Defaults]
 thickness=44
 
-[PlasmaViews][Panel 218]
+[PlasmaViews][Panel 266]
 alignment=132
 floating=1
 panelLengthMode=1
@@ -51,7 +51,7 @@ panelOpacity=0
 panelVisibility=1
 shell=org.kde.plasma.desktop
 
-[PlasmaViews][Panel 218][Defaults]
+[PlasmaViews][Panel 266][Defaults]
 thickness=32
 
 [PlasmaViews][Panel 3]
