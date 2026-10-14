@@ -1,6 +1,7 @@
-return {
-  {
-    "pearofducks/ansible-vim",
-    opts = {},
-  },
-}
+return {}
+-- return {
+--   {
+--     "pearofducks/ansible-vim",
+--     opts = {},
+--   },
+-- }
