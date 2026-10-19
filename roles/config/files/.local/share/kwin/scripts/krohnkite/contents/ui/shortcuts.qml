@@ -1,31 +1,23 @@
+/*
+    SPDX-FileCopyrightText: 2018 Eon S. Jeon <esjeon@hyunmu.am>
+    SPDX-FileCopyrightText: 2024 Vjatcheslav V. Kolchkov <akl334@protonmail.ch>
+
+    SPDX-License-Identifier: MIT
+*/
+
+
 import QtQuick;
 import org.kde.kwin;
 
 Item {
-    id: dbus;
-    function getToggleDock() {
-        return toggleDock;
-    }
-    ShortcutHandler {
-        id: toggleDock;
+    id: shortcuts;
 
-        name: "KrohnkitetoggleDock";
-        text: "Krohnkite: Toggle Dock";
-        sequence: "";
-    }
-
-    function getFocusNext() {
-        return focusNext;
-    }
     ShortcutHandler {
         id: focusNext;
 
         name: "KrohnkiteFocusNext";
         text: "Krohnkite: Focus Next";
         sequence: "Meta+.";
-    }
-    function getFocusPrev() {
-        return focusPrev;
     }
     ShortcutHandler {
         id: focusPrev;
@@ -34,39 +26,12 @@ Item {
         text: "Krohnkite: Focus Previous";
         sequence: "Meta+,";
     }
-
-    function getFocusDown() {
-        return focusDown;
-    }
-    ShortcutHandler {
-        id: focusDown;
-
-        name: "KrohnkiteFocusDown";
-        text: "Krohnkite: Focus Down";
-        sequence: "Meta+J";
-    }
-    function getFocusUp() {
-        return focusUp;
-    }
-    ShortcutHandler {
-        id: focusUp;
-
-        name: "KrohnkiteFocusUp";
-        text: "Krohnkite: Focus Up";
-        sequence: "Meta+K";
-    }
-    function getFocusLeft() {
-        return focusLeft;
-    }
     ShortcutHandler {
         id: focusLeft;
 
         name: "KrohnkiteFocusLeft";
         text: "Krohnkite: Focus Left";
         sequence: "Meta+H";
-    }
-    function getFocusRight() {
-        return focusRight;
     }
     ShortcutHandler {
         id: focusRight;
@@ -75,8 +40,26 @@ Item {
         text: "Krohnkite: Focus Right";
         sequence: "Meta+L";
     }
-    function getShiftDown() {
-        return shiftDown;
+    ShortcutHandler {
+        id: toggleDock;
+
+        name: "KrohnkitetoggleDock";
+        text: "Krohnkite: Toggle Dock";
+        sequence: "";
+    }
+    ShortcutHandler {
+        id: focusDown;
+
+        name: "KrohnkiteFocusDown";
+        text: "Krohnkite: Focus Down";
+        sequence: "Meta+J";
+    }
+    ShortcutHandler {
+        id: focusUp;
+
+        name: "KrohnkiteFocusUp";
+        text: "Krohnkite: Focus Up";
+        sequence: "Meta+K";
     }
     ShortcutHandler {
         id: shiftDown;
@@ -85,18 +68,12 @@ Item {
         text: "Krohnkite: Move Down/Next";
         sequence: "Meta+Shift+J";
     }
-    function getShiftUp() {
-        return shiftUp;
-    }
     ShortcutHandler {
         id: shiftUp;
 
         name: "KrohnkiteShiftUp";
         text: "Krohnkite: Move Up/Prev";
         sequence: "Meta+Shift+K";
-    }
-    function getShiftLeft() {
-        return shiftLeft;
     }
     ShortcutHandler {
         id: shiftLeft;
@@ -105,18 +82,12 @@ Item {
         text: "Krohnkite: Move Left";
         sequence: "Meta+Shift+H";
     }
-    function getShiftRight() {
-        return shiftRight;
-    }
     ShortcutHandler {
         id: shiftRight;
 
         name: "KrohnkiteShiftRight";
         text: "Krohnkite: Move Right";
         sequence: "Meta+Shift+L";
-    }
-    function getGrowHeight() {
-        return growHeight;
     }
     ShortcutHandler {
         id: growHeight;
@@ -125,18 +96,12 @@ Item {
         text: "Krohnkite: Grow Height";
         sequence: "Meta+Ctrl+J";
     }
-    function getShrinkHeight() {
-        return shrinkHeight;
-    }
     ShortcutHandler {
         id: shrinkHeight;
 
         name: "KrohnkiteShrinkHeight";
         text: "Krohnkite: Shrink Height";
         sequence: "Meta+Ctrl+K";
-    }
-    function getShrinkWidth() {
-        return shrinkWidth;
     }
     ShortcutHandler {
         id: shrinkWidth;
@@ -145,18 +110,12 @@ Item {
         text: "Krohnkite: Shrink Width";
         sequence: "Meta+Ctrl+H";
     }
-    function getGrowWidth() {
-        return growWidth;
-    }
     ShortcutHandler {
         id: growWidth;
 
         name: "KrohnkitegrowWidth";
         text: "Krohnkite: Grow Width";
         sequence: "Meta+Ctrl+L";
-    }
-    function getIncrease() {
-        return increase;
     }
     ShortcutHandler {
         id: increase;
@@ -165,18 +124,12 @@ Item {
         text: "Krohnkite: Increase";
         sequence: "Meta+I";
     }
-    function getDecrease() {
-        return decrease;
-    }
     ShortcutHandler {
         id: decrease;
 
         name: "KrohnkiteDecrease";
         text: "Krohnkite: Decrease";
         sequence: "Meta+D";
-    }
-    function getToggleFloat() {
-        return toggleFloat;
     }
     ShortcutHandler {
         id: toggleFloat;
@@ -185,18 +138,12 @@ Item {
         text: "Krohnkite: Toggle Float";
         sequence: "Meta+F";
     }
-    function getFloatAll() {
-        return floatAll;
-    }
     ShortcutHandler {
         id: floatAll;
 
         name: "KrohnkiteFloatAll";
         text: "Krohnkite: Toggle Float All";
         sequence: "Meta+Shift+F";
-    }
-    function getNextLayout() {
-        return nextLayout;
     }
     ShortcutHandler {
         id: nextLayout;
@@ -205,18 +152,12 @@ Item {
         text: "Krohnkite: Next Layout";
         sequence: "Meta+\\";
     }
-    function getPreviousLayout() {
-        return previousLayout;
-    }
     ShortcutHandler {
         id: previousLayout;
 
         name: "KrohnkitePreviousLayout";
         text: "Krohnkite: Previous Layout";
         sequence: "Meta+|";
-    }
-    function getRotate() {
-        return rotate;
     }
     ShortcutHandler {
         id: rotate;
@@ -225,18 +166,12 @@ Item {
         text: "Krohnkite: Rotate";
         sequence: "Meta+R";
     }
-    function getRotatePart() {
-        return rotatePart;
-    }
     ShortcutHandler {
         id: rotatePart;
 
         name: "KrohnkiteRotatePart";
         text: "Krohnkite: Rotate Part";
         sequence: "Meta+Shift+R";
-    }
-    function getSetMaster() {
-        return setMaster;
     }
     ShortcutHandler {
         id: setMaster;
@@ -245,114 +180,152 @@ Item {
         text: "Krohnkite: Set master";
         sequence: "Meta+Return";
     }
-    function getTileLayout() {
-        return tileLayout;
+    ShortcutHandler {
+        id: raiseSurfaceCapacity;
+
+        name: "KrohnkiteRaiseSurfaceCapacity";
+        text: "Krohnkite: Raise Surface Capacity";
+        sequence: "";
+    }
+    ShortcutHandler {
+        id: lowerSurfaceCapacity;
+
+        name: "KrohnkiteLowerSurfaceCapacity";
+        text: "Krohnkite: Lower Surface Capacity";
+        sequence: "";
+    }
+    ShortcutHandler {
+        id: alterRegister;
+
+        name: "KrohnkiteMeta";
+        text: "Krohnkite: Alter Register";
+        sequence: "";
     }
     ShortcutHandler {
         id: tileLayout;
 
         name: "KrohnkiteTileLayout";
-        text: "Krohnkite: Tile Layout";
+        text: "Krohnkite: Select Layout - Tile";
         sequence: "Meta+T";
-    }
-    function getMonocleLayout() {
-        return monocleLayout;
     }
     ShortcutHandler {
         id: monocleLayout;
 
         name: "KrohnkiteMonocleLayout";
-        text: "Krohnkite: Monocle Layout";
+        text: "Krohnkite: Select Layout - Monocle";
         sequence: "Meta+M";
-    }
-    function getThreeColumnLayout() {
-        return treeColumnLayout;
     }
     ShortcutHandler {
         id: treeColumnLayout;
 
         name: "KrohnkiteTreeColumnLayout";
-        text: "Krohnkite: Three Column Layout";
+        text: "Krohnkite: Select Layout -  Three Column";
         sequence: "";
-    }
-    function getSpreadLayout() {
-        return spreadLayout;
     }
     ShortcutHandler {
         id: spreadLayout;
 
         name: "KrohnkiteSpreadLayout";
-        text: "Krohnkite: Spread Layout";
+        text: "Krohnkite: Select Layout - Spread";
         sequence: "";
-    }
-    function getStairLayout() {
-        return stairLayout;
     }
     ShortcutHandler {
         id: stairLayout;
 
         name: "KrohnkiteStairLayout";
-        text: "Krohnkite: Stair Layout";
+        text: "Krohnkite: Select Layout - Stair";
         sequence: "";
-    }
-    function getFloatingLayout() {
-        return floatingLayout;
     }
     ShortcutHandler {
         id: floatingLayout;
 
         name: "KrohnkiteFloatingLayout";
-        text: "Krohnkite: Floating Layout";
+        text: "Krohnkite: Select Layout - Floating";
         sequence: "";
-    }
-    function getQuarterLayout() {
-        return quarterLayout;
     }
     ShortcutHandler {
         id: quarterLayout;
 
         name: "KrohnkiteQuarterLayout";
-        text: "Krohnkite: Quarter Layout";
+        text: "Krohnkite: Select Layout - Quarter";
         sequence: "";
-    }
-    function getStackedLayout() {
-        return stackedLayout;
     }
     ShortcutHandler {
         id: stackedLayout;
 
         name: "KrohnkiteStackedLayout";
-        text: "Krohnkite: Stacked Layout";
+        text: "Krohnkite: Select Layout - Stacked";
         sequence: "";
-    }
-    function getBTreeLayout() {
-        return bTreeLayout;
     }
     ShortcutHandler {
         id: bTreeLayout;
 
         name: "KrohnkiteBTreeLayout";
-        text: "Krohnkite: BTree Layout";
+        text: "Krohnkite: Select Layout - BTree";
         sequence: "";
-    }
-    function getSpiralLayout() {
-        return spiralLayout;
     }
     ShortcutHandler {
         id: spiralLayout;
 
         name: "KrohnkiteSpiralLayout";
-        text: "Krohnkite: Spiral Layout";
+        text: "Krohnkite: Select Layout - Spiral";
         sequence: "";
-    }
-    function getColumnsLayout() {
-        return columnsLayout;
     }
     ShortcutHandler {
         id: columnsLayout;
 
         name: "KrohnkiteColumnsLayout";
-        text: "Krohnkite: Columns Layout";
+        text: "Krohnkite: Select Layout - Columns";
         sequence: "";
     }
+    ShortcutHandler {
+        id: cascadeLayout;
+
+        name: "KrohnkiteCascadeLayout";
+        text: "Krohnkite: Select Layout - Cascade";
+        sequence: "";
+    }
+
+    property var shortcutList: [
+        { name: "FocusNextSC", hdl: focusNext },
+        { name: "FocusPrevSC", hdl: focusPrev },
+        { name: "FocusLeftSC", hdl: focusLeft },
+        { name: "FocusRightSC", hdl: focusRight },
+        { name: "ToggleDockSC", hdl: toggleDock },
+        { name: "FocusDownSC", hdl: focusDown },
+        { name: "FocusUpSC", hdl: focusUp },
+        { name: "MoveDownSC", hdl: shiftDown },
+        { name: "MoveUpSC", hdl: shiftUp },
+        { name: "MoveLeftSC", hdl: shiftLeft },
+        { name: "MoveRightSC", hdl: shiftRight },
+        { name: "GrowHeightSC", hdl: growHeight },
+        { name: "ShrinkHeightSC", hdl: shrinkHeight },
+        { name: "ShrinkWidthSC", hdl: shrinkWidth },
+        { name: "GrowWidthSC", hdl: growWidth },
+        { name: "IncreaseSC", hdl: increase },
+        { name: "DecreaseSC", hdl: decrease },
+        { name: "ToggleFloatSC", hdl: toggleFloat },
+        { name: "ToggleFloatAllSC", hdl: floatAll },
+        { name: "NextLayoutSC", hdl: nextLayout },
+        { name: "PreviousLayoutSC", hdl: previousLayout },
+        { name: "RotateSC", hdl: rotate },
+        { name: "RotatePartSC", hdl: rotatePart },
+        { name: "SetMasterSC", hdl: setMaster },
+        { name: "RaiseSurfaceCapacitySC", hdl: raiseSurfaceCapacity },
+        { name: "LowerSurfaceCapacitySC", hdl: lowerSurfaceCapacity },
+        { name: "AlterRegisterSC", hdl: alterRegister },
+        { name: "SetTileLayoutSC", hdl: tileLayout },
+        { name: "SetMonocleLayoutSC", hdl: monocleLayout },
+        { name: "SetThreeColumnLayoutSC", hdl: treeColumnLayout },
+        { name: "SetSpreadLayoutSC", hdl: spreadLayout },
+        { name: "SetStairLayoutSC", hdl: stairLayout },
+        { name: "SetFloatingLayoutSC", hdl: floatingLayout },
+        { name: "SetQuarterLayoutSC", hdl: quarterLayout },
+        { name: "SetStackedLayoutSC", hdl: stackedLayout },
+        { name: "SetColumnsLayoutSC", hdl: columnsLayout },
+        { name: "SetSpiralLayoutSC", hdl: spiralLayout },
+        { name: "SetBinaryTreeLayoutSC", hdl: bTreeLayout },
+        { name: "SetCascadeLayoutSC", hdl: cascadeLayout }
+    ];
+
 }

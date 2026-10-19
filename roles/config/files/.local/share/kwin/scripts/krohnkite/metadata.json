@@ -2,7 +2,7 @@
   "KPackageStructure": "KWin/Script",
   "KPlugin": {
     "Name": "Krohnkite",
-    "Description": "A dynamic tiling script for KWin (1d7fd74)",
+    "Description": "A dynamic tiling script for KWin (f045ec0)",
     "Icon": "dialog-tile-clones",
 
     "Authors": [
@@ -12,9 +12,9 @@
       }
     ],
     "Id": "krohnkite",
-    "Version": "0.9.9.2",
+    "Version": "0.9.10.0_alpha_2",
     "License": "MIT",
-    "Website": "https://github.com/anametologin/krohnkite#readme"
+    "Website": "https://codeberg.org/anametologin/Krohnkite#readme"
   },
   "X-Plasma-API": "declarativescript",
   "X-Plasma-API-Minimum-Version": "6.0",

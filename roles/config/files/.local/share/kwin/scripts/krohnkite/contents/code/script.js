@@ -1,67 +1,275 @@
 "use strict";
-const Shortcut = {
-    FocusNext: 1,
-    FocusPrev: 2,
-    DWMLeft: 3,
-    DWMRight: 4,
-    FocusUp: 5,
-    FocusDown: 6,
-    FocusLeft: 7,
-    FocusRight: 8,
-    ShiftLeft: 9,
-    ShiftRight: 10,
-    ShiftUp: 11,
-    ShiftDown: 12,
-    SwapUp: 13,
-    SwapDown: 14,
-    SwapLeft: 15,
-    SwapRight: 16,
-    GrowWidth: 17,
-    GrowHeight: 18,
-    ShrinkWidth: 19,
-    ShrinkHeight: 20,
-    Increase: 21,
-    Decrease: 22,
-    ShiftIncrease: 22,
-    ShiftDecrease: 23,
-    ToggleFloat: 24,
-    ToggleFloatAll: 25,
-    SetMaster: 26,
-    NextLayout: 27,
-    PreviousLayout: 28,
-    SetLayout: 29,
-    Rotate: 30,
-    RotatePart: 31,
-    ToggleDock: 32,
+function getOppositeDirection(direction) {
+    switch (direction) {
+        case "right":
+            return "left";
+        case "left":
+            return "right";
+        case "up":
+            return "down";
+        case "down":
+            return "up";
+    }
+}
+const ArrangeReason = {
+    forcedArrangeScreen: "forcedArrangeScreen",
+    moveWindowToOutput: "moveWindowToOutput",
+    transferWindowToVDesktop: "transferWindowToVDesktop",
+    quickRelocationWindows: "quickRelocationWindows",
+    relocationOutputChangedCB: "relocationOutputChangedCB",
+    manageDock: "manageDock",
+    outputChangedCB: "outputChangedCB",
+    activitiesChangedCB: "activitiesChangedCB",
+    screensChangedCB: "screensChangedCB",
+    virtualScreenGeometryChangedCB: "virtualScreenGeometryChangedCB",
+    currentDesktopChangedCB: "currentDesktopChangedCB",
+    windowRemovedCB: "windowRemovedCB",
+    currentActivityChangedCB: "currentActivityChangedCB",
+    windowAdded: "windowAdded",
+    windowDesktopsChangedCB: "windowDesktopsChangedCB",
+    windowFullScreenChangedCB: "windowFullScreenChangedCB",
+    windowMinimizedChangedCB: "windowMinimizedChangedCB",
+    windowSkipPagerCB: "windowSkipPagerCB",
+    windowInteractiveMoveResizeSteppedCB: "WindowInteractiveMoveResizeSteppedCB",
+    windowMoveResizedChangedCB: "windowMoveResizedChangedCB",
+    windowBufferGeometryChangedCB: "windowBufferGeometryChangedCB",
+    windowMaximizeAboutChangeCB: "windowMaximizeAboutChangeCB",
+    shortcutCB: "shortcutCB",
+    shortcutLayoutCB: "shortcutLayoutCB",
 };
-const ShortcutsKeys = Object.keys(Shortcut);
+const ConfigVariables = {
+    tileLayoutInitialRotationAngle: "tileLayoutInitialRotationAngle",
+    monocleMaximize: "monocleMaximize",
+    monocleMinimizeRest: "monocleMinimizeRest",
+    quarterLayoutReset: "quarterLayoutReset",
+    columnsLayoutInitialRotationAngle: "columnsLayoutInitialRotationAngle",
+    columnsBalanced: "columnsBalanced",
+    columnsLayerConf: "columnsLayerConf",
+    columnsApplyConfOnNewColumns: "columnsApplyConfOnNewColumns",
+    columnsLimitColumns: "columnsLimitColumns",
+    stairReverse: "stairReverse",
+    tileLayoutOrder: "tileLayoutOrder",
+    monocleLayoutOrder: "monocleLayoutOrder",
+    threeColumnLayoutOrder: "threeColumnLayoutOrder",
+    spiralLayoutOrder: "spiralLayoutOrder",
+    quarterLayoutOrder: "quarterLayoutOrder",
+    stackedLayoutOrder: "stackedLayoutOrder",
+    columnsLayoutOrder: "columnsLayoutOrder",
+    spreadLayoutOrder: "spreadLayoutOrder",
+    floatingLayoutOrder: "floatingLayoutOrder",
+    stairLayoutOrder: "stairLayoutOrder",
+    binaryTreeLayoutOrder: "binaryTreeLayoutOrder",
+    cascadeLayoutOrder: "cascadeLayoutOrder",
+    tileLayoutCapacity: "tileLayoutCapacity",
+    monocleLayoutCapacity: "monocleLayoutCapacity",
+    threeColumnLayoutCapacity: "threeColumnLayoutCapacity",
+    spiralLayoutCapacity: "spiralLayoutCapacity",
+    quarterLayoutCapacity: "quarterLayoutCapacity",
+    stackedLayoutCapacity: "stackedLayoutCapacity",
+    columnsLayoutCapacity: "columnsLayoutCapacity",
+    spreadLayoutCapacity: "spreadLayoutCapacity",
+    floatingLayoutCapacity: "floatingLayoutCapacity",
+    stairLayoutCapacity: "stairLayoutCapacity",
+    binaryTreeLayoutCapacity: "binaryTreeLayoutCapacity",
+    cascadeLayoutCapacity: "cascadeLayoutCapacity",
+    srfExceededToScreen: "srfExceededToScreen",
+    srfToScreenOrderLeft: "srfToScreenOrderLeft",
+    srfToScreenOrderTop: "srfToScreenOrderTop",
+    srfToScreenOrderRight: "srfToScreenOrderRight",
+    srfToScreenOrderBottom: "srfToScreenOrderBottom",
+    srfExceededToVDesktop: "srfExceededToVDesktop",
+    srfToVDesktopOrderLeft: "srfToVDesktopOrderLeft",
+    srfToVDesktopOrderTop: "srfToVDesktopOrderTop",
+    srfToVDesktopOrderRight: "srfToVDesktopOrderRight",
+    srfToVDesktopOrderBottom: "srfToVDesktopOrderBottom",
+    srfIsMoveOldestWindows: "srfIsMoveOldestWindows",
+    srfDefineCfg: "srfDefineCfg",
+    srfDefaultConfig: "srfDefaultConfig",
+    screenGapTop: "screenGapTop",
+    screenGapLeft: "screenGapLeft",
+    screenGapBetween: "screenGapBetween",
+    screenGapRight: "screenGapRight",
+    screenGapBottom: "screenGapBottom",
+    gapsOverrideConfig: "gapsOverrideConfig",
+    limitTileWidth: "limitTileWidth",
+    limitTileWidthRatio: "limitTileWidthRatio",
+    shortcutConf: "metaConf",
+    altRegisterTimeout: "altRegisterTimeout",
+    altRegisterIsToggle: "altRegisterIsToggle",
+    altRegisterIsPushedTwice: "altRegisterIsPushedTwice",
+    shortcutSequenceTime: "shortcutSequenceTime",
+    adjustLayout: "adjustLayout",
+    adjustLayoutLive: "adjustLayoutLive",
+    focusNormal: "focusNormal",
+    focusMeta: "focusMeta",
+    focusMoveScreensNormal: "focusMoveScreensNormal",
+    focusMoveVDesktopsNormal: "focusMoveVDesktopsNormal",
+    focusMoveScreensMeta: "focusMoveScreensMeta",
+    focusMoveVDesktopsMeta: "focusMoveVDesktopsMeta",
+    movePointerOnFocus: "movePointerOnFocus",
+    newWindowPosition: "newWindowPosition",
+    ignoreClass: "ignoreClass",
+    ignoreTitle: "ignoreTitle",
+    ignoreRole: "ignoreRole",
+    ignoreActivity: "ignoreActivity",
+    ignoreScreen: "ignoreScreen",
+    ignoreVDesktop: "ignoreVDesktop",
+    tileNothing: "tileNothing",
+    tilingClass: "tilingClass",
+    screenDefaultLayout: "screenDefaultLayout",
+    floatDefaultSizeEnable: "floatDefaultSizeEnable",
+    floatDefaultWidth: "floatDefaultWidth",
+    floatDefaultHeight: "floatDefaultHeight",
+    floatRandomEnable: "floatRandomEnable",
+    floatRandomWidth: "floatRandomWidth",
+    floatRandomHeight: "floatRandomHeight",
+    floatSizeStepWidth: "floatSizeStepWidth",
+    floatSizeStepHeight: "floatSizeStepHeight",
+    floatAsDefault: "floatAsDefault",
+    floatUtility: "floatUtility",
+    floatConfig: "floatConfig",
+    dockOrderLeft: "dockOrderLeft",
+    dockOrderTop: "dockOrderTop",
+    dockOrderRight: "dockOrderRight",
+    dockOrderBottom: "dockOrderBottom",
+    dockHHeight: "dockHHeight",
+    dockHWide: "dockHWide",
+    dockHGap: "dockHGap",
+    dockHEdgeGap: "dockHEdgeGap",
+    dockHAlignment: "dockHAlignment",
+    dockHEdgeAlignment: "dockHEdgeAlignment",
+    dockVHeight: "dockVHeight",
+    dockVWide: "dockVWide",
+    dockVGap: "dockVGap",
+    dockVEdgeGap: "dockVEdgeGap",
+    dockVAlignment: "dockVAlignment",
+    dockVEdgeAlignment: "dockVEdgeAlignment",
+    dockSurfacesConfig: "dockSurfacesConfig",
+    dockWindowClassConfig: "dockWindowClassConfig",
+    dockFrameColor: "dockFrameColor",
+    dockBorderColor: "dockBorderColor",
+    dockTopDragZone: "dockTopDragZone",
+    dockBottomDragZone: "dockBottomDragZone",
+    dockLeftDragZone: "dockLeftDragZone",
+    dockRightDragZone: "dockRightDragZone",
+    tiledWindowsLayer: "tiledWindowsLayer",
+    floatedWindowsLayer: "floatedWindowsLayer",
+    soleWindowWidth: "soleWindowWidth",
+    soleWindowHeight: "soleWindowHeight",
+    soleWindowNoBorders: "soleWindowNoBorders",
+    soleWindowNoGaps: "soleWindowNoGaps",
+    soleWindowOutputOverride: "soleWindowOutputOverride",
+    unfitGreater: "unfitGreater",
+    unfitLess: "unfitLess",
+    notificationDuration: "notificationDuration",
+    layoutPerActivity: "layoutPerActivity",
+    layoutPerDesktop: "layoutPerDesktop",
+    noTileBorder: "noTileBorder",
+    optVKeyboardSupport: "optVKeyboardSupport",
+    keepTilingOnDrag: "keepTilingOnDrag",
+    dragPreview: "dragPreview",
+    preventMinimize: "preventMinimize",
+    preventProtrusion: "preventProtrusion",
+    floatSkipPagerWindows: "floatSkipPagerWindows",
+    logging: "logging",
+    logNewWindows: "logNewWindows",
+    logFilteredWindows: "logFilteredWindows",
+    logUnmanagedWindows: "logUnmanagedWindows",
+    logWorkspaceSignals: "logWorkspaceSignals",
+    logWorkspaceSignalsSubmodules: "logWorkspaceSignalsSubmodules",
+    logWindowSignals: "logWindowSignals",
+    logWindowSignalsSubmodules: "logWindowSignalsSubmodules",
+    logOther: "logOther",
+    logOtherSubmodules: "logOtherSubmodules",
+    logFilter: "logFilter",
+    logFilterStr: "logFilterStr",
+};
+const WindowState = {
+    Unmanaged: "Unmanaged",
+    NativeFullscreen: "NativeFullscreen",
+    NativeMaximized: "NativeMaximized",
+    Floating: "Floating",
+    Maximized: "Maximized",
+    Tiled: "Tiled",
+    TiledAfloat: "TiledAfloat",
+    Undecided: "Undecided",
+    Docked: "Docked",
+};
+const KrohnkiteAction = {
+    FocusNext: "FocusNext",
+    FocusPrev: "FocusPrev",
+    DWMLeft: "DWMLeft",
+    DWMRight: "DWMRight",
+    FocusUp: "FocusUp",
+    FocusDown: "FocusDown",
+    FocusLeft: "FocusLeft",
+    FocusRight: "FocusRight",
+    MoveLeft: "MoveLeft",
+    MoveRight: "MoveRight",
+    MoveUp: "MoveUp",
+    MoveDown: "MoveDown",
+    SwapUp: "SwapUp",
+    SwapDown: "SwapDown",
+    GrowWidth: "GrowWidth",
+    GrowHeight: "GrowHeight",
+    ShrinkWidth: "ShrinkWidth",
+    ShrinkHeight: "ShrinkHeight",
+    Increase: "Increase",
+    Decrease: "Decrease",
+    ToggleFloat: "ToggleFloat",
+    ToggleFloatAll: "ToggleFloatAll",
+    SetMaster: "SetMaster",
+    NextLayout: "NextLayout",
+    PreviousLayout: "PreviousLayout",
+    SetTileLayout: "SetTileLayout",
+    SetMonocleLayout: "SetMonocleLayout",
+    SetThreeColumnLayout: "SetThreeColumnLayout",
+    SetSpreadLayout: "SetSpreadLayout",
+    SetStairLayout: "SetStairLayout",
+    SetFloatingLayout: "SetFloatingLayout",
+    SetQuarterLayout: "SetQuarterLayout",
+    SetStackedLayout: "SetStackedLayout",
+    SetColumnsLayout: "SetColumnsLayout",
+    SetSpiralLayout: "SetSpiralLayout",
+    SetBinaryTreeLayout: "SetBinaryTreeLayout",
+    SetCascadeLayout: "SetCascadeLayout",
+    Rotate: "Rotate",
+    RotatePart: "RotatePart",
+    ToggleDock: "ToggleDock",
+    RaiseSurfaceCapacity: "RaiseSurfaceCapacity",
+    LowerSurfaceCapacity: "LowerSurfaceCapacity",
+    ResetSurfaceCapacity: "ResetSurfaceCapacity",
+    AlterRegister: "AlterRegister",
+    ToggleRegister: "ToggleRegister",
+};
 const LogModules = {
-    newWindowAdded: 1,
-    newWindowFiltered: 2,
-    newWindowUnmanaged: 3,
-    screensChanged: 4,
-    virtualScreenGeometryChanged: 5,
-    currentActivityChanged: 6,
-    currentDesktopChanged: 7,
-    windowAdded: 8,
-    windowActivated: 9,
-    windowRemoved: 10,
-    activitiesChanged: 11,
-    bufferGeometryChanged: 12,
-    desktopsChanged: 13,
-    fullScreenChanged: 14,
-    interactiveMoveResizeStepped: 15,
-    maximizedAboutToChange: 16,
-    minimizedChanged: 17,
-    moveResizedChanged: 18,
-    outputChanged: 19,
-    shortcut: 20,
-    arrangeScreen: 21,
-    printConfig: 22,
-    setTimeout: 23,
-    window: 24,
+    newWindowAdded: "newWindowAdded",
+    newWindowFiltered: "newWindowFiltered",
+    newWindowUnmanaged: "newWindowUnmanaged",
+    screensChanged: "screensChanged",
+    virtualScreenGeometryChanged: "virtualScreenGeometryChanged",
+    currentActivityChanged: "currentActivityChanged",
+    currentDesktopChanged: "currentDesktopChanged",
+    windowAdded: "windowAdded",
+    windowActivated: "windowActivated",
+    windowRemoved: "windowRemoved",
+    surfaceChanged: "surfaceChanged",
+    activitiesChanged: "activitiesChanged",
+    bufferGeometryChanged: "bufferGeometryChanged",
+    desktopsChanged: "desktopsChanged",
+    fullScreenChanged: "fullScreenChanged",
+    interactiveMoveResizeStepped: "interactiveMoveResizeStepped",
+    maximizedAboutToChange: "maximizedAboutToChange",
+    minimizedChanged: "minimizedChanged",
+    moveResizedChanged: "moveResizedChanged",
+    outputChanged: "outputChanged",
+    shortcut: "shortcut",
+    arrangeScreen: "arrangeScreen",
+    printConfig: "printConfig",
+    setTimeout: "setTimeout",
+    window: "window",
+    dbus: "dbus",
 };
-const LogModulesKeys = Object.keys(LogModules);
 const LogPartitions = {
     newWindow: {
         number: 100,
@@ -83,6 +291,7 @@ const LogPartitions = {
             LogModules.windowAdded,
             LogModules.windowActivated,
             LogModules.windowRemoved,
+            LogModules.surfaceChanged,
         ],
     },
     windowSignals: {
@@ -109,11 +318,13 @@ const LogPartitions = {
             LogModules.printConfig,
             LogModules.setTimeout,
             LogModules.window,
+            LogModules.dbus,
         ],
     },
 };
 let CONFIG;
 let LOG;
+let DBUS;
 class Dock {
     constructor(cfg, priority = 0) {
         this.renderedOutputId = "";
@@ -122,6 +333,7 @@ class Dock {
         this.position = null;
         this.cfg = Object.assign({}, cfg);
         this.autoDock = false;
+        this.caption = null;
     }
     clone() {
         let dock = new Dock(this.cfg, this.priority);
@@ -129,30 +341,15 @@ class Dock {
         dock.renderedTime = this.renderedTime;
         dock.position = this.position;
         dock.autoDock = this.autoDock;
+        dock.caption = this.caption;
         return dock;
     }
 }
-class dockSurfaceCfg {
-    constructor(outputName, activityId, vDesktopName, cfg) {
-        this.outputName = outputName;
-        this.activityId = activityId;
-        this.vDesktopName = vDesktopName;
-        this.cfg = cfg;
-    }
-    isFit(srf) {
-        return ((this.outputName === "" || this.outputName === srf.output.name) &&
-            (this.vDesktopName === "" || this.vDesktopName === srf.desktop.name) &&
-            (this.activityId === "" || this.activityId === srf.activity));
-    }
-    toString() {
-        return `dockSurface: Output Name: ${this.outputName}, Activity ID: ${this.activityId}, Virtual Desktop Name: ${this.vDesktopName} cfg: ${this.cfg}`;
-    }
-}
 const DockPosition = {
-    left: 1,
-    right: 2,
-    top: 3,
-    bottom: 4,
+    left: "left",
+    right: "right",
+    top: "top",
+    bottom: "bottom",
 };
 const HDockAlignment = {
     center: 1,
@@ -322,13 +519,17 @@ class DefaultDockCfg {
         }
         return DefaultDockCfg._dockInstance;
     }
+    static reset() {
+        DefaultDockCfg._dockInstance = undefined;
+    }
     cloneAndUpdate(cfg) {
         return Object.assign({}, DefaultDockCfg.instance, cfg);
     }
 }
 class DockEntry {
     constructor(cfg, id) {
-        this.surfaceCfg = cfg;
+        this.tilesArea = null;
+        this.dockCfg = cfg;
         this._slots = this.parseSlots();
         this._id = id;
     }
@@ -346,10 +547,15 @@ class DockEntry {
             }
         }
     }
+    clearSlots() {
+        for (const slot of this.slots) {
+            slot.window = null;
+        }
+    }
     arrange(dockedWindows, workingArea) {
         const IS_WIDE = workingArea.width > workingArea.height;
         let dockCfg;
-        let renderedTime = new Date().getTime();
+        let renderedTime = getTime();
         let renderedOutputId = this.id;
         this.arrangeSlots(dockedWindows);
         this.assignSizes(workingArea);
@@ -423,25 +629,26 @@ class DockEntry {
             leftSlotArrange();
             rightSlotArrange();
         }
-        return new Rect(leftBorder, topBorder, width, height);
+        this.tilesArea = new Rect(leftBorder, topBorder, width, height);
+        return this.tilesArea;
     }
     handleShortcut(window, shortcut) {
         const slot = this.getSlotByWindow(window);
         let desiredPosition;
-        if (!slot || !window.dock) {
+        if (!slot) {
             return false;
         }
         switch (shortcut) {
-            case Shortcut.SwapLeft:
+            case KrohnkiteAction.MoveLeft:
                 desiredPosition = DockPosition.left;
                 break;
-            case Shortcut.SwapUp:
+            case KrohnkiteAction.MoveUp:
                 desiredPosition = DockPosition.top;
                 break;
-            case Shortcut.SwapRight:
+            case KrohnkiteAction.MoveRight:
                 desiredPosition = DockPosition.right;
                 break;
-            case Shortcut.SwapDown:
+            case KrohnkiteAction.MoveDown:
                 desiredPosition = DockPosition.bottom;
                 break;
             default:
@@ -569,10 +776,6 @@ class DockEntry {
             }
             let tempDockedWindows = [];
             contenders.push(...windows.filter((w) => {
-                if (w.dock === null) {
-                    w.dock = new Dock(this.surfaceCfg.cfg);
-                    return true;
-                }
                 if (w.dock.position === slot.position) {
                     return true;
                 }
@@ -738,13 +941,7 @@ class DockEntry {
     }
     contendersSort(contenders, position, id) {
         function compare(a, b) {
-            if (a.dock === null && b.dock === null)
-                return 0;
-            else if (a.dock === null)
-                return -1;
-            else if (b.dock === null)
-                return 1;
-            else if (a.dock.position === position && b.dock.position !== position)
+            if (a.dock.position === position && b.dock.position !== position)
                 return 1;
             else if (b.dock.position === position && a.dock.position !== position)
                 return -1;
@@ -790,39 +987,55 @@ class DockEntry {
 }
 function parseDockUserSurfacesCfg() {
     let surfacesCfg = [];
-    if (CONFIG.dockSurfacesConfig.length === 0)
-        return surfacesCfg;
-    CONFIG.dockSurfacesConfig.forEach((cfg) => {
-        let surfaceCfgString = cfg.split(":").map((part) => part.trim());
-        if (surfaceCfgString.length !== 4) {
-            warning(`Invalid User surface config: ${cfg}, config must have three colons`);
-            return;
+    for (const line of CONFIG.dockSurfacesConfig) {
+        const eqIdx = line.indexOf(":");
+        if (eqIdx === -1) {
+            warning(`Invalid dock surface config: "${line}" — missing ":" (expected: srfLabel:shortname=value,...)`);
+            continue;
         }
-        let splittedUserCfg = surfaceCfgString[3]
-            .split(",")
-            .map((part) => part.trim().toLowerCase());
-        let partialDockCfg = parseSplittedUserCfg(splittedUserCfg);
+        const srfLabel = line.slice(0, eqIdx).trim();
+        if (srfLabel.length === 0) {
+            warning(`Invalid dock surface config: "${line}" — label is empty`);
+            continue;
+        }
+        const paramsStr = line.slice(eqIdx + 1).trim();
+        const rawCfg = paramsStr.length > 0
+            ? paramsStr
+                .split(",")
+                .map((p) => p.trim())
+                .filter((p) => p.length > 0)
+            : [];
+        const partialDockCfg = parseSplittedUserCfg(rawCfg);
         if (partialDockCfg instanceof Err) {
-            warning(`Invalid User surface config: ${cfg}. ${partialDockCfg}`);
-            return;
+            warning(`Invalid dock surface config: "${line}". ${partialDockCfg}`);
+            continue;
         }
         if (Object.keys(partialDockCfg).length > 0) {
-            surfacesCfg.push(new dockSurfaceCfg(surfaceCfgString[0], surfaceCfgString[1], surfaceCfgString[2], DefaultDockCfg.instance.cloneAndUpdate(partialDockCfg)));
+            surfacesCfg.push({
+                srfLabel,
+                cfg: DefaultDockCfg.instance.cloneAndUpdate(partialDockCfg),
+            });
         }
-    });
+    }
     return surfacesCfg;
 }
 function parseDockUserWindowClassesCfg() {
     let userWindowClassesCfg = {};
+    let captionUserCfg = null;
+    let withCaption = 0;
     if (CONFIG.dockWindowClassConfig.length === 0)
         return userWindowClassesCfg;
     CONFIG.dockWindowClassConfig.forEach((cfg) => {
         let windowCfgString = cfg.split(":").map((part) => part.trim());
-        if (windowCfgString.length !== 3) {
-            warning(`Invalid window class config: "${cfg}" should have two colons`);
+        if (windowCfgString.length === 4) {
+            withCaption = 1;
+            captionUserCfg = windowCfgString[withCaption];
+        }
+        else if (windowCfgString.length !== 3) {
+            warning(`Invalid window class config: "${cfg}" should have two colons or three colons if you want configure the window title`);
             return;
         }
-        let splittedUserCfg = windowCfgString[2]
+        let splittedUserCfg = windowCfgString[withCaption + 2]
             .split(",")
             .map((part) => part.trim().toLowerCase());
         let partialDockCfg;
@@ -835,7 +1048,7 @@ function parseDockUserWindowClassesCfg() {
         }
         else
             partialDockCfg = {};
-        let splittedSpecialFlags = windowCfgString[1]
+        let splittedSpecialFlags = windowCfgString[withCaption + 1]
             .split(",")
             .map((part) => part.trim().toLowerCase());
         let dock = parseSpecialFlags(splittedSpecialFlags, partialDockCfg);
@@ -843,6 +1056,7 @@ function parseDockUserWindowClassesCfg() {
             warning(`Invalid User window class config: ${cfg}. ${dock}`);
             return;
         }
+        dock.caption = captionUserCfg;
         userWindowClassesCfg[windowCfgString[0]] = dock;
     });
     return userWindowClassesCfg;
@@ -1030,53 +1244,214 @@ class DockSlot {
 class DockStore {
     constructor() {
         this.store = {};
-        this.defaultCfg = null;
-        this.surfacesCfg = [];
-        this.windowClassesCfg = {};
+        this.defaultCfg = DefaultDockCfg.instance;
+        this.surfacesCfg = parseDockUserSurfacesCfg();
+        this.windowClassesCfg = parseDockUserWindowClassesCfg();
     }
     render(srf, visibles, workingArea) {
-        if (this.defaultCfg === null) {
-            this.defaultCfg = DefaultDockCfg.instance;
-            this.surfacesCfg = parseDockUserSurfacesCfg();
-            this.windowClassesCfg = parseDockUserWindowClassesCfg();
+        const entry = this.getOrCreateEntry(srf);
+        const dockedWindows = visibles.filter((w) => w.state === WindowState.Docked);
+        if (dockedWindows.length === 0) {
+            entry.clearSlots();
+            entry.tilesArea = workingArea;
         }
-        if (!this.store[srf.id]) {
-            this.store[srf.id] = new DockEntry(this.getSurfaceCfg(srf), srf.id);
+        else {
+            entry.tilesArea = entry.arrange(dockedWindows, workingArea);
         }
-        let dockedWindows = visibles.filter((w) => {
-            if (w.state === WindowState.Docked) {
-                if (w.dock === null && w.windowClassName in this.windowClassesCfg) {
-                    w.dock = this.windowClassesCfg[w.windowClassName].clone();
-                }
-                return true;
+        return entry.tilesArea;
+    }
+    getOrCreateEntry(srf) {
+        let entry = this.store[srf.id];
+        if (!entry) {
+            entry = new DockEntry(this.getSurfaceCfg(srf), srf.id);
+            this.store[srf.id] = entry;
+        }
+        return entry;
+    }
+    attachWindow(window) {
+        const cfg = this.windowClassesCfg[window.windowClassName];
+        window.setDockTemplate(cfg !== null && cfg !== void 0 ? cfg : new Dock(this.getSurfaceCfg(window.surface)));
+    }
+    drag(dragAction) {
+        const window = dragAction.window;
+        const swapping = dragAction.swapping;
+        const result = dragAction.result;
+        const wasDocked = dragAction.initialState === WindowState.Docked;
+        const entry = this.getOrCreateEntry(dragAction.srf);
+        const tilesArea = entry.tilesArea;
+        dragAction.tilesArea = tilesArea;
+        const dockHit = this.getDockPosition(dragAction, entry);
+        const restoreSwapping = () => {
+            if (swapping.window === null)
+                return;
+            if (wasDocked)
+                window.dock.position = swapping.window.dock.position;
+            swapping.window.setTransientState(WindowState.Docked);
+            swapping.window.dock.position = swapping.position;
+            swapping.window = null;
+            swapping.position = null;
+        };
+        if (dockHit.position === null) {
+            if (!window.isDocked)
+                return;
+            restoreSwapping();
+            window.setTransientState(WindowState.Tiled);
+            result.isProcessed = true;
+            result.isArrangeNeeded = true;
+            return;
+        }
+        if (dockHit.window === null) {
+            dragAction.dockTarget = dockHit.position;
+            if (window.isDocked && window.dock.position === dockHit.position) {
+                result.isProcessed = true;
+                return;
             }
-        });
-        if (dockedWindows.length === 0)
-            return workingArea;
-        return this.store[srf.id].arrange(dockedWindows, workingArea);
+            restoreSwapping();
+            window.setTransientState(WindowState.Docked);
+            window.dock.position = dockHit.position;
+            result.isProcessed = true;
+            result.isArrangeNeeded = true;
+            return;
+        }
+        if (swapping.window === dockHit.window) {
+            restoreSwapping();
+            dragAction.dockTarget = window.dock.position;
+            result.isProcessed = true;
+            result.isArrangeNeeded = true;
+            return;
+        }
+        restoreSwapping();
+        dragAction.dockTarget = dockHit.position;
+        swapping.window = dockHit.window;
+        swapping.position = dockHit.position;
+        window.setTransientState(WindowState.Docked);
+        if (wasDocked) {
+            dockHit.window.setTransientState(WindowState.Docked);
+            dockHit.window.dock.position = window.dock.position;
+        }
+        else {
+            dockHit.window.setTransientState(WindowState.Tiled);
+        }
+        window.dock.position = dockHit.position;
+        result.isProcessed = true;
+        result.isArrangeNeeded = true;
+    }
+    getDockPosition(dragAction, entry) {
+        const { mousePointer, middlePointer, workingArea, tilesArea, window, swapping, } = dragAction;
+        let ownDockPosition = null;
+        for (let i = 0; i < entry.slots.length; i++) {
+            const dockSlot = entry.slots[i];
+            const occupied = dockSlot.window !== null &&
+                dockSlot.window.state === WindowState.Docked;
+            const ownSlot = occupied && dockSlot.window === window;
+            if (ownSlot &&
+                (window.dock.position === dragAction.initialDockPosition ||
+                    swapping.window !== null)) {
+                if (dockSlot.position === DockPosition.bottom) {
+                    if (!(tilesArea === null || tilesArea === void 0 ? void 0 : tilesArea.includesPoint(middlePointer)))
+                        ownDockPosition = dockSlot.position;
+                }
+                else {
+                    if (!(tilesArea === null || tilesArea === void 0 ? void 0 : tilesArea.includesPoint(mousePointer)))
+                        ownDockPosition = dockSlot.position;
+                }
+                continue;
+            }
+            if (!occupied || ownSlot) {
+                switch (dockSlot.position) {
+                    case DockPosition.top: {
+                        if (CONFIG.dockTopDragZone > 0 &&
+                            workingArea.isTopZone(mousePointer, CONFIG.dockTopDragZone, "pixels", true))
+                            return { position: DockPosition.top, window: null };
+                        continue;
+                    }
+                    case DockPosition.left: {
+                        if (CONFIG.dockLeftDragZone > 0 &&
+                            workingArea.isLeftZone(mousePointer, CONFIG.dockLeftDragZone, "pixels", true))
+                            return { position: DockPosition.left, window: null };
+                        continue;
+                    }
+                    case DockPosition.right: {
+                        if (CONFIG.dockRightDragZone > 0 &&
+                            workingArea.isRightZone(mousePointer, CONFIG.dockRightDragZone, "pixels", true))
+                            return { position: DockPosition.right, window: null };
+                        continue;
+                    }
+                    case DockPosition.bottom: {
+                        if (CONFIG.dockBottomDragZone > 0 &&
+                            workingArea.isBottomZone(middlePointer, CONFIG.dockBottomDragZone, "pixels", true))
+                            return { position: DockPosition.bottom, window: null };
+                        continue;
+                    }
+                    default: {
+                        warning(`${getMethodName()}: Unknown DockPosition`);
+                        continue;
+                    }
+                }
+            }
+            else if (dockSlot.window !== null) {
+                if (entry.id !== dragAction.initialSrfId)
+                    continue;
+                if (dockSlot.window.geometry.includesPoint(mousePointer) ||
+                    dockSlot.window.geometry.includesPoint(middlePointer))
+                    return { position: dockSlot.position, window: dockSlot.window };
+            }
+        }
+        return { position: ownDockPosition, window: null };
     }
     remove(window) {
         for (let key in this.store) {
             this.store[key].remove(window);
         }
     }
-    handleShortcut(ctx, window, shortcut) {
-        switch (shortcut) {
-            case Shortcut.SwapLeft:
-            case Shortcut.SwapUp:
-            case Shortcut.SwapRight:
-            case Shortcut.SwapDown:
+    handleShortcut(ctx, window, action) {
+        let result = false;
+        switch (action) {
+            case KrohnkiteAction.GrowWidth:
+            case KrohnkiteAction.ShrinkWidth: {
+                const increment = action === KrohnkiteAction.GrowWidth ? 1 : -1;
+                if (window.dock.position === DockPosition.left ||
+                    window.dock.position === DockPosition.right) {
+                    window.dock.cfg.vWide += increment;
+                }
+                else {
+                    window.dock.cfg.hWide += increment;
+                }
+                result = true;
+                break;
+            }
+            case KrohnkiteAction.GrowHeight:
+            case KrohnkiteAction.ShrinkHeight: {
+                const increment = action === KrohnkiteAction.GrowHeight ? 1 : -1;
+                if (window.dock.position === DockPosition.left ||
+                    window.dock.position === DockPosition.right) {
+                    window.dock.cfg.vHeight += increment;
+                }
+                else {
+                    window.dock.cfg.hHeight += increment;
+                }
+                result = true;
+                break;
+            }
+            case KrohnkiteAction.MoveLeft:
+            case KrohnkiteAction.MoveUp:
+            case KrohnkiteAction.MoveRight:
+            case KrohnkiteAction.MoveDown:
                 const srf = ctx.currentSurface;
                 if (this.store[srf.id]) {
-                    return this.store[srf.id].handleShortcut(window, shortcut);
+                    result = this.store[srf.id].handleShortcut(window, action);
                 }
-                return false;
-            default:
-                return false;
+                break;
         }
+        if (CONFIG.movePointerOnFocus && result) {
+            window.moveMouseToFocus();
+        }
+        return result;
     }
     isNewWindowHaveDocked(window) {
         if (window.windowClassName in this.windowClassesCfg &&
+            (this.windowClassesCfg[window.windowClassName].caption === null ||
+                DriverWindow.isContain([this.windowClassesCfg[window.windowClassName].caption], window.window.windowCaption)) &&
             this.windowClassesCfg[window.windowClassName].autoDock === true)
             return true;
         return false;
@@ -1084,28 +1459,236 @@ class DockStore {
     getSurfaceCfg(srf) {
         let dockCfg = null;
         for (let surfaceCfg of this.surfacesCfg) {
-            if (surfaceCfg.isFit(srf)) {
+            if (srf.isFit(surfaceCfg.srfLabel)) {
                 dockCfg = Object.assign({}, surfaceCfg.cfg);
                 break;
             }
         }
         if (dockCfg === null)
             dockCfg = this.defaultCfg.cloneAndUpdate({});
-        let [outputName, activityId, vDesktopName] = srf.getParams();
-        return new dockSurfaceCfg(outputName, activityId, vDesktopName, dockCfg);
+        return dockCfg;
     }
+}
+const winTypesCfg = [
+    2 | 4 | 1,
+    8,
+    1,
+    4,
+    2,
+    1 | 4,
+    1 | 2,
+    4 | 2,
+    16,
+];
+function isValidConfigKey(key) {
+    return key in ConfigVariables;
+}
+function toCssColor(value, fallback) {
+    if (typeof value !== "string")
+        return fallback;
+    const str = value.trim();
+    if (str.length === 0)
+        return fallback;
+    if (str.charAt(0) === "#")
+        return str;
+    if (str.indexOf(",") !== -1) {
+        const parts = str.split(",").map((part) => parseInt(part.trim(), 10));
+        if ((parts.length === 3 || parts.length === 4) &&
+            parts.every((part) => !isNaN(part))) {
+            const clamp = (n) => Math.max(0, Math.min(255, n));
+            const r = clamp(parts[0]);
+            const g = clamp(parts[1]);
+            const b = clamp(parts[2]);
+            const a = clamp(parts.length === 4 ? parts[3] : 255);
+            const hex = (n) => (n < 16 ? "0" : "") + n.toString(16);
+            return "#" + hex(a) + hex(r) + hex(g) + hex(b);
+        }
+    }
+    return fallback;
 }
 class KWinConfig {
     constructor() {
-        function separate(str, separator) {
-            if (!str || typeof str !== "string")
-                return [];
-            return str
-                .split(separator)
-                .map((part) => part.trim())
-                .filter((part) => part != "");
+        var _a;
+        this.tileLayoutInitialAngle = KWIN.readConfig("tileLayoutInitialRotationAngle", "0");
+        this.monocleMaximize = KWIN.readConfig("monocleMaximize", true);
+        this.monocleMinimizeRest = KWIN.readConfig("monocleMinimizeRest", false);
+        this.quarterLayoutReset = KWIN.readConfig("quarterLayoutReset", false);
+        this.columnsLayoutInitialAngle = KWIN.readConfig("columnsLayoutInitialRotationAngle", "0");
+        this.columnsBalanced = KWIN.readConfig("columnsBalanced", false);
+        this.columnsLayerConf = separate(KWIN.readConfig("columnsLayerConf", ""), ",");
+        this.columnsApplyConfOnNewColumns = KWIN.readConfig("columnsApplyConfOnNewColumns", false);
+        this.columnsLimitColumns = KWIN.readConfig("columnsLimitColumns", false);
+        this.stairReverse = KWIN.readConfig("stairReverse", false);
+        const layoutsList = [
+            [TileLayout, true],
+            [MonocleLayout, false],
+            [ThreeColumnLayout, true],
+            [SpiralLayout, true],
+            [QuarterLayout, false],
+            [StackedLayout, true],
+            [ColumnsLayout, true],
+            [SpreadLayout, true],
+            [FloatingLayout, true],
+            [StairLayout, true],
+            [BinaryTreeLayout, true],
+            [CascadeLayout, true],
+        ];
+        const sortedLayouts = KWinConfig.getSortedLayouts(layoutsList);
+        this.layoutOrder = KWinConfig.getLayoutOrder(sortedLayouts);
+        const layoutConfig = KWinConfig.getLayoutFactories(sortedLayouts);
+        this.layoutFactories = layoutConfig.factories;
+        this.layoutFactoryCapacities = layoutConfig.capacities;
+        sortedLayouts.forEach(({ layoutClass, isCapacity }) => {
+            this.layoutOrder.push(layoutClass.id);
+        });
+        this.srfExceededToScreen = KWIN.readConfig("srfExceededToScreen", true);
+        const directionConfigs = [
+            {
+                direction: "left",
+                screenKey: "srfToScreenOrderLeft",
+                vDesktopKey: "srfToVDesktopOrderLeft",
+                defaultOrder: 1,
+            },
+            {
+                direction: "up",
+                screenKey: "srfToScreenOrderTop",
+                vDesktopKey: "srfToVDesktopOrderTop",
+                defaultOrder: 2,
+            },
+            {
+                direction: "right",
+                screenKey: "srfToScreenOrderRight",
+                vDesktopKey: "srfToVDesktopOrderRight",
+                defaultOrder: 3,
+            },
+            {
+                direction: "down",
+                screenKey: "srfToScreenOrderBottom",
+                vDesktopKey: "srfToVDesktopOrderBottom",
+                defaultOrder: 4,
+            },
+        ];
+        this.srfToScreenOrder = directionConfigs
+            .map(({ direction, screenKey: key, defaultOrder }) => ({
+            direction,
+            order: Number(KWIN.readConfig(key, defaultOrder)),
+        }))
+            .filter((el) => el.order !== 0)
+            .sort((a, b) => a.order - b.order)
+            .map((el) => el.direction);
+        this.srfExceededToVDesktop = KWIN.readConfig("srfExceededToVDesktop", true);
+        this.srfToVDesktopOrder = directionConfigs
+            .map(({ direction, vDesktopKey: key, defaultOrder }) => ({
+            direction,
+            order: Number(KWIN.readConfig(key, defaultOrder)),
+        }))
+            .filter((el) => el.order !== 0)
+            .sort((a, b) => a.order - b.order)
+            .map((el) => el.direction);
+        this.srfIsMoveOldestWindows = KWIN.readConfig("srfIsMoveOldestWindows", false);
+        this.srfDefineCfg = separate(KWIN.readConfig("srfDefineCfg", ""), "\n");
+        this.srfDefaultConfig = separate(KWIN.readConfig("srfDefaultConfig", ""), "\n");
+        this.screenGapTop = KWIN.readConfig("screenGapTop", 0);
+        this.screenGapLeft = KWIN.readConfig("screenGapLeft", 0);
+        this.screenGapBetween = KWIN.readConfig("screenGapBetween", 0);
+        this.screenGapRight = KWIN.readConfig("screenGapRight", 0);
+        this.screenGapBottom = KWIN.readConfig("screenGapBottom", 0);
+        this.gapsOverrideConfig = separate(KWIN.readConfig("gapsOverrideConfig", ""), "\n");
+        this.limitTileWidthRatio = 0;
+        if (KWIN.readConfig("limitTileWidth", false))
+            this.limitTileWidthRatio = KWIN.readConfig("limitTileWidthRatio", 1.6);
+        this.altRegisterTimeout = validateNumberWithDefault(KWIN.readConfig("altRegisterTimeout", 3000), 3000, "altRegisterTimeout", 100, 9999);
+        this.altRegisterIsToggle = KWIN.readConfig("altRegisterIsToggle", false);
+        this.altRegisterIsPushedTwice = KWIN.readConfig("altRegisterIsPushedTwice", false);
+        this.shortcutSequenceTime = validateNumberWithDefault(KWIN.readConfig("shortcutSequenceTime", 400), 400, "altRegisterTimeout", 0, 9999);
+        this.shortcutConf = parseShortcutConf(separate(KWIN.readConfig("shortcutConf", ""), "\n"));
+        this.adjustLayout = KWIN.readConfig("adjustLayout", true);
+        this.adjustLayoutLive = KWIN.readConfig("adjustLayoutLive", true);
+        this.focusNormalCfg =
+            winTypesCfg[validateNumberWithDefault(KWIN.readConfig("focusNormal", 0), 0, "focusNormal", 0, winTypesCfg.length)];
+        this.focusMetaCfg =
+            winTypesCfg[validateNumberWithDefault(KWIN.readConfig("focusMeta", 1), 1, "focusMeta", 0, winTypesCfg.length)];
+        this.focusMoveScreensNormal = KWIN.readConfig("focusMoveScreensNormal", true);
+        this.focusMoveVDesktopsNormal = KWIN.readConfig("focusMoveVDesktopsNormal", true);
+        this.focusMoveScreensMeta = KWIN.readConfig("focusMoveScreensMeta", false);
+        this.focusMoveVDesktopsMeta = KWIN.readConfig("focusMoveVDesktopsMeta", true);
+        this.movePointerOnFocus = KWIN.readConfig("movePointerOnFocus", false);
+        this.newWindowPosition =
+            (_a = ["last", "first", "second"][validateNumberWithDefault(KWIN.readConfig("newWindowPosition", 0), 0, "newWindowPosition", 0, 2)]) !== null && _a !== void 0 ? _a : "last";
+        this.ignoreClass = separate(KWIN.readConfig("ignoreClass", "krunner,yakuake,spectacle,kded5,xwaylandvideobridge,plasmashell,ksplashqml,org.kde.plasmashell,org.kde.polkit-kde-authentication-agent-1,org.kde.kruler,kruler,kwin_wayland,ksmserver-logout-greeter"), ",");
+        this.ignoreTitle = separate(KWIN.readConfig("ignoreTitle", ""), ",");
+        this.ignoreRole = separate(KWIN.readConfig("ignoreRole", "quake"), ",");
+        this.ignoreActivity = separate(KWIN.readConfig("ignoreActivity", ""), ",");
+        this.ignoreScreen = separate(KWIN.readConfig("ignoreScreen", ""), ",");
+        this.ignoreVDesktop = separate(KWIN.readConfig("ignoreVDesktop", ""), ",");
+        this.tileNothing = KWIN.readConfig("tileNothing", false);
+        this.tilingClass = separate(KWIN.readConfig("tilingClass", ""), ",");
+        this.screenDefaultLayout = separate(KWIN.readConfig("screenDefaultLayout", ""), ",");
+        this.floatConfig = {
+            isNativeSizeOverride: KWIN.readConfig("floatDefaultSizeEnable", false),
+            floatWidth: validateNumberWithDefault(KWIN.readConfig("floatDefaultWidth", 50), 50, "floatInitWindowWidth", 1, 100),
+            floatHeight: validateNumberWithDefault(KWIN.readConfig("floatDefaultHeight", 50), 50, "floatInitWindowHeight", 1, 100),
+            randomize: KWIN.readConfig("floatRandomEnable", true),
+            randomWidth: validateNumberWithDefault(KWIN.readConfig("floatRandomWidth", 15), 15, "floatRandomWidth", 1, 100),
+            randomHeight: validateNumberWithDefault(KWIN.readConfig("floatRandomHeight", 15), 15, "floatRandomHeight", 1, 100),
+            sizeStepWidth: validateNumberWithDefault(KWIN.readConfig("floatSizeStepWidth", 6), 6, "floatSizeStepWidth", 0, 100),
+            sizeStepHeight: validateNumberWithDefault(KWIN.readConfig("floatSizeStepHeight", 4), 4, "floatSizeStepHeight", 0, 100),
+            config: parseFloatConfig(separate(KWIN.readConfig("floatConfig", ""), "\n")),
+        };
+        this.floatAsDefault = KWIN.readConfig("floatAsDefault", false);
+        this.floatUtility = KWIN.readConfig("floatUtility", true);
+        this.dockOrder = [
+            KWIN.readConfig("dockOrderLeft", 1),
+            KWIN.readConfig("dockOrderTop", 2),
+            KWIN.readConfig("dockOrderRight", 3),
+            KWIN.readConfig("dockOrderBottom", 4),
+        ];
+        this.dockHHeight = KWIN.readConfig("dockHHeight", 15);
+        this.dockHWide = KWIN.readConfig("dockHWide", 100);
+        this.dockHGap = KWIN.readConfig("dockHGap", 0);
+        this.dockHEdgeGap = KWIN.readConfig("dockHEdgeGap", 0);
+        this.dockHAlignment = KWIN.readConfig("dockHAlignment", 0);
+        this.dockHEdgeAlignment = KWIN.readConfig("dockHEdgeAlignment", 0);
+        this.dockVHeight = KWIN.readConfig("dockVHeight", 100);
+        this.dockVWide = KWIN.readConfig("dockVWide", 15);
+        this.dockVEdgeGap = KWIN.readConfig("dockVEdgeGap", 0);
+        this.dockVGap = KWIN.readConfig("dockVGap", 0);
+        this.dockVAlignment = KWIN.readConfig("dockVAlignment", 0);
+        this.dockVEdgeAlignment = KWIN.readConfig("dockVEdgeAlignment", 0);
+        this.dockSurfacesConfig = separate(KWIN.readConfig("dockSurfacesConfig", ""), "\n");
+        this.dockWindowClassConfig = separate(KWIN.readConfig("dockWindowClassConfig", ""), "\n");
+        this.dockFrameColor = toCssColor(KWIN.readConfig("dockFrameColor", "61,135,240,77"), "#4d3d87f0");
+        this.dockBorderColor = toCssColor(KWIN.readConfig("dockBorderColor", "61,135,240,230"), "#e63d87f0");
+        this.dockTopDragZone = validateNumberWithDefault(KWIN.readConfig("dockTopDragZone", 15), 15, "dockTopDragZone", 0, 999);
+        this.dockBottomDragZone = validateNumberWithDefault(KWIN.readConfig("dockBottomDragZone", 15), 15, "dockBottomDragZone", 0, 999);
+        this.dockLeftDragZone = validateNumberWithDefault(KWIN.readConfig("dockLeftDragZone", 15), 15, "dockLeftDragZone", 0, 999);
+        this.dockRightDragZone = validateNumberWithDefault(KWIN.readConfig("dockRightDragZone", 15), 15, "dockRightDragZone", 0, 999);
+        this.tiledWindowsLayer = getWindowLayer(KWIN.readConfig("tiledWindowsLayer", 0));
+        this.floatedWindowsLayer = getWindowLayer(KWIN.readConfig("floatedWindowsLayer", 1));
+        this.soleWindowDefaultProps = {
+            width: validateNumberWithDefault(KWIN.readConfig("soleWindowWidth", 100), 100, "soleWindowDefault.Width", 1, 100, true),
+            height: validateNumberWithDefault(KWIN.readConfig("soleWindowHeight", 100), 100, "soleWindowDefault.Height", 1, 100, true),
+            noBorders: Boolean(KWIN.readConfig("soleWindowNoBorders", false)),
+            noGaps: Boolean(KWIN.readConfig("soleWindowNoGaps", false)),
+        };
+        this.soleWindowOutputOverride = KWinConfig.getSoleWindowsOverriddenProps(KWIN.readConfig("soleWindowOutputOverride", ""), this.soleWindowDefaultProps);
+        this.unfitGreater = KWIN.readConfig("unfitGreater", true);
+        this.unfitLess = KWIN.readConfig("unfitLess", true);
+        this.notificationDuration = KWIN.readConfig("notificationDuration", 1000);
+        this.layoutPerActivity = KWIN.readConfig("layoutPerActivity", true);
+        this.layoutPerDesktop = KWIN.readConfig("layoutPerDesktop", true);
+        this.noTileBorder = KWIN.readConfig("noTileBorder", false);
+        this.optVKeyboardSupport = KWIN.readConfig("optVKeyboardSupport", false);
+        this.keepTilingOnDrag = KWIN.readConfig("keepTilingOnDrag", true);
+        this.dragPreview = KWIN.readConfig("dragPreview", true);
+        this.preventMinimize = KWIN.readConfig("preventMinimize", false);
+        if (this.preventMinimize && this.monocleMinimizeRest) {
+            this.preventMinimize = false;
         }
-        if (KWIN.readConfig("logging", false)) {
+        this.preventProtrusion = KWIN.readConfig("preventProtrusion", true);
+        this.floatSkipPager = KWIN.readConfig("floatSkipPagerWindows", false);
+        const loggingEnabled = KWIN.readConfig("logging", false);
+        if (loggingEnabled) {
             let logParts = [];
             let newWindowSubmodules = [];
             if (KWIN.readConfig("logNewWindows", false))
@@ -1134,136 +1717,294 @@ class KWinConfig {
             const logFilters = KWIN.readConfig("logFilter", false)
                 ? separate(KWIN.readConfig("logFilterStr", ""), ",")
                 : [];
-            LOG = new Logging(logParts, logFilters);
+            this.loggingConfig = {
+                enabled: true,
+                parts: logParts,
+                filters: logFilters,
+            };
         }
-        else
-            LOG = undefined;
-        let sortedLayouts = [];
-        this.layoutFactories = {};
-        [
-            ["tileLayoutOrder", 1, TileLayout],
-            ["monocleLayoutOrder", 2, MonocleLayout],
-            ["threeColumnLayoutOrder", 3, ThreeColumnLayout],
-            ["spiralLayoutOrder", 4, SpiralLayout],
-            ["quarterLayoutOrder", 5, QuarterLayout],
-            ["stackedLayoutOrder", 6, StackedLayout],
-            ["columnsLayoutOrder", 7, ColumnsLayout],
-            ["spreadLayoutOrder", 8, SpreadLayout],
-            ["floatingLayoutOrder", 9, FloatingLayout],
-            ["stairLayoutOrder", 10, StairLayout],
-            ["binaryTreeLayoutOrder", 11, BTreeLayout],
-            ["cascadeLayoutOrder", 12, CascadeLayout],
-        ].forEach(([configKey, defaultValue, layoutClass]) => {
-            let order = validateNumber(KWIN.readConfig(configKey, defaultValue), 0, 12);
-            if (order instanceof Err) {
-                order = defaultValue;
-                warning(`kwinconfig: layout order for ${layoutClass.id} is invalid, using default value ${order}`);
-            }
-            if (order === 0)
+        else {
+            this.loggingConfig = { enabled: false, parts: [], filters: [] };
+        }
+    }
+    static getSoleWindowsOverriddenProps(props, defaultProps) {
+        let outputProps = {};
+        if (props.trim() === "") {
+            return outputProps;
+        }
+        const warn_mess = "The sole window properties cannot be overridden.";
+        separate(props, ",").forEach((userOutputStr) => {
+            const outputRawProps = separate(userOutputStr, ":");
+            if (outputRawProps.length < 2 || outputRawProps.length > 5) {
+                warning(`${warn_mess} Number of parts separated by colon:${outputRawProps.length} in ${outputRawProps} but have to be 2-5`);
                 return;
-            sortedLayouts.push({ order: order, layoutClass: layoutClass });
+            }
+            let outputParams = Object.assign({}, defaultProps);
+            let validatedResult;
+            for (let i = 1; i < outputRawProps.length; i++) {
+                if (i < 3) {
+                    validatedResult = validateNumber(outputRawProps[i], 1, 100, true);
+                }
+                else {
+                    validatedResult = validateNumber(outputRawProps[i], 0, 1);
+                }
+                if (validatedResult instanceof Err) {
+                    warning(`${warn_mess} in ${outputRawProps}. ${validatedResult}`);
+                    return;
+                }
+                switch (i) {
+                    case 1:
+                        outputParams.width = validatedResult;
+                        break;
+                    case 2: {
+                        outputParams.height = validatedResult;
+                        break;
+                    }
+                    case 3:
+                        outputParams.noBorders = Boolean(validatedResult);
+                        break;
+                    case 4:
+                        outputParams.noGaps = Boolean(validatedResult);
+                        break;
+                }
+            }
+            outputProps[outputRawProps[0].trim()] = outputParams;
         });
+        return outputProps;
+    }
+    static getSortedLayouts(layoutsList) {
+        let sortedLayouts = [];
+        for (const [idx, [layoutClass, isCapacity]] of layoutsList.entries()) {
+            const orderConfigKey = `${unCapitalize(layoutClass.id)}Order`;
+            if (!isValidConfigKey(orderConfigKey)) {
+                warning(`kwinconfig: unrecognized config key "${orderConfigKey}" for layout ${layoutClass.id}, skipping layout order`);
+                continue;
+            }
+            let validatedOrder = validateNumber(KWIN.readConfig(orderConfigKey, idx + 1), 0, 12);
+            if (validatedOrder instanceof Err) {
+                validatedOrder = idx + 1;
+                warning(`kwinconfig: layout order for ${layoutClass.id} is invalid, using default value ${validatedOrder}`);
+            }
+            if (validatedOrder === 0)
+                continue;
+            sortedLayouts.push({
+                order: validatedOrder,
+                layoutClass: layoutClass,
+                isCapacity: isCapacity,
+            });
+        }
         sortedLayouts.sort((a, b) => a.order - b.order);
         if (sortedLayouts.length === 0) {
-            sortedLayouts.push({ order: 1, layoutClass: TileLayout });
+            sortedLayouts.push({
+                order: 1,
+                layoutClass: TileLayout,
+                isCapacity: false,
+            });
         }
-        this.layoutOrder = [];
+        return sortedLayouts;
+    }
+    static getLayoutOrder(sortedLayouts) {
+        let layoutOrder = [];
         sortedLayouts.forEach(({ layoutClass }) => {
-            this.layoutOrder.push(layoutClass.id);
-            this.layoutFactories[layoutClass.id] = () => new layoutClass();
+            layoutOrder.push(layoutClass.id);
         });
-        this.dockOrder = [
-            KWIN.readConfig("dockOrderLeft", 1),
-            KWIN.readConfig("dockOrderTop", 2),
-            KWIN.readConfig("dockOrderRight", 3),
-            KWIN.readConfig("dockOrderBottom", 4),
-        ];
-        this.dockHHeight = KWIN.readConfig("dockHHeight", 15);
-        this.dockHWide = KWIN.readConfig("dockHWide", 100);
-        this.dockHGap = KWIN.readConfig("dockHGap", 0);
-        this.dockHEdgeGap = KWIN.readConfig("dockHEdgeGap", 0);
-        this.dockHAlignment = KWIN.readConfig("dockHAlignment", 0);
-        this.dockHEdgeAlignment = KWIN.readConfig("dockHEdgeAlignment", 0);
-        this.dockVHeight = KWIN.readConfig("dockVHeight", 100);
-        this.dockVWide = KWIN.readConfig("dockVWide", 15);
-        this.dockVEdgeGap = KWIN.readConfig("dockVEdgeGap", 0);
-        this.dockVGap = KWIN.readConfig("dockVGap", 0);
-        this.dockVAlignment = KWIN.readConfig("dockVAlignment", 0);
-        this.dockVEdgeAlignment = KWIN.readConfig("dockVEdgeAlignment", 0);
-        this.dockSurfacesConfig = separate(KWIN.readConfig("dockSurfacesConfig", ""), "\n");
-        this.dockWindowClassConfig = separate(KWIN.readConfig("dockWindowClassConfig", ""), "\n");
-        this.soleWindowWidth = KWIN.readConfig("soleWindowWidth", 100);
-        this.soleWindowHeight = KWIN.readConfig("soleWindowHeight", 100);
-        this.soleWindowNoBorders = KWIN.readConfig("soleWindowNoBorders", false);
-        this.soleWindowNoGaps = KWIN.readConfig("soleWindowNoGaps", false);
-        this.tileLayoutInitialAngle = KWIN.readConfig("tileLayoutInitialRotationAngle", "0");
-        this.columnsLayoutInitialAngle = KWIN.readConfig("columnsLayoutInitialRotationAngle", "0");
-        this.columnsBalanced = KWIN.readConfig("columnsBalanced", false);
-        this.columnsLayerConf = separate(KWIN.readConfig("columnsLayerConf", ""), ",");
-        this.tiledWindowsLayer = getWindowLayer(KWIN.readConfig("tiledWindowsLayer", 0));
-        this.floatedWindowsLayer = getWindowLayer(KWIN.readConfig("floatedWindowsLayer", 1));
-        this.quarterLayoutReset = KWIN.readConfig("quarterLayoutReset", false);
-        this.monocleMaximize = KWIN.readConfig("monocleMaximize", true);
-        this.monocleMinimizeRest = KWIN.readConfig("monocleMinimizeRest", false);
-        this.stairReverse = KWIN.readConfig("stairReverse", false);
-        this.adjustLayout = KWIN.readConfig("adjustLayout", true);
-        this.adjustLayoutLive = KWIN.readConfig("adjustLayoutLive", true);
-        this.keepTilingOnDrag = KWIN.readConfig("keepTilingOnDrag", true);
-        this.noTileBorder = KWIN.readConfig("noTileBorder", false);
-        this.limitTileWidthRatio = 0;
-        if (KWIN.readConfig("limitTileWidth", false))
-            this.limitTileWidthRatio = KWIN.readConfig("limitTileWidthRatio", 1.6);
-        this.screenGapBottom = KWIN.readConfig("screenGapBottom", 0);
-        this.screenGapLeft = KWIN.readConfig("screenGapLeft", 0);
-        this.screenGapRight = KWIN.readConfig("screenGapRight", 0);
-        this.screenGapTop = KWIN.readConfig("screenGapTop", 0);
-        this.screenGapBetween = KWIN.readConfig("screenGapBetween", 0);
-        this.gapsOverrideConfig = separate(KWIN.readConfig("gapsOverrideConfig", ""), "\n");
-        const directionalKeyDwm = KWIN.readConfig("directionalKeyDwm", false);
-        const directionalKeyFocus = KWIN.readConfig("directionalKeyFocus", true);
-        this.directionalKeyMode = directionalKeyDwm ? "dwm" : "focus";
-        this.newWindowPosition = KWIN.readConfig("newWindowPosition", 0);
-        this.layoutPerActivity = KWIN.readConfig("layoutPerActivity", true);
-        this.layoutPerDesktop = KWIN.readConfig("layoutPerDesktop", true);
-        this.floatUtility = KWIN.readConfig("floatUtility", true);
-        this.preventMinimize = KWIN.readConfig("preventMinimize", false);
-        this.preventProtrusion = KWIN.readConfig("preventProtrusion", true);
-        this.notificationDuration = KWIN.readConfig("notificationDuration", 1000);
-        this.floatSkipPager = KWIN.readConfig("floatSkipPagerWindows", false);
-        this.floatingClass = separate(KWIN.readConfig("floatingClass", ""), ",");
-        this.floatingTitle = separate(KWIN.readConfig("floatingTitle", ""), ",");
-        this.ignoreActivity = separate(KWIN.readConfig("ignoreActivity", ""), ",");
-        this.ignoreClass = separate(KWIN.readConfig("ignoreClass", "krunner,yakuake,spectacle,kded5,xwaylandvideobridge,plasmashell,ksplashqml,org.kde.plasmashell,org.kde.polkit-kde-authentication-agent-1,org.kde.kruler,kruler,kwin_wayland,ksmserver-logout-greeter"), ",");
-        this.ignoreRole = separate(KWIN.readConfig("ignoreRole", "quake"), ",");
-        this.ignoreScreen = separate(KWIN.readConfig("ignoreScreen", ""), ",");
-        this.ignoreVDesktop = separate(KWIN.readConfig("ignoreVDesktop", ""), ",");
-        this.ignoreTitle = separate(KWIN.readConfig("ignoreTitle", ""), ",");
-        this.screenDefaultLayout = separate(KWIN.readConfig("screenDefaultLayout", ""), ",");
-        this.tilingClass = separate(KWIN.readConfig("tilingClass", ""), ",");
-        this.tileNothing = KWIN.readConfig("tileNothing", false);
-        if (this.preventMinimize && this.monocleMinimizeRest) {
-            this.preventMinimize = false;
+        return layoutOrder;
+    }
+    static getLayoutFactories(sortedLayouts) {
+        let layoutFactories = {};
+        let layoutFactoryCapacities = {};
+        for (const { layoutClass, isCapacity } of sortedLayouts) {
+            if (isCapacity) {
+                const capacityConfigKey = `${unCapitalize(layoutClass.id)}Capacity`;
+                if (!isValidConfigKey(capacityConfigKey)) {
+                    warning(`kwinconfig: unrecognized config key "${capacityConfigKey}" for layout ${layoutClass.id}, skipping capacity config`);
+                    layoutFactories[layoutClass.id] = () => new layoutClass(null);
+                    layoutFactoryCapacities[layoutClass.id] = null;
+                    continue;
+                }
+                let capacity = validateNumber(KWIN.readConfig(capacityConfigKey, 99), 0, 99);
+                if (capacity instanceof Err) {
+                    warning(`kwinconfig: layout capacity for ${layoutClass.id} is invalid: ${capacity}`);
+                    layoutFactories[layoutClass.id] = () => new layoutClass(null);
+                    layoutFactoryCapacities[layoutClass.id] = null;
+                }
+                else if (capacity === 0 || capacity > 98) {
+                    layoutFactories[layoutClass.id] = () => new layoutClass(null);
+                    layoutFactoryCapacities[layoutClass.id] = null;
+                }
+                else {
+                    layoutFactories[layoutClass.id] = () => new layoutClass(capacity);
+                    layoutFactoryCapacities[layoutClass.id] = capacity;
+                }
+            }
+            else {
+                layoutFactories[layoutClass.id] = () => new layoutClass();
+                layoutFactoryCapacities[layoutClass.id] = null;
+            }
         }
+        return { factories: layoutFactories, capacities: layoutFactoryCapacities };
+    }
+    signature() {
+        const serializable = {};
+        for (const key of Object.keys(this).sort()) {
+            if (key !== "layoutFactories")
+                serializable[key] = this[key];
+        }
+        return JSON.stringify(serializable);
+    }
+    equals(other) {
+        return this.signature() === other.signature();
+    }
+    createLogger() {
+        if (!this.loggingConfig.enabled)
+            return undefined;
+        const parts = this.loggingConfig.parts.map(([partition, modules]) => [partition, [...modules]]);
+        return new Logging(parts, [...this.loggingConfig.filters]);
     }
     toString() {
         return "Config(" + JSON.stringify(this, undefined, 2) + ")";
     }
 }
 var KWINCONFIG;
+class DBusManager {
+    constructor(dBusQml) {
+        this._isConnected = false;
+        this._vkCallbacks = [];
+        this._vkCallInFlight = false;
+        this._entered = false;
+        this._disposed = false;
+        this._connections = [];
+        try {
+            this._dBusMoveMouseToFocus = dBusQml.getDBusMoveMouseToFocus();
+            this._dBusMoveMouseToCenter = dBusQml.getDBusMoveMouseToCenter();
+            this._connect(this._dBusMoveMouseToCenter.finished, this.moveMouseToFocusCallback.bind(this));
+            this._connect(this._dBusMoveMouseToFocus.failed, () => {
+                LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.dbus, "callFailed", " 'MoveMouseToFocus' failed");
+            });
+            this._connect(this._dBusMoveMouseToCenter.failed, () => {
+                LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.dbus, "callFailed", " 'MoveMouseToCenter' failed");
+            });
+            this._dBusConnectAttempts = 40;
+            this._existsCall = dBusQml.getDBusExists();
+            this._connect(this._existsCall.finished, this._dBusIsOn.bind(this));
+            this._connect(this._existsCall.failed, this._checkDBusConn.bind(this));
+            this._existsCall.call();
+            this._vkVisibleCall = dBusQml.getDBusVirtualKeyboardVisible();
+            this._connect(this._vkVisibleCall.finished, this._onVKResult.bind(this));
+            this._connect(this._vkVisibleCall.failed, this._onVKFailed.bind(this));
+        }
+        catch (error) {
+            this.dispose();
+            throw error;
+        }
+    }
+    _dBusIsOn() {
+        this._isConnected = true;
+        info("DBus: connected");
+    }
+    _checkDBusConn() {
+        if (this._dBusConnectAttempts-- > 0)
+            this.setTimeout(this._existsCall.call, 500);
+        else
+            warning("DBus failed");
+    }
+    moveMouseToCenter(timeout) {
+        if (!this._isConnected)
+            return;
+        if (timeout !== undefined)
+            this.setTimeout(this._dBusMoveMouseToCenter.call, timeout);
+        else
+            this._dBusMoveMouseToCenter.call();
+    }
+    moveMouseToFocus(timeout) {
+        if (!this._isConnected)
+            return;
+        if (timeout !== undefined)
+            this.setTimeout(this._dBusMoveMouseToFocus.call, timeout);
+        else
+            this._dBusMoveMouseToFocus.call();
+    }
+    moveMouseToFocusCallback() {
+        this.moveMouseToFocus();
+    }
+    _onVKResult(result) {
+        const isVisible = !!result[0];
+        this._vkCallInFlight = false;
+        const cbs = this._vkCallbacks.splice(0);
+        for (const cb of cbs)
+            cb(isVisible);
+    }
+    _onVKFailed() {
+        this._vkCallInFlight = false;
+        const cbs = this._vkCallbacks.splice(0);
+        for (const cb of cbs)
+            cb(false);
+    }
+    checkVirtualKeyboardVisible(callback) {
+        if (this._disposed)
+            return;
+        if (!this._isConnected) {
+            callback(false);
+            return;
+        }
+        this._vkCallbacks.push(callback);
+        if (!this._vkCallInFlight) {
+            this._vkCallInFlight = true;
+            this._vkVisibleCall.call();
+        }
+    }
+    _enter(callback) {
+        if (this._entered || this._disposed)
+            return;
+        this._entered = true;
+        try {
+            callback();
+        }
+        catch (e) {
+            warning(`DBusProtectFunc: Error raised line: ${e.lineNumber}. Error: ${e}`);
+        }
+        finally {
+            this._entered = false;
+        }
+    }
+    setTimeout(func, timeout) {
+        KWinSetTimeout(() => this._enter(func), timeout);
+    }
+    dispose() {
+        if (this._disposed)
+            return;
+        this._disposed = true;
+        this._vkCallbacks = [];
+        this._vkCallInFlight = false;
+        for (const { signal, callback } of this._connections.splice(0)) {
+            try {
+                signal.disconnect(callback);
+            }
+            catch (_) {
+            }
+        }
+    }
+    _connect(signal, callback) {
+        signal.connect(callback);
+        this._connections.push({ signal, callback });
+    }
+}
 var KWIN;
 class KWinDriver {
     get backend() {
         return KWinDriver.backendName;
     }
+    get currentDesktop() {
+        return this.workspace.currentDesktop;
+    }
     get currentSurface() {
-        return new KWinSurface(this.workspace.activeWindow
-            ? this.workspace.activeWindow.output
-            : this.workspace.activeScreen, this.workspace.currentActivity, this.workspace.currentDesktop, this.workspace);
+        const output = resolveWindowOutput(this.workspace, this.workspace.activeWindow);
+        return this._surfaceStore.getSurface(output, this.workspace.currentActivity, this.workspace.currentDesktop);
     }
     set currentSurface(value) {
         const ksrf = value;
-        if (this.workspace.currentDesktop.id !== ksrf.desktop.id)
-            this.workspace.currentDesktop = ksrf.desktop;
+        if (this.workspace.currentDesktop.id !== ksrf.vDesktop.id)
+            this.workspace.currentDesktop = ksrf.vDesktop;
         if (this.workspace.currentActivity !== ksrf.activity)
             this.workspace.currentActivity = ksrf.activity;
     }
@@ -1273,41 +2014,92 @@ class KWinDriver {
     }
     set currentWindow(window) {
         if (window !== null) {
-            window.timestamp = new Date().getTime();
+            window.focusTime = getTime();
             this.workspace.activeWindow = window.window.window;
         }
     }
-    get screens() {
-        const screens = [];
-        this.workspace.screens.forEach((screen) => {
-            screens.push(new KWinSurface(screen, this.workspace.currentActivity, this.workspace.currentDesktop, this.workspace));
+    get currentSurfaces() {
+        const currentSurfaces = [];
+        this.workspace.screens.forEach((output) => {
+            currentSurfaces.push(this._surfaceStore.getSurface(output, this.workspace.currentActivity, this._outputCurrentDesktop(output)));
         });
-        return screens;
+        return currentSurfaces;
     }
     get cursorPosition() {
         const workspacePos = this.workspace.cursorPos;
-        return workspacePos !== null ? [workspacePos.x, workspacePos.y] : null;
+        return workspacePos !== null
+            ? { x: workspacePos.x, y: workspacePos.y }
+            : null;
     }
-    constructor(api) {
+    get isRegister() {
+        return this._isRegister.state;
+    }
+    constructor(api, config) {
         KWIN = api.kwin;
+        CONFIG = KWINCONFIG = config !== null && config !== void 0 ? config : new KWinConfig();
+        LOG = KWINCONFIG.createLogger();
         this.workspace = api.workspace;
-        this.shortcuts = api.shortcuts;
+        this._shortcuts = new Map(api.shortcuts.map((entry) => [entry.name, new Shortcut(entry)]));
+        this._shortcutSequences = new Map();
+        this._shortcutPressTime = 0;
+        this._shortcutFinishToken = 0;
+        this._runningShortcutSequence = null;
         this.engine = new TilingEngine();
         this.control = new TilingController(this.engine);
-        this.windowMap = new WrapperMap((client) => KWinWindow.generateID(client), (client) => new WindowClass(new KWinWindow(client, this.workspace)));
+        this.windowMap = new WrapperMap((client) => DriverWindow.generateID(client), (client) => new WindowClass(new DriverWindow(client, this.workspace, this._surfaceStore)));
         this.entered = false;
+        this._connections = [];
+        this._started = false;
+        this._disposed = false;
+        this._surfaceStore = new KWinSurfaceStore(this.workspace);
+        this._isRegister = {
+            state: false,
+            lastPushed: 0,
+            toggleMode: CONFIG.altRegisterIsToggle,
+            alterActionID: 0,
+        };
+        DBUS = new DBusManager(api.dbus);
     }
     main() {
-        CONFIG = KWINCONFIG = new KWinConfig();
+        if (this._started || this._disposed)
+            return;
+        this._started = true;
         LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.printConfig, undefined, `Config: ${CONFIG}`);
-        this.bindEvents();
-        this.bindShortcut();
+        this._bindEvents();
+        this._bindShortcut();
         const clients = this.workspace.stackingOrder;
         for (let i = 0; i < clients.length; i++) {
-            this.addWindow(clients[i]);
+            this.addWindow(clients[i], false);
         }
+        this.control.onSurfaceUpdate(this, "forcedArrangeScreen");
     }
-    addWindow(client) {
+    dispose() {
+        if (this._disposed)
+            return;
+        this._disposed = true;
+        for (const { signal, callback } of this._connections.splice(0)) {
+            try {
+                signal.disconnect(callback);
+            }
+            catch (_) {
+            }
+        }
+        for (const window of this.windowMap)
+            window.window.dispose();
+        this.engine.relocationWindows.clear();
+        this.engine.windows.list = [];
+        this.windowMap.clear();
+        this.hideDragPreview();
+        this._shortcutSequences.clear();
+        this._shortcuts.clear();
+        this._runningShortcutSequence = null;
+        DBUS.dispose();
+    }
+    addWindow(client, arrange = true) {
+        if (client.dock) {
+            this.manageDock(client, arrange);
+            return null;
+        }
         if (!client.deleted &&
             client.pid >= 0 &&
             !client.popupWindow &&
@@ -1315,11 +2107,15 @@ class KWinDriver {
             !client.hidden &&
             client.width * client.height > 10) {
             const window = this.windowMap.add(client);
-            this.control.onWindowAdded(this, window);
+            if (client.maximizeMode > 0) {
+                window.window.maximized = true;
+            }
+            if (arrange)
+                this.control.onWindowAdded(this, window, "windowAdded");
+            else
+                this.engine.manage(window);
             if (window.state !== WindowState.Unmanaged) {
-                this.bindWindowEvents(window, client);
-                if (client.maximizeMode > 0)
-                    client.setMaximize(false, false);
+                this._bindWindowEvents(window, client);
                 LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.newWindowAdded, "", debugWin(client), {
                     winClass: [`${client.resourceClass}`],
                 });
@@ -1339,250 +2135,941 @@ class KWinDriver {
         }
         return null;
     }
+    manageDock(client, arrange = true) {
+        const placementArea = () => toRect(this.workspace.clientArea(0, client.output, this.workspace.currentDesktop));
+        let prevPlacement = {
+            desktop: this.workspace.currentDesktop,
+            area: placementArea(),
+        };
+        if (arrange)
+            this.control.onSurfaceUpdate(this, "manageDock");
+        this._connect(client.frameGeometryChanged, () => {
+            if (!client || client.deleted) {
+                return;
+            }
+            const desktop = this.workspace.currentDesktop;
+            const area = placementArea();
+            if (desktop.id === prevPlacement.desktop.id &&
+                area.equals(prevPlacement.area)) {
+                return;
+            }
+            prevPlacement = { desktop, area };
+            this.control.onSurfaceUpdate(this, "manageDock");
+        });
+    }
+    focusNeighborWindow(direction, winTypes) {
+        let window = this.workspace.activeWindow;
+        if (!window)
+            return false;
+        let windows = this._getWindowsByDirection(winTypes, this.currentSurface, toRect(window.frameGeometry), direction);
+        if (windows.length === 0)
+            return false;
+        return this._setFocusOnSurface(window, this.currentSurface, direction, winTypes, windows);
+    }
+    focusOutput(window, direction, winTypes) {
+        let neighbor = this.getNeighborOutput(direction, this.workspace.activeScreen);
+        if (neighbor === null)
+            return false;
+        this._makeActiveScreen(neighbor, false);
+        let neighbor_surface = this._surfaceStore.getSurface(neighbor, this.workspace.currentActivity, this._outputCurrentDesktop(neighbor));
+        if (!this._setFocusOnSurface(window, neighbor_surface, direction, winTypes)) {
+            this.showNotification("Active screen");
+        }
+        return true;
+    }
+    focusSpecial(direction) {
+        switch (direction) {
+            case "up": {
+                let screens = this.workspace.screens;
+                if (screens.length === 1)
+                    return true;
+                let output = this.workspace.activeScreen;
+                let idx = screens.indexOf(output);
+                if (idx < 0) {
+                    warning(`kwindriver: focusNeighborWindow: screen doesn't found.`);
+                    return false;
+                }
+                idx = idx < screens.length - 1 ? idx + 1 : 0;
+                this._makeActiveScreen(screens[idx]);
+                if (CONFIG.movePointerOnFocus) {
+                    DBUS.moveMouseToCenter();
+                }
+                return false;
+            }
+            case "down": {
+                let window = this.workspace.activeWindow;
+                if (!window)
+                    return false;
+                let windows = this._getWindowsByDirection(16, this.currentSurface, toRect(window.frameGeometry), direction);
+                let idx = windows.indexOf(window);
+                if (idx < 0) {
+                    this.workspace.activeWindow = windows[0];
+                    if (CONFIG.movePointerOnFocus) {
+                        DBUS.moveMouseToFocus();
+                    }
+                    return false;
+                }
+                if (windows.length === 1)
+                    return false;
+                idx = idx < windows.length - 1 ? idx + 1 : 0;
+                this.workspace.activeWindow = windows[idx];
+                if (CONFIG.movePointerOnFocus) {
+                    DBUS.moveMouseToFocus();
+                }
+                return false;
+            }
+            case "right":
+            case "left": {
+                let desktops = this.workspace.desktops;
+                if (desktops.length === 1)
+                    return true;
+                let currentDesktop = this.workspace.currentDesktop;
+                let idx = desktops.indexOf(currentDesktop);
+                if (idx < 0) {
+                    warning(`kwindriver: focusNeighborWindow: vDesktop doesn't found.`);
+                    return false;
+                }
+                if (direction === "left") {
+                    idx = idx > 0 ? idx - 1 : desktops.length - 1;
+                }
+                else {
+                    idx = idx < desktops.length - 1 ? idx + 1 : 0;
+                }
+                this.workspace.currentDesktop = desktops[idx];
+                return true;
+            }
+        }
+    }
+    focusVDesktop(window, direction, winTypes) {
+        let neighbor = this.getNeighborVDesktop(direction);
+        if (neighbor === null)
+            return false;
+        let targetOutput = this.workspace.activeScreen;
+        this._setOutputDesktop(targetOutput, neighbor);
+        this._makeActiveScreen(targetOutput, false);
+        let neighbor_surface = this._surfaceStore.getSurface(targetOutput, this.workspace.currentActivity, neighbor);
+        let result = this._setFocusOnSurface(window, neighbor_surface, direction, winTypes);
+        if (CONFIG.movePointerOnFocus) {
+            DBUS.moveMouseToCenter();
+        }
+        return result;
+    }
+    getNeighborOutput(direction, source) {
+        let retOutput = null;
+        let intersection = 0;
+        let sourceRect = toRect(source.geometry);
+        function isOutputCandidate(targetRect, coordinate) {
+            let currentIntersection = sourceRect.intersection(targetRect, coordinate);
+            if (currentIntersection > intersection) {
+                intersection = currentIntersection;
+                return true;
+            }
+            return false;
+        }
+        for (let target of this.workspace.screens) {
+            if (target === source)
+                continue;
+            let targetRect = toRect(target.geometry);
+            switch (direction) {
+                case "left": {
+                    if (sourceRect.x === targetRect.maxX) {
+                        if (isOutputCandidate(targetRect, "y"))
+                            retOutput = target;
+                    }
+                    break;
+                }
+                case "right": {
+                    if (sourceRect.maxX === targetRect.x) {
+                        if (isOutputCandidate(targetRect, "y"))
+                            retOutput = target;
+                    }
+                    break;
+                }
+                case "up": {
+                    if (sourceRect.y === targetRect.maxY) {
+                        if (isOutputCandidate(targetRect, "x"))
+                            retOutput = target;
+                    }
+                    break;
+                }
+                case "down": {
+                    if (sourceRect.maxY === targetRect.y) {
+                        if (isOutputCandidate(targetRect, "x"))
+                            retOutput = target;
+                    }
+                    break;
+                }
+                default: {
+                    break;
+                }
+            }
+        }
+        return retOutput;
+    }
+    getNeighborVDesktop(direction, sourceVDesktop) {
+        var _a;
+        const currentVDesktop = sourceVDesktop != null ? sourceVDesktop : this.workspace.currentDesktop;
+        const vDesktops = this.workspace.desktops;
+        const netSize = this.workspace.desktopGridSize;
+        if (!currentVDesktop)
+            return null;
+        const total = vDesktops.length;
+        const width = netSize.width;
+        const height = netSize.height;
+        const idx = vDesktops.indexOf(currentVDesktop);
+        if (idx < 0)
+            return null;
+        if ((direction === "left" || direction === "right") && width === 1)
+            return null;
+        if ((direction === "up" || direction === "down") && height === 1)
+            return null;
+        if (direction === "left" || direction === "right") {
+            const col = (idx % width) + 1;
+            if (direction === "left") {
+                if (col === 1)
+                    return null;
+                return (_a = vDesktops[idx - 1]) !== null && _a !== void 0 ? _a : null;
+            }
+            else {
+                if (col === width)
+                    return null;
+                return idx + 1 < total ? vDesktops[idx + 1] : null;
+            }
+        }
+        else {
+            const row = Math.ceil((idx + 1) / width);
+            if (direction === "up") {
+                if (row === 1)
+                    return null;
+                const neighborIdx = idx - width;
+                return neighborIdx >= 0 ? vDesktops[neighborIdx] : null;
+            }
+            else {
+                if (row === height)
+                    return null;
+                const neighborIdx = idx + width;
+                return neighborIdx < total ? vDesktops[neighborIdx] : null;
+            }
+        }
+    }
+    getSurface(output, vDesktop) {
+        if (!vDesktop) {
+            vDesktop = this._outputCurrentDesktop(output);
+        }
+        return this._surfaceStore.getSurface(output, this.workspace.currentActivity, vDesktop);
+    }
     setTimeout(func, timeout) {
-        KWinSetTimeout(() => this.enter(func), timeout);
+        KWinSetTimeout(() => this._enter(func), timeout);
     }
     showNotification(text) {
         if (CONFIG.notificationDuration > 0)
-            popupDialog.show(text, CONFIG.notificationDuration);
+            popupDialog.showNotification(text, CONFIG.notificationDuration);
     }
-    bindShortcut() {
-        const callbackShortcut = (shortcut) => {
-            return () => {
-                LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.shortcut, `Shortcut pressed:`, `${ShortcutsKeys[shortcut]}`);
-                this.enter(() => this.control.onShortcut(this, shortcut));
-            };
-        };
-        this.shortcuts
-            .getToggleDock()
-            .activated.connect(callbackShortcut(Shortcut.ToggleDock));
-        this.shortcuts
-            .getFocusNext()
-            .activated.connect(callbackShortcut(Shortcut.FocusNext));
-        this.shortcuts
-            .getFocusPrev()
-            .activated.connect(callbackShortcut(Shortcut.FocusPrev));
-        this.shortcuts
-            .getFocusDown()
-            .activated.connect(callbackShortcut(Shortcut.FocusDown));
-        this.shortcuts
-            .getFocusUp()
-            .activated.connect(callbackShortcut(Shortcut.FocusUp));
-        this.shortcuts
-            .getFocusLeft()
-            .activated.connect(callbackShortcut(Shortcut.FocusLeft));
-        this.shortcuts
-            .getFocusRight()
-            .activated.connect(callbackShortcut(Shortcut.FocusRight));
-        this.shortcuts
-            .getShiftDown()
-            .activated.connect(callbackShortcut(Shortcut.ShiftDown));
-        this.shortcuts
-            .getShiftUp()
-            .activated.connect(callbackShortcut(Shortcut.ShiftUp));
-        this.shortcuts
-            .getShiftLeft()
-            .activated.connect(callbackShortcut(Shortcut.ShiftLeft));
-        this.shortcuts
-            .getShiftRight()
-            .activated.connect(callbackShortcut(Shortcut.ShiftRight));
-        this.shortcuts
-            .getGrowHeight()
-            .activated.connect(callbackShortcut(Shortcut.GrowHeight));
-        this.shortcuts
-            .getShrinkHeight()
-            .activated.connect(callbackShortcut(Shortcut.ShrinkHeight));
-        this.shortcuts
-            .getShrinkWidth()
-            .activated.connect(callbackShortcut(Shortcut.ShrinkWidth));
-        this.shortcuts
-            .getGrowWidth()
-            .activated.connect(callbackShortcut(Shortcut.GrowWidth));
-        this.shortcuts
-            .getIncrease()
-            .activated.connect(callbackShortcut(Shortcut.Increase));
-        this.shortcuts
-            .getDecrease()
-            .activated.connect(callbackShortcut(Shortcut.Decrease));
-        this.shortcuts
-            .getToggleFloat()
-            .activated.connect(callbackShortcut(Shortcut.ToggleFloat));
-        this.shortcuts
-            .getFloatAll()
-            .activated.connect(callbackShortcut(Shortcut.ToggleFloatAll));
-        this.shortcuts
-            .getNextLayout()
-            .activated.connect(callbackShortcut(Shortcut.NextLayout));
-        this.shortcuts
-            .getPreviousLayout()
-            .activated.connect(callbackShortcut(Shortcut.PreviousLayout));
-        this.shortcuts
-            .getRotate()
-            .activated.connect(callbackShortcut(Shortcut.Rotate));
-        this.shortcuts
-            .getRotatePart()
-            .activated.connect(callbackShortcut(Shortcut.RotatePart));
-        this.shortcuts
-            .getSetMaster()
-            .activated.connect(callbackShortcut(Shortcut.SetMaster));
-        const callbackShortcutLayout = (layoutClass) => {
-            return () => {
-                LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.shortcut, "shortcut layout", `${layoutClass.id}`);
-                this.enter(() => this.control.onShortcut(this, Shortcut.SetLayout, layoutClass.id));
-            };
-        };
-        this.shortcuts
-            .getTileLayout()
-            .activated.connect(callbackShortcutLayout(TileLayout));
-        this.shortcuts
-            .getMonocleLayout()
-            .activated.connect(callbackShortcutLayout(MonocleLayout));
-        this.shortcuts
-            .getThreeColumnLayout()
-            .activated.connect(callbackShortcutLayout(ThreeColumnLayout));
-        this.shortcuts
-            .getSpreadLayout()
-            .activated.connect(callbackShortcutLayout(SpreadLayout));
-        this.shortcuts
-            .getStairLayout()
-            .activated.connect(callbackShortcutLayout(StairLayout));
-        this.shortcuts
-            .getFloatingLayout()
-            .activated.connect(callbackShortcutLayout(FloatingLayout));
-        this.shortcuts
-            .getQuarterLayout()
-            .activated.connect(callbackShortcutLayout(QuarterLayout));
-        this.shortcuts
-            .getStackedLayout()
-            .activated.connect(callbackShortcutLayout(StackedLayout));
-        this.shortcuts
-            .getColumnsLayout()
-            .activated.connect(callbackShortcutLayout(ColumnsLayout));
-        this.shortcuts
-            .getSpiralLayout()
-            .activated.connect(callbackShortcutLayout(SpiralLayout));
-        this.shortcuts
-            .getBTreeLayout()
-            .activated.connect(callbackShortcutLayout(BTreeLayout));
+    showDragPreview(area, rect) {
+        if (!CONFIG.dragPreview)
+            return;
+        dragPreview.showRect(area.x, area.y, area.width, area.height, rect.x, rect.y, rect.width, rect.height, CONFIG.dockFrameColor, CONFIG.dockBorderColor);
     }
-    connect(signal, handler) {
+    hideDragPreview() {
+        dragPreview.hide();
+    }
+    shortcutSequencesArrange() { }
+    _setRegisterTimeout(timeId, timeout) {
+        this.setTimeout(() => {
+            if (timeId === this._isRegister.alterActionID &&
+                this._isRegister.state !== this._isRegister.toggleMode) {
+                const timeNow = getTime();
+                const timeSinceLastPressShortcut = timeNow - this._shortcutPressTime;
+                if (timeSinceLastPressShortcut < CONFIG.altRegisterTimeout) {
+                    this._setRegisterTimeout(timeId, CONFIG.altRegisterTimeout - timeSinceLastPressShortcut);
+                }
+                else {
+                    this._isRegister.state = this._isRegister.toggleMode;
+                    this.showNotification(`Register ${this._isRegister.state ? "on" : "off"}`);
+                }
+            }
+        }, timeout !== null && timeout !== void 0 ? timeout : CONFIG.notificationDuration + 5);
+    }
+    alterRegisterHdl(action) {
+        switch (action) {
+            case "AlterRegister": {
+                this._isRegister.state = !this._isRegister.state;
+                this._isRegister.alterActionID = getTime();
+                this.showNotification(`Register ${this._isRegister.state ? "on" : "off"}`);
+                if (this._isRegister.state !== this._isRegister.toggleMode) {
+                    this._setRegisterTimeout(this._isRegister.alterActionID);
+                }
+                break;
+            }
+            case "ToggleRegister": {
+                this._isRegister.alterActionID = 0;
+                this._isRegister.toggleMode = !this._isRegister.toggleMode;
+                this._isRegister.state = this._isRegister.toggleMode;
+                this.showNotification(`Register toggled ${this._isRegister.state ? "on" : "off"}`);
+                break;
+            }
+        }
+    }
+    relocateWindows() {
+        const relocationWindows = this.engine.relocationWindows;
+        if (relocationWindows.totalNumWinsPrepareToOutput === 0) {
+            this._transferWindowsToVDesktops();
+            return true;
+        }
+        let totalWindowsSentToOutput = 0;
+        for (const [output, windows] of relocationWindows.toOutputs.entries()) {
+            for (const window of windows) {
+                if (this._moveWindowToOutput(window, output)) {
+                    if (relocationWindows.isSending === false)
+                        relocationWindows.isSending = true;
+                    totalWindowsSentToOutput++;
+                }
+            }
+        }
+        if (totalWindowsSentToOutput === 0) {
+            relocationWindows.clear();
+            return false;
+        }
+        if (this._sendingWindowsProcessCall("quickRelocationWindows"))
+            return true;
+        const time = getTime();
+        relocationWindows.startTime = time;
+        const forcedArrangeScreen = () => {
+            if (relocationWindows.isSending && relocationWindows.startTime <= time) {
+                warning(`${getMethodName()}. Forced Arrange. Start time: ${time}, Number of prepared Windows: ${relocationWindows.totalNumWinsPrepareToOutput}, sent:${totalWindowsSentToOutput}, sending to Output: ${relocationWindows.getWinsSendingToOutput}, prepare to transfer to VDesktop: ${relocationWindows.totalNumWinsPrepareToVDesktop}`);
+                relocationWindows.clear();
+                try {
+                    this.control.engine.arrange(this, "forcedArrangeScreen");
+                }
+                catch (e) {
+                    warning(`${getMethodName()}: ${e}`);
+                }
+            }
+        };
+        this.setTimeout(forcedArrangeScreen, TilingEngine.SENDING_WINDOWS_MAX_WAIT_TIME);
+        return true;
+    }
+    _moveWindowToOutput(window, targetOutput) {
+        const client = window.window.window;
+        if (client == null)
+            return false;
+        window.isSendingToOutput = true;
+        try {
+            this.workspace.sendClientToScreen(client, targetOutput);
+        }
+        catch (e) {
+            window.isSendingToOutput = false;
+            warning(`${getMethodName()}: sendClientToScreen() failed. ${e}`);
+            return false;
+        }
+        return true;
+    }
+    _transferWindowsToVDesktops() {
+        const overCapacityWindows = this.engine.relocationWindows;
+        if (overCapacityWindows.totalNumWinsPrepareToVDesktop <= 0)
+            return;
+        let totalWindowsTransferToVDesktop = 0;
+        for (const [vDesktop, windows,] of overCapacityWindows.toVDesktops.entries()) {
+            for (const window of windows) {
+                this._moveWinToVDesktop(window, vDesktop);
+                totalWindowsTransferToVDesktop++;
+            }
+        }
+        this._relocateWindowsProcessFinish("transferWindowToVDesktop");
+    }
+    _relocateWindowsProcessFinish(reason) {
+        var _a, _b, _c, _d;
+        if (this.engine.relocationWindows.activeWindow !== null)
+            this.currentWindow = this.engine.relocationWindows.activeWindow;
+        if (this.engine.relocationWindows.direction !== null) {
+            let win;
+            if (this.engine.relocationWindows.totalNumWinsPrepareToOutput === 1) {
+                win = (_b = (_a = this.engine.relocationWindows.toOutputs.entries()[0]) === null || _a === void 0 ? void 0 : _a[1]) === null || _b === void 0 ? void 0 : _b[0];
+            }
+            else if (this.engine.relocationWindows.totalNumWinsPrepareToVDesktop === 1) {
+                win = (_d = (_c = this.engine.relocationWindows.toVDesktops.entries()[0]) === null || _c === void 0 ? void 0 : _c[1]) === null || _d === void 0 ? void 0 : _d[0];
+            }
+            else {
+                warning(`${getMethodName()}. there is Direction assign but toOutputs or toVDesktops arrays length not equals one`);
+                return;
+            }
+            if (win) {
+                const srfRect = win.surface.workingArea;
+                const winGeom = win.actualGeometry;
+                let newX = winGeom.x;
+                let newY = winGeom.y;
+                switch (this.engine.relocationWindows.direction) {
+                    case "left":
+                        newX = srfRect.maxX - winGeom.width;
+                        break;
+                    case "right":
+                        newX = srfRect.x;
+                        break;
+                    case "up":
+                        newY = srfRect.maxY - winGeom.height;
+                        break;
+                    case "down":
+                        newY = srfRect.y;
+                        break;
+                }
+                win.forceSetGeometry(this, new Rect(newX, newY, winGeom.width, winGeom.height));
+            }
+            this.engine.relocationWindows.clear();
+            return;
+        }
+        this.engine.relocationWindows.clear();
+        try {
+            this.control.engine.arrange(this, reason);
+        }
+        catch (e) {
+            warning(`${getMethodName()}: ${e}`);
+        }
+    }
+    _sendingWindowsProcessCall(reason) {
+        if (this.engine.relocationWindows.isSending &&
+            !this.engine.relocationWindows.isExistSendingWindowsToOutput) {
+            if (this.engine.relocationWindows.isExistTransferWindowsToVDesktop) {
+                this._transferWindowsToVDesktops();
+                return true;
+            }
+            this._relocateWindowsProcessFinish(reason);
+            return true;
+        }
+        return false;
+    }
+    moveWinToVDesktopByDirection(window, direction) {
+        let targetVDesktop = this.getNeighborVDesktop(direction);
+        if (targetVDesktop === null)
+            return false;
+        let client = window.window.window;
+        this.workspace.currentDesktop = targetVDesktop;
+        this._moveWinToVDesktop(window, targetVDesktop);
+        this.workspace.activeWindow = client;
+        return true;
+    }
+    _moveWinToVDesktop(window, virtualDesktop) {
+        let client = window.window.window;
+        const desktops = client.desktops;
+        if (desktops.length !== 0 && !desktops.find((d) => d === virtualDesktop)) {
+            client.desktops = [virtualDesktop];
+        }
+    }
+    _getWindowsByDirection(wType, surface, rect, direction, window) {
+        let windows = [];
+        function mapWinClassToKWinWindow(winClassWindows) {
+            return winClassWindows.map((winClassWin) => winClassWin.window.window);
+        }
+        switch (wType) {
+            case 1 | 2 | 4: {
+                windows = mapWinClassToKWinWindow(this.engine.windows.getVisibleWindows(surface));
+                break;
+            }
+            case 8: {
+                windows = [];
+                break;
+            }
+            case 1: {
+                windows = mapWinClassToKWinWindow(this.engine.windows.getVisibleTiles(surface));
+                break;
+            }
+            case 4: {
+                windows = mapWinClassToKWinWindow(this.engine.windows.getVisibleFloat(surface));
+                break;
+            }
+            case 2: {
+                windows = mapWinClassToKWinWindow(this.engine.windows.getVisibleDocked(surface));
+                break;
+            }
+            case 1 | 4: {
+                windows = mapWinClassToKWinWindow(this.engine.windows.getVisibleTilesOrFloat(surface));
+                break;
+            }
+            case 1 | 2: {
+                windows = mapWinClassToKWinWindow(this.engine.windows.getVisibleTilesOrDocked(surface));
+                break;
+            }
+            case 4 | 2: {
+                windows = mapWinClassToKWinWindow(this.engine.windows.getVisibleFloatOrDocked(surface));
+                break;
+            }
+            case 16: {
+                windows = this.workspace.stackingOrder.filter((win) => win.output === surface.output &&
+                    (win.desktops.length === 0 ||
+                        win.desktops.indexOf(surface.vDesktop) > -1) &&
+                    !win.minimized &&
+                    !win.hidden &&
+                    !win.deleted &&
+                    win.resourceClass !== "plasmashell");
+                return windows;
+            }
+        }
+        let filterFunc;
+        switch (direction) {
+            case "left":
+                filterFunc = (r) => {
+                    return r.x < rect.x && rect.intersection(r, "y") > 0;
+                };
+                break;
+            case "right":
+                filterFunc = (r) => {
+                    return r.x > rect.x && rect.intersection(r, "y") > 0;
+                };
+                break;
+            case "up":
+                filterFunc = (r) => {
+                    return r.y < rect.y && rect.intersection(r, "x") > 0;
+                };
+                break;
+            case "down":
+                filterFunc = (r) => {
+                    return r.y > rect.y && rect.intersection(r, "x") > 0;
+                };
+                break;
+        }
+        windows = windows.filter((win) => {
+            if (window && window === win)
+                return false;
+            let r = toRect(win.frameGeometry);
+            return filterFunc(r);
+        });
+        return windows;
+    }
+    _makeActiveScreen(output, notify = true) {
+        for (let win of this.workspace.stackingOrder) {
+            if (win.resourceClass === "plasmashell" && win.output === output) {
+                this.workspace.activeWindow = win;
+                if (notify)
+                    this.showNotification("Active screen");
+                break;
+            }
+        }
+    }
+    _computeCrossScreenSourceRect(window, surface, direction) {
+        const tG = toRect(surface.output.geometry);
+        const sG = window.output.geometry;
+        const winRect = toRect(window.frameGeometry);
+        if (direction === "left" || direction === "right") {
+            const y_ratio = (winRect.y - sG.y) / sG.height;
+            const y = tG.y + tG.height * y_ratio;
+            const h = Math.min(winRect.height, tG.height - (y - tG.y));
+            if (direction === "left") {
+                return new Rect(tG.maxX - 5, y, 5, h);
+            }
+            else {
+                return new Rect(tG.x, y, 5, h);
+            }
+        }
+        else {
+            const x_ratio = (winRect.x - sG.x) / sG.width;
+            const x = tG.x + tG.width * x_ratio;
+            const w = Math.min(winRect.width, tG.width - (x - tG.x));
+            if (direction === "up") {
+                return new Rect(x, tG.maxY - 5, w, 5);
+            }
+            else {
+                return new Rect(x, tG.y, w, 5);
+            }
+        }
+    }
+    _computeSurfaceEdgeSourceRect(surface, direction) {
+        const g = toRect(surface.output.geometry);
+        switch (direction) {
+            case "left":
+                return new Rect(g.maxX - 5, g.y, 5, g.height);
+            case "right":
+                return new Rect(g.x, g.y, 5, g.height);
+            case "up":
+                return new Rect(g.x, g.maxY - 5, g.width, 5);
+            case "down":
+                return new Rect(g.x, g.y, g.width, 5);
+        }
+    }
+    _setFocusOnSurface(window, surface, direction, winTypes, localWindows = null) {
+        var _a, _b;
+        let sourceRect;
+        if (localWindows !== null && window !== null) {
+            sourceRect = toRect(window.frameGeometry);
+        }
+        else if (window !== null) {
+            sourceRect = this._computeCrossScreenSourceRect(window, surface, direction);
+        }
+        else {
+            sourceRect = this._computeSurfaceEdgeSourceRect(surface, direction);
+        }
+        let windows;
+        if (localWindows !== null) {
+            windows = localWindows;
+        }
+        else {
+            windows = this._getWindowsByDirection(winTypes, surface, sourceRect, direction);
+        }
+        let focusCandidate = null;
+        let fCTimeStamp = null;
+        let distance = null;
+        for (const win of windows) {
+            if (window !== null && win === window)
+                continue;
+            let winRect = toRect(win.frameGeometry);
+            const d = direction === "left"
+                ? sourceRect.x - winRect.maxX
+                : direction === "right"
+                    ? winRect.x - sourceRect.maxX
+                    : direction === "up"
+                        ? sourceRect.y - winRect.maxY
+                        : winRect.y - sourceRect.maxY;
+            if (focusCandidate === null || distance === null || d < distance) {
+                distance = d;
+                focusCandidate = win;
+                fCTimeStamp = null;
+            }
+            else if (d === distance) {
+                if (fCTimeStamp === null) {
+                    fCTimeStamp = (_a = this.engine.windows.getWindowById(String(focusCandidate.internalId))) === null || _a === void 0 ? void 0 : _a.focusTime;
+                }
+                let timestamp = (_b = this.engine.windows.getWindowById(String(win.internalId))) === null || _b === void 0 ? void 0 : _b.focusTime;
+                if ((timestamp && fCTimeStamp && timestamp > fCTimeStamp) ||
+                    (timestamp && !fCTimeStamp)) {
+                    fCTimeStamp = timestamp;
+                    focusCandidate = win;
+                }
+            }
+        }
+        if (focusCandidate !== null) {
+            const focusWindow = this.windowMap.get(focusCandidate);
+            this.currentWindow = focusWindow;
+        }
+        return focusCandidate !== null;
+    }
+    _outputCurrentDesktop(output) {
+        if (typeof this.workspace.currentDesktopForScreen === "function") {
+            try {
+                const d = this.workspace.currentDesktopForScreen(output);
+                if (d)
+                    return d;
+            }
+            catch (e) {
+            }
+        }
+        return this.workspace.currentDesktop;
+    }
+    _setOutputDesktop(output, desktop) {
+        if (typeof this.workspace.setCurrentDesktopForScreen === "function") {
+            try {
+                this.workspace.setCurrentDesktopForScreen(desktop, output);
+                return;
+            }
+            catch (e) {
+            }
+        }
+        this.workspace.currentDesktop = desktop;
+    }
+    _onShortcut(shortcut) {
+        this._shortcutPressTime = getTime();
+        const token = ++this._shortcutFinishToken;
+        const control = (action) => {
+            if (shortcut.name) {
+                LOG === null || LOG === void 0 ? void 0 : LOG.send("shortcut", "ControlFuncCall", `action:${action}`);
+                this.control.onShortcut(this, action, "shortcutCB");
+            }
+        };
+        const runSeq = (runningShortcutSequences) => {
+            let maxSeqInProcess = null;
+            for (let i = runningShortcutSequences.seq.length - 1; i >= 0; i--) {
+                const seq = runningShortcutSequences.seq[i];
+                if (seq.state === "inProcess") {
+                    switch (seq.next(shortcut)) {
+                        case "inProcess": {
+                            maxSeqInProcess =
+                                maxSeqInProcess !== null
+                                    ? Math.max(maxSeqInProcess, seq.sequence.length)
+                                    : seq.sequence.length;
+                            break;
+                        }
+                        case "finish": {
+                            if (maxSeqInProcess === null ||
+                                maxSeqInProcess <= seq.sequence.length) {
+                                runningShortcutSequences.finishAction = seq.resolve(this.isRegister);
+                            }
+                            else {
+                                runningShortcutSequences.actionCandidate = seq.resolve(this.isRegister);
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+            const notFinished = runningShortcutSequences.finishAction === "empty";
+            if (maxSeqInProcess === null && notFinished)
+                return false;
+            else if (notFinished) {
+                runningShortcutSequences.pressTime = this._shortcutPressTime;
+                this.setTimeout(() => this.onShortcutFinish(token), runningShortcutSequences.seq[0].timeout + 5);
+            }
+            return true;
+        };
+        if (this._runningShortcutSequence !== null) {
+            if (runSeq(this._runningShortcutSequence)) {
+                if (this._runningShortcutSequence.finishAction !== "empty") {
+                    let a = this._runningShortcutSequence.finishAction;
+                    this._runningShortcutSequence = null;
+                    control(a);
+                }
+                return;
+            }
+            else {
+                this._runningShortcutSequence = null;
+                return;
+            }
+        }
+        const shortcutSequences = this._shortcutSequences.get(shortcut.name);
+        if (this._runningShortcutSequence === null &&
+            shortcutSequences !== undefined) {
+            const seq = shortcutSequences.map((s) => new ShortcutSequence(s));
+            this._runningShortcutSequence = {
+                pressTime: this._shortcutPressTime,
+                seq,
+                finishAction: "empty",
+                actionCandidate: shortcut.resolve(this.isRegister),
+            };
+            this.setTimeout(() => this.onShortcutFinish(token), seq[0].timeout + 5);
+            return;
+        }
+        control(shortcut.resolve(this.isRegister));
+    }
+    onShortcutFinish(token) {
+        if (this._runningShortcutSequence !== null &&
+            token === this._shortcutFinishToken &&
+            this._runningShortcutSequence.pressTime === this._shortcutPressTime) {
+            this.control.onShortcut(this, this._runningShortcutSequence.actionCandidate, "shortcutCB");
+            this._runningShortcutSequence = null;
+        }
+    }
+    _bindShortcut() {
+        if (CONFIG.altRegisterIsPushedTwice) {
+            const conf = {
+                shortcuts: ["AlterRegisterSC", "AlterRegisterSC"],
+                mainAction: "ToggleRegister",
+                registerAction: "ToggleRegister",
+                sequenceTime: null,
+            };
+            const list = this._shortcutSequences.get("AlterRegisterSC");
+            if (list === undefined)
+                this._shortcutSequences.set("AlterRegisterSC", [conf]);
+            else
+                list.push(conf);
+        }
+        for (const conf of CONFIG.shortcutConf) {
+            if (conf.shortcuts.length === 1) {
+                const shortcut = this._shortcuts.get(conf.shortcuts[0]);
+                if (shortcut === undefined)
+                    continue;
+                if (conf.mainAction !== null)
+                    shortcut.action = conf.mainAction;
+                if (conf.registerAction !== null)
+                    shortcut.registerAction = conf.registerAction;
+            }
+            else {
+                const first = conf.shortcuts[0];
+                const list = this._shortcutSequences.get(first);
+                if (list === undefined)
+                    this._shortcutSequences.set(first, [conf]);
+                else
+                    list.push(conf);
+            }
+        }
+        for (const shortcut of this._shortcuts.values()) {
+            const action = shortcut.action;
+            const registerAction = shortcut.registerAction;
+            const isRegisterAction = (a) => a === KrohnkiteAction.AlterRegister ||
+                a === KrohnkiteAction.ToggleRegister;
+            if (isRegisterAction(action) || isRegisterAction(registerAction)) {
+                if (action !== registerAction) {
+                    warning(`${getMethodName()}. Shortcut "${shortcut.name}": action and registerAction must be equal to AlterRegister or ToggleRegister; fixing.`);
+                    if (isRegisterAction(action))
+                        shortcut.registerAction = action;
+                    else
+                        shortcut.action = registerAction;
+                }
+            }
+        }
+        for (const list of this._shortcutSequences.values()) {
+            list.sort((a, b) => a.shortcuts.length - b.shortcuts.length);
+            const maxTime = list.reduce((max, conf) => { var _a; return Math.max(max, (_a = conf.sequenceTime) !== null && _a !== void 0 ? _a : CONFIG.shortcutSequenceTime); }, 0);
+            for (const conf of list)
+                conf.sequenceTime = maxTime;
+        }
+        for (const shortcut of this._shortcuts.values()) {
+            this._connect(shortcut.hdl.activated, () => {
+                LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.shortcut, `Shortcut pressed:`, `${shortcut.name}`);
+                this._onShortcut(shortcut);
+            });
+        }
+    }
+    _connect(signal, handler) {
         const wrapper = (...args) => {
-            if (typeof this.workspace === "undefined")
+            if (this._disposed || typeof this.workspace === "undefined")
                 signal.disconnect(wrapper);
             else
-                this.enter(() => handler.apply(this, args));
+                this._enter(() => handler.apply(this, args));
         };
         signal.connect(wrapper);
+        this._connections.push({ signal, callback: wrapper });
         return wrapper;
     }
-    enter(callback) {
-        if (this.entered)
+    _enter(callback) {
+        if (this.entered || this._disposed)
             return;
         this.entered = true;
         try {
             callback();
         }
         catch (e) {
-            warning(`ProtectFunc: Error raised line: ${e.lineNumber}. Error: ${e}`);
+            const line = e && e.lineNumber !== undefined ? e.lineNumber : "unknown";
+            warning(`ProtectFunc: Error raised line: ${line}. Error: ${String(e)}`);
         }
         finally {
             this.entered = false;
         }
     }
-    bindEvents() {
-        this.connect(this.workspace.screensChanged, () => {
+    _bindEvents() {
+        this._connect(this.workspace.screensChanged, () => {
             LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.screensChanged, "eventFired");
-            this.control.onSurfaceUpdate(this);
+            this._surfaceStore.onOutputsChanged();
+            this.control.onSurfaceUpdate(this, "screensChangedCB");
         });
-        this.connect(this.workspace.virtualScreenGeometryChanged, () => {
+        this._connect(this.workspace.virtualScreenGeometryChanged, () => {
             LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.virtualScreenGeometryChanged, "eventFired");
-            this.control.onSurfaceUpdate(this);
+            this.control.onSurfaceUpdate(this, "virtualScreenGeometryChangedCB");
         });
-        this.connect(this.workspace.currentActivityChanged, (activityId) => {
+        this._connect(this.workspace.currentActivityChanged, (activityId) => {
             LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.currentActivityChanged, "eventFired", `Activity ID:${activityId}`);
-            this.control.onCurrentActivityChanged(this);
+            this.control.onCurrentActivityChanged(this, "currentActivityChangedCB");
         });
-        this.connect(this.workspace.currentDesktopChanged, (virtualDesktop) => {
+        this._connect(this.workspace.currentDesktopChanged, (virtualDesktop) => {
             LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.currentDesktopChanged, "eventFired", `Virtual Desktop. name:${virtualDesktop.name}, id:${virtualDesktop.id}`);
-            this.control.onSurfaceUpdate(this);
+            this.control.onSurfaceUpdate(this, "currentDesktopChangedCB");
         });
-        this.connect(this.workspace.windowAdded, (client) => {
+        this._connect(this.workspace.windowAdded, (client) => {
             if (!client)
                 return;
             LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.windowAdded, "eventFired", `window: caption:${client.caption} internalID:${client.internalId}`, { winClass: [`${client.resourceClass}`] });
             const window = this.addWindow(client);
-            if (client.active && window !== null)
+            if (client.active && window !== null) {
                 this.control.onWindowFocused(this, window);
+                if (CONFIG.movePointerOnFocus) {
+                    DBUS.moveMouseToCenter(20);
+                }
+            }
         });
-        this.connect(this.workspace.windowActivated, (client) => {
-            if (!client)
+        this._connect(this.workspace.windowActivated, (client) => {
+            if (!client || client.deleted)
                 return;
             LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.windowActivated, "eventFired", `window: caption:${client.caption} internalID:${client.internalId}`, { winClass: [`${client.resourceClass}`] });
             const window = this.windowMap.get(client);
-            if (client.active && window !== null)
+            if (client.active && window !== null) {
                 this.control.onWindowFocused(this, window);
+            }
         });
-        this.connect(this.workspace.windowRemoved, (client) => {
+        this._connect(this.workspace.windowRemoved, (client) => {
             if (!client)
                 return;
             LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.windowRemoved, "eventFired", `window: caption:${client.caption} internalID:${client.internalId}`, { winClass: [`${client.resourceClass}`] });
+            if (client.dock) {
+                this.control.onSurfaceUpdate(this, "windowRemovedCB");
+                return;
+            }
             const window = this.windowMap.get(client);
             if (window) {
-                this.control.onWindowRemoved(this, window);
+                this.control.onWindowRemoved(this, window, "windowRemovedCB");
                 this.windowMap.remove(client);
             }
         });
+        this._connect(this.workspace.activityRemoved, (id) => {
+            LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.surfaceChanged, "eventFired", `Activity: id: ${id} has been removed.`);
+            this._surfaceStore.removeByActivity(id);
+        });
+        this._connect(this.workspace.desktopsChanged, () => {
+            LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.surfaceChanged, "eventFired", `Virtual Desktops Changed`);
+            this._surfaceStore.checkVirtualDesktops();
+        });
     }
-    bindWindowEvents(window, client) {
+    _bindWindowEvents(window, client) {
         let moving = false;
         let resizing = false;
-        this.connect(client.activitiesChanged, () => {
+        this._connect(client.activitiesChanged, () => {
+            if (!client || client.deleted)
+                return;
             LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.activitiesChanged, "eventFired", `window: caption:${client.caption} internalID:${client.internalId}, activities: ${client.activities.join(",")}`, { winClass: [`${client.resourceClass}`] });
-            this.control.onWindowChanged(this, window, "activity=" + client.activities.join(","));
+            this.control.onWindowChanged(this, window, "activitiesChangedCB", "activity=" + client.activities.join(","));
         });
-        this.connect(client.bufferGeometryChanged, () => {
-            LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.bufferGeometryChanged, "eventFired", `Window: caption:${client.caption} internalId:${client.internalId}, moving:${moving}, resizing:${resizing}, geometry:${window.geometry}`, { winClass: [`${client.resourceClass}`] });
+        this._connect(client.bufferGeometryChanged, () => {
+            if (!client || client.deleted)
+                return;
+            LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.bufferGeometryChanged, "eventFired", `Window: caption:${client.caption} internalId:${client.internalId}, moving:${moving}, resizing:${resizing}, actualGeometry: ${window.actualGeometry}, commitGeometry:${window.geometry}`, { winClass: [`${client.resourceClass}`] });
             if (moving)
                 this.control.onWindowMove(window);
             else if (resizing)
-                this.control.onWindowResize(this, window);
+                this.control.onWindowResize(this, window, "windowBufferGeometryChangedCB");
             else {
                 if (!window.actualGeometry.equals(window.geometry))
-                    this.control.onWindowGeometryChanged(this, window);
+                    if (CONFIG.optVKeyboardSupport) {
+                        DBUS.checkVirtualKeyboardVisible((isVkVisible) => {
+                            if (!isVkVisible &&
+                                !window.actualGeometry.equals(window.geometry))
+                                this.control.onWindowGeometryChanged(this, window);
+                        });
+                    }
+                    else {
+                        this.control.onWindowGeometryChanged(this, window);
+                    }
             }
         });
-        this.connect(client.desktopsChanged, () => {
+        this._connect(client.desktopsChanged, () => {
+            if (!client || client.deleted)
+                return;
             LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.desktopsChanged, "eventFired", `window: caption:${client.caption} internalID:${client.internalId}, desktops: ${client.desktops}`, { winClass: [`${client.resourceClass}`] });
-            this.control.onWindowChanged(this, window, "Window's desktop changed.");
+            if (window.isSendingToOutput) {
+                return;
+            }
+            this.control.onWindowChanged(this, window, "windowDesktopsChangedCB", "Window's desktop changed.");
         });
-        this.connect(client.fullScreenChanged, () => {
+        this._connect(client.fullScreenChanged, () => {
+            if (!client || client.deleted)
+                return;
             LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.fullScreenChanged, "eventFired", `window: caption:${client.caption} internalID:${client.internalId}, fullscreen: ${client.fullScreen}`, { winClass: [`${client.resourceClass}`] });
-            this.control.onWindowChanged(this, window, "fullscreen=" + client.fullScreen);
+            this.control.onWindowChanged(this, window, "windowFullScreenChangedCB", "fullscreen=" + client.fullScreen);
         });
-        this.connect(client.interactiveMoveResizeStepped, (geometry) => {
+        this._connect(client.interactiveMoveResizeStepped, (geometry) => {
+            if (!client || client.deleted)
+                return;
             LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.interactiveMoveResizeStepped, "eventFired", `window: caption:${client.caption} internalID:${client.internalId},interactiveMoveResizeStepped:${geometry}`, { winClass: [`${client.resourceClass}`] });
             if (client.resize)
                 return;
-            this.control.onWindowDragging(this, window, geometry);
+            this.control.onWindowDragging(this, window, geometry, "windowInteractiveMoveResizeSteppedCB");
         });
-        this.connect(client.maximizedAboutToChange, (mode) => {
+        this._connect(client.maximizedAboutToChange, (mode) => {
+            if (!client || client.deleted)
+                return;
             LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.maximizedAboutToChange, "eventFired", `window: caption:${client.caption} internalID:${client.internalId},maximizedAboutToChange:${mode}`, { winClass: [`${client.resourceClass}`] });
-            window.window.maximized =
-                mode > 0 ? true : false;
-            this.control.onWindowMaximizeChanged(this, window);
+            window.window.maximized = mode > 0;
+            this.control.onWindowMaximizeChanged(this, window, "windowMaximizeAboutChangeCB");
         });
-        this.connect(client.minimizedChanged, () => {
+        this._connect(client.minimizedChanged, () => {
+            if (!client || client.deleted)
+                return;
             LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.minimizedChanged, "eventFired", `window: caption:${client.caption} internalID:${client.internalId},minimized:${client.minimized}`, { winClass: [`${client.resourceClass}`] });
             if (KWINCONFIG.preventMinimize) {
                 client.minimized = false;
                 this.workspace.activeWindow = client;
             }
             else {
-                var comment = client.minimized ? "minimized" : "unminimized";
-                this.control.onWindowChanged(this, window, comment);
+                let comment = client.minimized ? "minimized" : "unminimized";
+                this.control.onWindowChanged(this, window, "windowMinimizedChangedCB", comment);
             }
         });
-        this.connect(client.moveResizedChanged, () => {
+        this._connect(client.moveResizedChanged, () => {
+            if (!client || client.deleted)
+                return;
             LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.moveResizedChanged, "eventFired", `Window: caption:${client.caption} internalId:${client.internalId}, moving:${moving}, resizing:${resizing}`, { winClass: [`${client.resourceClass}`] });
             if (moving !== client.move) {
                 moving = client.move;
@@ -1590,7 +3077,7 @@ class KWinDriver {
                     this.control.onWindowMoveStart(window);
                 }
                 else {
-                    this.control.onWindowMoveOver(this, window);
+                    this.control.onWindowMoveOver(this, window, "windowMoveResizedChangedCB");
                 }
             }
             if (resizing !== client.resize) {
@@ -1598,24 +3085,121 @@ class KWinDriver {
                 if (resizing)
                     this.control.onWindowResizeStart(window);
                 else
-                    this.control.onWindowResizeOver(this, window);
+                    this.control.onWindowResizeOver(this, window, "windowMoveResizedChangedCB");
             }
         });
-        this.connect(client.outputChanged, () => {
+        this._connect(client.outputChanged, () => {
+            if (!client || client.deleted)
+                return;
             LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.outputChanged, "eventFired", `window: caption:${client.caption} internalID:${client.internalId} output: ${client.output.name}`, { winClass: [`${client.resourceClass}`] });
-            this.control.onWindowChanged(this, window, "screen=" + client.output.name);
+            if (window.isSendingToOutput) {
+                window.isSendingToOutput = false;
+                this._sendingWindowsProcessCall("relocationOutputChangedCB");
+                return;
+            }
+            this.control.onWindowChanged(this, window, "outputChangedCB", "screen=" + client.output.name);
         });
         if (CONFIG.floatSkipPager) {
-            this.connect(client.skipPagerChanged, () => {
-                this.control.onWindowSkipPagerChanged(this, window, client.skipPager);
+            this._connect(client.skipPagerChanged, () => {
+                this.control.onWindowSkipPagerChanged(this, window, client.skipPager, "windowSkipPagerCB");
             });
         }
     }
 }
 KWinDriver.backendName = "kwin";
+class KWinRuntime {
+    constructor(api) {
+        this.driver = null;
+        this.config = null;
+        this.generation = 0;
+        this.reloading = false;
+        this.disposed = false;
+        this.api = api;
+        KWIN = api.kwin;
+    }
+    start() {
+        if (this.driver !== null || this.disposed)
+            return;
+        const config = new KWinConfig();
+        this.startDriver(config, false);
+    }
+    reloadIfChanged() {
+        if (this.disposed || this.reloading || this.config === null)
+            return false;
+        const candidate = new KWinConfig();
+        if (this.config.equals(candidate))
+            return false;
+        const previousConfig = this.config;
+        this.reloading = true;
+        try {
+            this.stopDriver();
+            try {
+                this.startDriver(candidate, true);
+                return true;
+            }
+            catch (error) {
+                warning(`KWinRuntime: configuration reload failed; restoring the previous runtime. ${String(error)}`);
+                try {
+                    this.startDriver(previousConfig, false);
+                }
+                catch (rollbackError) {
+                    this.config = null;
+                    warning(`KWinRuntime: restoring the previous runtime also failed. ${String(rollbackError)}`);
+                    throw error;
+                }
+                return false;
+            }
+        }
+        finally {
+            this.reloading = false;
+        }
+    }
+    dispose() {
+        if (this.disposed)
+            return;
+        this.disposed = true;
+        this.stopDriver();
+        this.config = null;
+    }
+    startDriver(config, isReload) {
+        DefaultGapsCfg.reset();
+        DefaultDockCfg.reset();
+        let nextDriver = null;
+        try {
+            nextDriver = new KWinDriver(this.api, config);
+            nextDriver.main();
+        }
+        catch (error) {
+            if (nextDriver !== null) {
+                try {
+                    nextDriver.dispose();
+                }
+                catch (disposeError) {
+                    warning(`KWinRuntime: failed to dispose an incomplete runtime. ${String(disposeError)}`);
+                }
+            }
+            KWinTimerPool.instance.dispose();
+            throw error;
+        }
+        this.config = config;
+        this.driver = nextDriver;
+        this.generation++;
+        if (isReload)
+            print(`KROHNKITE: configuration reloaded (generation ${this.generation})`);
+    }
+    stopDriver() {
+        if (this.driver !== null) {
+            this.driver.dispose();
+            this.driver = null;
+        }
+        KWinTimerPool.instance.dispose();
+    }
+}
 class KWinTimerPool {
     constructor() {
         this.timers = [];
+        this.activeTimers = [];
+        this.generation = 0;
         this.numTimers = 0;
     }
     setTimeout(func, timeout) {
@@ -1625,6 +3209,7 @@ class KWinTimerPool {
         }
         const timer = this.timers.pop() ||
             Qt.createQmlObject("import QtQuick 2.0; Timer {}", scriptRoot);
+        const generation = this.generation;
         const callback = () => {
             try {
                 timer.triggered.disconnect(callback);
@@ -1636,17 +3221,498 @@ class KWinTimerPool {
             }
             catch (e) {
             }
-            this.timers.push(timer);
+            this.removeActive(timer, callback);
+            if (generation === this.generation)
+                this.timers.push(timer);
         };
         timer.interval = timeout;
         timer.repeat = false;
         timer.triggered.connect(callback);
+        this.activeTimers.push({ timer, callback });
         timer.start();
+    }
+    dispose() {
+        this.generation++;
+        for (const entry of this.activeTimers.splice(0)) {
+            try {
+                entry.timer.stop();
+                entry.timer.triggered.disconnect(entry.callback);
+                entry.timer.destroy();
+            }
+            catch (_) {
+            }
+        }
+        for (const timer of this.timers.splice(0)) {
+            try {
+                timer.stop();
+                timer.destroy();
+            }
+            catch (_) {
+            }
+        }
+        this.numTimers = 0;
+    }
+    removeActive(timer, callback) {
+        const idx = this.activeTimers.findIndex((entry) => entry.timer === timer && entry.callback === callback);
+        if (idx >= 0)
+            this.activeTimers.splice(idx, 1);
     }
 }
 KWinTimerPool.instance = new KWinTimerPool();
 function KWinSetTimeout(func, timeout) {
     KWinTimerPool.instance.setTimeout(func, timeout);
+}
+const Shortcuts = {
+    AlterRegisterSC: {
+        defaultAction: KrohnkiteAction.AlterRegister,
+        defaultRegisterAction: KrohnkiteAction.AlterRegister,
+    },
+    FocusNextSC: {
+        defaultAction: KrohnkiteAction.FocusNext,
+        defaultRegisterAction: KrohnkiteAction.SwapUp,
+    },
+    FocusPrevSC: {
+        defaultAction: KrohnkiteAction.FocusPrev,
+        defaultRegisterAction: KrohnkiteAction.SwapDown,
+    },
+    FocusLeftSC: {
+        defaultAction: KrohnkiteAction.FocusLeft,
+        defaultRegisterAction: KrohnkiteAction.FocusLeft,
+    },
+    FocusRightSC: {
+        defaultAction: KrohnkiteAction.FocusRight,
+        defaultRegisterAction: KrohnkiteAction.FocusRight,
+    },
+    FocusDownSC: {
+        defaultAction: KrohnkiteAction.FocusDown,
+        defaultRegisterAction: KrohnkiteAction.FocusDown,
+    },
+    FocusUpSC: {
+        defaultAction: KrohnkiteAction.FocusUp,
+        defaultRegisterAction: KrohnkiteAction.FocusUp,
+    },
+    MoveDownSC: {
+        defaultAction: KrohnkiteAction.MoveDown,
+        defaultRegisterAction: KrohnkiteAction.SwapDown,
+    },
+    MoveUpSC: {
+        defaultAction: KrohnkiteAction.MoveUp,
+        defaultRegisterAction: KrohnkiteAction.SwapUp,
+    },
+    MoveLeftSC: {
+        defaultAction: KrohnkiteAction.MoveLeft,
+        defaultRegisterAction: null,
+    },
+    MoveRightSC: {
+        defaultAction: KrohnkiteAction.MoveRight,
+        defaultRegisterAction: null,
+    },
+    ToggleDockSC: {
+        defaultAction: KrohnkiteAction.ToggleDock,
+        defaultRegisterAction: null,
+    },
+    GrowHeightSC: {
+        defaultAction: KrohnkiteAction.GrowHeight,
+        defaultRegisterAction: null,
+    },
+    ShrinkHeightSC: {
+        defaultAction: KrohnkiteAction.ShrinkHeight,
+        defaultRegisterAction: null,
+    },
+    ShrinkWidthSC: {
+        defaultAction: KrohnkiteAction.ShrinkWidth,
+        defaultRegisterAction: null,
+    },
+    GrowWidthSC: {
+        defaultAction: KrohnkiteAction.GrowWidth,
+        defaultRegisterAction: null,
+    },
+    IncreaseSC: {
+        defaultAction: KrohnkiteAction.Increase,
+        defaultRegisterAction: KrohnkiteAction.FocusNext,
+    },
+    DecreaseSC: {
+        defaultAction: KrohnkiteAction.Decrease,
+        defaultRegisterAction: KrohnkiteAction.FocusPrev,
+    },
+    ToggleFloatSC: {
+        defaultAction: KrohnkiteAction.ToggleFloat,
+        defaultRegisterAction: null,
+    },
+    ToggleFloatAllSC: {
+        defaultAction: KrohnkiteAction.ToggleFloatAll,
+        defaultRegisterAction: null,
+    },
+    NextLayoutSC: {
+        defaultAction: KrohnkiteAction.NextLayout,
+        defaultRegisterAction: null,
+    },
+    PreviousLayoutSC: {
+        defaultAction: KrohnkiteAction.PreviousLayout,
+        defaultRegisterAction: null,
+    },
+    RotateSC: {
+        defaultAction: KrohnkiteAction.Rotate,
+        defaultRegisterAction: KrohnkiteAction.RotatePart,
+    },
+    RotatePartSC: {
+        defaultAction: KrohnkiteAction.RotatePart,
+        defaultRegisterAction: KrohnkiteAction.Rotate,
+    },
+    SetMasterSC: {
+        defaultAction: KrohnkiteAction.SetMaster,
+        defaultRegisterAction: null,
+    },
+    RaiseSurfaceCapacitySC: {
+        defaultAction: KrohnkiteAction.RaiseSurfaceCapacity,
+        defaultRegisterAction: null,
+    },
+    LowerSurfaceCapacitySC: {
+        defaultAction: KrohnkiteAction.LowerSurfaceCapacity,
+        defaultRegisterAction: KrohnkiteAction.ResetSurfaceCapacity,
+    },
+    SetTileLayoutSC: {
+        defaultAction: KrohnkiteAction.SetTileLayout,
+        defaultRegisterAction: null,
+    },
+    SetMonocleLayoutSC: {
+        defaultAction: KrohnkiteAction.SetMonocleLayout,
+        defaultRegisterAction: null,
+    },
+    SetThreeColumnLayoutSC: {
+        defaultAction: KrohnkiteAction.SetThreeColumnLayout,
+        defaultRegisterAction: null,
+    },
+    SetSpreadLayoutSC: {
+        defaultAction: KrohnkiteAction.SetSpreadLayout,
+        defaultRegisterAction: null,
+    },
+    SetStairLayoutSC: {
+        defaultAction: KrohnkiteAction.SetStairLayout,
+        defaultRegisterAction: null,
+    },
+    SetFloatingLayoutSC: {
+        defaultAction: KrohnkiteAction.SetFloatingLayout,
+        defaultRegisterAction: null,
+    },
+    SetQuarterLayoutSC: {
+        defaultAction: KrohnkiteAction.SetQuarterLayout,
+        defaultRegisterAction: null,
+    },
+    SetStackedLayoutSC: {
+        defaultAction: KrohnkiteAction.SetStackedLayout,
+        defaultRegisterAction: null,
+    },
+    SetColumnsLayoutSC: {
+        defaultAction: KrohnkiteAction.SetColumnsLayout,
+        defaultRegisterAction: null,
+    },
+    SetSpiralLayoutSC: {
+        defaultAction: KrohnkiteAction.SetSpiralLayout,
+        defaultRegisterAction: null,
+    },
+    SetBinaryTreeLayoutSC: {
+        defaultAction: KrohnkiteAction.SetBinaryTreeLayout,
+        defaultRegisterAction: null,
+    },
+    SetCascadeLayoutSC: {
+        defaultAction: KrohnkiteAction.SetCascadeLayout,
+        defaultRegisterAction: null,
+    },
+};
+class ShortcutBase {
+    resolve(isRegister) {
+        if (isRegister && this.registerAction !== null)
+            return this.registerAction;
+        return this.action;
+    }
+}
+class Shortcut extends ShortcutBase {
+    constructor(entry) {
+        super();
+        const defaults = Shortcuts[entry.name];
+        this.name = entry.name;
+        this.hdl = entry.hdl;
+        this.defaultAction = defaults.defaultAction;
+        this.defaultRegisterAction = defaults.defaultRegisterAction;
+        this.action = defaults.defaultAction;
+        this.registerAction = defaults.defaultRegisterAction;
+    }
+}
+class ShortcutSequence extends ShortcutBase {
+    get state() {
+        if (this._state === "inProcess" &&
+            getTime() - this.timeout > this._beginTime)
+            this._state = "timeIsUp";
+        return this._state;
+    }
+    set state(s) {
+        this._state = s;
+    }
+    constructor(shortcutConf) {
+        super();
+        this.sequence = shortcutConf.shortcuts;
+        this.action = shortcutConf.mainAction;
+        this.registerAction = shortcutConf.registerAction;
+        this._currentIndex = 0;
+        this.timeout =
+            shortcutConf.sequenceTime !== null
+                ? shortcutConf.sequenceTime
+                : CONFIG.shortcutSequenceTime;
+        this._beginTime = getTime();
+        this._state = "inProcess";
+    }
+    next(shortcut) {
+        if (this.state !== "inProcess")
+            return this.state;
+        this._currentIndex++;
+        this._beginTime = getTime();
+        if (shortcut.name === this.sequence[this._currentIndex]) {
+            if (this._currentIndex === this.sequence.length - 1) {
+                this.state = "finish";
+            }
+            else {
+                this.state = "inProcess";
+            }
+        }
+        else {
+            this.state = "failed";
+        }
+        return this.state;
+    }
+}
+class KWinSurfaceStore {
+    constructor(workspace) {
+        this._store = {};
+        this.workspace = workspace;
+        this._vDesktopsIds = new Set();
+        this._evictedCapacities = {};
+        this._definedSurfaces = {};
+        this._applyUsrDefSurfaces(CONFIG.srfDefineCfg);
+        this._userSurfacesCfg = this.getSurfacesUserCfg();
+        this._liveOutputNames = this._getLiveOutputNames();
+    }
+    checkVirtualDesktops() {
+        let desktops = new Set();
+        this.workspace.desktops.forEach((desktop) => {
+            desktops.add(desktop.id);
+        });
+        let removeIds = [...this._vDesktopsIds].filter((x) => !desktops.has(x));
+        for (let id of removeIds) {
+            LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.surfaceChanged, "checkVirtualDesktops", `The Virtual Desktop with id:${id} was deleted.`);
+            this._removeById(id, "vDesktopId");
+            this._vDesktopsIds.delete(id);
+        }
+    }
+    getSurface(output, activity, vDesktop) {
+        const id = KWinSurface.generateId(output, activity, vDesktop);
+        if (!(id in this._store)) {
+            let surfaceCfg = this._surfaceCfg(output, activity, vDesktop);
+            this._store[id] = new KWinSurface(output, activity, vDesktop, this.workspace, surfaceCfg, this);
+            if (id in this._evictedCapacities) {
+                this._store[id].capacity = this._evictedCapacities[id];
+                delete this._evictedCapacities[id];
+            }
+            this._vDesktopsIds.has(vDesktop.id) ||
+                this._vDesktopsIds.add(vDesktop.id);
+        }
+        else {
+            this._store[id].output = output;
+        }
+        return this._store[id];
+    }
+    isFit(surface, label) {
+        return this._surfaceMatchesLabel(surface.output.name, surface.activity, surface.vDesktop.name, label);
+    }
+    removeByActivity(id) {
+        this._removeById(id, "activityId");
+    }
+    onOutputsChanged() {
+        this._liveOutputNames = this._getLiveOutputNames();
+        this._removeOutdatedSurfaces();
+    }
+    _removeOutdatedSurfaces() {
+        this._getLiveOutputNames();
+        const removeIds = Object.keys(this._store).filter((id) => !this._liveOutputNames.has(this._store[id].outputName));
+        if (removeIds.length === 0)
+            return;
+        LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.surfaceChanged, "removeOutdatedSurfaces", `outputs removed; dropping surfaces: ${removeIds
+            .map((id) => this._store[id].toString())
+            .join("#")}`);
+        removeIds.forEach((id) => {
+            this._evictedCapacities[id] = this._store[id].capacity;
+            delete this._store[id];
+        });
+    }
+    _getLiveOutputNames() {
+        const liveNames = new Set();
+        this.workspace.screens.forEach((output) => {
+            if (outputIsAlive(output))
+                liveNames.add(output.name);
+        });
+        return liveNames;
+    }
+    _surfaceCfg(output, activity, vDesktop) {
+        for (let i = 0; i < this._userSurfacesCfg.length; i++) {
+            let userCfg = this._userSurfacesCfg[i];
+            if (this._surfaceMatchesLabel(output.name, activity, vDesktop.name, userCfg.userLabel))
+                return userCfg.cfg;
+        }
+        return null;
+    }
+    _surfaceMatchesLabel(outputName, activity, vDesktopName, label) {
+        const defined = this._definedSurfaces[label];
+        if (defined === undefined)
+            return false;
+        if (defined.outputNames.length !== 0) {
+            let foundIdx = defined.outputNames.indexOf(outputName);
+            if (foundIdx === -1)
+                return false;
+            if (defined.outputNames.length > 1 && foundIdx !== 0) {
+                for (let i = 0; i < foundIdx; i++) {
+                    if (this._liveOutputNames.has(defined.outputNames[i]))
+                        return false;
+                }
+            }
+        }
+        if ((defined.activityId === "" || defined.activityId === activity) &&
+            (defined.virtualDesktopNames.length === 0 ||
+                defined.virtualDesktopNames.indexOf(vDesktopName) !== -1))
+            return true;
+        return false;
+    }
+    _removeById(sourceId, byType) {
+        let removeIds = [];
+        for (let id of Object.keys(this._store)) {
+            if ((byType === "vDesktopId" && this._store[id].vDesktop.id === sourceId) ||
+                (byType === "activityId" && this._store[id].activity === sourceId))
+                removeIds.push(id);
+        }
+        LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.surfaceChanged, "removeById", `remove from surface store by ${byType} next surfaces: ${removeIds.map((id) => this._store[id].toString()).join("#")}`);
+        removeIds.forEach((id) => {
+            delete this._store[id];
+        });
+    }
+    _applyUsrDefSurfaces(userConfig) {
+        for (const line of userConfig) {
+            const eqIdx = line.indexOf("=");
+            if (eqIdx === -1) {
+                warning(`Invalid defined surface: "${line}" — missing "=" (expected: label=Surface)`);
+                continue;
+            }
+            const label = line.slice(0, eqIdx).trim();
+            if (label.length === 0) {
+                warning(`Invalid defined surface: "${line}" — label is empty`);
+                continue;
+            }
+            const surface = line.slice(eqIdx + 1).trim();
+            const parts = surface.split(":").map((p) => p.trim());
+            if (parts.length > 3) {
+                warning(`Invalid defined surface: "${line}" — too many colons (expected: outputs[:vDesktops[:activity]])`);
+                continue;
+            }
+            const outputStr = parts[0];
+            const outputNames = outputStr
+                .split(",")
+                .map((o) => o.trim())
+                .filter((o) => o.length > 0);
+            const virtualDesktopNames = parts.length >= 2
+                ? parts[1]
+                    .split(",")
+                    .map((d) => d.trim())
+                    .filter((d) => d.length > 0)
+                : [];
+            const activityId = parts.length >= 3 ? parts[2] : "";
+            const entries = {
+                label,
+                outputNames,
+                virtualDesktopNames,
+                activityId,
+            };
+            if (this._definedSurfaces[label] !== undefined) {
+                warning(`Duplicate label "${label}" — overwriting previous definition`);
+            }
+            this._definedSurfaces[label] = entries;
+        }
+    }
+    getSurfacesUserCfg() {
+        let userCfg = [];
+        for (const line of CONFIG.srfDefaultConfig) {
+            const colonIdx = line.indexOf(":");
+            if (colonIdx === -1) {
+                warning(`Invalid surface config: "${line}" — missing ":" (expected: label:param=value,...)`);
+                continue;
+            }
+            const label = line.slice(0, colonIdx).trim();
+            if (label.length === 0) {
+                warning(`Invalid surface config: "${line}" — label is empty`);
+                continue;
+            }
+            const paramsStr = line.slice(colonIdx + 1).trim();
+            const rawCfg = paramsStr.length > 0
+                ? paramsStr
+                    .split(",")
+                    .map((p) => p.trim())
+                    .filter((p) => p.length > 0)
+                : [];
+            const validatedCfg = KWinSurfaceStore.validateUserCfg(rawCfg);
+            const defined = this._definedSurfaces[label];
+            if (defined === undefined) {
+                warning(`Surface config label "${label}" not found in defined surfaces`);
+                continue;
+            }
+            userCfg.push(new SurfaceCfg(label, validatedCfg));
+        }
+        return userCfg;
+    }
+    static validateUserCfg(rawCfg) {
+        let errors = [];
+        const cfgFields = ["cp", "capacity", "oc", "overcapacity"];
+        const cfgPossibleValues = "cp=6,oc=false";
+        let surfaceCfg = {
+            capacity: 99,
+            isOvercapacityCandidate: true,
+        };
+        rawCfg.forEach((part) => {
+            let splittedPart = part.split("=").map((p) => p.trim().toLowerCase());
+            if (splittedPart.length !== 2) {
+                errors.push(`"${part}" have to has the one equal sign`);
+                return;
+            }
+            const [userCfgField, userValue] = splittedPart;
+            if (userCfgField.length === 0 || userValue.length === 0) {
+                errors.push(`"${part}" can not have empty field or value`);
+                return;
+            }
+            if (cfgFields.indexOf(userCfgField) < 0) {
+                errors.push(`"${userCfgField}" has unknown parameter. Possible parameters: ${cfgFields.join(",")}.Possible values: ${cfgPossibleValues}`);
+                return;
+            }
+            switch (userCfgField) {
+                case "cp":
+                case "capacity":
+                    const value = validateNumber(userValue, 1, 99);
+                    if (value instanceof Err) {
+                        errors.push(`splittedPart[0]: ${value}`);
+                        break;
+                    }
+                    surfaceCfg["capacity"] = value;
+                    break;
+                case "oc":
+                case "overcapacity":
+                    surfaceCfg["isOvercapacityCandidate"] =
+                        userValue === "false" || userValue === "disable" ? false : true;
+                    break;
+                default:
+                    errors.push(`"${part}" has unknown parameter. Possible parameters: ${cfgFields.join(",")}`);
+                    return;
+            }
+        });
+        if (errors.length > 0) {
+            warning(errors.join("\n"));
+        }
+        return surfaceCfg;
+    }
 }
 class KWinSurface {
     static getHash(s) {
@@ -1660,49 +3726,410 @@ class KWinSurface {
         }
         return `${hash}`;
     }
-    static generateId(screenName, activity, desktopName) {
-        let path = screenName;
-        if (KWINCONFIG.layoutPerActivity)
+    get isOvercapacityCandidate() {
+        return this._isOvercapacityCandidate;
+    }
+    static generateId(output, activity, vDesktop, isLayoutId = false) {
+        let path = output.name;
+        if (isLayoutId) {
+            if (KWINCONFIG.layoutPerActivity)
+                path += "@" + activity;
+            if (KWINCONFIG.layoutPerDesktop)
+                path += "#" + vDesktop.id;
+        }
+        else {
             path += "@" + activity;
-        if (KWINCONFIG.layoutPerDesktop)
-            path += "#" + desktopName;
+            path += "#" + vDesktop.id;
+        }
         return KWinSurface.getHash(path);
     }
-    constructor(output, activity, desktop, workspace) {
-        this.id = KWinSurface.generateId(output.name, activity, desktop.id);
+    get workingArea() {
+        const output = this.output;
+        if (outputIsAlive(output)) {
+            try {
+                const area = this._workspace.clientArea(0, output, this.vDesktop);
+                this._lastWorkingArea = toRect(area);
+                return this._lastWorkingArea;
+            }
+            catch (e) {
+            }
+        }
+        LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.surfaceChanged, "workingArea", `output ${this.outputName} is gone; using cached workingArea`);
+        return this._lastWorkingArea !== null
+            ? this._lastWorkingArea
+            : new Rect(0, 0, 0, 0);
+    }
+    get capacity() {
+        return this._capacity;
+    }
+    set capacity(capacity) {
+        this._capacity = capacity;
+    }
+    get output() {
+        if (!outputIsAlive(this._output)) {
+            const live = findOutputByName(this._workspace, this.outputName);
+            if (live !== null)
+                this._output = live;
+        }
+        return this._output;
+    }
+    set output(value) {
+        this._output = value;
+    }
+    constructor(output, activity, vDesktop, workspace, surfaceConfig, surfaceStore) {
+        this.id = KWinSurface.generateId(output, activity, vDesktop);
+        this.layoutId = KWinSurface.generateId(output, activity, vDesktop, true);
         this.ignore =
             KWINCONFIG.ignoreActivity.indexOf(activity) >= 0 ||
                 KWINCONFIG.ignoreScreen.indexOf(output.name) >= 0 ||
-                KWINCONFIG.ignoreVDesktop.indexOf(desktop.name) >= 0;
-        this.workingArea = toRect(workspace.clientArea(0, output, desktop));
-        this.output = output;
+                KWINCONFIG.ignoreVDesktop.indexOf(vDesktop.name) >= 0;
+        this.outputName = output.name;
+        this._output = output;
         this.activity = activity;
-        this.desktop = desktop;
+        this.vDesktop = vDesktop;
+        this._workspace = workspace;
+        this._surfaceStore = surfaceStore;
+        this._capacity =
+            typeof (surfaceConfig === null || surfaceConfig === void 0 ? void 0 : surfaceConfig.capacity) === "number"
+                ? surfaceConfig.capacity
+                : null;
+        this._isOvercapacityCandidate =
+            typeof (surfaceConfig === null || surfaceConfig === void 0 ? void 0 : surfaceConfig.isOvercapacityCandidate) === "boolean"
+                ? surfaceConfig.isOvercapacityCandidate
+                : true;
+        this._lastWorkingArea = null;
+    }
+    isFit(label) {
+        return this._surfaceStore.isFit(this, label);
     }
     getParams() {
-        return [this.output.name, this.activity, this.desktop.name];
+        return [this.outputName, this.activity, this.vDesktop.name];
     }
     next() {
         return null;
     }
     toString() {
         return ("KWinSurface(" +
-            [this.output.name, this.activity, this.desktop.name].join(", ") +
+            [this.outputName, this.activity, this.vDesktop.name].join(", ") +
             ")");
     }
 }
-class KWinWindow {
+function parseShortcutConf(lines) {
+    const result = [];
+    const shortcutNames = {};
+    for (const name of Object.keys(Shortcuts)) {
+        shortcutNames[name.toLowerCase()] = name;
+    }
+    const actionNames = {};
+    for (const key of Object.keys(KrohnkiteAction)) {
+        const action = KrohnkiteAction[key];
+        actionNames[action.toLowerCase()] = action;
+    }
+    for (const line of lines) {
+        const trimmed = line.trim();
+        if (!trimmed)
+            continue;
+        if (trimmed.startsWith("#"))
+            continue;
+        const parts = trimmed.split(":");
+        if (parts.length !== 2) {
+            warning(`parseShortcutConf: invalid format in "${trimmed}"`);
+            continue;
+        }
+        const shortcutStrs = separate(parts[0], ",");
+        if (shortcutStrs.length === 0) {
+            warning(`parseShortcutConf: empty shortcut list in "${trimmed}"`);
+            continue;
+        }
+        const shortcuts = [];
+        let valid = true;
+        for (const s of shortcutStrs) {
+            const name = shortcutNames[s.toLowerCase()];
+            if (name === undefined) {
+                warning(`parseShortcutConf: unknown shortcut "${s}" in "${trimmed}"`);
+                valid = false;
+                break;
+            }
+            shortcuts.push(name);
+        }
+        if (!valid)
+            continue;
+        let mainAction = null;
+        let registerAction = null;
+        let sequenceTime = null;
+        const flags = separate(parts[1], ",");
+        for (const flag of flags) {
+            const eqIdx = flag.indexOf("=");
+            if (eqIdx < 0) {
+                warning(`parseShortcutConf: invalid flag "${flag}" in "${trimmed}"`);
+                valid = false;
+                break;
+            }
+            const key = flag.slice(0, eqIdx).trim().toLowerCase();
+            const rawVal = flag.slice(eqIdx + 1).trim();
+            switch (key) {
+                case "mainaction":
+                case "ma": {
+                    const action = actionNames[rawVal.toLowerCase()];
+                    if (action === undefined) {
+                        warning(`parseShortcutConf: unknown action "${rawVal}" in "${trimmed}"`);
+                        valid = false;
+                        break;
+                    }
+                    mainAction = action;
+                    break;
+                }
+                case "registeraction":
+                case "ra": {
+                    const action = actionNames[rawVal.toLowerCase()];
+                    if (action === undefined) {
+                        warning(`parseShortcutConf: unknown action "${rawVal}" in "${trimmed}"`);
+                        valid = false;
+                        break;
+                    }
+                    registerAction = action;
+                    break;
+                }
+                case "sequencetime":
+                case "st": {
+                    const t = validateNumber(rawVal, 0, 9999);
+                    if (t instanceof Err) {
+                        warning(`parseShortcutConf: invalid sequence time "${rawVal}" in "${trimmed}"`);
+                        valid = false;
+                        break;
+                    }
+                    sequenceTime = t;
+                    break;
+                }
+                default:
+                    warning(`parseShortcutConf: unknown flag "${flag}" in "${trimmed}"`);
+                    valid = false;
+                    break;
+            }
+            if (!valid)
+                break;
+        }
+        if (!valid)
+            continue;
+        if (mainAction === null && registerAction === null) {
+            warning(`parseShortcutConf: no action flag (mainaction/registeraction) in "${trimmed}"`);
+            continue;
+        }
+        result.push({ shortcuts, mainAction, registerAction, sequenceTime });
+    }
+    return result;
+}
+function parseFloatConfig(lines) {
+    const result = [];
+    for (const line of lines) {
+        const trimmed = line.trim();
+        if (!trimmed)
+            continue;
+        if (trimmed.startsWith("#"))
+            continue;
+        const parts = trimmed.split(":");
+        const classList = parts[0].trim();
+        if (classList) {
+            const rawParts = classList.split(",");
+            const classes = rawParts.map((c) => c.trim()).filter((c) => c !== "");
+            if (classes.length < rawParts.length) {
+                warning(`parseFloatConfig: empty class name in list "${classList}"`);
+                continue;
+            }
+        }
+        let title = "";
+        let paramsStr = "";
+        if (parts.length === 2) {
+            paramsStr = parts[1];
+        }
+        else if (parts.length === 3) {
+            title = parts[1];
+            paramsStr = parts[2];
+        }
+        else if (parts.length > 3) {
+            warning(`parseFloatConfig: invalid format in "${trimmed}"`);
+            continue;
+        }
+        const entry = {
+            class: classList,
+            title,
+            shouldFloat: true,
+            auto: false,
+            width: null,
+            height: null,
+            leftIndent: null,
+            topIndent: null,
+            stepWidth: null,
+            stepHeight: null,
+        };
+        if (paramsStr) {
+            const params = separate(paramsStr, ",");
+            for (const param of params) {
+                const eqIdx = param.indexOf("=");
+                const key = eqIdx >= 0
+                    ? param.slice(0, eqIdx).trim().toLowerCase()
+                    : param.trim().toLowerCase();
+                const rawVal = eqIdx >= 0
+                    ? param
+                        .slice(eqIdx + 1)
+                        .trim()
+                        .toLowerCase()
+                    : "";
+                switch (key) {
+                    case "shouldfloat":
+                    case "f":
+                        entry.shouldFloat = rawVal === "true" || rawVal === "1";
+                        break;
+                    case "auto":
+                    case "a":
+                        entry.auto = rawVal === "true" || rawVal === "1";
+                        break;
+                    case "width":
+                    case "w": {
+                        const w = parseNumber(rawVal, false);
+                        if (w instanceof Err) {
+                            warning(`parseFloatConfig: invalid width "${rawVal}"`);
+                        }
+                        else {
+                            const vw = validateNumber(w, 1, 100);
+                            if (vw instanceof Err) {
+                                warning(`parseFloatConfig: width out of range: ${rawVal}`);
+                            }
+                            else {
+                                entry.width = vw;
+                            }
+                        }
+                        break;
+                    }
+                    case "height":
+                    case "h": {
+                        const h = parseNumber(rawVal, false);
+                        if (h instanceof Err) {
+                            warning(`parseFloatConfig: invalid height "${rawVal}"`);
+                        }
+                        else {
+                            const vh = validateNumber(h, 1, 100);
+                            if (vh instanceof Err) {
+                                warning(`parseFloatConfig: height out of range: ${rawVal}`);
+                            }
+                            else {
+                                entry.height = vh;
+                            }
+                        }
+                        break;
+                    }
+                    case "leftindent":
+                    case "li":
+                    case "left": {
+                        let unit = "px";
+                        let numStr = rawVal;
+                        if (rawVal.endsWith("%")) {
+                            unit = "%";
+                            numStr = rawVal.slice(0, -1);
+                        }
+                        else if (rawVal.endsWith("px")) {
+                            numStr = rawVal.slice(0, -2);
+                        }
+                        const l = parseNumber(numStr, true);
+                        if (l instanceof Err) {
+                            warning(`parseFloatConfig: invalid left indent "${rawVal}"`);
+                        }
+                        else {
+                            entry.leftIndent = { value: l, unit };
+                        }
+                        break;
+                    }
+                    case "topindent":
+                    case "ti":
+                    case "top": {
+                        let unit = "px";
+                        let numStr = rawVal;
+                        if (rawVal.endsWith("%")) {
+                            unit = "%";
+                            numStr = rawVal.slice(0, -1);
+                        }
+                        else if (rawVal.endsWith("px")) {
+                            numStr = rawVal.slice(0, -2);
+                        }
+                        const t = parseNumber(numStr, true);
+                        if (t instanceof Err) {
+                            warning(`parseFloatConfig: invalid top indent "${rawVal}"`);
+                        }
+                        else {
+                            entry.topIndent = { value: t, unit };
+                        }
+                        break;
+                    }
+                    case "stepwidth":
+                    case "sw": {
+                        const sw = parseNumber(rawVal, false);
+                        if (sw instanceof Err) {
+                            warning(`parseFloatConfig: invalid step width "${rawVal}"`);
+                        }
+                        else {
+                            const vsw = validateNumber(sw, 0, 100);
+                            if (vsw instanceof Err) {
+                                warning(`parseFloatConfig: step width out of range: ${rawVal}`);
+                            }
+                            else {
+                                entry.stepWidth = vsw;
+                            }
+                        }
+                        break;
+                    }
+                    case "stepheight":
+                    case "sh": {
+                        const sh = parseNumber(rawVal, false);
+                        if (sh instanceof Err) {
+                            warning(`parseFloatConfig: invalid step height "${rawVal}"`);
+                        }
+                        else {
+                            const vsh = validateNumber(sh, 0, 100);
+                            if (vsh instanceof Err) {
+                                warning(`parseFloatConfig: step height out of range: ${rawVal}`);
+                            }
+                            else {
+                                entry.stepHeight = vsh;
+                            }
+                        }
+                        break;
+                    }
+                    default:
+                        warning(`parseFloatConfig: unknown param "${key}"`);
+                }
+            }
+        }
+        result.push(entry);
+    }
+    return result;
+}
+class DriverWindow {
     static generateID(w) {
         return w.internalId.toString();
     }
+    get isActive() {
+        return this.window.active;
+    }
     get fullScreen() {
         return this.window.fullScreen;
+    }
+    get floatGeometry() {
+        if (this._floatGeometry === null) {
+            this._floatGeometry = this._getInitFloatGeometry();
+        }
+        return this._floatGeometry;
+    }
+    set floatGeometry(value) {
+        this._floatGeometry = value;
     }
     get geometry() {
         return toRect(this.window.frameGeometry);
     }
     get windowClassName() {
         return this.window.resourceClass;
+    }
+    get windowCaption() {
+        return this.window.caption;
     }
     get shouldIgnore() {
         if (this.window.deleted)
@@ -1712,7 +4139,7 @@ class KWinWindow {
             this.isIgnoredByConfig);
     }
     get shouldFloat() {
-        return (this.isFloatByConfig ||
+        return (this.floatConfig.shouldFloat ||
             (CONFIG.floatSkipPager && this.window.skipPager) ||
             this.window.modal ||
             this.window.transient ||
@@ -1723,9 +4150,12 @@ class KWinWindow {
     get minimized() {
         return this.window.minimized;
     }
+    get nativeFloatGeometry() {
+        return this._nativeFloatGeometry;
+    }
     get surface() {
         let activity;
-        let desktop;
+        let vDesktop;
         if (this.window.activities.length === 0)
             activity = this.workspace.currentActivity;
         else if (this.window.activities.indexOf(this.workspace.currentActivity) >= 0)
@@ -1733,23 +4163,26 @@ class KWinWindow {
         else
             activity = this.window.activities[0];
         if (this.window.desktops.length === 1) {
-            desktop = this.window.desktops[0];
+            vDesktop = this.window.desktops[0];
         }
         else if (this.window.desktops.length === 0) {
-            desktop = this.workspace.currentDesktop;
+            vDesktop = this.workspace.currentDesktop;
         }
         else {
             if (this.window.desktops.indexOf(this.workspace.currentDesktop) >= 0)
-                desktop = this.workspace.currentDesktop;
+                vDesktop = this.workspace.currentDesktop;
             else
-                desktop = this.window.desktops[0];
+                vDesktop = this.window.desktops[0];
         }
-        return new KWinSurface(this.window.output, activity, desktop, this.workspace);
+        return this._surfaceStore.getSurface(this.resolvedOutput, activity, vDesktop);
+    }
+    get resolvedOutput() {
+        return resolveWindowOutput(this.workspace, this.window);
     }
     set surface(srf) {
         const ksrf = srf;
-        if (this.window.desktops[0] !== ksrf.desktop)
-            this.window.desktops = [ksrf.desktop];
+        if (this.window.desktops[0] !== ksrf.vDesktop)
+            this.window.desktops = [ksrf.vDesktop];
         if (this.window.activities[0] !== ksrf.activity)
             this.window.activities = [ksrf.activity];
     }
@@ -1765,28 +4198,51 @@ class KWinWindow {
             height: this.window.maxSize.height,
         };
     }
-    constructor(window, workspace) {
+    get srfTime() {
+        if (this._srfTime.time === null)
+            this._srfTime.time = getTime();
+        return this._srfTime.time;
+    }
+    constructor(window, workspace, surfaceStore) {
         this.workspace = workspace;
+        this._surfaceStore = surfaceStore;
+        this._srfTime = { time: null, srfId: null };
+        this._movePointerToCenter = {
+            isMove: false,
+            time: 0,
+        };
         this.window = window;
-        this.id = KWinWindow.generateID(window);
+        this.isCommittedEver = false;
+        this._nativeFloatGeometry = toRect(window.frameGeometry);
+        this._floatGeometry = null;
+        this.id = DriverWindow.generateID(window);
         this.maximized = false;
         this.noBorderManaged = false;
         this.noBorderOriginal = window.noBorder;
+        this.layerManaged = false;
+        this.keepAboveOriginal = window.keepAbove;
+        this.keepBelowOriginal = window.keepBelow;
+        this.minimizedManaged = false;
+        this.minimizedOriginal = window.minimized;
+        this.floatConfig = this._getFloatConfig(window);
         this.isIgnoredByConfig =
-            KWinWindow.isContain(KWINCONFIG.ignoreClass, window.resourceClass) ||
-                KWinWindow.isContain(KWINCONFIG.ignoreClass, window.resourceName) ||
+            DriverWindow.isContain(KWINCONFIG.ignoreClass, window.resourceClass) ||
+                DriverWindow.isContain(KWINCONFIG.ignoreClass, window.resourceName) ||
                 matchWords(this.window.caption, KWINCONFIG.ignoreTitle) >= 0 ||
-                KWinWindow.isContain(KWINCONFIG.ignoreRole, window.windowRole) ||
+                DriverWindow.isContain(KWINCONFIG.ignoreRole, window.windowRole) ||
                 (KWINCONFIG.tileNothing &&
-                    KWinWindow.isContain(KWINCONFIG.tilingClass, window.resourceClass));
-        this.isFloatByConfig =
-            KWinWindow.isContain(KWINCONFIG.floatingClass, window.resourceClass) ||
-                KWinWindow.isContain(KWINCONFIG.floatingClass, window.resourceName) ||
-                matchWords(this.window.caption, KWINCONFIG.floatingTitle) >= 0;
+                    !DriverWindow.isContain(KWINCONFIG.tilingClass, window.resourceClass));
     }
-    commit(geometry, noBorder, windowLayer) {
+    moveMouseToFocus() {
+        const time = getTime();
+        this._movePointerToCenter.isMove = this.isActive;
+        this._movePointerToCenter.time = time;
+    }
+    commit(ctx, geometry, noBorder, windowLayer) {
+        if (!this.window || this.window.deleted)
+            return;
         LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.window, "KwinWindow#commit", `geometry:${geometry}, noBorder:${noBorder}, windowLayer:${windowLayer}`);
-        if (this.window.move || this.window.resize)
+        if (this.window.resize)
             return;
         if (noBorder !== undefined) {
             if (!this.noBorderManaged && noBorder)
@@ -1800,6 +4256,7 @@ class KWinWindow {
             this.noBorderManaged = noBorder;
         }
         if (windowLayer !== undefined) {
+            this.layerManaged = true;
             if (windowLayer === 2)
                 this.window.keepAbove = true;
             else if (windowLayer === 0)
@@ -1812,39 +4269,152 @@ class KWinWindow {
         if (geometry !== undefined) {
             geometry = this.adjustGeometry(geometry);
             if (KWINCONFIG.preventProtrusion) {
-                const area = toRect(this.workspace.clientArea(0, this.window.output, this.workspace.currentDesktop));
-                if (!area.includes(geometry)) {
-                    const x = geometry.x + Math.min(area.maxX - geometry.maxX, 0);
-                    const y = geometry.y + Math.min(area.maxY - geometry.maxY, 0);
-                    geometry = new Rect(x, y, geometry.width, geometry.height);
-                    geometry = this.adjustGeometry(geometry);
+                const winOutput = this.resolvedOutput;
+                const area = toRect(this.workspace.clientArea(0, winOutput, this.workspace.currentDesktop));
+                if (geometry.x < area.x &&
+                    ctx.getNeighborOutput("left", winOutput) === null) {
+                    geometry.x = area.x;
                 }
+                if (geometry.y < area.y &&
+                    ctx.getNeighborOutput("up", winOutput) === null) {
+                    geometry.y = area.y;
+                }
+                if (geometry.maxX > area.maxX &&
+                    ctx.getNeighborOutput("right", winOutput) === null) {
+                    if (geometry.width > area.width) {
+                        geometry.x = area.x;
+                        geometry.width = area.width;
+                    }
+                    else {
+                        geometry.x = area.maxX - geometry.width;
+                    }
+                }
+                if (geometry.maxY > area.maxY &&
+                    ctx.getNeighborOutput("down", winOutput) === null) {
+                    if (geometry.height > area.height) {
+                        geometry.y = area.y;
+                        geometry.height = area.height;
+                    }
+                    else {
+                        geometry.y = area.maxY - geometry.height;
+                    }
+                }
+                geometry = this.adjustGeometry(geometry);
             }
             if (this.window.deleted)
                 return;
             this.window.frameGeometry = toQRect(geometry);
+            if (this._movePointerToCenter.isMove) {
+                this._movePointerToCenter.isMove = false;
+                if (CONFIG.movePointerOnFocus) {
+                    if (getTime() - this._movePointerToCenter.time < 100) {
+                        DBUS.moveMouseToFocus(20);
+                    }
+                }
+            }
         }
     }
     toString() {
-        return ("KWin(" +
-            this.window.internalId.toString() +
-            "." +
-            this.window.resourceClass +
-            ")");
+        return `${debugWin(this.window)}`;
+    }
+    setMinimizedByScript(minimized) {
+        if (this.window.deleted)
+            return;
+        if (!this.minimizedManaged) {
+            this.minimizedOriginal = this.window.minimized;
+            this.minimizedManaged = true;
+        }
+        this.window.minimized = minimized;
+    }
+    dispose() {
+        if (!this.window || this.window.deleted)
+            return;
+        try {
+            if (this.noBorderManaged)
+                this.window.noBorder = this.noBorderOriginal;
+            if (this.layerManaged) {
+                this.window.keepAbove = this.keepAboveOriginal;
+                this.window.keepBelow = this.keepBelowOriginal;
+            }
+            if (this.minimizedManaged)
+                this.window.minimized = this.minimizedOriginal;
+        }
+        catch (_) {
+        }
+        this.noBorderManaged = false;
+        this.layerManaged = false;
+        this.minimizedManaged = false;
     }
     visible(srf) {
         const ksrf = srf;
         return (!this.window.deleted &&
             !this.window.minimized &&
             (this.window.onAllDesktops ||
-                this.window.desktops.indexOf(ksrf.desktop) !== -1) &&
+                this.window.desktops.indexOf(ksrf.vDesktop) !== -1) &&
             (this.window.activities.length === 0 ||
                 this.window.activities.indexOf(ksrf.activity) !== -1) &&
-            this.window.output === ksrf.output);
+            this.resolvedOutput === ksrf.output);
+    }
+    updateSrfTime(srfId) {
+        if (srfId !== this._srfTime.srfId) {
+            this._srfTime.srfId = srfId;
+            this._srfTime.time = getTime();
+        }
+    }
+    _getFloatConfig(window) {
+        var _a, _b, _c, _d, _e, _f;
+        const configs = CONFIG.floatConfig.config;
+        const defaults = {
+            shouldFloat: false,
+            auto: CONFIG.floatAsDefault,
+            width: this._nativeFloatGeometry.width,
+            height: this._nativeFloatGeometry.height,
+            leftIndent: { value: this._nativeFloatGeometry.x, unit: "px" },
+            topIndent: { value: this._nativeFloatGeometry.y, unit: "px" },
+            stepWidth: CONFIG.floatConfig.sizeStepWidth,
+            stepHeight: CONFIG.floatConfig.sizeStepHeight,
+        };
+        if (!configs || configs.length === 0)
+            return defaults;
+        for (const cfg of configs) {
+            if (cfg.class) {
+                const classes = cfg.class
+                    .split(",")
+                    .map((c) => c.trim())
+                    .filter((c) => c !== "");
+                if (classes.length > 0) {
+                    if (!DriverWindow.isContain(classes, window.resourceClass) &&
+                        !DriverWindow.isContain(classes, window.resourceName))
+                        continue;
+                }
+            }
+            if (cfg.title) {
+                if (!DriverWindow.isContain([cfg.title], window.caption))
+                    continue;
+            }
+            return {
+                shouldFloat: cfg.shouldFloat,
+                auto: cfg.auto,
+                width: (_a = cfg.width) !== null && _a !== void 0 ? _a : this._nativeFloatGeometry.width,
+                height: (_b = cfg.height) !== null && _b !== void 0 ? _b : this._nativeFloatGeometry.height,
+                leftIndent: (_c = cfg.leftIndent) !== null && _c !== void 0 ? _c : {
+                    value: this._nativeFloatGeometry.x,
+                    unit: "px",
+                },
+                topIndent: (_d = cfg.topIndent) !== null && _d !== void 0 ? _d : {
+                    value: this._nativeFloatGeometry.y,
+                    unit: "px",
+                },
+                stepWidth: (_e = cfg.stepWidth) !== null && _e !== void 0 ? _e : CONFIG.floatConfig.sizeStepWidth,
+                stepHeight: (_f = cfg.stepHeight) !== null && _f !== void 0 ? _f : CONFIG.floatConfig.sizeStepHeight,
+            };
+        }
+        return defaults;
     }
     static isContain(filterList, s) {
         for (let filterWord of filterList) {
-            if (filterWord[0] === "[" && filterWord[filterWord.length - 1] === "]") {
+            if (filterWord.startsWith("[") &&
+                filterWord[filterWord.length - 1] === "]") {
                 if (s
                     .toLowerCase()
                     .includes(filterWord.toLowerCase().slice(1, filterWord.length - 1)))
@@ -1868,146 +4438,242 @@ class KWinWindow {
         }
         return new Rect(geometry.x, geometry.y, width, height);
     }
-}
-function debugWin(win) {
-    var w_props = [
-        { name: "caption", opt: win.caption },
-        { name: "output.name", opt: win.output.name },
-        { name: "resourceName", opt: win.resourceName },
-        { name: "resourceClass", opt: win.resourceClass },
-        { name: "skipPager", opt: win.skipPager },
-        { name: "desktopWindow", opt: win.desktopWindow },
-        { name: "windowRole", opt: win.windowRole },
-        { name: "windowType", opt: win.windowType },
-        { name: "pid", opt: win.pid },
-        { name: "internalId", opt: win.internalId },
-        { name: "stackingOrder", opt: win.stackingOrder },
-        { name: "size", opt: win.size },
-        { name: "width", opt: win.width },
-        { name: "height", opt: win.height },
-        { name: "dock", opt: win.dock },
-        { name: "toolbar", opt: win.toolbar },
-        { name: "menu", opt: win.menu },
-        { name: "dialog", opt: win.dialog },
-        { name: "splash", opt: win.splash },
-        { name: "utility", opt: win.utility },
-        { name: "dropdownMenu", opt: win.dropdownMenu },
-        { name: "popupMenu", opt: win.popupMenu },
-        { name: "tooltip", opt: win.tooltip },
-        { name: "notification", opt: win.notification },
-        { name: "criticalNotification", opt: win.criticalNotification },
-        { name: "appletPopup", opt: win.appletPopup },
-        { name: "onScreenDisplay", opt: win.onScreenDisplay },
-        { name: "comboBox", opt: win.comboBox },
-        { name: "managed", opt: win.managed },
-        { name: "popupWindow", opt: win.popupWindow },
-        { name: "outline", opt: win.outline },
-        { name: "fullScreenable", opt: win.fullScreenable },
-        { name: "closeable", opt: win.closeable },
-        { name: "minimizable", opt: win.minimizable },
-        { name: "specialWindow", opt: win.specialWindow },
-        { name: "modal", opt: win.modal },
-        { name: "resizeable", opt: win.resizeable },
-        { name: "minimized", opt: win.minimized },
-        { name: "tile", opt: win.tile },
-        { name: "minSize", opt: win.minSize },
-        { name: "maxSize", opt: win.maxSize },
-        { name: "transient", opt: win.transient },
-        { name: "transientFor", opt: win.transientFor },
-        { name: "maximizable", opt: win.maximizable },
-        { name: "maximizeMode", opt: win.maximizeMode },
-        { name: "moveable", opt: win.moveable },
-        { name: "moveableAcrossScreens", opt: win.moveableAcrossScreens },
-        { name: "hidden", opt: win.hidden },
-        { name: "keepAbove", opt: win.keepAbove },
-        { name: "keepBelow", opt: win.keepBelow },
-        { name: "opacity", opt: win.opacity },
-    ];
-    var s = "kwin window props:";
-    w_props.forEach((el) => {
-        if (typeof el.opt !== "undefined" &&
-            (el.opt || el.opt === 0 || el.opt === "0")) {
-            s += "<";
-            s += el.name;
-            s += ": ";
-            s += el.opt;
-            s += "> ";
+    _getInitFloatGeometry() {
+        var _a, _b, _c, _d;
+        let outputGeometry = this.resolvedOutput.geometry;
+        if (CONFIG.floatConfig === null) {
+            return toRect(outputGeometry);
         }
-    });
-    return s;
+        const cfg = this.floatConfig;
+        const nativeW = this._nativeFloatGeometry.width;
+        const nativeH = this._nativeFloatGeometry.height;
+        const nativeX = this._nativeFloatGeometry.x;
+        const nativeY = this._nativeFloatGeometry.y;
+        const cfgWidth = (_a = cfg.width) !== null && _a !== void 0 ? _a : nativeW;
+        const cfgHeight = (_b = cfg.height) !== null && _b !== void 0 ? _b : nativeH;
+        const defaultLeft = { value: nativeX, unit: "px" };
+        const defaultTop = { value: nativeY, unit: "px" };
+        const cfgLeft = (_c = cfg.leftIndent) !== null && _c !== void 0 ? _c : defaultLeft;
+        const cfgTop = (_d = cfg.topIndent) !== null && _d !== void 0 ? _d : defaultTop;
+        const hasCustomWidth = cfg.width !== null && cfg.width !== nativeW;
+        const hasCustomHeight = cfg.height !== null && cfg.height !== nativeH;
+        const hasCustomLeft = cfg.leftIndent !== null &&
+            (cfg.leftIndent.value !== nativeX || cfg.leftIndent.unit !== "px");
+        const hasCustomTop = cfg.topIndent !== null &&
+            (cfg.topIndent.value !== nativeY || cfg.topIndent.unit !== "px");
+        let width = hasCustomWidth
+            ? cfgWidth
+            : CONFIG.floatConfig.isNativeSizeOverride
+                ? outputGeometry.width * (CONFIG.floatConfig.floatWidth / 100)
+                : nativeW;
+        let height = hasCustomHeight
+            ? cfgHeight
+            : CONFIG.floatConfig.isNativeSizeOverride
+                ? outputGeometry.height * (CONFIG.floatConfig.floatHeight / 100)
+                : nativeH;
+        let x;
+        let y;
+        if (hasCustomLeft) {
+            if (cfgLeft.unit === "%") {
+                x = outputGeometry.x + outputGeometry.width * (cfgLeft.value / 100);
+            }
+            else {
+                x = cfgLeft.value;
+            }
+        }
+        else if (hasCustomWidth) {
+            x = outputGeometry.x + outputGeometry.width / 2 - width / 2;
+        }
+        else {
+            x = outputGeometry.x + outputGeometry.width / 2 - width / 2;
+        }
+        if (hasCustomTop) {
+            if (cfgTop.unit === "%") {
+                y = outputGeometry.y + outputGeometry.height * (cfgTop.value / 100);
+            }
+            else {
+                y = cfgTop.value;
+            }
+        }
+        else if (hasCustomHeight) {
+            y = outputGeometry.y + outputGeometry.height / 2 - height / 2;
+        }
+        else {
+            y = outputGeometry.y + outputGeometry.height / 2 - height / 2;
+        }
+        if (!this.window.resizeable) {
+            if (this.window.maxSize.width < width) {
+                x = x + (width - this.window.maxSize.width) / 2;
+                width = this.window.maxSize.width;
+            }
+            if (this.window.maxSize.height < height) {
+                y = y + (height - this.window.maxSize.height) / 2;
+                height = this.window.maxSize.height;
+            }
+        }
+        else {
+            if (this.window.minSize.width > outputGeometry.width) {
+                width = this.window.minSize.width;
+                x = outputGeometry.x;
+            }
+            if (this.window.minSize.height > outputGeometry.height) {
+                height = this.window.minSize.height;
+                y = outputGeometry.y;
+            }
+            if (CONFIG.floatConfig.randomize) {
+                x =
+                    x +
+                        getRandomInt((x - outputGeometry.x) * (CONFIG.floatConfig.randomWidth / 100), true);
+                y =
+                    y +
+                        getRandomInt((y - outputGeometry.y) * (CONFIG.floatConfig.randomHeight / 100), true);
+            }
+        }
+        return new Rect(x, y, width, height);
+    }
 }
+const LayoutShortcutIds = {
+    ["SetTileLayout"]: "TileLayout",
+    ["SetMonocleLayout"]: "MonocleLayout",
+    ["SetThreeColumnLayout"]: "ThreeColumnLayout",
+    ["SetSpreadLayout"]: "SpreadLayout",
+    ["SetStairLayout"]: "StairLayout",
+    ["SetFloatingLayout"]: "FloatingLayout",
+    ["SetQuarterLayout"]: "QuarterLayout",
+    ["SetStackedLayout"]: "StackedLayout",
+    ["SetColumnsLayout"]: "ColumnsLayout",
+    ["SetSpiralLayout"]: "SpiralLayout",
+    ["SetBinaryTreeLayout"]: "BinaryTreeLayout",
+    ["SetCascadeLayout"]: "CascadeLayout",
+};
 class TilingController {
     constructor(engine) {
         this.engine = engine;
-        this.isDragging = false;
-        this.dragCompleteTime = null;
+        this.dragAction = null;
     }
-    onSurfaceUpdate(ctx) {
-        this.engine.arrange(ctx);
+    onSurfaceUpdate(ctx, reason) {
+        this.engine.arrange(ctx, reason, getMethodName());
     }
-    onCurrentActivityChanged(ctx) {
-        this.engine.arrange(ctx);
+    onCurrentActivityChanged(ctx, reason) {
+        this.engine.arrange(ctx, reason, getMethodName());
     }
-    onCurrentSurfaceChanged(ctx) {
-        this.engine.arrange(ctx);
-    }
-    onWindowAdded(ctx, window) {
+    onWindowAdded(ctx, window, reason) {
         this.engine.manage(window);
-        if (window.tileable) {
+        if (window.isTileable) {
             const srf = ctx.currentSurface;
             const tiles = this.engine.windows.getVisibleTiles(srf);
-            const layoutCapcity = this.engine.layouts.getCurrentLayout(srf).capacity;
-            if (layoutCapcity !== undefined && tiles.length > layoutCapcity) {
-                const nsrf = ctx.currentSurface.next();
-                if (nsrf) {
-                    window.surface = nsrf;
-                    ctx.currentSurface = nsrf;
-                }
-            }
         }
-        this.engine.arrange(ctx);
+        if (window.state !== WindowState.NativeMaximized &&
+            window.state !== WindowState.NativeFullscreen)
+            this.engine.arrange(ctx, reason, getMethodName());
     }
-    onWindowSkipPagerChanged(ctx, window, skipPager) {
+    onWindowSkipPagerChanged(ctx, window, skipPager, reason) {
         if (skipPager)
             window.state = WindowState.Floating;
         else
             window.state = WindowState.Undecided;
-        this.engine.arrange(ctx);
+        this.engine.arrange(ctx, reason, getMethodName());
     }
-    onWindowRemoved(ctx, window) {
+    onWindowRemoved(ctx, window, reason) {
+        if (this.dragAction !== null && this.dragAction.window === window)
+            this.finishDrag(ctx);
         this.engine.unmanage(window);
-        this.engine.arrange(ctx);
+        this.engine.arrange(ctx, reason, getMethodName());
     }
     onWindowMoveStart(window) {
     }
     onWindowMove(window) {
     }
-    onWindowDragging(ctx, window, windowRect) {
-        if (this.isDragging)
+    onWindowDragging(ctx, window, windowRect, reason) {
+        if (!(window.isTiled || window.isDocked))
             return;
-        if (this.dragCompleteTime !== null &&
-            Date.now() - this.dragCompleteTime < 100)
-            return;
-        const srf = ctx.currentSurface;
-        const layout = this.engine.layouts.getCurrentLayout(srf);
-        if (!layout.drag)
-            return;
-        if (window.state === WindowState.Tiled) {
-            window.setDraggingState();
+        const srf = window.surface;
+        const workingArea = srf.workingArea.clone();
+        const draggingRect = toRect(windowRect);
+        const mousePointer = ctx.cursorPosition || draggingRect.activationPoint;
+        const middlePointer = ctx.cursorPosition || draggingRect.center;
+        const markActionTime = () => {
+            if (this.dragAction === null)
+                return;
+            this.dragAction.actionTime = getTime();
+        };
+        const getDragAction = () => {
+            window.isDragging = true;
+            const initialState = window.state;
+            return {
+                result: { isProcessed: false, isArrangeNeeded: false },
+                actionTime: getTime(),
+                srf,
+                initialSrfId: srf.id,
+                workingArea,
+                tilesArea: null,
+                window,
+                dockTarget: null,
+                mousePointer,
+                middlePointer,
+                swapping: { window: null, position: null },
+                initialState,
+                initialDockPosition: initialState === WindowState.Docked ? window.dock.position : null,
+                isLayoutHasDragStep: false,
+            };
+        };
+        if (this.dragAction === null) {
+            window.window.commit(ctx, new Rect(window.actualGeometry.x, window.actualGeometry.y, Math.max(window.minSize.width, workingArea.width * 0.25), Math.max(window.minSize.height, workingArea.height * 0.25)));
+            this.dragAction = getDragAction();
         }
-        if (window.state === WindowState.Dragging) {
-            if (layout.drag(new EngineContext(ctx, this.engine), toRect(windowRect), window, srf.workingArea)) {
-                this.engine.arrange(ctx);
+        else {
+            if (window === this.dragAction.window) {
+                this.dragAction.actionTime = getTime();
+                this.dragAction.mousePointer = mousePointer;
+                this.dragAction.middlePointer = middlePointer;
+                this.dragAction.srf = srf;
+                this.dragAction.workingArea = workingArea;
             }
-            this.dragCompleteTime = Date.now();
+            else {
+                this.finishDrag(ctx);
+                this.dragAction = getDragAction();
+            }
         }
-        this.isDragging = false;
+        this.dragAction.result = { isProcessed: false, isArrangeNeeded: false };
+        this.dragAction.dockTarget = null;
+        this.engine.docks.drag(this.dragAction);
+        if (this.dragAction.result.isProcessed) {
+            if (this.dragAction.result.isArrangeNeeded)
+                this.engine.arrange(ctx, reason, getMethodName());
+            this.updateDragPreview(ctx);
+            return markActionTime();
+        }
+        const layout = this.engine.layouts.getCurrentLayout(srf);
+        if (!layout.drag) {
+            this.updateDragPreview(ctx);
+            return markActionTime();
+        }
+        this.dragAction.isLayoutHasDragStep = true;
+        layout.drag(new EngineContext(ctx, this.engine), this.dragAction);
+        if (this.dragAction.result.isArrangeNeeded)
+            this.engine.arrange(ctx, reason, getMethodName());
+        this.updateDragPreview(ctx);
+        return markActionTime();
     }
-    onWindowMoveOver(ctx, window) {
-        if (window.state === WindowState.Dragging) {
-            window.setState(WindowState.Tiled);
-            this.engine.arrange(ctx);
+    updateDragPreview(ctx) {
+        const dragAction = this.dragAction;
+        if (dragAction === null ||
+            dragAction.dockTarget === null ||
+            dragAction.window.state !== WindowState.Docked) {
+            ctx.hideDragPreview();
             return;
+        }
+        ctx.showDragPreview(toRect(dragAction.srf.output.geometry), dragAction.window.geometry);
+    }
+    onWindowMoveOver(ctx, window, reason) {
+        window.isDragging = false;
+        if (this.dragAction !== null && this.dragAction.window === window) {
+            const isLayoutHasDragStep = this.dragAction.isLayoutHasDragStep;
+            this.finishDrag(ctx);
+            if (isLayoutHasDragStep) {
+                this.engine.arrange(ctx, reason, `${getMethodName()}:windowState=${window.state}`);
+                return;
+            }
         }
         if (window.state === WindowState.Tiled) {
             const tiles = this.engine.windows.getVisibleTiles(ctx.currentSurface);
@@ -2015,7 +4681,7 @@ class TilingController {
             const targets = tiles.filter((tile) => tile !== window && tile.actualGeometry.includesPoint(cursorPos));
             if (targets.length === 1) {
                 this.engine.windows.swap(window, targets[0]);
-                this.engine.arrange(ctx);
+                this.engine.arrange(ctx, reason, `${getMethodName()}:windowState=${window.state}`);
                 return;
             }
         }
@@ -2025,48 +4691,64 @@ class TilingController {
             if (distance > 30) {
                 window.floatGeometry = window.actualGeometry;
                 window.state = WindowState.Floating;
-                this.engine.arrange(ctx);
+                this.engine.arrange(ctx, reason, `${getMethodName()}:windowState=${window.state}:keepTilingOnDrag=${CONFIG.keepTilingOnDrag}`);
                 return;
             }
         }
-        window.commit();
+        window.commit(ctx);
+    }
+    finishDrag(ctx) {
+        const dragAction = this.dragAction;
+        if (dragAction === null)
+            return;
+        ctx.hideDragPreview();
+        const { window, initialState, swapping } = dragAction;
+        this.dragAction = null;
+        if (window.isAlive()) {
+            window.isDragging = false;
+            if (window.state !== initialState)
+                window.previousState = initialState;
+        }
+        if (swapping.window !== null &&
+            swapping.window.isAlive() &&
+            swapping.window.state !== WindowState.Docked)
+            swapping.window.previousState = WindowState.Docked;
     }
     onWindowResizeStart(window) {
     }
-    onWindowResize(ctx, window) {
+    onWindowResize(ctx, window, reason) {
         if (CONFIG.adjustLayout &&
             CONFIG.adjustLayoutLive &&
             window.state === WindowState.Tiled) {
             this.engine.adjustLayout(window);
-            this.engine.arrange(ctx);
+            this.engine.arrange(ctx, reason, `${getMethodName()}:windowState=${window.state}`);
         }
         else if (window.state === WindowState.Docked) {
             this.engine.adjustDock(window);
-            this.engine.arrange(ctx);
+            this.engine.arrange(ctx, reason, `${getMethodName()}:windowState=${window.state}`);
         }
     }
-    onWindowResizeOver(ctx, window) {
-        if (CONFIG.adjustLayout && window.tiled) {
+    onWindowResizeOver(ctx, window, reason) {
+        if (CONFIG.adjustLayout && window.isTiled) {
             this.engine.adjustLayout(window);
-            this.engine.arrange(ctx);
+            this.engine.arrange(ctx, reason, `${getMethodName()}:windowState=${window.state}`);
         }
         else if (window.state === WindowState.Docked) {
             this.engine.adjustDock(window);
-            this.engine.arrange(ctx);
+            this.engine.arrange(ctx, reason, `${getMethodName()}:windowState=${window.state}`);
         }
         else if (!CONFIG.adjustLayout)
             this.engine.enforceSize(ctx, window);
     }
-    onWindowMaximizeChanged(ctx, window) {
-        this.engine.arrange(ctx);
+    onWindowMaximizeChanged(ctx, window, reason) {
+        this.engine.arrange(ctx, reason, getMethodName());
     }
     onWindowGeometryChanged(ctx, window) {
+        LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.bufferGeometryChanged, "enforceSize", `Window: id:${window.id} actualGeometry: ${window.actualGeometry}, commitGeometry:${window.geometry}`, { winClass: [`${window.window.window.resourceClass}`] });
         this.engine.enforceSize(ctx, window);
     }
-    onWindowChanged(ctx, window, comment) {
+    onWindowChanged(ctx, window, reason, comment) {
         if (window) {
-            if (comment === "unminimized")
-                ctx.currentWindow = window;
             const workingArea = window.surface.workingArea;
             if (window.floatGeometry.width > workingArea.width) {
                 window.floatGeometry.width = workingArea.width;
@@ -2078,192 +4760,177 @@ class TilingController {
                 workingArea.x + (workingArea.width - window.floatGeometry.width) / 2;
             window.floatGeometry.y =
                 workingArea.y + (workingArea.height - window.floatGeometry.height) / 2;
-            this.engine.arrange(ctx);
+            this.engine.arrange(ctx, reason, `${getMethodName()}:windowState=${window.state}`);
         }
     }
     onWindowFocused(ctx, window) {
-        window.timestamp = new Date().getTime();
+        window.focusTime = getTime();
     }
     onDesktopsChanged(ctx, window) {
         if (window.state !== WindowState.Docked)
             window.state = WindowState.Undecided;
     }
-    onShortcut(ctx, input, data) {
-        if (CONFIG.directionalKeyMode === "dwm") {
-            switch (input) {
-                case Shortcut.FocusUp:
-                    input = Shortcut.FocusNext;
-                    break;
-                case Shortcut.FocusDown:
-                    input = Shortcut.FocusPrev;
-                    break;
-                case Shortcut.FocusLeft:
-                    input = Shortcut.DWMLeft;
-                    break;
-                case Shortcut.FocusRight:
-                    input = Shortcut.DWMRight;
-                    break;
-            }
-        }
-        else if (CONFIG.directionalKeyMode === "focus") {
-            switch (input) {
-                case Shortcut.ShiftUp:
-                    input = Shortcut.SwapUp;
-                    break;
-                case Shortcut.ShiftDown:
-                    input = Shortcut.SwapDown;
-                    break;
-                case Shortcut.ShiftLeft:
-                    input = Shortcut.SwapLeft;
-                    break;
-                case Shortcut.ShiftRight:
-                    input = Shortcut.SwapRight;
-                    break;
-            }
-        }
+    onShortcut(ctx, action, reason) {
+        if (action === null)
+            return;
+        let isArrangeNeeded = true;
+        let currentCapacity;
         const window = ctx.currentWindow;
-        if (window !== null &&
-            window.state === WindowState.Docked &&
-            this.engine.handleDockShortcut(ctx, window, input)) {
-            this.engine.arrange(ctx);
+        if (this.engine.handleDockWinShortcut(ctx, window, action, reason) ||
+            this.engine.handleFloatWinShortcut(ctx, window, action) ||
+            this.engine.handleLayoutShortcut(ctx, action, reason) ||
+            this.engine.handleTiledWinShortcut(ctx, window, action, reason)) {
+            if (CONFIG.movePointerOnFocus) {
+                window === null || window === void 0 ? void 0 : window.moveMouseToFocus();
+            }
             return;
         }
-        else if (this.engine.handleLayoutShortcut(ctx, input, data)) {
-            this.engine.arrange(ctx);
-            return;
-        }
-        switch (input) {
-            case Shortcut.FocusNext:
+        switch (action) {
+            case KrohnkiteAction.AlterRegister:
+            case KrohnkiteAction.ToggleRegister:
+                ctx.alterRegisterHdl(action);
+                isArrangeNeeded = false;
+                break;
+            case KrohnkiteAction.FocusNext:
                 this.engine.focusOrder(ctx, +1);
+                isArrangeNeeded = false;
                 break;
-            case Shortcut.FocusPrev:
+            case KrohnkiteAction.FocusPrev:
                 this.engine.focusOrder(ctx, -1);
+                isArrangeNeeded = false;
                 break;
-            case Shortcut.FocusUp:
-                this.engine.focusDir(ctx, "up");
+            case KrohnkiteAction.FocusUp:
+                isArrangeNeeded = this.engine.focusDir(ctx, "up");
                 break;
-            case Shortcut.FocusDown:
-                this.engine.focusDir(ctx, "down");
+            case KrohnkiteAction.FocusDown:
+                isArrangeNeeded = this.engine.focusDir(ctx, "down");
                 break;
-            case Shortcut.DWMLeft:
-            case Shortcut.FocusLeft:
-                this.engine.focusDir(ctx, "left");
+            case KrohnkiteAction.DWMLeft:
+            case KrohnkiteAction.FocusLeft:
+                isArrangeNeeded = this.engine.focusDir(ctx, "left");
                 break;
-            case Shortcut.DWMRight:
-            case Shortcut.FocusRight:
-                this.engine.focusDir(ctx, "right");
+            case KrohnkiteAction.DWMRight:
+            case KrohnkiteAction.FocusRight:
+                isArrangeNeeded = this.engine.focusDir(ctx, "right");
                 break;
-            case Shortcut.GrowWidth:
-                if (window) {
-                    if (window.state === WindowState.Docked && window.dock) {
-                        if (window.dock.position === DockPosition.left ||
-                            window.dock.position === DockPosition.right) {
-                            window.dock.cfg.vWide += 1;
-                        }
-                        else if (window.dock.position === DockPosition.top ||
-                            window.dock.position === DockPosition.bottom) {
-                            window.dock.cfg.hWide += 1;
-                        }
-                    }
-                    else
-                        this.engine.resizeWindow(window, "east", 1);
-                }
-                break;
-            case Shortcut.ShrinkWidth:
-                if (window) {
-                    if (window.state === WindowState.Docked && window.dock) {
-                        if (window.dock.position === DockPosition.left ||
-                            window.dock.position === DockPosition.right) {
-                            window.dock.cfg.vWide -= 1;
-                        }
-                        else if (window.dock.position === DockPosition.top ||
-                            window.dock.position === DockPosition.bottom) {
-                            window.dock.cfg.hWide -= 1;
-                        }
-                    }
-                    else
-                        this.engine.resizeWindow(window, "east", -1);
-                }
-                break;
-            case Shortcut.GrowHeight:
-                if (window) {
-                    if (window.state === WindowState.Docked && window.dock) {
-                        if (window.dock.position === DockPosition.left ||
-                            window.dock.position === DockPosition.right) {
-                            window.dock.cfg.vHeight += 1;
-                        }
-                        else if (window.dock.position === DockPosition.top ||
-                            window.dock.position === DockPosition.bottom) {
-                            window.dock.cfg.hHeight += 1;
-                        }
-                    }
-                    else
-                        this.engine.resizeWindow(window, "south", 1);
-                }
-                break;
-            case Shortcut.ShrinkHeight:
-                if (window) {
-                    if (window.state === WindowState.Docked && window.dock) {
-                        if (window.dock.position === DockPosition.left ||
-                            window.dock.position === DockPosition.right) {
-                            window.dock.cfg.vHeight -= 1;
-                        }
-                        else if (window.dock.position === DockPosition.top ||
-                            window.dock.position === DockPosition.bottom) {
-                            window.dock.cfg.hHeight -= 1;
-                        }
-                    }
-                    else
-                        this.engine.resizeWindow(window, "south", -1);
-                }
-                break;
-            case Shortcut.ShiftUp:
-                if (window)
-                    this.engine.swapOrder(window, -1);
-                break;
-            case Shortcut.ShiftDown:
-                if (window)
-                    this.engine.swapOrder(window, +1);
-                break;
-            case Shortcut.SwapUp:
-                this.engine.swapDirOrMoveFloat(ctx, "up");
-                break;
-            case Shortcut.SwapDown:
-                this.engine.swapDirOrMoveFloat(ctx, "down");
-                break;
-            case Shortcut.SwapLeft:
-                this.engine.swapDirOrMoveFloat(ctx, "left");
-                break;
-            case Shortcut.SwapRight:
-                this.engine.swapDirOrMoveFloat(ctx, "right");
-                break;
-            case Shortcut.SetMaster:
+            case KrohnkiteAction.SetMaster:
                 if (window)
                     this.engine.setMaster(window);
                 break;
-            case Shortcut.ToggleFloat:
+            case KrohnkiteAction.ToggleFloat:
                 if (window)
                     this.engine.toggleFloat(window);
                 break;
-            case Shortcut.ToggleFloatAll:
+            case KrohnkiteAction.ToggleFloatAll:
                 this.engine.floatAll(ctx, ctx.currentSurface);
                 break;
-            case Shortcut.NextLayout:
+            case KrohnkiteAction.NextLayout:
                 this.engine.cycleLayout(ctx, 1);
                 break;
-            case Shortcut.PreviousLayout:
+            case KrohnkiteAction.PreviousLayout:
                 this.engine.cycleLayout(ctx, -1);
                 break;
-            case Shortcut.SetLayout:
-                if (typeof data === "string")
-                    this.engine.setLayout(ctx, data);
+            case KrohnkiteAction.SetTileLayout:
+            case KrohnkiteAction.SetMonocleLayout:
+            case KrohnkiteAction.SetThreeColumnLayout:
+            case KrohnkiteAction.SetSpreadLayout:
+            case KrohnkiteAction.SetStairLayout:
+            case KrohnkiteAction.SetFloatingLayout:
+            case KrohnkiteAction.SetQuarterLayout:
+            case KrohnkiteAction.SetStackedLayout:
+            case KrohnkiteAction.SetColumnsLayout:
+            case KrohnkiteAction.SetSpiralLayout:
+            case KrohnkiteAction.SetBinaryTreeLayout:
+            case KrohnkiteAction.SetCascadeLayout:
+                this.engine.setLayout(ctx, LayoutShortcutIds[action]);
                 break;
-            case Shortcut.ToggleDock:
+            case KrohnkiteAction.ToggleDock:
                 if (window)
                     this.engine.toggleDock(window);
                 break;
+            case KrohnkiteAction.RaiseSurfaceCapacity:
+                currentCapacity = this.engine.raiseSurfaceCapacity(ctx);
+                ctx.showNotification(`Surface capacity: ${currentCapacity !== null ? currentCapacity : "unlimited"}`);
+                break;
+            case KrohnkiteAction.LowerSurfaceCapacity:
+                currentCapacity = this.engine.lowerSurfaceCapacity(ctx);
+                ctx.showNotification(`Surface capacity: ${currentCapacity}`);
+                break;
+            case KrohnkiteAction.ResetSurfaceCapacity:
+                currentCapacity = this.engine.ResetSurfaceCapacity(ctx);
+                ctx.showNotification(`Surface capacity: ${currentCapacity !== null ? currentCapacity : "unlimited"}`);
+                isArrangeNeeded = false;
+                break;
         }
-        this.engine.arrange(ctx);
+        if (isArrangeNeeded) {
+            this.engine.arrange(ctx, reason, `${getMethodName()}:shortcut=${action}`);
+        }
+        if (CONFIG.movePointerOnFocus) {
+            window === null || window === void 0 ? void 0 : window.moveMouseToFocus();
+        }
+    }
+}
+class RelocationWindows {
+    get totalNumWinsPrepareToOutput() {
+        let total = 0;
+        for (const windows of this.toOutputs) {
+            total += windows.length;
+        }
+        return total;
+    }
+    get totalNumWinsPrepareToVDesktop() {
+        let total = 0;
+        for (const windows of this.toVDesktops) {
+            total += windows.length;
+        }
+        return total;
+    }
+    get getWinsSendingToOutput() {
+        let total = 0;
+        for (const [output, windows] of this.toOutputs.entries()) {
+            for (const w of windows) {
+                if (output.name === w.surface.output.name && w.isSendingToOutput)
+                    total++;
+            }
+        }
+        return total;
+    }
+    get isExistSendingWindowsToOutput() {
+        for (const [output, windows] of this.toOutputs.entries()) {
+            for (const w of windows) {
+                if (output.name !== w.surface.output.name && w.isSendingToOutput)
+                    return true;
+            }
+        }
+        return false;
+    }
+    get isExistTransferWindowsToVDesktop() {
+        for (const windows of this.toVDesktops) {
+            for (const w of windows) {
+                if (w instanceof WindowClass)
+                    return true;
+            }
+        }
+        return false;
+    }
+    constructor() {
+        this.isSending = false;
+        this.startTime = 0;
+        this.toOutputs = new WrapperMap((client) => client.name, (_) => new Array());
+        this.toVDesktops = new WrapperMap((client) => client.id, (_) => new Array());
+        this.activeWindow = null;
+        this.direction = null;
+    }
+    clear() {
+        for (const windows of this.toOutputs) {
+            windows.forEach((w) => (w.isSendingToOutput = false));
+        }
+        this.isSending = false;
+        this.startTime = 0;
+        this.toOutputs.clear();
+        this.toVDesktops.clear();
+        this.activeWindow = null;
+        this.direction = null;
     }
 }
 class TilingEngine {
@@ -2271,6 +4938,9 @@ class TilingEngine {
         this.layouts = new LayoutStore();
         this.windows = new WindowStore();
         this.docks = new DockStore();
+        this.relocationWindows = new RelocationWindows();
+        this.arrangeProcessId = null;
+        this.makeWinActive = null;
         this._defaultGaps = null;
         this._gapsSurfacesCfg = [];
     }
@@ -2309,29 +4979,29 @@ class TilingEngine {
                 break;
         }
     }
-    resizeFloat(window, dir, step) {
+    resizeFloat(ctx, window, dir, step) {
         const srf = window.surface;
-        const hStepSize = srf.workingArea.width * 0.05;
-        const vStepSize = srf.workingArea.height * 0.05;
+        const hStepSize = (srf.workingArea.width * window.window.floatConfig.stepWidth) / 100;
+        const vStepSize = (srf.workingArea.height * window.window.floatConfig.stepHeight) / 100;
         let hStep, vStep;
         switch (dir) {
             case "east":
-                (hStep = step), (vStep = 0);
+                ((hStep = step), (vStep = 0));
                 break;
             case "west":
-                (hStep = -step), (vStep = 0);
+                ((hStep = -step), (vStep = 0));
                 break;
             case "south":
-                (hStep = 0), (vStep = step);
+                ((hStep = 0), (vStep = step));
                 break;
             case "north":
-                (hStep = 0), (vStep = -step);
+                ((hStep = 0), (vStep = -step));
                 break;
         }
         const geometry = window.actualGeometry;
         const width = geometry.width + hStepSize * hStep;
         const height = geometry.height + vStepSize * vStep;
-        window.forceSetGeometry(new Rect(geometry.x, geometry.y, width, height));
+        window.forceSetGeometry(ctx, new Rect(geometry.x, geometry.y, width, height));
     }
     resizeTile(basis, dir, step) {
         const srf = basis.surface;
@@ -2380,94 +5050,357 @@ class TilingEngine {
             layout.adjust(area, this.windows.getVisibleTileables(srf), basis, delta, gaps.between);
         }
     }
-    resizeWindow(window, dir, step) {
-        const state = window.state;
-        if (WindowClass.isFloatingState(state))
-            this.resizeFloat(window, dir, step);
-        else if (WindowClass.isTiledState(state))
-            this.resizeTile(window, dir, step);
-    }
-    arrange(ctx) {
-        ctx.screens.forEach((srf) => {
-            this.arrangeScreen(ctx, srf);
+    arrange(ctx, reason, message) {
+        this.arrangeProcessId = getRandomInt(1000000);
+        if (LOG === null || LOG === void 0 ? void 0 : LOG.isModuleOn(LogModules.arrangeScreen)) {
+            LOG.send(LogModules.arrangeScreen, "ArrangeScreens", `#######Reason: ${reason}:${message} arrangeProcessID:${this.arrangeProcessId}########`);
+        }
+        const surfaces = ctx.currentSurfaces;
+        let screensData = [];
+        surfaces.forEach((srf) => {
+            screensData.push(this.getTileables(srf));
         });
+        if (this._isCheckCapacity(reason) &&
+            (CONFIG.srfExceededToScreen || CONFIG.srfExceededToVDesktop)) {
+            if (this.relocationWindows.isSending) {
+                const time = getTime();
+                if (time - this.relocationWindows.startTime <
+                    TilingEngine.SENDING_WINDOWS_MAX_WAIT_TIME) {
+                    warning(`Method: ${getMethodName()}.Attempt to Check OverCapacityWindows during sending Process.`);
+                    return;
+                }
+                warning(`Method: ${getMethodName()}. OverCapacityWindows sending process is: enabled but SENDING_WINDOWS_MAX_WAIT_TIME is up.`);
+            }
+            this.relocationWindows.clear();
+            screensData.forEach((screenData) => {
+                if (screenData.overCapacity.length > 0) {
+                    CONFIG.srfExceededToScreen &&
+                        this._prepareWindowsMoveToOutput(ctx, screenData);
+                    CONFIG.srfExceededToVDesktop &&
+                        this._prepareOverCapacityWindowsTranferToVDesktop(ctx, screenData);
+                }
+            });
+            if (!this.relocationWindows.isSending &&
+                (this.relocationWindows.totalNumWinsPrepareToOutput > 0 ||
+                    this.relocationWindows.totalNumWinsPrepareToVDesktop > 0)) {
+                this.relocationWindows.activeWindow = ctx.currentWindow;
+                ctx.relocateWindows();
+                this.arrangeProcessId = null;
+                return;
+            }
+        }
+        screensData.forEach((screenData) => {
+            this.arrangeScreen(ctx, screenData, reason, this.arrangeProcessId);
+        });
+        this.arrangeProcessId = null;
     }
-    arrangeScreen(ctx, srf) {
-        const layout = this.layouts.getCurrentLayout(srf);
-        const visibles = this.windows.getVisibleWindows(srf);
-        LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.arrangeScreen, "Begin", `layout: ${layout}, surface: ${srf}, visibles number: ${visibles.length}`);
-        const gaps = this.getGaps(srf);
-        const workingArea = this.docks.render(srf, visibles, srf.workingArea.clone());
+    _isCheckCapacity(reason) {
+        const reasons = [
+            "forcedArrangeScreen",
+            "moveWindowToOutput",
+            "transferWindowToVDesktop",
+            "sendToOutputProcessFinish",
+        ];
+        return !(reason in [reasons]);
+    }
+    _searchAvailableSlotsForOvercapacity(ctx, sourceScreenData, output, screenDataStore, vDesktop) {
+        const overCapacity = sourceScreenData.overCapacity.length;
+        if (overCapacity <= 0)
+            return [];
+        let targetSrf = ctx.getSurface(output, vDesktop);
+        if (targetSrf == null || !targetSrf.isOvercapacityCandidate)
+            return [];
+        if (!screenDataStore.has(targetSrf.id)) {
+            screenDataStore.set(targetSrf.id, this.getTileables(targetSrf));
+        }
+        const sd = screenDataStore.get(targetSrf.id);
+        if (sd.capacity === null || sd.capacity - sd.awaitToMove.length > 0) {
+            const availableSlots = sd.capacity === null
+                ? overCapacity
+                : Math.min(sd.capacity - sd.awaitToMove.length, overCapacity);
+            const windowsToAvailableSlots = sourceScreenData.overCapacity.splice(0, availableSlots);
+            sd.awaitToMove.push(...windowsToAvailableSlots);
+            return windowsToAvailableSlots;
+        }
+        else
+            return [];
+    }
+    _prepareWindowsMoveToOutput(ctx, sourceScreenData, direction) {
+        let alreadyDone = new Set();
+        const screenDataStore = new Map();
+        const sourceOutput = sourceScreenData.srf.output;
+        alreadyDone.add(sourceOutput);
+        let outputQueue = new UniqueLifoFifo();
+        this._getPossibleOutputs(ctx, sourceOutput, outputQueue, alreadyDone, direction);
+        while (sourceScreenData.overCapacity.length > 0 && outputQueue.size !== 0) {
+            let neighborOutput = outputQueue.shift();
+            if (!neighborOutput)
+                return false;
+            const windowsToMove = this._searchAvailableSlotsForOvercapacity(ctx, sourceScreenData, neighborOutput, screenDataStore);
+            const windowsArr = this.relocationWindows.toOutputs.add(neighborOutput);
+            windowsArr.push(...windowsToMove);
+            if (sourceScreenData.overCapacity.length === 0)
+                break;
+            alreadyDone.add(neighborOutput);
+            this._getPossibleOutputs(ctx, neighborOutput, outputQueue, alreadyDone, direction);
+        }
+    }
+    _getPossibleOutputs(ctx, sourceOutput, outputQueue, alreadyDone, direction) {
+        let order;
+        if (direction)
+            order = [direction];
+        else
+            order = CONFIG.srfToScreenOrder;
+        for (let i = 0; i < order.length; i++) {
+            const direction = order[i];
+            const output = ctx.getNeighborOutput(direction, sourceOutput);
+            if (output && !alreadyDone.has(output))
+                outputQueue.push(output);
+        }
+    }
+    _getPossibleVDesktops(ctx, sourceVDesktop, vDesktopsQueue, alreadyDone) {
+        for (let i = 0; i < CONFIG.srfToVDesktopOrder.length; i++) {
+            const direction = CONFIG.srfToScreenOrder[i];
+            const vDesktop = ctx.getNeighborVDesktop(direction, sourceVDesktop);
+            if (vDesktop && !alreadyDone.has(vDesktop))
+                vDesktopsQueue.push(vDesktop);
+        }
+    }
+    _prepareOverCapacityWindowsTranferToVDesktop(ctx, sourceScreenData) {
+        let alreadyDone = new Set();
+        const screenDataStore = new Map();
+        alreadyDone.add(ctx.currentDesktop);
+        let vDesktopsQueue = new UniqueLifoFifo();
+        this._getPossibleVDesktops(ctx, ctx.currentDesktop, vDesktopsQueue, alreadyDone);
+        while (sourceScreenData.overCapacity.length > 0 &&
+            vDesktopsQueue.size !== 0) {
+            let neighborVDesktop = vDesktopsQueue.shift();
+            if (!neighborVDesktop)
+                return;
+            const windowsToTransfer = this._searchAvailableSlotsForOvercapacity(ctx, sourceScreenData, sourceScreenData.srf.output, screenDataStore, neighborVDesktop);
+            if (windowsToTransfer.length !== 0) {
+                const windowsArr = this.relocationWindows.toVDesktops.add(neighborVDesktop);
+                windowsArr.push(...windowsToTransfer);
+            }
+            if (sourceScreenData.overCapacity.length === 0)
+                break;
+            alreadyDone.add(neighborVDesktop);
+            this._getPossibleVDesktops(ctx, neighborVDesktop, vDesktopsQueue, alreadyDone);
+        }
+    }
+    getTileables(srf) {
+        let visibles = this.windows.getVisibleWindows(srf);
         visibles.forEach((window) => {
-            if (window.state === WindowState.Undecided) {
+            window.window.updateSrfTime(srf.id);
+            if (!window.window.isCommittedEver && window.window.floatConfig.auto) {
+                window.state = WindowState.Floating;
+            }
+            else if (window.state === WindowState.Undecided) {
                 window.state = window.shouldFloat
                     ? WindowState.Floating
                     : WindowState.Tiled;
             }
         });
-        const tileables = this.windows.getVisibleTileables(srf);
+        if (LOG === null || LOG === void 0 ? void 0 : LOG.isModuleOn(LogModules.arrangeScreen)) {
+            let mes = "";
+            visibles.forEach((tile) => {
+                mes += `${tile}\n`;
+            });
+            LOG.print(LogModules.arrangeScreen, "visibles", mes);
+        }
+        let tileables = this.windows.getVisibleTileables(srf);
+        const newWins = tileables.filter((t) => !t.window.isCommittedEver);
+        if (CONFIG.newWindowPosition !== "last" &&
+            newWins.length > 0 &&
+            tileables.length > 1) {
+            const anchor = tileables.find((t) => t.window.isCommittedEver);
+            if (anchor) {
+                this.windows.moveGroup(newWins, anchor, CONFIG.newWindowPosition === "second");
+            }
+            else {
+                let bootstrapAnchor = newWins[0];
+                for (const window of newWins.slice(1)) {
+                    const insertAfter = CONFIG.newWindowPosition === "second";
+                    this.windows.move(window, bootstrapAnchor, insertAfter);
+                    if (!insertAfter)
+                        bootstrapAnchor = window;
+                }
+            }
+            tileables = this.windows.getVisibleTileables(srf);
+        }
+        let layout = this.layouts.getCurrentLayout(srf);
+        let capacity;
+        let layoutCap = layout.capacity === undefined ? null : layout.capacity;
+        if (layoutCap === null && srf.capacity === null) {
+            capacity = null;
+        }
+        else if (layoutCap === null || srf.capacity === null) {
+            capacity = layoutCap || srf.capacity;
+        }
+        else {
+            capacity = Math.min(layoutCap, srf.capacity);
+        }
+        let overCapacity;
+        if (capacity !== null && tileables.length > capacity) {
+            const excess = tileables.length - capacity;
+            const sorted = [...tileables].sort((a, b) => a.window.srfTime - b.window.srfTime);
+            if (!CONFIG.srfIsMoveOldestWindows) {
+                overCapacity = sorted.slice(-excess);
+            }
+            else {
+                overCapacity = sorted.slice(0, excess);
+            }
+            const toRemove = new Set(overCapacity);
+            for (let i = tileables.length - 1; i >= 0; i--) {
+                if (toRemove.has(tileables[i]))
+                    tileables.splice(i, 1);
+            }
+            capacity = 0;
+        }
+        else {
+            overCapacity = [];
+            capacity = capacity === null ? null : capacity - tileables.length;
+        }
+        let screenData = {
+            visibles: visibles,
+            tileables: tileables,
+            layout: layout,
+            workingArea: this.docks.render(srf, visibles, srf.workingArea.clone()),
+            srf: srf,
+            overCapacity: overCapacity,
+            capacity: capacity,
+            awaitToMove: [],
+        };
+        LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.arrangeScreen, "getTileablesReturn", `output: ${srf.output.name}\n visibles number: ${visibles.length}\n tileables.length: ${screenData.tileables.length}, workingArea: ${screenData.workingArea}, layout: ${screenData.layout},capacity: ${capacity}, overCapacity: ${screenData.overCapacity.map((win) => win.window.windowClassName)}`);
+        return screenData;
+    }
+    arrangeScreen(ctx, screenData, reason, processID) {
+        const outputName = screenData.srf.output.name;
+        LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.arrangeScreen, "arrangeScreen", `output:processID: ${outputName}:${processID}`);
+        screenData.overCapacity.forEach((win) => {
+            win.state = WindowState.Floating;
+        });
+        const gaps = this.getGaps(screenData.srf);
         let tilingArea;
-        if ((CONFIG.monocleMaximize && layout instanceof MonocleLayout) ||
-            (tileables.length === 1 && CONFIG.soleWindowNoGaps))
-            tilingArea = workingArea;
-        else if (tileables.length === 1 &&
-            ((CONFIG.soleWindowWidth < 100 && CONFIG.soleWindowWidth > 0) ||
-                (CONFIG.soleWindowHeight < 100 && CONFIG.soleWindowHeight > 0))) {
-            const h_gap = (workingArea.height -
-                workingArea.height * (CONFIG.soleWindowHeight / 100)) /
+        let tileablesLen = screenData.tileables.length;
+        const soleWindowProps = CONFIG.soleWindowOutputOverride[outputName] ||
+            CONFIG.soleWindowDefaultProps;
+        if ((CONFIG.monocleMaximize && screenData.layout instanceof MonocleLayout) ||
+            (tileablesLen === 1 && soleWindowProps.noGaps)) {
+            tilingArea = screenData.workingArea;
+        }
+        else if (tileablesLen === 1 &&
+            (soleWindowProps.width < 100 || soleWindowProps.height < 100)) {
+            const h_gap = (screenData.workingArea.height -
+                screenData.workingArea.height * (soleWindowProps.height / 100)) /
                 2;
-            const v_gap = (workingArea.width -
-                workingArea.width * (CONFIG.soleWindowWidth / 100)) /
+            const v_gap = (screenData.workingArea.width -
+                screenData.workingArea.width * (soleWindowProps.width / 100)) /
                 2;
-            tilingArea = workingArea.gap(v_gap, v_gap, h_gap, h_gap);
+            tilingArea = screenData.workingArea.gap(v_gap, v_gap, h_gap, h_gap);
         }
         else
-            tilingArea = workingArea.gap(gaps.left, gaps.right, gaps.top, gaps.bottom);
-        if (tileables.length > 0)
-            layout.apply(new EngineContext(ctx, this), tileables, tilingArea, gaps.between);
-        if (CONFIG.limitTileWidthRatio > 0 && !(layout instanceof MonocleLayout)) {
-            const maxWidth = Math.floor(workingArea.height * CONFIG.limitTileWidthRatio);
-            tileables
-                .filter((tile) => tile.tiled && tile.geometry.width > maxWidth)
+            tilingArea = screenData.workingArea.gap(gaps.left, gaps.right, gaps.top, gaps.bottom);
+        if (tileablesLen > 0) {
+            let engineCtx = new EngineContext(ctx, this);
+            function layoutApply() {
+                screenData.layout.apply(engineCtx, screenData.tileables, tilingArea, gaps.between);
+                if (LOG === null || LOG === void 0 ? void 0 : LOG.isModuleOn(LogModules.arrangeScreen)) {
+                    let mes = "";
+                    screenData.tileables.forEach((tile) => {
+                        mes += `${tile.id}, state:${tile.state}, commitGeometry:${tile.geometry}\n`;
+                    });
+                    LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.arrangeScreen, "LayoutApply", mes);
+                }
+            }
+            function getNumberTileablesGreaterThenMin(tileables) {
+                let numberOfTiles = 0;
+                tileables.forEach((tile) => {
+                    if (tile.minSize.height > tile.geometry.height ||
+                        tile.minSize.width > tile.geometry.width) {
+                        numberOfTiles++;
+                    }
+                });
+                return numberOfTiles;
+            }
+            layoutApply();
+            if ((CONFIG.unfitGreater || CONFIG.unfitLess) &&
+                ["onWindowResize", "onWindowResizeOver"].indexOf(reason) < 0) {
+                let unfitGreaterQuantity = 0;
+                screenData.tileables = screenData.tileables.filter((tile) => {
+                    if (CONFIG.unfitLess &&
+                        (tile.maxSize.height < tile.geometry.height ||
+                            tile.maxSize.width < tile.geometry.width)) {
+                        LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.arrangeScreen, "unfitLess", `id: ${tile.id} commitGeometry:${tile.geometry}. minSize:${tile.minSize.width}:${tile.minSize.height} - heightUnfit:${tile.minSize.height > tile.geometry.height} widthUnfit: ${tile.minSize.width > tile.geometry.width}, tile.maxSize:${tile.maxSize.width}:${tile.maxSize.height} heightUnfit: ${tile.maxSize.height < tile.geometry.height}, widthUnfit: ${tile.maxSize.width < tile.geometry.width}`);
+                        tile.state = WindowState.Floating;
+                        return false;
+                    }
+                    else if (CONFIG.unfitGreater &&
+                        (tile.minSize.height > tile.geometry.height ||
+                            tile.minSize.width > tile.geometry.width)) {
+                        unfitGreaterQuantity += 1;
+                        return true;
+                    }
+                    else {
+                        return true;
+                    }
+                });
+                if (screenData.tileables.length !== tileablesLen) {
+                    layoutApply();
+                }
+                if (unfitGreaterQuantity > 0) {
+                    LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.arrangeScreen, "UnfitGreater", `unfitGreaterQuantity: ${unfitGreaterQuantity}`);
+                    if (screenData.tileables.length !== tileablesLen) {
+                        unfitGreaterQuantity = getNumberTileablesGreaterThenMin(screenData.tileables);
+                    }
+                    while (screenData.tileables.length > 0 && unfitGreaterQuantity > 0) {
+                        let tile = screenData.tileables.shift();
+                        tile.state = WindowState.Floating;
+                        layoutApply();
+                        unfitGreaterQuantity = getNumberTileablesGreaterThenMin(screenData.tileables);
+                    }
+                }
+            }
+        }
+        if (CONFIG.limitTileWidthRatio > 0 &&
+            !(screenData.layout instanceof MonocleLayout)) {
+            const maxWidth = Math.floor(screenData.workingArea.height * CONFIG.limitTileWidthRatio);
+            screenData.tileables
+                .filter((tile) => tile.isTiled && tile.geometry.width > maxWidth)
                 .forEach((tile) => {
                 const g = tile.geometry;
                 tile.geometry = new Rect(g.x + Math.floor((g.width - maxWidth) / 2), g.y, maxWidth, g.height);
             });
         }
-        if (CONFIG.soleWindowNoBorders && tileables.length === 1) {
-            visibles.forEach((window) => {
+        if (soleWindowProps.noBorders && tileablesLen === 1) {
+            screenData.visibles.forEach((window) => {
                 if (window.state === WindowState.Tiled)
-                    window.commit(CONFIG.soleWindowNoBorders);
+                    window.commit(ctx, soleWindowProps.noBorders);
                 else
-                    window.commit();
+                    window.commit(ctx);
             });
         }
         else {
-            visibles.forEach((window) => window.commit());
+            screenData.visibles.forEach((window) => window.commit(ctx));
         }
-        LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.arrangeScreen, "Finished", `${srf}`);
+        LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.arrangeScreen, "#######################################################Finished", `${screenData.srf}`);
     }
     enforceSize(ctx, window) {
-        if (window.tiled && !window.actualGeometry.equals(window.geometry))
+        if (window.isTiled && !window.actualGeometry.equals(window.geometry))
             ctx.setTimeout(() => {
-                if (window.tiled)
-                    window.commit();
+                if (window.isTiled)
+                    window.commit(ctx);
             }, 10);
     }
     manage(window) {
         if (!window.shouldIgnore) {
+            this.docks.attachWindow(window);
             if (this.docks.isNewWindowHaveDocked(window)) {
                 window.state = WindowState.Docked;
             }
             else
                 window.state = WindowState.Undecided;
-            if (CONFIG.newWindowPosition === 1)
-                this.windows.unshift(window);
-            else if (CONFIG.newWindowPosition === 2) {
-                this.windows.beside_first(window);
-            }
-            else
-                this.windows.push(window);
+            this.windows.push(window);
         }
     }
     unmanage(window) {
@@ -2482,6 +5415,9 @@ class TilingEngine {
             const tiles = this.windows.getVisibleTiles(ctx.currentSurface);
             if (tiles.length > 1)
                 ctx.currentWindow = tiles[0];
+            if (CONFIG.movePointerOnFocus) {
+                DBUS.moveMouseToFocus();
+            }
             return;
         }
         const visibles = this.windows.getVisibleWindows(ctx.currentSurface);
@@ -2490,23 +5426,44 @@ class TilingEngine {
         const idx = visibles.indexOf(window);
         if (!window || idx < 0) {
             ctx.currentWindow = visibles[0];
+            if (CONFIG.movePointerOnFocus) {
+                DBUS.moveMouseToFocus();
+            }
             return;
         }
         const num = visibles.length;
         const newIndex = (idx + (step % num) + num) % num;
         ctx.currentWindow = visibles[newIndex];
+        if (CONFIG.movePointerOnFocus) {
+            DBUS.moveMouseToFocus();
+        }
     }
     focusDir(ctx, dir) {
-        const window = ctx.currentWindow;
-        if (window === null) {
-            const tiles = this.windows.getVisibleTiles(ctx.currentSurface);
-            if (tiles.length > 1)
-                ctx.currentWindow = tiles[0];
-            return;
+        let winTypes = ctx.isRegister ? CONFIG.focusMetaCfg : CONFIG.focusNormalCfg;
+        if (winTypes === 16) {
+            return ctx.focusSpecial(dir);
         }
-        const neighbor = this.getNeighborByDirection(ctx, window, dir);
-        if (neighbor)
-            ctx.currentWindow = neighbor;
+        if (ctx.focusNeighborWindow(dir, winTypes)) {
+            if (CONFIG.movePointerOnFocus) {
+                DBUS.moveMouseToFocus();
+            }
+            return false;
+        }
+        if ((!ctx.isRegister && CONFIG.focusMoveScreensNormal) ||
+            (ctx.isRegister && CONFIG.focusMoveScreensMeta)) {
+            const result = ctx.focusOutput(null, dir, winTypes);
+            if (result) {
+                if (CONFIG.movePointerOnFocus) {
+                    DBUS.moveMouseToCenter();
+                }
+                return false;
+            }
+        }
+        if ((!ctx.isRegister && CONFIG.focusMoveVDesktopsNormal) ||
+            (ctx.isRegister && CONFIG.focusMoveVDesktopsMeta)) {
+            return ctx.focusVDesktop(null, dir, winTypes);
+        }
+        return false;
     }
     swapOrder(window, step) {
         const srf = window.surface;
@@ -2518,76 +5475,203 @@ class TilingEngine {
         const dstWin = visibles[vdst];
         this.windows.move(window, dstWin);
     }
-    swapDirection(ctx, dir) {
-        const window = ctx.currentWindow;
-        if (window === null) {
-            const tiles = this.windows.getVisibleTiles(ctx.currentSurface);
-            if (tiles.length > 1)
-                ctx.currentWindow = tiles[0];
+    _moveTiled(ctx, direction, window) {
+        const neighbor = this.getNeighborByDirection(ctx, window, direction);
+        if (neighbor) {
+            this.windows.swap(window, neighbor);
+            return true;
+        }
+        if (ctx.isRegister
+            ? CONFIG.focusMoveScreensMeta
+            : CONFIG.focusMoveScreensNormal) {
+            const sd = this.getTileables(window.surface);
+            const idx = sd.tileables.indexOf(window);
+            if (idx < 0) {
+                warning(`${getMethodName()}: there is not windows among tileables.`);
+                return false;
+            }
+            sd.overCapacity.push(...sd.tileables.splice(idx, 1));
+            this._prepareWindowsMoveToOutput(ctx, sd, direction);
+            if (!this.relocationWindows.isSending &&
+                this.relocationWindows.totalNumWinsPrepareToOutput > 0) {
+                if (!ctx.relocateWindows())
+                    warning(`${getMethodName()}: window cannot send to direction ${direction}`);
+                return false;
+            }
+        }
+        if (ctx.isRegister
+            ? CONFIG.focusMoveVDesktopsMeta
+            : CONFIG.focusMoveVDesktopsNormal)
+            return ctx.moveWinToVDesktopByDirection(window, direction);
+        return false;
+    }
+    _moveFloat(ctx, window, dir) {
+        function isRelocationReady() {
+            if (relocation.isSending) {
+                if (getTime() - relocation.startTime <=
+                    TilingEngine.SENDING_WINDOWS_MAX_WAIT_TIME) {
+                    warning(`${getMethodName()} Relocation windows in process. relocationWindows.isSending=${relocation.isSending}`);
+                    return false;
+                }
+                else {
+                    warning(`${getMethodName()} Relocation windows with startTime:${relocation.startTime} was canceled.`);
+                    relocation.clear();
+                }
+            }
+            return true;
+        }
+        function floatRelocation(target) {
+            const neighbor = target === "toOutput"
+                ? ctx.getNeighborOutput(dir, srcOutput)
+                : ctx.getNeighborVDesktop(dir);
+            if (neighbor === null)
+                return false;
+            if (!isRelocationReady())
+                return false;
+            const winArr = target === "toOutput"
+                ? relocation.toOutputs.add(neighbor)
+                : relocation.toVDesktops.add(neighbor);
+            winArr.push(window);
+            return true;
+        }
+        const relocation = this.relocationWindows;
+        const srcOutput = window.surface.output;
+        const srf = window.surface;
+        const srfRect = srf.workingArea;
+        const geometry = window.actualGeometry;
+        let x = geometry.x;
+        let y = geometry.y;
+        if ((x === srfRect.x && dir === "left") ||
+            (x === srfRect.maxX - geometry.width && dir === "right") ||
+            (y === srfRect.y && dir === "up") ||
+            (y === srfRect.maxY - geometry.height && dir === "down")) {
+            if ((ctx.isRegister
+                ? CONFIG.focusMoveScreensMeta
+                : CONFIG.focusMoveScreensNormal) &&
+                floatRelocation("toOutput")) {
+                this.relocationWindows.activeWindow = window;
+                this.relocationWindows.direction = dir;
+                ctx.relocateWindows();
+                return;
+            }
+            if ((ctx.isRegister
+                ? CONFIG.focusMoveVDesktopsMeta
+                : CONFIG.focusMoveVDesktopsNormal) &&
+                floatRelocation("toVDesktop")) {
+                this.relocationWindows.activeWindow = window;
+                this.relocationWindows.direction = dir;
+                ctx.relocateWindows();
+            }
             return;
         }
-        const neighbor = this.getNeighborByDirection(ctx, window, dir);
-        if (neighbor)
-            this.windows.swap(window, neighbor);
-    }
-    moveFloat(window, dir) {
-        const srf = window.surface;
-        const hStepSize = srf.workingArea.width * 0.05;
-        const vStepSize = srf.workingArea.height * 0.05;
+        const hStepSize = (srfRect.width * window.window.floatConfig.stepWidth) / 100;
+        const vStepSize = (srfRect.height * window.window.floatConfig.stepHeight) / 100;
         let hStep, vStep;
         switch (dir) {
             case "up":
-                (hStep = 0), (vStep = -1);
+                ((hStep = 0), (vStep = -1));
                 break;
             case "down":
-                (hStep = 0), (vStep = 1);
+                ((hStep = 0), (vStep = 1));
                 break;
             case "left":
-                (hStep = -1), (vStep = 0);
+                ((hStep = -1), (vStep = 0));
                 break;
             case "right":
-                (hStep = 1), (vStep = 0);
+                ((hStep = 1), (vStep = 0));
                 break;
         }
-        const geometry = window.actualGeometry;
-        const x = geometry.x + hStepSize * hStep;
-        const y = geometry.y + vStepSize * vStep;
-        window.forceSetGeometry(new Rect(x, y, geometry.width, geometry.height));
+        x = geometry.x + hStepSize * hStep;
+        y = geometry.y + vStepSize * vStep;
+        if (x < srfRect.x)
+            x = srfRect.x;
+        else if (x + geometry.width > srfRect.maxX)
+            x = srfRect.maxX - geometry.width;
+        if (y < srfRect.y)
+            y = srfRect.y;
+        else if (y + geometry.height > srfRect.maxY)
+            y = srfRect.maxY - geometry.height;
+        if (CONFIG.movePointerOnFocus) {
+            window.moveMouseToFocus();
+        }
+        window.forceSetGeometry(ctx, new Rect(x, y, geometry.width, geometry.height));
     }
-    swapDirOrMoveFloat(ctx, dir) {
+    moveTiledWindow(ctx, dir) {
         const window = ctx.currentWindow;
-        if (!window)
-            return;
-        const state = window.state;
-        if (WindowClass.isFloatingState(state))
-            this.moveFloat(window, dir);
-        else if (WindowClass.isTiledState(state))
-            this.swapDirection(ctx, dir);
+        if (window === null) {
+            const tiles = this.windows.getVisibleTiles(ctx.currentSurface);
+            if (tiles.length > 0)
+                ctx.currentWindow = tiles[0];
+            if (CONFIG.movePointerOnFocus) {
+                DBUS.moveMouseToFocus();
+            }
+            return false;
+        }
+        if (window.isTiled) {
+            return this._moveTiled(ctx, dir, window);
+        }
+        return false;
     }
     toggleDock(window) {
-        window.state =
-            window.state !== WindowState.Docked
-                ? WindowState.Docked
-                : WindowState.Tiled;
+        if (WindowClass.isToggleableState(window.state)) {
+            if (window.isDocked)
+                window.state = window.previousState;
+            else
+                window.state = WindowState.Docked;
+        }
+    }
+    raiseSurfaceCapacity(ctx) {
+        const currentSurface = ctx.currentSurface;
+        if (currentSurface.capacity !== null) {
+            currentSurface.capacity =
+                currentSurface.capacity < 98 ? currentSurface.capacity + 1 : null;
+        }
+        else {
+            let tileables = this.windows.getVisibleTileables(currentSurface);
+            currentSurface.capacity =
+                tileables.length < 98 ? tileables.length + 1 : null;
+        }
+        return currentSurface.capacity;
+    }
+    lowerSurfaceCapacity(ctx) {
+        const currentSurface = ctx.currentSurface;
+        if (currentSurface.capacity !== null) {
+            currentSurface.capacity =
+                currentSurface.capacity > 0 ? currentSurface.capacity - 1 : 0;
+        }
+        else {
+            let tileables = this.windows.getVisibleTileables(currentSurface);
+            currentSurface.capacity = tileables.length > 0 ? tileables.length - 1 : 0;
+        }
+        return currentSurface.capacity;
+    }
+    ResetSurfaceCapacity(ctx) {
+        return (ctx.currentSurface.capacity = null);
     }
     toggleFloat(window) {
-        window.state = !window.tileable ? WindowState.Tiled : WindowState.Floating;
+        if (WindowClass.isToggleableState(window.state)) {
+            if (window.isFloating)
+                window.state = window.previousState;
+            else
+                window.state = WindowState.Floating;
+        }
     }
     floatAll(ctx, srf) {
         const windows = this.windows.getVisibleWindows(srf);
         const numFloats = windows.reduce((count, window) => {
             return window.state === WindowState.Floating ? count + 1 : count;
         }, 0);
-        if (numFloats < windows.length / 2) {
+        if (numFloats === 0) {
             windows.forEach((window) => {
-                window.floatGeometry = window.actualGeometry.gap(4, 4, 4, 4);
-                window.state = WindowState.Floating;
+                if (WindowClass.isToggleableState(window.state))
+                    window.state = WindowState.Floating;
             });
             ctx.showNotification("Float All");
         }
         else {
             windows.forEach((window) => {
-                window.state = WindowState.Tiled;
+                if (WindowClass.isToggleableState(window.state))
+                    window.state = window.previousState;
             });
             ctx.showNotification("Tile All");
         }
@@ -2605,14 +5689,104 @@ class TilingEngine {
         if (layout)
             ctx.showNotification(layout.description);
     }
-    handleLayoutShortcut(ctx, input, data) {
+    handleDockWinShortcut(ctx, window, action, reason) {
+        if (window === null || !window.isDocked)
+            return false;
+        const isHandled = this.docks.handleShortcut(ctx, window, action);
+        if (isHandled) {
+            this.arrange(ctx, reason, `${getMethodName()}:action=${action}`);
+        }
+        return isHandled;
+    }
+    handleFloatWinShortcut(ctx, window, action) {
+        if (window === null || !window.isFloating)
+            return false;
+        switch (action) {
+            case KrohnkiteAction.Increase:
+            case KrohnkiteAction.Decrease:
+                break;
+            case KrohnkiteAction.GrowWidth:
+                this.resizeFloat(ctx, window, "east", 1);
+                break;
+            case KrohnkiteAction.ShrinkWidth:
+                this.resizeFloat(ctx, window, "east", -1);
+                break;
+            case KrohnkiteAction.GrowHeight:
+                this.resizeFloat(ctx, window, "south", 1);
+                break;
+            case KrohnkiteAction.ShrinkHeight:
+                this.resizeFloat(ctx, window, "south", -1);
+                break;
+            case KrohnkiteAction.MoveLeft:
+                this._moveFloat(ctx, window, "left");
+                break;
+            case KrohnkiteAction.MoveUp:
+                this._moveFloat(ctx, window, "up");
+                break;
+            case KrohnkiteAction.MoveRight:
+                this._moveFloat(ctx, window, "right");
+                break;
+            case KrohnkiteAction.MoveDown:
+                this._moveFloat(ctx, window, "down");
+                break;
+            default:
+                return false;
+        }
+        return true;
+    }
+    handleLayoutShortcut(ctx, action, reason) {
         const layout = this.layouts.getCurrentLayout(ctx.currentSurface);
-        if (layout.handleShortcut)
-            return layout.handleShortcut(new EngineContext(ctx, this), input, data);
+        if (layout.handleShortcut) {
+            const isHandled = layout.handleShortcut(new EngineContext(ctx, this), action);
+            if (isHandled) {
+                this.arrange(ctx, reason, `${getMethodName()}:shortcut=${action}`);
+                return true;
+            }
+        }
         return false;
     }
-    handleDockShortcut(ctx, window, input) {
-        return this.docks.handleShortcut(ctx, window, input);
+    handleTiledWinShortcut(ctx, window, action, reason) {
+        if (window === null || !window.isTiled)
+            return false;
+        let isArrangeNeeded = true;
+        switch (action) {
+            case KrohnkiteAction.GrowWidth:
+                this.resizeTile(window, "east", 1);
+                break;
+            case KrohnkiteAction.ShrinkWidth:
+                this.resizeTile(window, "east", -1);
+                break;
+            case KrohnkiteAction.GrowHeight:
+                this.resizeTile(window, "south", 1);
+                break;
+            case KrohnkiteAction.ShrinkHeight:
+                this.resizeTile(window, "south", -1);
+                break;
+            case KrohnkiteAction.SwapUp:
+                this.swapOrder(window, -1);
+                break;
+            case KrohnkiteAction.SwapDown:
+                this.swapOrder(window, +1);
+                break;
+            case KrohnkiteAction.MoveUp:
+                isArrangeNeeded = this.moveTiledWindow(ctx, "up");
+                break;
+            case KrohnkiteAction.MoveDown:
+                isArrangeNeeded = this.moveTiledWindow(ctx, "down");
+                break;
+            case KrohnkiteAction.MoveLeft:
+                isArrangeNeeded = this.moveTiledWindow(ctx, "left");
+                break;
+            case KrohnkiteAction.MoveRight:
+                isArrangeNeeded = this.moveTiledWindow(ctx, "right");
+                break;
+            default:
+                return false;
+        }
+        if (isArrangeNeeded) {
+            this.arrange(ctx, reason, `${getMethodName()}:shortcut=${action}`);
+        }
+        return true;
     }
     getNeighborByDirection(ctx, basis, dir) {
         let vertical;
@@ -2637,8 +5811,8 @@ class TilingEngine {
             default:
                 return null;
         }
-        const candidates = this.windows
-            .getVisibleTiles(ctx.currentSurface)
+        let windows = this.windows.getVisibleTileables(ctx.currentSurface);
+        const candidates = windows
             .filter(vertical
             ? (tile) => tile.geometry.y * sign > basis.geometry.y * sign
             : (tile) => tile.geometry.x * sign > basis.geometry.x * sign)
@@ -2654,19 +5828,20 @@ class TilingEngine {
         const closest = candidates.filter(vertical
             ? (tile) => tile.geometry.y === min
             : (tile) => tile.geometry.x === min);
-        return closest.sort((a, b) => b.timestamp - a.timestamp)[0];
+        return closest.sort((a, b) => b.focusTime - a.focusTime)[0];
     }
     getGaps(srf) {
         if (this._defaultGaps === null) {
             this._defaultGaps = DefaultGapsCfg.instance;
             this._gapsSurfacesCfg = gapsSurfaceCfg.parseGapsUserSurfacesCfg();
         }
-        const surfaceCfg = this._gapsSurfacesCfg.find((surfaceCfg) => surfaceCfg.isFit(srf));
+        const surfaceCfg = this._gapsSurfacesCfg.find((surfaceCfg) => srf.isFit(surfaceCfg.userLabel));
         if (surfaceCfg === undefined)
             return this._defaultGaps;
         return surfaceCfg.cfg;
     }
 }
+TilingEngine.SENDING_WINDOWS_MAX_WAIT_TIME = 100;
 class EngineContext {
     get backend() {
         return this.drvctx.backend;
@@ -2682,7 +5857,7 @@ class EngineContext {
     }
     get surfaceParams() {
         let srf = this.drvctx.currentSurface;
-        return srf.output.name, srf.activity, srf.desktop.name;
+        return (srf.output.name, srf.activity, srf.vDesktop.name);
     }
     constructor(drvctx, engine) {
         this.drvctx = drvctx;
@@ -2693,9 +5868,6 @@ class EngineContext {
     }
     cycleFocus(step) {
         this.engine.focusOrder(this.drvctx, step);
-    }
-    moveWindow(window, target, after) {
-        this.engine.windows.move(window, target, after);
     }
     moveWindowByWinId(window, targetId, after) {
         let target = this.engine.windows.getWindowById(targetId);
@@ -2754,24 +5926,23 @@ class DefaultGapsCfg {
         }
         return DefaultGapsCfg._gapsInstance;
     }
+    static reset() {
+        DefaultGapsCfg._gapsInstance = undefined;
+    }
     cloneAndUpdate(cfg) {
         return Object.assign({}, DefaultGapsCfg.instance, cfg);
     }
 }
 class gapsSurfaceCfg {
-    constructor(outputName, activityId, vDesktopName, cfg) {
-        this.outputName = outputName;
-        this.activityId = activityId;
-        this.vDesktopName = vDesktopName;
+    constructor(label, cfg) {
+        this.label = label;
         this.cfg = cfg;
     }
     isFit(srf) {
-        return ((this.outputName === "" || this.outputName === srf.output.name) &&
-            (this.vDesktopName === "" || this.vDesktopName === srf.desktop.name) &&
-            (this.activityId === "" || this.activityId === srf.activity));
+        return srf.isFit(this.label);
     }
     toString() {
-        return `gapsSurfaceCfg: Output Name: ${this.outputName}, Activity ID: ${this.activityId}, Virtual Desktop Name: ${this.vDesktopName} cfg: ${this.cfg}`;
+        return `gapsSurfaceCfg: Label: ${this.label} cfg: ${this.cfg}`;
     }
     static parseGapsUserSurfacesCfg() {
         let surfacesCfg = [];
@@ -2779,24 +5950,12 @@ class gapsSurfaceCfg {
             return surfacesCfg;
         CONFIG.gapsOverrideConfig.forEach((cfg) => {
             let surfaceCfgString = cfg.split(":").map((part) => part.trim());
-            if ([2, 4].indexOf(surfaceCfgString.length) < 0) {
-                warning(`Invalid Gaps surface config: ${cfg}, config must have one or three colons`);
+            if (surfaceCfgString.length !== 2) {
+                warning(`Invalid Gaps surface config: ${cfg}, config must have exactly one colon (expected: surfaceLabel:left=5,right=10,...)`);
                 return;
             }
-            let outputName = surfaceCfgString[0];
-            let activityId;
-            let vDesktopName;
-            let userCfg;
-            if (surfaceCfgString.length === 4) {
-                activityId = surfaceCfgString[1];
-                vDesktopName = surfaceCfgString[2];
-                userCfg = surfaceCfgString[3];
-            }
-            else {
-                activityId = "";
-                vDesktopName = "";
-                userCfg = surfaceCfgString[1];
-            }
+            let label = surfaceCfgString[0];
+            let userCfg = surfaceCfgString[1];
             let splittedUserCfg = userCfg
                 .split(",")
                 .map((part) => part.trim().toLowerCase());
@@ -2806,7 +5965,7 @@ class gapsSurfaceCfg {
                 return;
             }
             if (Object.keys(partialGapsCfg).length > 0) {
-                surfacesCfg.push(new gapsSurfaceCfg(outputName, activityId, vDesktopName, DefaultGapsCfg.instance.cloneAndUpdate(partialGapsCfg)));
+                surfacesCfg.push(new SurfaceCfg(label, DefaultGapsCfg.instance.cloneAndUpdate(partialGapsCfg)));
             }
         });
         return surfacesCfg;
@@ -2868,10 +6027,10 @@ class LayoutStoreEntry {
     get currentLayout() {
         return this.loadLayout(this.currentID);
     }
-    constructor(outputName, desktopName, activity) {
+    constructor(outputName, desktopName, activity, desktopId) {
         let layouts = CONFIG.layoutOrder.map((layout) => layout.toLowerCase());
         let layouts_str = layouts.map((layout, i) => i + "." + layout + " ");
-        print(`Krohnkite: Screen(output):${outputName}, Desktop(name):${desktopName}, Activity: ${activity}, layouts: ${layouts_str}`);
+        print(`Krohnkite: Screen(output):${outputName}, Desktop(name):${desktopName}(id):${desktopId}, Activity: ${activity}, layouts: ${layouts_str}`);
         this.currentIndex = 0;
         this.currentID = CONFIG.layoutOrder[0];
         CONFIG.screenDefaultLayout.some((entry) => {
@@ -2974,36 +6133,22 @@ class LayoutStore {
         return this.getEntry(srf).setLayout(layoutClassID);
     }
     getEntry(srf) {
-        if (!this.store[srf.id]) {
-            let key_without_activity = KWinSurface.generateId(srf.output.name, "", srf.desktop.id);
+        if (!this.store[srf.layoutId]) {
+            let key_without_activity = KWinSurface.generateId(srf.output, "", srf.vDesktop);
             if (this.store[key_without_activity]) {
-                this.store[srf.id] = this.store[key_without_activity];
+                this.store[srf.layoutId] = this.store[key_without_activity];
                 delete this.store[key_without_activity];
             }
             else {
-                this.store[srf.id] = new LayoutStoreEntry(srf.output.name, srf.desktop.name, srf.activity);
+                this.store[srf.layoutId] = new LayoutStoreEntry(srf.output.name, srf.vDesktop.name, srf.activity, srf.vDesktop.id);
             }
         }
-        return this.store[srf.id];
+        return this.store[srf.layoutId];
     }
 }
-var WindowState;
-(function (WindowState) {
-    WindowState[WindowState["Unmanaged"] = 0] = "Unmanaged";
-    WindowState[WindowState["NativeFullscreen"] = 1] = "NativeFullscreen";
-    WindowState[WindowState["NativeMaximized"] = 2] = "NativeMaximized";
-    WindowState[WindowState["Floating"] = 3] = "Floating";
-    WindowState[WindowState["Maximized"] = 4] = "Maximized";
-    WindowState[WindowState["Tiled"] = 5] = "Tiled";
-    WindowState[WindowState["TiledAfloat"] = 6] = "TiledAfloat";
-    WindowState[WindowState["Undecided"] = 7] = "Undecided";
-    WindowState[WindowState["Dragging"] = 8] = "Dragging";
-    WindowState[WindowState["Docked"] = 9] = "Docked";
-})(WindowState || (WindowState = {}));
 class WindowClass {
     static isTileableState(state) {
-        return (state === WindowState.Dragging ||
-            state === WindowState.Tiled ||
+        return (state === WindowState.Tiled ||
             state === WindowState.Maximized ||
             state === WindowState.TiledAfloat);
     }
@@ -3012,6 +6157,14 @@ class WindowClass {
     }
     static isFloatingState(state) {
         return state === WindowState.Floating || state === WindowState.TiledAfloat;
+    }
+    static isDockedState(state) {
+        return state === WindowState.Docked;
+    }
+    static isToggleableState(state) {
+        return (state === WindowState.Tiled ||
+            state === WindowState.Floating ||
+            state === WindowState.Docked);
     }
     get actualGeometry() {
         return this.window.geometry;
@@ -3022,19 +6175,31 @@ class WindowClass {
     get shouldIgnore() {
         return this.window.shouldIgnore;
     }
-    get tileable() {
+    isAlive() {
+        return !this.window.window.deleted;
+    }
+    get isTileable() {
         return WindowClass.isTileableState(this.state);
     }
-    get tiled() {
+    get isTiled() {
         return WindowClass.isTiledState(this.state);
     }
-    get floating() {
+    get isFloating() {
         return WindowClass.isFloatingState(this.state);
+    }
+    get isDocked() {
+        return WindowClass.isDockedState(this.state);
     }
     get geometryDelta() {
         if (this.geometry === this.actualGeometry)
             return null;
         return RectDelta.fromRects(this.geometry, this.actualGeometry);
+    }
+    get minSize() {
+        return this._minSize;
+    }
+    get maxSize() {
+        return this._maxSize;
     }
     get state() {
         if (this.window.fullScreen)
@@ -3045,21 +6210,23 @@ class WindowClass {
     }
     set state(value) {
         const state = this.state;
-        if (state === value || state === WindowState.Dragging)
+        if (state === value)
             return;
-        if ((state === WindowState.Unmanaged || WindowClass.isTileableState(state)) &&
+        if ((state === WindowState.Unmanaged || this.isTileable || this.isDocked) &&
             WindowClass.isFloatingState(value))
             this.shouldCommitFloat = true;
-        else if (WindowClass.isFloatingState(state) &&
-            WindowClass.isTileableState(value))
+        else if (this.isFloating &&
+            (WindowClass.isTileableState(value) || WindowClass.isDockedState(value)))
             this.floatGeometry = this.actualGeometry;
+        if (state === WindowState.Tiled ||
+            state === WindowState.Floating ||
+            state === WindowState.Docked) {
+            this.previousState = state;
+        }
         this.internalState = value;
     }
-    setDraggingState() {
-        this.internalState = WindowState.Dragging;
-    }
-    setState(value) {
-        this.internalState = value;
+    setTransientState(state) {
+        this.internalState = state;
     }
     get surface() {
         return this.window.surface;
@@ -3083,74 +6250,93 @@ class WindowClass {
     get windowClassName() {
         return this.window.windowClassName;
     }
+    get windowCaption() {
+        return this.window.windowCaption;
+    }
+    get floatGeometry() {
+        return this.window.floatGeometry;
+    }
+    set floatGeometry(value) {
+        this.window.floatGeometry = value;
+    }
+    get dock() {
+        if (this._dock === null)
+            this._dock = this._dockTemplate.clone();
+        return this._dock;
+    }
+    setDockTemplate(template) {
+        this._dockTemplate = template;
+    }
     constructor(window) {
         this.id = window.id;
         this.window = window;
-        this.floatGeometry = window.geometry;
         this.geometry = window.geometry;
-        this.timestamp = 0;
+        this.focusTime = 0;
+        this.isSendingToOutput = false;
+        this.isDragging = false;
         this.internalState = WindowState.Unmanaged;
+        this.previousState = WindowState.Tiled;
         this.shouldCommitFloat = this.shouldFloat;
         this.weightMap = {};
-        this.dock = null;
+        this._dock = null;
+        this._dockTemplate = new Dock(DefaultDockCfg.instance);
         this._minSize = window.minSize;
         this._maxSize = window.maxSize;
     }
-    get minSize() {
-        return this._minSize;
+    toString() {
+        return `Window: id=${this.id}, state: ${this.state}. ${this.window}`;
     }
-    get maxSize() {
-        return this._maxSize;
-    }
-    commit(noBorders) {
+    commit(ctx, noBorders) {
+        if (this.isDragging)
+            return;
+        if (!this.window.isCommittedEver)
+            this.window.isCommittedEver = true;
         const state = this.state;
-        LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.window, "commit", `state: ${WindowState[state]}`);
+        LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.arrangeScreen, "commit", `id: ${this.id}, state: ${state}, floatGeometry: ${this.floatGeometry}, commitGeometry: ${this.geometry}, noBorders: ${noBorders}`);
         switch (state) {
-            case WindowState.Dragging:
-                break;
             case WindowState.NativeMaximized:
-                this.window.commit(undefined, undefined, undefined);
+                this.window.commit(ctx, undefined, undefined, undefined);
                 break;
             case WindowState.NativeFullscreen:
-                this.window.commit(undefined, undefined, 1);
+                this.window.commit(ctx, undefined, undefined, 1);
                 break;
             case WindowState.Floating:
                 if (!this.shouldCommitFloat)
                     break;
-                this.window.commit(this.floatGeometry, false, CONFIG.floatedWindowsLayer);
+                this.window.commit(ctx, this.floatGeometry, false, CONFIG.floatedWindowsLayer);
                 this.shouldCommitFloat = false;
                 break;
             case WindowState.Maximized:
-                this.window.commit(this.geometry, true, 1);
+                this.window.commit(ctx, this.geometry, true, 1);
                 break;
             case WindowState.Tiled:
-                this.window.commit(this.geometry, CONFIG.noTileBorder || Boolean(noBorders), CONFIG.tiledWindowsLayer);
+                this.window.commit(ctx, this.geometry, CONFIG.noTileBorder || Boolean(noBorders), CONFIG.tiledWindowsLayer);
                 break;
             case WindowState.TiledAfloat:
                 if (!this.shouldCommitFloat)
                     break;
-                this.window.commit(this.floatGeometry, false, CONFIG.floatedWindowsLayer);
+                this.window.commit(ctx, this.floatGeometry, false, CONFIG.floatedWindowsLayer);
                 this.shouldCommitFloat = false;
                 break;
             case WindowState.Floating:
-                this.window.commit(this.geometry, CONFIG.noTileBorder || Boolean(noBorders), CONFIG.floatedWindowsLayer);
+                this.window.commit(ctx, this.geometry, CONFIG.noTileBorder || Boolean(noBorders), CONFIG.floatedWindowsLayer);
                 break;
             case WindowState.Docked:
-                this.window.commit(this.geometry, CONFIG.noTileBorder, CONFIG.tiledWindowsLayer);
+                this.window.commit(ctx, this.geometry, CONFIG.noTileBorder, CONFIG.tiledWindowsLayer);
                 break;
         }
     }
-    forceSetGeometry(geometry) {
-        this.window.commit(geometry);
+    forceSetGeometry(ctx, geometry) {
+        this.window.commit(ctx, geometry);
+    }
+    moveMouseToFocus() {
+        this.window.moveMouseToFocus();
     }
     visible(srf) {
         return this.window.visible(srf);
     }
     get minimized() {
         return this.window.minimized;
-    }
-    toString() {
-        return "Window(" + String(this.window) + ")";
     }
 }
 class WindowStore {
@@ -3178,6 +6364,22 @@ class WindowStore {
             this.list.splice(srcIdx, 1);
             this.list.splice(after ? destIdx : destIdx - 1, 0, srcWin);
         }
+    }
+    moveGroup(windows, destWin, after) {
+        const removed = [];
+        for (const win of windows) {
+            const idx = this.list.indexOf(win);
+            if (idx >= 0)
+                removed.push(this.list.splice(idx, 1)[0]);
+        }
+        if (removed.length === 0)
+            return;
+        const destIdx = this.list.indexOf(destWin);
+        if (destIdx === -1) {
+            this.list.push(...removed);
+            return;
+        }
+        this.list.splice(after ? destIdx + 1 : destIdx, 0, ...removed);
     }
     getWindowById(id) {
         let idx = this.list.map((w) => w.id).indexOf(id);
@@ -3221,14 +6423,29 @@ class WindowStore {
     unshift(window) {
         this.list.unshift(window);
     }
+    getVisibleTilesOrDocked(srf) {
+        return this.list.filter((win) => win.visible(srf) && (win.isTiled || win.isDocked));
+    }
+    getVisibleTilesOrFloat(srf) {
+        return this.list.filter((win) => win.visible(srf) && (win.isTiled || win.isFloating));
+    }
+    getVisibleFloatOrDocked(srf) {
+        return this.list.filter((win) => win.visible(srf) && (win.isFloating || win.isDocked));
+    }
+    getVisibleTiles(srf) {
+        return this.list.filter((win) => win.isTiled && win.visible(srf));
+    }
+    getVisibleDocked(srf) {
+        return this.list.filter((win) => win.isDocked && win.visible(srf));
+    }
+    getVisibleFloat(srf) {
+        return this.list.filter((win) => win.isFloating && win.visible(srf));
+    }
     getVisibleWindows(srf) {
         return this.list.filter((win) => win.visible(srf));
     }
-    getVisibleTiles(srf) {
-        return this.list.filter((win) => win.tiled && win.visible(srf));
-    }
     getVisibleTileables(srf) {
-        return this.list.filter((win) => win.tileable && win.visible(srf));
+        return this.list.filter((win) => win.isTileable && win.visible(srf));
     }
 }
 function getWindowLayer(index) {
@@ -3241,12 +6458,13 @@ function getWindowLayer(index) {
     else
         return 1;
 }
-class BTreeLayout {
+class BinaryTreeLayout {
     get description() {
         return "BTree";
     }
-    constructor() {
-        this.classID = BTreeLayout.id;
+    constructor(capacity) {
+        this.classID = BinaryTreeLayout.id;
+        this.capacity = capacity !== undefined ? capacity : null;
         this.parts = new HalfSplitLayoutPart(new FillLayoutPart(), new FillLayoutPart());
         this.parts.angle = 0;
     }
@@ -3304,7 +6522,7 @@ class BTreeLayout {
         return "BTreeLayout()";
     }
 }
-BTreeLayout.id = "BTreeLayout";
+BinaryTreeLayout.id = "BinaryTreeLayout";
 var CascadeDirection;
 (function (CascadeDirection) {
     CascadeDirection[CascadeDirection["NorthWest"] = 0] = "NorthWest";
@@ -3340,9 +6558,10 @@ class CascadeLayout {
     get description() {
         return "Cascade [" + CascadeDirection[this.dir] + "]";
     }
-    constructor(dir = CascadeDirection.SouthEast) {
+    constructor(capacity, dir = CascadeDirection.SouthEast) {
         this.dir = dir;
         this.classID = CascadeLayout.id;
+        this.capacity = capacity !== undefined ? capacity : null;
     }
     apply(ctx, tileables, area, gap) {
         const [vertStep, horzStep] = CascadeLayout.decomposeDirection(this.dir);
@@ -3364,15 +6583,15 @@ class CascadeLayout {
         });
     }
     clone() {
-        return new CascadeLayout(this.dir);
+        return new CascadeLayout(this.capacity, this.dir);
     }
-    handleShortcut(ctx, input, data) {
+    handleShortcut(ctx, input) {
         switch (input) {
-            case Shortcut.Increase:
+            case KrohnkiteAction.Increase:
                 this.dir = (this.dir + 1 + 8) % 8;
                 ctx.showNotification(this.description);
                 break;
-            case Shortcut.Decrease:
+            case KrohnkiteAction.Decrease:
                 this.dir = (this.dir - 1 + 8) % 8;
                 ctx.showNotification(this.description);
                 break;
@@ -3394,7 +6613,6 @@ class ColumnLayout {
     }
     constructor() {
         this.classID = ColumnLayout.id;
-        this.position = "single";
         this.weight = 1.0;
         this.parts = new RotateLayoutPart(new StackLayoutPart());
         this.windowIds = new Set();
@@ -3443,14 +6661,14 @@ class ColumnLayout {
     }
     getWindowIdOnRight(x) {
         for (let i = 0; i < this.renderedWindowsIds.length; i++) {
-            if (x < this.renderedWindowsRects[i].center[0] + 10)
+            if (x < this.renderedWindowsRects[i].center.x + 10)
                 return this.renderedWindowsIds[i];
         }
         return null;
     }
     getWindowIdOnTop(y) {
         for (let i = 0; i < this.renderedWindowsIds.length; i++) {
-            if (y < this.renderedWindowsRects[i].center[1] + 10)
+            if (y < this.renderedWindowsRects[i].center.y + 10)
                 return this.renderedWindowsIds[i];
         }
         return null;
@@ -3466,7 +6684,7 @@ class ColumnLayout {
             window = ctx.getWindowById(id);
             if (ids.has(id))
                 return true;
-            else if (window !== null && (window.minimized || window.floating)) {
+            else if (window !== null && (window.minimized || window.isFloating)) {
                 floatedOrMinimized += 1;
                 return true;
             }
@@ -3483,12 +6701,18 @@ class ColumnsLayout {
     get columns() {
         return this._columns;
     }
-    constructor() {
+    get columnsConfiguration() {
+        if (this._columnsConfiguration === null)
+            return [];
+        return this._columnsConfiguration;
+    }
+    constructor(capacity) {
         this.classID = ColumnsLayout.id;
+        this.capacity = capacity !== undefined ? capacity : null;
         this.parts = [new ColumnLayout()];
         this._columns = [];
         this.direction = new windRose(CONFIG.columnsLayoutInitialAngle);
-        this.columnsConfiguration = null;
+        this._columnsConfiguration = null;
     }
     adjust(area, tiles, basis, delta, gap) {
         let columnId = this.getColumnId(basis);
@@ -3524,8 +6748,8 @@ class ColumnsLayout {
         }
     }
     apply(ctx, tileables, area, gap) {
-        if (this.columnsConfiguration === null)
-            this.columnsConfiguration = this.getDefaultConfig(ctx);
+        if (this._columnsConfiguration === null)
+            this._columnsConfiguration = this.getDefaultConfig(ctx);
         this.arrangeTileables(ctx, tileables);
         if (this.columns.length === 0)
             return;
@@ -3555,84 +6779,124 @@ class ColumnsLayout {
             }
         }
     }
-    drag(ctx, draggingRect, window, workingArea) {
-        const cursorOrActivationPoint = ctx.cursorPos || draggingRect.activationPoint;
-        const cursorOrMiddlePoint = ctx.cursorPos || draggingRect.center;
+    drag(ctx, dragAction) {
         if (this.columns.length === 0 ||
             (this.columns.length === 1 && this.columns[0].windowIds.size === 1))
-            return false;
-        let columnId = this.getColumnId(window);
-        let windowId = window.id;
-        if (((this.direction.north && workingArea.isTopZone(cursorOrActivationPoint)) ||
-            (this.direction.south && workingArea.isBottomZone(cursorOrMiddlePoint)) ||
-            (this.direction.west && workingArea.isLeftZone(cursorOrActivationPoint)) ||
-            (this.direction.east && workingArea.isRightZone(cursorOrActivationPoint))) &&
+            return;
+        const window = dragAction.window;
+        const workingArea = dragAction.tilesArea !== null
+            ? dragAction.tilesArea
+            : dragAction.workingArea;
+        const columnId = this.getColumnId(window);
+        const windowId = window.id;
+        if (((this.direction.north &&
+            workingArea.isTopZone(dragAction.mousePointer)) ||
+            (this.direction.south &&
+                workingArea.isBottomZone(dragAction.middlePointer)) ||
+            (this.direction.west &&
+                workingArea.isLeftZone(dragAction.mousePointer)) ||
+            (this.direction.east &&
+                workingArea.isRightZone(dragAction.mousePointer))) &&
             !(this.columns[0].windowIds.size === 1 &&
                 this.columns[0].windowIds.has(windowId))) {
             if (columnId !== null)
                 this.columns[columnId].windowIds.delete(windowId);
-            const column = this.insertColumn(true);
+            let column;
+            if (CONFIG.columnsLimitColumns &&
+                this.columnsConfiguration.length > 0 &&
+                this.parts.length >= this.columnsConfiguration.length) {
+                column = this.parts[0];
+            }
+            else {
+                column = this.insertColumn(true);
+                if (CONFIG.columnsApplyConfOnNewColumns) {
+                    this.applyColumnWeights();
+                }
+            }
             column.windowIds.add(windowId);
-            return true;
+            dragAction.result.isArrangeNeeded = true;
+            return;
         }
-        if (((this.direction.north && workingArea.isBottomZone(cursorOrMiddlePoint)) ||
-            (this.direction.south && workingArea.isTopZone(cursorOrActivationPoint)) ||
-            (this.direction.west && workingArea.isRightZone(cursorOrActivationPoint)) ||
-            (this.direction.east && workingArea.isLeftZone(cursorOrActivationPoint))) &&
+        if (((this.direction.north &&
+            workingArea.isBottomZone(dragAction.middlePointer)) ||
+            (this.direction.south &&
+                workingArea.isTopZone(dragAction.mousePointer)) ||
+            (this.direction.west &&
+                workingArea.isRightZone(dragAction.mousePointer)) ||
+            (this.direction.east &&
+                workingArea.isLeftZone(dragAction.mousePointer))) &&
             !(this.columns[this.columns.length - 1].windowIds.size === 1 &&
                 this.columns[this.columns.length - 1].windowIds.has(windowId))) {
             if (columnId !== null)
                 this.columns[columnId].windowIds.delete(windowId);
-            const column = this.insertColumn(false);
+            let column;
+            if (CONFIG.columnsLimitColumns &&
+                this.columnsConfiguration.length > 0 &&
+                this.parts.length >= this.columnsConfiguration.length) {
+                column = this.parts[this.parts.length - 1];
+            }
+            else {
+                column = this.insertColumn(false);
+                if (CONFIG.columnsApplyConfOnNewColumns) {
+                    this.applyColumnWeights();
+                }
+            }
             column.windowIds.add(windowId);
-            return true;
+            dragAction.result.isArrangeNeeded = true;
+            return;
         }
         for (let colIdx = 0; colIdx < this.columns.length; colIdx++) {
             const column = this.columns[colIdx];
             for (let i = 0; i < column.renderedWindowsRects.length; i++) {
                 const renderedRect = column.renderedWindowsRects[i];
                 if ((this.direction.west &&
-                    renderedRect.includesPoint(cursorOrActivationPoint, 0)) ||
+                    renderedRect.includesPoint(dragAction.mousePointer, 0)) ||
                     (this.direction.north &&
-                        renderedRect.includesPoint(cursorOrActivationPoint, 2)) ||
+                        renderedRect.includesPoint(dragAction.mousePointer, 2)) ||
                     (this.direction.east &&
-                        renderedRect.includesPoint(cursorOrActivationPoint, 0)) ||
+                        renderedRect.includesPoint(dragAction.mousePointer, 0)) ||
                     (this.direction.south &&
-                        renderedRect.includesPoint(cursorOrActivationPoint, 2))) {
-                    if (column.renderedWindowsIds[i] === windowId)
-                        return false;
-                    if (i > 0 && column.renderedWindowsIds[i - 1] === windowId)
-                        return false;
+                        renderedRect.includesPoint(dragAction.mousePointer, 2))) {
+                    if (column.renderedWindowsIds[i] === windowId) {
+                        return;
+                    }
+                    if (i > 0 && column.renderedWindowsIds[i - 1] === windowId) {
+                        return;
+                    }
                     const renderedId = column.renderedWindowsIds[i];
                     if (columnId !== null && columnId !== colIdx)
                         this.columns[columnId].windowIds.delete(windowId);
                     column.windowIds.add(windowId);
                     ctx.moveWindowByWinId(window, renderedId);
-                    return true;
+                    dragAction.result.isArrangeNeeded = true;
+                    return;
                 }
                 if ((this.direction.west &&
-                    renderedRect.includesPoint(cursorOrActivationPoint, 1)) ||
+                    renderedRect.includesPoint(dragAction.mousePointer, 1)) ||
                     (this.direction.north &&
-                        renderedRect.includesPoint(cursorOrActivationPoint, 3)) ||
+                        renderedRect.includesPoint(dragAction.mousePointer, 3)) ||
                     (this.direction.east &&
-                        renderedRect.includesPoint(cursorOrActivationPoint, 1)) ||
+                        renderedRect.includesPoint(dragAction.mousePointer, 1)) ||
                     (this.direction.south &&
-                        renderedRect.includesPoint(cursorOrActivationPoint, 3))) {
-                    if (column.renderedWindowsIds[i] === windowId)
-                        return false;
+                        renderedRect.includesPoint(dragAction.mousePointer, 3))) {
+                    if (column.renderedWindowsIds[i] === windowId) {
+                        return;
+                    }
                     if (i < column.renderedWindowsIds.length - 1 &&
-                        column.renderedWindowsIds[i + 1] === windowId)
-                        return false;
+                        column.renderedWindowsIds[i + 1] === windowId) {
+                        return;
+                    }
                     const renderedId = column.renderedWindowsIds[i];
                     if (columnId !== null && columnId !== colIdx)
                         this.columns[columnId].windowIds.delete(windowId);
                     column.windowIds.add(windowId);
                     ctx.moveWindowByWinId(window, renderedId, true);
-                    return true;
+                    dragAction.result.isArrangeNeeded = true;
+                    return;
                 }
             }
         }
-        return false;
+        return;
     }
     arrangeTileables(ctx, tileables) {
         let latestTimestamp = 0;
@@ -3644,11 +6908,11 @@ class ColumnsLayout {
             tileable.state = WindowState.Tiled;
             partId = this.getPartsId(tileable);
             if (partId !== null) {
-                if (this.parts[partId].timestamp < tileable.timestamp) {
-                    this.parts[partId].timestamp = tileable.timestamp;
+                if (this.parts[partId].timestamp < tileable.focusTime) {
+                    this.parts[partId].timestamp = tileable.focusTime;
                 }
                 if (this.parts[partId].timestamp > latestTimestamp) {
-                    latestTimestamp = tileable.timestamp;
+                    latestTimestamp = tileable.focusTime;
                     currentColumnId = partId;
                 }
             }
@@ -3657,14 +6921,16 @@ class ColumnsLayout {
             }
             tileableIds.add(tileable.id);
         });
-        if (this.columnsConfiguration !== null &&
+        const colsLength = CONFIG.columnsLimitColumns
+            ? this.parts.length
+            : this.columns.length;
+        if (this.columnsConfiguration.length > 0 &&
             tileableIds.size > 0 &&
             newWindows.length > 0 &&
-            this.columnsConfiguration.length > this.columns.length) {
-            let new_columns_length = this.columnsConfiguration.length - this.columns.length >
-                newWindows.length
+            this.columnsConfiguration.length > colsLength) {
+            let new_columns_length = this.columnsConfiguration.length - colsLength > newWindows.length
                 ? newWindows.length
-                : this.columnsConfiguration.length - this.columns.length;
+                : this.columnsConfiguration.length - colsLength;
             for (let i = 0; i < new_columns_length; i++) {
                 let winId = newWindows.shift();
                 if (winId === undefined)
@@ -3672,14 +6938,7 @@ class ColumnsLayout {
                 let column = this.insertColumn(false);
                 column.windowIds.add(winId);
             }
-            this.applyColumnsPosition();
-            if (this.columnsConfiguration[0] !== 0) {
-                let sumWeights = this.columnsConfiguration.reduce((a, b) => a + b, 0);
-                for (let i = 0; i < this.columns.length; i++) {
-                    this.columns[i].weight =
-                        (this.columnsConfiguration[i] / sumWeights) * this.columns.length;
-                }
-            }
+            this.applyColumnWeights();
         }
         if (CONFIG.columnsBalanced) {
             for (var [_, id] of newWindows.entries()) {
@@ -3704,23 +6963,20 @@ class ColumnsLayout {
         this.applyColumnsPosition();
     }
     getColumnId(t) {
-        for (var i = 0; i < this.columns.length; i++) {
-            if (this.columns[i].windowIds.has(t.id))
-                return i;
+        if (t !== null) {
+            const windowId = typeof t === "string" ? t : t.id;
+            for (let i = 0; i < this.columns.length; i++) {
+                if (this.columns[i].windowIds.has(windowId))
+                    return i;
+            }
         }
         return null;
     }
     getPartsId(t) {
-        for (var i = 0; i < this.parts.length; i++) {
-            if (this.parts[i].windowIds.has(t.id))
-                return i;
-        }
-        return null;
-    }
-    getCurrentColumnId(currentWindowId) {
-        if (currentWindowId !== null) {
-            for (const [i, column] of this.columns.entries()) {
-                if (column.windowIds.has(currentWindowId))
+        if (t !== null) {
+            const windowId = typeof t === "string" ? t : t.id;
+            for (let i = 0; i < this.parts.length; i++) {
+                if (this.parts[i].windowIds.has(windowId))
                     return i;
             }
         }
@@ -3728,46 +6984,56 @@ class ColumnsLayout {
     }
     applyColumnsPosition() {
         this._columns = this.parts.filter((column) => !column.isEmpty());
-        const columnsLength = this.columns.length;
-        if (columnsLength === 1) {
-            this.columns[0].position = "single";
-        }
-        else if (columnsLength > 1) {
-            this.columns[0].position = "left";
-            this.columns[columnsLength - 1].position = "right";
-            for (let i = 1; i < columnsLength - 1; i++) {
-                this.columns[i].position = "middle";
+    }
+    applyColumnWeights() {
+        if (this.columnsConfiguration.length > 0 &&
+            this.columnsConfiguration[0] !== 0) {
+            const columnsList = CONFIG.columnsLimitColumns
+                ? this.parts
+                : this.columns;
+            const sumWeights = this.columnsConfiguration.reduce((a, b) => a + b, 0);
+            for (let i = 0; i < columnsList.length && i < this.columnsConfiguration.length; i++) {
+                columnsList[i].weight =
+                    (this.columnsConfiguration[i] / sumWeights) * columnsList.length;
             }
         }
     }
     toColumnWithBiggerIndex(ctx) {
         const currentWindow = ctx.currentWindow;
         const currentWindowId = currentWindow !== null ? currentWindow.id : null;
-        const activeColumnId = this.getCurrentColumnId(currentWindowId);
+        const activeColumnId = CONFIG.columnsLimitColumns && this.columnsConfiguration.length > 0
+            ? this.getPartsId(currentWindowId)
+            : this.getColumnId(currentWindowId);
+        const columnList = CONFIG.columnsLimitColumns && this.columnsConfiguration.length > 0
+            ? this.parts
+            : this.columns;
         if (currentWindow === null ||
             currentWindowId === null ||
             activeColumnId === null ||
-            (this.columns[activeColumnId].size < 2 &&
-                (this.columns[activeColumnId].position === "right" ||
-                    this.columns[activeColumnId].position === "single")))
+            (columnList[activeColumnId].windowIds.size < 2 &&
+                (activeColumnId === columnList.length - 1 || columnList.length < 2)) ||
+            (this.columnsConfiguration.length > 0 &&
+                activeColumnId === columnList.length - 1 &&
+                columnList.length >= this.columnsConfiguration.length)) {
             return false;
+        }
         let targetColumn;
-        const column = this.columns[activeColumnId];
+        const column = columnList[activeColumnId];
         const center = column.renderedWindowsRects[column.renderedWindowsIds.indexOf(currentWindowId)].center;
         column.windowIds.delete(currentWindowId);
-        if (column.position === "single" || column.position === "right") {
+        if (activeColumnId === columnList.length - 1) {
             targetColumn = this.insertColumn(false);
             targetColumn.windowIds.add(currentWindowId);
         }
         else {
-            targetColumn = this.columns[activeColumnId + 1];
+            targetColumn = columnList[activeColumnId + 1];
             targetColumn.windowIds.add(currentWindowId);
         }
         let idOnTarget;
         if (this.direction.north || this.direction.south)
-            idOnTarget = targetColumn.getWindowIdOnRight(center[0]);
+            idOnTarget = targetColumn.getWindowIdOnRight(center.x);
         else
-            idOnTarget = targetColumn.getWindowIdOnTop(center[1]);
+            idOnTarget = targetColumn.getWindowIdOnTop(center.y);
         if (idOnTarget !== null)
             ctx.moveWindowByWinId(currentWindow, idOnTarget);
         else {
@@ -3780,31 +7046,39 @@ class ColumnsLayout {
     toColumnWithSmallerIndex(ctx) {
         const currentWindow = ctx.currentWindow;
         const currentWindowId = currentWindow !== null ? currentWindow.id : null;
-        const activeColumnId = this.getCurrentColumnId(currentWindowId);
+        const activeColumnId = CONFIG.columnsLimitColumns && this.columnsConfiguration.length > 0
+            ? this.getPartsId(currentWindowId)
+            : this.getColumnId(currentWindowId);
+        const columnList = CONFIG.columnsLimitColumns && this.columnsConfiguration.length > 0
+            ? this.parts
+            : this.columns;
         if (currentWindow === null ||
             currentWindowId === null ||
             activeColumnId === null ||
-            (this.columns[activeColumnId].windowIds.size < 2 &&
-                (this.columns[activeColumnId].position === "left" ||
-                    this.columns[activeColumnId].position === "single")))
+            (columnList[activeColumnId].windowIds.size < 2 &&
+                (activeColumnId === 0 || columnList.length < 2)) ||
+            (this.columnsConfiguration.length > 0 &&
+                activeColumnId === 0 &&
+                columnList.length >= this.columnsConfiguration.length)) {
             return false;
+        }
         let targetColumn;
-        const column = this.columns[activeColumnId];
+        const column = columnList[activeColumnId];
         const center = column.renderedWindowsRects[column.renderedWindowsIds.indexOf(currentWindowId)].center;
         column.windowIds.delete(currentWindowId);
-        if (column.position === "single" || column.position === "left") {
+        if (activeColumnId === 0) {
             targetColumn = this.insertColumn(true);
             targetColumn.windowIds.add(currentWindowId);
         }
         else {
-            targetColumn = this.columns[activeColumnId - 1];
+            targetColumn = columnList[activeColumnId - 1];
             targetColumn.windowIds.add(currentWindowId);
         }
         let idOnTarget;
         if (this.direction.north || this.direction.south)
-            idOnTarget = targetColumn.getWindowIdOnRight(center[0]);
+            idOnTarget = targetColumn.getWindowIdOnRight(center.x);
         else
-            idOnTarget = targetColumn.getWindowIdOnTop(center[1]);
+            idOnTarget = targetColumn.getWindowIdOnTop(center.y);
         if (idOnTarget !== null)
             ctx.moveWindowByWinId(currentWindow, idOnTarget);
         else {
@@ -3817,7 +7091,7 @@ class ColumnsLayout {
     toUpOrLeft(ctx) {
         let currentWindow = ctx.currentWindow;
         let currentWindowId = currentWindow !== null ? currentWindow.id : null;
-        let activeColumnId = this.getCurrentColumnId(currentWindowId);
+        let activeColumnId = this.getColumnId(currentWindowId);
         if (currentWindow === null ||
             currentWindowId === null ||
             activeColumnId === null ||
@@ -3832,7 +7106,7 @@ class ColumnsLayout {
     toBottomOrRight(ctx) {
         let currentWindow = ctx.currentWindow;
         let currentWindowId = currentWindow !== null ? currentWindow.id : null;
-        let activeColumnId = this.getCurrentColumnId(currentWindowId);
+        let activeColumnId = this.getColumnId(currentWindowId);
         if (currentWindow === null ||
             currentWindowId === null ||
             activeColumnId === null ||
@@ -3861,7 +7135,7 @@ class ColumnsLayout {
     handleShortcut(ctx, input) {
         let isApply = false;
         switch (input) {
-            case Shortcut.SwapLeft:
+            case KrohnkiteAction.MoveLeft:
                 if (this.direction.north || this.direction.south) {
                     isApply = this.toUpOrLeft(ctx);
                 }
@@ -3871,7 +7145,7 @@ class ColumnsLayout {
                 else
                     isApply = this.toColumnWithSmallerIndex(ctx);
                 break;
-            case Shortcut.SwapRight:
+            case KrohnkiteAction.MoveRight:
                 if (this.direction.north || this.direction.south) {
                     isApply = this.toBottomOrRight(ctx);
                 }
@@ -3881,7 +7155,7 @@ class ColumnsLayout {
                 else
                     isApply = this.toColumnWithBiggerIndex(ctx);
                 break;
-            case Shortcut.SwapUp:
+            case KrohnkiteAction.MoveUp:
                 if (this.direction.north) {
                     isApply = this.toColumnWithSmallerIndex(ctx);
                 }
@@ -3891,7 +7165,7 @@ class ColumnsLayout {
                 else
                     isApply = this.toUpOrLeft(ctx);
                 break;
-            case Shortcut.SwapDown:
+            case KrohnkiteAction.MoveDown:
                 if (this.direction.north) {
                     isApply = this.toColumnWithBiggerIndex(ctx);
                 }
@@ -3901,12 +7175,12 @@ class ColumnsLayout {
                 else
                     isApply = this.toBottomOrRight(ctx);
                 break;
-            case Shortcut.Rotate:
+            case KrohnkiteAction.Rotate:
                 this.direction.cwRotation();
                 this.showDirection(ctx);
                 isApply = true;
                 break;
-            case Shortcut.RotatePart:
+            case KrohnkiteAction.RotatePart:
                 this.direction.ccwRotation();
                 this.showDirection(ctx);
                 isApply = true;
@@ -3959,7 +7233,7 @@ class ColumnsLayout {
         return returnValue;
     }
 }
-ColumnsLayout.id = "Columns";
+ColumnsLayout.id = "ColumnsLayout";
 class FloatingLayout {
     constructor() {
         this.classID = FloatingLayout.id;
@@ -3975,7 +7249,7 @@ class FloatingLayout {
         return "FloatingLayout()";
     }
 }
-FloatingLayout.id = "FloatingLayout ";
+FloatingLayout.id = "FloatingLayout";
 FloatingLayout.instance = new FloatingLayout();
 class FillLayoutPart {
     adjust(area, tiles, basis, delta, gap) {
@@ -4258,10 +7532,10 @@ class MonocleLayout {
             const tiles = [...tileables];
             ctx.setTimeout(() => {
                 const current = ctx.currentWindow;
-                if (current && current.tiled) {
+                if (current && current.isTiled) {
                     tiles.forEach((window) => {
                         if (window !== current)
-                            window.window.window.minimized = true;
+                            window.window.setMinimizedByScript(true);
                     });
                 }
             }, 50);
@@ -4270,18 +7544,18 @@ class MonocleLayout {
     clone() {
         return this;
     }
-    handleShortcut(ctx, input, data) {
+    handleShortcut(ctx, input) {
         switch (input) {
-            case Shortcut.DWMLeft:
-            case Shortcut.FocusNext:
-            case Shortcut.FocusUp:
-            case Shortcut.FocusLeft:
+            case KrohnkiteAction.DWMLeft:
+            case KrohnkiteAction.FocusNext:
+            case KrohnkiteAction.FocusUp:
+            case KrohnkiteAction.FocusLeft:
                 ctx.cycleFocus(-1);
                 return true;
-            case Shortcut.DWMRight:
-            case Shortcut.FocusPrev:
-            case Shortcut.FocusDown:
-            case Shortcut.FocusRight:
+            case KrohnkiteAction.DWMRight:
+            case KrohnkiteAction.FocusPrev:
+            case KrohnkiteAction.FocusDown:
+            case KrohnkiteAction.FocusRight:
                 ctx.cycleFocus(1);
                 return true;
             default:
@@ -4346,7 +7620,7 @@ class QuarterLayout {
     }
     apply(ctx, tileables, area, gap) {
         if (CONFIG.quarterLayoutReset) {
-            if (tileables.length < this.prevTileCount) {
+            if (tileables.length < this.prevTileCount && this.prevTileCount <= 4) {
                 this.resetSplits();
             }
             this.prevTileCount = tileables.length;
@@ -4397,9 +7671,10 @@ class QuarterLayout {
 QuarterLayout.MAX_PROPORTION = 0.8;
 QuarterLayout.id = "QuarterLayout";
 class SpiralLayout {
-    constructor() {
+    constructor(capacity) {
         this.description = "Spiral";
         this.classID = SpiralLayout.id;
+        this.capacity = capacity !== undefined ? capacity : null;
         this.depth = 1;
         this.parts = new HalfSplitLayoutPart(new FillLayoutPart(), new FillLayoutPart());
         this.parts.angle = 0;
@@ -4439,9 +7714,10 @@ class SpiralLayout {
 }
 SpiralLayout.id = "SpiralLayout";
 class SpreadLayout {
-    constructor() {
+    constructor(capacity) {
         this.classID = SpreadLayout.id;
         this.description = "Spread";
+        this.capacity = capacity !== undefined ? capacity : null;
         this.space = 0.07;
     }
     apply(ctx, tileables, area, gap) {
@@ -4465,10 +7741,10 @@ class SpreadLayout {
     }
     handleShortcut(ctx, input) {
         switch (input) {
-            case Shortcut.Decrease:
+            case KrohnkiteAction.Decrease:
                 this.space = Math.max(0.04, this.space - 0.01);
                 break;
-            case Shortcut.Increase:
+            case KrohnkiteAction.Increase:
                 this.space = Math.min(0.1, this.space + 0.01);
                 break;
             default:
@@ -4485,8 +7761,9 @@ class StackedLayout {
     get description() {
         return "Stacked";
     }
-    constructor() {
+    constructor(capacity) {
         this.classID = StackedLayout.id;
+        this.capacity = capacity !== undefined ? capacity : null;
         this.parts = new RotateLayoutPart(new HalfSplitLayoutPart(new StackLayoutPart(), new StackLayoutPart()));
     }
     adjust(area, tiles, basis, delta, gap) {
@@ -4507,7 +7784,7 @@ class StackedLayout {
     }
     handleShortcut(ctx, input) {
         switch (input) {
-            case Shortcut.Rotate:
+            case KrohnkiteAction.Rotate:
                 this.parts.rotate(90);
                 break;
             default:
@@ -4521,9 +7798,10 @@ class StackedLayout {
 }
 StackedLayout.id = "StackedLayout";
 class StairLayout {
-    constructor() {
+    constructor(capacity) {
         this.classID = StairLayout.id;
         this.description = "Stair";
+        this.capacity = capacity !== undefined ? capacity : null;
         this.space = 24;
     }
     apply(ctx, tileables, area, gap) {
@@ -4545,10 +7823,10 @@ class StairLayout {
     }
     handleShortcut(ctx, input) {
         switch (input) {
-            case Shortcut.Decrease:
+            case KrohnkiteAction.Decrease:
                 this.space = Math.max(16, this.space - 8);
                 break;
-            case Shortcut.Increase:
+            case KrohnkiteAction.Increase:
                 this.space = Math.min(160, this.space + 8);
                 break;
             default:
@@ -4565,8 +7843,9 @@ class ThreeColumnLayout {
     get description() {
         return "Three-Column [" + this.masterSize + "]";
     }
-    constructor() {
+    constructor(capacity) {
         this.classID = ThreeColumnLayout.id;
+        this.capacity = capacity !== undefined ? capacity : null;
         this.masterRatio = 0.6;
         this.masterSize = 1;
     }
@@ -4639,18 +7918,18 @@ class ThreeColumnLayout {
         other.masterSize = this.masterSize;
         return other;
     }
-    handleShortcut(ctx, input, data) {
+    handleShortcut(ctx, input) {
         switch (input) {
-            case Shortcut.Increase:
+            case KrohnkiteAction.Increase:
                 this.resizeMaster(ctx, +1);
                 return true;
-            case Shortcut.Decrease:
+            case KrohnkiteAction.Decrease:
                 this.resizeMaster(ctx, -1);
                 return true;
-            case Shortcut.DWMLeft:
+            case KrohnkiteAction.DWMLeft:
                 this.masterRatio = clip(slide(this.masterRatio, -0.05), ThreeColumnLayout.MIN_MASTER_RATIO, ThreeColumnLayout.MAX_MASTER_RATIO);
                 return true;
-            case Shortcut.DWMRight:
+            case KrohnkiteAction.DWMRight:
                 this.masterRatio = clip(slide(this.masterRatio, +0.05), ThreeColumnLayout.MIN_MASTER_RATIO, ThreeColumnLayout.MAX_MASTER_RATIO);
                 return true;
             default:
@@ -4684,8 +7963,9 @@ class TileLayout {
     set masterRatio(value) {
         this.parts.inner.ratio = value;
     }
-    constructor() {
+    constructor(capacity) {
         this.classID = TileLayout.id;
+        this.capacity = capacity !== undefined ? capacity : null;
         this.parts = new RotateLayoutPart(new HalfSplitLayoutPart(new RotateLayoutPart(new StackLayoutPart()), new StackLayoutPart()));
         switch (CONFIG.tileLayoutInitialAngle) {
             case "1": {
@@ -4719,26 +7999,26 @@ class TileLayout {
     }
     handleShortcut(ctx, input) {
         switch (input) {
-            case Shortcut.DWMLeft:
+            case KrohnkiteAction.DWMLeft:
                 this.masterRatio = clip(slide(this.masterRatio, -0.05), TileLayout.MIN_MASTER_RATIO, TileLayout.MAX_MASTER_RATIO);
                 break;
-            case Shortcut.DWMRight:
+            case KrohnkiteAction.DWMRight:
                 this.masterRatio = clip(slide(this.masterRatio, +0.05), TileLayout.MIN_MASTER_RATIO, TileLayout.MAX_MASTER_RATIO);
                 break;
-            case Shortcut.Increase:
+            case KrohnkiteAction.Increase:
                 if (this.numMaster < 10)
                     this.numMaster += 1;
                 ctx.showNotification(this.description);
                 break;
-            case Shortcut.Decrease:
+            case KrohnkiteAction.Decrease:
                 if (this.numMaster > 0)
                     this.numMaster -= 1;
                 ctx.showNotification(this.description);
                 break;
-            case Shortcut.Rotate:
+            case KrohnkiteAction.Rotate:
                 this.parts.rotate(90);
                 break;
-            case Shortcut.RotatePart:
+            case KrohnkiteAction.RotatePart:
                 this.parts.inner.primary.rotate(90);
                 break;
             default:
@@ -4757,6 +8037,73 @@ class TileLayout {
 TileLayout.MIN_MASTER_RATIO = 0.2;
 TileLayout.MAX_MASTER_RATIO = 0.8;
 TileLayout.id = "TileLayout";
+function debugWin(win) {
+    var w_props = [
+        { name: "caption", opt: win.caption },
+        { name: "output.name", opt: win.output.name },
+        { name: "resourceName", opt: win.resourceName },
+        { name: "resourceClass", opt: win.resourceClass },
+        { name: "skipPager", opt: win.skipPager },
+        { name: "desktopWindow", opt: win.desktopWindow },
+        { name: "windowRole", opt: win.windowRole },
+        { name: "windowType", opt: win.windowType },
+        { name: "pid", opt: win.pid },
+        { name: "internalId", opt: win.internalId },
+        { name: "stackingOrder", opt: win.stackingOrder },
+        { name: "size", opt: win.size },
+        { name: "width", opt: win.width },
+        { name: "height", opt: win.height },
+        { name: "dock", opt: win.dock },
+        { name: "toolbar", opt: win.toolbar },
+        { name: "menu", opt: win.menu },
+        { name: "dialog", opt: win.dialog },
+        { name: "splash", opt: win.splash },
+        { name: "utility", opt: win.utility },
+        { name: "dropdownMenu", opt: win.dropdownMenu },
+        { name: "popupMenu", opt: win.popupMenu },
+        { name: "tooltip", opt: win.tooltip },
+        { name: "notification", opt: win.notification },
+        { name: "criticalNotification", opt: win.criticalNotification },
+        { name: "appletPopup", opt: win.appletPopup },
+        { name: "onScreenDisplay", opt: win.onScreenDisplay },
+        { name: "comboBox", opt: win.comboBox },
+        { name: "managed", opt: win.managed },
+        { name: "popupWindow", opt: win.popupWindow },
+        { name: "outline", opt: win.outline },
+        { name: "fullScreenable", opt: win.fullScreenable },
+        { name: "closeable", opt: win.closeable },
+        { name: "minimizable", opt: win.minimizable },
+        { name: "specialWindow", opt: win.specialWindow },
+        { name: "modal", opt: win.modal },
+        { name: "resizeable", opt: win.resizeable },
+        { name: "minimized", opt: win.minimized },
+        { name: "tile", opt: win.tile },
+        { name: "minSize", opt: win.minSize },
+        { name: "maxSize", opt: win.maxSize },
+        { name: "transient", opt: win.transient },
+        { name: "transientFor", opt: win.transientFor },
+        { name: "maximizable", opt: win.maximizable },
+        { name: "maximizeMode", opt: win.maximizeMode },
+        { name: "moveable", opt: win.moveable },
+        { name: "moveableAcrossScreens", opt: win.moveableAcrossScreens },
+        { name: "hidden", opt: win.hidden },
+        { name: "keepAbove", opt: win.keepAbove },
+        { name: "keepBelow", opt: win.keepBelow },
+        { name: "opacity", opt: win.opacity },
+    ];
+    var s = "kwin window props:";
+    w_props.forEach((el) => {
+        if (typeof el.opt !== "undefined" &&
+            (el.opt || el.opt === 0 || el.opt === "0")) {
+            s += "<";
+            s += el.name;
+            s += ": ";
+            s += el.opt;
+            s += "> ";
+        }
+    });
+    return s;
+}
 class Err {
     constructor(s) {
         this.error = s;
@@ -4767,6 +8114,9 @@ class Err {
 }
 function warning(s) {
     print(`Krohnkite.WARNING: ${s}`);
+}
+function info(s) {
+    print(`Krohnkite: ${s}`);
 }
 function clip(value, min, max) {
     if (value < min)
@@ -4794,6 +8144,20 @@ function wrapIndex(index, length) {
         return index - length;
     return index;
 }
+function getRandomInt(max, signed = false) {
+    const randomNumber = Math.floor(Math.random() * max);
+    if (signed && Math.random() < 0.5)
+        return -randomNumber;
+    return randomNumber;
+}
+function getTime() {
+    const time = new Date().getTime();
+    if (Number.isNaN(time)) {
+        warning("getTime is Nan, wrong Time");
+        return 0;
+    }
+    return time;
+}
 function partitionArray(array, predicate) {
     return array.reduce((parts, item, index) => {
         parts[predicate(item, index) ? 0 : 1].push(item);
@@ -4816,6 +8180,15 @@ function overlap(min1, max1, min2, max2) {
     const dx = max(0, min(max1, max2) - max(min1, min2));
     return dx > 0;
 }
+class SurfaceCfg {
+    constructor(userLabel, cfg) {
+        this.userLabel = userLabel;
+        this.cfg = cfg;
+    }
+    toString() {
+        return `Surface: Label: ${this.userLabel} cfg: ${this.cfg}`;
+    }
+}
 function surfaceIdParse(id) {
     let i1 = id.indexOf("@");
     let i2 = id.indexOf("#");
@@ -4824,27 +8197,61 @@ function surfaceIdParse(id) {
     let desktopName = i2 !== -1 ? id.slice(i2 + 1) : "";
     return [outputName, activity, desktopName];
 }
+function getMethodName() {
+    var _a;
+    var err = new Error();
+    return `${(_a = err.stack) === null || _a === void 0 ? void 0 : _a.split("\n")[1].split("@")[0]}`;
+}
+function unCapitalize(str) {
+    return str.charAt(0).toLowerCase() + str.slice(1);
+}
 function toQRect(rect) {
     return Qt.rect(rect.x, rect.y, rect.width, rect.height);
 }
 function toRect(qrect) {
     return new Rect(qrect.x, qrect.y, qrect.width, qrect.height);
 }
+function outputIsAlive(output) {
+    try {
+        return !!output && typeof output.name === "string";
+    }
+    catch (e) {
+        return false;
+    }
+}
+function findOutputByName(workspace, name) {
+    for (const output of workspace.screens) {
+        if (outputIsAlive(output) && output.name === name)
+            return output;
+    }
+    return null;
+}
+function resolveWindowOutput(workspace, window) {
+    return window && !window.deleted && outputIsAlive(window.output)
+        ? window.output
+        : workspace.activeScreen;
+}
 class Logging {
     constructor(modules, filters) {
         this._isIncludeMode = true;
         this._logModules = Logging.parseModules(modules);
         this._filters = this.parseFilters(filters);
-        this._started = new Date().getTime();
+        this._started = getTime();
     }
     send(module, action, message, filter) {
-        if (module !== undefined && !this._logModules.has(module))
+        if (module !== undefined && !this.isModuleOn(module))
             return;
         if (filter !== undefined) {
             if (this.isFiltered(filter))
                 return;
         }
         this._print(module, action, message);
+    }
+    print(module, action, message) {
+        this._print(module, action, message);
+    }
+    isModuleOn(module) {
+        return this._logModules.has(module);
     }
     isFiltered(filter) {
         if (this._filters === null)
@@ -4853,7 +8260,7 @@ class Logging {
         for (key in filter) {
             if (this._filters[key] == null || filter[key] == null)
                 continue;
-            const isContain = KWinWindow.isContain(this._filters[key], filter[key][0]);
+            const isContain = DriverWindow.isContain(this._filters[key], filter[key][0]);
             if (this._isIncludeMode) {
                 return isContain ? false : true;
             }
@@ -4868,7 +8275,6 @@ class Logging {
         for (const module of modules) {
             const userModules = Logging._logParseUserModules(module[0], module[1]);
             if (userModules !== null) {
-                userModules.forEach((el) => { });
                 logModules = new Set([...logModules, ...userModules]);
             }
         }
@@ -4898,12 +8304,9 @@ class Logging {
         }
         return logFilters;
     }
-    static _getLogModulesStr(module) {
-        return LogModulesKeys[module - 1];
-    }
     _print(module, action, message) {
-        const timestamp = (new Date().getTime() - this._started) / 1000;
-        print(`Krohnkite.log [${timestamp}], ${module !== undefined ? `[${Logging._getLogModulesStr(module)}]` : ""} ${action !== undefined ? action : ""} ${message !== undefined ? message : ""}`);
+        const timestamp = (getTime() - this._started) / 1000;
+        print(`Krohnkite.log [${timestamp}], ${module !== undefined ? `[${module}]` : ""} ${action !== undefined ? action : ""} ${message !== undefined ? message : ""}`);
     }
     static _logParseUserModules(logPartition, userStr) {
         let submodules;
@@ -4993,13 +8396,13 @@ class Rect {
         return this.y + this.height;
     }
     get center() {
-        return [
-            this.x + Math.floor(this.width / 2),
-            this.y + Math.floor(this.height / 2),
-        ];
+        return {
+            x: this.x + Math.floor(this.width / 2),
+            y: this.y + Math.floor(this.height / 2),
+        };
     }
     get activationPoint() {
-        return [this.x + Math.floor(this.width / 2), this.y + 10];
+        return { x: this.x + Math.floor(this.width / 2), y: this.y + 10 };
     }
     clone() {
         return new Rect(this.x, this.y, this.width, this.height);
@@ -5026,7 +8429,8 @@ class Rect {
             other.maxX < this.maxX &&
             other.maxY < this.maxY);
     }
-    includesPoint([x, y], part = 4) {
+    includesPoint(point, part = 4) {
+        const { x, y } = point;
         if (part === 0)
             return (this.x <= x &&
                 x <= this.maxX &&
@@ -5053,32 +8457,67 @@ class Rect {
             return this.x <= x && x <= this.maxX && this.y <= y && y <= this.maxY;
         }
     }
-    isTopZone([x, y], activeZone = 10) {
-        return (this.y <= y &&
-            y <= this.y + (this.height * activeZone) / 100 &&
+    isTopZone(point, activeZone = 10, unit = "percents", mirror = false) {
+        const { x, y } = point;
+        let height = unit === "percents" ? (this.height * activeZone) / 100 : activeZone;
+        const topEdge = mirror ? this.y - height : this.y;
+        if (mirror)
+            height = height * 2;
+        return (topEdge <= y && y <= topEdge + height && this.x <= x && x <= this.maxX);
+    }
+    isBottomZone(point, activeZone = 10, unit = "percents", mirror = false) {
+        const { x, y } = point;
+        let height = unit === "percents" ? (this.height * activeZone) / 100 : activeZone;
+        const bottomEdge = mirror ? this.maxY + height : this.maxY;
+        if (mirror)
+            height = height * 2;
+        return (y >= bottomEdge - height &&
+            y <= bottomEdge &&
             this.x <= x &&
             x <= this.maxX);
     }
-    isBottomZone([x, y], activeZone = 10) {
-        return (y >= this.maxY - (this.height * activeZone) / 100 &&
-            y <= this.maxY &&
-            this.x <= x &&
-            x <= this.maxX);
+    isLeftZone(point, activeZone = 10, unit = "percents", mirror = false) {
+        const { x, y } = point;
+        let wide = unit === "percents" ? (this.width * activeZone) / 100 : activeZone;
+        const leftEdge = mirror ? this.x - wide : this.x;
+        if (mirror)
+            wide = wide * 2;
+        return (leftEdge <= x && x <= leftEdge + wide && this.y <= y && y <= this.maxY);
     }
-    isLeftZone([x, y], activeZone = 10) {
-        return (this.x <= x &&
-            x <= this.x + (this.width * activeZone) / 100 &&
-            this.y <= y &&
-            y <= this.maxY);
-    }
-    isRightZone([x, y], activeZone = 10) {
-        return (x >= this.maxX - (this.width * activeZone) / 100 &&
-            x <= this.maxX &&
-            this.y <= y &&
-            y <= this.maxY);
+    isRightZone(point, activeZone = 10, unit = "percents", mirror = false) {
+        const { x, y } = point;
+        let wide = unit === "percents" ? (this.width * activeZone) / 100 : activeZone;
+        const rightEdge = mirror ? this.maxX + wide : this.maxX;
+        if (mirror)
+            wide = wide * 2;
+        return (x >= rightEdge - wide && x <= rightEdge && this.y <= y && y <= this.maxY);
     }
     subtract(other) {
         return new Rect(this.x - other.x, this.y - other.y, this.width - other.width, this.height - other.height);
+    }
+    intersection(other, coordinate) {
+        if (coordinate === "x") {
+            return Math.max(0, Math.min(this.maxX, other.maxX) - Math.max(this.x, other.x));
+        }
+        else {
+            return Math.max(0, Math.min(this.maxY, other.maxY) - Math.max(this.y, other.y));
+        }
+    }
+    distance(other) {
+        return Math.sqrt(Math.pow((this.center.x - other.center.x), 2) +
+            Math.pow((this.center.y - other.center.y), 2));
+    }
+    overallDimension(other, direction) {
+        switch (direction) {
+            case "left":
+                return Math.abs(this.x - other.x);
+            case "right":
+                return Math.abs(this.maxX - other.maxX);
+            case "up":
+                return Math.abs(this.y - other.y);
+            case "down":
+                return Math.abs(this.maxY - other.maxY);
+        }
     }
     toString() {
         return "Rect(" + [this.x, this.y, this.width, this.height].join(", ") + ")";
@@ -5105,6 +8544,47 @@ class RectDelta {
             ].join(" ") +
             ")");
     }
+}
+class UniqueLifoFifo {
+    constructor() {
+        this.map = new Map();
+    }
+    push(item) {
+        if (this.map.has(item))
+            return false;
+        this.map.set(item, item);
+        return true;
+    }
+    pop() {
+        let last;
+        for (const k of this.map.keys())
+            last = k;
+        if (last === undefined)
+            return undefined;
+        this.map.delete(last);
+        return last;
+    }
+    shift() {
+        const [key] = this.map.keys();
+        if (key === undefined)
+            return undefined;
+        this.map.delete(key);
+        return key;
+    }
+    get size() {
+        return this.map.size;
+    }
+    clear() {
+        this.map.clear();
+    }
+}
+function separate(str, separator) {
+    if (!str || typeof str !== "string")
+        return [];
+    return str
+        .split(separator)
+        .map((part) => part.trim())
+        .filter((part) => part != "");
 }
 function isNumeric(s) {
     if (typeof s != "string")
@@ -5138,6 +8618,29 @@ function validateNumber(value, from, to, float = false) {
     }
     else if (to !== undefined && num > to) {
         return new Err(`Number must be less than or equal to ${to}`);
+    }
+    return num;
+}
+function validateNumberWithDefault(value, defaultValue, errMess, from, to, float = false) {
+    let num;
+    const err = `validateNumber: ${errMess}. param: ${value}. Error:`;
+    if (typeof value === "number") {
+        num = value;
+    }
+    else {
+        num = parseNumber(value, float);
+        if (num instanceof Err) {
+            warning(`${err}${num.toString()}`);
+            return defaultValue;
+        }
+    }
+    if (from !== undefined && num < from) {
+        warning(`${err}Number must be greater than or equal to ${from}`);
+        return defaultValue;
+    }
+    else if (to !== undefined && num > to) {
+        warning(`${err}Number must be less than or equal to ${to}`);
+        return defaultValue;
     }
     return num;
 }
@@ -5203,14 +8706,19 @@ class WrapperMap {
         this.hasher = hasher;
         this.wrapper = wrapper;
         this.items = {};
+        this.objects = {};
     }
     add(item) {
         const key = this.hasher(item);
-        if (this.items[key] !== undefined)
-            throw "WrapperMap: the key [" + key + "] already exists!";
+        if (this.has(item))
+            return this.items[key];
         const wrapped = this.wrapper(item);
         this.items[key] = wrapped;
+        this.objects[key] = item;
         return wrapped;
+    }
+    has(item) {
+        return this.items[this.hasher(item)] !== undefined;
     }
     get(item) {
         const key = this.hasher(item);
@@ -5219,11 +8727,35 @@ class WrapperMap {
     getByKey(key) {
         return this.items[key] || null;
     }
+    getKeyObject(key) {
+        return this.objects[key] || null;
+    }
     remove(item) {
         const key = this.hasher(item);
+        delete this.objects[key];
         return delete this.items[key];
+    }
+    clear() {
+        this.items = {};
+        this.objects = {};
     }
     length() {
         return Object.keys(this.items).length;
+    }
+    entries() {
+        return Object.keys(this.items).map((k) => [this.objects[k], this.items[k]]);
+    }
+    [Symbol.iterator]() {
+        const keys = Object.keys(this.items);
+        const self = this;
+        let index = 0;
+        return {
+            next() {
+                if (index < keys.length) {
+                    return { value: self.items[keys[index++]], done: false };
+                }
+                return { value: undefined, done: true };
+            },
+        };
     }
 }

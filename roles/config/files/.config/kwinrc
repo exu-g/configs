@@ -42,7 +42,6 @@ enableStairLayout=false
 enableThreeColumnLayout=false
 enableTileLayout=false
 ignoreClass=krunner,yakuake,spectacle,kded5,xwaylandvideobridge,plasmashell,ksplashqml,org.kde.plasmashell,org.kde.polkit-kde-authentication-agent-1,org.kde.kruler,kcalc,gamescope
-ignoreTitle=Extension: (Bitwarden Password Manager)
 noTileBorder=true
 screenDefaultLayout=:monocle
 
@@ -648,7 +647,7 @@ MaxLuminance=380
 Reference=150
 
 [Xwayland]
-Scale=1.25
+Scale=1
 XwaylandEisNoPromptApps=steam
 
 [org.kde.kdecoration2]
