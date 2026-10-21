@@ -4,6 +4,7 @@ return {
     opts = {
       -- a list of all tools you want to ensure are installed upon start
       ensure_installed = {
+        "ansible-language-server",
         "ansible-lint",
         "ast-grep",
         "basedpyright",
@@ -37,7 +38,9 @@ return {
         "sqlls",
         "stylua",
         "taplo",
+        "tinymist",
         "tree-sitter-cli",
+        "typstyle",
         "yaml-language-server",
         "yamllint",
       },
