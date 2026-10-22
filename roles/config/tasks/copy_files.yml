@@ -9,7 +9,7 @@
     - ".config"
     - ".face"
     - ".local"
-    - ".ssh"
+    # - ".ssh"
     - "scripts"
   tags: config
 
