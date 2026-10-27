@@ -6,4 +6,4 @@
 
 ssh_key_git: "{{ ansible_facts['user_dir'] }}/.ssh/id_ed25519_git"
 
-background_image: "{{ ansible_facts['user_dir'] }}/Bilder/On_the_Way_to_SafespaceStation1_Sylvia.Ritter.jpg"
+background_image: "{{ ansible_facts['user_dir'] }}/Bilder/artstation_11876102_45464154_Silver moon dragon.jpg"
