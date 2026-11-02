@@ -97,6 +97,14 @@ set -gx NIMBLE_DIR "$XDG_DATA_HOME/nimble"
 set -gx RANDFILE "$XDG_STATE_HOME/rnd"
 # wine
 set -gx WINEPREFIX "$XDG_DATA_HOME/wine"
+# java
+set -gx _JAVA_OPTIONS "-Djava.util.prefs.userRoot=$XDG_CONFIG_HOME/java"
+# npm
+set -gx NPM_CONFIG_INIT_MODULE "$XDG_CONFIG_HOME/npm/config/npm-init.js"
+set -gx NPM_CONFIG_CACHE "$XDG_CACHE_HOME/npm"
+set -gx NPM_CONFIG_TMP "$XDG_RUNTIME_DIR/npm"
+# gnupg
+set -gx GNUPGHOME "$XDG_DATA_HOME/gnupg"
 
 # text editor
 set EDITOR /usr/bin/vim
