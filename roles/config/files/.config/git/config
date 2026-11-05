@@ -52,7 +52,12 @@
 [gpg]
     format = ssh # use ssh key signing
 [gpg "ssh"]
-    allowedSignersFile = ~/.config/git/allowed-signers
+  allowedSignersFile = ~/.config/git/allowed-signers
+[filter "lfs"]
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
 # conditonal config
 [includeIf "gitdir:**gitprojects/occ/**"]
     path = ~/.config/git/occ
