@@ -49,6 +49,23 @@ Item {
 
     }
 
+    /* Separate from moveMouseToCenter: this object has no finished handler, so
+     * the pointer stays on the screen center instead of being forwarded to the
+     * focused window afterwards. */
+    function getDBusMoveMouseToScreenCenter() {
+        return moveMouseToScreenCenter;
+    }
+    DBusCall {
+        id: moveMouseToScreenCenter;
+
+        service: "org.kde.kglobalaccel";
+        path: "/component/kwin";
+        dbusInterface: "org.kde.kglobalaccel.Component";
+        method: "invokeShortcut";
+        arguments: ["MoveMouseToCenter",];
+
+    }
+
     function getDBusVirtualKeyboardVisible() {
         return virtualKeyboardVisibleCall;
     }

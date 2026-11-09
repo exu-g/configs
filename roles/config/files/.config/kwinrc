@@ -647,7 +647,7 @@ MaxLuminance=380
 Reference=150
 
 [Xwayland]
-Scale=1
+Scale=1.25
 XwaylandEisNoPromptApps=steam
 
 [org.kde.kdecoration2]

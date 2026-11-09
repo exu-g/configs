@@ -17,6 +17,7 @@ const ArrangeReason = {
     transferWindowToVDesktop: "transferWindowToVDesktop",
     quickRelocationWindows: "quickRelocationWindows",
     relocationOutputChangedCB: "relocationOutputChangedCB",
+    relocationCompletionCB: "relocationCompletionCB",
     manageDock: "manageDock",
     outputChangedCB: "outputChangedCB",
     activitiesChangedCB: "activitiesChangedCB",
@@ -34,6 +35,7 @@ const ArrangeReason = {
     windowMoveResizedChangedCB: "windowMoveResizedChangedCB",
     windowBufferGeometryChangedCB: "windowBufferGeometryChangedCB",
     windowMaximizeAboutChangeCB: "windowMaximizeAboutChangeCB",
+    stackingOrderChanged: "stackingOrderChanged",
     shortcutCB: "shortcutCB",
     shortcutLayoutCB: "shortcutLayoutCB",
 };
@@ -48,6 +50,19 @@ const ConfigVariables = {
     columnsApplyConfOnNewColumns: "columnsApplyConfOnNewColumns",
     columnsLimitColumns: "columnsLimitColumns",
     stairReverse: "stairReverse",
+    spreadLayoutSpace: "spreadLayoutSpace",
+    tileLayoutEnabled: "tileLayoutEnabled",
+    monocleLayoutEnabled: "monocleLayoutEnabled",
+    threeColumnLayoutEnabled: "threeColumnLayoutEnabled",
+    spiralLayoutEnabled: "spiralLayoutEnabled",
+    quarterLayoutEnabled: "quarterLayoutEnabled",
+    stackedLayoutEnabled: "stackedLayoutEnabled",
+    columnsLayoutEnabled: "columnsLayoutEnabled",
+    spreadLayoutEnabled: "spreadLayoutEnabled",
+    floatingLayoutEnabled: "floatingLayoutEnabled",
+    stairLayoutEnabled: "stairLayoutEnabled",
+    binaryTreeLayoutEnabled: "binaryTreeLayoutEnabled",
+    cascadeLayoutEnabled: "cascadeLayoutEnabled",
     tileLayoutOrder: "tileLayoutOrder",
     monocleLayoutOrder: "monocleLayoutOrder",
     threeColumnLayoutOrder: "threeColumnLayoutOrder",
@@ -61,14 +76,11 @@ const ConfigVariables = {
     binaryTreeLayoutOrder: "binaryTreeLayoutOrder",
     cascadeLayoutOrder: "cascadeLayoutOrder",
     tileLayoutCapacity: "tileLayoutCapacity",
-    monocleLayoutCapacity: "monocleLayoutCapacity",
     threeColumnLayoutCapacity: "threeColumnLayoutCapacity",
     spiralLayoutCapacity: "spiralLayoutCapacity",
-    quarterLayoutCapacity: "quarterLayoutCapacity",
     stackedLayoutCapacity: "stackedLayoutCapacity",
     columnsLayoutCapacity: "columnsLayoutCapacity",
     spreadLayoutCapacity: "spreadLayoutCapacity",
-    floatingLayoutCapacity: "floatingLayoutCapacity",
     stairLayoutCapacity: "stairLayoutCapacity",
     binaryTreeLayoutCapacity: "binaryTreeLayoutCapacity",
     cascadeLayoutCapacity: "cascadeLayoutCapacity",
@@ -82,7 +94,9 @@ const ConfigVariables = {
     srfToVDesktopOrderTop: "srfToVDesktopOrderTop",
     srfToVDesktopOrderRight: "srfToVDesktopOrderRight",
     srfToVDesktopOrderBottom: "srfToVDesktopOrderBottom",
-    srfIsMoveOldestWindows: "srfIsMoveOldestWindows",
+    srfOvercapacityEviction: "srfOvercapacityEviction",
+    srfOvercapacityMode: "srfOvercapacityMode",
+    srfAllowShortcutMoveToFullSurface: "srfAllowShortcutMoveToFullSurface",
     srfDefineCfg: "srfDefineCfg",
     srfDefaultConfig: "srfDefaultConfig",
     screenGapTop: "screenGapTop",
@@ -93,7 +107,7 @@ const ConfigVariables = {
     gapsOverrideConfig: "gapsOverrideConfig",
     limitTileWidth: "limitTileWidth",
     limitTileWidthRatio: "limitTileWidthRatio",
-    shortcutConf: "metaConf",
+    shortcutConf: "shortcutConf",
     altRegisterTimeout: "altRegisterTimeout",
     altRegisterIsToggle: "altRegisterIsToggle",
     altRegisterIsPushedTwice: "altRegisterIsPushedTwice",
@@ -107,6 +121,8 @@ const ConfigVariables = {
     focusMoveScreensMeta: "focusMoveScreensMeta",
     focusMoveVDesktopsMeta: "focusMoveVDesktopsMeta",
     movePointerOnFocus: "movePointerOnFocus",
+    movePointerOnFocusShortcutsOnly: "movePointerOnFocusShortcutsOnly",
+    movePointerOnResize: "movePointerOnResize",
     newWindowPosition: "newWindowPosition",
     ignoreClass: "ignoreClass",
     ignoreTitle: "ignoreTitle",
@@ -221,6 +237,7 @@ const KrohnkiteAction = {
     SetMaster: "SetMaster",
     NextLayout: "NextLayout",
     PreviousLayout: "PreviousLayout",
+    LayoutChooser: "LayoutChooser",
     SetTileLayout: "SetTileLayout",
     SetMonocleLayout: "SetMonocleLayout",
     SetThreeColumnLayout: "SetThreeColumnLayout",
@@ -239,6 +256,7 @@ const KrohnkiteAction = {
     RaiseSurfaceCapacity: "RaiseSurfaceCapacity",
     LowerSurfaceCapacity: "LowerSurfaceCapacity",
     ResetSurfaceCapacity: "ResetSurfaceCapacity",
+    ShowCurrentCapacity: "ShowCurrentCapacity",
     AlterRegister: "AlterRegister",
     ToggleRegister: "ToggleRegister",
 };
@@ -263,6 +281,7 @@ const LogModules = {
     minimizedChanged: "minimizedChanged",
     moveResizedChanged: "moveResizedChanged",
     outputChanged: "outputChanged",
+    stackingOrderChanged: "stackingOrderChanged",
     shortcut: "shortcut",
     arrangeScreen: "arrangeScreen",
     printConfig: "printConfig",
@@ -307,6 +326,7 @@ const LogPartitions = {
             LogModules.minimizedChanged,
             LogModules.moveResizedChanged,
             LogModules.outputChanged,
+            LogModules.stackingOrderChanged,
         ],
     },
     other: {
@@ -541,22 +561,18 @@ class DockEntry {
     }
     remove(window) {
         for (let slot of this.slots) {
-            if (slot.window === window) {
-                slot.window = null;
-                break;
-            }
+            slot.remove(window);
         }
     }
     clearSlots() {
         for (const slot of this.slots) {
-            slot.window = null;
+            slot.windows = [];
         }
     }
     arrange(dockedWindows, workingArea) {
         const IS_WIDE = workingArea.width > workingArea.height;
-        let dockCfg;
-        let renderedTime = getTime();
-        let renderedOutputId = this.id;
+        const renderedTime = getTime();
+        const renderedOutputId = this.id;
         this.arrangeSlots(dockedWindows);
         this.assignSizes(workingArea);
         const leftSlot = this.getSlot(DockPosition.left);
@@ -567,56 +583,94 @@ class DockEntry {
         let width = workingArea.width;
         let topBorder = workingArea.y;
         let height = workingArea.height;
-        function leftSlotArrange() {
-            if (leftSlot !== null) {
-                dockCfg = leftSlot.window.dock.cfg;
-                let leftSlotHeight = Math.min((workingArea.height * dockCfg.vHeight) / 100, height);
-                let initRect = new Rect(leftBorder, topBorder, (workingArea.width * dockCfg.vWide) / 100, leftSlotHeight);
+        const mark = (window) => {
+            window.dock.renderedTime = renderedTime;
+            window.dock.renderedOutputId = renderedOutputId;
+        };
+        const leftSlotArrange = () => {
+            if (leftSlot === null)
+                return;
+            const windows = leftSlot.windows;
+            if (windows.length === 1) {
+                const cfg = windows[0].dock.cfg;
+                const leftSlotHeight = Math.min((workingArea.height * cfg.vHeight) / 100, height);
+                const initRect = new Rect(leftBorder, topBorder, (workingArea.width * cfg.vWide) / 100, leftSlotHeight);
                 leftBorder = leftBorder + initRect.width;
                 width = width - initRect.width;
-                leftSlot.window.geometry = DockEntry.align(initRect, leftSlot.position, dockCfg, height);
-                leftSlot.window.dock.renderedTime = renderedTime;
-                leftSlot.window.dock.renderedOutputId = renderedOutputId;
+                windows[0].geometry = DockEntry.align(initRect, leftSlot.position, cfg, height);
+                mark(windows[0]);
+                return;
             }
-        }
-        function rightSlotArrange() {
-            if (rightSlot !== null) {
-                dockCfg = rightSlot.window.dock.cfg;
-                let rightSlotHeight = Math.min((workingArea.height * dockCfg.vHeight) / 100, height);
-                let initRect = new Rect(workingArea.x +
+            const cfg = windows[0].dock.cfg;
+            const stripWidth = Math.min((workingArea.width * cfg.vWide) / 100, width);
+            const [alignedWidth, alignedLeft] = DockEntry.alignEdge(stripWidth, leftBorder, cfg.vEdgeGap, leftSlot.position, cfg.vEdgeAlignment);
+            this.layoutVertical(windows, alignedLeft, topBorder, alignedWidth, height, cfg, mark);
+            leftBorder = leftBorder + stripWidth;
+            width = width - stripWidth;
+        };
+        const rightSlotArrange = () => {
+            if (rightSlot === null)
+                return;
+            const windows = rightSlot.windows;
+            if (windows.length === 1) {
+                const cfg = windows[0].dock.cfg;
+                const rightSlotHeight = Math.min((workingArea.height * cfg.vHeight) / 100, height);
+                const initRect = new Rect(workingArea.x +
                     workingArea.width -
-                    (workingArea.width * dockCfg.vWide) / 100, topBorder, (workingArea.width * dockCfg.vWide) / 100, rightSlotHeight);
+                    (workingArea.width * cfg.vWide) / 100, topBorder, (workingArea.width * cfg.vWide) / 100, rightSlotHeight);
                 width = width - initRect.width;
-                rightSlot.window.geometry = DockEntry.align(initRect, rightSlot.position, dockCfg, height);
-                rightSlot.window.dock.renderedTime = renderedTime;
-                rightSlot.window.dock.renderedOutputId = renderedOutputId;
+                windows[0].geometry = DockEntry.align(initRect, rightSlot.position, cfg, height);
+                mark(windows[0]);
+                return;
             }
-        }
-        function topSlotArrange() {
-            if (topSlot !== null) {
-                dockCfg = topSlot.window.dock.cfg;
-                let topSlotWidth = Math.min((workingArea.width * dockCfg.hWide) / 100, width);
-                let initRect = new Rect(leftBorder, topBorder, topSlotWidth, (workingArea.height * dockCfg.hHeight) / 100);
+            const cfg = windows[0].dock.cfg;
+            const stripWidth = Math.min((workingArea.width * cfg.vWide) / 100, width);
+            const [alignedWidth, alignedLeft] = DockEntry.alignEdge(stripWidth, workingArea.x + workingArea.width - stripWidth, cfg.vEdgeGap, rightSlot.position, cfg.vEdgeAlignment);
+            this.layoutVertical(windows, alignedLeft, topBorder, alignedWidth, height, cfg, mark);
+            width = width - stripWidth;
+        };
+        const topSlotArrange = () => {
+            if (topSlot === null)
+                return;
+            const windows = topSlot.windows;
+            if (windows.length === 1) {
+                const cfg = windows[0].dock.cfg;
+                const topSlotWidth = Math.min((workingArea.width * cfg.hWide) / 100, width);
+                const initRect = new Rect(leftBorder, topBorder, topSlotWidth, (workingArea.height * cfg.hHeight) / 100);
                 topBorder = topBorder + initRect.height;
                 height = height - initRect.height;
-                topSlot.window.geometry = DockEntry.align(initRect, topSlot.position, dockCfg, width);
-                topSlot.window.dock.renderedTime = renderedTime;
-                topSlot.window.dock.renderedOutputId = renderedOutputId;
+                windows[0].geometry = DockEntry.align(initRect, topSlot.position, cfg, width);
+                mark(windows[0]);
+                return;
             }
-        }
-        function bottomSlotArrange() {
-            if (bottomSlot !== null) {
-                dockCfg = bottomSlot.window.dock.cfg;
-                let bottomSlotWidth = Math.min((workingArea.width * dockCfg.hWide) / 100, width);
-                let initRect = new Rect(leftBorder, workingArea.y +
+            const cfg = windows[0].dock.cfg;
+            const stripHeight = Math.min((workingArea.height * cfg.hHeight) / 100, height);
+            const [alignedHeight, alignedTop] = DockEntry.alignEdge(stripHeight, topBorder, cfg.hEdgeGap, topSlot.position, cfg.hEdgeAlignment);
+            this.layoutHorizontal(windows, leftBorder, alignedTop, width, alignedHeight, cfg, mark);
+            topBorder = topBorder + stripHeight;
+            height = height - stripHeight;
+        };
+        const bottomSlotArrange = () => {
+            if (bottomSlot === null)
+                return;
+            const windows = bottomSlot.windows;
+            if (windows.length === 1) {
+                const cfg = windows[0].dock.cfg;
+                const bottomSlotWidth = Math.min((workingArea.width * cfg.hWide) / 100, width);
+                const initRect = new Rect(leftBorder, workingArea.y +
                     workingArea.height -
-                    (workingArea.height * dockCfg.hHeight) / 100, bottomSlotWidth, (workingArea.height * dockCfg.hHeight) / 100);
+                    (workingArea.height * cfg.hHeight) / 100, bottomSlotWidth, (workingArea.height * cfg.hHeight) / 100);
                 height = height - initRect.height;
-                bottomSlot.window.geometry = DockEntry.align(initRect, bottomSlot.position, dockCfg, width);
-                bottomSlot.window.dock.renderedTime = renderedTime;
-                bottomSlot.window.dock.renderedOutputId = renderedOutputId;
+                windows[0].geometry = DockEntry.align(initRect, bottomSlot.position, cfg, width);
+                mark(windows[0]);
+                return;
             }
-        }
+            const cfg = windows[0].dock.cfg;
+            const stripHeight = Math.min((workingArea.height * cfg.hHeight) / 100, height);
+            const [alignedHeight, alignedTop] = DockEntry.alignEdge(stripHeight, workingArea.y + workingArea.height - stripHeight, cfg.hEdgeGap, bottomSlot.position, cfg.hEdgeAlignment);
+            this.layoutHorizontal(windows, leftBorder, alignedTop, width, alignedHeight, cfg, mark);
+            height = height - stripHeight;
+        };
         if (IS_WIDE) {
             leftSlotArrange();
             rightSlotArrange();
@@ -633,35 +687,95 @@ class DockEntry {
         return this.tilesArea;
     }
     handleShortcut(window, shortcut) {
-        const slot = this.getSlotByWindow(window);
-        let desiredPosition;
-        if (!slot) {
+        const found = this.findWindow(window);
+        if (found === null)
             return false;
+        const { slot, index } = found;
+        const isVertical = slot.position === DockPosition.left ||
+            slot.position === DockPosition.right;
+        if (isVertical) {
+            switch (shortcut) {
+                case KrohnkiteAction.MoveUp:
+                case KrohnkiteAction.MoveDown: {
+                    const delta = shortcut === KrohnkiteAction.MoveUp ? -1 : 1;
+                    if (this.moveWithinSlot(slot, index, delta))
+                        return true;
+                    return this.moveToSide(window, slot, shortcut === KrohnkiteAction.MoveUp
+                        ? DockPosition.top
+                        : DockPosition.bottom);
+                }
+                case KrohnkiteAction.MoveLeft:
+                    if (slot.position === DockPosition.left)
+                        return false;
+                    return this.moveToSide(window, slot, DockPosition.left);
+                case KrohnkiteAction.MoveRight:
+                    if (slot.position === DockPosition.right)
+                        return false;
+                    return this.moveToSide(window, slot, DockPosition.right);
+                default:
+                    return false;
+            }
         }
         switch (shortcut) {
             case KrohnkiteAction.MoveLeft:
-                desiredPosition = DockPosition.left;
-                break;
+            case KrohnkiteAction.MoveRight: {
+                const delta = shortcut === KrohnkiteAction.MoveLeft ? -1 : 1;
+                if (this.moveWithinSlot(slot, index, delta))
+                    return true;
+                return this.moveToSide(window, slot, shortcut === KrohnkiteAction.MoveLeft
+                    ? DockPosition.left
+                    : DockPosition.right);
+            }
             case KrohnkiteAction.MoveUp:
-                desiredPosition = DockPosition.top;
-                break;
-            case KrohnkiteAction.MoveRight:
-                desiredPosition = DockPosition.right;
-                break;
+                if (slot.position === DockPosition.top)
+                    return false;
+                return this.moveToSide(window, slot, DockPosition.top);
             case KrohnkiteAction.MoveDown:
-                desiredPosition = DockPosition.bottom;
-                break;
+                if (slot.position === DockPosition.bottom)
+                    return false;
+                return this.moveToSide(window, slot, DockPosition.bottom);
             default:
                 return false;
         }
-        if (slot.position !== desiredPosition) {
-            const desiredSlot = this.getSlotByPosition(desiredPosition);
-            if (desiredSlot !== null && desiredSlot.window === null) {
-                window.dock.position = desiredPosition;
-                return true;
-            }
+    }
+    moveWithinSlot(slot, index, delta) {
+        const targetIndex = index + delta;
+        if (targetIndex < 0 || targetIndex >= slot.windows.length)
+            return false;
+        const window = slot.windows[index];
+        slot.windows[index] = slot.windows[targetIndex];
+        slot.windows[targetIndex] = window;
+        return true;
+    }
+    moveToSide(window, source, position) {
+        const target = this.getSlotByPosition(position);
+        if (target === null || target === source)
+            return false;
+        if (!source.remove(window))
+            return false;
+        target.windows.push(window);
+        window.dock.position = position;
+        return true;
+    }
+    setCrossSize(window, size) {
+        const found = this.findWindow(window);
+        if (found === null)
+            return false;
+        const key = found.slot.position === DockPosition.left ||
+            found.slot.position === DockPosition.right
+            ? "vWide"
+            : "hHeight";
+        for (const member of found.slot.windows)
+            member.dock.cfg[key] = size;
+        return true;
+    }
+    findWindow(window) {
+        for (const slot of this.slots) {
+            const index = slot.windows.indexOf(window);
+            if (index >= 0)
+                return { slot, index };
         }
-        return false;
+        return null;
     }
     static align(initRect, position, cfg, wholeSize) {
         let leftBorder = initRect.x;
@@ -725,248 +839,224 @@ class DockEntry {
                 return [dimension - gap, sideBorder];
         }
     }
+    layoutVertical(windows, x, y, width, height, cfg, mark) {
+        let gap = Math.max(0, cfg.vGap);
+        if (gap * (windows.length + 1) > height)
+            gap = Math.max(0, height / (windows.length + 1));
+        const available = Math.max(0, height - gap * (windows.length + 1));
+        const sizes = DockEntry.distribute(windows.map((window) => window.dock.cfg.vHeight), available, windows.map((window) => window.minSize.height));
+        let cursor = y + gap;
+        windows.forEach((window, index) => {
+            window.geometry = new Rect(x, cursor, width, sizes[index]);
+            cursor = cursor + sizes[index] + gap;
+            mark(window);
+        });
+    }
+    layoutHorizontal(windows, x, y, width, height, cfg, mark) {
+        let gap = Math.max(0, cfg.hGap);
+        if (gap * (windows.length + 1) > width)
+            gap = Math.max(0, width / (windows.length + 1));
+        const available = Math.max(0, width - gap * (windows.length + 1));
+        const sizes = DockEntry.distribute(windows.map((window) => window.dock.cfg.hWide), available, windows.map((window) => window.minSize.width));
+        let cursor = x + gap;
+        windows.forEach((window, index) => {
+            window.geometry = new Rect(cursor, y, sizes[index], height);
+            cursor = cursor + sizes[index] + gap;
+            mark(window);
+        });
+    }
+    static distribute(weights, available, minimums) {
+        const count = weights.length;
+        if (count === 0)
+            return [];
+        const positive = weights.map((weight) => Math.max(0, weight));
+        const sum = positive.reduce((total, weight) => total + weight, 0);
+        const sizes = sum > 0
+            ? positive.map((weight) => (available * weight) / sum)
+            : positive.map(() => available / count);
+        const totalMinimum = minimums.reduce((total, minimum) => total + Math.max(0, minimum), 0);
+        if (totalMinimum > available)
+            return sizes;
+        for (let pass = 0; pass < count; pass++) {
+            let deficit = 0;
+            let flexible = 0;
+            for (let i = 0; i < count; i++) {
+                if (sizes[i] < minimums[i]) {
+                    deficit += minimums[i] - sizes[i];
+                    sizes[i] = minimums[i];
+                }
+                else {
+                    flexible += sizes[i] - minimums[i];
+                }
+            }
+            if (deficit <= 0 || flexible <= 0)
+                break;
+            for (let i = 0; i < count; i++) {
+                const extra = sizes[i] - minimums[i];
+                if (extra > 0)
+                    sizes[i] -= (deficit * extra) / flexible;
+            }
+        }
+        return sizes;
+    }
     getSlot(position) {
-        let slot = this.slots.find((slot) => slot.position === position) || null;
-        if (slot === null || slot.window === null) {
+        const slot = this.getSlotByPosition(position);
+        if (slot === null)
             return null;
-        }
-        else if (slot.window.state !== WindowState.Docked ||
-            slot.window.dock.position !== position) {
-            slot.window = null;
-            return null;
-        }
-        else {
-            return slot;
-        }
+        this.getValidWindows(slot);
+        return slot.windows.length > 0 ? slot : null;
+    }
+    getValidWindows(slot) {
+        slot.windows = slot.windows.filter((window) => window.state === WindowState.Docked &&
+            window.dock.position === slot.position);
+        return slot.windows;
     }
     getSlotByPosition(position) {
         return this.slots.find((slot) => slot.position === position) || null;
     }
-    getSlotByWindow(window) {
-        let slot = this.slots.find((slot) => slot.window === window) || null;
-        if (slot === null || slot.window === null) {
-            return null;
-        }
-        else if (slot.window.state !== WindowState.Docked) {
-            slot.window = null;
-            return null;
-        }
-        else {
-            return slot;
-        }
-    }
     arrangeSlots(dockedWindows) {
-        let contenders = this.arrangeContenders(dockedWindows, true);
-        if (contenders.length !== 0 && this.isHasEmptySlot()) {
-            contenders.forEach((w) => (w.dock.position = null));
-            contenders = this.arrangeContenders(contenders, false);
-        }
-        contenders.forEach((w) => {
-            w.state = WindowState.Tiled;
-        });
-    }
-    arrangeContenders(windows, init) {
-        let contenders = [];
+        const dockedSet = new Set(dockedWindows);
+        const placed = new Set();
         for (const slot of this.slots) {
-            if (!init && slot.window !== null)
-                continue;
-            if (windows.length === 0 && contenders.length === 0) {
-                slot.window = null;
-                continue;
-            }
-            let tempDockedWindows = [];
-            contenders.push(...windows.filter((w) => {
-                if (w.dock.position === slot.position) {
-                    return true;
-                }
-                if (w.dock.position === null)
-                    return true;
-                tempDockedWindows.push(w);
-            }));
-            windows = tempDockedWindows;
-            if (contenders.length !== 0) {
-                this.contendersSort(contenders, slot.position, this.id);
-                slot.window = contenders.pop();
-                slot.window.dock.position = slot.position;
-            }
-            else {
-                slot.window = null;
-            }
+            slot.windows = slot.windows.filter((window) => {
+                if (!dockedSet.has(window) || window.state !== WindowState.Docked)
+                    return false;
+                if (window.dock.position !== null &&
+                    window.dock.position !== slot.position)
+                    return false;
+                window.dock.position = slot.position;
+                placed.add(window);
+                return true;
+            });
         }
-        return contenders;
+        const remaining = dockedWindows.filter((window) => !placed.has(window));
+        for (const window of remaining) {
+            if (window.dock.position !== null &&
+                this.getSlotByPosition(window.dock.position) === null)
+                window.dock.position = null;
+        }
+        remaining.sort((a, b) => this.compareDockPriority(a, b));
+        for (const window of remaining) {
+            let slot = window.dock.position !== null
+                ? this.getSlotByPosition(window.dock.position)
+                : null;
+            if (slot === null) {
+                slot = this.slots.length > 0 ? this.slots[0] : null;
+                if (slot === null) {
+                    window.state = WindowState.Tiled;
+                    continue;
+                }
+                window.dock.position = slot.position;
+            }
+            slot.windows.push(window);
+        }
+    }
+    compareDockPriority(a, b) {
+        if (a.dock.priority !== b.dock.priority)
+            return b.dock.priority - a.dock.priority;
+        const aTime = a.dock.renderedTime;
+        const bTime = b.dock.renderedTime;
+        if (aTime === null && bTime !== null)
+            return -1;
+        if (bTime === null && aTime !== null)
+            return 1;
+        if (aTime !== null && bTime !== null && aTime !== bTime)
+            return aTime - bTime;
+        if (a.dock.renderedOutputId === this.id && b.dock.renderedOutputId !== this.id)
+            return -1;
+        if (b.dock.renderedOutputId === this.id && a.dock.renderedOutputId !== this.id)
+            return 1;
+        return 0;
     }
     assignSizes(workingArea) {
-        const MAX_SIZE = 50;
+        const MAX_SIDE_SIZE = 70;
+        const MAX_OPPOSITE_SIDES_SIZE = 70;
         const MAX_GAPS = {
             width: workingArea.width * 0.05,
             height: workingArea.height * 0.05,
         };
-        let oppositeSlot = null;
-        let donePositions = [];
-        let dockCfg;
-        let oppositeDockCfg;
+        const groups = new Map();
         for (const slot of this.slots) {
-            if (slot.window === null)
+            const windows = this.getValidWindows(slot);
+            if (windows.length === 0)
                 continue;
-            dockCfg = slot.window.dock.cfg;
-            const minSize = {
-                width: Math.max((slot.window.minSize.width * 100) / workingArea.width, 5),
-                height: Math.max((slot.window.minSize.height * 100) / workingArea.height, 5),
-            };
-            if (donePositions.indexOf(slot.position) >= 0)
-                continue;
-            switch (slot.position) {
-                case DockPosition.top:
-                    oppositeSlot = this.getSlot(DockPosition.bottom);
-                    break;
-                case DockPosition.bottom:
-                    oppositeSlot = this.getSlot(DockPosition.top);
-                    break;
-                case DockPosition.left:
-                    oppositeSlot = this.getSlot(DockPosition.right);
-                    break;
-                case DockPosition.right:
-                    oppositeSlot = this.getSlot(DockPosition.left);
-                    break;
-                default:
-                    warning("DockEntry assignSizes - invalid position");
-                    break;
+            const isVertical = slot.position === DockPosition.left ||
+                slot.position === DockPosition.right;
+            const crossKey = isVertical ? "vWide" : "hHeight";
+            const alongKey = isVertical ? "vHeight" : "hWide";
+            const gapKey = isVertical ? "vGap" : "hGap";
+            const edgeGapKey = isVertical
+                ? "vEdgeGap"
+                : "hEdgeGap";
+            const edgeAlignment = isVertical
+                ? windows[0].dock.cfg.vEdgeAlignment
+                : windows[0].dock.cfg.hEdgeAlignment;
+            const crossDimension = Math.max(1, isVertical ? workingArea.width : workingArea.height);
+            const alongDimension = Math.max(1, isVertical ? workingArea.height : workingArea.width);
+            let crossSize = 0;
+            let gap = 0;
+            let edgeGap = 0;
+            for (const window of windows) {
+                const cfg = window.dock.cfg;
+                crossSize = Math.max(crossSize, cfg[crossKey]);
+                gap = Math.max(gap, cfg[gapKey]);
+                edgeGap = Math.max(edgeGap, cfg[edgeGapKey]);
             }
-            switch (slot.position) {
-                case DockPosition.left:
-                case DockPosition.right:
-                    if (dockCfg.vGap > MAX_GAPS.width)
-                        dockCfg.vGap = MAX_GAPS.width;
-                    if (dockCfg.vWide <
-                        minSize.width + (200 * dockCfg.vGap) / workingArea.width)
-                        dockCfg.vWide =
-                            minSize.width + (200 * dockCfg.vGap) / workingArea.width;
-                    if (oppositeSlot !== null) {
-                        oppositeDockCfg = oppositeSlot.window.dock.cfg;
-                        let opMinSize = {
-                            width: Math.max((oppositeSlot.window.minSize.width * 100) / workingArea.width, 5),
-                            height: Math.max((oppositeSlot.window.minSize.height * 100) /
-                                workingArea.height, 5),
-                        };
-                        if (oppositeDockCfg.vGap > MAX_GAPS.width)
-                            oppositeDockCfg.vGap = MAX_GAPS.width;
-                        if (oppositeDockCfg.vWide <
-                            opMinSize.width + (200 * oppositeDockCfg.vGap) / workingArea.width)
-                            oppositeDockCfg.vWide =
-                                opMinSize.width +
-                                    (200 * oppositeDockCfg.vGap) / workingArea.width;
-                        if (dockCfg.vWide + oppositeDockCfg.vWide > MAX_SIZE) {
-                            if (dockCfg.vWide > MAX_SIZE / 2 &&
-                                oppositeDockCfg.vWide > MAX_SIZE / 2) {
-                                dockCfg.vWide = MAX_SIZE / 2;
-                                oppositeDockCfg.vWide = MAX_SIZE / 2;
-                            }
-                            else if (dockCfg.vWide > MAX_SIZE / 2) {
-                                dockCfg.vWide = MAX_SIZE - oppositeDockCfg.vWide;
-                            }
-                            else {
-                                oppositeDockCfg.vWide = MAX_SIZE - dockCfg.vWide;
-                            }
-                        }
-                        if (oppositeDockCfg.vHeight > 100)
-                            oppositeDockCfg.vHeight = 100;
-                        if (oppositeDockCfg.vHeight < minSize.height)
-                            oppositeDockCfg.vHeight = minSize.height;
-                        donePositions.push(oppositeSlot.position);
-                    }
-                    else {
-                        if (dockCfg.vWide > MAX_SIZE) {
-                            dockCfg.vWide = MAX_SIZE;
-                        }
-                    }
-                    if (dockCfg.vHeight > 100)
-                        dockCfg.vHeight = 100;
-                    if (dockCfg.vHeight < minSize.height)
-                        dockCfg.vHeight = minSize.height;
-                    break;
-                case DockPosition.top:
-                case DockPosition.bottom:
-                    if (dockCfg.hGap > MAX_GAPS.height)
-                        dockCfg.hGap = MAX_GAPS.height;
-                    if (dockCfg.hHeight <
-                        minSize.height + (200 * dockCfg.hGap) / workingArea.height)
-                        dockCfg.hHeight =
-                            minSize.height + (200 * dockCfg.hGap) / workingArea.height;
-                    if (oppositeSlot !== null) {
-                        oppositeDockCfg = oppositeSlot.window.dock.cfg;
-                        let opMinSize = {
-                            width: Math.max((oppositeSlot.window.minSize.width * 100) / workingArea.width, 5),
-                            height: Math.max((oppositeSlot.window.minSize.height * 100) /
-                                workingArea.height, 5),
-                        };
-                        if (oppositeDockCfg.hGap > MAX_GAPS.height)
-                            oppositeDockCfg.hGap = MAX_GAPS.height;
-                        if (oppositeDockCfg.hHeight <
-                            opMinSize.height +
-                                (200 * oppositeDockCfg.hGap) / workingArea.height)
-                            oppositeDockCfg.hHeight =
-                                opMinSize.height +
-                                    (200 * oppositeDockCfg.hGap) / workingArea.height;
-                        if (dockCfg.hHeight + oppositeDockCfg.hHeight > MAX_SIZE) {
-                            if (dockCfg.hHeight > MAX_SIZE / 2 &&
-                                oppositeDockCfg.hHeight > MAX_SIZE / 2) {
-                                dockCfg.hHeight = MAX_SIZE / 2;
-                                oppositeDockCfg.hHeight = MAX_SIZE / 2;
-                            }
-                            else if (dockCfg.hHeight > MAX_SIZE / 2) {
-                                dockCfg.hHeight = MAX_SIZE - oppositeDockCfg.hHeight;
-                            }
-                            else {
-                                oppositeDockCfg.hHeight = MAX_SIZE - dockCfg.hHeight;
-                            }
-                        }
-                        if (oppositeDockCfg.hWide > 100)
-                            oppositeDockCfg.hWide = 100;
-                        if (oppositeDockCfg.hWide < opMinSize.width)
-                            oppositeDockCfg.hWide = opMinSize.width;
-                        donePositions.push(oppositeSlot.position);
-                    }
-                    else {
-                        if (dockCfg.hHeight > MAX_SIZE) {
-                            dockCfg.hHeight = MAX_SIZE;
-                        }
-                    }
-                    if (dockCfg.hWide > 100)
-                        dockCfg.hWide = 100;
-                    if (dockCfg.hWide < minSize.width)
-                        dockCfg.hWide = minSize.width;
-                    break;
+            gap = Math.max(0, Math.min(gap, isVertical ? MAX_GAPS.height : MAX_GAPS.width));
+            edgeGap = Math.max(0, edgeGap);
+            const edgeReserve = edgeAlignment === EdgeAlignment.middle ? 2 * edgeGap : edgeGap;
+            for (const window of windows) {
+                const cfg = window.dock.cfg;
+                const minCross = Math.max(((isVertical ? window.minSize.width : window.minSize.height) * 100) /
+                    crossDimension, 5);
+                const minAlong = Math.max(((isVertical ? window.minSize.height : window.minSize.width) * 100) /
+                    alongDimension, 5);
+                if (cfg[alongKey] < minAlong)
+                    cfg[alongKey] = minAlong;
+                if (windows.length === 1 && cfg[alongKey] > 100)
+                    cfg[alongKey] = 100;
+                cfg[gapKey] = gap;
+                cfg[edgeGapKey] = edgeGap;
+                crossSize = Math.max(crossSize, minCross + (100 * edgeReserve) / crossDimension);
             }
+            crossSize = Math.min(crossSize, MAX_SIDE_SIZE);
+            for (const window of windows)
+                window.dock.cfg[crossKey] = crossSize;
+            groups.set(slot.position, {
+                windows,
+                crossKey,
+                crossSize,
+            });
         }
-    }
-    contendersSort(contenders, position, id) {
-        function compare(a, b) {
-            if (a.dock.position === position && b.dock.position !== position)
-                return 1;
-            else if (b.dock.position === position && a.dock.position !== position)
-                return -1;
-            else if (a.dock.priority > b.dock.priority)
-                return 1;
-            else if (b.dock.priority > a.dock.priority)
-                return -1;
-            else if (a.dock.renderedTime === null && b.dock.renderedTime === null)
-                return 0;
-            else if (a.dock.renderedTime === null)
-                return -1;
-            else if (b.dock.renderedTime === null)
-                return 1;
-            else if (a.dock.renderedOutputId === id && b.dock.renderedOutputId !== id)
-                return 1;
-            else if (b.dock.renderedOutputId === id && a.dock.renderedOutputId !== id)
-                return -1;
-            else if (a.dock.renderedTime > b.dock.renderedTime)
-                return 1;
-            else if (b.dock.renderedTime > a.dock.renderedTime)
-                return -1;
-            else
-                return 0;
-        }
-        contenders.sort(compare);
+        const clampPair = (firstPosition, secondPosition) => {
+            const first = groups.get(firstPosition);
+            const second = groups.get(secondPosition);
+            if (first === undefined || second === undefined)
+                return;
+            let firstSize = first.crossSize;
+            let secondSize = second.crossSize;
+            if (firstSize + secondSize <= MAX_OPPOSITE_SIDES_SIZE)
+                return;
+            if (firstSize > MAX_OPPOSITE_SIDES_SIZE / 2 &&
+                secondSize > MAX_OPPOSITE_SIDES_SIZE / 2) {
+                firstSize = MAX_OPPOSITE_SIDES_SIZE / 2;
+                secondSize = MAX_OPPOSITE_SIDES_SIZE / 2;
+            }
+            else if (firstSize > MAX_OPPOSITE_SIDES_SIZE / 2) {
+                firstSize = MAX_OPPOSITE_SIDES_SIZE - secondSize;
+            }
+            else {
+                secondSize = MAX_OPPOSITE_SIDES_SIZE - firstSize;
+            }
+            first.crossSize = firstSize;
+            second.crossSize = secondSize;
+            for (const window of first.windows)
+                window.dock.cfg[first.crossKey] = firstSize;
+            for (const window of second.windows)
+                window.dock.cfg[second.crossKey] = secondSize;
+        };
+        clampPair(DockPosition.left, DockPosition.right);
+        clampPair(DockPosition.top, DockPosition.bottom);
     }
     parseSlots() {
         const slots = [];
@@ -980,9 +1070,6 @@ class DockEntry {
             slots.push(new DockSlot(DockPosition.bottom, CONFIG.dockOrder[3]));
         slots.sort((a, b) => a.order - b.order);
         return slots;
-    }
-    isHasEmptySlot() {
-        return !this.slots.every((slot) => slot.window !== null);
     }
 }
 function parseDockUserSurfacesCfg() {
@@ -1238,7 +1325,21 @@ class DockSlot {
     constructor(position, order) {
         this._position = position;
         this._order = order;
-        this.window = null;
+        this.windows = [];
+    }
+    add(window, index = this.windows.length) {
+        const target = Math.max(0, Math.min(index, this.windows.length));
+        this.windows.splice(target, 0, window);
+    }
+    remove(window) {
+        const index = this.windows.indexOf(window);
+        if (index < 0)
+            return false;
+        this.windows.splice(index, 1);
+        return true;
+    }
+    indexOf(window) {
+        return this.windows.indexOf(window);
     }
 }
 class DockStore {
@@ -1274,130 +1375,319 @@ class DockStore {
     }
     drag(dragAction) {
         const window = dragAction.window;
-        const swapping = dragAction.swapping;
         const result = dragAction.result;
         const wasDocked = dragAction.initialState === WindowState.Docked;
         const entry = this.getOrCreateEntry(dragAction.srf);
-        const tilesArea = entry.tilesArea;
-        dragAction.tilesArea = tilesArea;
+        dragAction.tilesArea = entry.tilesArea;
+        if (wasDocked) {
+            const source = this.findWindow(window);
+            if (source !== null)
+                this.ensureSnapshot(dragAction, source.entry);
+        }
+        this.ensureSnapshot(dragAction, entry);
+        this.restoreSnapshots(dragAction);
+        const wasPreviewDocked = window.state === WindowState.Docked;
+        if (!wasDocked)
+            window.setTransientState(dragAction.initialState);
         const dockHit = this.getDockPosition(dragAction, entry);
-        const restoreSwapping = () => {
-            if (swapping.window === null)
-                return;
-            if (wasDocked)
-                window.dock.position = swapping.window.dock.position;
-            swapping.window.setTransientState(WindowState.Docked);
-            swapping.window.dock.position = swapping.position;
-            swapping.window = null;
-            swapping.position = null;
-        };
         if (dockHit.position === null) {
-            if (!window.isDocked)
+            dragAction.dockTarget = null;
+            if (!wasDocked) {
+                if (wasPreviewDocked) {
+                    result.isProcessed = true;
+                    result.isArrangeNeeded = true;
+                }
+                else {
+                    result.isProcessed = false;
+                    result.isArrangeNeeded = false;
+                }
                 return;
-            restoreSwapping();
+            }
+            this.remove(window);
             window.setTransientState(WindowState.Tiled);
             result.isProcessed = true;
             result.isArrangeNeeded = true;
             return;
         }
-        if (dockHit.window === null) {
-            dragAction.dockTarget = dockHit.position;
-            if (window.isDocked && window.dock.position === dockHit.position) {
-                result.isProcessed = true;
-                return;
-            }
-            restoreSwapping();
-            window.setTransientState(WindowState.Docked);
-            window.dock.position = dockHit.position;
-            result.isProcessed = true;
-            result.isArrangeNeeded = true;
-            return;
-        }
-        if (swapping.window === dockHit.window) {
-            restoreSwapping();
-            dragAction.dockTarget = window.dock.position;
-            result.isProcessed = true;
-            result.isArrangeNeeded = true;
-            return;
-        }
-        restoreSwapping();
         dragAction.dockTarget = dockHit.position;
-        swapping.window = dockHit.window;
-        swapping.position = dockHit.position;
-        window.setTransientState(WindowState.Docked);
-        if (wasDocked) {
-            dockHit.window.setTransientState(WindowState.Docked);
-            dockHit.window.dock.position = window.dock.position;
+        if (dockHit.window === window) {
+            result.isProcessed = true;
+            result.isArrangeNeeded = true;
+            return;
+        }
+        if (dockHit.window !== null && dockHit.zone === "swap") {
+            this.swapWith(dragAction, entry, dockHit, wasDocked);
         }
         else {
-            dockHit.window.setTransientState(WindowState.Tiled);
+            this.insertAt(dragAction, entry, dockHit);
         }
-        window.dock.position = dockHit.position;
         result.isProcessed = true;
         result.isArrangeNeeded = true;
     }
-    getDockPosition(dragAction, entry) {
-        const { mousePointer, middlePointer, workingArea, tilesArea, window, swapping, } = dragAction;
-        let ownDockPosition = null;
-        for (let i = 0; i < entry.slots.length; i++) {
-            const dockSlot = entry.slots[i];
-            const occupied = dockSlot.window !== null &&
-                dockSlot.window.state === WindowState.Docked;
-            const ownSlot = occupied && dockSlot.window === window;
-            if (ownSlot &&
-                (window.dock.position === dragAction.initialDockPosition ||
-                    swapping.window !== null)) {
-                if (dockSlot.position === DockPosition.bottom) {
-                    if (!(tilesArea === null || tilesArea === void 0 ? void 0 : tilesArea.includesPoint(middlePointer)))
-                        ownDockPosition = dockSlot.position;
-                }
-                else {
-                    if (!(tilesArea === null || tilesArea === void 0 ? void 0 : tilesArea.includesPoint(mousePointer)))
-                        ownDockPosition = dockSlot.position;
-                }
-                continue;
-            }
-            if (!occupied || ownSlot) {
-                switch (dockSlot.position) {
-                    case DockPosition.top: {
-                        if (CONFIG.dockTopDragZone > 0 &&
-                            workingArea.isTopZone(mousePointer, CONFIG.dockTopDragZone, "pixels", true))
-                            return { position: DockPosition.top, window: null };
-                        continue;
-                    }
-                    case DockPosition.left: {
-                        if (CONFIG.dockLeftDragZone > 0 &&
-                            workingArea.isLeftZone(mousePointer, CONFIG.dockLeftDragZone, "pixels", true))
-                            return { position: DockPosition.left, window: null };
-                        continue;
-                    }
-                    case DockPosition.right: {
-                        if (CONFIG.dockRightDragZone > 0 &&
-                            workingArea.isRightZone(mousePointer, CONFIG.dockRightDragZone, "pixels", true))
-                            return { position: DockPosition.right, window: null };
-                        continue;
-                    }
-                    case DockPosition.bottom: {
-                        if (CONFIG.dockBottomDragZone > 0 &&
-                            workingArea.isBottomZone(middlePointer, CONFIG.dockBottomDragZone, "pixels", true))
-                            return { position: DockPosition.bottom, window: null };
-                        continue;
-                    }
-                    default: {
-                        warning(`${getMethodName()}: Unknown DockPosition`);
-                        continue;
-                    }
-                }
-            }
-            else if (dockSlot.window !== null) {
-                if (entry.id !== dragAction.initialSrfId)
-                    continue;
-                if (dockSlot.window.geometry.includesPoint(mousePointer) ||
-                    dockSlot.window.geometry.includesPoint(middlePointer))
-                    return { position: dockSlot.position, window: dockSlot.window };
+    finishDrag(dragAction) {
+        for (const id in dragAction.dockSnapshots) {
+            const snapshot = dragAction.dockSnapshots[id];
+            for (const saved of snapshot.states) {
+                if (saved.state === WindowState.Docked &&
+                    saved.window.state !== WindowState.Docked)
+                    saved.window.previousState = WindowState.Docked;
             }
         }
-        return { position: ownDockPosition, window: null };
+        dragAction.dockSnapshots = {};
+    }
+    adjust(basis, widthDiff, heightDiff) {
+        const cfg = basis.dock.cfg;
+        const workingArea = basis.surface.workingArea;
+        const entry = this.store[basis.surface.id];
+        switch (basis.dock.position) {
+            case DockPosition.left:
+            case DockPosition.right:
+                cfg.vHeight =
+                    cfg.vHeight + (100 * heightDiff) / workingArea.height;
+                {
+                    const size = cfg.vWide + (100 * widthDiff) / workingArea.width;
+                    if (entry === undefined || !entry.setCrossSize(basis, size))
+                        cfg.vWide = size;
+                }
+                break;
+            case DockPosition.top:
+            case DockPosition.bottom:
+                cfg.hWide = cfg.hWide + (100 * widthDiff) / workingArea.width;
+                {
+                    const size = cfg.hHeight + (100 * heightDiff) / workingArea.height;
+                    if (entry === undefined || !entry.setCrossSize(basis, size))
+                        cfg.hHeight = size;
+                }
+                break;
+        }
+    }
+    swapWith(dragAction, entry, dockHit, wasDocked) {
+        const window = dragAction.window;
+        const target = dockHit.window;
+        const targetSlot = entry.slots.find((slot) => slot.position === dockHit.position);
+        if (targetSlot === undefined)
+            return;
+        const targetIndex = targetSlot.indexOf(target);
+        if (!wasDocked) {
+            targetSlot.remove(target);
+            target.setTransientState(WindowState.Tiled);
+            this.remove(window);
+            targetSlot.add(window, targetIndex);
+            window.setTransientState(WindowState.Docked);
+            window.dock.position = targetSlot.position;
+            return;
+        }
+        const source = this.findWindow(window);
+        if (source === null) {
+            this.insertAt(dragAction, entry, {
+                position: targetSlot.position,
+                window: null,
+                index: targetIndex,
+                zone: "append",
+            });
+            return;
+        }
+        if (source.entry === entry && source.slot === targetSlot) {
+            const sourceIndex = source.index;
+            const temporary = source.slot.windows[sourceIndex];
+            source.slot.windows[sourceIndex] = target;
+            source.slot.windows[targetIndex] = temporary;
+            return;
+        }
+        source.slot.remove(window);
+        targetSlot.remove(target);
+        source.slot.add(target, source.index);
+        targetSlot.add(window, targetIndex);
+        target.setTransientState(WindowState.Docked);
+        window.setTransientState(WindowState.Docked);
+        target.dock.position = source.slot.position;
+        window.dock.position = targetSlot.position;
+    }
+    insertAt(dragAction, entry, dockHit) {
+        if (dockHit.position === null)
+            return;
+        const targetSlot = entry.slots.find((slot) => slot.position === dockHit.position);
+        if (targetSlot === undefined)
+            return;
+        let index = dockHit.zone === "after" ? dockHit.index + 1 : dockHit.index;
+        const source = this.findWindow(dragAction.window);
+        if (source !== null &&
+            source.entry === entry &&
+            source.slot === targetSlot &&
+            source.index < index)
+            index = index - 1;
+        this.remove(dragAction.window);
+        targetSlot.add(dragAction.window, index);
+        dragAction.window.setTransientState(WindowState.Docked);
+        dragAction.window.dock.position = targetSlot.position;
+    }
+    ensureSnapshot(dragAction, entry) {
+        if (dragAction.dockSnapshots[entry.id] !== undefined)
+            return;
+        const states = [];
+        for (const slot of entry.slots) {
+            for (const window of slot.windows)
+                states.push({
+                    window,
+                    state: window.state,
+                    dockPosition: window.dock.position,
+                    geometry: window.geometry.clone(),
+                });
+        }
+        dragAction.dockSnapshots[entry.id] = {
+            srfId: entry.id,
+            slots: entry.slots.map((slot) => ({
+                position: slot.position,
+                windows: slot.windows.slice(),
+            })),
+            states,
+        };
+    }
+    restoreSnapshots(dragAction) {
+        for (const id in dragAction.dockSnapshots) {
+            const entry = this.store[id];
+            if (entry === undefined)
+                continue;
+            const snapshot = dragAction.dockSnapshots[id];
+            for (const slot of entry.slots) {
+                const saved = snapshot.slots.find((savedSlot) => savedSlot.position === slot.position);
+                slot.windows = saved === undefined ? [] : saved.windows.slice();
+            }
+            for (const saved of snapshot.states) {
+                saved.window.setTransientState(saved.state);
+                saved.window.dock.position = saved.dockPosition;
+                saved.window.geometry = saved.geometry.clone();
+            }
+        }
+    }
+    findWindow(window) {
+        for (const id in this.store) {
+            const entry = this.store[id];
+            const found = entry.findWindow(window);
+            if (found !== null)
+                return Object.assign({ entry }, found);
+        }
+        return null;
+    }
+    getDockPosition(dragAction, entry) {
+        const { mousePointer, middlePointer, neighbors, workingArea, window, } = dragAction;
+        const canSwap = entry.id === dragAction.initialSrfId;
+        for (const dockSlot of entry.slots) {
+            for (const target of dockSlot.windows) {
+                if (target.state !== WindowState.Docked)
+                    continue;
+                if (target.geometry === null)
+                    continue;
+                const point = target.geometry.includesPoint(mousePointer)
+                    ? mousePointer
+                    : target.geometry.includesPoint(middlePointer)
+                        ? middlePointer
+                        : null;
+                if (point === null)
+                    continue;
+                const index = dockSlot.indexOf(target);
+                if (target === window)
+                    return {
+                        position: dockSlot.position,
+                        window: target,
+                        index,
+                        zone: "swap",
+                    };
+                let zone = "swap";
+                if (dockSlot.position === DockPosition.left ||
+                    dockSlot.position === DockPosition.right) {
+                    if (target.geometry.height > 0) {
+                        const relative = (point.y - target.geometry.y) / target.geometry.height;
+                        if (relative < 0.25)
+                            zone = "before";
+                        else if (relative > 0.75)
+                            zone = "after";
+                    }
+                }
+                else if (target.geometry.width > 0) {
+                    const relative = (point.x - target.geometry.x) / target.geometry.width;
+                    if (relative < 0.25)
+                        zone = "before";
+                    else if (relative > 0.75)
+                        zone = "after";
+                }
+                if (!canSwap && zone === "swap")
+                    zone = "before";
+                return {
+                    position: dockSlot.position,
+                    window: target,
+                    index,
+                    zone,
+                };
+            }
+        }
+        for (const dockSlot of entry.slots) {
+            const dragZone = dockSlot.position === DockPosition.top
+                ? CONFIG.dockTopDragZone
+                : dockSlot.position === DockPosition.bottom
+                    ? CONFIG.dockBottomDragZone
+                    : dockSlot.position === DockPosition.left
+                        ? CONFIG.dockLeftDragZone
+                        : CONFIG.dockRightDragZone;
+            if (!this.isSideZoneHit(dragAction, dockSlot.position, dragZone))
+                continue;
+            const point = this.getSidePoint(dragAction, dockSlot.position);
+            return {
+                position: dockSlot.position,
+                window: null,
+                index: this.getInsertionIndex(dockSlot, point, dockSlot.position),
+                zone: "append",
+            };
+        }
+        return { position: null, window: null, index: 0, zone: "append" };
+    }
+    getSidePoint(dragAction, position) {
+        const { mousePointer, middlePointer, neighbors } = dragAction;
+        switch (position) {
+            case DockPosition.top:
+                return neighbors.up ? middlePointer : mousePointer;
+            case DockPosition.bottom:
+                return neighbors.down ? middlePointer : mousePointer;
+            case DockPosition.left:
+                return neighbors.left ? middlePointer : mousePointer;
+            case DockPosition.right:
+                return neighbors.right ? middlePointer : mousePointer;
+        }
+    }
+    isSideZoneHit(dragAction, position, dragZone) {
+        if (dragZone <= 0)
+            return false;
+        const { workingArea, neighbors } = dragAction;
+        const point = this.getSidePoint(dragAction, position);
+        switch (position) {
+            case DockPosition.top:
+                return workingArea.isTopZone(point, dragZone, "pixels", !neighbors.up);
+            case DockPosition.left:
+                return workingArea.isLeftZone(point, dragZone, "pixels", !neighbors.left);
+            case DockPosition.right:
+                return workingArea.isRightZone(point, dragZone, "pixels", !neighbors.right);
+            case DockPosition.bottom:
+                return workingArea.isBottomZone(point, dragZone, "pixels", !neighbors.down);
+        }
+    }
+    getInsertionIndex(slot, point, position) {
+        for (let index = 0; index < slot.windows.length; index++) {
+            const geometry = slot.windows[index].geometry;
+            if (geometry === null)
+                continue;
+            if (position === DockPosition.left ||
+                position === DockPosition.right) {
+                const center = geometry.y + geometry.height / 2;
+                if (point.y < center)
+                    return index;
+            }
+            else {
+                const center = geometry.x + geometry.width / 2;
+                if (point.x < center)
+                    return index;
+            }
+        }
+        return slot.windows.length;
     }
     remove(window) {
         for (let key in this.store) {
@@ -1406,13 +1696,16 @@ class DockStore {
     }
     handleShortcut(ctx, window, action) {
         let result = false;
+        const entry = this.store[ctx.currentSurface.id];
         switch (action) {
             case KrohnkiteAction.GrowWidth:
             case KrohnkiteAction.ShrinkWidth: {
                 const increment = action === KrohnkiteAction.GrowWidth ? 1 : -1;
                 if (window.dock.position === DockPosition.left ||
                     window.dock.position === DockPosition.right) {
-                    window.dock.cfg.vWide += increment;
+                    const size = window.dock.cfg.vWide + increment;
+                    if (entry === undefined || !entry.setCrossSize(window, size))
+                        window.dock.cfg.vWide = size;
                 }
                 else {
                     window.dock.cfg.hWide += increment;
@@ -1428,7 +1721,9 @@ class DockStore {
                     window.dock.cfg.vHeight += increment;
                 }
                 else {
-                    window.dock.cfg.hHeight += increment;
+                    const size = window.dock.cfg.hHeight + increment;
+                    if (entry === undefined || !entry.setCrossSize(window, size))
+                        window.dock.cfg.hHeight = size;
                 }
                 result = true;
                 break;
@@ -1437,14 +1732,10 @@ class DockStore {
             case KrohnkiteAction.MoveUp:
             case KrohnkiteAction.MoveRight:
             case KrohnkiteAction.MoveDown:
-                const srf = ctx.currentSurface;
-                if (this.store[srf.id]) {
-                    result = this.store[srf.id].handleShortcut(window, action);
+                if (entry !== undefined) {
+                    result = entry.handleShortcut(window, action);
                 }
                 break;
-        }
-        if (CONFIG.movePointerOnFocus && result) {
-            window.moveMouseToFocus();
         }
         return result;
     }
@@ -1479,6 +1770,27 @@ const winTypesCfg = [
     1 | 2,
     4 | 2,
     16,
+];
+const hardcodedIgnoreClasses = [
+    "krunner",
+    "yakuake",
+    "spectacle",
+    "kded5",
+    "xwaylandvideobridge",
+    "plasmashell",
+    "ksplashqml",
+    "org.kde.plasmashell",
+    "org.kde.polkit-kde-authentication-agent-1",
+    "org.kde.kruler",
+    "kruler",
+    "kwin_wayland",
+    "ksmserver-logout-greeter",
+    "org.krohnkite.configurator",
+];
+const hardcodedFloatConfig = [
+    "systemsettings:Configure — System Settings:auto=1",
+    "systemsettings:Настройка — Параметры системы:auto=1",
+    "systemsettings:配置 — 系统设置:auto=1",
 ];
 function isValidConfigKey(key) {
     return key in ConfigVariables;
@@ -1519,6 +1831,7 @@ class KWinConfig {
         this.columnsApplyConfOnNewColumns = KWIN.readConfig("columnsApplyConfOnNewColumns", false);
         this.columnsLimitColumns = KWIN.readConfig("columnsLimitColumns", false);
         this.stairReverse = KWIN.readConfig("stairReverse", false);
+        this.spreadLayoutSpace = validateNumberWithDefault(KWIN.readConfig("spreadLayoutSpace", 4), 4, "spreadLayoutSpace", 0, 15);
         const layoutsList = [
             [TileLayout, true],
             [MonocleLayout, false],
@@ -1528,7 +1841,7 @@ class KWinConfig {
             [StackedLayout, true],
             [ColumnsLayout, true],
             [SpreadLayout, true],
-            [FloatingLayout, true],
+            [FloatingLayout, false],
             [StairLayout, true],
             [BinaryTreeLayout, true],
             [CascadeLayout, true],
@@ -1538,10 +1851,7 @@ class KWinConfig {
         const layoutConfig = KWinConfig.getLayoutFactories(sortedLayouts);
         this.layoutFactories = layoutConfig.factories;
         this.layoutFactoryCapacities = layoutConfig.capacities;
-        sortedLayouts.forEach(({ layoutClass, isCapacity }) => {
-            this.layoutOrder.push(layoutClass.id);
-        });
-        this.srfExceededToScreen = KWIN.readConfig("srfExceededToScreen", true);
+        this.srfExceededToScreen = KWIN.readConfig("srfExceededToScreen", false);
         const directionConfigs = [
             {
                 direction: "left",
@@ -1576,7 +1886,7 @@ class KWinConfig {
             .filter((el) => el.order !== 0)
             .sort((a, b) => a.order - b.order)
             .map((el) => el.direction);
-        this.srfExceededToVDesktop = KWIN.readConfig("srfExceededToVDesktop", true);
+        this.srfExceededToVDesktop = KWIN.readConfig("srfExceededToVDesktop", false);
         this.srfToVDesktopOrder = directionConfigs
             .map(({ direction, vDesktopKey: key, defaultOrder }) => ({
             direction,
@@ -1585,7 +1895,15 @@ class KWinConfig {
             .filter((el) => el.order !== 0)
             .sort((a, b) => a.order - b.order)
             .map((el) => el.direction);
-        this.srfIsMoveOldestWindows = KWIN.readConfig("srfIsMoveOldestWindows", false);
+        this.srfOvercapacityEviction =
+            Number(KWIN.readConfig("srfOvercapacityEviction", 1)) === 1
+                ? "oldest"
+                : "lastFocused";
+        this.srfOvercapacityMode =
+            Number(KWIN.readConfig("srfOvercapacityMode", 1)) === 0
+                ? "float"
+                : "minimize";
+        this.srfAllowShortcutMoveToFullSurface = KWIN.readConfig("srfAllowShortcutMoveToFullSurface", false);
         this.srfDefineCfg = separate(KWIN.readConfig("srfDefineCfg", ""), "\n");
         this.srfDefaultConfig = separate(KWIN.readConfig("srfDefaultConfig", ""), "\n");
         this.screenGapTop = KWIN.readConfig("screenGapTop", 0);
@@ -1600,7 +1918,7 @@ class KWinConfig {
         this.altRegisterTimeout = validateNumberWithDefault(KWIN.readConfig("altRegisterTimeout", 3000), 3000, "altRegisterTimeout", 100, 9999);
         this.altRegisterIsToggle = KWIN.readConfig("altRegisterIsToggle", false);
         this.altRegisterIsPushedTwice = KWIN.readConfig("altRegisterIsPushedTwice", false);
-        this.shortcutSequenceTime = validateNumberWithDefault(KWIN.readConfig("shortcutSequenceTime", 400), 400, "altRegisterTimeout", 0, 9999);
+        this.shortcutSequenceTime = validateNumberWithDefault(KWIN.readConfig("shortcutSequenceTime", 400), 400, "shortcutSequenceTime", 0, 9999);
         this.shortcutConf = parseShortcutConf(separate(KWIN.readConfig("shortcutConf", ""), "\n"));
         this.adjustLayout = KWIN.readConfig("adjustLayout", true);
         this.adjustLayoutLive = KWIN.readConfig("adjustLayoutLive", true);
@@ -1613,9 +1931,11 @@ class KWinConfig {
         this.focusMoveScreensMeta = KWIN.readConfig("focusMoveScreensMeta", false);
         this.focusMoveVDesktopsMeta = KWIN.readConfig("focusMoveVDesktopsMeta", true);
         this.movePointerOnFocus = KWIN.readConfig("movePointerOnFocus", false);
+        this.movePointerOnFocusShortcutsOnly = KWIN.readConfig("movePointerOnFocusShortcutsOnly", false);
+        this.movePointerOnResize = KWIN.readConfig("movePointerOnResize", false);
         this.newWindowPosition =
             (_a = ["last", "first", "second"][validateNumberWithDefault(KWIN.readConfig("newWindowPosition", 0), 0, "newWindowPosition", 0, 2)]) !== null && _a !== void 0 ? _a : "last";
-        this.ignoreClass = separate(KWIN.readConfig("ignoreClass", "krunner,yakuake,spectacle,kded5,xwaylandvideobridge,plasmashell,ksplashqml,org.kde.plasmashell,org.kde.polkit-kde-authentication-agent-1,org.kde.kruler,kruler,kwin_wayland,ksmserver-logout-greeter"), ",");
+        this.ignoreClass = hardcodedIgnoreClasses.concat(separate(KWIN.readConfig("ignoreClass", ""), ","));
         this.ignoreTitle = separate(KWIN.readConfig("ignoreTitle", ""), ",");
         this.ignoreRole = separate(KWIN.readConfig("ignoreRole", "quake"), ",");
         this.ignoreActivity = separate(KWIN.readConfig("ignoreActivity", ""), ",");
@@ -1626,14 +1946,14 @@ class KWinConfig {
         this.screenDefaultLayout = separate(KWIN.readConfig("screenDefaultLayout", ""), ",");
         this.floatConfig = {
             isNativeSizeOverride: KWIN.readConfig("floatDefaultSizeEnable", false),
-            floatWidth: validateNumberWithDefault(KWIN.readConfig("floatDefaultWidth", 50), 50, "floatInitWindowWidth", 1, 100),
-            floatHeight: validateNumberWithDefault(KWIN.readConfig("floatDefaultHeight", 50), 50, "floatInitWindowHeight", 1, 100),
+            floatWidth: validateNumberWithDefault(KWIN.readConfig("floatDefaultWidth", 50), 50, "floatDefaultWidth", 1, 100),
+            floatHeight: validateNumberWithDefault(KWIN.readConfig("floatDefaultHeight", 50), 50, "floatDefaultHeight", 1, 100),
             randomize: KWIN.readConfig("floatRandomEnable", true),
             randomWidth: validateNumberWithDefault(KWIN.readConfig("floatRandomWidth", 15), 15, "floatRandomWidth", 1, 100),
             randomHeight: validateNumberWithDefault(KWIN.readConfig("floatRandomHeight", 15), 15, "floatRandomHeight", 1, 100),
             sizeStepWidth: validateNumberWithDefault(KWIN.readConfig("floatSizeStepWidth", 6), 6, "floatSizeStepWidth", 0, 100),
             sizeStepHeight: validateNumberWithDefault(KWIN.readConfig("floatSizeStepHeight", 4), 4, "floatSizeStepHeight", 0, 100),
-            config: parseFloatConfig(separate(KWIN.readConfig("floatConfig", ""), "\n")),
+            config: parseFloatConfig(hardcodedFloatConfig.concat(separate(KWIN.readConfig("floatConfig", ""), "\n"))),
         };
         this.floatAsDefault = KWIN.readConfig("floatAsDefault", false);
         this.floatUtility = KWIN.readConfig("floatUtility", true);
@@ -1672,8 +1992,8 @@ class KWinConfig {
             noGaps: Boolean(KWIN.readConfig("soleWindowNoGaps", false)),
         };
         this.soleWindowOutputOverride = KWinConfig.getSoleWindowsOverriddenProps(KWIN.readConfig("soleWindowOutputOverride", ""), this.soleWindowDefaultProps);
-        this.unfitGreater = KWIN.readConfig("unfitGreater", true);
         this.unfitLess = KWIN.readConfig("unfitLess", true);
+        this.unfitGreater = KWIN.readConfig("unfitGreater", false);
         this.notificationDuration = KWIN.readConfig("notificationDuration", 1000);
         this.layoutPerActivity = KWIN.readConfig("layoutPerActivity", true);
         this.layoutPerDesktop = KWIN.readConfig("layoutPerDesktop", true);
@@ -1775,18 +2095,23 @@ class KWinConfig {
     static getSortedLayouts(layoutsList) {
         let sortedLayouts = [];
         for (const [idx, [layoutClass, isCapacity]] of layoutsList.entries()) {
+            const enabledConfigKey = `${unCapitalize(layoutClass.id)}Enabled`;
+            if (!isValidConfigKey(enabledConfigKey)) {
+                warning(`kwinconfig: unrecognized config key "${enabledConfigKey}" for layout ${layoutClass.id}, treating layout as enabled`);
+            }
+            else if (!KWIN.readConfig(enabledConfigKey, true)) {
+                continue;
+            }
             const orderConfigKey = `${unCapitalize(layoutClass.id)}Order`;
             if (!isValidConfigKey(orderConfigKey)) {
                 warning(`kwinconfig: unrecognized config key "${orderConfigKey}" for layout ${layoutClass.id}, skipping layout order`);
                 continue;
             }
-            let validatedOrder = validateNumber(KWIN.readConfig(orderConfigKey, idx + 1), 0, 12);
+            let validatedOrder = validateNumber(KWIN.readConfig(orderConfigKey, idx + 1), 1, 12);
             if (validatedOrder instanceof Err) {
                 validatedOrder = idx + 1;
                 warning(`kwinconfig: layout order for ${layoutClass.id} is invalid, using default value ${validatedOrder}`);
             }
-            if (validatedOrder === 0)
-                continue;
             sortedLayouts.push({
                 order: validatedOrder,
                 layoutClass: layoutClass,
@@ -1877,6 +2202,8 @@ class DBusManager {
         try {
             this._dBusMoveMouseToFocus = dBusQml.getDBusMoveMouseToFocus();
             this._dBusMoveMouseToCenter = dBusQml.getDBusMoveMouseToCenter();
+            this._dBusMoveMouseToScreenCenter =
+                dBusQml.getDBusMoveMouseToScreenCenter();
             this._connect(this._dBusMoveMouseToCenter.finished, this.moveMouseToFocusCallback.bind(this));
             this._connect(this._dBusMoveMouseToFocus.failed, () => {
                 LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.dbus, "callFailed", " 'MoveMouseToFocus' failed");
@@ -1915,6 +2242,14 @@ class DBusManager {
             this.setTimeout(this._dBusMoveMouseToCenter.call, timeout);
         else
             this._dBusMoveMouseToCenter.call();
+    }
+    moveMouseToScreenCenter(timeout) {
+        if (!this._isConnected)
+            return;
+        if (timeout !== undefined)
+            this.setTimeout(this._dBusMoveMouseToScreenCenter.call, timeout);
+        else
+            this._dBusMoveMouseToScreenCenter.call();
     }
     moveMouseToFocus(timeout) {
         if (!this._isConnected)
@@ -1990,6 +2325,43 @@ class DBusManager {
     }
 }
 var KWIN;
+const LayoutOSDNames = {
+    TileLayout: { name: "Tile", icon: "tile" },
+    MonocleLayout: { name: "Monocle", icon: "monocle" },
+    ThreeColumnLayout: { name: "Three Column", icon: "threecolumn" },
+    SpiralLayout: { name: "Spiral", icon: "spiral" },
+    QuarterLayout: { name: "Quarter", icon: "quarter" },
+    StackedLayout: { name: "Stacked", icon: "stacked" },
+    ColumnsLayout: { name: "Columns", icon: "columns" },
+    SpreadLayout: { name: "Spread", icon: "spread" },
+    FloatingLayout: { name: "Floating", icon: "floating" },
+    StairLayout: { name: "Stair", icon: "stair" },
+    BinaryTreeLayout: { name: "Binary Tree", icon: "binarytree" },
+    CascadeLayout: { name: "Cascade", icon: "cascade" },
+};
+function logProtectedError(e) {
+    const line = e && e.lineNumber !== undefined ? e.lineNumber : "unknown";
+    warning(`ProtectFunc: Error raised line: ${line}. Error: ${String(e)}`);
+}
+class ReentrancyGuard {
+    constructor() {
+        this._entered = false;
+    }
+    run(callback) {
+        if (this._entered)
+            return;
+        this._entered = true;
+        try {
+            callback();
+        }
+        catch (e) {
+            logProtectedError(e);
+        }
+        finally {
+            this._entered = false;
+        }
+    }
+}
 class KWinDriver {
     get backend() {
         return KWinDriver.backendName;
@@ -2047,10 +2419,14 @@ class KWinDriver {
         this.engine = new TilingEngine();
         this.control = new TilingController(this.engine);
         this.windowMap = new WrapperMap((client) => DriverWindow.generateID(client), (client) => new WindowClass(new DriverWindow(client, this.workspace, this._surfaceStore)));
-        this.entered = false;
         this._connections = [];
         this._started = false;
         this._disposed = false;
+        this._lastInteractiveMoveResize = 0;
+        this._pointerRequest = null;
+        this._pointerCenterPending = false;
+        this._layoutPassActive = false;
+        this._layoutChooserSurfaceId = null;
         this._surfaceStore = new KWinSurfaceStore(this.workspace);
         this._isRegister = {
             state: false,
@@ -2107,6 +2483,8 @@ class KWinDriver {
             !client.hidden &&
             client.width * client.height > 10) {
             const window = this.windowMap.add(client);
+            if (client.active)
+                this.control.onWindowFocused(this, window);
             if (client.maximizeMode > 0) {
                 window.window.maximized = true;
             }
@@ -2191,9 +2569,7 @@ class KWinDriver {
                 }
                 idx = idx < screens.length - 1 ? idx + 1 : 0;
                 this._makeActiveScreen(screens[idx]);
-                if (CONFIG.movePointerOnFocus) {
-                    DBUS.moveMouseToCenter();
-                }
+                this.requestPointerOnFocus("screen", true);
                 return false;
             }
             case "down": {
@@ -2204,18 +2580,14 @@ class KWinDriver {
                 let idx = windows.indexOf(window);
                 if (idx < 0) {
                     this.workspace.activeWindow = windows[0];
-                    if (CONFIG.movePointerOnFocus) {
-                        DBUS.moveMouseToFocus();
-                    }
+                    this.requestPointerOnFocus("window", true);
                     return false;
                 }
                 if (windows.length === 1)
                     return false;
                 idx = idx < windows.length - 1 ? idx + 1 : 0;
                 this.workspace.activeWindow = windows[idx];
-                if (CONFIG.movePointerOnFocus) {
-                    DBUS.moveMouseToFocus();
-                }
+                this.requestPointerOnFocus("window", true);
                 return false;
             }
             case "right":
@@ -2249,9 +2621,7 @@ class KWinDriver {
         this._makeActiveScreen(targetOutput, false);
         let neighbor_surface = this._surfaceStore.getSurface(targetOutput, this.workspace.currentActivity, neighbor);
         let result = this._setFocusOnSurface(window, neighbor_surface, direction, winTypes);
-        if (CONFIG.movePointerOnFocus) {
-            DBUS.moveMouseToCenter();
-        }
+        this.requestPointerOnFocus("screen", true);
         return result;
     }
     getNeighborOutput(direction, source) {
@@ -2359,11 +2729,86 @@ class KWinDriver {
         return this._surfaceStore.getSurface(output, this.workspace.currentActivity, vDesktop);
     }
     setTimeout(func, timeout) {
-        KWinSetTimeout(() => this._enter(func), timeout);
+        KWinSetTimeout(() => this._runProtected(func), timeout);
     }
     showNotification(text) {
         if (CONFIG.notificationDuration > 0)
             popupDialog.showNotification(text, CONFIG.notificationDuration);
+    }
+    showLayoutOSD() {
+        if (CONFIG.notificationDuration <= 0)
+            return;
+        const entries = CONFIG.layoutOrder
+            .filter((id) => LayoutOSDNames[id] !== undefined)
+            .map((id) => ({
+            id,
+            name: LayoutOSDNames[id].name,
+            icon: LayoutOSDNames[id].icon,
+        }));
+        if (entries.length === 0)
+            return;
+        const selected = this.engine.layouts.getCurrentLayout(this.currentSurface).classID;
+        popupDialog.showLayouts(entries, selected, CONFIG.notificationDuration);
+    }
+    showLayoutShortcut(id) {
+        const entry = LayoutOSDNames[id];
+        if (!entry || CONFIG.notificationDuration <= 0)
+            return;
+        popupDialog.showLayoutShortcut({ id, name: entry.name, icon: entry.icon }, CONFIG.notificationDuration);
+    }
+    showLayoutChooser() {
+        const surface = this.currentSurface;
+        if (layoutChooserDialog.isOpen() &&
+            this._layoutChooserSurfaceId === surface.id) {
+            layoutChooserDialog.hide();
+            this._layoutChooserSurfaceId = null;
+            return;
+        }
+        const entries = CONFIG.layoutOrder
+            .filter((id) => LayoutOSDNames[id] !== undefined)
+            .map((id) => ({
+            id,
+            name: LayoutOSDNames[id].name,
+            icon: LayoutOSDNames[id].icon,
+        }));
+        if (entries.length === 0)
+            return;
+        const selected = this.engine.layouts.getCurrentLayout(surface).classID;
+        this._layoutChooserSurfaceId = surface.id;
+        layoutChooserDialog.showLayouts(entries, selected, CONFIG.notificationDuration);
+        DBUS.moveMouseToScreenCenter(KWinDriver.POINTER_CENTER_DELAY_MS);
+    }
+    handleLayoutChooserShortcut(action) {
+        if (!layoutChooserDialog.isOpen())
+            return false;
+        switch (action) {
+            case KrohnkiteAction.DWMLeft:
+            case KrohnkiteAction.FocusLeft:
+                layoutChooserDialog.navigate(-1, 0);
+                return true;
+            case KrohnkiteAction.DWMRight:
+            case KrohnkiteAction.FocusRight:
+                layoutChooserDialog.navigate(1, 0);
+                return true;
+            case KrohnkiteAction.FocusUp:
+                layoutChooserDialog.navigate(0, -1);
+                return true;
+            case KrohnkiteAction.FocusDown:
+                layoutChooserDialog.navigate(0, 1);
+                return true;
+            default:
+                return false;
+        }
+    }
+    selectLayoutFromOSD(id) {
+        if (CONFIG.layoutOrder.indexOf(id) === -1)
+            return;
+        this._runProtected(() => {
+            if (this.engine.layouts.getCurrentLayout(this.currentSurface).classID === id)
+                return;
+            this.engine.setLayout(this, id, false);
+            this.engine.arrange(this, "shortcutLayoutCB");
+        });
     }
     showDragPreview(area, rect) {
         if (!CONFIG.dragPreview)
@@ -2454,14 +2899,85 @@ class KWinDriver {
         if (client == null)
             return false;
         window.isSendingToOutput = true;
+        window.relocationTargetOutput = targetOutput;
         try {
             this.workspace.sendClientToScreen(client, targetOutput);
         }
         catch (e) {
             window.isSendingToOutput = false;
+            window.relocationTargetOutput = null;
             warning(`${getMethodName()}: sendClientToScreen() failed. ${e}`);
             return false;
         }
+        this.setTimeout(() => this._finishOutputRelocation(window, targetOutput), 0);
+        return true;
+    }
+    _finishOutputRelocation(window, targetOutput) {
+        if (!window.isAlive() || !window.isSendingToOutput)
+            return;
+        const client = window.window.window;
+        if (!outputIsAlive(client.output))
+            return;
+        if (client.output.name !== targetOutput.name)
+            return;
+        window.isSendingToOutput = false;
+        window.relocationTargetOutput = null;
+        this._sendingWindowsProcessCall("relocationCompletionCB");
+    }
+    _scheduleSurfaceArrange(window, reason, mayBeOverviewDrop = false) {
+        const token = ++window.surfaceArrangeToken;
+        const overviewWasActive = mayBeOverviewDrop &&
+            typeof this.workspace.isEffectActive === "function" &&
+            this.workspace.isEffectActive("overview");
+        window.isRelocationPending = true;
+        this.setTimeout(() => {
+            if (window.surfaceArrangeToken !== token)
+                return;
+            if (!window.isAlive()) {
+                window.isRelocationPending = false;
+                return;
+            }
+            window.isRelocationPending = false;
+            if (overviewWasActive && this._moveOverviewDropToCursorOutput(window)) {
+                if (window.surfaceArrangeToken !== token)
+                    return;
+            }
+            this.control.onWindowChanged(this, window, reason, "deferred surface change", [window.surface]);
+        }, 0);
+    }
+    _moveOverviewDropToCursorOutput(window) {
+        if (typeof this.workspace.isEffectActive !== "function" ||
+            !this.workspace.isEffectActive("overview"))
+            return false;
+        const client = window.window.window;
+        if (!client || client.deleted)
+            return false;
+        if (client.desktops.length !== 1)
+            return false;
+        let cursorOutput = null;
+        try {
+            cursorOutput = this.workspace.screenAt(this.workspace.cursorPos);
+        }
+        catch (e) {
+            return false;
+        }
+        if (!outputIsAlive(cursorOutput) ||
+            !outputIsAlive(client.output) ||
+            cursorOutput.name === client.output.name)
+            return false;
+        const targetDesktop = client.desktops[0];
+        const sourceDesktop = this._outputCurrentDesktop(client.output);
+        const cursorDesktop = this._outputCurrentDesktop(cursorOutput);
+        if (targetDesktop.id !== cursorDesktop.id &&
+            targetDesktop.id === sourceDesktop.id)
+            return false;
+        LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.outputChanged, "overviewCrossScreenDrop", `window: caption:${client.caption} internalID:${client.internalId}, ` +
+            `output: ${client.output.name} -> ${cursorOutput.name}, ` +
+            `desktop: ${targetDesktop.name}`);
+        const targetGeom = toRect(cursorOutput.geometry);
+        const actual = window.actualGeometry;
+        const targetRect = new Rect(targetGeom.x + Math.floor((targetGeom.width - actual.width) / 2), targetGeom.y + Math.floor((targetGeom.height - actual.height) / 2), actual.width, actual.height);
+        client.frameGeometry = toQRect(targetRect);
         return true;
     }
     _transferWindowsToVDesktops() {
@@ -2542,10 +3058,17 @@ class KWinDriver {
         if (targetVDesktop === null)
             return false;
         let client = window.window.window;
-        this.workspace.currentDesktop = targetVDesktop;
-        this._moveWinToVDesktop(window, targetVDesktop);
-        this.workspace.activeWindow = client;
-        return true;
+        const sourceSurface = window.surface;
+        this.engine.beginArrangeBatch();
+        try {
+            this.workspace.currentDesktop = targetVDesktop;
+            this._moveWinToVDesktop(window, targetVDesktop);
+            this.workspace.activeWindow = client;
+        }
+        finally {
+            this.engine.endArrangeBatch(this, "shortcutCB", `${getMethodName()}:moveToVDesktop`, [sourceSurface]);
+        }
+        return false;
     }
     _moveWinToVDesktop(window, virtualDesktop) {
         let client = window.window.window;
@@ -2763,6 +3286,14 @@ class KWinDriver {
         }
         this.workspace.currentDesktop = desktop;
     }
+    _previousDesktopSurfaces(previousDesktop, output) {
+        if (previousDesktop === undefined || previousDesktop === null)
+            return [];
+        const outputs = output !== undefined && output !== null
+            ? [output]
+            : this.workspace.screens;
+        return outputs.map((out) => this._surfaceStore.getSurface(out, this.workspace.currentActivity, previousDesktop));
+    }
     _onShortcut(shortcut) {
         this._shortcutPressTime = getTime();
         const token = ++this._shortcutFinishToken;
@@ -2863,9 +3394,9 @@ class KWinDriver {
                 const shortcut = this._shortcuts.get(conf.shortcuts[0]);
                 if (shortcut === undefined)
                     continue;
-                if (conf.mainAction !== null)
+                if (conf.mainAction !== undefined)
                     shortcut.action = conf.mainAction;
-                if (conf.registerAction !== null)
+                if (conf.registerAction !== undefined)
                     shortcut.registerAction = conf.registerAction;
             }
             else {
@@ -2906,29 +3437,25 @@ class KWinDriver {
         }
     }
     _connect(signal, handler) {
+        const guard = new ReentrancyGuard();
         const wrapper = (...args) => {
             if (this._disposed || typeof this.workspace === "undefined")
                 signal.disconnect(wrapper);
             else
-                this._enter(() => handler.apply(this, args));
+                guard.run(() => handler.apply(this, args));
         };
         signal.connect(wrapper);
         this._connections.push({ signal, callback: wrapper });
         return wrapper;
     }
-    _enter(callback) {
-        if (this.entered || this._disposed)
+    _runProtected(callback) {
+        if (this._disposed)
             return;
-        this.entered = true;
         try {
             callback();
         }
         catch (e) {
-            const line = e && e.lineNumber !== undefined ? e.lineNumber : "unknown";
-            warning(`ProtectFunc: Error raised line: ${line}. Error: ${String(e)}`);
-        }
-        finally {
-            this.entered = false;
+            logProtectedError(e);
         }
     }
     _bindEvents() {
@@ -2945,9 +3472,9 @@ class KWinDriver {
             LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.currentActivityChanged, "eventFired", `Activity ID:${activityId}`);
             this.control.onCurrentActivityChanged(this, "currentActivityChangedCB");
         });
-        this._connect(this.workspace.currentDesktopChanged, (virtualDesktop) => {
-            LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.currentDesktopChanged, "eventFired", `Virtual Desktop. name:${virtualDesktop.name}, id:${virtualDesktop.id}`);
-            this.control.onSurfaceUpdate(this, "currentDesktopChangedCB");
+        this._connect(this.workspace.currentDesktopChanged, (previousDesktop, _currentDesktop, output) => {
+            LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.currentDesktopChanged, "eventFired", `Virtual Desktop. previous name:${previousDesktop === null || previousDesktop === void 0 ? void 0 : previousDesktop.name}, id:${previousDesktop === null || previousDesktop === void 0 ? void 0 : previousDesktop.id}`);
+            this.control.onSurfaceUpdate(this, "currentDesktopChangedCB", this._previousDesktopSurfaces(previousDesktop, output));
         });
         this._connect(this.workspace.windowAdded, (client) => {
             if (!client)
@@ -2956,9 +3483,7 @@ class KWinDriver {
             const window = this.addWindow(client);
             if (client.active && window !== null) {
                 this.control.onWindowFocused(this, window);
-                if (CONFIG.movePointerOnFocus) {
-                    DBUS.moveMouseToCenter(20);
-                }
+                this.requestPointerOnFocus("screen", false);
             }
         });
         this._connect(this.workspace.windowActivated, (client) => {
@@ -2992,6 +3517,59 @@ class KWinDriver {
             LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.surfaceChanged, "eventFired", `Virtual Desktops Changed`);
             this._surfaceStore.checkVirtualDesktops();
         });
+    }
+    onLayoutStart() {
+        this._layoutPassActive = true;
+    }
+    onLayoutSettled() {
+        this._layoutPassActive = false;
+        if (this._pointerRequest === null)
+            return;
+        if (this._pointerCenterPending)
+            return;
+        this._pointerCenterPending = true;
+        this.setTimeout(() => {
+            this._pointerCenterPending = false;
+            const request = this._pointerRequest;
+            this._pointerRequest = null;
+            if (request === null)
+                return;
+            if (request.reason === "focus" && !CONFIG.movePointerOnFocus)
+                return;
+            if (request.reason === "resize" && !CONFIG.movePointerOnResize)
+                return;
+            if (request.reason === "resize" &&
+                getTime() - this._lastInteractiveMoveResize <
+                    KWinDriver.INTERACTIVE_POINTER_GRACE_MS)
+                return;
+            if (request.target === "screen")
+                DBUS.moveMouseToCenter();
+            else
+                DBUS.moveMouseToFocus();
+        }, KWinDriver.POINTER_CENTER_DELAY_MS);
+    }
+    requestPointerOnFocus(target, byShortcut) {
+        if (!CONFIG.movePointerOnFocus)
+            return;
+        if (CONFIG.movePointerOnFocusShortcutsOnly && !byShortcut)
+            return;
+        this._pointerRequest = { target, reason: "focus" };
+        if (!this._layoutPassActive)
+            this.onLayoutSettled();
+    }
+    onWindowSizeCommitted(client) {
+        var _a;
+        if (!CONFIG.movePointerOnResize)
+            return;
+        if (!client.active || client.move || client.resize)
+            return;
+        if (getTime() - this._lastInteractiveMoveResize <
+            KWinDriver.INTERACTIVE_POINTER_GRACE_MS)
+            return;
+        if (((_a = this._pointerRequest) === null || _a === void 0 ? void 0 : _a.reason) !== "focus")
+            this._pointerRequest = { target: "window", reason: "resize" };
+        if (!this._layoutPassActive)
+            this.onLayoutSettled();
     }
     _bindWindowEvents(window, client) {
         let moving = false;
@@ -3029,9 +3607,12 @@ class KWinDriver {
                 return;
             LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.desktopsChanged, "eventFired", `window: caption:${client.caption} internalID:${client.internalId}, desktops: ${client.desktops}`, { winClass: [`${client.resourceClass}`] });
             if (window.isSendingToOutput) {
+                const target = window.relocationTargetOutput;
+                if (target !== null)
+                    this.setTimeout(() => this._finishOutputRelocation(window, target), 0);
                 return;
             }
-            this.control.onWindowChanged(this, window, "windowDesktopsChangedCB", "Window's desktop changed.");
+            this._scheduleSurfaceArrange(window, "windowDesktopsChangedCB", true);
         });
         this._connect(client.fullScreenChanged, () => {
             if (!client || client.deleted)
@@ -3043,6 +3624,7 @@ class KWinDriver {
             if (!client || client.deleted)
                 return;
             LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.interactiveMoveResizeStepped, "eventFired", `window: caption:${client.caption} internalID:${client.internalId},interactiveMoveResizeStepped:${geometry}`, { winClass: [`${client.resourceClass}`] });
+            this._lastInteractiveMoveResize = getTime();
             if (client.resize)
                 return;
             this.control.onWindowDragging(this, window, geometry, "windowInteractiveMoveResizeSteppedCB");
@@ -3071,6 +3653,7 @@ class KWinDriver {
             if (!client || client.deleted)
                 return;
             LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.moveResizedChanged, "eventFired", `Window: caption:${client.caption} internalId:${client.internalId}, moving:${moving}, resizing:${resizing}`, { winClass: [`${client.resourceClass}`] });
+            this._lastInteractiveMoveResize = getTime();
             if (moving !== client.move) {
                 moving = client.move;
                 if (moving) {
@@ -3093,11 +3676,24 @@ class KWinDriver {
                 return;
             LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.outputChanged, "eventFired", `window: caption:${client.caption} internalID:${client.internalId} output: ${client.output.name}`, { winClass: [`${client.resourceClass}`] });
             if (window.isSendingToOutput) {
-                window.isSendingToOutput = false;
-                this._sendingWindowsProcessCall("relocationOutputChangedCB");
+                const target = window.relocationTargetOutput;
+                if (target !== null)
+                    this.setTimeout(() => this._finishOutputRelocation(window, target), 0);
+                else {
+                    window.isSendingToOutput = false;
+                    this._sendingWindowsProcessCall("relocationOutputChangedCB");
+                }
                 return;
             }
-            this.control.onWindowChanged(this, window, "outputChangedCB", "screen=" + client.output.name);
+            this._scheduleSurfaceArrange(window, "outputChangedCB");
+        });
+        this._connect(client.stackingOrderChanged, () => {
+            if (!client || client.deleted)
+                return;
+            if (this.currentWindow === window) {
+                LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.stackingOrderChanged, "eventFired", `window: caption:${client.caption} internalID:${client.internalId} stackingOrder:${client.stackingOrder}`, { winClass: [`${client.resourceClass}`] });
+                this.control.onStackingOrderChanged(this, window, "stackingOrderChanged");
+            }
         });
         if (CONFIG.floatSkipPager) {
             this._connect(client.skipPagerChanged, () => {
@@ -3107,6 +3703,8 @@ class KWinDriver {
     }
 }
 KWinDriver.backendName = "kwin";
+KWinDriver.INTERACTIVE_POINTER_GRACE_MS = 500;
+KWinDriver.POINTER_CENTER_DELAY_MS = 30;
 class KWinRuntime {
     constructor(api) {
         this.driver = null;
@@ -3116,6 +3714,14 @@ class KWinRuntime {
         this.disposed = false;
         this.api = api;
         KWIN = api.kwin;
+    }
+    selectLayout(id) {
+        if (!this.config || !this.driver)
+            return false;
+        if (this.config.layoutOrder.indexOf(id) === -1)
+            return false;
+        this.driver.selectLayoutFromOSD(id);
+        return true;
     }
     start() {
         if (this.driver !== null || this.disposed)
@@ -3351,6 +3957,10 @@ const Shortcuts = {
         defaultAction: KrohnkiteAction.PreviousLayout,
         defaultRegisterAction: null,
     },
+    LayoutChooserSC: {
+        defaultAction: KrohnkiteAction.LayoutChooser,
+        defaultRegisterAction: null,
+    },
     RotateSC: {
         defaultAction: KrohnkiteAction.Rotate,
         defaultRegisterAction: KrohnkiteAction.RotatePart,
@@ -3365,7 +3975,7 @@ const Shortcuts = {
     },
     RaiseSurfaceCapacitySC: {
         defaultAction: KrohnkiteAction.RaiseSurfaceCapacity,
-        defaultRegisterAction: null,
+        defaultRegisterAction: KrohnkiteAction.ShowCurrentCapacity,
     },
     LowerSurfaceCapacitySC: {
         defaultAction: KrohnkiteAction.LowerSurfaceCapacity,
@@ -3450,10 +4060,11 @@ class ShortcutSequence extends ShortcutBase {
         this._state = s;
     }
     constructor(shortcutConf) {
+        var _a, _b;
         super();
         this.sequence = shortcutConf.shortcuts;
-        this.action = shortcutConf.mainAction;
-        this.registerAction = shortcutConf.registerAction;
+        this.action = (_a = shortcutConf.mainAction) !== null && _a !== void 0 ? _a : null;
+        this.registerAction = (_b = shortcutConf.registerAction) !== null && _b !== void 0 ? _b : null;
         this._currentIndex = 0;
         this.timeout =
             shortcutConf.sequenceTime !== null
@@ -3825,6 +4436,11 @@ function parseShortcutConf(lines) {
         const action = KrohnkiteAction[key];
         actionNames[action.toLowerCase()] = action;
     }
+    const parseAction = (rawVal) => {
+        if (rawVal.toLowerCase() === "null")
+            return null;
+        return actionNames[rawVal.toLowerCase()];
+    };
     for (const line of lines) {
         const trimmed = line.trim();
         if (!trimmed)
@@ -3854,8 +4470,8 @@ function parseShortcutConf(lines) {
         }
         if (!valid)
             continue;
-        let mainAction = null;
-        let registerAction = null;
+        let mainAction = undefined;
+        let registerAction = undefined;
         let sequenceTime = null;
         const flags = separate(parts[1], ",");
         for (const flag of flags) {
@@ -3870,7 +4486,7 @@ function parseShortcutConf(lines) {
             switch (key) {
                 case "mainaction":
                 case "ma": {
-                    const action = actionNames[rawVal.toLowerCase()];
+                    const action = parseAction(rawVal);
                     if (action === undefined) {
                         warning(`parseShortcutConf: unknown action "${rawVal}" in "${trimmed}"`);
                         valid = false;
@@ -3881,7 +4497,7 @@ function parseShortcutConf(lines) {
                 }
                 case "registeraction":
                 case "ra": {
-                    const action = actionNames[rawVal.toLowerCase()];
+                    const action = parseAction(rawVal);
                     if (action === undefined) {
                         warning(`parseShortcutConf: unknown action "${rawVal}" in "${trimmed}"`);
                         valid = false;
@@ -3911,7 +4527,7 @@ function parseShortcutConf(lines) {
         }
         if (!valid)
             continue;
-        if (mainAction === null && registerAction === null) {
+        if (mainAction === undefined && registerAction === undefined) {
             warning(`parseShortcutConf: no action flag (mainaction/registeraction) in "${trimmed}"`);
             continue;
         }
@@ -4131,6 +4747,9 @@ class DriverWindow {
     get windowCaption() {
         return this.window.caption;
     }
+    get stackingOrder() {
+        return this.window.stackingOrder;
+    }
     get shouldIgnore() {
         if (this.window.deleted)
             return true;
@@ -4207,10 +4826,6 @@ class DriverWindow {
         this.workspace = workspace;
         this._surfaceStore = surfaceStore;
         this._srfTime = { time: null, srfId: null };
-        this._movePointerToCenter = {
-            isMove: false,
-            time: 0,
-        };
         this.window = window;
         this.isCommittedEver = false;
         this._nativeFloatGeometry = toRect(window.frameGeometry);
@@ -4233,10 +4848,13 @@ class DriverWindow {
                 (KWINCONFIG.tileNothing &&
                     !DriverWindow.isContain(KWINCONFIG.tilingClass, window.resourceClass));
     }
-    moveMouseToFocus() {
-        const time = getTime();
-        this._movePointerToCenter.isMove = this.isActive;
-        this._movePointerToCenter.time = time;
+    isAlive() {
+        try {
+            return !!this.window && this.window.deleted === false;
+        }
+        catch (_) {
+            return false;
+        }
     }
     commit(ctx, geometry, noBorder, windowLayer) {
         if (!this.window || this.window.deleted)
@@ -4303,15 +4921,12 @@ class DriverWindow {
             }
             if (this.window.deleted)
                 return;
-            this.window.frameGeometry = toQRect(geometry);
-            if (this._movePointerToCenter.isMove) {
-                this._movePointerToCenter.isMove = false;
-                if (CONFIG.movePointerOnFocus) {
-                    if (getTime() - this._movePointerToCenter.time < 100) {
-                        DBUS.moveMouseToFocus(20);
-                    }
-                }
-            }
+            const nextFrame = toQRect(geometry);
+            const currentFrame = this.window.frameGeometry;
+            if (nextFrame.width !== currentFrame.width ||
+                nextFrame.height !== currentFrame.height)
+                ctx.onWindowSizeCommitted(this.window);
+            this.window.frameGeometry = nextFrame;
         }
     }
     toString() {
@@ -4551,11 +5166,17 @@ class TilingController {
         this.engine = engine;
         this.dragAction = null;
     }
-    onSurfaceUpdate(ctx, reason) {
-        this.engine.arrange(ctx, reason, getMethodName());
+    onSurfaceUpdate(ctx, reason, extraSurfaces) {
+        this.engine.arrange(ctx, reason, getMethodName(), extraSurfaces);
     }
     onCurrentActivityChanged(ctx, reason) {
         this.engine.arrange(ctx, reason, getMethodName());
+    }
+    onStackingOrderChanged(ctx, window, reason) {
+        const layout = this.engine.layouts.getCurrentLayout(window.surface);
+        if (layout instanceof SpreadLayout) {
+            this.engine.arrange(ctx, reason, getMethodName());
+        }
     }
     onWindowAdded(ctx, window, reason) {
         this.engine.manage(window);
@@ -4591,7 +5212,16 @@ class TilingController {
         const workingArea = srf.workingArea.clone();
         const draggingRect = toRect(windowRect);
         const mousePointer = ctx.cursorPosition || draggingRect.activationPoint;
-        const middlePointer = ctx.cursorPosition || draggingRect.center;
+        const middlePointer = {
+            x: draggingRect.center.x,
+            y: mousePointer.y,
+        };
+        const getNeighbors = (srf) => ({
+            left: ctx.getNeighborOutput("left", srf.output) !== null,
+            right: ctx.getNeighborOutput("right", srf.output) !== null,
+            up: ctx.getNeighborOutput("up", srf.output) !== null,
+            down: ctx.getNeighborOutput("down", srf.output) !== null,
+        });
         const markActionTime = () => {
             if (this.dragAction === null)
                 return;
@@ -4611,9 +5241,10 @@ class TilingController {
                 dockTarget: null,
                 mousePointer,
                 middlePointer,
-                swapping: { window: null, position: null },
+                neighbors: getNeighbors(srf),
+                neighborsSrfId: srf.id,
+                dockSnapshots: {},
                 initialState,
-                initialDockPosition: initialState === WindowState.Docked ? window.dock.position : null,
                 isLayoutHasDragStep: false,
             };
         };
@@ -4636,6 +5267,10 @@ class TilingController {
         }
         this.dragAction.result = { isProcessed: false, isArrangeNeeded: false };
         this.dragAction.dockTarget = null;
+        if (this.dragAction.neighborsSrfId !== srf.id) {
+            this.dragAction.neighbors = getNeighbors(srf);
+            this.dragAction.neighborsSrfId = srf.id;
+        }
         this.engine.docks.drag(this.dragAction);
         if (this.dragAction.result.isProcessed) {
             if (this.dragAction.result.isArrangeNeeded)
@@ -4702,17 +5337,14 @@ class TilingController {
         if (dragAction === null)
             return;
         ctx.hideDragPreview();
-        const { window, initialState, swapping } = dragAction;
+        const { window, initialState } = dragAction;
+        this.engine.docks.finishDrag(dragAction);
         this.dragAction = null;
         if (window.isAlive()) {
             window.isDragging = false;
             if (window.state !== initialState)
                 window.previousState = initialState;
         }
-        if (swapping.window !== null &&
-            swapping.window.isAlive() &&
-            swapping.window.state !== WindowState.Docked)
-            swapping.window.previousState = WindowState.Docked;
     }
     onWindowResizeStart(window) {
     }
@@ -4747,7 +5379,7 @@ class TilingController {
         LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.bufferGeometryChanged, "enforceSize", `Window: id:${window.id} actualGeometry: ${window.actualGeometry}, commitGeometry:${window.geometry}`, { winClass: [`${window.window.window.resourceClass}`] });
         this.engine.enforceSize(ctx, window);
     }
-    onWindowChanged(ctx, window, reason, comment) {
+    onWindowChanged(ctx, window, reason, comment, extraSurfaces) {
         if (window) {
             const workingArea = window.surface.workingArea;
             if (window.floatGeometry.width > workingArea.width) {
@@ -4760,7 +5392,7 @@ class TilingController {
                 workingArea.x + (workingArea.width - window.floatGeometry.width) / 2;
             window.floatGeometry.y =
                 workingArea.y + (workingArea.height - window.floatGeometry.height) / 2;
-            this.engine.arrange(ctx, reason, `${getMethodName()}:windowState=${window.state}`);
+            this.engine.arrange(ctx, reason, `${getMethodName()}:windowState=${window.state}`, extraSurfaces);
         }
     }
     onWindowFocused(ctx, window) {
@@ -4773,6 +5405,8 @@ class TilingController {
     onShortcut(ctx, action, reason) {
         if (action === null)
             return;
+        if (ctx.handleLayoutChooserShortcut(action))
+            return;
         let isArrangeNeeded = true;
         let currentCapacity;
         const window = ctx.currentWindow;
@@ -4780,9 +5414,8 @@ class TilingController {
             this.engine.handleFloatWinShortcut(ctx, window, action) ||
             this.engine.handleLayoutShortcut(ctx, action, reason) ||
             this.engine.handleTiledWinShortcut(ctx, window, action, reason)) {
-            if (CONFIG.movePointerOnFocus) {
-                window === null || window === void 0 ? void 0 : window.moveMouseToFocus();
-            }
+            if (window)
+                ctx.requestPointerOnFocus("window", true);
             return;
         }
         switch (action) {
@@ -4815,7 +5448,7 @@ class TilingController {
                 break;
             case KrohnkiteAction.SetMaster:
                 if (window)
-                    this.engine.setMaster(window);
+                    this.engine.setMaster(ctx, window);
                 break;
             case KrohnkiteAction.ToggleFloat:
                 if (window)
@@ -4829,6 +5462,10 @@ class TilingController {
                 break;
             case KrohnkiteAction.PreviousLayout:
                 this.engine.cycleLayout(ctx, -1);
+                break;
+            case KrohnkiteAction.LayoutChooser:
+                ctx.showLayoutChooser();
+                isArrangeNeeded = false;
                 break;
             case KrohnkiteAction.SetTileLayout:
             case KrohnkiteAction.SetMonocleLayout:
@@ -4861,12 +5498,14 @@ class TilingController {
                 ctx.showNotification(`Surface capacity: ${currentCapacity !== null ? currentCapacity : "unlimited"}`);
                 isArrangeNeeded = false;
                 break;
+            case KrohnkiteAction.ShowCurrentCapacity:
+                currentCapacity = this.engine.getCurrentSurfaceCapacity(ctx);
+                ctx.showNotification(`Surface capacity: ${currentCapacity !== null ? currentCapacity : "unlimited"}`);
+                isArrangeNeeded = false;
+                break;
         }
         if (isArrangeNeeded) {
             this.engine.arrange(ctx, reason, `${getMethodName()}:shortcut=${action}`);
-        }
-        if (CONFIG.movePointerOnFocus) {
-            window === null || window === void 0 ? void 0 : window.moveMouseToFocus();
         }
     }
 }
@@ -4923,7 +5562,10 @@ class RelocationWindows {
     }
     clear() {
         for (const windows of this.toOutputs) {
-            windows.forEach((w) => (w.isSendingToOutput = false));
+            windows.forEach((w) => {
+                w.isSendingToOutput = false;
+                w.relocationTargetOutput = null;
+            });
         }
         this.isSending = false;
         this.startTime = 0;
@@ -4941,8 +5583,13 @@ class TilingEngine {
         this.relocationWindows = new RelocationWindows();
         this.arrangeProcessId = null;
         this.makeWinActive = null;
+        this._overCapacityMinimized = [];
         this._defaultGaps = null;
         this._gapsSurfacesCfg = [];
+        this._arranging = false;
+        this._arrangePending = false;
+        this._pendingExtraSurfaces = new Map();
+        this._batchDepth = 0;
     }
     adjustLayout(basis) {
         let delta = basis.geometryDelta;
@@ -4960,24 +5607,9 @@ class TilingEngine {
     adjustDock(basis) {
         if (basis.actualGeometry === basis.geometry)
             return;
-        let widthDiff = basis.actualGeometry.width - basis.geometry.width;
-        let heightDiff = basis.actualGeometry.height - basis.geometry.height;
-        let dockCfg = basis.dock.cfg;
-        const workingArea = basis.surface.workingArea;
-        switch (basis.dock.position) {
-            case DockPosition.left:
-            case DockPosition.right:
-                dockCfg.vHeight =
-                    dockCfg.vHeight + (100 * heightDiff) / workingArea.height;
-                dockCfg.vWide = dockCfg.vWide + (100 * widthDiff) / workingArea.width;
-                break;
-            case DockPosition.top:
-            case DockPosition.bottom:
-                dockCfg.hHeight =
-                    dockCfg.hHeight + (100 * heightDiff) / workingArea.height;
-                dockCfg.hWide = dockCfg.hWide + (100 * widthDiff) / workingArea.width;
-                break;
-        }
+        const widthDiff = basis.actualGeometry.width - basis.geometry.width;
+        const heightDiff = basis.actualGeometry.height - basis.geometry.height;
+        this.docks.adjust(basis, widthDiff, heightDiff);
     }
     resizeFloat(ctx, window, dir, step) {
         const srf = window.surface;
@@ -5050,12 +5682,70 @@ class TilingEngine {
             layout.adjust(area, this.windows.getVisibleTileables(srf), basis, delta, gaps.between);
         }
     }
-    arrange(ctx, reason, message) {
+    beginArrangeBatch() {
+        this._batchDepth++;
+    }
+    endArrangeBatch(ctx, reason, message, extraSurfaces) {
+        if (this._batchDepth === 0)
+            return;
+        this._batchDepth--;
+        this._addPendingExtraSurfaces(extraSurfaces);
+        if (this._batchDepth > 0)
+            return;
+        this.arrange(ctx, reason, message);
+    }
+    arrange(ctx, reason, message, extraSurfaces) {
+        this._addPendingExtraSurfaces(extraSurfaces);
+        if (this._arranging || this._batchDepth > 0) {
+            this._arrangePending = true;
+            return;
+        }
+        this._arranging = true;
+        ctx.onLayoutStart();
+        try {
+            let passes = 0;
+            do {
+                this._arrangePending = false;
+                const extras = [...this._pendingExtraSurfaces.values()];
+                this._pendingExtraSurfaces.clear();
+                this._arrangeOnce(ctx, reason, message, extras);
+            } while (this._arrangePending &&
+                ++passes < TilingEngine.MAX_ARRANGE_PASSES);
+            if (this._arrangePending) {
+                warning(`${getMethodName()}: arrange did not settle after ${TilingEngine.MAX_ARRANGE_PASSES} passes.`);
+            }
+        }
+        finally {
+            this._arranging = false;
+            this._arrangePending = false;
+            this._pendingExtraSurfaces.clear();
+            ctx.onLayoutSettled();
+        }
+    }
+    _addPendingExtraSurfaces(extraSurfaces) {
+        if (extraSurfaces === undefined)
+            return;
+        for (const srf of extraSurfaces)
+            this._pendingExtraSurfaces.set(srf.id, srf);
+    }
+    _arrangeOnce(ctx, reason, message, extraSurfaces) {
         this.arrangeProcessId = getRandomInt(1000000);
         if (LOG === null || LOG === void 0 ? void 0 : LOG.isModuleOn(LogModules.arrangeScreen)) {
             LOG.send(LogModules.arrangeScreen, "ArrangeScreens", `#######Reason: ${reason}:${message} arrangeProcessID:${this.arrangeProcessId}########`);
         }
         const surfaces = ctx.currentSurfaces;
+        surfaces.forEach((srf) => this._restoreOverCapacityMinimized(srf));
+        const extraScreensData = [];
+        const knownSrfIds = new Set(surfaces.map((srf) => srf.id));
+        for (const srf of extraSurfaces) {
+            if (knownSrfIds.has(srf.id))
+                continue;
+            knownSrfIds.add(srf.id);
+            extraScreensData.push(this.getTileables(srf));
+        }
+        extraScreensData.forEach((screenData) => {
+            this.arrangeScreen(ctx, screenData, reason, this.arrangeProcessId);
+        });
         let screensData = [];
         surfaces.forEach((srf) => {
             screensData.push(this.getTileables(srf));
@@ -5101,31 +5791,36 @@ class TilingEngine {
             "transferWindowToVDesktop",
             "sendToOutputProcessFinish",
         ];
-        return !(reason in [reasons]);
+        return reasons.indexOf(reason) < 0;
     }
-    _searchAvailableSlotsForOvercapacity(ctx, sourceScreenData, output, screenDataStore, vDesktop) {
+    _searchAvailableSlotsForOvercapacity(ctx, sourceScreenData, output, screenDataStore, vDesktop, allowOverfill = false) {
         const overCapacity = sourceScreenData.overCapacity.length;
         if (overCapacity <= 0)
             return [];
-        let targetSrf = ctx.getSurface(output, vDesktop);
+        const targetSrf = ctx.getSurface(output, vDesktop);
         if (targetSrf == null || !targetSrf.isOvercapacityCandidate)
+            return [];
+        const targetCapacity = resolveSurfaceCapacity(this.layouts.getCurrentLayout(targetSrf).capacity, targetSrf.capacity);
+        if (targetCapacity === 0)
             return [];
         if (!screenDataStore.has(targetSrf.id)) {
             screenDataStore.set(targetSrf.id, this.getTileables(targetSrf));
         }
         const sd = screenDataStore.get(targetSrf.id);
-        if (sd.capacity === null || sd.capacity - sd.awaitToMove.length > 0) {
-            const availableSlots = sd.capacity === null
-                ? overCapacity
-                : Math.min(sd.capacity - sd.awaitToMove.length, overCapacity);
-            const windowsToAvailableSlots = sourceScreenData.overCapacity.splice(0, availableSlots);
-            sd.awaitToMove.push(...windowsToAvailableSlots);
-            return windowsToAvailableSlots;
-        }
-        else
+        const wasFull = sd.capacity !== null && sd.capacity - sd.awaitToMove.length <= 0;
+        const availableSlots = resolveAvailableSlots(sd.capacity, sd.awaitToMove.length, overCapacity, allowOverfill);
+        if (availableSlots <= 0)
             return [];
+        const windowsToAvailableSlots = sourceScreenData.overCapacity.splice(0, availableSlots);
+        if (allowOverfill && wasFull) {
+            windowsToAvailableSlots.forEach((win) => {
+                win.preserveOnSurface = targetSrf.id;
+            });
+        }
+        sd.awaitToMove.push(...windowsToAvailableSlots);
+        return windowsToAvailableSlots;
     }
-    _prepareWindowsMoveToOutput(ctx, sourceScreenData, direction) {
+    _prepareWindowsMoveToOutput(ctx, sourceScreenData, direction, allowOverfill = false) {
         let alreadyDone = new Set();
         const screenDataStore = new Map();
         const sourceOutput = sourceScreenData.srf.output;
@@ -5136,7 +5831,7 @@ class TilingEngine {
             let neighborOutput = outputQueue.shift();
             if (!neighborOutput)
                 return false;
-            const windowsToMove = this._searchAvailableSlotsForOvercapacity(ctx, sourceScreenData, neighborOutput, screenDataStore);
+            const windowsToMove = this._searchAvailableSlotsForOvercapacity(ctx, sourceScreenData, neighborOutput, screenDataStore, undefined, allowOverfill);
             const windowsArr = this.relocationWindows.toOutputs.add(neighborOutput);
             windowsArr.push(...windowsToMove);
             if (sourceScreenData.overCapacity.length === 0)
@@ -5188,6 +5883,53 @@ class TilingEngine {
             this._getPossibleVDesktops(ctx, neighborVDesktop, vDesktopsQueue, alreadyDone);
         }
     }
+    _isMinimizeOvercapacityMode() {
+        return isMinimizeOvercapacityMode(CONFIG.srfOvercapacityMode, KWINCONFIG.preventMinimize);
+    }
+    _minimizeOvercapacityWindow(window) {
+        if (this._overCapacityMinimized.indexOf(window) === -1)
+            this._overCapacityMinimized.push(window);
+        window.window.setMinimizedByScript(true);
+    }
+    _handleOverCapacityWindows(screenData) {
+        if (!this._isMinimizeOvercapacityMode()) {
+            screenData.overCapacity.forEach((win) => win.floatInPlace());
+            return;
+        }
+        screenData.overCapacity.forEach((win) => {
+            this._minimizeOvercapacityWindow(win);
+            const idx = screenData.visibles.indexOf(win);
+            if (idx >= 0)
+                screenData.visibles.splice(idx, 1);
+        });
+    }
+    _restoreOverCapacityMinimized(srf) {
+        if (this._overCapacityMinimized.length === 0)
+            return;
+        this._overCapacityMinimized = this._overCapacityMinimized.filter((win) => win.isAlive() &&
+            this.windows.indexOf(win) >= 0 &&
+            win.minimized);
+        if (this._overCapacityMinimized.length === 0)
+            return;
+        const restoreAll = !this._isMinimizeOvercapacityMode();
+        let freeSlots = null;
+        if (!restoreAll) {
+            const layout = this.layouts.getCurrentLayout(srf);
+            const capacity = resolveSurfaceCapacity(layout.capacity, srf.capacity);
+            freeSlots =
+                capacity === null
+                    ? null
+                    : Math.max(0, capacity - this.windows.getVisibleTileables(srf).length);
+            if (freeSlots !== null && freeSlots <= 0)
+                return;
+        }
+        const toRestore = selectRestorableWindows(this._overCapacityMinimized, srf.id, freeSlots, restoreAll);
+        if (toRestore.length === 0)
+            return;
+        const restored = new Set(toRestore);
+        this._overCapacityMinimized = this._overCapacityMinimized.filter((win) => !restored.has(win));
+        toRestore.forEach((win) => win.window.setMinimizedByScript(false));
+    }
     getTileables(srf) {
         let visibles = this.windows.getVisibleWindows(srf);
         visibles.forEach((window) => {
@@ -5228,39 +5970,19 @@ class TilingEngine {
             }
             tileables = this.windows.getVisibleTileables(srf);
         }
-        let layout = this.layouts.getCurrentLayout(srf);
-        let capacity;
-        let layoutCap = layout.capacity === undefined ? null : layout.capacity;
-        if (layoutCap === null && srf.capacity === null) {
-            capacity = null;
-        }
-        else if (layoutCap === null || srf.capacity === null) {
-            capacity = layoutCap || srf.capacity;
-        }
-        else {
-            capacity = Math.min(layoutCap, srf.capacity);
-        }
-        let overCapacity;
-        if (capacity !== null && tileables.length > capacity) {
-            const excess = tileables.length - capacity;
-            const sorted = [...tileables].sort((a, b) => a.window.srfTime - b.window.srfTime);
-            if (!CONFIG.srfIsMoveOldestWindows) {
-                overCapacity = sorted.slice(-excess);
-            }
-            else {
-                overCapacity = sorted.slice(0, excess);
-            }
-            const toRemove = new Set(overCapacity);
-            for (let i = tileables.length - 1; i >= 0; i--) {
-                if (toRemove.has(tileables[i]))
-                    tileables.splice(i, 1);
-            }
-            capacity = 0;
-        }
-        else {
-            overCapacity = [];
-            capacity = capacity === null ? null : capacity - tileables.length;
-        }
+        const layout = this.layouts.getCurrentLayout(srf);
+        const protectedWindows = tileables.filter((win) => win.preserveOnSurface === srf.id);
+        const selection = selectOverCapacityWindows(tileables, resolveSurfaceCapacity(layout.capacity, srf.capacity), CONFIG.srfOvercapacityEviction, protectedWindows);
+        tileables = selection.tileables;
+        const overCapacity = selection.overCapacity;
+        const freeCapacity = selection.freeSlots;
+        visibles.forEach((win) => {
+            if (win.preserveOnSurface === null)
+                return;
+            if (win.preserveOnSurface === srf.id ||
+                (!win.isSendingToOutput && !win.isRelocationPending))
+                win.preserveOnSurface = null;
+        });
         let screenData = {
             visibles: visibles,
             tileables: tileables,
@@ -5268,18 +5990,16 @@ class TilingEngine {
             workingArea: this.docks.render(srf, visibles, srf.workingArea.clone()),
             srf: srf,
             overCapacity: overCapacity,
-            capacity: capacity,
+            capacity: freeCapacity,
             awaitToMove: [],
         };
-        LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.arrangeScreen, "getTileablesReturn", `output: ${srf.output.name}\n visibles number: ${visibles.length}\n tileables.length: ${screenData.tileables.length}, workingArea: ${screenData.workingArea}, layout: ${screenData.layout},capacity: ${capacity}, overCapacity: ${screenData.overCapacity.map((win) => win.window.windowClassName)}`);
+        LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.arrangeScreen, "getTileablesReturn", `output: ${srf.output.name}\n visibles number: ${visibles.length}\n tileables.length: ${screenData.tileables.length}, workingArea: ${screenData.workingArea}, layout: ${screenData.layout},capacity: ${freeCapacity}, overCapacity: ${screenData.overCapacity.map((win) => win.window.windowClassName)}`);
         return screenData;
     }
     arrangeScreen(ctx, screenData, reason, processID) {
         const outputName = screenData.srf.output.name;
         LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.arrangeScreen, "arrangeScreen", `output:processID: ${outputName}:${processID}`);
-        screenData.overCapacity.forEach((win) => {
-            win.state = WindowState.Floating;
-        });
+        this._handleOverCapacityWindows(screenData);
         const gaps = this.getGaps(screenData.srf);
         let tilingArea;
         let tileablesLen = screenData.tileables.length;
@@ -5332,7 +6052,7 @@ class TilingEngine {
                         (tile.maxSize.height < tile.geometry.height ||
                             tile.maxSize.width < tile.geometry.width)) {
                         LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.arrangeScreen, "unfitLess", `id: ${tile.id} commitGeometry:${tile.geometry}. minSize:${tile.minSize.width}:${tile.minSize.height} - heightUnfit:${tile.minSize.height > tile.geometry.height} widthUnfit: ${tile.minSize.width > tile.geometry.width}, tile.maxSize:${tile.maxSize.width}:${tile.maxSize.height} heightUnfit: ${tile.maxSize.height < tile.geometry.height}, widthUnfit: ${tile.maxSize.width < tile.geometry.width}`);
-                        tile.state = WindowState.Floating;
+                        tile.floatInPlace();
                         return false;
                     }
                     else if (CONFIG.unfitGreater &&
@@ -5355,7 +6075,7 @@ class TilingEngine {
                     }
                     while (screenData.tileables.length > 0 && unfitGreaterQuantity > 0) {
                         let tile = screenData.tileables.shift();
-                        tile.state = WindowState.Floating;
+                        tile.floatInPlace();
                         layoutApply();
                         unfitGreaterQuantity = getNumberTileablesGreaterThenMin(screenData.tileables);
                     }
@@ -5386,11 +6106,19 @@ class TilingEngine {
         LOG === null || LOG === void 0 ? void 0 : LOG.send(LogModules.arrangeScreen, "#######################################################Finished", `${screenData.srf}`);
     }
     enforceSize(ctx, window) {
-        if (window.isTiled && !window.actualGeometry.equals(window.geometry))
+        if (window.isRelocationPending || window.isSendingToOutput)
+            return;
+        if (window.isTiled && !window.actualGeometry.equals(window.geometry)) {
+            const srfId = window.surface.id;
             ctx.setTimeout(() => {
-                if (window.isTiled)
+                if (window.isAlive() &&
+                    !window.isRelocationPending &&
+                    !window.isSendingToOutput &&
+                    window.isTiled &&
+                    window.surface.id === srfId)
                     window.commit(ctx);
             }, 10);
+        }
     }
     manage(window) {
         if (!window.shouldIgnore) {
@@ -5408,6 +6136,7 @@ class TilingEngine {
             this.docks.remove(window);
         }
         this.windows.remove(window);
+        this._overCapacityMinimized = this._overCapacityMinimized.filter((win) => win !== window);
     }
     focusOrder(ctx, step) {
         const window = ctx.currentWindow;
@@ -5415,9 +6144,7 @@ class TilingEngine {
             const tiles = this.windows.getVisibleTiles(ctx.currentSurface);
             if (tiles.length > 1)
                 ctx.currentWindow = tiles[0];
-            if (CONFIG.movePointerOnFocus) {
-                DBUS.moveMouseToFocus();
-            }
+            ctx.requestPointerOnFocus("window", true);
             return;
         }
         const visibles = this.windows.getVisibleWindows(ctx.currentSurface);
@@ -5426,17 +6153,13 @@ class TilingEngine {
         const idx = visibles.indexOf(window);
         if (!window || idx < 0) {
             ctx.currentWindow = visibles[0];
-            if (CONFIG.movePointerOnFocus) {
-                DBUS.moveMouseToFocus();
-            }
+            ctx.requestPointerOnFocus("window", true);
             return;
         }
         const num = visibles.length;
         const newIndex = (idx + (step % num) + num) % num;
         ctx.currentWindow = visibles[newIndex];
-        if (CONFIG.movePointerOnFocus) {
-            DBUS.moveMouseToFocus();
-        }
+        ctx.requestPointerOnFocus("window", true);
     }
     focusDir(ctx, dir) {
         let winTypes = ctx.isRegister ? CONFIG.focusMetaCfg : CONFIG.focusNormalCfg;
@@ -5444,18 +6167,14 @@ class TilingEngine {
             return ctx.focusSpecial(dir);
         }
         if (ctx.focusNeighborWindow(dir, winTypes)) {
-            if (CONFIG.movePointerOnFocus) {
-                DBUS.moveMouseToFocus();
-            }
+            ctx.requestPointerOnFocus("window", true);
             return false;
         }
         if ((!ctx.isRegister && CONFIG.focusMoveScreensNormal) ||
             (ctx.isRegister && CONFIG.focusMoveScreensMeta)) {
             const result = ctx.focusOutput(null, dir, winTypes);
             if (result) {
-                if (CONFIG.movePointerOnFocus) {
-                    DBUS.moveMouseToCenter();
-                }
+                ctx.requestPointerOnFocus("screen", true);
                 return false;
             }
         }
@@ -5491,7 +6210,7 @@ class TilingEngine {
                 return false;
             }
             sd.overCapacity.push(...sd.tileables.splice(idx, 1));
-            this._prepareWindowsMoveToOutput(ctx, sd, direction);
+            this._prepareWindowsMoveToOutput(ctx, sd, direction, CONFIG.srfAllowShortcutMoveToFullSurface);
             if (!this.relocationWindows.isSending &&
                 this.relocationWindows.totalNumWinsPrepareToOutput > 0) {
                 if (!ctx.relocateWindows())
@@ -5506,6 +6225,8 @@ class TilingEngine {
         return false;
     }
     _moveFloat(ctx, window, dir) {
+        const relocation = this.relocationWindows;
+        const srcOutput = window.surface.output;
         function isRelocationReady() {
             if (relocation.isSending) {
                 if (getTime() - relocation.startTime <=
@@ -5534,8 +6255,6 @@ class TilingEngine {
             winArr.push(window);
             return true;
         }
-        const relocation = this.relocationWindows;
-        const srcOutput = window.surface.output;
         const srf = window.surface;
         const srfRect = srf.workingArea;
         const geometry = window.actualGeometry;
@@ -5591,9 +6310,7 @@ class TilingEngine {
             y = srfRect.y;
         else if (y + geometry.height > srfRect.maxY)
             y = srfRect.maxY - geometry.height;
-        if (CONFIG.movePointerOnFocus) {
-            window.moveMouseToFocus();
-        }
+        ctx.requestPointerOnFocus("window", true);
         window.forceSetGeometry(ctx, new Rect(x, y, geometry.width, geometry.height));
     }
     moveTiledWindow(ctx, dir) {
@@ -5602,9 +6319,7 @@ class TilingEngine {
             const tiles = this.windows.getVisibleTiles(ctx.currentSurface);
             if (tiles.length > 0)
                 ctx.currentWindow = tiles[0];
-            if (CONFIG.movePointerOnFocus) {
-                DBUS.moveMouseToFocus();
-            }
+            ctx.requestPointerOnFocus("window", true);
             return false;
         }
         if (window.isTiled) {
@@ -5648,6 +6363,10 @@ class TilingEngine {
     ResetSurfaceCapacity(ctx) {
         return (ctx.currentSurface.capacity = null);
     }
+    getCurrentSurfaceCapacity(ctx) {
+        const currentSurface = ctx.currentSurface;
+        return resolveSurfaceCapacity(this.layouts.getCurrentLayout(currentSurface).capacity, currentSurface.capacity);
+    }
     toggleFloat(window) {
         if (WindowClass.isToggleableState(window.state)) {
             if (window.isFloating)
@@ -5676,18 +6395,23 @@ class TilingEngine {
             ctx.showNotification("Tile All");
         }
     }
-    setMaster(window) {
+    setMaster(ctx, window) {
         this.windows.setMaster(window);
+        const master = this.windows.surfaceMaster(window);
+        if (master === null)
+            return;
+        ctx.currentWindow = master;
+        ctx.requestPointerOnFocus("window", true);
     }
     cycleLayout(ctx, step) {
         const layout = this.layouts.cycleLayout(ctx.currentSurface, step);
         if (layout)
-            ctx.showNotification(layout.description);
+            ctx.showLayoutOSD();
     }
-    setLayout(ctx, layoutClassID) {
+    setLayout(ctx, layoutClassID, showOSD = true) {
         const layout = this.layouts.setLayout(ctx.currentSurface, layoutClassID);
-        if (layout)
-            ctx.showNotification(layout.description);
+        if (layout && showOSD)
+            ctx.showLayoutShortcut(layout.classID);
     }
     handleDockWinShortcut(ctx, window, action, reason) {
         if (window === null || !window.isDocked)
@@ -5842,6 +6566,7 @@ class TilingEngine {
     }
 }
 TilingEngine.SENDING_WINDOWS_MAX_WAIT_TIME = 100;
+TilingEngine.MAX_ARRANGE_PASSES = 10;
 class EngineContext {
     get backend() {
         return this.drvctx.backend;
@@ -5878,8 +6603,20 @@ class EngineContext {
     getWindowById(id) {
         return this.engine.windows.getWindowById(id);
     }
+    setPrevMaster(window, prev) {
+        this.engine.windows.setPrevMaster(window, prev);
+    }
+    getPrevMaster(window) {
+        return this.engine.windows.getPrevMaster(window);
+    }
     showNotification(text) {
         this.drvctx.showNotification(text);
+    }
+    showLayoutOSD() {
+        this.drvctx.showLayoutOSD();
+    }
+    showLayoutShortcut(id) {
+        this.drvctx.showLayoutShortcut(id);
     }
 }
 class DefaultGapsCfg {
@@ -6130,6 +6867,8 @@ class LayoutStore {
     setLayout(srf, layoutClassID) {
         if (srf.ignore)
             return null;
+        if (CONFIG.layoutOrder.indexOf(layoutClassID) === -1)
+            return null;
         return this.getEntry(srf).setLayout(layoutClassID);
     }
     getEntry(srf) {
@@ -6176,7 +6915,7 @@ class WindowClass {
         return this.window.shouldIgnore;
     }
     isAlive() {
-        return !this.window.window.deleted;
+        return this.window.isAlive();
     }
     get isTileable() {
         return WindowClass.isTileableState(this.state);
@@ -6228,6 +6967,11 @@ class WindowClass {
     setTransientState(state) {
         this.internalState = state;
     }
+    floatInPlace() {
+        if (!this.isFloating)
+            this.floatGeometry = this.actualGeometry.clone();
+        this.state = WindowState.Floating;
+    }
     get surface() {
         return this.window.surface;
     }
@@ -6273,6 +7017,10 @@ class WindowClass {
         this.geometry = window.geometry;
         this.focusTime = 0;
         this.isSendingToOutput = false;
+        this.isRelocationPending = false;
+        this.preserveOnSurface = null;
+        this.surfaceArrangeToken = 0;
+        this.relocationTargetOutput = null;
         this.isDragging = false;
         this.internalState = WindowState.Unmanaged;
         this.previousState = WindowState.Tiled;
@@ -6329,9 +7077,6 @@ class WindowClass {
     forceSetGeometry(ctx, geometry) {
         this.window.commit(ctx, geometry);
     }
-    moveMouseToFocus() {
-        this.window.moveMouseToFocus();
-    }
     visible(srf) {
         return this.window.visible(srf);
     }
@@ -6342,6 +7087,7 @@ class WindowClass {
 class WindowStore {
     constructor(windows) {
         this.list = windows || [];
+        this._prevMaster = new Map();
     }
     move(srcWin, destWin, after) {
         const srcIdx = this.list.indexOf(srcWin);
@@ -6385,12 +7131,50 @@ class WindowStore {
         let idx = this.list.map((w) => w.id).indexOf(id);
         return idx < 0 ? null : this.list[idx];
     }
-    setMaster(window) {
-        const idx = this.list.indexOf(window);
-        if (idx === -1)
+    surfaceMaster(window) {
+        const id = window.surface.id;
+        for (const win of this.list) {
+            if (win.surface.id === id)
+                return win;
+        }
+        return null;
+    }
+    getPrevMaster(window) {
+        const id = window.surface.id;
+        const prev = this._prevMaster.get(id);
+        if (prev === undefined ||
+            prev === window ||
+            !prev.isAlive() ||
+            this.list.indexOf(prev) === -1 ||
+            prev.surface.id !== id) {
+            this._prevMaster.delete(id);
+            return null;
+        }
+        return prev;
+    }
+    setPrevMaster(window, prev) {
+        if (prev === null || prev === window || !prev.isAlive())
             return;
-        this.list.splice(idx, 1);
-        this.list.splice(0, 0, window);
+        const id = window.surface.id;
+        if (prev.surface.id !== id || this.list.indexOf(prev) === -1)
+            return;
+        this._prevMaster.set(id, prev);
+    }
+    setMaster(window) {
+        if (this.list.indexOf(window) === -1)
+            return;
+        const id = window.surface.id;
+        const master = this.surfaceMaster(window);
+        if (master === null || master === window) {
+            const prev = this.getPrevMaster(window);
+            if (prev === null)
+                return;
+            this.swap(window, prev);
+            this._prevMaster.set(id, window);
+            return;
+        }
+        this._prevMaster.set(id, master);
+        this.swap(window, master);
     }
     swap(alpha, beta) {
         const alphaIndex = this.list.indexOf(alpha);
@@ -6419,6 +7203,10 @@ class WindowStore {
         const idx = this.list.indexOf(window);
         if (idx >= 0)
             this.list.splice(idx, 1);
+        for (const [id, prev] of this._prevMaster) {
+            if (prev === window)
+                this._prevMaster.delete(id);
+        }
     }
     unshift(window) {
         this.list.unshift(window);
@@ -6465,61 +7253,313 @@ class BinaryTreeLayout {
     constructor(capacity) {
         this.classID = BinaryTreeLayout.id;
         this.capacity = capacity !== undefined ? capacity : null;
-        this.parts = new HalfSplitLayoutPart(new FillLayoutPart(), new FillLayoutPart());
-        this.parts.angle = 0;
+        this.tree = new DwindleTree();
+        this.rendered = new Map();
+        this.lastArea = null;
+        this.lastGap = 0;
+        this.lastMetrics = null;
+        this.dragSession = null;
+        this.dragKey = null;
     }
     apply(ctx, tileables, area, gap) {
         tileables.forEach((tileable) => (tileable.state = WindowState.Tiled));
-        this.create_parts(tileables.length);
-        let rectangles = this.parts.apply(area, tileables, gap);
-        rectangles.forEach((geometry, i) => {
-            tileables[i].geometry = geometry;
+        this.synchronize(ctx, tileables, area, gap);
+        const metrics = this.metrics(tileables);
+        this.lastArea = area;
+        this.lastGap = gap;
+        this.lastMetrics = metrics;
+        this.rendered = this.tree.geometry(area, gap, metrics);
+        tileables.forEach((tileable) => {
+            const geometry = this.rendered.get(tileable.id);
+            if (geometry !== undefined)
+                tileable.geometry = geometry;
         });
     }
-    create_parts(tiles_len) {
-        let head = this.get_head();
-        head.angle = 0;
-        if (tiles_len > 2) {
-            let level = Math.ceil(Math.log(tiles_len) * 1.442695);
-            let level_capacity = Math.pow(2, (level - 1));
-            let half_level_capacity = Math.pow(2, (level - 2));
-            if (tiles_len > level_capacity + half_level_capacity) {
-                head.primarySize = tiles_len - level_capacity;
-            }
-            else {
-                head.primarySize = half_level_capacity;
-            }
-            this.build_binary_tree(head, level, 2, tiles_len);
-        }
-        this.parts = head;
+    adjust(area, tiles, basis, delta, gap) {
+        if (this.tree.find(basis.id) === null)
+            return;
+        this.tree.adjust(area, gap, this.metrics(tiles), basis.id, delta);
     }
-    build_binary_tree(head, max_level, current_level, tiles_len) {
-        if (current_level <= max_level) {
-            if (head.primarySize > 1) {
-                let primary = this.get_head();
-                primary.primarySize = Math.floor(head.primarySize / 2);
-                primary.angle = current_level % 2 ? 0 : 90;
-                head.primary = primary;
-                this.build_binary_tree(primary, max_level, current_level + 1, head.primarySize);
+    drag(_ctx, dragAction) {
+        var _a;
+        if (!dragAction.window.isTiled)
+            return;
+        if (this.dragSession !== dragAction) {
+            this.dragSession = dragAction;
+            this.dragKey = null;
+        }
+        if (this.rendered.size === 0)
+            return;
+        const windowId = dragAction.window.id;
+        const area = (_a = dragAction.tilesArea) !== null && _a !== void 0 ? _a : dragAction.workingArea;
+        const edge = this.edgeAt(area, dragAction.mousePointer);
+        if (edge !== null) {
+            const key = `edge:${edge}`;
+            if (key === this.dragKey)
+                return;
+            const dir = edge === "left" || edge === "right" ? "h" : "v";
+            const before = edge === "left" || edge === "up";
+            if (this.tree.moveToRoot(windowId, before, dir, true)) {
+                this.dragKey = key;
+                dragAction.result.isArrangeNeeded = true;
             }
-            if (tiles_len - head.primarySize > 1) {
-                let secondary = this.get_head();
-                secondary.primarySize = Math.floor((tiles_len - head.primarySize) / 2);
-                secondary.angle = current_level % 2 ? 0 : 90;
-                head.secondary = secondary;
-                this.build_binary_tree(secondary, max_level, current_level + 1, tiles_len - head.primarySize);
-            }
+            return;
+        }
+        const target = this.dropTarget(windowId, dragAction.mousePointer);
+        if (target === null)
+            return;
+        const side = this.sideAt(target.rect, dragAction.mousePointer);
+        const key = `target:${target.id}:${side}`;
+        if (key === this.dragKey)
+            return;
+        const dir = side === "left" || side === "right" ? "h" : "v";
+        const before = side === "left" || side === "up";
+        if (this.tree.move(windowId, target.id, before, dir, true)) {
+            this.dragKey = key;
+            dragAction.result.isArrangeNeeded = true;
         }
     }
-    get_head() {
-        return new HalfSplitLayoutPart(new FillLayoutPart(), new FillLayoutPart());
+    handleShortcut(ctx, input) {
+        const window = ctx.currentWindow;
+        if (window === null || !window.isTiled)
+            return false;
+        switch (input) {
+            case KrohnkiteAction.MoveLeft:
+                return this.moveToNeighbor(ctx, window, "left");
+            case KrohnkiteAction.MoveRight:
+                return this.moveToNeighbor(ctx, window, "right");
+            case KrohnkiteAction.MoveUp:
+                return this.moveToNeighbor(ctx, window, "up");
+            case KrohnkiteAction.MoveDown:
+                return this.moveToNeighbor(ctx, window, "down");
+            case KrohnkiteAction.SwapUp:
+                return this.moveInOrder(window, -1);
+            case KrohnkiteAction.SwapDown:
+                return this.moveInOrder(window, +1);
+            case KrohnkiteAction.Rotate:
+                this.tree.rotateAll();
+                return true;
+            case KrohnkiteAction.RotatePart:
+                return this.tree.toggleSplit(window.id);
+            case KrohnkiteAction.SetMaster:
+                ctx.showNotification("BTree: no master");
+                return true;
+            default:
+                return false;
+        }
     }
     clone() {
-        const other = new StackedLayout();
-        return other;
+        return new BinaryTreeLayout(this.capacity !== undefined ? this.capacity : null);
     }
     toString() {
         return "BTreeLayout()";
+    }
+    synchronize(ctx, tileables, area, gap) {
+        for (const windowId of this.tree.order) {
+            if (ctx.getWindowById(windowId) === null)
+                this.tree.remove(windowId);
+        }
+        const missing = tileables.filter((tileable) => this.tree.find(tileable.id) === null);
+        if (missing.length === 0)
+            return;
+        let lastInserted = null;
+        if (this.tree.isEmpty) {
+            const rootWindow = this.pickAnchor(tileables, null);
+            if (rootWindow === null)
+                return;
+            this.tree.insertRoot(rootWindow.id);
+            lastInserted = rootWindow.id;
+        }
+        for (const tileable of missing) {
+            if (this.tree.find(tileable.id) !== null)
+                continue;
+            const metrics = this.metrics(tileables);
+            let anchorId = lastInserted;
+            if (anchorId === null || !metrics.has(anchorId)) {
+                const anchor = this.pickAnchor(tileables, metrics);
+                anchorId = anchor !== null ? anchor.id : null;
+            }
+            if (anchorId === null) {
+                const firstLeaf = this.tree.order[0];
+                if (firstLeaf === undefined) {
+                    this.tree.insertRoot(tileable.id);
+                }
+                else {
+                    this.tree.insert(tileable.id, firstLeaf, this.newWindowGoesFirst(), "h");
+                }
+                lastInserted = tileable.id;
+                continue;
+            }
+            const anchorRect = this.tree.geometry(area, gap, metrics).get(anchorId);
+            if (anchorRect === undefined) {
+                const fallbackId = this.tree.order.find((id) => metrics.has(id));
+                if (fallbackId === undefined)
+                    this.tree.insertRoot(tileable.id);
+                else
+                    this.tree.insert(tileable.id, fallbackId, this.newWindowGoesFirst(), "h");
+                lastInserted = tileable.id;
+                continue;
+            }
+            const dir = anchorRect.width >= anchorRect.height ? "h" : "v";
+            this.tree.insert(tileable.id, anchorId, this.newWindowGoesFirst(), dir);
+            lastInserted = tileable.id;
+        }
+    }
+    newWindowGoesFirst() {
+        return CONFIG.newWindowPosition === "first";
+    }
+    pickAnchor(tileables, metrics) {
+        let best = null;
+        for (const tileable of tileables) {
+            if (metrics !== null) {
+                if (!metrics.has(tileable.id))
+                    continue;
+                if (this.tree.find(tileable.id) === null)
+                    continue;
+            }
+            if (best === null || tileable.focusTime > best.focusTime)
+                best = tileable;
+        }
+        return best;
+    }
+    metrics(tileables) {
+        const metrics = new Map();
+        for (const tileable of tileables)
+            metrics.set(tileable.id, tileable.minSize);
+        return metrics;
+    }
+    edgeAt(area, pointer) {
+        const marginX = Math.max(1, Math.floor(area.width * 0.1));
+        const marginY = Math.max(1, Math.floor(area.height * 0.1));
+        const edges = [
+            ["left", pointer.x - area.x, marginX],
+            ["right", area.maxX - pointer.x, marginX],
+            ["up", pointer.y - area.y, marginY],
+            ["down", area.maxY - pointer.y, marginY],
+        ];
+        let best = null;
+        let bestDistance = Infinity;
+        for (const [direction, distance, margin] of edges) {
+            if (distance < 0 || distance > margin)
+                continue;
+            if (distance < bestDistance) {
+                bestDistance = distance;
+                best = direction;
+            }
+        }
+        return best;
+    }
+    sideAt(rect, pointer) {
+        const relX = (pointer.x - rect.x) / Math.max(1, rect.width);
+        const relY = (pointer.y - rect.y) / Math.max(1, rect.height);
+        if (Math.abs(relX - 0.5) >= Math.abs(relY - 0.5))
+            return relX < 0.5 ? "left" : "right";
+        return relY < 0.5 ? "up" : "down";
+    }
+    dropTarget(windowId, pointer) {
+        for (const [id, rect] of this.rendered) {
+            if (id === windowId)
+                continue;
+            if (rect.includesPoint(pointer))
+                return { id, rect };
+        }
+        return null;
+    }
+    moveToNeighbor(ctx, window, direction) {
+        const area = this.lastArea;
+        const metrics = this.lastMetrics;
+        const basis = this.rendered.get(window.id);
+        if (area === null || metrics === null || basis === undefined)
+            return false;
+        const horizontal = direction === "left" || direction === "right";
+        const forward = direction === "right" || direction === "down";
+        const gap = this.lastGap;
+        let focalX = basis.x + basis.width / 2;
+        let focalY = basis.y + basis.height / 2;
+        if (horizontal)
+            focalX = forward ? basis.maxX + gap : basis.x - gap - 1;
+        else
+            focalY = forward ? basis.maxY + gap : basis.y - gap - 1;
+        if (focalX < area.x ||
+            focalX >= area.maxX ||
+            focalY < area.y ||
+            focalY >= area.maxY) {
+            const dir = horizontal ? "h" : "v";
+            const before = direction === "left" || direction === "up";
+            const leaf = this.tree.find(window.id);
+            const root = this.tree.root;
+            if (leaf === null || !(root instanceof DwindleSplit))
+                return false;
+            const outer = before ? root.first : root.second;
+            if (outer === leaf && root.horizontal === horizontal)
+                return false;
+            return this.tree.moveToRoot(window.id, before, dir, true);
+        }
+        const leaf = this.tree.find(window.id);
+        const parent = leaf !== null ? leaf.parent : null;
+        if (leaf !== null && parent !== null && parent.horizontal === horizontal) {
+            const first = parent.first === leaf;
+            const sibling = first ? parent.second : parent.first;
+            if (first === forward &&
+                sibling instanceof DwindleLeaf &&
+                metrics.has(sibling.windowId))
+                return this.tree.swapSides(window.id);
+        }
+        const neighborId = this.neighbor(ctx, window.id, direction);
+        if (neighborId === null)
+            return false;
+        const target = this.rendered.get(neighborId);
+        if (target === undefined)
+            return false;
+        const targetHorizontal = target.width >= target.height;
+        const first = targetHorizontal
+            ? focalX < target.x + target.width / 2
+            : focalY < target.y + target.height / 2;
+        return this.tree.move(window.id, neighborId, first, targetHorizontal ? "h" : "v");
+    }
+    moveInOrder(window, step) {
+        const order = this.tree.order.filter((id) => this.rendered.has(id));
+        const index = order.indexOf(window.id);
+        if (index < 0)
+            return false;
+        const targetIndex = index + step;
+        if (targetIndex < 0 || targetIndex >= order.length)
+            return false;
+        return this.tree.swapContents(window.id, order[targetIndex]);
+    }
+    neighbor(ctx, windowId, direction) {
+        const basis = this.rendered.get(windowId);
+        if (basis === undefined)
+            return null;
+        const vertical = direction === "up" || direction === "down";
+        const sign = direction === "up" || direction === "left" ? -1 : 1;
+        const candidates = [];
+        for (const [id, rect] of this.rendered) {
+            if (id === windowId)
+                continue;
+            const beyond = vertical
+                ? rect.y * sign > basis.y * sign
+                : rect.x * sign > basis.x * sign;
+            if (!beyond)
+                continue;
+            const overlaps = vertical
+                ? overlap(basis.x, basis.maxX, rect.x, rect.maxX)
+                : overlap(basis.y, basis.maxY, rect.y, rect.maxY);
+            if (!overlaps)
+                continue;
+            candidates.push({ id, rect });
+        }
+        if (candidates.length === 0)
+            return null;
+        const min = candidates.reduce((acc, candidate) => Math.min(acc, (vertical ? candidate.rect.y : candidate.rect.x) * sign), Infinity);
+        const closest = candidates.filter((candidate) => (vertical ? candidate.rect.y : candidate.rect.x) * sign === min);
+        closest.sort((a, b) => {
+            var _a, _b, _c, _d;
+            const aFocus = (_b = (_a = ctx.getWindowById(a.id)) === null || _a === void 0 ? void 0 : _a.focusTime) !== null && _b !== void 0 ? _b : 0;
+            const bFocus = (_d = (_c = ctx.getWindowById(b.id)) === null || _c === void 0 ? void 0 : _c.focusTime) !== null && _d !== void 0 ? _d : 0;
+            return bFocus - aFocus;
+        });
+        return closest[0].id;
     }
 }
 BinaryTreeLayout.id = "BinaryTreeLayout";
@@ -6614,6 +7654,7 @@ class ColumnLayout {
     constructor() {
         this.classID = ColumnLayout.id;
         this.weight = 1.0;
+        this.minWeight = 0.0;
         this.parts = new RotateLayoutPart(new StackLayoutPart());
         this.windowIds = new Set();
         this.renderedWindowsIds = [];
@@ -6724,17 +7765,16 @@ class ColumnsLayout {
             (delta.east !== 0 || delta.west !== 0)) ||
             ((this.direction.north || this.direction.south) &&
                 (delta.north !== 0 || delta.south !== 0))) {
-            let oldWeights;
-            if (isReverse) {
-                oldWeights = this.columns
-                    .slice(0)
-                    .reverse()
-                    .map((column) => column.weight);
-            }
-            else {
-                oldWeights = this.columns.map((column) => column.weight);
-            }
-            const weights = LayoutUtils.adjustAreaWeights(area, oldWeights, gap, isReverse ? columnsLength - 1 - columnId : columnId, delta, this.direction.east || this.direction.west);
+            const horizontal = this.direction.east || this.direction.west;
+            const orderedColumns = isReverse
+                ? this.columns.slice(0).reverse()
+                : this.columns;
+            const oldWeights = orderedColumns.map((column) => column.weight);
+            const minLengths = orderedColumns.map((column) => column.minWeight);
+            const axisLength = horizontal ? area.width : area.height;
+            const availableLength = axisLength - (columnsLength - 1) * gap;
+            const totalMin = minLengths.reduce((sum, min) => sum + min, 0);
+            const weights = LayoutUtils.adjustAreaWeightsProportional(area, oldWeights, gap, isReverse ? columnsLength - 1 - columnId : columnId, delta, horizontal, totalMin <= availableLength ? minLengths : undefined);
             weights.forEach((weight, i) => {
                 this.columns[isReverse ? columnsLength - 1 - i : i].weight =
                     weight * columnsLength;
@@ -6753,17 +7793,16 @@ class ColumnsLayout {
         this.arrangeTileables(ctx, tileables);
         if (this.columns.length === 0)
             return;
-        let weights;
-        if (this.direction.east || this.direction.south) {
-            weights = this.columns
-                .slice(0)
-                .reverse()
-                .map((tile) => tile.weight);
-        }
-        else {
-            weights = this.columns.map((tile) => tile.weight);
-        }
-        const rects = LayoutUtils.splitAreaWeighted(area, weights, gap, this.direction.east || this.direction.west);
+        const horizontal = this.direction.east || this.direction.west;
+        const orderedColumns = this.direction.east || this.direction.south
+            ? this.columns.slice(0).reverse()
+            : this.columns;
+        const weights = orderedColumns.map((column) => column.weight);
+        const minLengths = orderedColumns.map((column) => column.minWeight);
+        const axisLength = horizontal ? area.width : area.height;
+        const availableLength = axisLength - (this.columns.length - 1) * gap;
+        const totalMin = minLengths.reduce((sum, min) => sum + min, 0);
+        const rects = LayoutUtils.splitAreaWeighted(area, weights, gap, horizontal, totalMin <= availableLength ? minLengths : undefined);
         if (this.direction.east || this.direction.south) {
             let i = 0;
             for (var idx = this.columns.length - 1; idx >= 0; idx--) {
@@ -6961,6 +8000,22 @@ class ColumnsLayout {
         if (this.parts.length === 0)
             this.insertColumn(true);
         this.applyColumnsPosition();
+        this.updateColumnsMinWeight(ctx);
+    }
+    updateColumnsMinWeight(ctx) {
+        const horizontal = this.direction.east || this.direction.west;
+        this.columns.forEach((column) => {
+            let min = 0;
+            column.windowIds.forEach((id) => {
+                const win = ctx.getWindowById(id);
+                if (win === null || win.isFloating || win.minimized)
+                    return;
+                const size = horizontal ? win.minSize.width : win.minSize.height;
+                if (size > min)
+                    min = size;
+            });
+            column.minWeight = Math.max(1, min);
+        });
     }
     getColumnId(t) {
         if (t !== null) {
@@ -7234,6 +8289,280 @@ class ColumnsLayout {
     }
 }
 ColumnsLayout.id = "ColumnsLayout";
+class DwindleLeaf {
+    constructor(windowId) {
+        this.windowId = windowId;
+        this.parent = null;
+    }
+}
+class DwindleSplit {
+    constructor(first, second, dir, ratio = 0.5, locked = false) {
+        this.first = first;
+        this.second = second;
+        this.dir = dir;
+        this.ratio = ratio;
+        this.locked = locked;
+        this.parent = null;
+        this.first.parent = this;
+        this.second.parent = this;
+    }
+    get horizontal() {
+        return this.dir === "h";
+    }
+}
+class DwindleTree {
+    constructor() {
+        this.root = null;
+    }
+    get isEmpty() {
+        return this.root === null;
+    }
+    get order() {
+        const order = [];
+        const collect = (node) => {
+            if (node instanceof DwindleLeaf) {
+                order.push(node.windowId);
+                return;
+            }
+            collect(node.first);
+            collect(node.second);
+        };
+        if (this.root !== null)
+            collect(this.root);
+        return order;
+    }
+    find(windowId) {
+        return DwindleTree.findIn(this.root, windowId);
+    }
+    static findIn(node, windowId) {
+        var _a;
+        if (node === null)
+            return null;
+        if (node instanceof DwindleLeaf)
+            return node.windowId === windowId ? node : null;
+        return ((_a = DwindleTree.findIn(node.first, windowId)) !== null && _a !== void 0 ? _a : DwindleTree.findIn(node.second, windowId));
+    }
+    insertRoot(windowId) {
+        if (this.root !== null)
+            return false;
+        this.root = new DwindleLeaf(windowId);
+        return true;
+    }
+    insert(windowId, anchorId, before, dir, locked = false) {
+        if (this.find(windowId) !== null)
+            return false;
+        const anchor = this.find(anchorId);
+        if (anchor === null)
+            return this.insertRoot(windowId);
+        const parent = anchor.parent;
+        const leaf = new DwindleLeaf(windowId);
+        const split = before
+            ? new DwindleSplit(leaf, anchor, dir, 0.5, locked)
+            : new DwindleSplit(anchor, leaf, dir, 0.5, locked);
+        this.link(parent, anchor, split);
+        return true;
+    }
+    remove(windowId) {
+        const leaf = this.find(windowId);
+        if (leaf === null)
+            return false;
+        const parent = leaf.parent;
+        if (parent === null) {
+            this.root = null;
+            return true;
+        }
+        const sibling = parent.first === leaf ? parent.second : parent.first;
+        this.link(parent.parent, parent, sibling);
+        leaf.parent = null;
+        parent.parent = null;
+        return true;
+    }
+    move(windowId, neighborId, before, dir, locked = false) {
+        if (windowId === neighborId)
+            return false;
+        if (this.find(windowId) === null || this.find(neighborId) === null)
+            return false;
+        this.remove(windowId);
+        return this.insert(windowId, neighborId, before, dir, locked);
+    }
+    moveToRoot(windowId, before, dir, locked = true) {
+        const leaf = this.find(windowId);
+        if (leaf === null || leaf === this.root)
+            return false;
+        this.remove(windowId);
+        const root = this.root;
+        if (root === null) {
+            this.root = new DwindleLeaf(windowId);
+            return true;
+        }
+        const dragged = new DwindleLeaf(windowId);
+        const split = before
+            ? new DwindleSplit(dragged, root, dir, 0.5, locked)
+            : new DwindleSplit(root, dragged, dir, 0.5, locked);
+        split.parent = null;
+        this.root = split;
+        return true;
+    }
+    toggleSplit(windowId) {
+        const leaf = this.find(windowId);
+        const parent = leaf !== null ? leaf.parent : null;
+        if (parent === null)
+            return false;
+        parent.dir = parent.horizontal ? "v" : "h";
+        parent.locked = true;
+        return true;
+    }
+    swapSides(windowId) {
+        const leaf = this.find(windowId);
+        const parent = leaf !== null ? leaf.parent : null;
+        if (parent === null)
+            return false;
+        const first = parent.first;
+        parent.first = parent.second;
+        parent.second = first;
+        parent.ratio = 0.5;
+        return true;
+    }
+    swapContents(firstId, secondId) {
+        const first = this.find(firstId);
+        const second = this.find(secondId);
+        if (first === null || second === null || first === second)
+            return false;
+        const windowId = first.windowId;
+        first.windowId = second.windowId;
+        second.windowId = windowId;
+        return true;
+    }
+    rotateAll() {
+        let changed = false;
+        const rotate = (node) => {
+            if (node instanceof DwindleLeaf)
+                return;
+            node.dir = node.horizontal ? "v" : "h";
+            node.locked = true;
+            changed = true;
+            rotate(node.first);
+            rotate(node.second);
+        };
+        if (this.root !== null)
+            rotate(this.root);
+        return changed;
+    }
+    geometry(area, gap, metrics) {
+        const result = new Map();
+        if (this.root !== null)
+            this.layoutNode(this.root, area, gap, metrics, result);
+        return result;
+    }
+    adjust(area, gap, metrics, basisId, delta) {
+        if (this.root === null)
+            return;
+        this.adjustNode(this.root, area, gap, metrics, basisId, delta);
+    }
+    link(parent, node, replacement) {
+        replacement.parent = parent;
+        if (parent === null)
+            this.root = replacement;
+        else if (parent.first === node)
+            parent.first = replacement;
+        else
+            parent.second = replacement;
+    }
+    layoutNode(node, area, gap, metrics, result) {
+        if (node instanceof DwindleLeaf) {
+            if (!metrics.has(node.windowId))
+                return false;
+            result.set(node.windowId, area);
+            return true;
+        }
+        const firstPresent = this.hasPresent(node.first, metrics);
+        const secondPresent = this.hasPresent(node.second, metrics);
+        if (!firstPresent && !secondPresent)
+            return false;
+        if (!firstPresent)
+            return this.layoutNode(node.second, area, gap, metrics, result);
+        if (!secondPresent)
+            return this.layoutNode(node.first, area, gap, metrics, result);
+        if (!node.locked)
+            node.dir = area.width >= area.height ? "h" : "v";
+        const splitAxis = node.horizontal ? "x" : "y";
+        const minFirst = this.minLength(node.first, splitAxis, gap, metrics);
+        const minSecond = this.minLength(node.second, splitAxis, gap, metrics);
+        const [firstArea, secondArea] = LayoutUtils.splitAreaWeighted(area, [node.ratio, 1 - node.ratio], gap, node.horizontal, [minFirst, minSecond]);
+        this.layoutNode(node.first, firstArea, gap, metrics, result);
+        this.layoutNode(node.second, secondArea, gap, metrics, result);
+        return true;
+    }
+    adjustNode(node, area, gap, metrics, basisId, delta) {
+        if (node instanceof DwindleLeaf)
+            return delta;
+        const firstContains = this.contains(node.first, basisId);
+        const secondContains = this.contains(node.second, basisId);
+        if (!firstContains && !secondContains)
+            return delta;
+        const firstPresent = this.hasPresent(node.first, metrics);
+        const secondPresent = this.hasPresent(node.second, metrics);
+        if (!firstPresent || !secondPresent) {
+            const child = firstContains ? node.first : node.second;
+            return this.adjustNode(child, area, gap, metrics, basisId, delta);
+        }
+        if (!node.locked)
+            node.dir = area.width >= area.height ? "h" : "v";
+        const splitAxis = node.horizontal ? "x" : "y";
+        const minFirst = this.minLength(node.first, splitAxis, gap, metrics);
+        const minSecond = this.minLength(node.second, splitAxis, gap, metrics);
+        const [firstArea, secondArea] = LayoutUtils.splitAreaWeighted(area, [node.ratio, 1 - node.ratio], gap, node.horizontal, [minFirst, minSecond]);
+        const target = firstContains ? 0 : 1;
+        const child = firstContains ? node.first : node.second;
+        const childArea = firstContains ? firstArea : secondArea;
+        const remainder = this.adjustNode(child, childArea, gap, metrics, basisId, delta);
+        const alongAxis = node.horizontal
+            ? remainder.east !== 0 || remainder.west !== 0
+            : remainder.south !== 0 || remainder.north !== 0;
+        if (!alongAxis)
+            return remainder;
+        const axisLength = node.horizontal ? area.width : area.height;
+        const minLengths = minFirst + minSecond <= axisLength - gap
+            ? [minFirst, minSecond]
+            : undefined;
+        node.ratio = LayoutUtils.adjustAreaHalfWeights(area, node.ratio, gap, target, remainder, node.horizontal, minLengths);
+        return node.horizontal
+            ? new RectDelta(0, 0, remainder.south, remainder.north)
+            : new RectDelta(remainder.east, remainder.west, 0, 0);
+    }
+    hasPresent(node, metrics) {
+        if (node instanceof DwindleLeaf)
+            return metrics.has(node.windowId);
+        return (this.hasPresent(node.first, metrics) ||
+            this.hasPresent(node.second, metrics));
+    }
+    contains(node, windowId) {
+        if (node instanceof DwindleLeaf)
+            return node.windowId === windowId;
+        return (this.contains(node.first, windowId) ||
+            this.contains(node.second, windowId));
+    }
+    minLength(node, axis, gap, metrics) {
+        if (node instanceof DwindleLeaf) {
+            const size = metrics.get(node.windowId);
+            if (size === undefined)
+                return 0;
+            return axis === "x" ? size.width : size.height;
+        }
+        const firstPresent = this.hasPresent(node.first, metrics);
+        const secondPresent = this.hasPresent(node.second, metrics);
+        const first = this.minLength(node.first, axis, gap, metrics);
+        const second = this.minLength(node.second, axis, gap, metrics);
+        const splitAxis = node.horizontal ? "x" : "y";
+        if (axis !== splitAxis)
+            return Math.max(first, second);
+        if (!firstPresent)
+            return second;
+        if (!secondPresent)
+            return first;
+        return first + second + gap;
+    }
+}
 class FloatingLayout {
     constructor() {
         this.classID = FloatingLayout.id;
@@ -7251,14 +8580,22 @@ class FloatingLayout {
 }
 FloatingLayout.id = "FloatingLayout";
 FloatingLayout.instance = new FloatingLayout();
+function minComponent(axis, tile, transposed) {
+    if (axis === "y")
+        return transposed ? tile.minSize.width : tile.minSize.height;
+    return transposed ? tile.minSize.height : tile.minSize.width;
+}
 class FillLayoutPart {
-    adjust(area, tiles, basis, delta, gap) {
+    adjust(area, tiles, basis, delta, gap, transposed) {
         return delta;
     }
-    apply(area, tiles, gap) {
+    apply(area, tiles, gap, transposed) {
         return tiles.map((tile) => {
             return area;
         });
+    }
+    minLength(axis, tiles, gap, transposed) {
+        return tiles.reduce((max, tile) => Math.max(max, minComponent(axis, tile, transposed !== null && transposed !== void 0 ? transposed : false)), 0);
     }
     toString() {
         return `FillLayoutPart`;
@@ -7278,25 +8615,32 @@ class HalfSplitLayoutPart {
         this.primarySize = 1;
         this.ratio = 0.5;
     }
-    adjust(area, tiles, basis, delta, gap) {
+    adjust(area, tiles, basis, delta, gap, transposed) {
         const basisIndex = tiles.indexOf(basis);
         if (basisIndex < 0)
             return delta;
         if (tiles.length <= this.primarySize) {
-            return this.primary.adjust(area, tiles, basis, delta, gap);
+            return this.primary.adjust(area, tiles, basis, delta, gap, transposed);
         }
         else if (this.primarySize === 0) {
-            return this.secondary.adjust(area, tiles, basis, delta, gap);
+            return this.secondary.adjust(area, tiles, basis, delta, gap, transposed);
         }
         else {
             const targetIndex = basisIndex < this.primarySize ? 0 : 1;
             if (targetIndex === 0) {
-                delta = this.primary.adjust(area, tiles.slice(0, this.primarySize), basis, delta, gap);
+                delta = this.primary.adjust(area, tiles.slice(0, this.primarySize), basis, delta, gap, transposed);
             }
             else {
-                delta = this.secondary.adjust(area, tiles.slice(this.primarySize), basis, delta, gap);
+                delta = this.secondary.adjust(area, tiles.slice(this.primarySize), basis, delta, gap, transposed);
             }
-            this.ratio = LayoutUtils.adjustAreaHalfWeights(area, this.reversed ? 1 - this.ratio : this.ratio, gap, this.reversed ? 1 - targetIndex : targetIndex, delta, this.horizontal);
+            const [primaryMin, secondaryMin] = this.splitMinPair(tiles, gap, transposed);
+            const axisLength = this.horizontal ? area.width : area.height;
+            const minLengths = primaryMin + secondaryMin <= axisLength - gap
+                ? this.reversed
+                    ? [secondaryMin, primaryMin]
+                    : [primaryMin, secondaryMin]
+                : undefined;
+            this.ratio = LayoutUtils.adjustAreaHalfWeights(area, this.reversed ? 1 - this.ratio : this.ratio, gap, this.reversed ? 1 - targetIndex : targetIndex, delta, this.horizontal, minLengths);
             if (this.reversed)
                 this.ratio = 1 - this.ratio;
             switch (this.angle * 10 + targetIndex + 1) {
@@ -7319,35 +8663,71 @@ class HalfSplitLayoutPart {
     toString() {
         return `<HalfSplitLayout: angle:${this.angle},ratio:${this.ratio},pr_size:${this.primarySize}.<<<Primary:${this.primary}---Secondary:${this.secondary}>>>`;
     }
-    apply(area, tiles, gap) {
+    apply(area, tiles, gap, transposed) {
         if (tiles.length <= this.primarySize) {
-            return this.primary.apply(area, tiles, gap);
+            return this.primary.apply(area, tiles, gap, transposed);
         }
         else if (this.primarySize === 0) {
-            return this.secondary.apply(area, tiles, gap);
+            return this.secondary.apply(area, tiles, gap, transposed);
         }
         else {
             const reversed = this.reversed;
             const ratio = reversed ? 1 - this.ratio : this.ratio;
-            const [area1, area2] = LayoutUtils.splitAreaHalfWeighted(area, ratio, gap, this.horizontal);
-            const result1 = this.primary.apply(reversed ? area2 : area1, tiles.slice(0, this.primarySize), gap);
-            const result2 = this.secondary.apply(reversed ? area1 : area2, tiles.slice(this.primarySize), gap);
+            const [primaryMin, secondaryMin] = this.splitMinPair(tiles, gap, transposed);
+            const minLengths = reversed
+                ? [secondaryMin, primaryMin]
+                : [primaryMin, secondaryMin];
+            const [area1, area2] = LayoutUtils.splitAreaWeighted(area, [ratio, 1 - ratio], gap, this.horizontal, minLengths);
+            const result1 = this.primary.apply(reversed ? area2 : area1, tiles.slice(0, this.primarySize), gap, transposed);
+            const result2 = this.secondary.apply(reversed ? area1 : area2, tiles.slice(this.primarySize), gap, transposed);
             return result1.concat(result2);
         }
     }
+    minLength(axis, tiles, gap, transposed) {
+        if (tiles.length <= this.primarySize) {
+            return this.primary.minLength(axis, tiles, gap, transposed);
+        }
+        else if (this.primarySize === 0) {
+            return this.secondary.minLength(axis, tiles, gap, transposed);
+        }
+        const primaryMin = this.primary.minLength(axis, tiles.slice(0, this.primarySize), gap, transposed);
+        const secondaryMin = this.secondary.minLength(axis, tiles.slice(this.primarySize), gap, transposed);
+        const splitAxis = this.horizontal ? "x" : "y";
+        return axis === splitAxis
+            ? primaryMin + secondaryMin + gap
+            : Math.max(primaryMin, secondaryMin);
+    }
+    splitMinPair(tiles, gap, transposed) {
+        const splitAxis = this.horizontal ? "x" : "y";
+        return [
+            this.primary.minLength(splitAxis, tiles.slice(0, this.primarySize), gap, transposed),
+            this.secondary.minLength(splitAxis, tiles.slice(this.primarySize), gap, transposed),
+        ];
+    }
 }
 class StackLayoutPart {
-    adjust(area, tiles, basis, delta, gap) {
-        const weights = LayoutUtils.adjustAreaWeights(area, tiles.map((tile) => tile.weight), gap, tiles.indexOf(basis), delta, false);
+    adjust(area, tiles, basis, delta, gap, transposed) {
+        const weights = LayoutUtils.adjustAreaWeightsProportional(area, tiles.map((tile) => tile.weight), gap, tiles.indexOf(basis), delta, false, StackLayoutPart.minLengths(tiles, transposed));
         weights.forEach((weight, i) => {
             tiles[i].weight = weight * tiles.length;
         });
         const idx = tiles.indexOf(basis);
         return new RectDelta(delta.east, delta.west, idx === tiles.length - 1 ? delta.south : 0, idx === 0 ? delta.north : 0);
     }
-    apply(area, tiles, gap) {
+    apply(area, tiles, gap, transposed) {
         const weights = tiles.map((tile) => tile.weight);
-        return LayoutUtils.splitAreaWeighted(area, weights, gap);
+        return LayoutUtils.splitAreaWeighted(area, weights, gap, false, StackLayoutPart.minLengths(tiles, transposed));
+    }
+    minLength(axis, tiles, gap, transposed) {
+        const flag = transposed !== null && transposed !== void 0 ? transposed : false;
+        if (axis === "y") {
+            const sum = tiles.reduce((acc, tile) => acc + minComponent("y", tile, flag), 0);
+            return sum + Math.max(0, tiles.length - 1) * gap;
+        }
+        return tiles.reduce((max, tile) => Math.max(max, minComponent("x", tile, flag)), 0);
+    }
+    static minLengths(tiles, transposed) {
+        return tiles.map((tile) => transposed ? tile.minSize.width : tile.minSize.height);
     }
 }
 class RotateLayoutPart {
@@ -7355,7 +8735,7 @@ class RotateLayoutPart {
         this.inner = inner;
         this.angle = angle;
     }
-    adjust(area, tiles, basis, delta, gap) {
+    adjust(area, tiles, basis, delta, gap, transposed) {
         switch (this.angle) {
             case 0:
                 break;
@@ -7371,7 +8751,7 @@ class RotateLayoutPart {
                 delta = new RectDelta(delta.north, delta.south, delta.east, delta.west);
                 break;
         }
-        delta = this.inner.adjust(area, tiles, basis, delta, gap);
+        delta = this.inner.adjust(area, tiles, basis, delta, gap, this.innerTransposed(transposed));
         switch (this.angle) {
             case 0:
                 delta = delta;
@@ -7388,7 +8768,7 @@ class RotateLayoutPart {
         }
         return delta;
     }
-    apply(area, tiles, gap) {
+    apply(area, tiles, gap, transposed) {
         switch (this.angle) {
             case 0:
                 break;
@@ -7401,7 +8781,7 @@ class RotateLayoutPart {
                 area = new Rect(area.y, area.x, area.height, area.width);
                 break;
         }
-        const innerResult = this.inner.apply(area, tiles, gap);
+        const innerResult = this.inner.apply(area, tiles, gap, this.innerTransposed(transposed));
         switch (this.angle) {
             case 0:
                 return innerResult;
@@ -7420,6 +8800,19 @@ class RotateLayoutPart {
                     return new Rect(g.y, newY, g.height, g.width);
                 });
         }
+    }
+    innerTransposed(transposed) {
+        const swapsAxes = this.angle === 90 || this.angle === 270;
+        return (transposed !== null && transposed !== void 0 ? transposed : false) !== swapsAxes;
+    }
+    minLength(axis, tiles, gap, transposed) {
+        const swapsAxes = this.angle === 90 || this.angle === 270;
+        const innerAxis = swapsAxes
+            ? axis === "x"
+                ? "y"
+                : "x"
+            : axis;
+        return this.inner.minLength(innerAxis, tiles, gap, this.innerTransposed(transposed));
     }
     rotate(amount) {
         let angle = this.angle + amount;
@@ -7453,16 +8846,80 @@ class LayoutUtils {
         }
         return parts;
     }
-    static splitAreaWeighted(area, weights, gap, horizontal) {
+    static splitAreaWeighted(area, weights, gap, horizontal, minLengths) {
         gap = gap !== undefined ? gap : 0;
         horizontal = horizontal !== undefined ? horizontal : false;
         const line = horizontal
             ? [area.x, area.width]
             : [area.y, area.height];
-        const parts = LayoutUtils.splitWeighted(line, weights, gap);
+        const parts = minLengths !== undefined
+            ? LayoutUtils.splitWeightedWithMinimum(line, weights, gap, minLengths)
+            : LayoutUtils.splitWeighted(line, weights, gap);
         return parts.map(([begin, length]) => horizontal
             ? new Rect(begin, area.y, length, area.height)
             : new Rect(area.x, begin, area.width, length));
+    }
+    static splitWeightedWithMinimum([begin, length], weights, gap, minLengths) {
+        gap = gap !== undefined ? gap : 0;
+        const n = weights.length;
+        const actualLength = length - (n - 1) * gap;
+        const totalMin = minLengths.reduce((sum, min) => sum + min, 0);
+        if (n === 0 || actualLength <= 0 || totalMin > actualLength) {
+            return LayoutUtils.splitWeighted([begin, length], weights, gap);
+        }
+        const partLengths = new Array(n).fill(0);
+        const fixed = new Array(n).fill(false);
+        let remaining = actualLength;
+        let activeWeightSum = weights.reduce((sum, weight) => sum + weight, 0);
+        while (true) {
+            if (activeWeightSum <= 0) {
+                let activeCount = 0;
+                for (let i = 0; i < n; i++)
+                    if (!fixed[i])
+                        activeCount++;
+                for (let i = 0; i < n; i++) {
+                    if (!fixed[i])
+                        partLengths[i] = remaining / activeCount;
+                }
+                break;
+            }
+            let offender = -1;
+            for (let i = 0; i < n; i++) {
+                if (fixed[i])
+                    continue;
+                const size = (remaining * weights[i]) / activeWeightSum;
+                if (size < minLengths[i]) {
+                    offender = i;
+                    break;
+                }
+            }
+            if (offender === -1) {
+                for (let i = 0; i < n; i++) {
+                    if (!fixed[i])
+                        partLengths[i] = (remaining * weights[i]) / activeWeightSum;
+                }
+                break;
+            }
+            partLengths[offender] = minLengths[offender];
+            fixed[offender] = true;
+            remaining -= minLengths[offender];
+            activeWeightSum -= weights[offender];
+        }
+        let weightAcc = 0;
+        const parts = partLengths.map((partLength, i) => {
+            const partBegin = weightAcc + i * gap;
+            weightAcc += partLength;
+            return [begin + Math.floor(partBegin), Math.floor(partLength)];
+        });
+        let finalLength = parts.reduce((sum, [, partLength]) => sum + partLength, 0);
+        finalLength += (n - 1) * gap;
+        let remainder = length - finalLength;
+        if (remainder > 0 && remainder < n) {
+            for (let i = 0; i < remainder; i++) {
+                parts[n - i - 1][1] += 1;
+            }
+        }
+        return parts;
     }
     static splitAreaHalfWeighted(area, weight, gap, horizontal) {
         return LayoutUtils.splitAreaWeighted(area, [weight, 1 - weight], gap, horizontal);
@@ -7496,9 +8953,83 @@ class LayoutUtils {
             : [delta.south, delta.north];
         return LayoutUtils.adjustWeights(line, weights, gap, target, deltaFw, deltaBw);
     }
-    static adjustAreaHalfWeights(area, weight, gap, target, delta, horizontal) {
+    static adjustWeightsProportional([begin, length], weights, gap, target, deltaFw, deltaBw, minLengths) {
+        const parts = this.splitWeighted([begin, length], weights, gap);
+        const sizes = parts.map(([, size]) => size);
+        const n = sizes.length;
+        const mins = sizes.map((_, i) => { var _a; return (_a = minLengths === null || minLengths === void 0 ? void 0 : minLengths[i]) !== null && _a !== void 0 ? _a : 1; });
+        const shrinkPartners = (indices, amount) => {
+            const room = indices.map((i) => Math.max(0, sizes[i] - mins[i]));
+            const roomSum = room.reduce((sum, value) => sum + value, 0);
+            const moved = Math.min(amount, roomSum);
+            if (moved <= 0 || roomSum <= 0)
+                return 0;
+            indices.forEach((i, k) => {
+                sizes[i] -= (moved * room[k]) / roomSum;
+            });
+            return moved;
+        };
+        const growPartners = (indices, amount) => {
+            if (amount <= 0 || indices.length === 0)
+                return 0;
+            const total = indices.reduce((sum, i) => sum + sizes[i], 0);
+            if (total <= 0) {
+                indices.forEach((i) => {
+                    sizes[i] += amount / indices.length;
+                });
+            }
+            else {
+                indices.forEach((i) => {
+                    sizes[i] += (amount * sizes[i]) / total;
+                });
+            }
+            return amount;
+        };
+        if (target > 0 && deltaBw !== 0) {
+            const partners = [];
+            for (let i = 0; i < target; i++)
+                partners.push(i);
+            if (deltaBw > 0) {
+                sizes[target] += shrinkPartners(partners, deltaBw);
+            }
+            else {
+                const moved = Math.min(-deltaBw, Math.max(0, sizes[target] - mins[target]));
+                growPartners(partners, moved);
+                sizes[target] -= moved;
+            }
+        }
+        if (target < n - 1 && deltaFw !== 0) {
+            const partners = [];
+            for (let i = target + 1; i < n; i++)
+                partners.push(i);
+            if (deltaFw > 0) {
+                sizes[target] += shrinkPartners(partners, deltaFw);
+            }
+            else {
+                const moved = Math.min(-deltaFw, Math.max(0, sizes[target] - mins[target]));
+                growPartners(partners, moved);
+                sizes[target] -= moved;
+            }
+        }
+        const total = sizes.reduce((sum, size) => sum + size, 0);
+        if (total <= 0)
+            return weights;
+        return sizes.map((size) => size / total);
+    }
+    static adjustAreaWeightsProportional(area, weights, gap, target, delta, horizontal, minLengths) {
+        const line = horizontal
+            ? [area.x, area.width]
+            : [area.y, area.height];
+        const [deltaFw, deltaBw] = horizontal
+            ? [delta.east, delta.west]
+            : [delta.south, delta.north];
+        return LayoutUtils.adjustWeightsProportional(line, weights, gap, target, deltaFw, deltaBw, minLengths);
+    }
+    static adjustAreaHalfWeights(area, weight, gap, target, delta, horizontal, minLengths) {
         const weights = [weight, 1 - weight];
-        const newWeights = LayoutUtils.adjustAreaWeights(area, weights, gap, target, delta, horizontal);
+        const newWeights = minLengths !== undefined
+            ? LayoutUtils.adjustAreaWeightsProportional(area, weights, gap, target, delta, horizontal, minLengths)
+            : LayoutUtils.adjustAreaWeights(area, weights, gap, target, delta, horizontal);
         return newWeights[0];
     }
     static calculateWeights(parts) {
@@ -7718,11 +9249,11 @@ class SpreadLayout {
         this.classID = SpreadLayout.id;
         this.description = "Spread";
         this.capacity = capacity !== undefined ? capacity : null;
-        this.space = 0.07;
+        this.space = KWINCONFIG.spreadLayoutSpace / 100;
     }
     apply(ctx, tileables, area, gap) {
         tileables.forEach((tileable) => (tileable.state = WindowState.Tiled));
-        const tiles = tileables;
+        const tiles = [...tileables].sort((a, b) => a.window.stackingOrder - b.window.stackingOrder);
         let numTiles = tiles.length;
         const spaceWidth = Math.floor(area.width * this.space);
         let cardWidth = area.width - spaceWidth * (numTiles - 1);
@@ -7850,19 +9381,22 @@ class ThreeColumnLayout {
         this.masterSize = 1;
     }
     adjust(area, tiles, basis, delta, gap) {
+        var _a, _b;
         const basisIndex = tiles.indexOf(basis);
         if (basisIndex < 0)
             return;
         if (tiles.length === 0)
             return;
         else if (tiles.length <= this.masterSize) {
-            LayoutUtils.adjustAreaWeights(area, tiles.map((tile) => tile.weight), gap, tiles.indexOf(basis), delta).forEach((newWeight, i) => (tiles[i].weight = newWeight * tiles.length));
+            LayoutUtils.adjustAreaWeightsProportional(area, tiles.map((tile) => tile.weight), gap, tiles.indexOf(basis), delta, false, this.verticalMinLengths(tiles, area.height, gap)).forEach((newWeight, i) => (tiles[i].weight = newWeight * tiles.length));
         }
         else if (tiles.length === this.masterSize + 1) {
-            this.masterRatio = LayoutUtils.adjustAreaHalfWeights(area, this.masterRatio, gap, basisIndex < this.masterSize ? 0 : 1, delta, true);
+            const masterTiles = tiles.slice(0, this.masterSize);
+            const stackTile = tiles[tiles.length - 1];
+            const ratioWeights = LayoutUtils.adjustAreaWeightsProportional(area, [this.masterRatio, 1 - this.masterRatio], gap, basisIndex < this.masterSize ? 0 : 1, delta, true, this.horizontalMinLengths([masterTiles, [stackTile]], area.width, gap));
+            this.masterRatio = ratioWeights[0];
             if (basisIndex < this.masterSize) {
-                const masterTiles = tiles.slice(0, -1);
-                LayoutUtils.adjustAreaWeights(area, masterTiles.map((tile) => tile.weight), gap, basisIndex, delta).forEach((newWeight, i) => (masterTiles[i].weight = newWeight * masterTiles.length));
+                LayoutUtils.adjustAreaWeightsProportional(area, masterTiles.map((tile) => tile.weight), gap, basisIndex, delta, false, this.verticalMinLengths(masterTiles, area.height, gap)).forEach((newWeight, i) => (masterTiles[i].weight = newWeight * masterTiles.length));
             }
         }
         else if (tiles.length > this.masterSize + 1) {
@@ -7873,42 +9407,48 @@ class ThreeColumnLayout {
                 basisGroup = 2;
             else
                 basisGroup = 0;
-            const stackRatio = 1 - this.masterRatio;
-            const newRatios = LayoutUtils.adjustAreaWeights(area, [stackRatio, this.masterRatio, stackRatio], gap, basisGroup, delta, true);
-            const newMasterRatio = newRatios[1];
-            const newStackRatio = basisGroup === 0 ? newRatios[0] : newRatios[2];
-            this.masterRatio = newMasterRatio / (newMasterRatio + newStackRatio);
             const rstackNumTile = Math.floor((tiles.length - this.masterSize) / 2);
             const [masterTiles, rstackTiles, lstackTiles] = partitionArrayBySizes(tiles, [
                 this.masterSize,
                 rstackNumTile,
             ]);
+            const stackRatio = 1 - this.masterRatio;
+            const groupMinLengths = this.horizontalMinLengths([lstackTiles, masterTiles, rstackTiles], area.width, gap);
+            const stackMin = Math.max((_a = groupMinLengths === null || groupMinLengths === void 0 ? void 0 : groupMinLengths[0]) !== null && _a !== void 0 ? _a : 0, (_b = groupMinLengths === null || groupMinLengths === void 0 ? void 0 : groupMinLengths[2]) !== null && _b !== void 0 ? _b : 0);
+            const ratioMinLengths = groupMinLengths
+                ? [stackMin, groupMinLengths[1], stackMin]
+                : undefined;
+            const newRatios = LayoutUtils.adjustAreaWeightsProportional(area, [stackRatio, this.masterRatio, stackRatio], gap, basisGroup, delta, true, ratioMinLengths);
+            const newMasterRatio = newRatios[1];
+            const newStackRatio = basisGroup === 0 ? newRatios[0] : newRatios[2];
+            this.masterRatio = newMasterRatio / (newMasterRatio + newStackRatio);
             const groupTiles = [lstackTiles, masterTiles, rstackTiles][basisGroup];
-            LayoutUtils.adjustAreaWeights(area, groupTiles.map((tile) => tile.weight), gap, groupTiles.indexOf(basis), delta).forEach((newWeight, i) => (groupTiles[i].weight = newWeight * groupTiles.length));
+            LayoutUtils.adjustAreaWeightsProportional(area, groupTiles.map((tile) => tile.weight), gap, groupTiles.indexOf(basis), delta, false, this.verticalMinLengths(groupTiles, area.height, gap)).forEach((newWeight, i) => (groupTiles[i].weight = newWeight * groupTiles.length));
         }
     }
     apply(ctx, tileables, area, gap) {
         tileables.forEach((tileable) => (tileable.state = WindowState.Tiled));
         const tiles = tileables;
         if (tiles.length <= this.masterSize) {
-            LayoutUtils.splitAreaWeighted(area, tiles.map((tile) => tile.weight), gap).forEach((tileArea, i) => (tiles[i].geometry = tileArea));
+            LayoutUtils.splitAreaWeighted(area, tiles.map((tile) => tile.weight), gap, false, this.verticalMinLengths(tiles, area.height, gap)).forEach((tileArea, i) => (tiles[i].geometry = tileArea));
         }
         else if (tiles.length === this.masterSize + 1) {
-            const [masterArea, stackArea] = LayoutUtils.splitAreaHalfWeighted(area, this.masterRatio, gap, true);
             const masterTiles = tiles.slice(0, this.masterSize);
-            LayoutUtils.splitAreaWeighted(masterArea, masterTiles.map((tile) => tile.weight), gap).forEach((tileArea, i) => (masterTiles[i].geometry = tileArea));
-            tiles[tiles.length - 1].geometry = stackArea;
+            const stackTile = tiles[tiles.length - 1];
+            const [masterArea, stackArea] = LayoutUtils.splitAreaWeighted(area, [this.masterRatio, 1 - this.masterRatio], gap, true, this.horizontalMinLengths([masterTiles, [stackTile]], area.width, gap));
+            LayoutUtils.splitAreaWeighted(masterArea, masterTiles.map((tile) => tile.weight), gap, false, this.verticalMinLengths(masterTiles, masterArea.height, gap)).forEach((tileArea, i) => (masterTiles[i].geometry = tileArea));
+            stackTile.geometry = stackArea;
         }
         else if (tiles.length > this.masterSize + 1) {
             const stackRatio = 1 - this.masterRatio;
-            const groupAreas = LayoutUtils.splitAreaWeighted(area, [stackRatio, this.masterRatio, stackRatio], gap, true);
             const rstackSize = Math.floor((tiles.length - this.masterSize) / 2);
             const [masterTiles, rstackTiles, lstackTiles] = partitionArrayBySizes(tiles, [
                 this.masterSize,
                 rstackSize,
             ]);
+            const groupAreas = LayoutUtils.splitAreaWeighted(area, [stackRatio, this.masterRatio, stackRatio], gap, true, this.horizontalMinLengths([lstackTiles, masterTiles, rstackTiles], area.width, gap));
             [lstackTiles, masterTiles, rstackTiles].forEach((groupTiles, group) => {
-                LayoutUtils.splitAreaWeighted(groupAreas[group], groupTiles.map((tile) => tile.weight), gap).forEach((tileArea, i) => (groupTiles[i].geometry = tileArea));
+                LayoutUtils.splitAreaWeighted(groupAreas[group], groupTiles.map((tile) => tile.weight), gap, false, this.verticalMinLengths(groupTiles, groupAreas[group].height, gap)).forEach((tileArea, i) => (groupTiles[i].geometry = tileArea));
             });
         }
     }
@@ -7939,6 +9479,18 @@ class ThreeColumnLayout {
     toString() {
         return "ThreeColumnLayout(nmaster=" + this.masterSize + ")";
     }
+    verticalMinLengths(tiles, axisLength, gap) {
+        const minLengths = tiles.map((tile) => tile.minSize.height);
+        const available = axisLength - (tiles.length - 1) * gap;
+        const totalMin = minLengths.reduce((sum, min) => sum + min, 0);
+        return totalMin <= available ? minLengths : undefined;
+    }
+    horizontalMinLengths(groups, axisLength, gap) {
+        const minLengths = groups.map((group) => group.reduce((max, tile) => Math.max(max, tile.minSize.width), 0));
+        const available = axisLength - (groups.length - 1) * gap;
+        const totalMin = minLengths.reduce((sum, min) => sum + min, 0);
+        return totalMin <= available ? minLengths : undefined;
+    }
     resizeMaster(ctx, step) {
         this.masterSize = clip(this.masterSize + step, 1, 10);
         ctx.showNotification(this.description);
@@ -7965,6 +9517,7 @@ class TileLayout {
     }
     constructor(capacity) {
         this.classID = TileLayout.id;
+        this.master = null;
         this.capacity = capacity !== undefined ? capacity : null;
         this.parts = new RotateLayoutPart(new HalfSplitLayoutPart(new RotateLayoutPart(new StackLayoutPart()), new StackLayoutPart()));
         switch (CONFIG.tileLayoutInitialAngle) {
@@ -7986,6 +9539,20 @@ class TileLayout {
         this.parts.adjust(area, tiles, basis, delta, gap);
     }
     apply(ctx, tileables, area, gap) {
+        const master = tileables.length > 0 ? tileables[0] : null;
+        if (master !== null &&
+            this.master !== null &&
+            this.master !== master &&
+            this.master.isAlive()) {
+            ctx.setPrevMaster(master, this.master);
+        }
+        if (master !== null && tileables.length > 1) {
+            const prev = ctx.getPrevMaster(master);
+            if (prev === null || tileables.indexOf(prev) === -1) {
+                ctx.setPrevMaster(master, tileables[1]);
+            }
+        }
+        this.master = master;
         tileables.forEach((tileable) => (tileable.state = WindowState.Tiled));
         this.parts.apply(area, tileables, gap).forEach((geometry, i) => {
             tileables[i].geometry = geometry;
@@ -8381,6 +9948,62 @@ class Logging {
         }
         return submodules;
     }
+}
+function resolveSurfaceCapacity(layoutCapacity, surfaceCapacity) {
+    const layoutCap = layoutCapacity === undefined ? null : layoutCapacity;
+    if (layoutCap === null && surfaceCapacity === null)
+        return null;
+    if (layoutCap === null || surfaceCapacity === null)
+        return layoutCap || surfaceCapacity;
+    return Math.min(layoutCap, surfaceCapacity);
+}
+function isMinimizeOvercapacityMode(mode, preventMinimize) {
+    return mode === "minimize" && !preventMinimize;
+}
+function resolveAvailableSlots(capacity, awaitToMove, overCapacity, allowOverfill) {
+    if (capacity === null)
+        return overCapacity;
+    const freeSlots = capacity - awaitToMove;
+    if (freeSlots > 0)
+        return Math.min(freeSlots, overCapacity);
+    return allowOverfill ? overCapacity : 0;
+}
+function selectOverCapacityWindows(tileables, capacity, eviction, protectedWindows = []) {
+    if (capacity === null || tileables.length <= capacity) {
+        return {
+            tileables: tileables.slice(),
+            overCapacity: [],
+            freeSlots: capacity === null ? null : capacity - tileables.length,
+        };
+    }
+    const excess = tileables.length - capacity;
+    const sorted = [...tileables].sort((a, b) => eviction === "oldest"
+        ? a.window.srfTime - b.window.srfTime
+        : b.focusTime - a.focusTime || b.window.srfTime - a.window.srfTime);
+    const candidates = sorted.filter((win) => protectedWindows.indexOf(win) < 0);
+    const pool = candidates.length >= excess ? candidates : sorted;
+    const overCapacity = pool.slice(0, excess);
+    const toRemove = new Set(overCapacity);
+    return {
+        tileables: tileables.filter((tile) => !toRemove.has(tile)),
+        overCapacity,
+        freeSlots: 0,
+    };
+}
+function selectRestorableWindows(hidden, srfId, freeSlots, restoreAll) {
+    const restore = [];
+    let slots = freeSlots;
+    for (let i = hidden.length - 1; i >= 0; i--) {
+        if (!restoreAll && slots !== null && slots <= 0)
+            break;
+        const win = hidden[i];
+        if (win.surface.id !== srfId)
+            continue;
+        restore.push(win);
+        if (!restoreAll && slots !== null)
+            slots--;
+    }
+    return restore;
 }
 class Rect {
     constructor(x, y, width, height) {

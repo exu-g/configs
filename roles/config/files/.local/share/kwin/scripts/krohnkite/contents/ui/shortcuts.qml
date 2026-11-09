@@ -160,6 +160,13 @@ Item {
         sequence: "Meta+|";
     }
     ShortcutHandler {
+        id: layoutChooser;
+
+        name: "KrohnkiteLayoutChooser";
+        text: "Krohnkite: Layout Chooser";
+        sequence: "";
+    }
+    ShortcutHandler {
         id: rotate;
 
         name: "KrohnkiteRotate";
@@ -308,6 +315,7 @@ Item {
         { name: "ToggleFloatAllSC", hdl: floatAll },
         { name: "NextLayoutSC", hdl: nextLayout },
         { name: "PreviousLayoutSC", hdl: previousLayout },
+        { name: "LayoutChooserSC", hdl: layoutChooser },
         { name: "RotateSC", hdl: rotate },
         { name: "RotatePartSC", hdl: rotatePart },
         { name: "SetMasterSC", hdl: setMaster },

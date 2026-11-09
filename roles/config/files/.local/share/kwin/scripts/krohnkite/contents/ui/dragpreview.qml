@@ -11,14 +11,19 @@ import org.kde.plasma.core as PlasmaCore;
  * Ghost rectangle shown while dragging a window over a dock slot, so the user
  * can see where the window will land before releasing the mouse button.
  *
- * The dialog is an on-screen-display surface, frameless, always on top and
- * fully transparent for input, so it never interferes with the active drag.
+ * The dialog is an on-screen-display surface, frameless and always on top,
+ * and it is meant to be transparent for input. On some KWin/X11 versions that
+ * input transparency is not honored while the surface is mapped, so an idle
+ * overlay would intercept clicks (observed as a 160x160 window at the
+ * top-left corner). To avoid that, the dialog is unmapped whenever no preview
+ * is active (`hide()`) and mapped again on demand.
  *
- * KWin re-runs OSD placement whenever the window size changes (see
+ * KWin re-runs OSD placement whenever the window is mapped or resized (see
  * Placement::placeOnScreenDisplay), which would override any position we set.
- * To avoid that, the window size/position are fixed to the active output and
- * only the inner rectangle moves; `hide()` merely collapses the rectangle
- * instead of unmapping the window.
+ * To cope with that, the window size/position are fixed to the active output
+ * and only the inner rectangle moves; on the call that maps or relocates the
+ * dialog the rectangle stays hidden, and it is only revealed on the next
+ * (stable) call that re-asserts the position.
  */
 PlasmaCore.Dialog {
     id: dragPreview
@@ -30,7 +35,7 @@ PlasmaCore.Dialog {
     outputOnly: true
     hideOnWindowDeactivate: false
 
-    visible: true
+    visible: false
 
     /* Output(full screen) area the overlay is anchored to. */
     property int areaX: 0
@@ -40,6 +45,10 @@ PlasmaCore.Dialog {
 
     property color frameColor: Qt.rgba(0.24, 0.53, 0.94, 0.30)
     property color borderColor: Qt.rgba(0.24, 0.53, 0.94, 0.90)
+
+    /* False until the dialog has been mapped and positioned for the current
+     * area; the rectangle is revealed on the call after that settles. */
+    property bool placed: false
 
     function showRect(ax, ay, aw, ah, x, y, w, h, frame, border) {
         if (frame !== undefined)
@@ -58,9 +67,7 @@ PlasmaCore.Dialog {
             areaY = ay;
             areaW = aw;
             areaH = ah;
-            /* The size change makes KWin re-place the OSD; keep the rectangle
-             * hidden until the next (size-stable) call re-asserts the position. */
-            previewRect.visible = false;
+            placed = false;
         }
 
         /* Position-only changes are always honored: the size is unchanged, so
@@ -72,12 +79,25 @@ PlasmaCore.Dialog {
         previewRect.y = y - areaY;
         previewRect.width = w;
         previewRect.height = h;
-        if (!areaChanged)
-            previewRect.visible = true;
+
+        if (areaChanged || !dragPreview.visible || !placed) {
+            /* Mapping the dialog (or changing its size) makes KWin re-place the
+             * OSD, which may override the position just set. Map it with the
+             * rectangle hidden and wait for the next, size-stable call to reveal
+             * the rectangle once the position has settled. */
+            dragPreview.visible = true;
+            previewRect.visible = false;
+            placed = true;
+            return;
+        }
+
+        previewRect.visible = true;
     }
 
     function hide() {
         previewRect.visible = false;
+        dragPreview.visible = false;
+        placed = false;
     }
 
     mainItem: Item {

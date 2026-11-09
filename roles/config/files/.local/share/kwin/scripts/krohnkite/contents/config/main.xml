@@ -8,6 +8,10 @@
       <!-- ***************************** -->
       <!-- ***********Layouts*********** -->
       <!-- ***************************** -->
+    <entry name="tileLayoutEnabled" type="Bool">
+        <label>Enable Tile layout</label>
+        <default>true</default>
+    </entry>
     <entry name="tileLayoutOrder" type="Int">
 	    <label> Tile layout order</label>
         <default>1</default>
@@ -22,6 +26,10 @@
         <default>0</default>
     </entry>
 
+    <entry name="monocleLayoutEnabled" type="Bool">
+        <label>Enable Monocle layout</label>
+        <default>true</default>
+    </entry>
     <entry name="monocleLayoutOrder" type="Int">
 	    <label> Monocle layout order</label>
         <default>2</default>
@@ -35,6 +43,10 @@
         <default>false</default>
     </entry>
 
+    <entry name="threeColumnLayoutEnabled" type="Bool">
+        <label>Enable Three Column layout</label>
+        <default>true</default>
+    </entry>
     <entry name="threeColumnLayoutOrder" type="Int">
 	    <label> Three Column layout order</label>
         <default>3</default>
@@ -44,6 +56,10 @@
         <default>0</default>
     </entry>
 
+    <entry name="spiralLayoutEnabled" type="Bool">
+        <label>Enable Spiral layout</label>
+        <default>true</default>
+    </entry>
     <entry name="spiralLayoutOrder" type="Int">
 	    <label> Spiral layout order</label>
         <default>4</default>
@@ -53,6 +69,10 @@
         <default>0</default>
     </entry>
 
+    <entry name="quarterLayoutEnabled" type="Bool">
+        <label>Enable Quarter layout</label>
+        <default>true</default>
+    </entry>
     <entry name="quarterLayoutOrder" type="Int">
 	    <label> Quarter layout order</label>
         <default>5</default>
@@ -62,6 +82,10 @@
         <default>false</default>
     </entry>
 
+    <entry name="stackedLayoutEnabled" type="Bool">
+        <label>Enable Stacked layout</label>
+        <default>true</default>
+    </entry>
     <entry name="stackedLayoutOrder" type="Int">
 	    <label> Stacked layout order</label>
         <default>6</default>
@@ -71,6 +95,10 @@
         <default>0</default>
     </entry>
 
+    <entry name="columnsLayoutEnabled" type="Bool">
+        <label>Enable Columns layout</label>
+        <default>true</default>
+    </entry>
     <entry name="columnsLayoutOrder" type="Int">
 	    <label> Columns layout order</label>
         <default>7</default>
@@ -100,6 +128,10 @@
         <default>false</default>
     </entry>
 
+    <entry name="spreadLayoutEnabled" type="Bool">
+        <label>Enable Spread layout</label>
+        <default>true</default>
+    </entry>
     <entry name="spreadLayoutOrder" type="Int">
 	    <label> Spread layout order</label>
         <default>8</default>
@@ -108,12 +140,24 @@
 	    <label>How many tiles can a layout contain before windows start floating or moving to another screen</label>
         <default>0</default>
     </entry>
+    <entry name="spreadLayoutSpace" type="Int">
+	    <label>Spread layout space between tiles (percent)</label>
+        <default>4</default>
+    </entry>
 
+    <entry name="floatingLayoutEnabled" type="Bool">
+        <label>Enable Floating layout</label>
+        <default>true</default>
+    </entry>
     <entry name="floatingLayoutOrder" type="Int">
 	    <label> Floating layout order</label>
         <default>9</default>
     </entry>
 
+    <entry name="stairLayoutEnabled" type="Bool">
+        <label>Enable Stair layout</label>
+        <default>true</default>
+    </entry>
     <entry name="stairLayoutOrder" type="Int">
 	    <label> Stair layout order</label>
         <default>10</default>
@@ -127,6 +171,10 @@
         <default>false</default>
     </entry>
 
+    <entry name="binaryTreeLayoutEnabled" type="Bool">
+        <label>Enable Binary Tree layout</label>
+        <default>true</default>
+    </entry>
     <entry name="binaryTreeLayoutOrder" type="Int">
 	    <label> BTree layout order</label>
         <default>11</default>
@@ -136,6 +184,10 @@
         <default>0</default>
     </entry>
 
+    <entry name="cascadeLayoutEnabled" type="Bool">
+        <label>Enable Cascade layout</label>
+        <default>true</default>
+    </entry>
     <entry name="cascadeLayoutOrder" type="Int">
 	    <label> Cascade layout order</label>
         <default>12</default>
@@ -151,7 +203,7 @@
 
     <entry name="srfExceededToScreen" type="Bool">
 	    <label>Move windows to next screen if surface(or layout) capacity is exceeded</label>
-        <default>true</default>
+        <default>false</default>
     </entry>
     <entry name="srfToScreenOrderLeft" type="Int">
 	    <label>The order of the left screen to move exceeded windows</label>
@@ -172,7 +224,7 @@
 
     <entry name="srfExceededToVDesktop" type="Bool">
 	    <label>Move windows to next screen if surface(or layout) capacity is exceeded</label>
-        <default>true</default>
+        <default>false</default>
     </entry>
     <entry name="srfToVDesktopOrderLeft" type="Int">
 	    <label>The order of the left Virtual Desktop to move exceeded windows</label>
@@ -191,8 +243,18 @@
         <default>4</default>
     </entry>
 
-    <entry name="srfIsMoveOldestWindows" type="Bool">
-	    <label>Move the oldest windows</label>
+    <entry name="srfOvercapacityEviction" type="Int">
+	    <label>Which overcapacity windows to evict: 0 - last focused, 1 - oldest</label>
+        <default>1</default>
+    </entry>
+
+    <entry name="srfOvercapacityMode" type="Int">
+	    <label>How to handle overcapacity windows: 0 - float, 1 - minimize</label>
+        <default>1</default>
+    </entry>
+
+    <entry name="srfAllowShortcutMoveToFullSurface" type="Bool">
+	    <label>Allow shortcut moves to a full surface</label>
         <default>false</default>
     </entry>
 
@@ -317,6 +379,14 @@
       <label>Move mouse cursor to the center of a window/screen when it becomes focused</label>
       <default>false</default>
     </entry>
+    <entry name="movePointerOnFocusShortcutsOnly" type="Bool">
+      <label>Move the pointer on focus only when focus changes through a Krohnkite shortcut</label>
+      <default>false</default>
+    </entry>
+    <entry name="movePointerOnResize" type="Bool">
+      <label>Move mouse cursor to the center of the focused window when it is resized</label>
+      <default>false</default>
+    </entry>
 
     <entry name="newWindowPosition" type="Int">
         <label>The position every new window in the screen window array</label>
@@ -329,7 +399,7 @@
 
         <entry name="ignoreClass" type="String">
 	    <label>Ignore windows with certain classes(comma-separated list)</label>
-        <default>krunner,yakuake,spectacle,kded5,xwaylandvideobridge,plasmashell,ksplashqml,org.kde.plasmashell,org.kde.polkit-kde-authentication-agent-1,org.kde.kruler,kruler,kwin_wayland,ksmserver-logout-greeter</default>
+        <default></default>
     </entry>
 
     <entry name="ignoreTitle" type="String">
@@ -415,16 +485,7 @@
 	    <label>Automatically float utility windows (Dialog, Splash, Utility)</label>
         <default>true</default>
     </entry>
-    <!-- TODO: will be removed from Krohnkite Settings>Float>ByClass and ByTitle -->
-    <entry name="floatingClass" type="String">
-     <label>Float windows with certain classes(comma-separated list)</label>
-        <default></default>
-    </entry>
 
-    <entry name="floatingTitle" type="String">
-     <label>Float windows with certain string in title(comma-separated list)</label>
-        <default></default>
-    </entry>
     <!-- ############# -->
     <entry name="floatConfig" type="String">
 	    <label>Override default screen gaps</label>
@@ -561,8 +622,8 @@
 
 
     <entry name="unfitGreater" type="Bool">
-      <label>If enable make all windows floating if they minimum size to large for tile</label>
-        <default>true</default>
+      <label>(Experimental)If enable make all windows floating if they minimum size to large for tile</label>
+        <default>false</default>
     </entry>
     <entry name="unfitLess" type="Bool">
       <label>If enable make all windows floating if the maximum size to small for tile</label>
