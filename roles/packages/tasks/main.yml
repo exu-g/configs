@@ -78,7 +78,12 @@
     - inxi # host information
     - jre-openjdk # java
     - just # command runner
-    - kde-applications-meta # kde
+    - kde-graphics-meta # Meta package for KDE graphics applications
+    - kde-multimedia-meta # Meta package for KDE multimedia applications
+    - kde-network-meta # Meta package for KDE network applications
+    - kde-sdk-meta # Meta package for KDE SDK applications
+    - kde-system-meta # Meta package for KDE system applications
+    - kde-utilities-meta # Meta package for KDE utilities applications
     - kid3 # music metadata
     - krita
     - languagetool
